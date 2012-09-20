@@ -9,6 +9,8 @@
 
 #include "../../extern/include/SFML/Graphics.hpp"
 
+
+
 int main(int argc, char **argv)
 {
 	FILE *loggerFile = NULL;
@@ -20,6 +22,7 @@ int main(int argc, char **argv)
         return -1;
     }
 	
+	// logger settings
 	if (!(loggerFile = fopen("error.log", "a")))
 	{
 		printf("Failed to open logger file, aborting.");
@@ -28,13 +31,17 @@ int main(int argc, char **argv)
 	
 	wxLogStderr *logger = new (std::nothrow) wxLogStderr(loggerFile);
 	delete wxLog::SetActiveTarget(logger);
-	 
-	wxLogMessage(_T("This is log message"));
-    wxLogWarning(_T("This is log warning"));
-	wxLogError(_T("This is error"));
+	
+	//set verbose logger (use for debug)
+	wxLog::SetVerbose(true);
+		
+	wxLogInfo(_T("Infos are enabled"));
+    wxLogWarning(_T("Warnings are enabled"));
+	wxLogError(_T("Errors are enabled"));
 	// Create the main window
 	sf::RenderWindow App(sf::VideoMode(800, 600), "SFML window");
  
+	
       // Start the game loop
 	while (App.IsOpened())
     {
