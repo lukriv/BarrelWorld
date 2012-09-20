@@ -3,11 +3,11 @@
   <Project Name="MainWindow" Path="MainWindow/MainWindow.project" Active="Yes"/>
   <Project Name="Extern" Path="Extern/Extern.project" Active="No"/>
   <BuildMatrix>
-    <WorkspaceConfiguration Name="Debug" Selected="no">
+    <WorkspaceConfiguration Name="Debug" Selected="yes">
       <Project Name="MainWindow" ConfigName="Debug"/>
       <Project Name="Extern" ConfigName="Debug"/>
     </WorkspaceConfiguration>
-    <WorkspaceConfiguration Name="Release" Selected="yes">
+    <WorkspaceConfiguration Name="Release" Selected="no">
       <Project Name="MainWindow" ConfigName="Release"/>
       <Project Name="Extern" ConfigName="Debug"/>
     </WorkspaceConfiguration>
