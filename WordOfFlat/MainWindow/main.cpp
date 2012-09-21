@@ -23,7 +23,7 @@ int main(int argc, char **argv)
     }
 	
 	// logger settings
-	if (!(loggerFile = fopen("error.log", "a")))
+	if (!(loggerFile = fopen("error.log", "w")))
 	{
 		printf("Failed to open logger file, aborting.");
         return -1;
@@ -41,6 +41,15 @@ int main(int argc, char **argv)
 	// Create the main window
 	sf::RenderWindow App(sf::VideoMode(800, 600), "SFML window");
  
+     // Load a sprite to display
+     sf::Image Image;
+     if (!Image.LoadFromFile("../../../Resources/images/body.png"))
+	 {
+		 wxLogError(_T("Body image load failed"));
+		 return -1;
+	 }
+		 
+     sf::Sprite Sprite(Image);
 	
       // Start the game loop
 	while (App.IsOpened())
@@ -55,8 +64,9 @@ int main(int argc, char **argv)
         }
         // Clear screen
 		App.Clear();
-        // Draw the sprite
-        //App.Draw(Sprite);
+        
+		// Draw the sprite
+        App.Draw(Sprite);
  
         // Draw the string
         //App.Draw(Text);
