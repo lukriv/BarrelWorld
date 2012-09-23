@@ -1,10 +1,10 @@
 ///////////////////////////////////////////////////////////////////////////////
-// Name:        dnd.h
+// Name:        wx/os2/dnd.h
 // Purpose:     declaration of the wxDropTarget class
 // Author:      David Webster
 // Modified by:
 // Created:     10/21/99
-// RCS-ID:      $Id: dnd.h 27408 2004-05-23 20:53:33Z JS $
+// RCS-ID:      $Id$
 // Copyright:   (c) 1999 David Webster
 // Licence:     wxWindows licence
 ///////////////////////////////////////////////////////////////////////////////
@@ -29,7 +29,7 @@ class CIDropTarget;
 // wxDropSource
 //-------------------------------------------------------------------------
 
-class WXDLLEXPORT wxDropSource: public wxDropSourceBase
+class WXDLLIMPEXP_CORE wxDropSource: public wxDropSourceBase
 {
 public:
     /* constructor. set data later with SetData() */
@@ -59,10 +59,10 @@ protected:
 // wxDropTarget
 //-------------------------------------------------------------------------
 
-class WXDLLEXPORT wxDropTarget : public wxDropTargetBase
+class WXDLLIMPEXP_CORE wxDropTarget : public wxDropTargetBase
 {
 public:
-    wxDropTarget(wxDataObject* pDataObject = (wxDataObject*)NULL);
+    wxDropTarget(wxDataObject* pDataObject = NULL);
     virtual ~wxDropTarget();
 
     //

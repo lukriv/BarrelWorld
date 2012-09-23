@@ -1,8 +1,8 @@
 ///////////////////////////////////////////////////////////////////////////////
-// Name:        wx/motif/dataobj.h
+// Name:        wx/x11/dataobj.h
 // Purpose:     declaration of the wxDataObject class for Motif
 // Author:      Julian Smart
-// RCS-ID:      $Id: dataobj.h 41020 2006-09-05 20:47:48Z VZ $
+// RCS-ID:      $Id$
 // Copyright:   (c) 1998 Robert Roebling
 // Licence:     wxWindows licence
 ///////////////////////////////////////////////////////////////////////////////
@@ -18,7 +18,7 @@ class WXDLLIMPEXP_CORE wxDataObject : public wxDataObjectBase
 {
 public:
     wxDataObject();
-    
+
 #ifdef __DARWIN__
     virtual ~wxDataObject() { }
 #endif

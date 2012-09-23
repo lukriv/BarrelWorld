@@ -10,6 +10,9 @@
   <VirtualDirectory Name="src">
     <File Name="main.cpp"/>
   </VirtualDirectory>
+  <VirtualDirectory Name="header"/>
+  <Dependencies Name="Debug"/>
+  <Dependencies Name="Release"/>
   <Settings Type="Executable">
     <GlobalSettings>
       <Compiler Options="" C_Options="">
@@ -25,7 +28,7 @@
       <Linker Options="" Required="yes">
         <Library Value="sfml-graphics-s-d"/>
         <Library Value="sfml-window-s-d"/>
-        <Library Value="wx_baseu-2.8.dll"/>
+        <Library Value="wx_baseu-2.9.dll"/>
         <Library Value="opengl32"/>
         <Library Value="sfml-system-s-d"/>
         <Library Value="gdi32"/>
@@ -68,7 +71,7 @@
       <Linker Options="" Required="yes">
         <Library Value="sfml-graphics-s"/>
         <Library Value="sfml-window-s"/>
-        <Library Value="wx_baseu-2.8.dll"/>
+        <Library Value="wx_baseu-2.9.dll"/>
         <Library Value="opengl32"/>
         <Library Value="sfml-system-s"/>
         <Library Value="gdi32"/>
@@ -107,7 +110,4 @@
       </Completion>
     </Configuration>
   </Settings>
-  <VirtualDirectory Name="header"/>
-  <Dependencies Name="Debug"/>
-  <Dependencies Name="Release"/>
 </CodeLite_Project>

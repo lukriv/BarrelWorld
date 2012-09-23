@@ -1,10 +1,10 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        toolbar.h
+// Name:        wx/os2/toolbar.h
 // Purpose:     wxToolBar class
 // Author:      David Webster
 // Modified by:
 // Created:     10/17/98
-// RCS-ID:      $Id: toolbar.h 27408 2004-05-23 20:53:33Z JS $
+// RCS-ID:      $Id$
 // Copyright:   (c) David Webster
 // Licence:     wxWindows licence
 /////////////////////////////////////////////////////////////////////////////
@@ -19,7 +19,7 @@
 #define ID_TOOLTIMER                100
 #define ID_TOOLEXPTIMER             101
 
-class WXDLLEXPORT wxToolBar: public wxToolBarBase
+class WXDLLIMPEXP_CORE wxToolBar: public wxToolBarBase
 {
 public:
     /*
@@ -165,7 +165,8 @@ protected:
                                           ,const wxString& rsShortHelp
                                           ,const wxString& rsLongHelp
                                          );
-    virtual wxToolBarToolBase* CreateTool(wxControl* pControl);
+    virtual wxToolBarToolBase* CreateTool(wxControl* pControl,
+                                          const wxString& label);
 
     //
     // Helpers

@@ -2,7 +2,7 @@
 // Name:        wx/gtk/gauge.h
 // Purpose:
 // Author:      Robert Roebling
-// Id:          $Id: gauge.h 42077 2006-10-17 14:44:52Z ABX $
+// Id:          $Id$
 // Copyright:   (c) 1998 Robert Roebling
 // Licence:     wxWindows licence
 /////////////////////////////////////////////////////////////////////////////
@@ -43,8 +43,8 @@ public:
 
     void SetShadowWidth( int WXUNUSED(w) ) { }
     void SetBezelFace( int WXUNUSED(w) ) { }
-    int GetShadowWidth() const { return 0; };
-    int GetBezelFace() const { return 0; };
+    int GetShadowWidth() const { return 0; }
+    int GetBezelFace() const { return 0; }
 
     // determinate mode API
     void SetRange( int r );

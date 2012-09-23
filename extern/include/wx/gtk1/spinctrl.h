@@ -3,7 +3,7 @@
 // Purpose:     wxSpinCtrl class
 // Author:      Robert Roebling
 // Modified by:
-// RCS-ID:      $Id: spinctrl.h 61872 2009-09-09 22:37:05Z VZ $
+// RCS-ID:      $Id$
 // Copyright:   (c) Robert Roebling
 // Licence:     wxWindows licence
 /////////////////////////////////////////////////////////////////////////////
