@@ -67,13 +67,14 @@
       </Completion>
     </Configuration>
     <Configuration Name="Release" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
-      <Compiler Options="-O3;-Wall" C_Options="-O3;-Wall" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags=""/>
+      <Compiler Options="-O3;-Wall;-DSFML_STATIC" C_Options="-O3;-Wall" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags=""/>
       <Linker Options="" Required="yes">
-        <Library Value="sfml-graphics-s"/>
-        <Library Value="sfml-window-s"/>
+        <Library Value="sfml-graphics"/>
+        <Library Value="sfml-window"/>
+        <Library Value="sfml-main"/>
         <Library Value="wx_baseu-2.9.dll"/>
-        <Library Value="opengl32"/>
-        <Library Value="sfml-system-s"/>
+        <Library Value="glew32"/>
+        <Library Value="sfml-system"/>
         <Library Value="gdi32"/>
         <Library Value="winmm"/>
       </Linker>

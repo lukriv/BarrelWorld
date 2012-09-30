@@ -39,40 +39,43 @@ int main(int argc, char **argv)
     wxLogWarning(_T("Warnings are enabled"));
 	wxLogError(_T("Errors are enabled"));
 	// Create the main window
-	sf::RenderWindow App(sf::VideoMode(800, 600), "SFML window");
+	sf::RenderWindow window(sf::VideoMode(800, 600), "SFML window");
  
      // Load a sprite to display
-     sf::Image Image;
-     if (!Image.LoadFromFile("../../../Resources/images/body.png"))
+     sf::Texture texture;
+     if (!texture.loadFromFile("cute_image.png"))
 	 {
-		 wxLogError(_T("Body image load failed"));
+		 wxLogError(_T("Loading file error"));
 		 return -1;
 	 }
+     sf::Sprite sprite(texture);
 		 
-     sf::Sprite Sprite(Image);
+
 	
       // Start the game loop
-	while (App.IsOpened())
+	while (window.isOpen())
     {
         // Process events
-        sf::Event Event;
-        while (App.GetEvent(Event))
+        sf::Event event;
+        while (window.pollEvent(event))
         {
             // Close window : exit
-            if (Event.Type == sf::Event::Closed)
-                App.Close();
+            if (event.type == sf::Event::Closed)
+                window.close();
         }
+		 
+
         // Clear screen
-		App.Clear();
-        
-		// Draw the sprite
-        App.Draw(Sprite);
+        window.clear();
+ 
+        // Draw the sprite
+        window.draw(sprite);
  
         // Draw the string
         //App.Draw(Text);
- 
-        // Update the window
-        App.Display();
+		
+		// Update the window
+        window.display();
     }
 	 
 	return 0;
