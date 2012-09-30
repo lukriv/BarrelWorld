@@ -1562,87 +1562,95 @@
     <File Name="../../extern/include/wx/zstream.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="SFML">
-    <VirtualDirectory Name="System">
-      <VirtualDirectory Name="Unix">
-        <File Name="../../extern/include/SFML/System/Unix/Mutex.hpp"/>
-        <File Name="../../extern/include/SFML/System/Unix/Thread.hpp"/>
-      </VirtualDirectory>
-      <VirtualDirectory Name="Win32">
-        <File Name="../../extern/include/SFML/System/Win32/Mutex.hpp"/>
-        <File Name="../../extern/include/SFML/System/Win32/Thread.hpp"/>
-      </VirtualDirectory>
-      <File Name="../../extern/include/SFML/System/Clock.hpp"/>
-      <File Name="../../extern/include/SFML/System/Lock.hpp"/>
-      <File Name="../../extern/include/SFML/System/Mutex.hpp"/>
-      <File Name="../../extern/include/SFML/System/NonCopyable.hpp"/>
-      <File Name="../../extern/include/SFML/System/Randomizer.hpp"/>
-      <File Name="../../extern/include/SFML/System/Resource.hpp"/>
-      <File Name="../../extern/include/SFML/System/Sleep.hpp"/>
-      <File Name="../../extern/include/SFML/System/Thread.hpp"/>
-      <File Name="../../extern/include/SFML/System/Unicode.hpp"/>
-      <File Name="../../extern/include/SFML/System/Vector2.hpp"/>
-      <File Name="../../extern/include/SFML/System/Vector3.hpp"/>
-    </VirtualDirectory>
-    <VirtualDirectory Name="Network">
-      <VirtualDirectory Name="Unix">
-        <File Name="../../extern/include/SFML/Network/Unix/SocketHelper.hpp"/>
-      </VirtualDirectory>
-      <VirtualDirectory Name="Win32">
-        <File Name="../../extern/include/SFML/Network/Win32/SocketHelper.hpp"/>
-      </VirtualDirectory>
-      <File Name="../../extern/include/SFML/Network/Ftp.hpp"/>
-      <File Name="../../extern/include/SFML/Network/Http.hpp"/>
-      <File Name="../../extern/include/SFML/Network/IPAddress.hpp"/>
-      <File Name="../../extern/include/SFML/Network/Packet.hpp"/>
-      <File Name="../../extern/include/SFML/Network/Selector.hpp"/>
-      <File Name="../../extern/include/SFML/Network/SelectorBase.hpp"/>
-      <File Name="../../extern/include/SFML/Network/SocketHelper.hpp"/>
-      <File Name="../../extern/include/SFML/Network/Sockets.hpp"/>
-      <File Name="../../extern/include/SFML/Network/SocketTCP.hpp"/>
-      <File Name="../../extern/include/SFML/Network/SocketUDP.hpp"/>
-    </VirtualDirectory>
     <VirtualDirectory Name="Audio">
-      <File Name="../../extern/include/SFML/Audio/AudioResource.hpp"/>
+      <File Name="../../extern/include/SFML/Audio/Export.hpp"/>
       <File Name="../../extern/include/SFML/Audio/Listener.hpp"/>
       <File Name="../../extern/include/SFML/Audio/Music.hpp"/>
       <File Name="../../extern/include/SFML/Audio/Sound.hpp"/>
       <File Name="../../extern/include/SFML/Audio/SoundBuffer.hpp"/>
       <File Name="../../extern/include/SFML/Audio/SoundBufferRecorder.hpp"/>
       <File Name="../../extern/include/SFML/Audio/SoundRecorder.hpp"/>
+      <File Name="../../extern/include/SFML/Audio/SoundSource.hpp"/>
       <File Name="../../extern/include/SFML/Audio/SoundStream.hpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="Graphics">
+      <File Name="../../extern/include/SFML/Graphics/BlendMode.hpp"/>
+      <File Name="../../extern/include/SFML/Graphics/CircleShape.hpp"/>
       <File Name="../../extern/include/SFML/Graphics/Color.hpp"/>
+      <File Name="../../extern/include/SFML/Graphics/ConvexShape.hpp"/>
       <File Name="../../extern/include/SFML/Graphics/Drawable.hpp"/>
+      <File Name="../../extern/include/SFML/Graphics/Export.hpp"/>
       <File Name="../../extern/include/SFML/Graphics/Font.hpp"/>
       <File Name="../../extern/include/SFML/Graphics/Glyph.hpp"/>
       <File Name="../../extern/include/SFML/Graphics/Image.hpp"/>
-      <File Name="../../extern/include/SFML/Graphics/Matrix3.hpp"/>
-      <File Name="../../extern/include/SFML/Graphics/PostFX.hpp"/>
+      <File Name="../../extern/include/SFML/Graphics/PrimitiveType.hpp"/>
       <File Name="../../extern/include/SFML/Graphics/Rect.hpp"/>
+      <File Name="../../extern/include/SFML/Graphics/RectangleShape.hpp"/>
+      <File Name="../../extern/include/SFML/Graphics/RenderStates.hpp"/>
       <File Name="../../extern/include/SFML/Graphics/RenderTarget.hpp"/>
+      <File Name="../../extern/include/SFML/Graphics/RenderTexture.hpp"/>
       <File Name="../../extern/include/SFML/Graphics/RenderWindow.hpp"/>
+      <File Name="../../extern/include/SFML/Graphics/Shader.hpp"/>
       <File Name="../../extern/include/SFML/Graphics/Shape.hpp"/>
       <File Name="../../extern/include/SFML/Graphics/Sprite.hpp"/>
-      <File Name="../../extern/include/SFML/Graphics/String.hpp"/>
+      <File Name="../../extern/include/SFML/Graphics/Text.hpp"/>
+      <File Name="../../extern/include/SFML/Graphics/Texture.hpp"/>
+      <File Name="../../extern/include/SFML/Graphics/Transform.hpp"/>
+      <File Name="../../extern/include/SFML/Graphics/Transformable.hpp"/>
+      <File Name="../../extern/include/SFML/Graphics/Vertex.hpp"/>
+      <File Name="../../extern/include/SFML/Graphics/VertexArray.hpp"/>
       <File Name="../../extern/include/SFML/Graphics/View.hpp"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="Network">
+      <File Name="../../extern/include/SFML/Network/Export.hpp"/>
+      <File Name="../../extern/include/SFML/Network/Ftp.hpp"/>
+      <File Name="../../extern/include/SFML/Network/Http.hpp"/>
+      <File Name="../../extern/include/SFML/Network/IpAddress.hpp"/>
+      <File Name="../../extern/include/SFML/Network/Packet.hpp"/>
+      <File Name="../../extern/include/SFML/Network/Socket.hpp"/>
+      <File Name="../../extern/include/SFML/Network/SocketHandle.hpp"/>
+      <File Name="../../extern/include/SFML/Network/SocketSelector.hpp"/>
+      <File Name="../../extern/include/SFML/Network/TcpListener.hpp"/>
+      <File Name="../../extern/include/SFML/Network/TcpSocket.hpp"/>
+      <File Name="../../extern/include/SFML/Network/UdpSocket.hpp"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="System">
+      <File Name="../../extern/include/SFML/System/Clock.hpp"/>
+      <File Name="../../extern/include/SFML/System/Err.hpp"/>
+      <File Name="../../extern/include/SFML/System/Export.hpp"/>
+      <File Name="../../extern/include/SFML/System/InputStream.hpp"/>
+      <File Name="../../extern/include/SFML/System/Lock.hpp"/>
+      <File Name="../../extern/include/SFML/System/Mutex.hpp"/>
+      <File Name="../../extern/include/SFML/System/NonCopyable.hpp"/>
+      <File Name="../../extern/include/SFML/System/Sleep.hpp"/>
+      <File Name="../../extern/include/SFML/System/String.hpp"/>
+      <File Name="../../extern/include/SFML/System/Thread.hpp"/>
+      <File Name="../../extern/include/SFML/System/ThreadLocal.hpp"/>
+      <File Name="../../extern/include/SFML/System/ThreadLocalPtr.hpp"/>
+      <File Name="../../extern/include/SFML/System/Time.hpp"/>
+      <File Name="../../extern/include/SFML/System/Utf.hpp"/>
+      <File Name="../../extern/include/SFML/System/Vector2.hpp"/>
+      <File Name="../../extern/include/SFML/System/Vector3.hpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="Window">
       <File Name="../../extern/include/SFML/Window/Context.hpp"/>
+      <File Name="../../extern/include/SFML/Window/ContextSettings.hpp"/>
       <File Name="../../extern/include/SFML/Window/Event.hpp"/>
-      <File Name="../../extern/include/SFML/Window/Input.hpp"/>
-      <File Name="../../extern/include/SFML/Window/OpenGL.hpp"/>
+      <File Name="../../extern/include/SFML/Window/Export.hpp"/>
+      <File Name="../../extern/include/SFML/Window/GlResource.hpp"/>
+      <File Name="../../extern/include/SFML/Window/Joystick.hpp"/>
+      <File Name="../../extern/include/SFML/Window/Keyboard.hpp"/>
+      <File Name="../../extern/include/SFML/Window/Mouse.hpp"/>
       <File Name="../../extern/include/SFML/Window/VideoMode.hpp"/>
       <File Name="../../extern/include/SFML/Window/Window.hpp"/>
       <File Name="../../extern/include/SFML/Window/WindowHandle.hpp"/>
-      <File Name="../../extern/include/SFML/Window/WindowListener.hpp"/>
-      <File Name="../../extern/include/SFML/Window/WindowSettings.hpp"/>
       <File Name="../../extern/include/SFML/Window/WindowStyle.hpp"/>
     </VirtualDirectory>
     <File Name="../../extern/include/SFML/Audio.hpp"/>
     <File Name="../../extern/include/SFML/Config.hpp"/>
     <File Name="../../extern/include/SFML/Graphics.hpp"/>
     <File Name="../../extern/include/SFML/Network.hpp"/>
+    <File Name="../../extern/include/SFML/OpenGL.hpp"/>
     <File Name="../../extern/include/SFML/System.hpp"/>
     <File Name="../../extern/include/SFML/Window.hpp"/>
   </VirtualDirectory>
