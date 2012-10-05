@@ -87,9 +87,12 @@
       </Completion>
     </Configuration>
   </Settings>
-  <VirtualDirectory Name="src"/>
+  <VirtualDirectory Name="src">
+    <File Name="treeobj.cpp"/>
+  </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="gameobj.h"/>
+    <File Name="treeobj.h"/>
   </VirtualDirectory>
   <Dependencies Name="Debug"/>
   <Dependencies Name="Release"/>
