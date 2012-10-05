@@ -67,7 +67,7 @@
       </Completion>
     </Configuration>
     <Configuration Name="Release" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
-      <Compiler Options="-O3;-Wall;-DSFML_STATIC" C_Options="-O3;-Wall" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags=""/>
+      <Compiler Options="-O3;-Wall" C_Options="-O3;-Wall" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags=""/>
       <Linker Options="" Required="yes">
         <Library Value="sfml-graphics"/>
         <Library Value="sfml-window"/>
@@ -88,7 +88,16 @@
         <StartupCommands/>
       </Debugger>
       <PreBuild/>
-      <PostBuild/>
+      <PostBuild>
+        <Command Enabled="yes">cp $(OutDir)/$(ProjectName).exe ../../bin/</Command>
+        <Command Enabled="yes">cp ../../extern/lib/wxbase294u_gcc_custom.dll ../../bin/</Command>
+        <Command Enabled="yes">cp ../../extern/lib/wxmsw294u_core_gcc_custom.dll ../../bin/</Command>
+        <Command Enabled="yes">cp ../../extern/lib/sfml-system-2.dll ../../bin/</Command>
+        <Command Enabled="yes">cp ../../extern/lib/sfml-graphics-2.dll ../../bin/</Command>
+        <Command Enabled="yes">cp ../../extern/lib/sfml-window-2.dll ../../bin/</Command>
+        <Command Enabled="yes">cp ../../extern/lib/sfml-window-2.dll ../../bin/</Command>
+        <Command Enabled="yes">cp ../../Resources/images/*.png ../../bin/res/img/</Command>
+      </PostBuild>
       <CustomBuild Enabled="no">
         <RebuildCommand/>
         <CleanCommand/>

@@ -43,7 +43,7 @@ int main(int argc, char **argv)
  
      // Load a sprite to display
      sf::Texture texture;
-     if (!texture.loadFromFile("../../../Resources/images/body.png "))
+     if (!texture.loadFromFile("res/img/body.png"))
 	 {
 		 wxLogError(_T("Loading file error"));
 		 return -1;
