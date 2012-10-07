@@ -4,12 +4,14 @@
 #include "refobject.h"
 
 enum GameObjectType {
-	GAME_TYPE_TREE
+	GAME_TYPE_TREE,
+	GAME_TYPE_GROUND
 };
 
 class IGameObject : public IRefObject {
 public:
 	virtual GameObjectType GetType() = 0;
+	virtual wxInt32 GetId() = 0;
 	virtual bool IsStatic() = 0;
 	virtual bool IsMoveable() = 0;
 	virtual bool IsDestroyable() = 0;
