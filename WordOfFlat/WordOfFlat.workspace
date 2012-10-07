@@ -1,24 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Workspace Name="WordOfFlat" Database="./WordOfFlat.tags">
-  <Project Name="MainWindow" Path="MainWindow/MainWindow.project" Active="Yes"/>
+  <Project Name="MainWindow" Path="MainWindow/MainWindow.project" Active="No"/>
   <Environment>
     <![CDATA[]]>
   </Environment>
-  <Project Name="GameObjects" Path="GameObjects/GameObjects.project" Active="No"/>
+  <Project Name="GameObjects" Path="GameObjects/GameObjects.project" Active="Yes"/>
   <Project Name="GameSystem" Path="GameSystem/GameSystem.project" Active="No"/>
   <Project Name="Extern" Path="Extern/Extern.project" Active="No"/>
+  <Project Name="GameObjectsSrv" Path="GameObjectsSrv/GameObjectsSrv.project" Active="No"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="no">
       <Project Name="MainWindow" ConfigName="Debug"/>
       <Project Name="GameObjects" ConfigName="Debug"/>
       <Project Name="GameSystem" ConfigName="Debug"/>
       <Project Name="Extern" ConfigName="Debug"/>
+      <Project Name="GameObjectsSrv" ConfigName="Debug"/>
     </WorkspaceConfiguration>
     <WorkspaceConfiguration Name="Release" Selected="yes">
       <Project Name="MainWindow" ConfigName="Release"/>
       <Project Name="GameObjects" ConfigName="Release"/>
       <Project Name="GameSystem" ConfigName="Release"/>
       <Project Name="Extern" ConfigName="Debug"/>
+      <Project Name="GameObjectsSrv" ConfigName="Release"/>
     </WorkspaceConfiguration>
   </BuildMatrix>
 </CodeLite_Workspace>
