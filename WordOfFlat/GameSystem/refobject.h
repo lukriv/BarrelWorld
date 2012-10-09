@@ -2,7 +2,7 @@
 #define __REFERENCED_OBJECT_H__
 
 
-#include "../../extern/include/wx/defs.h"
+#include <wx/defs.h>
 
 
 class IRefObject {

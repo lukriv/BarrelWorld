@@ -4,10 +4,10 @@
 
 //#include "../../extern/include/wx/string.h"
 //#include "../../extern/include/wx/file.h"
-#include "../../extern/include/wx/app.h"
-#include "../../extern/include/wx/log.h"
+#include <wx/app.h>
+#include <wx/log.h>
 
-#include "../../extern/include/SFML/Graphics.hpp"
+#include <SFML/Graphics.hpp>
 
 
 

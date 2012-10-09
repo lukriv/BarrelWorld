@@ -87,10 +87,13 @@
       </Completion>
     </Configuration>
   </Settings>
-  <VirtualDirectory Name="src"/>
+  <VirtualDirectory Name="src">
+    <File Name="gerror.cpp"/>
+  </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="refobject.h"/>
     <File Name="refobjectsmptr.h"/>
+    <File Name="gerror.h"/>
   </VirtualDirectory>
   <Dependencies Name="Debug"/>
   <Dependencies Name="Release"/>

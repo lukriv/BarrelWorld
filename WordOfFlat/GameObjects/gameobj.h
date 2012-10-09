@@ -1,6 +1,7 @@
 #ifndef __GAME_OBJ_H__
 #define __GAME_OBJ_H__
 
+#include "b2Math.h"
 #include "refobject.h"
 
 enum GameObjectType {
@@ -12,11 +13,12 @@ class IGameObject : public IRefObject {
 public:
 	virtual GameObjectType GetType() = 0;
 	virtual wxInt32 GetId() = 0;
-	virtual bool IsStatic() = 0;
-	virtual bool IsMoveable() = 0;
-	virtual bool IsDestroyable() = 0;
-	virtual bool IsDrawable() = 0;
+	virtual void SetId(wxInt32 id) = 0;
 	
+	virtual b2Vec2 GetMiddlePoint() = 0;
+	virtual b2Vec2 GetLLPoint() = 0;
+	virtual b2Vec2 GetRUPoint() = 0;
+		
 	/*! \brief Draw an object
 	 * 
 	 * If object is not drawable, this method do nothing.

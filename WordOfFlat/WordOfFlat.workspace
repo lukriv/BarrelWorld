@@ -4,10 +4,12 @@
   <Environment>
     <![CDATA[]]>
   </Environment>
-  <Project Name="GameObjects" Path="GameObjects/GameObjects.project" Active="Yes"/>
+  <Project Name="GameObjects" Path="GameObjects/GameObjects.project" Active="No"/>
   <Project Name="GameSystem" Path="GameSystem/GameSystem.project" Active="No"/>
   <Project Name="Extern" Path="Extern/Extern.project" Active="No"/>
   <Project Name="GameObjectsSrv" Path="GameObjectsSrv/GameObjectsSrv.project" Active="No"/>
+  <Project Name="WorldSrv" Path="WorldSrv/WorldSrv.project" Active="Yes"/>
+  <Project Name="WorldCli" Path="WorldCli/WorldCli.project"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="no">
       <Project Name="MainWindow" ConfigName="Debug"/>
@@ -15,6 +17,8 @@
       <Project Name="GameSystem" ConfigName="Debug"/>
       <Project Name="Extern" ConfigName="Debug"/>
       <Project Name="GameObjectsSrv" ConfigName="Debug"/>
+      <Project Name="WorldSrv" ConfigName="Debug"/>
+      <Project Name="WorldCli" ConfigName="Debug"/>
     </WorkspaceConfiguration>
     <WorkspaceConfiguration Name="Release" Selected="yes">
       <Project Name="MainWindow" ConfigName="Release"/>
@@ -22,6 +26,8 @@
       <Project Name="GameSystem" ConfigName="Release"/>
       <Project Name="Extern" ConfigName="Debug"/>
       <Project Name="GameObjectsSrv" ConfigName="Release"/>
+      <Project Name="WorldSrv" ConfigName="Release"/>
+      <Project Name="WorldCli" ConfigName="Release"/>
     </WorkspaceConfiguration>
   </BuildMatrix>
 </CodeLite_Workspace>
