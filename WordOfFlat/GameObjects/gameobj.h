@@ -1,7 +1,7 @@
 #ifndef __GAME_OBJ_H__
 #define __GAME_OBJ_H__
 
-#include "b2Math.h"
+#include <b2Math.h>
 #include "refobject.h"
 
 enum GameObjectType {

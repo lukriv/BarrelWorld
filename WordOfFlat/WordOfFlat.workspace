@@ -4,11 +4,11 @@
   <Environment>
     <![CDATA[]]>
   </Environment>
-  <Project Name="GameObjects" Path="GameObjects/GameObjects.project" Active="No"/>
+  <Project Name="GameObjects" Path="GameObjects/GameObjects.project" Active="Yes"/>
   <Project Name="GameSystem" Path="GameSystem/GameSystem.project" Active="No"/>
   <Project Name="Extern" Path="Extern/Extern.project" Active="No"/>
   <Project Name="GameObjectsSrv" Path="GameObjectsSrv/GameObjectsSrv.project" Active="No"/>
-  <Project Name="WorldSrv" Path="WorldSrv/WorldSrv.project" Active="Yes"/>
+  <Project Name="WorldSrv" Path="WorldSrv/WorldSrv.project" Active="No"/>
   <Project Name="WorldCli" Path="WorldCli/WorldCli.project"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="no">

@@ -89,7 +89,8 @@
   </Settings>
   <VirtualDirectory Name="src"/>
   <VirtualDirectory Name="include">
-    <File Name="worldsrv.h"/>
+    <File Name="globalworldsrv.h"/>
+    <File Name="flatworldsrv.h"/>
   </VirtualDirectory>
   <Dependencies Name="Debug"/>
   <Dependencies Name="Release"/>
