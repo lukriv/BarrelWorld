@@ -10,8 +10,10 @@
  */
 
 class FlatLocalWorldSrv {
+	GameErrorCode Initialize();
 	GameErrorCode AddNewObject(IGameObjectSrv *object);
-	GameErrorCode SetWorldSize()
+	GameErrorCode SetWorldSize(const b2Vec2 &LLpoint, const b2Vec2 &RUpoint);
+	GameErrorCode GenerateStaticWorld();
 }
 
 #endif //__GAME_FLAT_WORLD_SERVER_H__
