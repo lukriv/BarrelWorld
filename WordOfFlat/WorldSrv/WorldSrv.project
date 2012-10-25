@@ -87,7 +87,9 @@
       </Completion>
     </Configuration>
   </Settings>
-  <VirtualDirectory Name="src"/>
+  <VirtualDirectory Name="src">
+    <File Name="flatworldsrv.cpp"/>
+  </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="globalworldsrv.h"/>
     <File Name="flatworldsrv.h"/>
