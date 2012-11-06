@@ -5,6 +5,12 @@ void GameConvertErrCode2String(GameErrorCode errCode, wxString &errorStr)
 {
 	switch (errCode)
 	{
+	case FWG_NO_ERROR:
+		errorStr.assign(FWG_NO_ERROR_STR);
+		break;
+	case FWG_E_OBJECT_NOT_INITIALIZED:
+		errorStr.assign(FWG_E_OBJECT_NOT_INITIALIZED_STR);
+		break;
 	default:
 		errorStr.assign(_T("Unknown Error"));
 		break;
