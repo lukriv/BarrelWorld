@@ -10,10 +10,16 @@
  */
 
 class FlatLocalWorldSrv {
+private:
+	bool m_isInitialized;
+	b2Vec2 m_gravity;
+	b2World *m_pWorld;
+public:
+	
 	GameErrorCode Initialize();
 	GameErrorCode AddNewObject(IGameObjectSrv *object);
 	GameErrorCode SetWorldSize(const b2Vec2 &LLpoint, const b2Vec2 &RUpoint);
-	GameErrorCode GenerateStaticWorld();
+	GameErrorCode GenerateTestStaticWorld();
 }
 
 #endif //__GAME_FLAT_WORLD_SERVER_H__
