@@ -8,8 +8,11 @@ void GameConvertErrCode2String(GameErrorCode errCode, wxString &errorStr)
 	case FWG_NO_ERROR:
 		errorStr.assign(FWG_NO_ERROR_STR);
 		break;
-	case FWG_E_OBJECT_NOT_INITIALIZED:
-		errorStr.assign(FWG_E_OBJECT_NOT_INITIALIZED_STR);
+	case FWG_E_OBJECT_NOT_INITIALIZED_ERROR:
+		errorStr.assign(FWG_E_OBJECT_NOT_INITIALIZED_ERROR_STR);
+		break;
+	case FWG_E_MEMORY_ALLOCATION_ERROR:
+		errorStr.assign(FWG_E_MEMORY_ALLOCATION_ERROR_STR);
 		break;
 	default:
 		errorStr.assign(_T("Unknown Error"));

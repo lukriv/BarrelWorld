@@ -88,10 +88,11 @@
     </Configuration>
   </Settings>
   <VirtualDirectory Name="src">
-    <File Name="flatworldsrv.cpp"/>
+    <File Name="flatworldsrvimpl.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="globalworldsrv.h"/>
+    <File Name="flatworldsrvimpl.h"/>
     <File Name="flatworldsrv.h"/>
   </VirtualDirectory>
   <Dependencies Name="Debug"/>
