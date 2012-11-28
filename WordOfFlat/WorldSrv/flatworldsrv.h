@@ -13,10 +13,8 @@
 class IFlatLocalWorldSrv {
 public:
 	
-	GameErrorCode Initialize();
-	GameErrorCode AddNewObject(IGameObjectSrv *object);
-	GameErrorCode SetWorldSize(const b2Vec2 &LLpoint, const b2Vec2 &RUpoint);
-	GameErrorCode GenerateTestStaticWorld();
+	GameErrorCode AddNewObject(IGameObjectSrv *object) = 0;
+	GameErrorCode SetWorldSize(const b2Vec2 &LLpoint, const b2Vec2 &RUpoint) = 0;
 	
 }
 
