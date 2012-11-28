@@ -2,9 +2,9 @@
 #define __GAME_WORLD_CLIENT_H__
 
 
-class GameWorldClient {
+class IGameWorldClient {
 public:
-	bool DrawScreen();
+	virtual bool DrawScreen() = 0;
 	
 }
 

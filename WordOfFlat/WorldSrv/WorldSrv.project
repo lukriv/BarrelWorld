@@ -89,12 +89,16 @@
   </Settings>
   <VirtualDirectory Name="src">
     <File Name="flatworldsrvimpl.cpp"/>
+    <File Name="globalworldsrvimpl.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
-    <File Name="globalworldsrv.h"/>
-    <File Name="flatworldsrvimpl.h"/>
     <File Name="flatworldsrv.h"/>
+    <File Name="globalworldsrv.h"/>
   </VirtualDirectory>
   <Dependencies Name="Debug"/>
   <Dependencies Name="Release"/>
+  <VirtualDirectory Name="impl">
+    <File Name="flatworldsrvimpl.h"/>
+    <File Name="globalworldsrvimpl.h"/>
+  </VirtualDirectory>
 </CodeLite_Project>
