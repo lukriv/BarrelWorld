@@ -13,10 +13,7 @@ private:
 	};
 private:
 	b2BodyDef m_bodyDef;
-	wxVector<b2Shape*> m_pShapeVec;
-	wxVector<FixtureSet> m_pFixtureVec;
 	b2Body* m_pBody;
-	b2World* m_pOwner;
 public:
 	virtual GameObjectType GetType() = 0;
 	virtual wxInt32 GetId() = 0;
