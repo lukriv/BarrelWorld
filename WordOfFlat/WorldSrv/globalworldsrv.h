@@ -1,7 +1,7 @@
 #ifndef __GAME_GLOBAL_WORLD_SERVER_H__
 #define __GAME_GLOBAL_WORLD_SERVER_H__
 
-class GlobalWorldSrv {
+class IGlobalWorldSrv {
 	
 	virtual GameErrorCode GenerateTestStaticWorld() = 0;
 	
