@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeLite_Workspace Name="WordOfFlatUtils" Database="./WordOfFlatUtils.tags">
+  <Project Name="FlatWorldEditor" Path="FlatWorldEditor/FlatWorldEditor.project" Active="Yes"/>
+  <Project Name="Extern" Path="../WordOfFlat/Extern/Extern.project" Active="No"/>
+  <BuildMatrix>
+    <WorkspaceConfiguration Name="Debug" Selected="no">
+      <Project Name="FlatWorldEditor" ConfigName="Debug"/>
+      <Project Name="Extern" ConfigName="Debug"/>
+    </WorkspaceConfiguration>
+    <WorkspaceConfiguration Name="Release" Selected="yes">
+      <Project Name="FlatWorldEditor" ConfigName="Release"/>
+      <Project Name="Extern" ConfigName="Debug"/>
+    </WorkspaceConfiguration>
+  </BuildMatrix>
+</CodeLite_Workspace>
