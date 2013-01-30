@@ -94,6 +94,7 @@
   <VirtualDirectory Name="include">
     <File Name="flatworldsrv.h"/>
     <File Name="globalworldsrv.h"/>
+    <File Name="worldsrvapi.h"/>
   </VirtualDirectory>
   <Dependencies Name="Debug"/>
   <Dependencies Name="Release"/>
