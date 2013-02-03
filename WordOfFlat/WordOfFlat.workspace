@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Workspace Name="WordOfFlat" Database="./WordOfFlat.tags">
-  <Project Name="MainWindow" Path="MainWindow/MainWindow.project" Active="Yes"/>
+  <Project Name="MainWindow" Path="MainWindow/MainWindow.project" Active="No"/>
   <Environment>
     <![CDATA[]]>
   </Environment>
@@ -10,6 +10,9 @@
   <Project Name="GameObjectsSrv" Path="GameObjectsSrv/GameObjectsSrv.project" Active="No"/>
   <Project Name="WorldSrv" Path="WorldSrv/WorldSrv.project" Active="No"/>
   <Project Name="WorldCli" Path="WorldCli/WorldCli.project" Active="No"/>
+  <Project Name="GameMsgCli" Path="GameMsgCli/GameMsgCli.project" Active="Yes"/>
+  <Project Name="GameMsgSrv" Path="GameMsgSrv/GameMsgSrv.project"/>
+  <Project Name="GameComm" Path="GameComm/GameComm.project"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="yes">
       <Project Name="MainWindow" ConfigName="Debug"/>
@@ -19,8 +22,11 @@
       <Project Name="GameObjectsSrv" ConfigName="Debug"/>
       <Project Name="WorldSrv" ConfigName="Debug"/>
       <Project Name="WorldCli" ConfigName="Debug"/>
+      <Project Name="GameMsgCli" ConfigName="Debug"/>
+      <Project Name="GameMsgSrv" ConfigName="Debug"/>
+      <Project Name="GameComm" ConfigName="Debug"/>
     </WorkspaceConfiguration>
-    <WorkspaceConfiguration Name="Release" Selected="no">
+    <WorkspaceConfiguration Name="Release" Selected="yes">
       <Project Name="MainWindow" ConfigName="Release"/>
       <Project Name="GameObjects" ConfigName="Release"/>
       <Project Name="GameSystem" ConfigName="Release"/>
@@ -28,6 +34,9 @@
       <Project Name="GameObjectsSrv" ConfigName="Release"/>
       <Project Name="WorldSrv" ConfigName="Release"/>
       <Project Name="WorldCli" ConfigName="Release"/>
+      <Project Name="GameMsgCli" ConfigName="Release"/>
+      <Project Name="GameMsgSrv" ConfigName="Release"/>
+      <Project Name="GameComm" ConfigName="Release"/>
     </WorkspaceConfiguration>
   </BuildMatrix>
 </CodeLite_Workspace>
