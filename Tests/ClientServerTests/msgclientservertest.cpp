@@ -1,12 +1,11 @@
-#include <UnitTest++.h>
-
-#include <wx/msgout.h>
+#include <UnitTest++/UnitTest++.h>
+#include <iostream>
 
 SUITE(MsgServerClientTest)
 {
 	TEST(LocalServerClientTest)
 	{
-		wxMessageOutputStderr output();
-		output.DoPrintfWchar(wxT("SimpleTest: formated message"));
+		std::cout << "First test" << std::endl;
+		
 	}
 }

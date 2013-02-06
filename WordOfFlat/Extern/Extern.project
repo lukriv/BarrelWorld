@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Project Name="Extern" InternalType="">
+  <Plugins>
+    <Plugin Name="qmake">
+      <![CDATA[00010001N0005Debug000000000000]]>
+    </Plugin>
+  </Plugins>
   <VirtualDirectory Name="wx">
     <VirtualDirectory Name="x11">
       <VirtualDirectory Name="nanox">
@@ -1561,6 +1566,39 @@
     <File Name="../../extern/include/wx/zipstrm.h"/>
     <File Name="../../extern/include/wx/zstream.h"/>
   </VirtualDirectory>
+  <VirtualDirectory Name="msvc">
+    <VirtualDirectory Name="wx">
+      <File Name="../../extern/include/msvc/wx/setup.h"/>
+    </VirtualDirectory>
+  </VirtualDirectory>
+  <VirtualDirectory Name="UnitTest++">
+    <VirtualDirectory Name="Win32">
+      <File Name="../../extern/include/UnitTest++/Win32/TimeHelpers.h"/>
+    </VirtualDirectory>
+    <File Name="../../extern/include/UnitTest++/AssertException.h"/>
+    <File Name="../../extern/include/UnitTest++/CheckMacros.h"/>
+    <File Name="../../extern/include/UnitTest++/Checks.h"/>
+    <File Name="../../extern/include/UnitTest++/Config.h"/>
+    <File Name="../../extern/include/UnitTest++/CurrentTest.h"/>
+    <File Name="../../extern/include/UnitTest++/DeferredTestReporter.h"/>
+    <File Name="../../extern/include/UnitTest++/DeferredTestResult.h"/>
+    <File Name="../../extern/include/UnitTest++/ExecuteTest.h"/>
+    <File Name="../../extern/include/UnitTest++/MemoryOutStream.h"/>
+    <File Name="../../extern/include/UnitTest++/ReportAssert.h"/>
+    <File Name="../../extern/include/UnitTest++/Test.h"/>
+    <File Name="../../extern/include/UnitTest++/TestDetails.h"/>
+    <File Name="../../extern/include/UnitTest++/TestList.h"/>
+    <File Name="../../extern/include/UnitTest++/TestMacros.h"/>
+    <File Name="../../extern/include/UnitTest++/TestReporter.h"/>
+    <File Name="../../extern/include/UnitTest++/TestReporterStdout.h"/>
+    <File Name="../../extern/include/UnitTest++/TestResults.h"/>
+    <File Name="../../extern/include/UnitTest++/TestRunner.h"/>
+    <File Name="../../extern/include/UnitTest++/TestSuite.h"/>
+    <File Name="../../extern/include/UnitTest++/TimeConstraint.h"/>
+    <File Name="../../extern/include/UnitTest++/TimeHelpers.h"/>
+    <File Name="../../extern/include/UnitTest++/UnitTest++.h"/>
+    <File Name="../../extern/include/UnitTest++/XmlTestReporter.h"/>
+  </VirtualDirectory>
   <VirtualDirectory Name="SFML">
     <VirtualDirectory Name="Audio">
       <File Name="../../extern/include/SFML/Audio/Export.hpp"/>
@@ -1605,7 +1643,7 @@
       <File Name="../../extern/include/SFML/Network/Export.hpp"/>
       <File Name="../../extern/include/SFML/Network/Ftp.hpp"/>
       <File Name="../../extern/include/SFML/Network/Http.hpp"/>
-      <File Name="../../extern/include/SFML/Network/IpAddress.hpp"/>
+      <File Name="../../extern/include/SFML/Network/IPAddress.hpp"/>
       <File Name="../../extern/include/SFML/Network/Packet.hpp"/>
       <File Name="../../extern/include/SFML/Network/Socket.hpp"/>
       <File Name="../../extern/include/SFML/Network/SocketHandle.hpp"/>
@@ -1653,11 +1691,6 @@
     <File Name="../../extern/include/SFML/OpenGL.hpp"/>
     <File Name="../../extern/include/SFML/System.hpp"/>
     <File Name="../../extern/include/SFML/Window.hpp"/>
-  </VirtualDirectory>
-  <VirtualDirectory Name="msvc">
-    <VirtualDirectory Name="wx">
-      <File Name="../../extern/include/msvc/wx/setup.h"/>
-    </VirtualDirectory>
   </VirtualDirectory>
   <VirtualDirectory Name="Box2D">
     <VirtualDirectory Name="Dynamics">
@@ -1723,7 +1756,8 @@
   </VirtualDirectory>
   <Description/>
   <Dependencies/>
-  <Settings Type="Static Library">
+  <Dependencies Name="Debug"/>
+  <Settings Type="Executable">
     <GlobalSettings>
       <Compiler Options="" C_Options="">
         <IncludePath Value="."/>
@@ -1734,16 +1768,16 @@
       <ResourceCompiler Options=""/>
     </GlobalSettings>
     <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
-      <Compiler Options="-g -Wall" C_Options="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags="">
+      <Compiler Options="-g -Wall" C_Options="" Required="no" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags="">
         <IncludePath Value="."/>
       </Compiler>
-      <Linker Options="-O0" Required="yes">
+      <Linker Options="-O0" Required="no">
         <LibraryPath Value="."/>
         <LibraryPath Value="Debug"/>
       </Linker>
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="" IntermediateDirectory="./Debug" Command="" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="./Debug" PauseExecWhenProcTerminates="yes"/>
-      <Environment EnvVarSetName="&lt;Use Workspace Settings&gt;" DbgSetName="&lt;Use Global Settings&gt;">
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
         <![CDATA[]]>
       </Environment>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
@@ -1774,5 +1808,4 @@
       </Completion>
     </Configuration>
   </Settings>
-  <Dependencies Name="Debug"/>
 </CodeLite_Project>

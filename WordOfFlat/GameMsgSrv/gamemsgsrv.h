@@ -3,9 +3,9 @@
 
 #include "../GameMsgCli/gamemsgcli.h"
 
-class IGameMsgSrv : public IGameMsgCli {
+class IGameMsgSrv : public IGameMsgCli, public IRefObject{
 public:
-		
+	GameErrorCode CreateLocalMsgCli(IGameMsgCli *& pMsgCli)	= 0;
 	
 }
 

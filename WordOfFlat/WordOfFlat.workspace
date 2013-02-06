@@ -6,13 +6,13 @@
   </Environment>
   <Project Name="GameObjects" Path="GameObjects/GameObjects.project" Active="No"/>
   <Project Name="GameSystem" Path="GameSystem/GameSystem.project" Active="No"/>
-  <Project Name="Extern" Path="Extern/Extern.project" Active="No"/>
+  <Project Name="Extern" Path="Extern/Extern.project" Active="Yes"/>
   <Project Name="GameObjectsSrv" Path="GameObjectsSrv/GameObjectsSrv.project" Active="No"/>
   <Project Name="WorldSrv" Path="WorldSrv/WorldSrv.project" Active="No"/>
   <Project Name="WorldCli" Path="WorldCli/WorldCli.project" Active="No"/>
-  <Project Name="GameMsgCli" Path="GameMsgCli/GameMsgCli.project" Active="Yes"/>
+  <Project Name="GameMsgCli" Path="GameMsgCli/GameMsgCli.project" Active="No"/>
   <Project Name="GameMsgSrv" Path="GameMsgSrv/GameMsgSrv.project"/>
-  <Project Name="GameComm" Path="GameComm/GameComm.project"/>
+  <Project Name="GameComm" Path="GameComm/GameComm.project" Active="No"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="yes">
       <Project Name="MainWindow" ConfigName="Debug"/>
