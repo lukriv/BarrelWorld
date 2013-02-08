@@ -9,6 +9,7 @@
   <Dependencies/>
   <VirtualDirectory Name="src">
     <File Name="gerror.cpp"/>
+    <File Name="glog.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="refobject.h"/>
@@ -16,6 +17,7 @@
     <File Name="gerror.h"/>
     <File Name="persistent.h"/>
     <File Name="gdefs.h"/>
+    <File Name="glog.h"/>
   </VirtualDirectory>
   <Dependencies Name="Debug"/>
   <Dependencies Name="Release"/>
@@ -24,9 +26,7 @@
       <Compiler Options="" C_Options="">
         <IncludePath Value="../../extern/include"/>
       </Compiler>
-      <Linker Options="">
-        <LibraryPath Value="../../extern/lib"/>
-      </Linker>
+      <Linker Options=""/>
       <ResourceCompiler Options=""/>
     </GlobalSettings>
     <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Static Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">

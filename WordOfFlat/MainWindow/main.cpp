@@ -1,11 +1,14 @@
-#include "../../extern/include/wx/setup.h"
-#include "../../extern/include/wx/defs.h"
+#include <wx/setup.h>
+#include <wx/defs.h>
+#include <wx/app.h>
 #include <stdio.h>
 
 //#include "../../extern/include/wx/string.h"
 //#include "../../extern/include/wx/file.h"
-#include <wx/app.h>
-#include <wx/log.h>
+
+#include "../GameSystem/glog.h"
+#include "../GameSystem/refobject.h"
+#include "../GameSystem/refobjectsmptr.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -13,8 +16,9 @@
 
 int main(int argc, char **argv)
 {
-	FILE *loggerFile = NULL;
+	
 	wxInitializer initializer;
+	RefObjSmPtr<GameLogger> spLogger;
 	
     if ( !initializer )
     {
@@ -22,22 +26,21 @@ int main(int argc, char **argv)
         return -1;
     }
 	
-	// logger settings
-	if (!(loggerFile = fopen("error.log", "w")))
+	if (FWG_FAILED(GameLogger::CreateLogger(spLogger.OutRef())))
 	{
-		printf("Failed to open logger file, aborting.");
-        return -1;
+		printf("Failed to initialize the logger, aborting.");
+		return -1;
 	}
 	
-	wxLogStderr *logger = new (std::nothrow) wxLogStderr(loggerFile);
-	delete wxLog::SetActiveTarget(logger);
-	
-	//set verbose logger (use for debug)
-	wxLog::SetVerbose(true);
+	spLogger->GetLogger()->LogRecord(wxLOG_Status, wxString(wxT("Status logs are enabled")),
+		wxLogRecordInfo(__FILE__, __LINE__, __FUNCTION__, NULL));
 		
-	wxLogInfo(_T("Infos are enabled"));
-    wxLogWarning(_T("Warnings are enabled"));
-	wxLogError(_T("Errors are enabled"));
+	spLogger->GetLogger()->LogRecord(wxLOG_Message , wxString(wxT("Infos are enabled")),
+		wxLogRecordInfo(__FILE__, __LINE__, __FUNCTION__, NULL));
+    spLogger->GetLogger()->LogRecord(wxLOG_Warning, wxString(wxT("Warnings are enabled")),
+		wxLogRecordInfo(__FILE__, __LINE__, __FUNCTION__, NULL));
+	spLogger->GetLogger()->LogRecord(wxLOG_Error, wxString(wxT("Errors are enabled")),
+		wxLogRecordInfo(__FILE__, __LINE__, __FUNCTION__, NULL));
 	// Create the main window
 	sf::RenderWindow window(sf::VideoMode(800, 600), "SFML window");
  

@@ -20,19 +20,23 @@
       </Compiler>
       <Linker Options="">
         <LibraryPath Value="../../extern/lib"/>
+        <Library Value="sfml-graphics"/>
+        <Library Value="sfml-window"/>
+        <Library Value="sfml-main"/>
+        <Library Value="wx_baseu-2.9.dll"/>
+        <Library Value="glew32"/>
+        <Library Value="sfml-system"/>
+        <Library Value="gdi32"/>
+        <Library Value="winmm"/>
+        <Library Value="GameSystem"/>
       </Linker>
       <ResourceCompiler Options=""/>
     </GlobalSettings>
     <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="-g;-O0;-Wall" C_Options="-g;-O0;-Wall" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags=""/>
       <Linker Options="" Required="yes">
-        <Library Value="sfml-graphics-s-d"/>
-        <Library Value="sfml-window-s-d"/>
-        <Library Value="wx_baseu-2.9.dll"/>
-        <Library Value="opengl32"/>
-        <Library Value="sfml-system-s-d"/>
-        <Library Value="gdi32"/>
-        <Library Value="winmm"/>
+        <LibraryPath Value="../GameSystem/Debug"/>
+        <Library Value="libGameSystem.a"/>
       </Linker>
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="./Debug" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
@@ -69,14 +73,7 @@
     <Configuration Name="Release" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="-O3;-Wall" C_Options="-O3;-Wall" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags=""/>
       <Linker Options="" Required="yes">
-        <Library Value="sfml-graphics"/>
-        <Library Value="sfml-window"/>
-        <Library Value="sfml-main"/>
-        <Library Value="wx_baseu-2.9.dll"/>
-        <Library Value="glew32"/>
-        <Library Value="sfml-system"/>
-        <Library Value="gdi32"/>
-        <Library Value="winmm"/>
+        <LibraryPath Value="../GameSystem/Release"/>
       </Linker>
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="./Release" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
