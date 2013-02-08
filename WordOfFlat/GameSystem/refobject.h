@@ -10,8 +10,8 @@ protected:
 	virtual ~IRefObject(){};
 
 public:
-	void addRef() = 0;
-	wxInt32 release() = 0;
-}
+	virtual void addRef() = 0;
+	virtual wxInt32 release() = 0;
+};
 
 #endif //__REFERENCED_OBJECT_H__

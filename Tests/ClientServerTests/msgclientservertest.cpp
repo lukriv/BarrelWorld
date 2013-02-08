@@ -1,11 +1,16 @@
 #include <UnitTest++/UnitTest++.h>
-#include <iostream>
+
+
+#include <wx/string.h>
+#include <wx/log.h>
+
 
 SUITE(MsgServerClientTest)
 {
 	TEST(LocalServerClientTest)
 	{
-		std::cout << "First test" << std::endl;
-		
+		wxLog logger;
+				
+		logger.LogTextAtLevel(wxLOG_Status, wxString(wxT("Try logging")));
 	}
 }

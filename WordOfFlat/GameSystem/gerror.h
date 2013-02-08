@@ -6,6 +6,26 @@
 
 typedef wxInt32 GameErrorCode;
 
+/*! \brief FWG_FAILED returns false when some error or warning occured
+ * 
+ * Use at this manner:
+ * if(FWG_FAILED(result))
+ * {
+ * 		...ErrorCodeHandling...
+ * }
+ */ 
+#define FWG_FAILED(x) (0>(x))
+
+/*! \brief FWG_SUCCEDED returns false when no error or warning occured
+ * 
+ * Use at this manner:
+ * if(FWG_SUCCEDED(result))
+ * {
+ * 		...when succed do this...
+ * }
+ */
+#define FWG_SUCCEDED(x) (0<=(x))
+
 #define FWG_NO_ERROR 0x00000000
 static const wxChar* FWG_NO_ERROR_STR = wxT("FWG_NO_ERROR");
 
@@ -14,6 +34,7 @@ static const wxChar* FWG_E_OBJECT_NOT_INITIALIZED_ERROR_STR = wxT("FWG_E_OBJECT_
 
 #define FWG_E_MEMORY_ALLOCATION_ERROR 0xE0000002
 static const wxChar* FWG_E_MEMORY_ALLOCATION_ERROR_STR = wxT("FWG_E_MEMORY_ALLOCATION_ERROR");
+
 
 
 /*!

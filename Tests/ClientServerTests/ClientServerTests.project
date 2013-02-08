@@ -21,6 +21,7 @@
       <Linker Options="">
         <LibraryPath Value="../../extern/lib"/>
         <Library Value="libUnitTest++.a"/>
+        <Library Value="libwx_baseu-2.9.dll.a"/>
       </Linker>
       <ResourceCompiler Options=""/>
     </GlobalSettings>
