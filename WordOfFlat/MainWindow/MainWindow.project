@@ -20,15 +20,16 @@
       </Compiler>
       <Linker Options="">
         <LibraryPath Value="../../extern/lib"/>
+        <Library Value="GameSystem"/>
         <Library Value="sfml-graphics"/>
         <Library Value="sfml-window"/>
         <Library Value="sfml-main"/>
         <Library Value="wx_baseu-2.9.dll"/>
+        <Library Value="wx_mswu_core-2.9.dll"/>
         <Library Value="glew32"/>
         <Library Value="sfml-system"/>
         <Library Value="gdi32"/>
         <Library Value="winmm"/>
-        <Library Value="GameSystem"/>
       </Linker>
       <ResourceCompiler Options=""/>
     </GlobalSettings>
@@ -36,7 +37,6 @@
       <Compiler Options="-g;-O0;-Wall" C_Options="-g;-O0;-Wall" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags=""/>
       <Linker Options="" Required="yes">
         <LibraryPath Value="../GameSystem/Debug"/>
-        <Library Value="libGameSystem.a"/>
       </Linker>
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="./Debug" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
