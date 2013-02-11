@@ -1,7 +1,9 @@
 #include <wx/setup.h>
 #include <wx/defs.h>
 #include <wx/app.h>
+
 #include <stdio.h>
+#include <iostream>
 
 //#include "../../extern/include/wx/string.h"
 //#include "../../extern/include/wx/file.h"
@@ -13,6 +15,7 @@
 #include <SFML/Graphics.hpp>
 
 
+#include <wx/log.h>
 
 int main(int argc, char **argv)
 {
@@ -26,21 +29,16 @@ int main(int argc, char **argv)
         return -1;
     }
 	
-	if (FWG_FAILED(GameLogger::CreateLogger(spLogger.OutRef())))
+	if (FWG_FAILED(GameLogger::CreateLogger()))
 	{
 		printf("Failed to initialize the logger, aborting.");
 		return -1;
 	}
-	
-	spLogger->GetLogger()->LogRecord(wxLOG_Status, wxString(wxT("Status logs are enabled")),
-		wxLogRecordInfo(__FILE__, __LINE__, __FUNCTION__, NULL));
-		
-	spLogger->GetLogger()->LogRecord(wxLOG_Message , wxString(wxT("Infos are enabled")),
-		wxLogRecordInfo(__FILE__, __LINE__, __FUNCTION__, NULL));
-    spLogger->GetLogger()->LogRecord(wxLOG_Warning, wxString(wxT("Warnings are enabled")),
-		wxLogRecordInfo(__FILE__, __LINE__, __FUNCTION__, NULL));
-	spLogger->GetLogger()->LogRecord(wxLOG_Error, wxString(wxT("Errors are enabled")),
-		wxLogRecordInfo(__FILE__, __LINE__, __FUNCTION__, NULL));
+
+	wxLogMessage(wxT("Infos are enabled"));
+	wxLogWarning(wxT("Warnings are enabled"));
+	wxLogError(wxT("Errors are enabled"));
+
 	// Create the main window
 	sf::RenderWindow window(sf::VideoMode(800, 600), "SFML window");
  
@@ -48,7 +46,7 @@ int main(int argc, char **argv)
      sf::Texture texture;
      if (!texture.loadFromFile("res/img/body.png"))
 	 {
-		 wxLogError(_T("Loading file error"));
+		 wxLogError(_T("Loading resource file \"%s\" failed"), wxT("res/img/body.png"));
 		 return -1;
 	 }
      sf::Sprite sprite(texture);
