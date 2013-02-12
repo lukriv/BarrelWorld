@@ -14,6 +14,9 @@ void GameConvertErrCode2String(GameErrorCode errCode, wxString &errorStr)
 	case FWG_E_MEMORY_ALLOCATION_ERROR:
 		errorStr.assign(FWG_E_MEMORY_ALLOCATION_ERROR_STR);
 		break;
+	case FWG_E_OPEN_FILE_ERROR:
+		errorStr.assign(FWG_E_OPEN_FILE_ERROR_STR);
+		break;
 	default:
 		errorStr.assign(_T("Unknown Error"));
 		break;

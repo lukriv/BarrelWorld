@@ -18,6 +18,7 @@
     <File Name="persistent.h"/>
     <File Name="gdefs.h"/>
     <File Name="glog.h"/>
+    <File Name="glogconst.h"/>
   </VirtualDirectory>
   <Dependencies Name="Debug"/>
   <Dependencies Name="Release"/>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Workspace Name="WordOfFlat" Database="./WordOfFlat.tags">
-  <Project Name="MainWindow" Path="MainWindow/MainWindow.project" Active="Yes"/>
+  <Project Name="MainWindow" Path="MainWindow/MainWindow.project" Active="No"/>
   <Environment>
     <![CDATA[]]>
   </Environment>
   <Project Name="GameObjects" Path="GameObjects/GameObjects.project" Active="No"/>
-  <Project Name="GameSystem" Path="GameSystem/GameSystem.project" Active="No"/>
+  <Project Name="GameSystem" Path="GameSystem/GameSystem.project" Active="Yes"/>
   <Project Name="Extern" Path="Extern/Extern.project" Active="No"/>
   <Project Name="GameObjectsSrv" Path="GameObjectsSrv/GameObjectsSrv.project" Active="No"/>
   <Project Name="WorldSrv" Path="WorldSrv/WorldSrv.project" Active="No"/>
