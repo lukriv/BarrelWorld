@@ -1,9 +1,21 @@
 #include "glog.h"
+#include <wx/log.h>
+#include <wx/datetime.h>
 #include <cstdio>
 #include "glogconst.h"
+#include <stdarg.h>
 
 
 GameLoggerCreator* g_pLoggerCreator = NULL;
+
+
+class MyLogFormatter: public wxLogFormatter
+{
+	virtual wxString Format(wxLogLevel level, const wxString& msg, const wxLogRecordInfo& info) const
+	{
+		return wxString::Format("%s", msg);
+	}
+};
 
 // ***************************************************************************
 // **************************** GameLogger ***********************************
@@ -50,59 +62,125 @@ GameErrorCode GameLogger::Initialize(const wxChar* loggerName, const wxChar* log
         return -1;
 	}
 		
-	wxLogStderr *stdLogger = new (std::nothrow) wxLogStderr(pLoggerFile);
-	if(!stdLogger)
+	wxLogStderr *pStdLogger = new (std::nothrow) wxLogStderr(pLoggerFile);
+	if(!pStdLogger)
 	{
 		return FWG_E_MEMORY_ALLOCATION_ERROR;
 	}
 	
-	delete wxLog::SetActiveTarget(stdLogger);
+	delete wxLog::SetActiveTarget(pStdLogger);
+	
+	wxLog::DisableTimestamp();
+	
+	m_loggerName.assign(loggerName);
 	
 	m_isInitialized = true;
 	
 	return result;
 }
 
+wxString GameLogger::LogTimeFormatter(const time_t time)
+{
+	wxDateTime tm(time);
+	wxString normTime;
+	normTime = tm.FormatISOCombined(' ');
+	return wxString::Format(wxT("%s,%u"), normTime.wx_str(), tm.GetMillisecond());
+	
+}
+
+wxString GameLogger::LogFormatter(const wxChar* Severity, const wxString& msg, const wxLogRecordInfo& info)
+{
+	return wxString::Format(wxT("[%s] %s :%s : %s(%d); thr(%d); %s(): %s"), 
+					m_loggerName.wx_str(),
+					Severity,
+					LogTimeFormatter(info.timestamp).wx_str(),
+					info.filename,
+					info.line,
+					info.threadId,
+					info.func,
+					msg.wx_str());
+}
+wxString GameLogger::LogFormatterV(const wxChar* Severity, const wxString& msg, const wxLogRecordInfo& info, va_list args)
+{
+	wxString intMsg;
+	intMsg = wxString::FormatV(msg, args);
+	return LogFormatter(Severity, intMsg, info);
+}
+
+
+void GameLogger::LogTrace(const wxString& msg, const wxLogRecordInfo& info)
+{
+	wxString str = LogFormatter(FWGLOG_SEVERITY_STR_TRACE, msg, info);
+	wxLogMessage(str.wx_str());
+}
+
+void GameLogger::LogTraceFormat(const wxString& formatStr, const wxLogRecordInfo& info, ...)
+{
+	va_list args;
+	va_start(args, formatStr.fn_str());
+	wxString str = LogFormatterV(FWGLOG_SEVERITY_STR_TRACE, formatStr, info, args);
+	va_end(args);
+	wxLogMessage(str.wx_str());
+}
+
 void GameLogger::LogDebug(const wxString& msg, const wxLogRecordInfo& info)
 {
-	wxLogMessage(wxString::Format("[%s] %s(%d) : %s", info.threadId, info.filename, info.line, msg));
+	wxString str = LogFormatter(FWGLOG_SEVERITY_STR_DEBUG, msg, info);
+	wxLogMessage(str.wx_str());
 }
 
 void GameLogger::LogDebugFormat(const wxString& formatStr, const wxLogRecordInfo& info, ...)
 {
-
-}
-
-void GameLogger::LogDetail(const wxString& msg, const wxLogRecordInfo& info)
-{
-}
-
-void GameLogger::LogDetailFormat(const wxString& formatStr, const wxLogRecordInfo& info, ...)
-{
-}
-
-void GameLogger::LogError(const wxString& msg, const wxLogRecordInfo& info)
-{
-}
-
-void GameLogger::LogErrorFormat(const wxString& formatStr, const wxLogRecordInfo& info, ...)
-{
+	va_list args;
+	va_start(args, formatStr.fn_str());
+	wxString str = LogFormatterV(FWGLOG_SEVERITY_STR_DEBUG, formatStr, info, args);
+	va_end(args);
+	wxLogMessage(str.wx_str());
 }
 
 void GameLogger::LogInfo(const wxString& msg, const wxLogRecordInfo& info)
 {
+	wxString str = LogFormatter(FWGLOG_SEVERITY_STR_INFO, msg, info);
+	wxLogMessage(str.wx_str());
 }
 
 void GameLogger::LogInfoFormat(const wxString& formatStr, const wxLogRecordInfo& info, ...)
 {
+	va_list args;
+	va_start(args, formatStr.fn_str());
+	wxString str = LogFormatterV(FWGLOG_SEVERITY_STR_INFO, formatStr, info, args);
+	va_end(args);
+	wxLogMessage(str.wx_str());
 }
 
 void GameLogger::LogWarning(const wxString& msg, const wxLogRecordInfo& info)
 {
+	wxString str = LogFormatter(FWGLOG_SEVERITY_STR_WARNING, msg, info);
+	wxLogMessage(str.wx_str());
 }
 
 void GameLogger::LogWarningFormat(const wxString& formatStr, const wxLogRecordInfo& info, ...)
 {
+	va_list args;
+	va_start(args, formatStr.fn_str());
+	wxString str = LogFormatterV(FWGLOG_SEVERITY_STR_WARNING, formatStr, info, args);
+	va_end(args);
+	wxLogMessage(str.wx_str());
+}
+
+void GameLogger::LogError(const wxString& msg, const wxLogRecordInfo& info)
+{
+	wxString str = LogFormatter(FWGLOG_SEVERITY_STR_ERROR, msg, info);
+	wxLogMessage(str.wx_str());
+}
+
+void GameLogger::LogErrorFormat(const wxString& formatStr, const wxLogRecordInfo& info, ...)
+{
+	va_list args;
+	va_start(args, formatStr.fn_str());
+	wxString str = LogFormatterV(FWGLOG_SEVERITY_STR_ERROR, formatStr, info, args);
+	va_end(args);
+	wxLogMessage(str.wx_str());
 }
 
 GameLogger::~GameLogger()
@@ -120,7 +198,7 @@ GameErrorCode GameLoggerCreator::CreateLogger(GameLogger*& pLogger, const wxChar
 {
 	FILE* pLoggerFile = NULL;
 	GameErrorCode result = FWG_NO_ERROR;
-	wxChar* loggerFileName = NULL;
+	const wxChar* loggerFileName = NULL;
 	GameLogger* pLog = NULL;
 	
 	if (loggerName)
@@ -133,12 +211,17 @@ GameErrorCode GameLoggerCreator::CreateLogger(GameLogger*& pLogger, const wxChar
 				break;
 			}
 		}
+		
+		loggerName = DefaultLogger.m_loggerName;
+		loggerFileName = DefaultLogger.m_logFileName;
+		
 	} else {
+		loggerName = DefaultLogger.m_loggerName;
 		loggerFileName = DefaultLogger.m_logFileName;
 	}
 	
 	pLog = new (std::nothrow) GameLogger();
-	if(!pLog)
+	if(pLog)
 	{
 		if(FWG_FAILED(result = pLog->Initialize(loggerName, loggerFileName)))
 		{
@@ -157,12 +240,20 @@ GameErrorCode GameLoggerCreator::CreateLogger(GameLogger*& pLogger, const wxChar
 void GameLoggerCreator::DestroyLogger(GameLogger* pLogger)
 {
 	LoggerSetType::iterator iter;
-	wxCriticalSectionLocker locker(g_pLoggerCreator->m_creatorLock);
-	
-	iter = g_pLoggerCreator->m_loggerSet.find(pLogger);
-	if(g_pLoggerCreator->m_loggerSet.end() != iter)
+	if (g_pLoggerCreator)
 	{
-		g_pLoggerCreator->m_loggerSet.erase(iter);
-		delete pLogger;
+		wxCriticalSectionLocker locker(g_pLoggerCreator->m_creatorLock);
+		
+		iter = g_pLoggerCreator->m_loggerSet.find(pLogger);
+		if(g_pLoggerCreator->m_loggerSet.end() != iter)
+		{
+			g_pLoggerCreator->m_loggerSet.erase(iter);
+		}
 	}
+	
+	delete pLogger;
+}
+GameLoggerCreator::~GameLoggerCreator()
+{
+	g_pLoggerCreator = NULL;
 }

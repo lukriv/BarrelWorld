@@ -29,15 +29,23 @@ int main(int argc, char **argv)
         return -1;
     }
 	
-	if (FWG_FAILED(GameLogger::CreateLogger()))
+ 	if (FWG_FAILED(GameLoggerCreator::CreateLogger(spLogger.OutRef(),wxT("default"))))
 	{
 		printf("Failed to initialize the logger, aborting.");
 		return -1;
 	}
 
-	wxLogMessage(wxT("Infos are enabled"));
-	wxLogWarning(wxT("Warnings are enabled"));
-	wxLogError(wxT("Errors are enabled"));
+	FWGLOG_TRACE(wxT("Trace message"), spLogger);
+	FWGLOG_DEBUG(wxT("Debug message"), spLogger);
+	FWGLOG_INFO(wxT("Info message"), spLogger);
+	FWGLOG_WARNING(wxT("Warning message"), spLogger);
+	FWGLOG_ERROR(wxT("Error message"), spLogger);
+	
+	FWGLOG_TRACE_FORMAT(wxT("Format: %s"), spLogger, wxT("Trace message"));
+	FWGLOG_DEBUG_FORMAT(wxT("Format: %s"), spLogger, wxT("Debug message"));
+	FWGLOG_INFO_FORMAT(wxT("Format: %s"), spLogger, wxT("Info message"));
+	FWGLOG_WARNING_FORMAT(wxT("Format: %s"), spLogger, wxT("Warning message"));
+	FWGLOG_ERROR_FORMAT(wxT("Format: %s"), spLogger, wxT("Error message"));
 
 	// Create the main window
 	sf::RenderWindow window(sf::VideoMode(800, 600), "SFML window");
@@ -46,7 +54,7 @@ int main(int argc, char **argv)
      sf::Texture texture;
      if (!texture.loadFromFile("res/img/body.png"))
 	 {
-		 wxLogError(_T("Loading resource file \"%s\" failed"), wxT("res/img/body.png"));
+		 FWGLOG_ERROR_FORMAT(wxT("Loading resource file \"%s\" failed"), spLogger, wxT("res/img/body.png"));
 		 return -1;
 	 }
      sf::Sprite sprite(texture);
