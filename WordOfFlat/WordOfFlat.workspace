@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Workspace Name="WordOfFlat" Database="./WordOfFlat.tags">
-  <Project Name="MainWindow" Path="MainWindow/MainWindow.project" Active="No"/>
+  <Project Name="MainWindow" Path="MainWindow/MainWindow.project" Active="Yes"/>
   <Environment>
     <![CDATA[]]>
   </Environment>
   <Project Name="GameObjects" Path="GameObjects/GameObjects.project" Active="No"/>
-  <Project Name="GameSystem" Path="GameSystem/GameSystem.project" Active="Yes"/>
+  <Project Name="GameSystem" Path="GameSystem/GameSystem.project" Active="No"/>
   <Project Name="Extern" Path="Extern/Extern.project" Active="No"/>
   <Project Name="GameObjectsSrv" Path="GameObjectsSrv/GameObjectsSrv.project" Active="No"/>
   <Project Name="WorldSrv" Path="WorldSrv/WorldSrv.project" Active="No"/>
@@ -15,16 +15,16 @@
   <Project Name="GameComm" Path="GameComm/GameComm.project" Active="No"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="yes">
-      <Project Name="MainWindow" ConfigName="Debug"/>
-      <Project Name="GameObjects" ConfigName="Debug"/>
-      <Project Name="GameSystem" ConfigName="Debug"/>
       <Project Name="Extern" ConfigName="Debug"/>
-      <Project Name="GameObjectsSrv" ConfigName="Debug"/>
-      <Project Name="WorldSrv" ConfigName="Debug"/>
-      <Project Name="WorldCli" ConfigName="Debug"/>
+      <Project Name="GameComm" ConfigName="Debug"/>
       <Project Name="GameMsgCli" ConfigName="Debug"/>
       <Project Name="GameMsgSrv" ConfigName="Debug"/>
-      <Project Name="GameComm" ConfigName="Debug"/>
+      <Project Name="GameObjects" ConfigName="Debug"/>
+      <Project Name="GameObjectsSrv" ConfigName="Debug"/>
+      <Project Name="GameSystem" ConfigName="Debug"/>
+      <Project Name="MainWindow" ConfigName="Debug"/>
+      <Project Name="WorldCli" ConfigName="Debug"/>
+      <Project Name="WorldSrv" ConfigName="Debug"/>
     </WorkspaceConfiguration>
     <WorkspaceConfiguration Name="Release" Selected="no">
       <Project Name="MainWindow" ConfigName="Release"/>

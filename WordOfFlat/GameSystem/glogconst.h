@@ -4,14 +4,15 @@
 #include <wx/chartype.h>
 
 struct GameLoggerRow{
-	wxChar* m_loggerName;
-	wxChar* m_logFileName;
+	GameLoggerRow(const wxChar* logName, const wxChar* logFileName):m_loggerName(logName), m_logFileName(logFileName){}
+	const wxChar* m_loggerName;
+	const wxChar* m_logFileName;
 };
 
-static const GameLoggerRow DefaultLogger = {wxT("default"),wxT("default.log")};
+static const GameLoggerRow DefaultLogger = GameLoggerRow(wxT("default"), wxT("default.log"));
 
 static const GameLoggerRow GameLoggerTable[] = {
-	{wxT("default"),wxT("default.log")}
+	GameLoggerRow(wxT("default"),wxT("default.log"))
 };
 
 static const wxDword GameLoggerTableSize = 1;
