@@ -22,10 +22,16 @@ static const GameAddrType GAME_ADDR_BROADCAST = wxINT32_MAX; //!< Address to sen
  * 
  * This types are for control that the type of message is same. Every message implementation
  * should return static constant which is unique for every message type.
+ * 
+ * If callback is registered on GAME_MSG_TYPE_DEFAULT_ALL message type, it would be called when no callback 
+ * on exact type is not registered.
  */
 enum GameMessageType {
 	GAME_MSG_TYPE_UNKNOWN = 0,
-	GAME_MSG_TYPE_TEST = 9999
+	
+	GAME_MSG_TYPE_TEST = 9999,
+	
+	GAME_MSG_TYPE_DEFAULT_ALL = wxINT32_MAX /*!< Type for filtering rest of all types
 };
 
 /*! \brief Game message class

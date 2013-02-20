@@ -11,9 +11,6 @@
     <File Name="main.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="header"/>
-  <Dependencies Name="Release">
-    <Project Name="GameSystem"/>
-  </Dependencies>
   <Settings Type="Executable">
     <GlobalSettings>
       <Compiler Options="" C_Options="">
@@ -119,4 +116,5 @@
     </Configuration>
   </Settings>
   <Dependencies Name="Debug"/>
+  <Dependencies Name="Release"/>
 </CodeLite_Project>

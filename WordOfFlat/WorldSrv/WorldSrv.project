@@ -16,7 +16,6 @@
     <File Name="globalworldsrv.h"/>
     <File Name="worldsrvapi.h"/>
   </VirtualDirectory>
-  <Dependencies Name="Release"/>
   <VirtualDirectory Name="impl">
     <File Name="flatworldsrvimpl.h"/>
     <File Name="globalworldsrvimpl.h"/>
@@ -103,4 +102,5 @@
     </Configuration>
   </Settings>
   <Dependencies Name="Debug"/>
+  <Dependencies Name="Release"/>
 </CodeLite_Project>
