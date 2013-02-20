@@ -9,8 +9,6 @@ SUITE(MsgServerClientTest)
 {
 	TEST(LocalServerClientTest)
 	{
-		wxLog logger;
-				
-		logger.LogTextAtLevel(wxLOG_Status, wxString(wxT("Try logging")));
+		wxPrintf(wxT("Testing log\n"));
 	}
 }

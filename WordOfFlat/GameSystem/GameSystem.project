@@ -20,7 +20,6 @@
     <File Name="glog.h"/>
     <File Name="glogconst.h"/>
   </VirtualDirectory>
-  <Dependencies Name="Release"/>
   <Settings Type="Static Library">
     <GlobalSettings>
       <Compiler Options="" C_Options="">
@@ -101,4 +100,5 @@
     </Configuration>
   </Settings>
   <Dependencies Name="Debug"/>
+  <Dependencies Name="Release"/>
 </CodeLite_Project>

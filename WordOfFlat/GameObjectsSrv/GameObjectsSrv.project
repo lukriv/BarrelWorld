@@ -13,7 +13,6 @@
   <VirtualDirectory Name="include">
     <File Name="gamesrvobj.h"/>
   </VirtualDirectory>
-  <Dependencies Name="Release"/>
   <VirtualDirectory Name="impl">
     <File Name="gamesrvobjimpl.h"/>
   </VirtualDirectory>
@@ -99,4 +98,5 @@
     </Configuration>
   </Settings>
   <Dependencies Name="Debug"/>
+  <Dependencies Name="Release"/>
 </CodeLite_Project>

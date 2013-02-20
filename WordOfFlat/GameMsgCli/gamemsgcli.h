@@ -7,7 +7,7 @@
 
 class IGameMsgCallback {
 public:
-	GameErrorCode OnNewMessage() = 0;
+	GameErrorCode OnNewMessage(const IGameMessage& msg) = 0;
 }
 
 class IGameMsgCli : public IRefObject {
