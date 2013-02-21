@@ -18,7 +18,7 @@ public:
 	GameErrorCode Load(wxInputStream &istream);
 	GameErrorCode Store(wxOutputStream &ostream);
 	
-}
+};
 
 
 #endif //__GAME_MESSAGES_IMPL_H__
