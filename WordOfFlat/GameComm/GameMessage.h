@@ -31,7 +31,7 @@ enum GameMessageType {
 	
 	GAME_MSG_TYPE_TEST = 9999,
 	
-	GAME_MSG_TYPE_DEFAULT_ALL = wxINT32_MAX /*!< Type for filtering rest of all types
+	GAME_MSG_TYPE_DEFAULT_ALL = wxINT32_MAX //!< Type for filtering rest of all types
 };
 
 /*! \brief Game message class
@@ -48,26 +48,26 @@ enum GameMessageType {
 class IGameMessage {
 public:
 	
-	GameMessageType GetType() = 0;
-	GameVersionType GetVersion() = 0;
+	virtual GameMessageType GetType() = 0;
+	virtual GameVersionType GetVersion() = 0;
     
-	void SetSource (GameAddrType sourceCli) = 0;
-	GameAddrType GetSource() = 0;
+	virtual void SetSource (GameAddrType sourceCli) = 0;
+	virtual GameAddrType GetSource() = 0;
 	
-	void SetSourceId (GameAddrType sourceId) = 0;
-	GameAddrType GetSourceId() = 0;
+	virtual void SetSourceId (GameAddrType sourceId) = 0;
+	virtual GameAddrType GetSourceId() = 0;
 	
-	void SetTarget (GameAddrType targetCli) = 0;
-	GameAddrType GetTarget() = 0;
+	virtual void SetTarget (GameAddrType targetCli) = 0;
+	virtual GameAddrType GetTarget() = 0;
 	
-	void SetTargetId(GameAddrType targetId) = 0;
-	GameAddrType GetTargetId() = 0;
+	virtual void SetTargetId(GameAddrType targetId) = 0;
+	virtual GameAddrType GetTargetId() = 0;
 	
-	GameErrorCode Load(wxInputStream &istream) = 0;
-	GameErrorCode Store(wxOutputStream &ostream) = 0;
+	virtual GameErrorCode Load(wxInputStream &istream) = 0;
+	virtual GameErrorCode Store(wxOutputStream &ostream) = 0;
 
 	
-}
+};
 
 
 #endif //__GAME_MESSAGE_H__

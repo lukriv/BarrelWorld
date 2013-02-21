@@ -7,9 +7,12 @@
   </Plugins>
   <Description/>
   <Dependencies/>
-  <VirtualDirectory Name="src"/>
+  <VirtualDirectory Name="src">
+    <File Name="gamemsgsrvimpl.cpp"/>
+  </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="gamemsgsrv.h"/>
+    <File Name="gamemsgsrvimpl.h"/>
   </VirtualDirectory>
   <Settings Type="Static Library">
     <GlobalSettings>
