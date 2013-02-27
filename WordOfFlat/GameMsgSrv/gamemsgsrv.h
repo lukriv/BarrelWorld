@@ -3,7 +3,7 @@
 
 #include "../GameMsgCli/gamemsgcli.h"
 
-class IGameMsgSrv : public IGameMsgCli, public IRefObject {
+class IGameMsgSrv : public IGameMsgCli {
 	
 };
 

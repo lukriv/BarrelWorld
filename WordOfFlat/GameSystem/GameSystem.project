@@ -19,7 +19,12 @@
     <File Name="gdefs.h"/>
     <File Name="glog.h"/>
     <File Name="glogconst.h"/>
+    <VirtualDirectory Name="Containers">
+      <File Name="circularQueue.h"/>
+    </VirtualDirectory>
   </VirtualDirectory>
+  <Dependencies Name="Debug"/>
+  <Dependencies Name="Release"/>
   <Settings Type="Static Library">
     <GlobalSettings>
       <Compiler Options="" C_Options="">
@@ -99,6 +104,4 @@
       </Completion>
     </Configuration>
   </Settings>
-  <Dependencies Name="Debug"/>
-  <Dependencies Name="Release"/>
 </CodeLite_Project>

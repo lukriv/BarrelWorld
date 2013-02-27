@@ -14,10 +14,16 @@
     <File Name="gamemsgsrv.h"/>
     <File Name="gamemsgsrvimpl.h"/>
   </VirtualDirectory>
+  <Dependencies Name="Debug"/>
+  <Dependencies Name="Release"/>
   <Settings Type="Static Library">
     <GlobalSettings>
-      <Compiler Options="-Wall" C_Options=""/>
-      <Linker Options=""/>
+      <Compiler Options="-Wall" C_Options="">
+        <IncludePath Value="../../extern/include"/>
+      </Compiler>
+      <Linker Options="">
+        <LibraryPath Value="../../extern/bin"/>
+      </Linker>
       <ResourceCompiler Options=""/>
     </GlobalSettings>
     <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Static Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
@@ -91,6 +97,4 @@
       </Completion>
     </Configuration>
   </Settings>
-  <Dependencies Name="Debug"/>
-  <Dependencies Name="Release"/>
 </CodeLite_Project>
