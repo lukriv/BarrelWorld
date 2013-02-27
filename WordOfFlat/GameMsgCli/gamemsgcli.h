@@ -16,6 +16,8 @@ class IGameMsgCli : public IRefObject {
 public:
 	virtual bool IsLocal() = 0;
 	virtual bool IsConnected() = 0;
+	virtual GameErrorCode Connect() = 0;
+	
 	virtual GameAddrType GetCliAddress() = 0;
 	virtual GameErrorCode SendMsg(const IGameMessage& msg, long timeout) = 0;
 	

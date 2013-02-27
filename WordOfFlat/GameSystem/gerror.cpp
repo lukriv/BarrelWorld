@@ -20,6 +20,10 @@ void GameConvertErrCode2String(GameErrorCode errCode, wxString &errorStr)
 	case FWG_E_NOT_IMPLEMENTED_ERROR:
 		errorStr.assign(FWG_E_NOT_IMPLEMENTED_ERROR_STR);
 		break;
+	case FWG_E_FULL_BUFFER_ERROR:
+		errorStr.assign(FWG_E_FULL_BUFFER_ERROR_STR);
+		break;
+		
 	default:
 		errorStr.assign(_T("Unknown Error"));
 		break;
