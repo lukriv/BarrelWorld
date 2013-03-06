@@ -16,33 +16,44 @@
 
 class GameMsgSrv : public IGameMsgSrv {
 protected:
-  
+    
 	struct ClientInfo {
 		bool m_local;
+		bool m_active;
 	};
 	
+	typedef wxVector<ClientInfo> ClientListType;
 	typedef std::set<IGameMsgCallback*> ClbkVecType;
 	typedef std::pair<GameMessageType,ClbkVecType> ClbkMapPairType;
-	typedef std::map<GameAddrType,ClientInfo> ClientMapType;
 	typedef std::map<GameMessageType,ClbkVecType> ClbkMapType;
 	typedef CircularQueue<IGameMessage*> MsgQueueType;
+	
+	class CallbackThread : public wxThread {
+		
+	}
+	
+	
 	
 protected:
     GameAddrType m_addressPool;
 	GameAddrType m_address;
 	bool m_isConnected;
-	ClientMapType m_clientMap;
+	
+	ClientListType m_clientList;
+	wxDWord m_clientCount;
+	
 	ClbkMapType m_callbackMap;
 	MsgQueueType m_msgQueue;
 	wxCriticalSection m_clientLock;
 	wxCriticalSection m_clbkLock;
-	
+
 		
 // message server methods	
 public:
 	GameMsgSrv():m_addressPool(GAME_ADDR_SERVER+1),
 				m_address(GAME_ADDR_SERVER),
-				m_isConnected(false){}
+				m_isConnected(false),
+				m_clientCount(0){}
 	~GameMsgSrv(){}
 	
 	/*!

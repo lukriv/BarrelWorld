@@ -9,10 +9,12 @@
   <Dependencies/>
   <VirtualDirectory Name="src">
     <File Name="gamemessages.cpp"/>
+    <File Name="gamemessageimpl.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="GameMessage.h"/>
     <File Name="gamemessages.h"/>
+    <File Name="GameMessageImpl.h"/>
   </VirtualDirectory>
   <Settings Type="Static Library">
     <GlobalSettings>

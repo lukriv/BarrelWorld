@@ -7,6 +7,14 @@
 #include "../GameMsgSrv/gamemsgsrvimpl.h"
 
 
+class TestMsgCallback : public IGameMsgCallback {
+public:
+	virtual GameErrorCode OnNewMessage(const IGameMessage& msg)
+	{
+		
+	}
+};
+
 SUITE(MsgServerClientTest)
 {
 	TEST(LocalServerClientTest)
