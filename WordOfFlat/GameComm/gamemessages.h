@@ -10,6 +10,7 @@ public:
 	
 	
 	void SetTestValue(wxDword test);
+	wxDword GetTestValue();
 	
 public:
 	GameMessageType GetType();

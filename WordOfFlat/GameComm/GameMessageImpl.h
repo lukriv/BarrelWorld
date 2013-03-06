@@ -1,0 +1,49 @@
+#ifndef __GAME_MESSAGE_IMPL_H__
+#define __GAME_MESSAGE_IMPL_H__
+
+
+#include "GameMessage.h"
+
+
+class GameMessageBase : public IGameMessage {
+	GameMessageType m_msgType;
+	GameVersionType m_msgVer;
+	
+	GameAddrType m_source;
+	GameAddrType m_sourceId;
+	
+	GameAddrType m_target;
+	GameAddrType m_targetId;
+	
+protected:
+	virtual GameErrorCode LoadHeader(wxInputStream &istream);
+	virtual GameErrorCode StoreHeader(wxOutputStream &ostream);
+
+public:
+	GameMessageBase(GameMessageType type, GameVersionType ver): m_msgType(type),
+																m_msgVer(ver),
+																m_source(GAME_ADDR_UNKNOWN),
+																m_sourceId(0),
+																m_target(GAME_ADDR_UNKNOWN),
+																m_targetId(0) {}
+	
+	virtual GameMessageType GetType() {return m_msgType;}
+	virtual GameVersionType GetVersion() {return m_msgVer;}
+    
+	virtual void SetSource (GameAddrType sourceCli) {m_source = sourceCli;}
+	virtual GameAddrType GetSource() {return m_source;}
+	
+	virtual void SetSourceId (GameAddrType sourceId) {m_sourceId = sourceId;}
+	virtual GameAddrType GetSourceId() {return m_sourceId;}
+	
+	virtual void SetTarget (GameAddrType targetCli) {m_target = targetCli;}
+	virtual GameAddrType GetTarget() {return m_target;}
+	
+	virtual void SetTargetId(GameAddrType targetId) {m_targetId = targetId;}
+	virtual GameAddrType GetTargetId() {return m_targetId};
+	
+};
+
+
+
+#endif //__GAME_MESSAGE_IMPL_H__
