@@ -23,6 +23,28 @@ void GameConvertErrCode2String(GameErrorCode errCode, wxString &errorStr)
 	case FWG_E_FULL_BUFFER_ERROR:
 		errorStr.assign(FWG_E_FULL_BUFFER_ERROR_STR);
 		break;
+	case FWG_E_THREAD_ALREADY_RUNNING_ERROR:
+		errorStr.assign(FWG_E_THREAD_ALREADY_RUNNING_ERROR_STR);
+		break;
+		
+	case FWG_E_THREAD_NOT_RUNNING_ERROR:
+		errorStr.assign(FWG_E_THREAD_NOT_RUNNING_ERROR_STR);
+		
+	case FWG_E_THREAD_ALREADY_KILLED_ERROR:
+		errorStr.assign(FWG_E_THREAD_ALREADY_KILLED_ERROR_STR);
+		break;
+
+	case FWG_E_NO_RESOURCES_ERROR:
+		errorStr.assign(FWG_E_NO_RESOURCES_ERROR_STR);
+		break;
+
+	case FWG_E_MISC_ERROR:
+		errorStr.assign(FWG_E_MISC_ERROR_STR);
+		break;
+		
+	case FWG_E_TIMEOUT_WARNING:
+		errorStr.assign(FWG_E_TIMEOUT_WARNING_STR);
+		break;
 		
 	default:
 		errorStr.assign(_T("Unknown Error"));

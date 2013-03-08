@@ -4,11 +4,12 @@
 
 #include <map>
 #include <wx/stream.h>
-#include <wx/thread.h>
 #include <wx/vector.h>
+#include <wx/msgqueue.h>
 #include "../GameSystem/gdefs.h"
 #include "../GameSystem/gerror.h"
-#include "../GameSystem/circularQueue.h"
+#include "../GameSystem/gthread.h"
+#include "../GameSystem/glog.h"
 #include "../GameComm/GameMessage.h"
 #include "../GameMsgCli/gamemsgcli.h"
 #include "gamemsgsrv.h"
@@ -26,15 +27,27 @@ protected:
 	typedef std::set<IGameMsgCallback*> ClbkVecType;
 	typedef std::pair<GameMessageType,ClbkVecType> ClbkMapPairType;
 	typedef std::map<GameMessageType,ClbkVecType> ClbkMapType;
-	typedef CircularQueue<IGameMessage*> MsgQueueType;
+	typedef wxMessageQueue<IGameMessage*> MsgQueueType;
 	
-	class CallbackThread : public wxThread {
-		
-	}
+	class CallbackThread : public GameThread {
+		wxAtomicInt m_isStopRequest;
+		bool m_isInitialized;
+		GameMsgSrv m_pOwner;
+	protected:
+		virtual ExitCode Entry 	(); 
+	public:
+		CallbackThread(GameMsgSrv pOwner): m_isStopRequest(0),
+										m_pOwner(pOwner),
+										m_isInitialized(false) {}
+		GameErrorCode Initialize();
+		GameErrorCode StopRequest();
+
+	};
 	
 	
 	
 protected:
+	GameLoggerPtr m_pLogger;
     GameAddrType m_addressPool;
 	GameAddrType m_address;
 	bool m_isConnected;
@@ -53,7 +66,8 @@ public:
 	GameMsgSrv():m_addressPool(GAME_ADDR_SERVER+1),
 				m_address(GAME_ADDR_SERVER),
 				m_isConnected(false),
-				m_clientCount(0){}
+				m_clientCount(0),
+				m_pLogger(NULL){}
 	~GameMsgSrv(){}
 	
 	/*!
@@ -64,7 +78,7 @@ public:
 	 * \retval FWG_NO_ERROR if success
 	 * \retval errorcode on failture
 	 */
-	GameErrorCode Initialize();
+	GameErrorCode Initialize(GameLogger *pLogger);
 	
 
 // message client interface	implementation
