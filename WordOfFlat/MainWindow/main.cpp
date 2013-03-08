@@ -34,7 +34,7 @@ int main(int argc, char **argv)
 		printf("Failed to initialize the logger, aborting.");
 		return -1;
 	}
-
+	
 	FWGLOG_TRACE(wxT("Trace message"), spLogger);
 	FWGLOG_DEBUG(wxT("Debug message"), spLogger);
 	FWGLOG_INFO(wxT("Info message"), spLogger);

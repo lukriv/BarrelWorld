@@ -1,4 +1,5 @@
 #include "gamemsgsrvimpl.h"
+#include "../GameSystem/glog.h"
 
 #define CLIENT_LIST_SIZE 10
 
@@ -71,7 +72,7 @@ GameErrorCode GameMsgSrv::UnregisterCallback(IGameMsgCallback* pClbk)
 	return result;
 }
 
-GameErrorCode GameMsgSrv::Initialize()
+GameErrorCode GameMsgSrv::Initialize(GameLogger* pLogger)
 {
 	ClientListType::iterator iter;
 	m_clientList.resize(CLIENT_LIST_SIZE);
@@ -96,6 +97,58 @@ GameErrorCode GameMsgSrv::Connect()
 	
 	//set is connected
 	m_isConnected = true;
+	
+	return result;
+}
+
+//--------------------------------------------------------------------
+//--------------- GameMsgSrv::CallbackThread -------------------------
+//--------------------------------------------------------------------
+
+ExitCode GameMsgSrv::CallbackThread::Entry()
+{
+	GameErrorCode result = FWG_NO_ERROR;
+	IGameMessage *pMsg = NULL;
+	while (m_isStopRequest == 0)
+	{
+		if (FWG_FAILED(result = GameConvertWxMsgQueueErr2GameErr(m_pOwner->m_msgQueue.Receive(pMsg))))
+		{
+			FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::CallbackThread::Entry() : Receive message failed: 0x%08x"), m_pLogger, result);
+			return result;
+		}
+	}
+	
+	return result;
+}
+
+GameErrorCode GameMsgSrv::CallbackThread::Initialize()
+{
+	GameErrorCode result = FWG_NO_ERROR;
+	if (FWG_FAILED(result = Create()))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::CallbackThread::Initialize() : Thread create failed: 0x%08x"), m_pLogger, result);
+		return result;
+	}
+	
+	if (FWG_FAILED(result = Run()))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::CallbackThread::Initialize() : Run thread failed: 0x%08x"), m_pLogger, result);
+		return result;
+	}
+	
+	return result;
+}
+
+GameErrorCode GameMsgSrv::CallbackThread::StopRequest()
+{
+	GameErrorCode result = FWG_NO_ERROR;
+	
+	wxAtomicInc(m_isStopRequest);
+	if (FWG_FAILED(result = GameConvertWxMsgQueueErr2GameErr(m_pOwner.m_msgQueue.Post(NULL))))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::CallbackThread::StopRequest() : Post message failed: 0x%08x"), m_pLogger, result);
+		return result;
+	}
 	
 	return result;
 }
