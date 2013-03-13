@@ -13,3 +13,6 @@ GameErrorCode GameMessageBase::StoreHeader(wxOutputStream& ostream)
 	wxDataOutputStream oStream(ostream);
 	oStream.BigEndianOrdered(true);
 }
+
+
+

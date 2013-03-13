@@ -42,6 +42,12 @@ GameErrorCode GameMsgSrv::RegisterCallback(IGameMsgCallback* pClbk, GameMessageT
 
 GameErrorCode GameMsgSrv::SendMsg(const IGameMessage& msg, long timeout)
 {
+	msg.SetSource(m_address);
+	GameAddrType target = msg.GetTarget();
+	if (GAME_ADDR_UNKNOWN == target)
+	{
+		return FWG_E_UNKNOWN_TARGET_ERROR;
+	}
 }
 
 GameErrorCode GameMsgSrv::UnregisterCallback(IGameMsgCallback* pClbk)
@@ -111,7 +117,7 @@ ExitCode GameMsgSrv::CallbackThread::Entry()
 	IGameMessage *pMsg = NULL;
 	while (m_isStopRequest == 0)
 	{
-		if (FWG_FAILED(result = GameConvertWxMsgQueueErr2GameErr(m_pOwner->m_msgQueue.Receive(pMsg))))
+		if (FWG_FAILED(result = m_pOwner->m_msgQueue.Receive(pMsg)))
 		{
 			FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::CallbackThread::Entry() : Receive message failed: 0x%08x"), m_pLogger, result);
 			return result;
@@ -144,7 +150,7 @@ GameErrorCode GameMsgSrv::CallbackThread::StopRequest()
 	GameErrorCode result = FWG_NO_ERROR;
 	
 	wxAtomicInc(m_isStopRequest);
-	if (FWG_FAILED(result = GameConvertWxMsgQueueErr2GameErr(m_pOwner.m_msgQueue.Post(NULL))))
+	if (FWG_FAILED(result = m_pOwner.m_msgQueue.Post(NULL)))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::CallbackThread::StopRequest() : Post message failed: 0x%08x"), m_pLogger, result);
 		return result;

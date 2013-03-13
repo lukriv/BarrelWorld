@@ -26,6 +26,15 @@ public:
 																m_sourceId(0),
 																m_target(GAME_ADDR_UNKNOWN),
 																m_targetId(0) {}
+																
+	GameMessageBase(const GameMessageBase & msg) {
+		m_msgType = msg.m_msgType;
+		m_msgVer = msg.m_msgVer;
+		m_source = msg.m_source;
+		m_sourceId = msg.m_sourceId;
+		m_target = msg.m_target;
+		m_targetId = msg.m_targetId;
+	}
 	
 	virtual GameMessageType GetType() {return m_msgType;}
 	virtual GameVersionType GetVersion() {return m_msgVer;}

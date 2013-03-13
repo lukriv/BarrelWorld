@@ -8,6 +8,7 @@
 
 
 #include "../GameSystem/gdefs.h"
+#include "../GameSystem/gerror.h"
 
 typedef wxDword GameAddrType;
 
@@ -66,6 +67,7 @@ public:
 	virtual GameErrorCode Load(wxInputStream &istream) = 0;
 	virtual GameErrorCode Store(wxOutputStream &ostream) = 0;
 
+	virtual GameErrorCode CreateCopy(IGameMessage *&pMsgCopy) = 0;
 	
 };
 

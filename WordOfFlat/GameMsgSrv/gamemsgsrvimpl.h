@@ -5,10 +5,10 @@
 #include <map>
 #include <wx/stream.h>
 #include <wx/vector.h>
-#include <wx/msgqueue.h>
 #include "../GameSystem/gdefs.h"
 #include "../GameSystem/gerror.h"
 #include "../GameSystem/gthread.h"
+#include "../GameSystem/gmsgqueue.h"
 #include "../GameSystem/glog.h"
 #include "../GameComm/GameMessage.h"
 #include "../GameMsgCli/gamemsgcli.h"
@@ -27,7 +27,7 @@ protected:
 	typedef std::set<IGameMsgCallback*> ClbkVecType;
 	typedef std::pair<GameMessageType,ClbkVecType> ClbkMapPairType;
 	typedef std::map<GameMessageType,ClbkVecType> ClbkMapType;
-	typedef wxMessageQueue<IGameMessage*> MsgQueueType;
+	typedef GameMessageQueue<IGameMessage*> MsgQueueType;
 	
 	class CallbackThread : public GameThread {
 		wxAtomicInt m_isStopRequest;
