@@ -45,6 +45,9 @@ void GameConvertErrCode2String(GameErrorCode errCode, wxString &errorStr)
 	case FWG_E_TIMEOUT_WARNING:
 		errorStr.assign(FWG_E_TIMEOUT_WARNING_STR);
 		break;
+	case FWG_E_UNKNOWN_TARGET_ERROR:
+		errorStr.assign(FWG_E_UNKNOWN_TARGET_ERROR_STR);
+		break;
 		
 	default:
 		errorStr.assign(_T("Unknown Error"));

@@ -24,6 +24,7 @@
     </VirtualDirectory>
     <VirtualDirectory Name="Threading">
       <File Name="gthread.h"/>
+      <File Name="gmsgqueue.h"/>
     </VirtualDirectory>
   </VirtualDirectory>
   <Dependencies Name="Debug"/>

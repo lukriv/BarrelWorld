@@ -2,7 +2,6 @@
 #define __GAME_THREAD_H__
 
 #include <wx/thread.h>
-#include <wx/msgqueue.h>
 #include "gerror.h"
 
 inline GameErrorCode GameConvertWxThreadErr2GameErr(wxThreadError threadErr)
@@ -24,21 +23,6 @@ inline GameErrorCode GameConvertWxThreadErr2GameErr(wxThreadError threadErr)
 		return FWG_E_MISC_ERROR;
 	}
 }
-
-inline GameErrorCode GameConvertWxMsgQueueErr2GameErr(wxMessageQueueError msgQueueErr)
-{
-	switch (msgQueueErr)
-	{
-		case wxMSGQUEUE_NO_ERROR:
-			return FWG_NO_ERROR;
-		case wxMSGQUEUE_TIMEOUT:
-			return FWG_E_TIMEOUT_WARNING:
-		case wxMSGQUEUE_MISC_ERROR:
-		default:
-			return FWG_E_MISC_ERROR;
-	}
-}
-
 
 /*!
  * \class GameThread
