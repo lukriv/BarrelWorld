@@ -48,6 +48,11 @@ GameErrorCode GameMsgSrv::SendMsg(const IGameMessage& msg, long timeout)
 	{
 		return FWG_E_UNKNOWN_TARGET_ERROR;
 	}
+	
+	if (m_address == target)
+	{
+		
+	}
 }
 
 GameErrorCode GameMsgSrv::UnregisterCallback(IGameMsgCallback* pClbk)
