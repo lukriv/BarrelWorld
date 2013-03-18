@@ -26,6 +26,16 @@ typedef wxInt32 GameErrorCode;
  */
 #define FWG_SUCCEDED(x) (0<=(x))
 
+#define FWG_RETURN_FAIL(x) 	\
+	{\
+		GameErrorCode resultErrcode = (x);\
+		if (FWG_FAILED(resultErrcode))\
+		{\
+			return resultErrcode;\
+		}\
+	}
+
+
 #define FWG_NO_ERROR 0x00000000
 static const wxChar* FWG_NO_ERROR_STR = wxT("FWG_NO_ERROR");
 

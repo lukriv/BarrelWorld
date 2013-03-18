@@ -18,14 +18,12 @@ public:
 	wxDword GetTestValue();
 	
 public:
-	GameMessageType GetType();
-	GameVersionType GetVersion();
-	
-	GameErrorCode Load(wxInputStream &istream);
-	GameErrorCode Store(wxOutputStream &ostream);
+
 	
 	GameErrorCode CreateCopy(IGameMessage*& pMsgCopy);
-	
+protected:
+	virtual GameErrorCode LoadInternal(wxDataInputStream &istream);
+	virtual GameErrorCode StoreInternal(wxDataOutputStream &ostream);	
 };
 
 

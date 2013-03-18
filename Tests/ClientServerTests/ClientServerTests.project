@@ -23,6 +23,7 @@
         <LibraryPath Value="../../extern/lib"/>
         <Library Value="libUnitTest++.a"/>
         <Library Value="GameMsgSrv"/>
+        <Library Value="GameComm"/>
         <Library Value="GameSystem"/>
         <Library Value="wx_baseu-2.9.dll"/>
       </Linker>
@@ -33,6 +34,7 @@
       <Linker Options="" Required="yes">
         <LibraryPath Value="../../WordOfFlat/GameMsgSrv/Debug"/>
         <LibraryPath Value="../../WordOfFlat/GameSystem/Debug"/>
+        <LibraryPath Value="../../WordOfFlat/GameComm/Debug"/>
       </Linker>
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="Debug" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
@@ -72,6 +74,7 @@
         <LibraryPath Value="$(UNIT_TEST_PP_SRC_DIR)/Release"/>
         <LibraryPath Value="../../WordOfFlat/GameMsgSrv/Release"/>
         <LibraryPath Value="../../WordOfFlat/GameSystem/Release"/>
+        <LibraryPath Value="../../WordOfFlat/GameComm/Release"/>
       </Linker>
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="Release" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
