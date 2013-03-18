@@ -3,6 +3,7 @@
 
 
 #include "GameMessage.h"
+#include <wx/datstrm.h>
 
 
 class GameMessageBase : public IGameMessage {
@@ -15,9 +16,7 @@ class GameMessageBase : public IGameMessage {
 	GameAddrType m_target;
 	GameAddrType m_targetId;
 	
-protected:
-	virtual GameErrorCode LoadHeader(wxInputStream &istream);
-	virtual GameErrorCode StoreHeader(wxOutputStream &ostream);
+
 
 public:
 	GameMessageBase(GameMessageType type, GameVersionType ver): m_msgType(type),
@@ -36,6 +35,8 @@ public:
 		m_targetId = msg.m_targetId;
 	}
 	
+	virtual ~GameMessageBase() {}
+	
 	virtual GameMessageType GetType() {return m_msgType;}
 	virtual GameVersionType GetVersion() {return m_msgVer;}
     
@@ -51,6 +52,16 @@ public:
 	virtual void SetTargetId(GameAddrType targetId) {m_targetId = targetId;}
 	virtual GameAddrType GetTargetId() {return m_targetId;}
 	
+	
+	GameErrorCode Load(wxInputStream &istream);
+	GameErrorCode Store(wxOutputStream &ostream);
+
+protected:
+	virtual GameErrorCode LoadHeader(wxDataInputStream &iDataStream);
+	virtual GameErrorCode StoreHeader(wxDataOutputStream &oDataStream);
+	
+	virtual GameErrorCode LoadInternal(wxDataInputStream &iDataStream) = 0;
+	virtual GameErrorCode StoreInternal(wxDataOutputStream &oDataStream) = 0;	
 };
 
 

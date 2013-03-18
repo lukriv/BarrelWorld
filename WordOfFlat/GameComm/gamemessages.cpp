@@ -8,11 +8,10 @@ wxDword TestMessage::GetTestValue()
 
 
 
-GameErrorCode TestMessage::Load(wxInputStream& istream)
+GameErrorCode TestMessage::LoadInternal(wxDataInputStream& istream)
 {
-	wxDataInputStream iStream(istream);
-	iStream.BigEndianOrdered(true);
-	m_testValue = (wxDword) iStream.Read32();
+
+	m_testValue = (wxDword) istream.Read32();
 	
 	return FWG_NO_ERROR;
 }
@@ -22,11 +21,10 @@ void TestMessage::SetTestValue(wxDword test)
 	m_testValue = test;
 }
 
-GameErrorCode TestMessage::Store(wxOutputStream& ostream)
+GameErrorCode TestMessage::StoreInternal(wxDataOutputStream& ostream)
 {
-	wxDataOutputStream oStream(ostream);
-	oStream.BigEndianOrdered(true);
-	oStream.Write32((wxUint32) m_testValue);
+
+	ostream.Write32((wxUint32) m_testValue);
 	
 	return FWG_NO_ERROR;
 }
@@ -44,3 +42,4 @@ GameErrorCode TestMessage::CreateCopy(IGameMessage*& pMsgCopy)
 	
 	return FWG_NO_ERROR;
 }
+
