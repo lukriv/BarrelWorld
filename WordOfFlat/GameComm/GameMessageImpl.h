@@ -49,7 +49,7 @@ public:
 	virtual GameAddrType GetTarget() {return m_target;}
 	
 	virtual void SetTargetId(GameAddrType targetId) {m_targetId = targetId;}
-	virtual GameAddrType GetTargetId() {return m_targetId};
+	virtual GameAddrType GetTargetId() {return m_targetId;}
 	
 };
 

@@ -4,7 +4,7 @@
 #include <wx/string.h>
 #include <wx/log.h>
 
-#include "../GameMsgSrv/gamemsgsrvimpl.h"
+#include "../../WordOfFlat/GameMsgSrv/gamemsgsrvimpl.h"
 
 
 class TestMsgCallback : public IGameMsgCallback {

@@ -6,11 +6,10 @@
 #ifndef __GAME_MESSAGE_H__
 #define __GAME_MESSAGE_H__
 
-
+#include <wx/stream.h>
 #include "../GameSystem/gdefs.h"
 #include "../GameSystem/gerror.h"
 
-typedef wxDword GameAddrType;
 
 
 

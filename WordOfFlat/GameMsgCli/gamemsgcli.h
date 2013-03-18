@@ -19,7 +19,7 @@ public:
 	virtual GameErrorCode Connect() = 0;
 	
 	virtual GameAddrType GetCliAddress() = 0;
-	virtual GameErrorCode SendMsg(const IGameMessage& msg, long timeout) = 0;
+	virtual GameErrorCode SendMsg(IGameMessage* msg, long timeout) = 0;
 	
 	virtual GameErrorCode RegisterCallback(IGameMsgCallback *pClbk, GameMessageType msgType) = 0;
 	virtual GameErrorCode UnregisterCallback(IGameMsgCallback *pClbk) = 0;

@@ -10,7 +10,9 @@ class TestMessage : public GameMessageBase {
 public:
 	
 	TestMessage() : GameMessageBase(GAME_MSG_TYPE_TEST, TEST_MESSAGE_VERSION), m_testValue(0) {}
-	TestMessage(const TestMessage& msg) : 
+	TestMessage(const TestMessage& msg) : GameMessageBase(msg) {
+		m_testValue = msg.m_testValue;
+	}
 	
 	void SetTestValue(wxDword test);
 	wxDword GetTestValue();
