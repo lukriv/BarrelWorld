@@ -3,9 +3,10 @@
 
 #include <wx/string.h>
 #include <wx/log.h>
+#include <wx/scopedptr.h>
 
 #include "../../WordOfFlat/GameMsgSrv/gamemsgsrvimpl.h"
-
+#include "../../WordOfFlat/GameComm/gamemessages.h"
 
 class TestMsgCallback : public IGameMsgCallback {
 public:
@@ -14,6 +15,7 @@ public:
 		
 	}
 };
+
 
 SUITE(MsgServerClientTest)
 {

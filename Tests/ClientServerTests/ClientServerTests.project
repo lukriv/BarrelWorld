@@ -10,6 +10,7 @@
   <VirtualDirectory Name="src">
     <File Name="main.cpp"/>
     <File Name="msgclientservertest.cpp"/>
+    <File Name="messagetests.cpp"/>
   </VirtualDirectory>
   <Dependencies Name="Debug"/>
   <Dependencies Name="Release"/>
@@ -69,7 +70,8 @@
       <Compiler Options="" C_Options="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags=""/>
       <Linker Options="-O2" Required="yes">
         <LibraryPath Value="$(UNIT_TEST_PP_SRC_DIR)/Release"/>
-        <Library Value="libUnitTest++.a"/>
+        <LibraryPath Value="../../WordOfFlat/GameMsgSrv/Release"/>
+        <LibraryPath Value="../../WordOfFlat/GameSystem/Release"/>
       </Linker>
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="Release" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
