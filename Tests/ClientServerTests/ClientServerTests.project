@@ -21,13 +21,18 @@
       <Linker Options="">
         <LibraryPath Value="../../extern/lib"/>
         <Library Value="libUnitTest++.a"/>
-        <Library Value="libwx_baseu-2.9.dll.a"/>
+        <Library Value="GameMsgSrv"/>
+        <Library Value="GameSystem"/>
+        <Library Value="wx_baseu-2.9.dll"/>
       </Linker>
       <ResourceCompiler Options=""/>
     </GlobalSettings>
     <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="-g" C_Options="-g" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags=""/>
-      <Linker Options="" Required="yes"/>
+      <Linker Options="" Required="yes">
+        <LibraryPath Value="../../WordOfFlat/GameMsgSrv/Debug"/>
+        <LibraryPath Value="../../WordOfFlat/GameSystem/Debug"/>
+      </Linker>
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="Debug" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">

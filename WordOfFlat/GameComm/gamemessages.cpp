@@ -1,4 +1,5 @@
 #include "gamemessages.h"
+#include <wx/datstrm.h>
 
 wxDword TestMessage::GetTestValue()
 {
@@ -9,6 +10,11 @@ wxDword TestMessage::GetTestValue()
 
 GameErrorCode TestMessage::Load(wxInputStream& istream)
 {
+	wxDataInputStream iStream(istream);
+	iStream.BigEndianOrdered(true);
+	m_testValue = (wxDword) iStream.Read32();
+	
+	return FWG_NO_ERROR;
 }
 
 void TestMessage::SetTestValue(wxDword test)
@@ -18,6 +24,11 @@ void TestMessage::SetTestValue(wxDword test)
 
 GameErrorCode TestMessage::Store(wxOutputStream& ostream)
 {
+	wxDataOutputStream oStream(ostream);
+	oStream.BigEndianOrdered(true);
+	oStream.Write32((wxUint32) m_testValue);
+	
+	return FWG_NO_ERROR;
 }
 
 

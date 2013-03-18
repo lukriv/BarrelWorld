@@ -31,12 +31,13 @@ protected:
 	
 	class CallbackThread : public GameThread {
 		wxAtomicInt m_isStopRequest;
+		GameMsgSrv* m_pOwner;
 		bool m_isInitialized;
-		GameMsgSrv m_pOwner;
+		
 	protected:
-		virtual ExitCode Entry 	(); 
+		virtual void *Entry();
 	public:
-		CallbackThread(GameMsgSrv pOwner): m_isStopRequest(0),
+		CallbackThread(GameMsgSrv* pOwner): m_isStopRequest(0),
 										m_pOwner(pOwner),
 										m_isInitialized(false) {}
 		GameErrorCode Initialize();
@@ -47,13 +48,14 @@ protected:
 	
 	
 protected:
+	wxAtomicInt m_refCount;
 	GameLoggerPtr m_pLogger;
     GameAddrType m_addressPool;
 	GameAddrType m_address;
 	bool m_isConnected;
 	
 	ClientListType m_clientList;
-	wxDWord m_clientCount;
+	wxDword m_clientCount;
 	
 	ClbkMapType m_callbackMap;
 	MsgQueueType m_msgQueue;
@@ -63,11 +65,12 @@ protected:
 		
 // message server methods	
 public:
-	GameMsgSrv():m_addressPool(GAME_ADDR_SERVER+1),
+	GameMsgSrv():m_refCount(1),
+				m_pLogger(NULL),
+				m_addressPool(GAME_ADDR_SERVER+1),
 				m_address(GAME_ADDR_SERVER),
 				m_isConnected(false),
-				m_clientCount(0),
-				m_pLogger(NULL){}
+				m_clientCount(0){}
 	~GameMsgSrv(){}
 	
 	/*!
@@ -80,6 +83,8 @@ public:
 	 */
 	GameErrorCode Initialize(GameLogger *pLogger);
 	
+	inline GameLoggerPtr GetLogger() { return m_pLogger; }
+	
 
 // message client interface	implementation
 public:
@@ -88,7 +93,7 @@ public:
     virtual GameErrorCode Connect();	
 
 	virtual GameAddrType GetCliAddress();
-	virtual GameErrorCode SendMsg(const IGameMessage& msg, long timeout);
+	virtual GameErrorCode SendMsg(IGameMessage* msg, long timeout);
 	
 	virtual GameErrorCode RegisterCallback(IGameMsgCallback *pClbk, GameMessageType msgType);
 	virtual GameErrorCode UnregisterCallback(IGameMsgCallback *pClbk);

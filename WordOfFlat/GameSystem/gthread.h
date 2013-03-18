@@ -59,6 +59,6 @@ public:
 		return GameConvertWxThreadErr2GameErr(wxThread::Run());
 	}
 	
-}
+};
 
 #endif //__GAME_THREAD_H__

@@ -33,17 +33,18 @@ GameErrorCode GameMsgSrv::RegisterCallback(IGameMsgCallback* pClbk, GameMessageT
 		mapIter->second.insert(pClbk);
 	} else {
 		ClbkVecType newVec;
-		newVec.push_back(pClbk);
+		newVec.insert(pClbk);
 		m_callbackMap.insert(ClbkMapPairType(msgType,newVec));
 	}
 	
 	return result;
 }
 
-GameErrorCode GameMsgSrv::SendMsg(const IGameMessage& msg, long timeout)
+GameErrorCode GameMsgSrv::SendMsg(IGameMessage* msg, long timeout)
 {
-	msg.SetSource(m_address);
-	GameAddrType target = msg.GetTarget();
+	GameErrorCode result = FWG_NO_ERROR;
+	msg->SetSource(m_address);
+	GameAddrType target = msg->GetTarget();
 	if (GAME_ADDR_UNKNOWN == target)
 	{
 		return FWG_E_UNKNOWN_TARGET_ERROR;
@@ -51,8 +52,25 @@ GameErrorCode GameMsgSrv::SendMsg(const IGameMessage& msg, long timeout)
 	
 	if (m_address == target)
 	{
+		IGameMessage* copy = NULL;
+		if(FWG_FAILED(result = msg->CreateCopy(copy)))
+		{
+			FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::SendMsg() : Create message copy failed: 0x%08x"), m_pLogger, result);
+			return result;
+		}
 		
+		if(FWG_FAILED(result = m_msgQueue.Post(copy)))
+		{
+			FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::SendMsg() : Post message to queue failed: 0x%08x"), m_pLogger, result);
+			return result;
+		}
+		
+		return result;
+	} else {
+		return FWG_E_NOT_IMPLEMENTED_ERROR;
 	}
+	
+	return result;
 }
 
 GameErrorCode GameMsgSrv::UnregisterCallback(IGameMsgCallback* pClbk)
@@ -64,11 +82,8 @@ GameErrorCode GameMsgSrv::UnregisterCallback(IGameMsgCallback* pClbk)
 
 	wxCriticalSectionLocker locker(m_clbkLock);
 	
-	mapIter = m_callbackMap.find(msgType);
-	if (mapIter == m_callbackMap.end())
+	for (mapIter = m_callbackMap.begin(); mapIter != m_callbackMap.end(); mapIter++)
 	{
-		return FWG_NO_ERROR;
-	} else {
 		vecIter = mapIter->second.find(pClbk);
 		if (vecIter != mapIter->second.end())
 		{
@@ -112,11 +127,27 @@ GameErrorCode GameMsgSrv::Connect()
 	return result;
 }
 
+void GameMsgSrv::addRef()
+{
+	wxAtomicInc(m_refCount);
+}
+
+wxInt32 GameMsgSrv::release()
+{
+	wxInt32 refCount = wxAtomicDec(m_refCount);
+	if (refCount == 0)
+	{
+		delete this;
+	}
+	
+	return refCount;
+}
+
 //--------------------------------------------------------------------
 //--------------- GameMsgSrv::CallbackThread -------------------------
 //--------------------------------------------------------------------
 
-ExitCode GameMsgSrv::CallbackThread::Entry()
+void* GameMsgSrv::CallbackThread::Entry()
 {
 	GameErrorCode result = FWG_NO_ERROR;
 	IGameMessage *pMsg = NULL;
@@ -124,12 +155,12 @@ ExitCode GameMsgSrv::CallbackThread::Entry()
 	{
 		if (FWG_FAILED(result = m_pOwner->m_msgQueue.Receive(pMsg)))
 		{
-			FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::CallbackThread::Entry() : Receive message failed: 0x%08x"), m_pLogger, result);
-			return result;
+			FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::CallbackThread::Entry() : Receive message failed: 0x%08x"), m_pOwner->GetLogger(), result);
+			return (void*) result;
 		}
 	}
 	
-	return result;
+	return (void*) result;
 }
 
 GameErrorCode GameMsgSrv::CallbackThread::Initialize()
@@ -137,13 +168,13 @@ GameErrorCode GameMsgSrv::CallbackThread::Initialize()
 	GameErrorCode result = FWG_NO_ERROR;
 	if (FWG_FAILED(result = Create()))
 	{
-		FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::CallbackThread::Initialize() : Thread create failed: 0x%08x"), m_pLogger, result);
+		FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::CallbackThread::Initialize() : Thread create failed: 0x%08x"), m_pOwner->GetLogger(), result);
 		return result;
 	}
 	
 	if (FWG_FAILED(result = Run()))
 	{
-		FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::CallbackThread::Initialize() : Run thread failed: 0x%08x"), m_pLogger, result);
+		FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::CallbackThread::Initialize() : Run thread failed: 0x%08x"), m_pOwner->GetLogger(), result);
 		return result;
 	}
 	
@@ -155,9 +186,9 @@ GameErrorCode GameMsgSrv::CallbackThread::StopRequest()
 	GameErrorCode result = FWG_NO_ERROR;
 	
 	wxAtomicInc(m_isStopRequest);
-	if (FWG_FAILED(result = m_pOwner.m_msgQueue.Post(NULL)))
+	if (FWG_FAILED(result = m_pOwner->m_msgQueue.Post(NULL)))
 	{
-		FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::CallbackThread::StopRequest() : Post message failed: 0x%08x"), m_pLogger, result);
+		FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::CallbackThread::StopRequest() : Post message failed: 0x%08x"), m_pOwner->GetLogger(), result);
 		return result;
 	}
 	
