@@ -37,20 +37,20 @@ public:
 	
 	virtual ~GameMessageBase() {}
 	
-	virtual GameMessageType GetType() {return m_msgType;}
-	virtual GameVersionType GetVersion() {return m_msgVer;}
+	virtual GameMessageType GetType() const {return m_msgType;}
+	virtual GameVersionType GetVersion() const {return m_msgVer;}
     
 	virtual void SetSource (GameAddrType sourceCli) {m_source = sourceCli;}
-	virtual GameAddrType GetSource() {return m_source;}
+	virtual GameAddrType GetSource() const {return m_source;}
 	
 	virtual void SetSourceId (GameAddrType sourceId) {m_sourceId = sourceId;}
-	virtual GameAddrType GetSourceId() {return m_sourceId;}
+	virtual GameAddrType GetSourceId() const {return m_sourceId;}
 	
 	virtual void SetTarget (GameAddrType targetCli) {m_target = targetCli;}
-	virtual GameAddrType GetTarget() {return m_target;}
+	virtual GameAddrType GetTarget() const {return m_target;}
 	
 	virtual void SetTargetId(GameAddrType targetId) {m_targetId = targetId;}
-	virtual GameAddrType GetTargetId() {return m_targetId;}
+	virtual GameAddrType GetTargetId() const {return m_targetId;}
 	
 	
 	GameErrorCode Load(wxInputStream &istream);
