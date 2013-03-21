@@ -48,20 +48,20 @@ enum GameMessageType {
 class IGameMessage {
 public:
 	
-	virtual GameMessageType GetType() = 0;
-	virtual GameVersionType GetVersion() = 0;
+	virtual GameMessageType GetType() const = 0;
+	virtual GameVersionType GetVersion() const = 0;
     
 	virtual void SetSource (GameAddrType sourceCli) = 0;
-	virtual GameAddrType GetSource() = 0;
+	virtual GameAddrType GetSource() const = 0;
 	
 	virtual void SetSourceId (GameAddrType sourceId) = 0;
-	virtual GameAddrType GetSourceId() = 0;
+	virtual GameAddrType GetSourceId() const = 0;
 	
 	virtual void SetTarget (GameAddrType targetCli) = 0;
-	virtual GameAddrType GetTarget() = 0;
+	virtual GameAddrType GetTarget() const = 0;
 	
 	virtual void SetTargetId(GameAddrType targetId) = 0;
-	virtual GameAddrType GetTargetId() = 0;
+	virtual GameAddrType GetTargetId() const = 0;
 	
 	virtual GameErrorCode Load(wxInputStream &istream) = 0;
 	virtual GameErrorCode Store(wxOutputStream &ostream) = 0;

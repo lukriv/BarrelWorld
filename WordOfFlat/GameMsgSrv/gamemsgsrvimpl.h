@@ -15,6 +15,7 @@
 #include "gamemsgsrv.h"
 
 
+
 class GameMsgSrv : public IGameMsgSrv {
 protected:
     
@@ -36,8 +37,10 @@ protected:
 		
 	protected:
 		virtual void *Entry();
+		
 	public:
-		CallbackThread(GameMsgSrv* pOwner): m_isStopRequest(0),
+		CallbackThread(GameMsgSrv* pOwner): GameThread(wxTHREAD_JOINABLE),
+										m_isStopRequest(0),
 										m_pOwner(pOwner),
 										m_isInitialized(false) {}
 		GameErrorCode Initialize();
@@ -45,7 +48,7 @@ protected:
 
 	};
 	
-	
+	typedef wxVector<CallbackThread*> CallbackWorkerPool;
 	
 protected:
 	wxAtomicInt m_refCount;
@@ -56,13 +59,18 @@ protected:
 	
 	ClientListType m_clientList;
 	wxDword m_clientCount;
+	bool m_isInitialized;
 	
 	ClbkMapType m_callbackMap;
 	MsgQueueType m_msgQueue;
 	wxCriticalSection m_clientLock;
 	wxCriticalSection m_clbkLock;
+	
+	CallbackWorkerPool m_clbkThreads;
 
-		
+protected:
+	GameErrorCode MessageProcess(IGameMessage* pMsg);
+
 // message server methods	
 public:
 	GameMsgSrv():m_refCount(1),
@@ -70,8 +78,9 @@ public:
 				m_addressPool(GAME_ADDR_SERVER+1),
 				m_address(GAME_ADDR_SERVER),
 				m_isConnected(false),
-				m_clientCount(0){}
-	~GameMsgSrv(){}
+				m_clientCount(0),
+				m_isInitialized(false){}
+	~GameMsgSrv();
 	
 	/*!
 	 * \brief Initialize server and connect the client
@@ -85,18 +94,22 @@ public:
 	
 	inline GameLoggerPtr GetLogger() { return m_pLogger; }
 	
-
+	/*!
+	 * \brief Destroy all created members
+	 */
+	void DestroyThreads();
 // message client interface	implementation
 public:
 	virtual bool IsLocal();
 	virtual bool IsConnected();
-    virtual GameErrorCode Connect();	
+    virtual GameErrorCode Connect();
+	virtual GameErrorCode Disconnect();
 
 	virtual GameAddrType GetCliAddress();
-	virtual GameErrorCode SendMsg(IGameMessage* msg, long timeout);
+	virtual GameErrorCode SendMsg(IGameMessage &msg, long timeout);
 	
-	virtual GameErrorCode RegisterCallback(IGameMsgCallback *pClbk, GameMessageType msgType);
-	virtual GameErrorCode UnregisterCallback(IGameMsgCallback *pClbk);
+	virtual GameErrorCode RegisterCallback(GameMessageType msgType, IGameMsgCallback *pClbk);
+	virtual GameErrorCode UnregisterCallback(GameMessageType msgType, IGameMsgCallback *pClbk);
 
 // irefobject interface implementation
 public:

@@ -35,6 +35,8 @@ inline GameErrorCode GameConvertWxThreadErr2GameErr(wxThreadError threadErr)
  */
 class GameThread : public wxThread {
 public:
+	GameThread(wxThreadKind kind=wxTHREAD_DETACHED) : wxThread(kind) {}
+
 	inline GameErrorCode Create (unsigned int stackSize=0){
 		return GameConvertWxThreadErr2GameErr(wxThread::Create(stackSize));
 	}

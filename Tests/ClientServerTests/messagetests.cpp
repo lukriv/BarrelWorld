@@ -9,6 +9,7 @@
 
 SUITE(MessagesTests)
 {
+	
 	TEST(TestMessageTests)
 	{
 		wxMemoryOutputStream oMemStream;

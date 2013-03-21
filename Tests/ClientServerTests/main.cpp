@@ -1,4 +1,6 @@
 #include <UnitTest++/UnitTest++.h>
+#include <wx/init.h>
+#include <wx/wxcrtvararg.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -58,6 +60,13 @@
 // run all tests
 int main(int argc, char **argv)
 {
+	wxInitializer intialize (argc, argv);
+	if (!intialize.IsOk())
+	{
+		wxPrintf(wxT("Initializer failed"));
+		return -1;
+	}
+	
 	return UnitTest::RunAllTests();
 }
 
