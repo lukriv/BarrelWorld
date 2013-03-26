@@ -1,7 +1,7 @@
+#include "../GameSystem/gstream.h"
 #include "GameMessageImpl.h"
-#include <wx/datstrm.h>
 
-GameErrorCode GameMessageBase::LoadHeader(wxDataInputStream& iDataStream)
+GameErrorCode GameMessage::LoadHeader(wxDataInputStream& iDataStream)
 {
 	m_msgType = (GameMessageType) iDataStream.Read32();
 	m_msgVer = (GameVersionType) iDataStream.Read32();
@@ -10,10 +10,12 @@ GameErrorCode GameMessageBase::LoadHeader(wxDataInputStream& iDataStream)
 	m_target = (GameAddrType) iDataStream.Read32();
 	m_targetId = (GameAddrType) iDataStream.Read32();
 	
+	// load stream size
+	m_streamSize = iDataStream.Read64();
 	return FWG_NO_ERROR;	
 }
 
-GameErrorCode GameMessageBase::StoreHeader(wxDataOutputStream& oDataStream)
+GameErrorCode GameMessage::StoreHeader(wxDataOutputStream& oDataStream)
 {
 	oDataStream.Write32((wxUint32) m_msgType);
 	oDataStream.Write32((wxUint32) m_msgVer);
@@ -22,44 +24,96 @@ GameErrorCode GameMessageBase::StoreHeader(wxDataOutputStream& oDataStream)
 	oDataStream.Write32((wxUint32) m_target);
 	oDataStream.Write32((wxUint32) m_targetId);
 	
+	// store stream size
+	oDataStream.Write64(m_streamSize);
 	return FWG_NO_ERROR;
 }
 
 
 
 
-GameErrorCode GameMessageBase::Load(wxInputStream& istream)
+GameErrorCode GameMessage::Load(wxInputStream& istream)
 {
+	GameErrorCode resultErrcode = FWG_NO_ERROR;
 	wxDataInputStream iDataStream(istream);
 	iDataStream.BigEndianOrdered(true);
 	{
-		GameErrorCode resultErrcode = LoadHeader(iDataStream);
+		resultErrcode = LoadHeader(iDataStream);
 		if (FWG_FAILED(resultErrcode))
 		{
 			return resultErrcode;
 		}
 	}
 
-	{
-		GameErrorCode resultErrcode = LoadInternal(iDataStream);
-		if (FWG_FAILED(resultErrcode))
-		{
-			return resultErrcode;
-		}
-	}
 	
-	return FWG_NO_ERROR;
+	// resize stream to 0
+	m_internalStream.SeekO(0);
+	m_internalStream.GetOutputStreamBuffer()->Truncate();
+	
+	if(m_streamSize > 0)
+	{
+		// reset stream state
+		m_internalStream.Reset();
+		
+		// fill stream
+		m_internalStream.Write(istream);
+		
+		resultErrcode = GameConvertWxStreamErr2GameErr(m_internalStream.GetLastError());
+	}
+	return resultErrcode;
 }
 
-GameErrorCode GameMessageBase::Store(wxOutputStream& ostream)
+GameErrorCode GameMessage::Store(wxOutputStream& ostream)
 {
 	wxDataOutputStream oDataStream(ostream);
 	oDataStream.BigEndianOrdered(true);
 
 	FWG_RETURN_FAIL(StoreHeader(oDataStream));
-	FWG_RETURN_FAIL(StoreInternal(oDataStream));
 	
-	return FWG_NO_ERROR;
+	if(m_streamSize > 0) {
+		wxMemoryInputStream istream(m_internalStream);
+		ostream.Write(istream);
+	}
+	
+	return GameConvertWxStreamErr2GameErr(ostream.GetLastError());
 }
 
 
+GameErrorCode GameMessage::GetMessage(IGameData& data) const
+{
+	if(m_streamSize > 0)
+	{
+		wxMemoryInputStream iMemStream(m_internalStream);
+		FWG_RETURN_FAIL(data.Load(iMemStream));
+	}
+	return FWG_NO_ERROR;
+}
+
+GameErrorCode GameMessage::SetMessage(const IGameData &data, GameMessageType msgType)
+{
+		//reset stream (resize to 0)
+		m_internalStream.SeekO(0);
+		m_internalStream.GetOutputStreamBuffer()->Truncate();
+		
+		//set type
+		m_msgType = msgType;
+		
+		FWG_RETURN_FAIL(data.Store(m_internalStream));
+		
+		m_streamSize = (wxUint64) m_internalStream.GetLength();
+		
+		return FWG_NO_ERROR;
+}
+
+GameErrorCode GameMessage::CreateCopy(IGameMessage*& pMsgCopy)
+{
+	pMsgCopy = NULL;
+	
+	pMsgCopy = new (std::nothrow) GameMessage(*this);
+	if (!pMsgCopy)
+	{
+		return FWG_E_MEMORY_ALLOCATION_ERROR;
+	}
+	
+	return FWG_NO_ERROR;
+}

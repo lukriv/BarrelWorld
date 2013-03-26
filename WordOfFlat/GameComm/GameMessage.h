@@ -7,9 +7,10 @@
 #define __GAME_MESSAGE_H__
 
 #include <wx/stream.h>
+#include <wx/datstrm.h>
 #include "../GameSystem/gdefs.h"
 #include "../GameSystem/gerror.h"
-
+#include "gamedata.h"
 
 
 
@@ -63,10 +64,15 @@ public:
 	virtual void SetTargetId(GameAddrType targetId) = 0;
 	virtual GameAddrType GetTargetId() const = 0;
 	
+	virtual GameErrorCode SetMessage(const IGameData &data, GameMessageType msgType) = 0;
+	virtual GameErrorCode GetMessage(IGameData &data) const = 0;
+	
 	virtual GameErrorCode Load(wxInputStream &istream) = 0;
 	virtual GameErrorCode Store(wxOutputStream &ostream) = 0;
 
 	virtual GameErrorCode CreateCopy(IGameMessage *&pMsgCopy) = 0;
+	
+	virtual ~IGameMessage() {};
 	
 };
 

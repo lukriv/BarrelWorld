@@ -26,8 +26,10 @@
       <File Name="gthread.h"/>
       <File Name="gmsgqueue.h"/>
     </VirtualDirectory>
+    <VirtualDirectory Name="Streams">
+      <File Name="gstream.h"/>
+    </VirtualDirectory>
   </VirtualDirectory>
-  <Dependencies Name="Debug"/>
   <Dependencies Name="Release"/>
   <Settings Type="Static Library">
     <GlobalSettings>
@@ -108,4 +110,5 @@
       </Completion>
     </Configuration>
   </Settings>
+  <Dependencies Name="Debug"/>
 </CodeLite_Project>

@@ -49,6 +49,18 @@ void GameConvertErrCode2String(GameErrorCode errCode, wxString &errorStr)
 		errorStr.assign(FWG_E_UNKNOWN_TARGET_ERROR_STR);
 		break;
 		
+	case FWG_E_STREAM_EOF_ERROR:
+		errorStr.assign(FWG_E_STREAM_EOF_ERROR_STR);
+		break;
+		
+	case FWG_E_STREAM_WRITE_ERROR:
+		errorStr.assign(FWG_E_STREAM_WRITE_ERROR_STR);
+		break;
+		
+	case FWG_E_STREAM_READ_ERROR:
+		errorStr.assign(FWG_E_STREAM_READ_ERROR_STR);
+		break;
+		
 	default:
 		errorStr.assign(_T("Unknown Error"));
 		break;

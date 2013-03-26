@@ -12,8 +12,13 @@
     <File Name="msgclientservertest.cpp"/>
     <File Name="messagetests.cpp"/>
   </VirtualDirectory>
-  <Dependencies Name="Debug"/>
   <Dependencies Name="Release"/>
+  <Dependencies Name="Debug">
+    <Project Name="GameSystem"/>
+    <Project Name="GameComm"/>
+    <Project Name="GameMsgCli"/>
+    <Project Name="GameMsgSrv"/>
+  </Dependencies>
   <Settings Type="Executable">
     <GlobalSettings>
       <Compiler Options="-Wall" C_Options="">
@@ -22,8 +27,8 @@
       <Linker Options="">
         <LibraryPath Value="../../extern/lib"/>
         <Library Value="libUnitTest++.a"/>
-        <Library Value="GameMsgSrv"/>
         <Library Value="GameComm"/>
+        <Library Value="GameMsgSrv"/>
         <Library Value="GameSystem"/>
         <Library Value="wx_baseu-2.9.dll"/>
       </Linker>
@@ -37,7 +42,7 @@
         <LibraryPath Value="../../WordOfFlat/GameComm/Debug"/>
       </Linker>
       <ResourceCompiler Options="" Required="no"/>
-      <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="Debug" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
+      <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="Debug" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="Debug" PauseExecWhenProcTerminates="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
         <![CDATA[]]>
       </Environment>

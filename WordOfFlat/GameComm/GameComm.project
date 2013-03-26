@@ -8,14 +8,16 @@
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="src">
-    <File Name="gamemessages.cpp"/>
     <File Name="gamemessageimpl.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="GameMessage.h"/>
-    <File Name="gamemessages.h"/>
     <File Name="GameMessageImpl.h"/>
+    <File Name="GameDataImpl.h"/>
+    <File Name="gamemsgdata.h"/>
+    <File Name="gamedata.h"/>
   </VirtualDirectory>
+  <Dependencies Name="Release"/>
   <Settings Type="Static Library">
     <GlobalSettings>
       <Compiler Options="-Wall" C_Options="">
@@ -98,5 +100,4 @@
     </Configuration>
   </Settings>
   <Dependencies Name="Debug"/>
-  <Dependencies Name="Release"/>
 </CodeLite_Project>
