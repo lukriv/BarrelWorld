@@ -3,10 +3,12 @@
 
 
 #include "GameMessage.h"
+#include <wx/mstream.h>
 #include <wx/datstrm.h>
 
+static const GameVersionType GameMsgVersion = 1;
 
-class GameMessageBase : public IGameMessage {
+class GameMessage : public IGameMessage {
 	GameMessageType m_msgType;
 	GameVersionType m_msgVer;
 	
@@ -16,26 +18,35 @@ class GameMessageBase : public IGameMessage {
 	GameAddrType m_target;
 	GameAddrType m_targetId;
 	
+	wxUint64 m_streamSize;
+	wxMemoryOutputStream m_internalStream;
 
 
 public:
-	GameMessageBase(GameMessageType type, GameVersionType ver): m_msgType(type),
-																m_msgVer(ver),
-																m_source(GAME_ADDR_UNKNOWN),
-																m_sourceId(0),
-																m_target(GAME_ADDR_UNKNOWN),
-																m_targetId(0) {}
+	GameMessage(): m_msgType(GAME_MSG_TYPE_UNKNOWN),
+					m_msgVer(GameMsgVersion),
+					m_source(GAME_ADDR_UNKNOWN),
+					m_sourceId(0),
+					m_target(GAME_ADDR_UNKNOWN),
+					m_targetId(0),
+					m_streamSize(0) {}
 																
-	GameMessageBase(const GameMessageBase & msg) {
+	GameMessage(const GameMessage & msg) {
 		m_msgType = msg.m_msgType;
 		m_msgVer = msg.m_msgVer;
 		m_source = msg.m_source;
 		m_sourceId = msg.m_sourceId;
 		m_target = msg.m_target;
 		m_targetId = msg.m_targetId;
+		m_streamSize = msg.m_streamSize;
+		if(msg.m_internalStream.GetLength() > 0)
+		{
+			wxMemoryInputStream istream(msg.m_internalStream);
+			m_internalStream.Write(istream);
+		}
 	}
 	
-	virtual ~GameMessageBase() {}
+	virtual ~GameMessage() {}
 	
 	virtual GameMessageType GetType() const {return m_msgType;}
 	virtual GameVersionType GetVersion() const {return m_msgVer;}
@@ -52,18 +63,17 @@ public:
 	virtual void SetTargetId(GameAddrType targetId) {m_targetId = targetId;}
 	virtual GameAddrType GetTargetId() const {return m_targetId;}
 	
+	virtual GameErrorCode SetMessage(const IGameData &data, GameMessageType msgType);
+	virtual GameErrorCode GetMessage(IGameData &data) const;
 	
-	GameErrorCode Load(wxInputStream &istream);
-	GameErrorCode Store(wxOutputStream &ostream);
-
+	virtual GameErrorCode Load(wxInputStream &istream);
+	virtual GameErrorCode Store(wxOutputStream &ostream);
+	
+	virtual GameErrorCode CreateCopy(IGameMessage *&pMsgCopy);
+	
 protected:
 	virtual GameErrorCode LoadHeader(wxDataInputStream &iDataStream);
 	virtual GameErrorCode StoreHeader(wxDataOutputStream &oDataStream);
-	
-	virtual GameErrorCode LoadInternal(wxDataInputStream &iDataStream) = 0;
-	virtual GameErrorCode StoreInternal(wxDataOutputStream &oDataStream) = 0;	
 };
-
-
 
 #endif //__GAME_MESSAGE_IMPL_H__

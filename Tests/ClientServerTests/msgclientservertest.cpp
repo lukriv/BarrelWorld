@@ -6,7 +6,8 @@
 #include <wx/scopedptr.h>
 
 #include "../../WordOfFlat/GameMsgSrv/gamemsgsrvimpl.h"
-#include "../../WordOfFlat/GameComm/gamemessages.h"
+#include "../../WordOfFlat/GameComm/gamemsgdata.h"
+#include "../../WordOfFlat/GameComm/GameMessageImpl.h"
 
 class TestMsgCallback : public IGameMsgCallback {
 	wxAtomicInt m_callCounter;
@@ -18,8 +19,9 @@ public:
 	{
 		if(GAME_MSG_TYPE_TEST == msg.GetType())
 		{
-			TestMessage* pTestMsg = (TestMessage*) (&msg); // retype
-			if(m_expectedValue == pTestMsg->GetTestValue())
+			TestMessageData testMsgData;
+			msg.GetMessage(testMsgData);
+			if(m_expectedValue == testMsgData.GetTestValue())
 			{
 				wxAtomicInc(m_callCounter);
 			} else {
@@ -81,10 +83,11 @@ SUITE(MsgServerClientTest)
 	TEST(ServerClient_LocalCallbackSendTest)
 	{
 		GameMsgSrv serverCli;
-		TestMessage testMsg;
+		TestMessageData testMsgData;
+		GameMessage testMsg;
 		wxPrintf(wxT("ServerClient_LocalCallbackSendTest\n"));
 		
-		const wxDword testValue = 111;
+		wxDword testValue = 111;
 		
 		TestMsgCallback testClbk;
 		testClbk.SetExpectedValue(testValue);
@@ -97,7 +100,8 @@ SUITE(MsgServerClientTest)
 		CHECK(FWG_SUCCEDED(serverCli.RegisterCallback(GAME_MSG_TYPE_TEST, &testClbk)));
 		
 		testMsg.SetTarget(GAME_ADDR_SERVER);
-		testMsg.SetTestValue(testValue);
+		testMsgData.SetTestValue(testValue);
+		CHECK(FWG_SUCCEDED(testMsg.SetMessage(testMsgData, GAME_MSG_TYPE_TEST)));
 		CHECK(FWG_SUCCEDED(serverCli.SendMsg(testMsg, 0)));
 		wxThread::Sleep(50);
 		
@@ -119,8 +123,13 @@ SUITE(MsgServerClientTest)
 		
 		CHECK(FWG_SUCCEDED(serverCli.RegisterCallback(GAME_MSG_TYPE_TEST, &testClbk)));
 		
+		//change value
+		testValue = 222;
+		testClbk.SetExpectedValue(testValue);
+				
 		testMsg.SetTarget(GAME_ADDR_SERVER);
-		testMsg.SetTestValue(testValue);
+		testMsgData.SetTestValue(testValue);
+		CHECK(FWG_SUCCEDED(testMsg.SetMessage(testMsgData, GAME_MSG_TYPE_TEST)));
 		CHECK(FWG_SUCCEDED(serverCli.SendMsg(testMsg, 0)));
 		CHECK(FWG_SUCCEDED(serverCli.SendMsg(testMsg, 0)));
 		CHECK(FWG_SUCCEDED(serverCli.SendMsg(testMsg, 0)));
