@@ -120,6 +120,25 @@ SUITE(MessagesTests)
 		CHECK(GAME_MSG_TYPE_TEST == pTestMsg->GetType());
 		CHECK(FWG_SUCCEDED(pTestMsg->GetMessage(testDataLoaded)));
 		CHECK(value == testDataLoaded.GetTestValue());
+		
+		
+		//multiple set tests
+		// type and message set test
+		value = 66;
+		testDataOrig.SetTestValue(value);
+		CHECK(FWG_SUCCEDED(testMessage.SetMessage(testDataOrig, GAME_MSG_TYPE_TEST)));
+		CHECK(FWG_SUCCEDED(testMessage.GetMessage(testDataLoaded)));
+		CHECK(value == testDataLoaded.GetTestValue());
+		value = 77;
+		testDataOrig.SetTestValue(value);
+		CHECK(FWG_SUCCEDED(testMessage.SetMessage(testDataOrig, GAME_MSG_TYPE_TEST)));
+		CHECK(FWG_SUCCEDED(testMessage.GetMessage(testDataLoaded)));
+		CHECK(value == testDataLoaded.GetTestValue());
+		value = 88;
+		testDataOrig.SetTestValue(value);
+		CHECK(FWG_SUCCEDED(testMessage.SetMessage(testDataOrig, GAME_MSG_TYPE_TEST)));
+		CHECK(FWG_SUCCEDED(testMessage.GetMessage(testDataLoaded)));
+		CHECK(value == testDataLoaded.GetTestValue());
 	}
 	
 }
