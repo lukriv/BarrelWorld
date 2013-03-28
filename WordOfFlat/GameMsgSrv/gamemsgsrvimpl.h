@@ -45,7 +45,7 @@ public:
 				m_isConnected(false),
 				m_clientCount(0),
 				m_isInitialized(false){}
-	~GameMsgSrv();
+	virtual ~GameMsgSrv();
 	
 	/*!
 	 * \brief Initialize server and connect the client

@@ -54,6 +54,7 @@ protected:
 
 public:
 	GameCliClbkWorkerPool() : m_isInitialized(false), m_threadsNr(0) {}
+	virtual ~GameCliClbkWorkerPool();
 	
 	GameErrorCode Initialize(wxDword threadsNr, GameLogger *pLogger);
 	
