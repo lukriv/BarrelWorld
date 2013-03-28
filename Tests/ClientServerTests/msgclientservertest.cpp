@@ -5,6 +5,7 @@
 #include <wx/log.h>
 #include <wx/scopedptr.h>
 
+#include "../../WordOfFlat/GameSystem/glog.h"
 #include "../../WordOfFlat/GameMsgSrv/gamemsgsrvimpl.h"
 #include "../../WordOfFlat/GameComm/gamemsgdata.h"
 #include "../../WordOfFlat/GameComm/GameMessageImpl.h"
@@ -23,8 +24,10 @@ public:
 			msg.GetMessage(testMsgData);
 			if(m_expectedValue == testMsgData.GetTestValue())
 			{
+				wxPrintf(wxT("OnNewMessage succed: value = %d\n"), testMsgData.GetTestValue());
 				wxAtomicInc(m_callCounter);
 			} else {
+				wxPrintf(wxT("OnNewMessage failed: expected = %d ; from message = %d\n"), m_expectedValue, testMsgData.GetTestValue());
 				wxAtomicInc(m_errorCall);
 			}
 			
@@ -87,12 +90,15 @@ SUITE(MsgServerClientTest)
 		GameMessage testMsg;
 		wxPrintf(wxT("ServerClient_LocalCallbackSendTest\n"));
 		
+		GameLogger* pLogger;
+		GameLoggerCreator::CreateLogger(pLogger);
+		
 		wxDword testValue = 111;
 		
 		TestMsgCallback testClbk;
 		testClbk.SetExpectedValue(testValue);
 		
-		CHECK(FWG_SUCCEDED(serverCli.Initialize(NULL)));
+		CHECK(FWG_SUCCEDED(serverCli.Initialize(pLogger)));
 		CHECK(FWG_SUCCEDED(serverCli.Connect()));
 		CHECK(true == serverCli.IsConnected());
 		CHECK(true == serverCli.IsLocal());
@@ -126,13 +132,30 @@ SUITE(MsgServerClientTest)
 		//change value
 		testValue = 222;
 		testClbk.SetExpectedValue(testValue);
-				
 		testMsg.SetTarget(GAME_ADDR_SERVER);
 		testMsgData.SetTestValue(testValue);
 		CHECK(FWG_SUCCEDED(testMsg.SetMessage(testMsgData, GAME_MSG_TYPE_TEST)));
 		CHECK(FWG_SUCCEDED(serverCli.SendMsg(testMsg, 0)));
+		wxThread::Sleep(50);
+		testValue = 333;
+		testClbk.SetExpectedValue(testValue);
+		testMsg.SetTarget(GAME_ADDR_SERVER);
+		testMsgData.SetTestValue(testValue);
+		CHECK(FWG_SUCCEDED(testMsg.SetMessage(testMsgData, GAME_MSG_TYPE_TEST)));
 		CHECK(FWG_SUCCEDED(serverCli.SendMsg(testMsg, 0)));
+		wxThread::Sleep(50);
+		testValue = 444;
+		testClbk.SetExpectedValue(testValue);
+		testMsg.SetTarget(GAME_ADDR_SERVER);
+		testMsgData.SetTestValue(testValue);
+		CHECK(FWG_SUCCEDED(testMsg.SetMessage(testMsgData, GAME_MSG_TYPE_TEST)));
 		CHECK(FWG_SUCCEDED(serverCli.SendMsg(testMsg, 0)));
+		wxThread::Sleep(50);
+		testValue = 555;
+		testClbk.SetExpectedValue(testValue);
+		testMsg.SetTarget(GAME_ADDR_SERVER);
+		testMsgData.SetTestValue(testValue);
+		CHECK(FWG_SUCCEDED(testMsg.SetMessage(testMsgData, GAME_MSG_TYPE_TEST)));
 		CHECK(FWG_SUCCEDED(serverCli.SendMsg(testMsg, 0)));
 		wxThread::Sleep(50);
 		

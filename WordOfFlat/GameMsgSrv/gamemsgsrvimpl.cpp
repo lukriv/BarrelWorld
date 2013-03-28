@@ -5,13 +5,7 @@
 
 #define CLIENT_LIST_SIZE 10
 
-#define CALLBACK_THREAD_NR 2
-
-
-static void ScopeGuardMsgSrv(GameMsgSrv *srv)
-{
-	if (srv != NULL) { srv->DestroyThreads(); }
-}
+static const wxDword CALLBACK_THREAD_NR = 2;
 
 
 GameAddrType GameMsgSrv::GetCliAddress()
@@ -129,8 +123,7 @@ GameErrorCode GameMsgSrv::Initialize(GameLogger* pLogger)
 	GameErrorCode result = FWG_NO_ERROR;
 	ClientListType::iterator iter;
 	m_clientList.resize(CLIENT_LIST_SIZE);
-	wxScopedPtr<CallbackThread> spWorkerThr;
-	CallbackThread* pWorkerThr = NULL;
+
 	
 	if(m_isInitialized) {
 		return FWG_NO_ERROR;
@@ -141,66 +134,18 @@ GameErrorCode GameMsgSrv::Initialize(GameLogger* pLogger)
 		iter->m_active = false;
 	}
 	
-	wxScopeGuard guard = wxMakeGuard(ScopeGuardMsgSrv, this);
-	  
-	//worker threads initialization
-	for (wxDword i = 0; i < CALLBACK_THREAD_NR; ++i)
+	if(FWG_FAILED(result = GameCliClbkWorkerPool::Initialize(CALLBACK_THREAD_NR, pLogger)))
 	{
-		pWorkerThr = new (std::nothrow) CallbackThread(this);
-		if (pWorkerThr != NULL) {
-			spWorkerThr.reset(pWorkerThr);
-		}
-		if(FWG_FAILED(result = spWorkerThr->Initialize()))
-		{
-			FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::Initialize() : Run thread failed: 0x%08x"), m_pLogger, result);
-			return result;	
-		}
-		m_clbkThreads.push_back(spWorkerThr.release());
+		FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::Initialize() : Initialization GameCliClbkWorkerPool failed: 0x%08x"),
+							pLogger, result);
+		return result;
 	}
-	
-	guard.Dismiss();
 	
 	m_isInitialized = true;
 	
 	return FWG_NO_ERROR;
 }
 
-void GameMsgSrv::DestroyThreads()
-{
-	GameErrorCode result = FWG_NO_ERROR;
-	void* resultThr = 0;
-	CallbackWorkerPool::iterator iter;
-	//send stop request for all
-	for (iter = m_clbkThreads.begin(); iter != m_clbkThreads.end(); iter++)
-	{
-		(**iter).StopRequest();
-	}
-	
-	//call initiate end messages
-	for (wxDword i = 0; i < CALLBACK_THREAD_NR; i++)
-	{
-		if(FWG_FAILED(result = m_msgQueue.Post(NULL)))
-		{
-			FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::Destroy() : Post NULL message failed: 0x%08x"), m_pLogger, result);
-		}
-	}
-	
-	//wait for end
-	for (iter = m_clbkThreads.begin(); iter != m_clbkThreads.end(); iter++)
-	{
-		if(FWG_FAILED(result = (**iter).Delete(&resultThr, wxTHREAD_WAIT_BLOCK)))
-		{
-			FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::Destroy() : Delete thread failed: 0x%08x"), m_pLogger, result);
-		}
-		
-		if (FWG_FAILED((GameErrorCode)resultThr))
-		{
-			FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::Destroy() : Thread exit with error: 0x%08x"), m_pLogger, (GameErrorCode)resultThr);
-		}
-	}
-	
-	
-}
 
 GameErrorCode GameMsgSrv::Connect()
 {
@@ -259,105 +204,7 @@ wxInt32 GameMsgSrv::release()
 
 GameMsgSrv::~GameMsgSrv()
 {
-	DestroyThreads();
-}
 
-
-GameErrorCode GameMsgSrv::MessageProcess(IGameMessage* pMsg)
-{
-	GameErrorCode result = FWG_NO_ERROR;
-	ClbkMapType::iterator iterMap;
-	
-	wxCriticalSectionLocker locker(m_clbkLock);
-	iterMap = m_callbackMap.find(pMsg->GetType());
-	
-	if (iterMap != m_callbackMap.end())
-	{
-		ClbkVecType::iterator iterClbk;
-		for(iterClbk = iterMap->second.begin(); iterClbk != iterMap->second.end(); iterClbk++)
-		{
-			if(FWG_FAILED(result = (**iterClbk).OnNewMessage(*pMsg)))
-			{
-				FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::MessageProcess() : Callback failed: 0x%08x"), m_pLogger, result);
-			}
-		}
-	} else {
-		FWGLOG_DEBUG_FORMAT(wxT("GameMsgSrv::MessageProcess() : Callback not found for message type: %u"), m_pLogger, pMsg->GetType());
-	}
-	
-	return result;
-}
-
-
-
-//--------------------------------------------------------------------
-//--------------- GameMsgSrv::CallbackThread -------------------------
-//--------------------------------------------------------------------
-
-void* GameMsgSrv::CallbackThread::Entry()
-{
-	GameErrorCode result = FWG_NO_ERROR;
-	IGameMessage *pMsg = NULL;
-	
-	if(!m_isInitialized) {
-		return (void*) FWG_E_OBJECT_NOT_INITIALIZED_ERROR;
-	}
-	
-	while (m_isStopRequest == 0)
-	{
-		if (FWG_FAILED(result = m_pOwner->m_msgQueue.Receive(pMsg)))
-		{
-			FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::CallbackThread::Entry() : Receive message failed: 0x%08x"), m_pOwner->GetLogger(), result);
-			return (void*) result;
-		}
-		
-		// do not process message if is NULL poiter (end message)
-		if (pMsg == NULL) continue;
-		
-		if(FWG_FAILED(result = m_pOwner->MessageProcess(pMsg)))
-		{
-			FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::CallbackThread::Entry() : Callback failed: 0x%08x"), m_pOwner->GetLogger(), result);
-		}
-		
-		// discard message
-		delete pMsg;
-		pMsg = NULL;
-		
-	}
-	
-	return (void*) result;
-}
-
-GameErrorCode GameMsgSrv::CallbackThread::Initialize()
-{
-	GameErrorCode result = FWG_NO_ERROR;
-	if (FWG_FAILED(result = Create()))
-	{
-		FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::CallbackThread::Initialize() : Thread create failed: 0x%08x"), m_pOwner->GetLogger(), result);
-		return result;
-	}
-	
-	if (FWG_FAILED(result = Run()))
-	{
-		FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::CallbackThread::Initialize() : Run thread failed: 0x%08x"), m_pOwner->GetLogger(), result);
-		return result;
-	}
-	
-	m_isInitialized = true;
-	
-	return result;
-}
-
-GameErrorCode GameMsgSrv::CallbackThread::StopRequest()
-{
-	GameErrorCode result = FWG_NO_ERROR;
-	if(!m_isInitialized) {
-		return FWG_E_OBJECT_NOT_INITIALIZED_ERROR;
-	}
-	
-	wxAtomicInc(m_isStopRequest);
-	
-	return result;
 }
 
 
