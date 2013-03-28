@@ -108,6 +108,12 @@ GameErrorCode GameCliClbkWorkerPool::MessageProcess(IGameMessage* pMsg)
 	
 	return result;
 }
+
+GameCliClbkWorkerPool::~GameCliClbkWorkerPool()
+{
+	DestroyThreads();
+	m_msgQueue.Clear();
+}
 //--------------------------------------------------------------------
 //------------ GameCliClbkWorkerPool::CallbackThread -----------------
 //--------------------------------------------------------------------

@@ -24,10 +24,10 @@ public:
 			msg.GetMessage(testMsgData);
 			if(m_expectedValue == testMsgData.GetTestValue())
 			{
-				wxPrintf(wxT("OnNewMessage succed: value = %d\n"), testMsgData.GetTestValue());
+				//wxPrintf(wxT("OnNewMessage succed: value = %d\n"), testMsgData.GetTestValue());
 				wxAtomicInc(m_callCounter);
 			} else {
-				wxPrintf(wxT("OnNewMessage failed: expected = %d ; from message = %d\n"), m_expectedValue, testMsgData.GetTestValue());
+				//wxPrintf(wxT("OnNewMessage failed: expected = %d ; from message = %d\n"), m_expectedValue, testMsgData.GetTestValue());
 				wxAtomicInc(m_errorCall);
 			}
 			
