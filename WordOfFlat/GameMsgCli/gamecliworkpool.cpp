@@ -25,7 +25,7 @@ void GameCliClbkWorkerPool::DestroyThreads()
 	{
 		if(FWG_FAILED(result = m_msgQueue.Post(NULL)))
 		{
-			FWGLOG_ERROR_FORMAT(wxT("GameCliClbkWorkerPool::Destroy() : Post NULL message failed: 0x%08x"), m_pLogger, result);
+			FWGLOG_ERROR_FORMAT(wxT("GameCliClbkWorkerPool::Destroy() : Post NULL message failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
 		}
 	}
 	
@@ -34,12 +34,12 @@ void GameCliClbkWorkerPool::DestroyThreads()
 	{
 		if(FWG_FAILED(result = (**iter).Delete(&resultThr, wxTHREAD_WAIT_BLOCK)))
 		{
-			FWGLOG_ERROR_FORMAT(wxT("GameCliClbkWorkerPool::Destroy() : Delete thread failed: 0x%08x"), m_pLogger, result);
+			FWGLOG_ERROR_FORMAT(wxT("GameCliClbkWorkerPool::Destroy() : Delete thread failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
 		}
 		
 		if (FWG_FAILED((GameErrorCode)resultThr))
 		{
-			FWGLOG_ERROR_FORMAT(wxT("GameCliClbkWorkerPool::Destroy() : Thread exit with error: 0x%08x"), m_pLogger, (GameErrorCode)resultThr);
+			FWGLOG_ERROR_FORMAT(wxT("GameCliClbkWorkerPool::Destroy() : Thread exit with error: 0x%08x"), m_pLogger, (GameErrorCode)resultThr, FWGLOG_ENDVAL);
 		}
 		
 		m_threadsNr--;
@@ -71,7 +71,7 @@ GameErrorCode GameCliClbkWorkerPool::Initialize(wxDword threadsNr, GameLogger* p
 		}
 		if(FWG_FAILED(result = spWorkerThr->Initialize()))
 		{
-			FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::Initialize() : Run thread failed: 0x%08x"), m_pLogger, result);
+			FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::Initialize() : Run thread failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
 			return result;	
 		}
 		m_clbkThreads.push_back(spWorkerThr.release());
@@ -99,7 +99,7 @@ GameErrorCode GameCliClbkWorkerPool::MessageProcess(IGameMessage* pMsg)
 		{
 			if(FWG_FAILED(result = (**iterClbk).OnNewMessage(*pMsg)))
 			{
-				FWGLOG_ERROR_FORMAT(wxT("GameCliClbkWorkerPool::MessageProcess() : Callback failed: 0x%08x"), m_pLogger, result);
+				FWGLOG_ERROR_FORMAT(wxT("GameCliClbkWorkerPool::MessageProcess() : Callback failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
 			}
 		}
 	} else {
@@ -131,7 +131,7 @@ void* GameCliClbkWorkerPool::CallbackThread::Entry()
 	{
 		if (FWG_FAILED(result = m_pOwner->m_msgQueue.Receive(pMsg)))
 		{
-			FWGLOG_ERROR_FORMAT(wxT("GameCliClbkWorkerPool::CallbackThread::Entry() : Receive message failed: 0x%08x"), m_pOwner->GetLogger(), result);
+			FWGLOG_ERROR_FORMAT(wxT("GameCliClbkWorkerPool::CallbackThread::Entry() : Receive message failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
 			return (void*) result;
 		}
 		
@@ -140,7 +140,7 @@ void* GameCliClbkWorkerPool::CallbackThread::Entry()
 		
 		if(FWG_FAILED(result = m_pOwner->MessageProcess(pMsg)))
 		{
-			FWGLOG_ERROR_FORMAT(wxT("GameCliClbkWorkerPool::CallbackThread::Entry() : Callback failed: 0x%08x"), m_pOwner->GetLogger(), result);
+			FWGLOG_ERROR_FORMAT(wxT("GameCliClbkWorkerPool::CallbackThread::Entry() : Callback failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
 		}
 		
 		// discard message
@@ -157,13 +157,13 @@ GameErrorCode GameCliClbkWorkerPool::CallbackThread::Initialize()
 	GameErrorCode result = FWG_NO_ERROR;
 	if (FWG_FAILED(result = Create()))
 	{
-		FWGLOG_ERROR_FORMAT(wxT("GameCliClbkWorkerPool::CallbackThread::Initialize() : Thread create failed: 0x%08x"), m_pOwner->GetLogger(), result);
+		FWGLOG_ERROR_FORMAT(wxT("GameCliClbkWorkerPool::CallbackThread::Initialize() : Thread create failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
 		return result;
 	}
 	
 	if (FWG_FAILED(result = Run()))
 	{
-		FWGLOG_ERROR_FORMAT(wxT("GameCliClbkWorkerPool::CallbackThread::Initialize() : Run thread failed: 0x%08x"), m_pOwner->GetLogger(), result);
+		FWGLOG_ERROR_FORMAT(wxT("GameCliClbkWorkerPool::CallbackThread::Initialize() : Run thread failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
 		return result;
 	}
 	
