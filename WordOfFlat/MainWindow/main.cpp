@@ -41,11 +41,11 @@ int main(int argc, char **argv)
 	FWGLOG_WARNING(wxT("Warning message"), spLogger);
 	FWGLOG_ERROR(wxT("Error message"), spLogger);
 	
-	FWGLOG_TRACE_FORMAT(wxT("Format: %s"), spLogger, wxT("Trace message"));
-	FWGLOG_DEBUG_FORMAT(wxT("Format: %s"), spLogger, wxT("Debug message"));
-	FWGLOG_INFO_FORMAT(wxT("Format: %s"), spLogger, wxT("Info message"));
-	FWGLOG_WARNING_FORMAT(wxT("Format: %s"), spLogger, wxT("Warning message"));
-	FWGLOG_ERROR_FORMAT(wxT("Format: %s"), spLogger, wxT("Error message"));
+	FWGLOG_TRACE_FORMAT(wxT("Format: %s"), spLogger, wxT("Trace message"), FWGLOG_ENDVAL);
+	FWGLOG_DEBUG_FORMAT(wxT("Format: %s"), spLogger, wxT("Debug message"), FWGLOG_ENDVAL);
+	FWGLOG_INFO_FORMAT(wxT("Format: %s"), spLogger, wxT("Info message"), FWGLOG_ENDVAL);
+	FWGLOG_WARNING_FORMAT(wxT("Format: %s"), spLogger, wxT("Warning message"), FWGLOG_ENDVAL);
+	FWGLOG_ERROR_FORMAT(wxT("Format: %s"), spLogger, wxT("Error message"), FWGLOG_ENDVAL);
 
 	// Create the main window
 	sf::RenderWindow window(sf::VideoMode(800, 600), "SFML window");

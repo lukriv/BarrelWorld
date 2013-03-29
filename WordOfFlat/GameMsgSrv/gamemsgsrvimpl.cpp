@@ -69,13 +69,13 @@ GameErrorCode GameMsgSrv::SendMsg(IGameMessage &msg, long timeout)
 		IGameMessage* copy = NULL;
 		if(FWG_FAILED(result = msg.CreateCopy(copy)))
 		{
-			FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::SendMsg() : Create message copy failed: 0x%08x"), m_pLogger, result);
+			FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::SendMsg() : Create message copy failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
 			return result;
 		}
 		
 		if(FWG_FAILED(result = m_msgQueue.Post(copy)))
 		{
-			FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::SendMsg() : Post message to queue failed: 0x%08x"), m_pLogger, result);
+			FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::SendMsg() : Post message to queue failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
 			return result;
 		}
 		
@@ -137,7 +137,7 @@ GameErrorCode GameMsgSrv::Initialize(GameLogger* pLogger)
 	if(FWG_FAILED(result = GameCliClbkWorkerPool::Initialize(CALLBACK_THREAD_NR, pLogger)))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::Initialize() : Initialization GameCliClbkWorkerPool failed: 0x%08x"),
-							pLogger, result);
+							pLogger, result, FWGLOG_ENDVAL);
 		return result;
 	}
 	

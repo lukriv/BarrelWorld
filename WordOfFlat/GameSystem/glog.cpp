@@ -107,78 +107,37 @@ wxString GameLogger::LogFormatterV(const wxChar* Severity, const wxString& msg, 
 	return LogFormatter(Severity, intMsg, info);
 }
 
-
-void GameLogger::LogTrace(const wxString& msg, const wxLogRecordInfo& info)
+const wxChar* GameLogger::LogSeverity2String(wxDword logSeverity)
 {
-	wxString str = LogFormatter(FWGLOG_SEVERITY_STR_TRACE, msg, info);
+	switch(logSeverity)
+	{
+		case FWGLOG_LEVEL_TRACE:
+			return FWGLOG_SEVERITY_STR_TRACE;
+		case FWGLOG_LEVEL_DEBUG:
+			return FWGLOG_SEVERITY_STR_DEBUG;
+		case FWGLOG_LEVEL_INFO:
+			return FWGLOG_SEVERITY_STR_INFO;
+		case FWGLOG_LEVEL_WARNING:
+			return FWGLOG_SEVERITY_STR_WARNING;
+		case FWGLOG_LEVEL_ERROR:
+			return FWGLOG_SEVERITY_STR_ERROR;
+		default:
+			return NULL;
+	}
+} 
+
+
+void GameLogger::LogWrite(const wxString& msg, const wxLogRecordInfo& info, wxDword logSeverity)
+{	
+	wxString str = LogFormatter(LogSeverity2String(logSeverity), msg, info);
 	wxLogMessage(str.wx_str());
 }
 
-void GameLogger::LogTraceFormat(const wxString& formatStr, const wxLogRecordInfo& info, ...)
+void GameLogger::LogWriteFormat(const wxString& formatStr, const wxLogRecordInfo& info, wxDword logSeverity, ...)
 {
 	va_list args;
-	va_start(args, formatStr.fn_str());
-	wxString str = LogFormatterV(FWGLOG_SEVERITY_STR_TRACE, formatStr, info, args);
-	va_end(args);
-	wxLogMessage(str.wx_str());
-}
-
-void GameLogger::LogDebug(const wxString& msg, const wxLogRecordInfo& info)
-{
-	wxString str = LogFormatter(FWGLOG_SEVERITY_STR_DEBUG, msg, info);
-	wxLogMessage(str.wx_str());
-}
-
-void GameLogger::LogDebugFormat(const wxString& formatStr, const wxLogRecordInfo& info, ...)
-{
-	va_list args;
-	va_start(args, formatStr.fn_str());
-	wxString str = LogFormatterV(FWGLOG_SEVERITY_STR_DEBUG, formatStr, info, args);
-	va_end(args);
-	wxLogMessage(str.wx_str());
-}
-
-void GameLogger::LogInfo(const wxString& msg, const wxLogRecordInfo& info)
-{
-	wxString str = LogFormatter(FWGLOG_SEVERITY_STR_INFO, msg, info);
-	wxLogMessage(str.wx_str());
-}
-
-void GameLogger::LogInfoFormat(const wxString& formatStr, const wxLogRecordInfo& info, ...)
-{
-	va_list args;
-	va_start(args, formatStr.fn_str());
-	wxString str = LogFormatterV(FWGLOG_SEVERITY_STR_INFO, formatStr, info, args);
-	va_end(args);
-	wxLogMessage(str.wx_str());
-}
-
-void GameLogger::LogWarning(const wxString& msg, const wxLogRecordInfo& info)
-{
-	wxString str = LogFormatter(FWGLOG_SEVERITY_STR_WARNING, msg, info);
-	wxLogMessage(str.wx_str());
-}
-
-void GameLogger::LogWarningFormat(const wxString& formatStr, const wxLogRecordInfo& info, ...)
-{
-	va_list args;
-	va_start(args, formatStr.fn_str());
-	wxString str = LogFormatterV(FWGLOG_SEVERITY_STR_WARNING, formatStr, info, args);
-	va_end(args);
-	wxLogMessage(str.wx_str());
-}
-
-void GameLogger::LogError(const wxString& msg, const wxLogRecordInfo& info)
-{
-	wxString str = LogFormatter(FWGLOG_SEVERITY_STR_ERROR, msg, info);
-	wxLogMessage(str.wx_str());
-}
-
-void GameLogger::LogErrorFormat(const wxString& formatStr, const wxLogRecordInfo& info, ...)
-{
-	va_list args;
-	va_start(args, formatStr.fn_str());
-	wxString str = LogFormatterV(FWGLOG_SEVERITY_STR_ERROR, formatStr, info, args);
+	va_start(args, FWGLOG_ENDVAL);
+	wxString str = LogFormatterV(LogSeverity2String(logSeverity), formatStr, info, args);
 	va_end(args);
 	wxLogMessage(str.wx_str());
 }
@@ -189,17 +148,20 @@ GameLogger::~GameLogger()
 
 
 
+
 // ***************************************************************************
 // ************************* GameLoggerCreator *******************************
 // ***************************************************************************
 
 
-GameErrorCode GameLoggerCreator::CreateLogger(GameLogger*& pLogger, const wxChar* loggerName)
+GameErrorCode GameLoggerCreator::CreateLogger(GameLogger*& pLogger, const wxChar* loggerName, wxDword logSeverity)
 {
 	FILE* pLoggerFile = NULL;
 	GameErrorCode result = FWG_NO_ERROR;
 	const wxChar* loggerFileName = NULL;
 	GameLogger* pLog = NULL;
+	FWG_UNREFERENCED_PARAMETER(logSeverity);
+	
 	
 	if (loggerName)
 	{
@@ -257,3 +219,5 @@ GameLoggerCreator::~GameLoggerCreator()
 {
 	g_pLoggerCreator = NULL;
 }
+
+

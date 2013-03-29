@@ -1,6 +1,7 @@
 #ifndef __GAME_LOG_H__
 #define __GAME_LOG_H__
 
+#include "gdefs.h"
 #include <set>
 #include <wx/log.h>
 #include <wx/thread.h>
@@ -17,57 +18,64 @@
 #define FWGLOG_LEVEL_ERROR 		1
 #define FWGLOG_LEVEL_NOLOG 		0
 
+#define FWGLOG_ENDVAL 			0
+
 #ifndef FWGLOG_ACTUAL_LEVEL
 	#define FWGLOG_ACTUAL_LEVEL FWGLOG_LEVEL_TRACE
 #endif
 
+#define FWGLOG_WRITE_LOG(message,logger,severity) \
+	if(logger) (logger)->LogWrite(wxString(message),wxLogRecordInfo(__FILE__,__LINE__,__FUNCTION__,NULL),severity)
+
+#define FWGLOG_WRITE_LOG_FORMAT(messageFormat,logger,severity,...) \
+	if(logger) (logger)->LogWriteFormat(wxString(messageFormat),wxLogRecordInfo(__FILE__,__LINE__,__FUNCTION__,NULL),severity, __VA_ARGS__)
 
 #if FWGLOG_ACTUAL_LEVEL >= FWGLOG_LEVEL_TRACE
-	#define FWGLOG_TRACE(message,logger) if(logger) (logger)->LogTrace(wxString(message),wxLogRecordInfo(__FILE__,__LINE__,__FUNCTION__,NULL))
-	#define FWGLOG_TRACE_FORMAT(messageFormat,logger,...) if(logger) (logger)->LogTraceFormat(wxString(messageFormat),wxLogRecordInfo(__FILE__,__LINE__,__FUNCTION__,NULL), __VA_ARGS__)
+	#define FWGLOG_TRACE(message,logger) FWGLOG_WRITE_LOG(message,logger,FWGLOG_LEVEL_TRACE)
+	#define FWGLOG_TRACE_FORMAT(messageFormat,logger,...) FWGLOG_WRITE_LOG_FORMAT(messageFormat,logger,FWGLOG_LEVEL_TRACE,__VA_ARGS__)
 #else 
 	#define FWGLOG_TRACE(message,logger)
 	#define FWGLOG_TRACE_FORMAT(messageFormat,logger,...)
 #endif
 
 #if FWGLOG_ACTUAL_LEVEL >= FWGLOG_LEVEL_DEBUG
-	#define FWGLOG_DEBUG(message,logger) if(logger) (logger)->LogDebug(wxString(message),wxLogRecordInfo(__FILE__,__LINE__,__FUNCTION__,NULL))
-	#define FWGLOG_DEBUG_FORMAT(messageFormat,logger,...) if(logger) (logger)->LogDebugFormat(wxString(messageFormat),wxLogRecordInfo(__FILE__,__LINE__,__FUNCTION__,NULL), __VA_ARGS__)
+	#define FWGLOG_DEBUG(message,logger) FWGLOG_WRITE_LOG(message,logger,FWGLOG_LEVEL_DEBUG)
+	#define FWGLOG_DEBUG_FORMAT(messageFormat,logger,...) FWGLOG_WRITE_LOG_FORMAT(messageFormat,logger,FWGLOG_LEVEL_DEBUG,__VA_ARGS__)
 #else 
 	#define FWGLOG_DEBUG(message,logger)
 	#define FWGLOG_DEBUG_FORMAT(messageFormat,logger,...)
 #endif
 
 #if FWGLOG_ACTUAL_LEVEL >= FWGLOG_LEVEL_INFO	
-	#define FWGLOG_INFO(message,logger) if(logger) (logger)->LogInfo(wxString(message),wxLogRecordInfo(__FILE__,__LINE__,__FUNCTION__,NULL))
-	#define FWGLOG_INFO_FORMAT(messageFormat,logger,...) if(logger) (logger)->LogInfoFormat(wxString(messageFormat),wxLogRecordInfo(__FILE__,__LINE__,__FUNCTION__,NULL), __VA_ARGS__)
+	#define FWGLOG_INFO(message,logger) FWGLOG_WRITE_LOG(message,logger,FWGLOG_LEVEL_INFO)
+	#define FWGLOG_INFO_FORMAT(messageFormat,logger,...) FWGLOG_WRITE_LOG_FORMAT(messageFormat,logger,FWGLOG_LEVEL_INFO,__VA_ARGS__)
 #else 
 	#define FWGLOG_INFO(message,logger)
 	#define FWGLOG_INFO_FORMAT(messageFormat,logger,...)
 #endif
 
 #if FWGLOG_ACTUAL_LEVEL >= FWGLOG_LEVEL_WARNING		
-	#define FWGLOG_WARNING(message,logger) if(logger) (logger)->LogWarning(wxString(message),wxLogRecordInfo(__FILE__,__LINE__,__FUNCTION__,NULL))
-	#define FWGLOG_WARNING_FORMAT(messageFormat,logger,...) if(logger) (logger)->LogWarningFormat(wxString(messageFormat),wxLogRecordInfo(__FILE__,__LINE__,__FUNCTION__,NULL), __VA_ARGS__)
+	#define FWGLOG_WARNING(message,logger) FWGLOG_WRITE_LOG(message,logger,FWGLOG_LEVEL_WARNING)
+	#define FWGLOG_WARNING_FORMAT(messageFormat,logger,...) FWGLOG_WRITE_LOG_FORMAT(messageFormat,logger,FWGLOG_LEVEL_WARNING,__VA_ARGS__)
 #else 
 	#define FWGLOG_WARNING(message,logger)
 	#define FWGLOG_WARNING_FORMAT(messageFormat,logger,...)
 #endif
 
 #if FWGLOG_ACTUAL_LEVEL >= FWGLOG_LEVEL_ERROR		
-	#define FWGLOG_ERROR(message,logger) if(logger) (logger)->LogError(wxString(message),wxLogRecordInfo(__FILE__,__LINE__,__FUNCTION__,NULL))
-	#define FWGLOG_ERROR_FORMAT(messageFormat,logger,...) if(logger) (logger)->LogErrorFormat(wxString(messageFormat),wxLogRecordInfo(__FILE__,__LINE__,__FUNCTION__,NULL), __VA_ARGS__)
+	#define FWGLOG_ERROR(message,logger) FWGLOG_WRITE_LOG(message,logger,FWGLOG_LEVEL_ERROR)
+	#define FWGLOG_ERROR_FORMAT(messageFormat,logger,...) FWGLOG_WRITE_LOG_FORMAT(messageFormat,logger,FWGLOG_LEVEL_ERROR,__VA_ARGS__)
 #else 
 	#define FWGLOG_ERROR(message,logger)
 	#define FWGLOG_ERROR_FORMAT(messageFormat,logger,...)
 #endif
 
 
-static const wxChar* FWGLOG_SEVERITY_STR_TRACE = wxT("TRACE");
-static const wxChar* FWGLOG_SEVERITY_STR_DEBUG = wxT("DEBUG");
-static const wxChar* FWGLOG_SEVERITY_STR_INFO = wxT("INFO");
-static const wxChar* FWGLOG_SEVERITY_STR_WARNING = wxT("WARNING");
-static const wxChar* FWGLOG_SEVERITY_STR_ERROR = wxT("ERROR");
+FWG_UNUSED(static const wxChar* FWGLOG_SEVERITY_STR_TRACE) = wxT("TRACE");
+FWG_UNUSED(static const wxChar* FWGLOG_SEVERITY_STR_DEBUG) = wxT("DEBUG");
+FWG_UNUSED(static const wxChar* FWGLOG_SEVERITY_STR_INFO) = wxT("INFO");
+FWG_UNUSED(static const wxChar* FWGLOG_SEVERITY_STR_WARNING) = wxT("WARNING");
+FWG_UNUSED(static const wxChar* FWGLOG_SEVERITY_STR_ERROR) = wxT("ERROR");
 
 
 class GameLoggerCreator;
@@ -93,22 +101,14 @@ private:
 	wxString LogTimeFormatter(const time_t time);
 	wxString LogFormatter(const wxChar* Severity, const wxString& msg, const wxLogRecordInfo& info);
 	wxString LogFormatterV(const wxChar* Severity, const wxString& msg, const wxLogRecordInfo& info, va_list args);
+	const wxChar* LogSeverity2String(wxDword logSeverity);
 	
 	friend class GameLoggerCreator;
 public:
 	const wxChar* GetLoggerName() const;
 	
-	void LogTrace(const wxString& msg, const wxLogRecordInfo& info);
-	void LogDebug(const wxString& msg, const wxLogRecordInfo& info);
-	void LogInfo(const wxString& msg, const wxLogRecordInfo& info);
-	void LogWarning(const wxString& msg, const wxLogRecordInfo& info);
-	void LogError(const wxString& msg, const wxLogRecordInfo& info);
-	
-	void LogTraceFormat(const wxString& formatStr, const wxLogRecordInfo& info, ...);
-	void LogDebugFormat(const wxString& formatStr, const wxLogRecordInfo& info, ...);
-	void LogInfoFormat(const wxString& formatStr, const wxLogRecordInfo& info, ...);
-	void LogWarningFormat(const wxString& formatStr, const wxLogRecordInfo& info, ...);
-	void LogErrorFormat(const wxString& formatStr, const wxLogRecordInfo& info, ...);
+	void LogWrite(const wxString& msg, const wxLogRecordInfo& info, wxDword logSeverity);
+	void LogWriteFormat(const wxString& msg, const wxLogRecordInfo& info, wxDword logSeverity, ...);
 	
 	void addRef();
 	wxInt32 release();
@@ -125,7 +125,7 @@ private:
 	static void DestroyLogger(GameLogger* pLogger);
 	friend wxInt32 GameLogger::release();	
 public:
-	static GameErrorCode CreateLogger(GameLogger *&pLogger, const wxChar* loggerName = NULL);
+	static GameErrorCode CreateLogger(GameLogger *&pLogger, const wxChar* loggerName = NULL, wxDword logSeverity = FWGLOG_ACTUAL_LEVEL);
 	
 	~GameLoggerCreator();
 };
