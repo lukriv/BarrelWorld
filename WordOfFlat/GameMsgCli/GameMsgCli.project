@@ -9,10 +9,13 @@
   <Dependencies/>
   <VirtualDirectory Name="src">
     <File Name="gamecliworkpool.cpp"/>
+    <File Name="gamemsgcliimpl.cpp"/>
+    <File Name="gamecliworkpool.inl"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="gamemsgcli.h"/>
     <File Name="gamecliworkpool.h"/>
+    <File Name="gamemsgcliimpl.h"/>
   </VirtualDirectory>
   <Dependencies Name="Release"/>
   <Dependencies Name="Debug"/>

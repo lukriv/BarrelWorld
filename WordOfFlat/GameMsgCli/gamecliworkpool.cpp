@@ -183,3 +183,5 @@ GameErrorCode GameCliClbkWorkerPool::CallbackThread::StopRequest()
 	
 	return result;
 }
+
+
