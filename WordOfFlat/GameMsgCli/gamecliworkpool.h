@@ -51,6 +51,9 @@ protected:
 	CallbackWorkerPool m_clbkThreads;
 protected:
 	GameErrorCode MessageProcess(IGameMessage* pMsg);
+	
+	inline GameErrorCode RegisterCallbackInternal(GameMessageType msgType, IGameMsgCallback *pClbk);
+	inline GameErrorCode UnregisterCallbackInternal(GameMessageType msgType, IGameMsgCallback *pClbk);
 
 public:
 	GameCliClbkWorkerPool() : m_isInitialized(false), m_threadsNr(0) {}
@@ -66,5 +69,8 @@ public:
 	inline GameLoggerPtr GetLogger() { return m_pLogger; }
 
 };
+
+#include "gamecliworkpool.inl"
+
 
 #endif //__GAME_CLIENT_WORKER_POOL_H__
