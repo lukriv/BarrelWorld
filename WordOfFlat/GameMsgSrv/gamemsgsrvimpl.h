@@ -4,9 +4,11 @@
 
 #include <wx/stream.h>
 #include <wx/vector.h>
+#include <wx/socket.h>
 #include "../GameSystem/gdefs.h"
 #include "../GameSystem/gerror.h"
 #include "../GameSystem/glog.h"
+#include "../GameSystem/gthread.h"
 #include "../GameComm/GameMessage.h"
 #include "../GameMsgCli/gamemsgcli.h"
 #include "../GameMsgCli/gamecliworkpool.h"
@@ -15,21 +17,29 @@
 
 
 
-class GameMsgSrv : public IGameMsgSrv, GameCliClbkWorkerPool {
+class GameMsgSrv : public IGameMsgSrv, public GameCliClbkWorkerPool, public wxEvtHandler {
 protected:
     
 	struct ClientInfo {
 		bool m_local;
 		bool m_active;
+		wxObjectDataPtr<wxSocketBase> m_spSocket;
+		
+		ClientInfo() : m_local(false), m_active(false) {}
+		
+		void SocketEvent(wxSocketEvent &event);
 	};
 	
 	typedef wxVector<ClientInfo> ClientListType;
+	
 	
 protected:
 	wxAtomicInt m_refCount;
     GameAddrType m_addressPool;
 	GameAddrType m_address;
 	bool m_isConnected;
+	
+	
 	
 	ClientListType m_clientList;
 	wxDword m_clientCount;
@@ -57,7 +67,14 @@ public:
 	 */
 	GameErrorCode Initialize(GameLogger *pLogger);
 	
-
+	/*!
+	 * \brief Destroy the object without memory leaks.
+	 * 
+	 * It is called from destructor and it uses also scope guard in initialize function.
+	 */
+	void Destroy();
+	
+	void SocketReceiver(wxSocketEvent &event);
 	
 // message client interface	implementation
 public:

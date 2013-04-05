@@ -8,6 +8,14 @@
 static const wxDword CALLBACK_THREAD_NR = 2;
 
 
+static void ScopeGuardMsgSrv (GameMsgSrv *pSrv)
+{
+	if (pSrv != NULL) {
+		pSrv->Destroy();
+	}
+}
+
+
 GameAddrType GameMsgSrv::GetCliAddress()
 {
 	return m_address;
@@ -82,6 +90,9 @@ GameErrorCode GameMsgSrv::Initialize(GameLogger* pLogger)
 	if(m_isInitialized) {
 		return FWG_NO_ERROR;
 	}
+	
+	wxScopeGuard scopeGuard = wxMakeGuard(ScopeGuardMsgSrv, this);
+	
 	//initialize client list
 	for (iter = m_clientList.begin(); iter != m_clientList.end(); iter++)
 	{
@@ -94,6 +105,10 @@ GameErrorCode GameMsgSrv::Initialize(GameLogger* pLogger)
 							pLogger, result, FWGLOG_ENDVAL);
 		return result;
 	}
+	
+	Bind(wxEVT_SOCKET, &GameMsgSrv::SocketReceiver, this, wxID_ANY);
+	
+	scopeGuard.Dismiss();
 	
 	m_isInitialized = true;
 	
@@ -159,6 +174,24 @@ wxInt32 GameMsgSrv::release()
 GameMsgSrv::~GameMsgSrv()
 {
 
+}
+
+
+void GameMsgSrv::Destroy()
+{
+}
+
+void GameMsgSrv::SocketReceiver(wxSocketEvent& event)
+{
+	switch(event.GetSocketEvent())
+	{
+		case wxSOCKET_INPUT:
+		case wxSOCKET_OUTPUT:
+		case wxSOCKET_CONNECTION:
+		case wxSOCKET_LOST:
+		default:
+	}
+	
 }
 
 
