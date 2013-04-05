@@ -1,9 +1,25 @@
 #include "gamemsgcliimpl.h"
+#include <wx/sckaddr.h>
 
+
+static void GameClientScopeGuard(GameMsgCli *pMsgCli) 
+{
+	if (pMsgCli){
+		pMsgCli->Destroy();
+	}
+}
 
 GameErrorCode GameMsgCli::Initialize(GameLogger* pLogger)
 {
-	return FWG_E_NOT_IMPLEMENTED_ERROR;
+	GameErrorCode result = FWG_NO_ERROR;
+	
+	wxScopeGuard guard = wxMakeGuard(GameClientScopeGuard, this);
+	
+	
+	guard.Dismiss();
+	
+	m_isInitialized = true;	
+	return result;
 }
 
 
@@ -60,4 +76,14 @@ wxInt32 GameMsgCli::release()
 		delete this;
 	}
 	return refCount;
+}
+
+
+GameMsgCli::~GameMsgCli()
+{
+	Destroy();
+}
+
+void GameMsgCli::Destroy()
+{
 }
