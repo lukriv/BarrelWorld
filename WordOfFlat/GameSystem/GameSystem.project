@@ -29,6 +29,9 @@
     <VirtualDirectory Name="Streams">
       <File Name="gstream.h"/>
     </VirtualDirectory>
+    <VirtualDirectory Name="Network">
+      <File Name="gsocket.h"/>
+    </VirtualDirectory>
   </VirtualDirectory>
   <Dependencies Name="Release"/>
   <Settings Type="Static Library">

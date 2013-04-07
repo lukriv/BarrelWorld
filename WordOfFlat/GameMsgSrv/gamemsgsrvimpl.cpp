@@ -2,6 +2,7 @@
 #include <wx/scopeguard.h>
 #include "gamemsgsrvimpl.h"
 #include "../GameSystem/glog.h"
+#include "../GameSystem/gsocket.h"
 
 #define CLIENT_LIST_SIZE 10
 
@@ -106,7 +107,39 @@ GameErrorCode GameMsgSrv::Initialize(GameLogger* pLogger)
 		return result;
 	}
 	
+	// initialize socket server
+	wxIPV4address addr;
+	if(addr.Service(GAME_SERVICE_PORT))
+	{
+		return FWG_E_PORT_ERROR;
+	}
+	
+	m_pSocketServer = new wxSocketServer(addr, wxSOCKET_BLOCK);
+	if (!m_pSocketServer) {
+		FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::Initialize() : Creation of m_pSocketServer failed: 0x%08x"),
+							pLogger, FWG_E_MEMORY_ALLOCATION_ERROR, FWGLOG_ENDVAL);
+		return FWG_E_MEMORY_ALLOCATION_ERROR;
+	}
+	
+	if (m_pSocketServer.Error()) {
+		result = GameConvertWxSocketErr2GameErr(m_pSocketServer.LastError());
+		FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::Initialize() : Socket server initialization failed: 0x%08x"),
+						pLogger, result, FWGLOG_ENDVAL);
+		return result;	
+	}
+	
 	Bind(wxEVT_SOCKET, &GameMsgSrv::SocketReceiver, this, wxID_ANY);
+	
+	// set socket server event handling
+	m_pSocketServer->SetEventHandler(*this);
+	m_pSocketServer->SetNotify(wxSOCKET_CONNECTION_FLAG);
+	m_pSocketServer->Notify(true);
+	
+	if (!m_pSocketServer->IsOk())
+	{
+		FWGLOG_ERROR(wxT("GameMsgSrv::Initialize() : Initialization of socket server failed: Server is not ready"),	pLogger);
+		return FWG_E_MISC_ERROR;
+	}
 	
 	scopeGuard.Dismiss();
 	
@@ -173,25 +206,97 @@ wxInt32 GameMsgSrv::release()
 
 GameMsgSrv::~GameMsgSrv()
 {
-
+	Destroy();
 }
 
 
 void GameMsgSrv::Destroy()
 {
+	if (m_pSocketServer)
+	{
+		m_pSocketServer->Destroy();
+	}
 }
 
 void GameMsgSrv::SocketReceiver(wxSocketEvent& event)
 {
+	GameErrorCode result = FWG_NO_ERROR;
 	switch(event.GetSocketEvent())
 	{
-		case wxSOCKET_INPUT:
-		case wxSOCKET_OUTPUT:
 		case wxSOCKET_CONNECTION:
-		case wxSOCKET_LOST:
+   
+			// Check if the server socket
+			if (m_pSocketServer == (wxSocketServer*) event.GetSocket())
+			{
+				wxDword freeIndex = 0;
+				wxSocketBase *  pSocket = pServerSocket->Accept(true);
+				
+				wxCriticalSectionLocker locker(m_clientLock);
+				
+				for (freeIndex = 1; freeIndex < m_clientList.size(); freeIndex++)
+				{
+					if(m_clientList[freeIndex].m_active == false)
+					{
+						if (FWG_FAILED(result = ConnectRemoteClient(m_clientList[freeIndex], pSocket)))
+						{
+							FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::SocketReceiver() : Connect client failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
+						}
+						break;
+					}
+				}
+				
+				if (freeIndex == m_clientList.size())
+				{
+					m_clientList.push_back(GameMsgSrv::ClientInfo());
+					if (FWG_FAILED(result = ConnectRemoteClient(m_clientList[freeIndex], pSocket)))
+					{
+						FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::SocketReceiver() : Connect client failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
+					}
+				}
+				
+				
+			}
+			break;
 		default:
+			FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::SocketReceiver() : Unknown event: %d"), m_pLogger, event.GetEventType(), FWGLOG_ENDVAL);
+			break;
 	}
 	
 }
 
+GameErrorCode GameMsgSrv::ConnectRemoteClient(ClientInfo& client, wxSocketBase* pSocket)
+{
+	// set client count
+	client.m_spSocket.reset(pSocket);
+	client.m_active = true;
+	client.m_local = false;
+	// add client count
+	m_clientCount++;
+	// set events
+	client.Bind(wxEVT_SOCKET, &ClientInfo::SocketEvent, client, wxID_ANY);
+	// set socket server event handling
+	pSocket->SetEventHandler(client);
+	pSocket->SetNotify(wxSOCKET_INPUT_FLAG|wxSOCKET_LOST_FLAG);
+	pSocket->Notify(true);
+	
+	return FWG_NO_ERROR;
+}
 
+//--------------------------------------------------------------
+//--------------------GameMsgSrv::ClientInfo--------------------
+//--------------------------------------------------------------
+void GameMsgSrv::ClientInfo::SocketEvent(wxSocketEvent& event)
+{
+	GameErrorCode result = FWG_NO_ERROR;
+	switch(event.GetSocketEvent())
+	{
+	case wxSOCKET_INPUT:
+		
+		break;
+	case wxSOCKET_LOST:
+		break;
+	default:
+		FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::ClientInfo::SocketEvent() : Unknown event: %d"), m_pLogger, event.GetEventType(), FWGLOG_ENDVAL);
+		break;
+	}
+}

@@ -26,41 +26,60 @@ void GameConvertErrCode2String(GameErrorCode errCode, wxString &errorStr)
 	case FWG_E_THREAD_ALREADY_RUNNING_ERROR:
 		errorStr.assign(FWG_E_THREAD_ALREADY_RUNNING_ERROR_STR);
 		break;
-		
 	case FWG_E_THREAD_NOT_RUNNING_ERROR:
 		errorStr.assign(FWG_E_THREAD_NOT_RUNNING_ERROR_STR);
-		
+		break;
 	case FWG_E_THREAD_ALREADY_KILLED_ERROR:
 		errorStr.assign(FWG_E_THREAD_ALREADY_KILLED_ERROR_STR);
 		break;
-
 	case FWG_E_NO_RESOURCES_ERROR:
 		errorStr.assign(FWG_E_NO_RESOURCES_ERROR_STR);
 		break;
-
 	case FWG_E_MISC_ERROR:
 		errorStr.assign(FWG_E_MISC_ERROR_STR);
 		break;
-		
 	case FWG_E_TIMEOUT_WARNING:
 		errorStr.assign(FWG_E_TIMEOUT_WARNING_STR);
 		break;
 	case FWG_E_UNKNOWN_TARGET_ERROR:
 		errorStr.assign(FWG_E_UNKNOWN_TARGET_ERROR_STR);
 		break;
-		
 	case FWG_E_STREAM_EOF_ERROR:
 		errorStr.assign(FWG_E_STREAM_EOF_ERROR_STR);
 		break;
-		
 	case FWG_E_STREAM_WRITE_ERROR:
 		errorStr.assign(FWG_E_STREAM_WRITE_ERROR_STR);
 		break;
-		
 	case FWG_E_STREAM_READ_ERROR:
 		errorStr.assign(FWG_E_STREAM_READ_ERROR_STR);
 		break;
-		
+	case FWG_E_PORT_ERROR:
+		errorStr.assign(FWG_E_PORT_ERROR_STR);
+		break;
+	case FWG_E_INVALID_OPERATION_ERROR:
+		errorStr.assign(FWG_E_INVALID_OPERATION_ERROR_STR);
+		break;
+	case FWG_E_IO_ERROR:
+		errorStr.assign(FWG_E_IO_ERROR_STR);
+		break;
+	case FWG_E_INVALID_ADDRESS_ERROR:
+		errorStr.assign(FWG_E_INVALID_ADDRESS_ERROR_STR);
+		break;
+	case  FWG_E_INVALID_SOCKET_ERROR:
+		errorStr.assign(FWG_E_INVALID_SOCKET_ERROR);
+		break;
+	case FWG_E_NOHOST_ERROR:
+		errorStr.assign(FWG_E_NOHOST_ERROR_STR);
+		break;
+	case FWG_E_INVALID_PORT_ERROR:
+		errorStr.assign(FWG_E_INVALID_PORT_ERROR_STR);
+		break;
+	case FWG_E_WOULD_BLOCK_WARNING:
+		errorStr.assign(FWG_E_WOULD_BLOCK_WARNING_STR);
+		break;
+	case FWG_E_MEMORY_ERROR:
+		errorStr.assign(FWG_E_MEMORY_ERROR_STR);
+		break;
 	default:
 		errorStr.assign(_T("Unknown Error"));
 		break;

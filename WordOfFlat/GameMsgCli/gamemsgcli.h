@@ -7,6 +7,7 @@
 #include "../GameSystem/refobject.h"
 #include "../GameSystem/gerror.h"
 
+
 class IGameMsgCallback {
 public:
 	virtual GameErrorCode OnNewMessage(const IGameMessage& msg) = 0;
@@ -26,6 +27,9 @@ public:
 	virtual GameErrorCode UnregisterCallback(GameMessageType msgType, IGameMsgCallback *pClbk) = 0;
 	
 };
+
+
+static const unsigned short int GAME_SERVICE_PORT = 9567;
 
 
 #endif //__GAME_MESSAGE_CLIENT_H__
