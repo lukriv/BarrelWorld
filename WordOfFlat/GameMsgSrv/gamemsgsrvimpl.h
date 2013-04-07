@@ -20,7 +20,7 @@
 class GameMsgSrv : public IGameMsgSrv, public GameCliClbkWorkerPool, public wxEvtHandler {
 protected:
     
-	struct ClientInfo {
+	struct ClientInfo : public wxEvtHandler {
 		bool m_local;
 		bool m_active;
 		wxObjectDataPtr<wxSocketBase> m_spSocket;
@@ -46,6 +46,11 @@ protected:
 	bool m_isInitialized;
 	
 	wxCriticalSection m_clientLock;
+	wxSocketServer *m_pSocketServer;
+
+// message server protected methods
+protected:
+	GameErrorCode ConnectRemoteClient(ClientInfo &client, wxSocketBase *pSocket);
 	
 // message server methods	
 public:
@@ -54,7 +59,8 @@ public:
 				m_address(GAME_ADDR_SERVER),
 				m_isConnected(false),
 				m_clientCount(0),
-				m_isInitialized(false){}
+				m_isInitialized(false),
+				m_pSocketServer(NULL){}
 	virtual ~GameMsgSrv();
 	
 	/*!
