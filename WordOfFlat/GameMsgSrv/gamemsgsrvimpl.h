@@ -20,17 +20,34 @@
 class GameMsgSrv : public IGameMsgSrv, public GameCliClbkWorkerPool, public wxEvtHandler {
 protected:
     
-	struct ClientInfo : public wxEvtHandler {
+	class ClientInfo : public wxEvtHandler {
+	private:
+		GameMsgSrv *m_pOwner;
 		bool m_local;
 		bool m_active;
-		wxObjectDataPtr<wxSocketBase> m_spSocket;
+		wxSocketBase *m_pSocket;
+	public:
+		ClientInfo(GameMsgSrv *pOwner) : m_pOwner(pOwner), m_local(false), m_active(false), m_pSocket(NULL) {}
+		~ClientInfo() 
+		{
+			if(m_pSocket != NULL) {
+				m_pSocket->Destroy();
+				m_pSocket = NULL;
+			}
+		}
 		
-		ClientInfo() : m_local(false), m_active(false) {}
+	
+		
+		GameErrorCode ClientConnect(wxSocketBase *pSocket);
+		GameErrorCode ClientDisconnect();
+		
+		inline bool IsActive() {return m_active;}
+		inline bool IsLocal() {return m_local;}
 		
 		void SocketEvent(wxSocketEvent &event);
 	};
 	
-	typedef wxVector<ClientInfo> ClientListType;
+	typedef wxVector<ClientInfo*> ClientListType;
 	
 	
 protected:
