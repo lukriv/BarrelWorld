@@ -66,7 +66,7 @@ void GameConvertErrCode2String(GameErrorCode errCode, wxString &errorStr)
 		errorStr.assign(FWG_E_INVALID_ADDRESS_ERROR_STR);
 		break;
 	case  FWG_E_INVALID_SOCKET_ERROR:
-		errorStr.assign(FWG_E_INVALID_SOCKET_ERROR);
+		errorStr.assign(FWG_E_INVALID_SOCKET_ERROR_STR);
 		break;
 	case FWG_E_NOHOST_ERROR:
 		errorStr.assign(FWG_E_NOHOST_ERROR_STR);
@@ -79,6 +79,9 @@ void GameConvertErrCode2String(GameErrorCode errCode, wxString &errorStr)
 		break;
 	case FWG_E_MEMORY_ERROR:
 		errorStr.assign(FWG_E_MEMORY_ERROR_STR);
+		break;
+	case FWG_E_INVALID_PARAMETER_ERROR:
+		errorStr.assign(FWG_E_INVALID_PARAMETER_ERROR_STR);
 		break;
 	default:
 		errorStr.assign(_T("Unknown Error"));
