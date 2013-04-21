@@ -15,6 +15,11 @@ GameErrorCode GameMsgCli::Initialize(GameLogger* pLogger)
 	
 	wxScopeGuard guard = wxMakeGuard(GameClientScopeGuard, this);
 	
+	m_clientSocket = new (std::nothrow) wxSocketClient(wxSOCKET_BLOCK|wxSOCKET_WAITALL);
+	if(m_clientSocket == NULL) {
+		return = FWG_E_MEMORY_ALLOCATION_ERROR;
+		FWGLOG_ERROR_FORMAT(wxT("GameMsgCli::Initialize() : Create client socket failed: 0x%08x"), result, FWGLOG_ENDVAL);
+	}
 	
 	guard.Dismiss();
 	
