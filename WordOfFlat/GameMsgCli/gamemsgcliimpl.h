@@ -11,12 +11,13 @@ class GameMsgCli : public IGameMsgCli, GameCliClbkWorkerPool {
 protected:
 	wxAtomicInt32 m_refCount;
 	GameAddrType m_cliAddr;
-	//wxSocketServer *m_pServer;
+	wxSocketClient* m_clientSocket;
 public:
 	GameMsgCli() : GameCliClbkWorkerPool(),
 			m_isInitialized(false),
 			m_refCount(1),
-			m_cliAddr(GAME_ADDR_UNKNOWN) {}
+			m_cliAddr(GAME_ADDR_UNKNOWN),
+			m_clientSocket(NULL) {}
 	virtual ~GameMsgCli();
 	
 	GameErrorCode Initialize(GameLogger* pLogger = NULL);
