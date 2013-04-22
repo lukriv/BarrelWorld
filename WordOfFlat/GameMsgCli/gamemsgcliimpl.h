@@ -4,25 +4,50 @@
 #include "../GameSystem/gerror.h"
 #include "../GameComm/GameMessage.h"
 #include "gamecliworkpool.h"
+#include <wx/event.h>
+#include <wx/socket.h>
 
 
-class GameMsgCli : public IGameMsgCli, GameCliClbkWorkerPool {
+class GameMsgCli : public IGameMsgCli, public GameCliClbkWorkerPool, public wxEvtHandler {
 	bool m_isInitialized;
 protected:
 	wxAtomicInt32 m_refCount;
 	GameAddrType m_cliAddr;
-	wxSocketClient* m_clientSocket;
+	bool m_connected;
+	bool m_isConnecting;
+	wxSocketClient* m_socketClient;
+	wxString m_hostName;
+	wxCriticalSection m_clientLock;
 public:
 	GameMsgCli() : GameCliClbkWorkerPool(),
 			m_isInitialized(false),
 			m_refCount(1),
 			m_cliAddr(GAME_ADDR_UNKNOWN),
-			m_clientSocket(NULL) {}
+			m_connected(false),
+			m_isConnecting(false),
+			m_socketClient(NULL),
+			m_clientLock(wxCRITSEC_DEFAULT) {}
 	virtual ~GameMsgCli();
 	
 	GameErrorCode Initialize(GameLogger* pLogger = NULL);
 	
+	/*!
+	 * \brief Sets host name
+	 * 
+	 * \param hostName Hostname in IP4 format
+	 * \retval FWG_NO_ERROR on success.
+	 * \retval FWG_E_INVALID_ADDRESS_ERROR if wrong address format is putted in.
+	 */
+	GameErrorCode SetServerAddress(const wxString & hostName);
+	
 	void Destroy();
+	
+	
+	/*!
+	 * \brief On new socket event handler
+	 * \param event Socket event
+	 */
+	void OnSocketEvent(wxSocketEvent &event);
 	
 // message client methods
 public:
