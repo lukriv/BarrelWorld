@@ -30,6 +30,8 @@ static const GameAddrType GAME_ADDR_BROADCAST = wxINT32_MAX; //!< Address to sen
 enum GameMessageType {
 	GAME_MSG_TYPE_UNKNOWN = 0,
 	
+	GAME_MSG_TYPE_CLIENT_ID_REQUEST = 1,
+	
 	GAME_MSG_TYPE_TEST = 9999,
 	
 	GAME_MSG_TYPE_DEFAULT_ALL = wxINT32_MAX //!< Type for filtering rest of all types

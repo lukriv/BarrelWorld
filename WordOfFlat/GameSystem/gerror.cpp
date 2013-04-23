@@ -83,6 +83,9 @@ void GameConvertErrCode2String(GameErrorCode errCode, wxString &errorStr)
 	case FWG_E_INVALID_PARAMETER_ERROR:
 		errorStr.assign(FWG_E_INVALID_PARAMETER_ERROR_STR);
 		break;
+	case FWG_E_NOT_CONNECTED_ERROR:
+		errorStr.assign(FWG_E_NOT_CONNECTED_ERROR_STR);
+		break;
 	default:
 		errorStr.assign(_T("Unknown Error"));
 		break;
