@@ -45,6 +45,11 @@ GameErrorCode GameMsgCli::Connect()
 {
 	wxCriticalSectionLocker lock(m_clientLock);
 	
+	if(!m_isInitialized)
+	{
+		return FWG_E_OBJECT_NOT_INITIALIZED_ERROR;
+	}
+	
 	if (m_isConnecting || m_connected)
 	{
 		return FWG_NO_ERROR;
@@ -97,7 +102,7 @@ GameAddrType GameMsgCli::GetCliAddress()
 
 bool GameMsgCli::IsConnected()
 {
-	return false;
+	return m_connected;
 }
 
 bool GameMsgCli::IsLocal()
@@ -112,7 +117,28 @@ GameErrorCode GameMsgCli::RegisterCallback(GameMessageType msgType, IGameMsgCall
 
 GameErrorCode GameMsgCli::SendMsg(IGameMessage& msg, long timeout)
 {
-	return FWG_E_NOT_IMPLEMENTED_ERROR;
+	if(!m_isInitialized)
+	{
+		return FWG_E_OBJECT_NOT_INITIALIZED_ERROR;
+	}
+	
+	if(!m_connected)
+	{
+		return FWG_E_NOT_CONNECTED_ERROR;
+	}
+	
+	GameErrorCode result = FWG_NO_ERROR;
+	wxCriticalSectionLocker lock(m_clientLock);
+	wxSocketOutputStream socketOutStream(*m_socketClient);
+	
+	if(FWG_FAILED(result = msg.Store(socketOutStream)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("GameMsgCli::SendMsg() : Send message failed: 0x%08x"), m_pLogger,
+							result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	return result;
 }
 
 GameErrorCode GameMsgCli::UnregisterCallback(GameMessageType msgType, IGameMsgCallback* pClbk)
@@ -148,6 +174,8 @@ void GameMsgCli::Destroy()
 		m_socketClient->Destroy();
 		m_socketClient = NULL;
 	}
+	
+	m_isInitialized = false;
 }
 
 GameErrorCode GameMsgCli::SetServerAddress(const wxString& hostName)
@@ -210,6 +238,20 @@ void GameMsgCli::OnSocketEvent(wxSocketEvent& event)
 			FWGLOG_ERROR_FORMAT(wxT("GameMsgCli::OnSocketEvent() : Socket client failed: 0x%08x"), 
 					m_pLogger, result, FWGLOG_ENDVAL);
 		}
+		
+		if(m_cliAddr == GAME_ADDR_UNKNOWN)
+		{
+			GameMessage msg;
+			ClientIdRequestData data;
+			wxSocketOutputStream socketOutStream(*m_socketClient);
+			msg.SetTarget(GAME_ADDR_SERVER);
+			msg.SetMessage(ClientIdRequestData, GAME_MSG_TYPE_CLIENT_ID_REQUEST);
+			if(FWG_FAILED(result = msg.Store(socketOutStream))) {
+				FWGLOG_ERROR_FORMAT(wxT("GameMsgCli::OnSocketEvent() : Message sending failed: 0x%08x"),
+							m_pLogger, result, FWGLOG_ENDVAL);
+			}
+		}
+		
 		break;
 	}
     case wxSOCKET_CONNECTION:
