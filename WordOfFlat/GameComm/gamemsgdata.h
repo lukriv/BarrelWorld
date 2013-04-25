@@ -28,7 +28,7 @@ protected:
 		oDataStream.Write32((wxUint32) m_clientId);
 		return FWG_NO_ERROR;
 	}
-}
+};
 
 // testing message data
 class TestMessageData : public GameDataBase {

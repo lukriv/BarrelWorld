@@ -3,6 +3,7 @@
 #include <wx/sckstrm.h>
 #include "gamemsgsrvimpl.h"
 #include "../GameComm/GameMessageImpl.h"
+#include "../GameComm/gamemsgdata.h"
 #include "../GameSystem/glog.h"
 #include "../GameSystem/gsocket.h"
 
@@ -69,9 +70,17 @@ GameErrorCode GameMsgSrv::SendMsg(IGameMessage &msg, long timeout)
 			return result;
 		}
 		
-		return result;
 	} else {
-		return FWG_E_NOT_IMPLEMENTED_ERROR;
+		if((m_clientList.size() < msg.GetTarget())||(!m_clientList[msg.GetTarget()-1]->IsActive()))
+		{
+			return FWG_E_UNKNOWN_TARGET_ERROR;
+		}
+		
+		if(FWG_FAILED(result = m_clientList[msg.GetTarget() - 1]->SendMsg(msg, timeout)))
+		{
+			FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::SendMsg() : Send message failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
+			return result;
+		}
 	}
 	
 	return result;
@@ -104,7 +113,7 @@ GameErrorCode GameMsgSrv::Initialize(GameLogger* pLogger)
 							pLogger, FWG_E_MEMORY_ALLOCATION_ERROR, FWGLOG_ENDVAL);
 			return FWG_E_MEMORY_ALLOCATION_ERROR;
 		}
-		
+		pClientInfo->SetAddress((GameAddrType) (i+1));
 		m_clientList.push_back(pClientInfo);
 	}
 	
@@ -313,6 +322,22 @@ void GameMsgSrv::ClientInfo::SocketEvent(wxSocketEvent& event)
 				return;
 			}
 			
+			if (GAME_MSG_TYPE_CLIENT_ID_REQUEST == apMessage->GetType())
+			{
+				wxSocketOutputStream socketStream(*m_pSocket);
+				ClientIdRequestData data;
+				data.SetClientId(m_reservedAddr);
+				apMessage->SetTarget(m_reservedAddr);
+				apMessage->SetSource(GAME_ADDR_SERVER);
+				apMessage->SetMessage(data, GAME_MSG_TYPE_CLIENT_ID_REQUEST);
+				if (FWG_FAILED(result = apMessage->Store(socketStream)))
+				{
+					FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::ClientInfo::SocketEvent() : Message loading error"),
+								m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
+					return;
+				}
+			}
+			
 			m_pOwner->m_msgQueue.Post(apMessage.release());
 			
 		} else {
@@ -385,4 +410,28 @@ GameErrorCode GameMsgSrv::ClientInfo::ClientDisconnect()
 	m_active = false;
 	m_local = false;
 	return FWG_NO_ERROR;
+}
+
+
+GameErrorCode GameMsgSrv::ClientInfo::SendMsg(IGameMessage& msg, long timeout)
+{
+	if((!m_active)||(m_pSocket != NULL))
+	{
+		return FWG_E_INVALID_SOCKET_ERROR;
+	}
+	
+	GameErrorCode result = FWG_NO_ERROR;
+	wxSocketOutputStream socketOutStream(*m_pSocket);
+	
+	if(FWG_FAILED(result = msg.Store(socketOutStream)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::ClientInfo::SendMsg() : Message store failed : 0x%08x"), 
+					m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	FWGLOG_TRACE_FORMAT(wxT("GameMsgSrv::ClientInfo::SendMsg() : Message sended, type( %d ), target ( %d )"),
+					m_pOwner->GetLogger(), msg.GetType(), msg.GetTarget(), FWGLOG_ENDVAL);
+	
+	return result;
 }

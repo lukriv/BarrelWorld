@@ -7,6 +7,7 @@
 
 #include "../../WordOfFlat/GameSystem/glog.h"
 #include "../../WordOfFlat/GameMsgSrv/gamemsgsrvimpl.h"
+#include "../../WordOfFlat/GameMsgCli/gamemsgcliimpl.h"
 #include "../../WordOfFlat/GameComm/gamemsgdata.h"
 #include "../../WordOfFlat/GameComm/GameMessageImpl.h"
 
@@ -166,4 +167,26 @@ SUITE(MsgServerClientTest)
 	
 		
 	}
+	
+	
+	TEST(ClientServer_BasicRemoteConnection_Test)
+	{
+		GameMsgSrv server;
+		GameMsgCli client;
+		CHECK(FWG_SUCCEDED(server.Initialize(NULL)));
+		CHECK(FWG_SUCCEDED(client.Initialize(NULL)));
+		
+		CHECK(FWG_SUCCEDED(server.Connect()));
+		CHECK(server.IsConnected());
+		
+		CHECK(FWG_SUCCEDED(client.Connect()));
+		CHECK(client.IsConnected());
+		
+		wxThread::Sleep(50);
+		
+		CHECK(client.GetCliAddress() == GAME_ADDR_SERVER + 1);
+		
+		
+	}
+	
 }
