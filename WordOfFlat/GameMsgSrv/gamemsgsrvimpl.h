@@ -25,9 +25,14 @@ protected:
 		GameMsgSrv *m_pOwner;
 		bool m_local;
 		bool m_active;
+		GameAddrType m_reservedAddr;
 		wxSocketBase *m_pSocket;
 	public:
-		ClientInfo(GameMsgSrv *pOwner) : m_pOwner(pOwner), m_local(false), m_active(false), m_pSocket(NULL) {}
+		ClientInfo(GameMsgSrv *pOwner) : m_pOwner(pOwner),
+									m_local(false),
+									m_active(false),
+									m_reservedAddr(GAME_ADDR_UNKNOWN),
+									m_pSocket(NULL) {}
 		~ClientInfo() 
 		{
 			if(m_pSocket != NULL) {
@@ -36,7 +41,10 @@ protected:
 			}
 		}
 		
-	
+		void SetAddress(GameAddrType gameAddr) {m_reservedAddr = gameAddr;}
+		GameAddrType GetAddress() {return m_reservedAddr;}
+		
+		GameErrorCode SendMsg(IGameMessage& msg, long timeout);
 		
 		GameErrorCode ClientConnect(wxSocketBase *pSocket);
 		GameErrorCode ClientDisconnect();
@@ -96,6 +104,7 @@ public:
 	 * It is called from destructor and it uses also scope guard in initialize function.
 	 */
 	void Destroy();
+	
 	
 	void SocketReceiver(wxSocketEvent &event);
 	

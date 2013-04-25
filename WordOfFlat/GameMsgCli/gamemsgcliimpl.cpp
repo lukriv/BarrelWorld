@@ -4,6 +4,7 @@
 #include <wx/scopedptr.h>
 #include "../GameSystem/gsocket.h"
 #include "../GameComm/GameMessageImpl.h"
+#include "../GameComm/gamemsgdata.h"
 
 static const long CLIENT_CONNECTION_TIMEOUT = 30;
 
@@ -245,7 +246,7 @@ void GameMsgCli::OnSocketEvent(wxSocketEvent& event)
 			ClientIdRequestData data;
 			wxSocketOutputStream socketOutStream(*m_socketClient);
 			msg.SetTarget(GAME_ADDR_SERVER);
-			msg.SetMessage(ClientIdRequestData, GAME_MSG_TYPE_CLIENT_ID_REQUEST);
+			msg.SetMessage(data, GAME_MSG_TYPE_CLIENT_ID_REQUEST);
 			if(FWG_FAILED(result = msg.Store(socketOutStream))) {
 				FWGLOG_ERROR_FORMAT(wxT("GameMsgCli::OnSocketEvent() : Message sending failed: 0x%08x"),
 							m_pLogger, result, FWGLOG_ENDVAL);
