@@ -30,7 +30,7 @@ GameErrorCode GameMsgCli::Initialize(GameLogger* pLogger)
 	}
 	
 	m_socketClient->SetTimeout(CLIENT_CONNECTION_TIMEOUT);
-	
+	m_socketClient->SetEventHandler(*this);
 	// set hostname
 	ipAddr.LocalHost();
 	m_hostName = ipAddr.Hostname();
@@ -44,6 +44,7 @@ GameErrorCode GameMsgCli::Initialize(GameLogger* pLogger)
 
 GameErrorCode GameMsgCli::Connect()
 {
+	GameErrorCode result = FWG_NO_ERROR;
 	wxCriticalSectionLocker lock(m_clientLock);
 	
 	if(!m_isInitialized)
@@ -57,18 +58,45 @@ GameErrorCode GameMsgCli::Connect()
 	}
 	
 	wxIPV4address ipAddr;
-    ipAddr.Hostname(m_hostName);
+    ipAddr.Hostname(wxT("127.0.0.1"));
     ipAddr.Service(GAME_SERVICE_PORT);
 
 	Bind(wxEVT_SOCKET, &GameMsgCli::OnSocketEvent, this, wxID_ANY);
+	
 	
     m_socketClient->SetNotify(wxSOCKET_CONNECTION_FLAG|wxSOCKET_LOST_FLAG|wxSOCKET_OUTPUT_FLAG|wxSOCKET_INPUT_FLAG);
     m_socketClient->Notify(true);
 	
      //wxLogMessage(wxT("EventWorker: Connecting....."));
-    m_socketClient->Connect(ipAddr,false);
+    m_socketClient->Connect(ipAddr,true);
+	m_socketClient->WaitOnConnect(CLIENT_CONNECTION_TIMEOUT);
+	if(m_socketClient->Error())
+	{
+		if(FWG_FAILED(result = GameConvertWxSocketErr2GameErr(m_socketClient->LastError())))
+		{
+			FWGLOG_ERROR_FORMAT(wxT("GameMsgCli::Connect() : Connection failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
+			return result;
+		}
+	}
+	
 	
 	m_isConnecting = true;	
+	
+	if(m_cliAddr == GAME_ADDR_UNKNOWN)
+	{
+		GameMessage msg;
+		ClientIdRequestData data;
+		wxSocketOutputStream socketOutStream(*m_socketClient);
+		msg.SetTarget(GAME_ADDR_SERVER);
+		msg.SetMessage(data, GAME_MSG_TYPE_CLIENT_ID_REQUEST);
+		if(FWG_FAILED(result = msg.Store(socketOutStream))) {
+			FWGLOG_ERROR_FORMAT(wxT("GameMsgCli::OnSocketEvent() : Message sending failed: 0x%08x"),
+						m_pLogger, result, FWGLOG_ENDVAL);
+			return result;
+		}
+	}
+	
+	m_connected = true;
 	return FWG_NO_ERROR;
 }
 

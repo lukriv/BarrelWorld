@@ -20,8 +20,9 @@
 class GameMsgSrv : public IGameMsgSrv, public GameCliClbkWorkerPool, public wxEvtHandler {
 protected:
     
-	class ClientInfo : public wxEvtHandler {
+	class ClientInfo {
 	private:
+		wxDECLARE_EVENT_TABLE();
 		GameMsgSrv *m_pOwner;
 		bool m_local;
 		bool m_active;
@@ -59,6 +60,7 @@ protected:
 	
 	
 protected:
+
 	wxAtomicInt m_refCount;
     GameAddrType m_addressPool;
 	GameAddrType m_address;
@@ -125,6 +127,8 @@ public:
 public:
 	virtual void addRef();
 	virtual wxInt32 release();
+private:
+	wxDECLARE_EVENT_TABLE();
 };
 
 

@@ -12,6 +12,10 @@
 static const wxDword CALLBACK_THREAD_NR = 2;
 
 
+wxBEGIN_EVENT_TABLE(GameMsgSrv,wxEvtHandler)
+    EVT_SOCKET(wxID_ANY,GameMsgSrv::SocketReceiver)
+wxEND_EVENT_TABLE()
+
 static void ScopeGuardMsgSrv (GameMsgSrv *pSrv)
 {
 	if (pSrv != NULL) {
@@ -128,7 +132,7 @@ GameErrorCode GameMsgSrv::Initialize(GameLogger* pLogger)
 	wxIPV4address addr;
 	addr.Service(GAME_SERVICE_PORT);
 	
-	m_pSocketServer = new wxSocketServer(addr, wxSOCKET_BLOCK);
+	m_pSocketServer = new wxSocketServer(addr, wxSOCKET_BLOCK|wxSOCKET_WAITALL);
 	if (!m_pSocketServer) {
 		FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::Initialize() : Creation of m_pSocketServer failed: 0x%08x"),
 							pLogger, FWG_E_MEMORY_ALLOCATION_ERROR, FWGLOG_ENDVAL);
@@ -142,7 +146,7 @@ GameErrorCode GameMsgSrv::Initialize(GameLogger* pLogger)
 		return result;	
 	}
 	
-	Bind(wxEVT_SOCKET, &GameMsgSrv::SocketReceiver, this, wxID_ANY);
+	//Bind(wxEVT_SOCKET, &GameMsgSrv::SocketReceiver, this, wxID_ANY);
 	
 	// set socket server event handling
 	m_pSocketServer->SetEventHandler(*this);
@@ -298,6 +302,11 @@ void GameMsgSrv::SocketReceiver(wxSocketEvent& event)
 //--------------------------------------------------------------
 //--------------------GameMsgSrv::ClientInfo--------------------
 //--------------------------------------------------------------
+
+wxBEGIN_EVENT_TABLE(GameMsgSrv::ClientInfo,wxEvtHandler)
+    EVT_SOCKET(wxID_ANY,GameMsgSrv::ClientInfo::SocketEvent)
+wxEND_EVENT_TABLE()
+
 void GameMsgSrv::ClientInfo::SocketEvent(wxSocketEvent& event)
 {
 	GameErrorCode result = FWG_NO_ERROR;
@@ -352,7 +361,7 @@ void GameMsgSrv::ClientInfo::SocketEvent(wxSocketEvent& event)
 				result = GameConvertWxSocketErr2GameErr(m_pSocket->LastError());
 				FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::ClientInfo::SocketEvent() : Memory allocation error"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
 			}
-			Unbind(wxEVT_SOCKET, &ClientInfo::SocketEvent, this, wxID_ANY);
+			//Unbind(wxEVT_SOCKET, &ClientInfo::SocketEvent, this, wxID_ANY);
 			m_pSocket = NULL;
 			
 		}
@@ -374,7 +383,7 @@ GameErrorCode GameMsgSrv::ClientInfo::ClientConnect(wxSocketBase* pSocket)
 		{
 			m_pSocket->Destroy();
 			m_pSocket = NULL;
-			Unbind(wxEVT_SOCKET, &ClientInfo::SocketEvent, this, wxID_ANY);
+			//Unbind(wxEVT_SOCKET, &ClientInfo::SocketEvent, this, wxID_ANY);
 		}
 		
 	} else {
@@ -384,11 +393,11 @@ GameErrorCode GameMsgSrv::ClientInfo::ClientConnect(wxSocketBase* pSocket)
 		{
 			m_pSocket->Destroy();
 			m_pSocket = NULL;
-			Unbind(wxEVT_SOCKET, &ClientInfo::SocketEvent, this, wxID_ANY);
+			//Unbind(wxEVT_SOCKET, &ClientInfo::SocketEvent, this, wxID_ANY);
 		}
 		m_pSocket = pSocket;
 		
-		Bind(wxEVT_SOCKET, &ClientInfo::SocketEvent, this, wxID_ANY);
+		//Bind(wxEVT_SOCKET, &ClientInfo::SocketEvent, this, wxID_ANY);
 		// set socket server event handling
 		pSocket->SetEventHandler(*this);
 		pSocket->SetNotify(wxSOCKET_INPUT_FLAG|wxSOCKET_LOST_FLAG);
@@ -404,7 +413,7 @@ GameErrorCode GameMsgSrv::ClientInfo::ClientDisconnect()
 	{
 		m_pSocket->Destroy();
 		m_pSocket = NULL;
-		Unbind(wxEVT_SOCKET, &ClientInfo::SocketEvent, this, wxID_ANY);
+		//Unbind(wxEVT_SOCKET, &ClientInfo::SocketEvent, this, wxID_ANY);
 	}
 	
 	m_active = false;
