@@ -182,7 +182,7 @@ SUITE(MsgServerClientTest)
 		CHECK(FWG_SUCCEDED(client.Connect()));
 		CHECK(client.IsConnected());
 		
-		wxThread::Sleep(50);
+		wxThread::Sleep(50000);
 		
 		CHECK(client.GetCliAddress() == GAME_ADDR_SERVER + 1);
 		

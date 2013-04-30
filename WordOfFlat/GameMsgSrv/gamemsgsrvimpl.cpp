@@ -128,7 +128,7 @@ GameErrorCode GameMsgSrv::Initialize(GameLogger* pLogger)
 	wxIPV4address addr;
 	addr.Service(GAME_SERVICE_PORT);
 	
-	m_pSocketServer = new wxSocketServer(addr, wxSOCKET_BLOCK);
+	/*m_pSocketServer = new wxSocketServer(addr, wxSOCKET_BLOCK);
 	if (!m_pSocketServer) {
 		FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::Initialize() : Creation of m_pSocketServer failed: 0x%08x"),
 							pLogger, FWG_E_MEMORY_ALLOCATION_ERROR, FWGLOG_ENDVAL);
@@ -153,7 +153,7 @@ GameErrorCode GameMsgSrv::Initialize(GameLogger* pLogger)
 	{
 		FWGLOG_ERROR(wxT("GameMsgSrv::Initialize() : Initialization of socket server failed: Server is not ready"),	pLogger);
 		return FWG_E_MISC_ERROR;
-	}
+	}*/
 	
 	scopeGuard.Dismiss();
 	

@@ -1,6 +1,8 @@
 #include <UnitTest++/UnitTest++.h>
 #include <wx/init.h>
 #include <wx/wxcrtvararg.h>
+#include <wx/app.h>
+#include <wx/socket.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -58,15 +60,83 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // run all tests
-int main(int argc, char **argv)
-{
-	wxInitializer intialize (argc, argv);
-	if (!intialize.IsOk())
-	{
-		wxPrintf(wxT("Initializer failed"));
-		return -1;
-	}
-	
+
+
+class MyApp : public wxApp {
+	wxSocketServer *m_pSocketServer;
+public:
+	virtual bool OnInit();
+	virtual int OnRun();
+	virtual int FilterEvent (wxEvent &event);
+	void SocketReceiver(wxSocketEvent& event);
+};
+
+
+wxDECLARE_APP(MyApp);
+
+
+int MyApp::OnRun() {
 	return UnitTest::RunAllTests();
 }
 
+
+int MyApp::FilterEvent(wxEvent& event)
+{
+	wxPrintf(wxT("Event was called: %u\n"),event.GetId());
+	return -1;
+}
+
+bool MyApp::OnInit()
+{
+	if(!wxApp::OnInit()) return false;
+	
+	// initialize socket server
+	wxIPV4address addr;
+	addr.Service(9567);
+	
+	m_pSocketServer = new wxSocketServer(addr, wxSOCKET_BLOCK);
+	if (!m_pSocketServer) return false;
+	
+	if (m_pSocketServer->Error()) {
+		
+		wxPrintf(wxT("GameMsgSrv::Initialize() : Socket server initialization failed: 0x%08x"), m_pSocketServer->LastError());
+		return false;	
+	}
+	
+	Bind(wxEVT_SOCKET, &MyApp::SocketReceiver, this, wxID_ANY);
+	
+	// set socket server event handling
+	m_pSocketServer->SetEventHandler(*this);
+	m_pSocketServer->SetNotify(wxSOCKET_CONNECTION_FLAG);
+	m_pSocketServer->Notify(true);
+	
+	return true;
+	
+}
+
+
+void MyApp::SocketReceiver(wxSocketEvent& event)
+{
+	wxPrintf(wxT("Recieved event\n"));	
+	switch(event.GetSocketEvent())
+	{
+		case wxSOCKET_CONNECTION:
+   
+			// Check if the server socket
+			if (m_pSocketServer == (wxSocketServer*) event.GetSocket())
+			{
+				wxDword freeIndex = 0;
+				wxSocketBase *  pSocket = m_pSocketServer->Accept(true);
+				wxPrintf(wxT("Recieved connection\n"));	
+				
+			}
+			break;
+		default:
+			wxPrintf(wxT("GameMsgSrv::SocketReceiver() : Unknown event: %d"), event.GetEventType());
+			break;
+	}
+	
+}
+
+
+wxIMPLEMENT_APP_CONSOLE(MyApp);
