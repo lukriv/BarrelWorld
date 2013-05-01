@@ -30,7 +30,13 @@ GameErrorCode GameMsgCli::Initialize(GameLogger* pLogger)
 	}
 	
 	m_socketClient->SetTimeout(CLIENT_CONNECTION_TIMEOUT);
+<<<<<<< Updated upstream
 	
+=======
+	m_socketClient->SetEventHandler(*this);
+	m_socketClient->SetNotify(wxSOCKET_CONNECTION_FLAG|wxSOCKET_LOST_FLAG|wxSOCKET_OUTPUT_FLAG|wxSOCKET_INPUT_FLAG);
+    m_socketClient->Notify(true);
+>>>>>>> Stashed changes
 	// set hostname
 	ipAddr.LocalHost();
 	m_hostName = ipAddr.Hostname();
@@ -62,8 +68,13 @@ GameErrorCode GameMsgCli::Connect()
 
 	Bind(wxEVT_SOCKET, &GameMsgCli::OnSocketEvent, this, wxID_ANY);
 	
+<<<<<<< Updated upstream
     m_socketClient->SetNotify(wxSOCKET_CONNECTION_FLAG|wxSOCKET_LOST_FLAG|wxSOCKET_OUTPUT_FLAG|wxSOCKET_INPUT_FLAG);
     m_socketClient->Notify(true);
+=======
+	
+
+>>>>>>> Stashed changes
 	
      //wxLogMessage(wxT("EventWorker: Connecting....."));
     m_socketClient->Connect(ipAddr,false);
