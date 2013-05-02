@@ -70,7 +70,6 @@ const char *GetSocketErrorMsg(int pSockError)
 //and list of two type worker classes that serve clients
 class Server : public wxApp
 {
-    DECLARE_EVENT_TABLE()
 public:
     Server() : m_maxConnections(-1) {}
     ~Server() {}
@@ -206,11 +205,11 @@ void Server::OnSocketEvent(wxSocketEvent& pEvent)
 }
 
 
-
+/*
 BEGIN_EVENT_TABLE(Server,wxEvtHandler)
   EVT_SOCKET(wxID_ANY,Server::OnSocketEvent)
 END_EVENT_TABLE()
-
+*/
 
 
 

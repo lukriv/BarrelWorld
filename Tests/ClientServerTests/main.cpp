@@ -3,6 +3,9 @@
 #include <wx/wxcrtvararg.h>
 #include <wx/app.h>
 #include <wx/socket.h>
+#include <wx/evtloop.h>
+#include <wx/apptrait.h>
+#include "../../WordOfFlat/GameSystem/gthread.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -62,81 +65,87 @@
 // run all tests
 
 
-class MyApp : public wxApp {
-	wxSocketServer *m_pSocketServer;
+class EventThread : public GameThread {
+	wxConsoleAppTraits* m_pTraits;    
+	wxEventLoopBase* m_pEventLoop;
+	//bool m_isInitialized;
+		
+protected:
+	virtual void *Entry();
+		
 public:
-	virtual bool OnInit();
-	virtual int OnRun();
-	virtual int FilterEvent (wxEvent &event);
-	void SocketReceiver(wxSocketEvent& event);
+	EventThread(): GameThread(wxTHREAD_JOINABLE),
+										m_pTraits(NULL),
+										m_pEventLoop(NULL) 
+										{}
+
+	~EventThread() {
+		if (m_pEventLoop)
+		{
+			m_pEventLoop->IsRunning();
+			m_pEventLoop->Exit();
+			delete m_pEventLoop;
+			m_pEventLoop = NULL;
+		}
+		
+		if (m_pTraits)
+		{
+			delete m_pTraits;
+			m_pTraits = NULL;
+		}
+	}
+	
+	GameErrorCode Initialize(wxConsoleAppTraits* pTraits);
+	GameErrorCode StopRequest();
+
 };
 
-
-wxDECLARE_APP(MyApp);
-
-
-int MyApp::OnRun() {
-	return UnitTest::RunAllTests();
+GameErrorCode EventThread::Initialize(wxConsoleAppTraits* pTraits)
+{
+	m_pTraits = pTraits;
+	m_pEventLoop = m_pTraits->CreateEventLoop();
+	return FWG_NO_ERROR;
 }
 
-
-int MyApp::FilterEvent(wxEvent& event)
+GameErrorCode EventThread::StopRequest()
 {
-	wxPrintf(wxT("Event was called: %u\n"),event.GetId());
-	return -1;
-}
-
-bool MyApp::OnInit()
-{
-	if(!wxApp::OnInit()) return false;
+	if (!m_pEventLoop) return FWG_NO_ERROR;
 	
-	// initialize socket server
-	wxIPV4address addr;
-	addr.Service(9567);
-	
-	m_pSocketServer = new wxSocketServer(addr, wxSOCKET_BLOCK);
-	if (!m_pSocketServer) return false;
-	
-	if (m_pSocketServer->Error()) {
-		
-		wxPrintf(wxT("GameMsgSrv::Initialize() : Socket server initialization failed: 0x%08x"), m_pSocketServer->LastError());
-		return false;	
-	}
-	
-	Bind(wxEVT_SOCKET, &MyApp::SocketReceiver, this, wxID_ANY);
-	
-	// set socket server event handling
-	m_pSocketServer->SetEventHandler(*this);
-	m_pSocketServer->SetNotify(wxSOCKET_CONNECTION_FLAG);
-	m_pSocketServer->Notify(true);
-	
-	return true;
-	
-}
-
-
-void MyApp::SocketReceiver(wxSocketEvent& event)
-{
-	wxPrintf(wxT("Recieved event\n"));	
-	switch(event.GetSocketEvent())
+	if(m_pEventLoop->IsRunning())
 	{
-		case wxSOCKET_CONNECTION:
-   
-			// Check if the server socket
-			if (m_pSocketServer == (wxSocketServer*) event.GetSocket())
-			{
-				wxDword freeIndex = 0;
-				wxSocketBase *  pSocket = m_pSocketServer->Accept(true);
-				wxPrintf(wxT("Recieved connection\n"));	
-				
-			}
-			break;
-		default:
-			wxPrintf(wxT("GameMsgSrv::SocketReceiver() : Unknown event: %d"), event.GetEventType());
-			break;
+		m_pEventLoop->Exit();
 	}
 	
+	return FWG_NO_ERROR;
+}
+
+void* EventThread::Entry()
+{
+	if(m_pEventLoop == NULL) return NULL;
+	return (void*) m_pEventLoop->Run();
 }
 
 
-wxIMPLEMENT_APP_CONSOLE(MyApp);
+
+
+int main(int argc, char **argv)
+{
+	wxInitializer intializer (argc, argv);
+	if (!intializer.IsOk())
+	{
+		wxPrintf(wxT("Initializer failed"));
+		return -1;
+	}
+	
+	wxConsoleAppTraits traits;
+	EventThread eventThr;
+	
+	eventThr.Initialize(&traits);
+	eventThr.Run();
+	
+	
+ 	return UnitTest::RunAllTests();
+}
+
+
+
