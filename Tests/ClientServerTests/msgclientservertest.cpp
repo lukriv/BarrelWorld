@@ -186,7 +186,7 @@ SUITE(MsgServerClientTest)
 		
 		CHECK(client.GetCliAddress() == GAME_ADDR_SERVER + 1);
 		
-		
+		 
 	}
 	
 }
