@@ -29,7 +29,9 @@ public:
 };
 
 
-//static const unsigned short int GAME_SERVICE_PORT = 9567;
-static const unsigned short int GAME_SERVICE_PORT = 3000;
+static const unsigned short int GAME_TCP_SERVICE_PORT = 9567;
+static const unsigned short int GAME_UDP_SERVER_PORT = 9568;
+static const unsigned short int GAME_UDP_CLIENT_PORT = 9569;
+//static const unsigned short int GAME_SERVICE_PORT = 3000;
 
 #endif //__GAME_MESSAGE_CLIENT_H__

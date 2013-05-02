@@ -5,8 +5,6 @@
 #include <wx/socket.h>
 #include <wx/evtloop.h>
 #include <wx/apptrait.h>
-#include "../../WordOfFlat/GameSystem/eventthread.h"
-#include "../../WordOfFlat/GameMsgSrv/gamemsgsrvimpl.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -68,7 +66,23 @@
 /*
 */
 
-
+class TestThread : public wxThread {
+	
+	wxEventLoopBase *m_pEventLoop;
+protected:
+	virtual void *Entry() {
+		while (!m_pEventLoop->IsRunning()) {
+			Sleep(500);
+		}
+		int result = UnitTest::RunAllTests();
+		wxPrintf(wxT("UnitTest result: %d\n"), result);
+		m_pEventLoop->Exit();
+		return (void*) result;
+	}
+public: 
+	TestThread(wxEventLoopBase* pEventLoop) : wxThread(wxTHREAD_JOINABLE), m_pEventLoop(pEventLoop) {}
+	
+};
 
 
 
@@ -85,18 +99,23 @@ int main(int argc, char **argv)
 	
 	wxEventLoopBase* pEventLoop = NULL;
 	wxConsoleAppTraits wxTraits;
+	
+
+	
+	
 	pEventLoop = wxTraits.CreateEventLoop();
 	
-	GameMsgSrv server;
-	server.Initialize(NULL);
-		
-	server.Connect();
-	server.IsConnected();
+	TestThread testThr(pEventLoop);
+	
+	testThr.Create();
+	
+	testThr.Run();
 	
 	
 	pEventLoop->Run();
 	
+	testThr.Wait();
 	
- 	return UnitTest::RunAllTests();
+	return 0;
 }
 

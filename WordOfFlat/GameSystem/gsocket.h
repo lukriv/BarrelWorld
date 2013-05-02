@@ -3,6 +3,7 @@
 
 
 #include <wx/socket.h>
+#include <SFML/Socket.hpp>
 #include "gerror.h"
 
 inline GameErrorCode GameConvertWxSocketErr2GameErr( wxSocketError streamErr)
@@ -34,6 +35,22 @@ inline GameErrorCode GameConvertWxSocketErr2GameErr( wxSocketError streamErr)
 	}
 }
 
+
+inline GameErrorCode GameConvertSocketStatus2GameErr( sf::Socket::Status status)
+{
+	switch (status)
+	{
+	case Done:
+		return FWG_NO_ERROR;
+	case NotReady: 	
+		return FWG_E_INVALID_SOCKET_ERROR;  // Invalid operation.
+	case Disconnected:
+		return FWG_E_NOT_CONNECTED_ERROR; // Input/Output error.
+	case Error:
+	default:
+		return FWG_E_MISC_ERROR;
+	}
+}
 
 
 #endif // __GAME_SOCKET_H__
