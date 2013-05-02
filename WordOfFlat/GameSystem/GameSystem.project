@@ -32,7 +32,6 @@
     <VirtualDirectory Name="Network">
       <File Name="gsocket.h"/>
     </VirtualDirectory>
-    <VirtualDirectory Name="Environment"/>
   </VirtualDirectory>
   <Dependencies Name="Release"/>
   <Settings Type="Static Library">

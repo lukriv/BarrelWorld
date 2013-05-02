@@ -125,35 +125,22 @@ GameErrorCode GameMsgSrv::Initialize(GameLogger* pLogger)
 	}
 	
 	// initialize socket server
-	wxIPV4address addr;
-	addr.Service(GAME_SERVICE_PORT);
 	
-	m_pSocketServer = new wxSocketServer(addr, wxSOCKET_BLOCK);
-	if (!m_pSocketServer) {
-		FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::Initialize() : Creation of m_pSocketServer failed: 0x%08x"),
-							pLogger, FWG_E_MEMORY_ALLOCATION_ERROR, FWGLOG_ENDVAL);
-		return FWG_E_MEMORY_ALLOCATION_ERROR;
-	}
-	
-	if (m_pSocketServer->Error()) {
-		result = GameConvertWxSocketErr2GameErr(m_pSocketServer->LastError());
-		FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::Initialize() : Socket server initialization failed: 0x%08x"),
-						pLogger, result, FWGLOG_ENDVAL);
-		return result;	
-	}
-	
-	Bind(wxEVT_SOCKET, &GameMsgSrv::SocketReceiver, this, wxID_ANY);
-	
-	// set socket server event handling
-	m_pSocketServer->SetEventHandler(*this);
-	m_pSocketServer->SetNotify(wxSOCKET_CONNECTION_FLAG);
-	m_pSocketServer->Notify(true);
-	
-	if (!m_pSocketServer->IsOk())
+	if (FWG_FAILED(result = GameConvertSocketStatus2GameErr(m_socketServer.listen(GAME_TCP_SERVICE_PORT))))
 	{
-		FWGLOG_ERROR(wxT("GameMsgSrv::Initialize() : Initialization of socket server failed: Server is not ready"),	pLogger);
-		return FWG_E_MISC_ERROR;
+		FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::Initialize() : Set socket listener failed: 0x%08x"),
+							pLogger, result, FWGLOG_ENDVAL);
+		return result;
 	}
+	
+	// initialize selector
+	m_socketSelector.add(m_socketServer);
+	
+	// create thread
+	this->Create();
+	
+	// run thread
+	this->Run();
 	
 	scopeGuard.Dismiss();
 	
@@ -228,9 +215,9 @@ GameMsgSrv::~GameMsgSrv()
 
 void GameMsgSrv::Destroy()
 {
-	if (m_pSocketServer)
+	if (m_socketServer)
 	{
-		m_pSocketServer->Destroy();
+		m_socketServer->Destroy();
 	}
 	
 	for (wxDword i = 0; i < m_clientList.size(); ++i)
@@ -241,56 +228,32 @@ void GameMsgSrv::Destroy()
 	
 }
 
-void GameMsgSrv::SocketReceiver(wxSocketEvent& event)
+GameErrorCode GameMsgSrv::ConnectRemoteClient(ClientInfo& client, sf::Socket* pSocket)
 {
-	GameErrorCode result = FWG_NO_ERROR;
-	switch(event.GetSocketEvent())
-	{
-		case wxSOCKET_CONNECTION:
-   
-			// Check if the server socket
-			if (m_pSocketServer == (wxSocketServer*) event.GetSocket())
-			{
-				wxDword freeIndex = 0;
-				wxSocketBase *  pSocket = m_pSocketServer->Accept(true);
-				
-				wxCriticalSectionLocker locker(m_clientLock);
-				
-				for (freeIndex = 1; freeIndex < m_clientList.size(); freeIndex++)
-				{
-					if(!m_clientList[freeIndex]->IsActive())
-					{
-						if (FWG_FAILED(result = m_clientList[freeIndex]->ClientConnect(pSocket)))
-						{
-							FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::SocketReceiver() : Connect client failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
-						}
-						break;
-					}
-				}
-				
-				if (freeIndex == m_clientList.size())
-				{
-					ClientInfo *pClient = new (std::nothrow) ClientInfo(this);
-					if (pClient) {
-						m_clientList.push_back(pClient);
-						if (FWG_FAILED(result = pClient->ClientConnect(pSocket)))
-						{
-							FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::SocketReceiver() : Connect client failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
-						}
-					} else {
-						FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::SocketReceiver() : Client creation failed: 0x%08x"),
-								m_pLogger, FWG_E_MEMORY_ALLOCATION_ERROR, FWGLOG_ENDVAL);
-					}
-				}
-				
-				
-			}
-			break;
-		default:
-			FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::SocketReceiver() : Unknown event: %d"), m_pLogger, event.GetEventType(), FWGLOG_ENDVAL);
-			break;
-	}
+}
+
+void* GameMsgSrv::Entry()
+{
+	//prepare selector
+	m_socketSelector.add(m_socketServer);
 	
+	do {
+		if(m_socketSelector.wait(sf::milliseconds(5000))){
+			if(m_socketSelector.isReady(m_socketServer))
+			{
+				// add new connection
+			} else {
+				// try find what happen
+			}
+		}
+		
+	} while (!m_stopRequest);
+	
+}
+
+GameErrorCode GameMsgSrv::StopRequest()
+{
+	m_stopRequest = true;	
 }
 
 
@@ -435,3 +398,5 @@ GameErrorCode GameMsgSrv::ClientInfo::SendMsg(IGameMessage& msg, long timeout)
 	
 	return result;
 }
+
+
