@@ -52,7 +52,7 @@ protected:
 		inline bool IsActive() {return m_active;}
 		inline bool IsLocal() {return m_local;}
 		
-		sf::Socket& GetSocket() {return *m_pSocket;}
+		inline sf::Socket& GetSocket() {return *m_pSocket;}
 	};
 	
 	typedef wxVector<ClientInfo*> ClientListType;
@@ -85,6 +85,7 @@ protected:
 	virtual void *Entry();
 	
 	GameErrorCode ConnectRemoteClient(ClientInfo &client, sf::Socket *pSocket);
+	ClientInfo* FindNonActiveClient();
 	GameErrorCode StopRequest();
 	
 // message server methods	
