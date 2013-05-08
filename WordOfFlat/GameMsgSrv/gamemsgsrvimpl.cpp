@@ -272,22 +272,32 @@ void* GameMsgSrv::Entry()
 				ClientListType::iterator iter;
 				for (iter = m_clientList.begin(); iter != m_clientList.end(); iter++)
 				{
-					if(m_socketSelector((*iter).GetSocket()))
+					if(m_socketSelector.isReady((*iter).GetSocket()))
 					{
 						sf::Packet packet;
 						if(FWG_SUCCEDED(result = GameConvertSocketStatus2GameErr((*iter).GetSocket().receive(packet))))
 						{
 							//todo: Receive packet
-							GameMessage message;
-							packet.getData()
+							wxScopedPtr<GameMessage> spMessage;
+							wxMemoryInputStream packetStream(packet.getData(), packet.getDataSize());
+							spMessage.reset(new (std::nothrow) GameMessage);
+							
+							if (FWG_FAILED(result = message.Load(packetStream))) {
+								FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::Entry() : Load message from packet failed: 0x%08x"), m_pLogger,
+														result,
+														FWGLOG_ENDVAL);
+							} else {
+								if (FWG_FAILED(result = m_msgQueue.Post(spMessage.release()))) {
+									FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::Entry() : Post message to queue failed: 0x%08x"), m_pLogger,
+															result,
+															FWGLOG_ENDVAL);
+								}
+							}
 						} else {
 							FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::Entry() : Packet receive failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
 						}
 					}
-					
 				}
-				
-				
 			}
 		}
 		
@@ -350,7 +360,10 @@ GameErrorCode GameMsgSrv::ClientInfo::SendMsg(IGameMessage& msg, long timeout)
 	}
 	
 	GameErrorCode result = FWG_NO_ERROR;
-	wxSocketOutputStream socketOutStream(*m_pSocket);
+	wxSocketOutputStream ;
+	sf::Packet packet;
+	
+	packet << 
 	
 	if(FWG_FAILED(result = msg.Store(socketOutStream)))
 	{
