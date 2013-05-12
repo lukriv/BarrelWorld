@@ -4,27 +4,32 @@
 #include "../GameSystem/gerror.h"
 #include "../GameComm/GameMessage.h"
 #include "gamecliworkpool.h"
-#include <wx/event.h>
-#include <wx/socket.h>
+#include <SFML/Network.hpp>
 
 
-class GameMsgCli : public IGameMsgCli, public GameCliClbkWorkerPool, public wxEvtHandler {
+class GameMsgCli : public IGameMsgCli, public GameCliClbkWorkerPool, protected GameThread {
 	bool m_isInitialized;
 protected:
 	wxAtomicInt32 m_refCount;
 	GameAddrType m_cliAddr;
 	bool m_connected;
-	bool m_isConnecting;
-	wxSocketClient* m_socketClient;
+	bool m_stopRequrest;
+	sf::TcpSocket m_socketClient;
+	sf::SocketSelector m_socketSelector;
 	wxString m_hostName;
 	wxCriticalSection m_clientLock;
+	
+protected:
+	virtual void *Entry();
+	void SetStopRequest();
+	
 public:
 	GameMsgCli() : GameCliClbkWorkerPool(),
 			m_isInitialized(false),
 			m_refCount(1),
 			m_cliAddr(GAME_ADDR_UNKNOWN),
 			m_connected(false),
-			m_isConnecting(false),
+			m_stopRequrest(false),
 			m_socketClient(NULL),
 			m_clientLock(wxCRITSEC_DEFAULT) {}
 	virtual ~GameMsgCli();
@@ -43,11 +48,6 @@ public:
 	void Destroy();
 	
 	
-	/*!
-	 * \brief On new socket event handler
-	 * \param event Socket event
-	 */
-	void OnSocketEvent(wxSocketEvent &event);
 	
 // message client methods
 public:

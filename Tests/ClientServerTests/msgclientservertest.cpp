@@ -183,9 +183,9 @@ SUITE(MsgServerClientTest)
 		CHECK(client.IsConnected());
 		
 		wxThread::Sleep(30000);
-				CHECK(client.GetCliAddress() == GAME_ADDR_SERVER + 1);
+		CHECK(client.GetCliAddress() == GAME_ADDR_SERVER + 1);
 		
-		
+		 
 	}
 	
 }
