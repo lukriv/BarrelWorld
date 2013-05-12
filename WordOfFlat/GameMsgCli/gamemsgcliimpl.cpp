@@ -22,21 +22,8 @@ GameErrorCode GameMsgCli::Initialize(GameLogger* pLogger)
 	
 	wxScopeGuard guard = wxMakeGuard(GameClientScopeGuard, this);
 	
-	m_socketClient = new (std::nothrow) wxSocketClient(wxSOCKET_BLOCK|wxSOCKET_WAITALL);
-	if(m_socketClient == NULL) {
-		result = FWG_E_MEMORY_ALLOCATION_ERROR;
-		FWGLOG_ERROR_FORMAT(wxT("GameMsgCli::Initialize() : Create client socket failed: 0x%08x"),
-							m_pLogger, result, FWGLOG_ENDVAL);
-	}
-	
-	m_socketClient->SetTimeout(CLIENT_CONNECTION_TIMEOUT);
-	m_socketClient->SetEventHandler(*this);
-	m_socketClient->SetNotify(wxSOCKET_CONNECTION_FLAG|wxSOCKET_LOST_FLAG|wxSOCKET_OUTPUT_FLAG|wxSOCKET_INPUT_FLAG);
-    m_socketClient->Notify(true);
-
 	// set hostname
-	ipAddr.LocalHost();
-	m_hostName = ipAddr.Hostname();
+	m_hostName.assign(wxT("127.0.0.1"));
 	
 	guard.Dismiss();
 	
@@ -54,23 +41,48 @@ GameErrorCode GameMsgCli::Connect()
 		return FWG_E_OBJECT_NOT_INITIALIZED_ERROR;
 	}
 	
-	if (m_isConnecting || m_connected)
+	if (m_connected)
 	{
 		return FWG_NO_ERROR;
 	}
 	
-	wxIPV4address ipAddr;
+	sf::IpAddress ipAddr(m_hostName.GetData().AsChar());
     ipAddr.Hostname(m_hostName);
-    ipAddr.Service(GAME_SERVICE_PORT);
 
-	Bind(wxEVT_SOCKET, &GameMsgCli::OnSocketEvent, this, wxID_ANY);
+	if(FWG_FAILED(result = GameConvertSocketStatus2GameErr(m_socketClient.connect( ipAddr, GAME_TCP_SERVICE_PORT, sf::milliseconds(5000)))))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("GameMsgCli::Connect() : Client connect failed: 0x%08x"),
+						m_pLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
 	
-
-
-     //wxLogMessage(wxT("EventWorker: Connecting....."));
-    m_socketClient->Connect(ipAddr,false);
+	if(m_cliAddr == GAME_ADDR_UNKNOWN)
+	{
+		GameMessage msg;
+		ClientIdRequestData data;
+		wxMemoryOutputStream outputStream;
+		sf::Packet packet;
+		
+		msg.SetTarget(GAME_ADDR_SERVER);
+		msg.SetMessage(data, GAME_MSG_TYPE_CLIENT_ID_REQUEST);
+		if(FWG_FAILED(result = msg.Store(outputStream))) {
+			FWGLOG_ERROR_FORMAT(wxT("GameMsgCli::Connect() : Message sending failed: 0x%08x"),
+						m_pLogger, result, FWGLOG_ENDVAL);
+			m_socketClient->disconnect();
+			return result;
+		}
+		packet.append(outputStream.GetOutputStreamBuffer()->GetBufferStart(), outputStream.GetSize());
+				
+		if(FWG_FAILED(result = GameConvertSocketStatus2GameErr(m_socketClient.send(packet))))
+		{
+			FWGLOG_ERROR_FORMAT(wxT("GameMsgCli::Connect() : Send client address request failed: 0x%08x"),
+						m_pLogger, result, FWGLOG_ENDVAL);
+			m_socketClient->disconnect();
+			return result;
+		}
+	}
 	
-	m_isConnecting = true;	
+	m_connected = true;	
 	return FWG_NO_ERROR;
 }
 
@@ -78,22 +90,12 @@ GameErrorCode GameMsgCli::Disconnect()
 {
 	wxCriticalSectionLocker lock(m_clientLock);
 	
-	if((!m_connected)&&(!m_isConnecting))
+	if(!m_connected)
 	{
 		return FWG_NO_ERROR;
 	}
-
-	m_isConnecting = false;
-	m_connected = false;
 	
-	Unbind(wxEVT_SOCKET, &GameMsgCli::OnSocketEvent, this, wxID_ANY);
-	
-	m_socketClient->Notify(false);
-	
-	if(!m_socketClient->Close())
-	{
-		return GameConvertWxSocketErr2GameErr(m_socketClient->LastError());
-	}
+	m_socketClient.disconnect();
 	
 	return FWG_NO_ERROR;
 }
@@ -132,12 +134,23 @@ GameErrorCode GameMsgCli::SendMsg(IGameMessage& msg, long timeout)
 	
 	GameErrorCode result = FWG_NO_ERROR;
 	wxCriticalSectionLocker lock(m_clientLock);
-	wxSocketOutputStream socketOutStream(*m_socketClient);
+	wxMemoryOutputStream outputStream;
+	sf::Packet packet;
 	
-	if(FWG_FAILED(result = msg.Store(socketOutStream)))
+	msg.SetSource(m_cliAddr);
+	
+	if(FWG_FAILED(result = msg.Store(outputStream))) {
+		FWGLOG_ERROR_FORMAT(wxT("GameMsgCli::SendMsg() : Message serialize failed: 0x%08x"),
+					m_pLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	packet.append(outputStream.GetOutputStreamBuffer()->GetBufferStart(), outputStream.GetSize());
+				
+	if(FWG_FAILED(result = GameConvertSocketStatus2GameErr(m_socketClient.send(packet))))
 	{
-		FWGLOG_ERROR_FORMAT(wxT("GameMsgCli::SendMsg() : Send message failed: 0x%08x"), m_pLogger,
-							result, FWGLOG_ENDVAL);
+		FWGLOG_ERROR_FORMAT(wxT("GameMsgCli::SendMsg() : Send message failed: 0x%08x"),
+					m_pLogger, result, FWGLOG_ENDVAL);
 		return result;
 	}
 	
@@ -194,81 +207,66 @@ GameErrorCode GameMsgCli::SetServerAddress(const wxString& hostName)
 	
 }
 
-void GameMsgCli::OnSocketEvent(wxSocketEvent& event)
+void* GameMsgCli::Entry()
 {
-	GameErrorCode result = FWG_NO_ERROR;
-	// lock
-	wxCriticalSectionLocker lock(m_clientLock);
-	switch(event.GetSocketEvent()) 
+	if (m_socketClient)
 	{
-    case wxSOCKET_INPUT:
-	{
-		FWGLOG_TRACE(wxT("GameMsgCli::OnSocketEvent() : Game client input event"), m_pLogger);
-		wxSocketInputStream socketStream(*m_socketClient);
 		
-		GameMessage* pMessage = NULL;
-		pMessage = new (std::nothrow) GameMessage;
-		if (pMessage == NULL) {
-			FWGLOG_ERROR(wxT("GameMsgCli::OnSocketEvent() : Memory allocation error"), m_pLogger);
-			return;
-		}
+
+		m_socketSelector.add(m_socketClient);
 		
-		wxScopedPtr<GameMessage> apMessage(pMessage);
 		
-		if (FWG_FAILED(result = pMessage->Load(socketStream)))
-		{
-			FWGLOG_ERROR_FORMAT(wxT("GameMsgCli::OnSocketEvent() : Message loading failed: 0x%08x"),
-							m_pLogger, result, FWGLOG_ENDVAL);
-			return;
-		}
+		do {
 			
-		if (FWG_FAILED(result = m_msgQueue.Post(apMessage.release())))
-		{
-			FWGLOG_ERROR_FORMAT(wxT("GameMsgCli::OnSocketEvent() : Message post failed: 0x%08x"), 
-							m_pLogger, result, FWGLOG_ENDVAL);
-			return;
-		}
-		
-		break;
-	}
-    case wxSOCKET_OUTPUT:
-	{
-		FWGLOG_INFO(wxT("GameMsgCli::OnSocketEvent() : Game client output event"), m_pLogger);
+			if( m_socketSelector.wait(sf::milliseconds(5000)))
+			{
+				
+				wxCriticalSectionLocker lock(m_clientLock);
+				if (m_socketSelector.isReady(*m_socketClient))
+				{
+					sf::Packet packet;
+					wxScopedPtr<GameMessage> apMessage;
+					
+					do {
+						if (FWG_FAILED(result = GameConvertSocketStatus2GameErr(m_socketClient->receive(packet))))
+						{
+							FWGLOG_ERROR_FORMAT(wxT("GameMsgCli::Entry() : Packet receive failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
+							break;
+						}
 
-		if(m_socketClient->Error())
-		{
-			result = GameConvertWxSocketErr2GameErr(m_socketClient->LastError());
-			FWGLOG_ERROR_FORMAT(wxT("GameMsgCli::OnSocketEvent() : Socket client failed: 0x%08x"), 
-					m_pLogger, result, FWGLOG_ENDVAL);
-		}
-		
-		if(m_cliAddr == GAME_ADDR_UNKNOWN)
-		{
-			GameMessage msg;
-			ClientIdRequestData data;
-			wxSocketOutputStream socketOutStream(*m_socketClient);
-			msg.SetTarget(GAME_ADDR_SERVER);
-			msg.SetMessage(data, GAME_MSG_TYPE_CLIENT_ID_REQUEST);
-			if(FWG_FAILED(result = msg.Store(socketOutStream))) {
-				FWGLOG_ERROR_FORMAT(wxT("GameMsgCli::OnSocketEvent() : Message sending failed: 0x%08x"),
-							m_pLogger, result, FWGLOG_ENDVAL);
+						wxMemoryInputStream inputStream(packet.getData(), packet.getDataSize());
+						
+						apMessage.reset(new (std::nothrow) GameMessage);
+						if (apMessage.get() == NULL) {
+							FWGLOG_ERROR(wxT("GameMsgCli::Entry() : Memory allocation error"), m_pLogger);
+							break;
+						}
+											
+						if (FWG_FAILED(result = apMessage->Load(inputStream)))
+						{
+							FWGLOG_ERROR_FORMAT(wxT("GameMsgCli::Entry() : Message loading failed: 0x%08x"),
+											m_pLogger, result, FWGLOG_ENDVAL);
+							break;
+						}
+							
+						if (FWG_FAILED(result = m_msgQueue.Post(apMessage.release())))
+						{
+							FWGLOG_ERROR_FORMAT(wxT("GameMsgCli::Entry() : Message post failed: 0x%08x"), 
+											m_pLogger, result, FWGLOG_ENDVAL);
+							break;
+						}
+					} while (0);
+				}
 			}
-		}
-		
-		break;
+			
+			
+		} while (!m_stopRequrest);
+		FWGLOG_TRACE(wxT("GameMsgCli::OnSocketEvent() : Game client input event"), m_pLogger);
 	}
-    case wxSOCKET_CONNECTION:
-        FWGLOG_INFO(wxT("GameMsgCli::OnSocketEvent() : Game client connected"), m_pLogger);
-		if (m_socketClient->LastError() == wxSOCKET_NOERROR) {
-			m_isConnecting = false;
-			m_connected = true;
-		}
-		break;
+}
 
-    case wxSOCKET_LOST:
-		FWGLOG_WARNING(wxT("GameMsgCli::OnSocketEvent() : Game client connection lost"), m_pLogger);
-		m_connected = false;
-		m_isConnecting = false;
-        break;
-    }
+void GameMsgCli::SetStopRequest()
+{
+	wxCriticalSectionLocker lock(m_clientLock);
+	m_stopRequrest = true;
 }
