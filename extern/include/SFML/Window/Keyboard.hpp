@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2012 Laurent Gomila (laurent.gom@gmail.com)
+// Copyright (C) 2007-2013 Laurent Gomila (laurent.gom@gmail.com)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -115,10 +115,10 @@ public :
         Home,         ///< The Home key
         Insert,       ///< The Insert key
         Delete,       ///< The Delete key
-        Add,          ///< +
-        Subtract,     ///< -
-        Multiply,     ///< *
-        Divide,       ///< /
+        Add,          ///< The + key
+        Subtract,     ///< The - key
+        Multiply,     ///< The * key
+        Divide,       ///< The / key
         Left,         ///< Left arrow
         Right,        ///< Right arrow
         Up,           ///< Up arrow
