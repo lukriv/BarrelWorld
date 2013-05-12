@@ -26,7 +26,7 @@ protected:
 		bool m_local;
 		bool m_active;
 		GameAddrType m_reservedAddr;
-		sf::Socket *m_pSocket;
+		sf::TcpSocket *m_pSocket;
 	public:
 		ClientInfo(GameMsgSrv *pOwner) : m_pOwner(pOwner),
 									m_local(false),
@@ -36,7 +36,8 @@ protected:
 		~ClientInfo() 
 		{
 			if(m_pSocket != NULL) {
-				m_pSocket->close();
+				m_pSocket->disconnect();
+				delete m_pSocket;
 				m_pSocket = NULL;
 			}
 		}

@@ -256,6 +256,8 @@ void* GameMsgSrv::Entry()
 					
 					if (FWG_SUCCEDED(result = ClientInfo->ClientConnect(client))) {
 						selector.add(*client);
+						FWGLOG_INFO_FORMAT(wxT("GameMsgSrv::Entry() : Client succesfully connected: %d"),
+										m_pLogger, ClientInfo->GetAddress(), FWGLOG_ENDVAL);
 					} else {
 						FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::Entry() : Client connection failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
 						delete client;
@@ -291,6 +293,9 @@ void* GameMsgSrv::Entry()
 									FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::Entry() : Post message to queue failed: 0x%08x"), m_pLogger,
 															result,
 															FWGLOG_ENDVAL);
+								} else {
+									FWGLOG_TRACE_FORMAT(wxT("GameMsgSrv::Entry() : Message was succesfully received: %d"), m_pLogger,
+															(*iter).GetAddress(), FWGLOG_ENDVAL);
 								}
 							}
 						} else {
@@ -360,16 +365,26 @@ GameErrorCode GameMsgSrv::ClientInfo::SendMsg(IGameMessage& msg, long timeout)
 	}
 	
 	GameErrorCode result = FWG_NO_ERROR;
-	wxSocketOutputStream ;
+	
+	wxMemoryOutputStream outputStream;
+	wxStreamBuffer *streamBuffer = NULL;
 	sf::Packet packet;
 	
-	packet << 
-	
-	if(FWG_FAILED(result = msg.Store(socketOutStream)))
+	if (FWG_FAILED(result = msg.Store(outputStream)))
 	{
-		FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::ClientInfo::SendMsg() : Message store failed : 0x%08x"), 
-					m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
+		FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::ClientInfo::SendMsg() : Message serialize failed: 0x%08x"),
+						m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
 		return result;
+	}
+	
+	streamBuffer = outputStream.GetOutputStreamBuffer();
+	
+	packet.append(streamBuffer->GetBufferStart(), streamBuffer->GetBufferSize());
+	
+	if(FWG_FAILED(result = GameConvertSocketStatus2GameErr(m_pSocket->send(packet))))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::ClientInfo::SendMsg() : Send packet failed: 0x%08x"),
+						m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
 	}
 	
 	FWGLOG_TRACE_FORMAT(wxT("GameMsgSrv::ClientInfo::SendMsg() : Message sended, type( %d ), target ( %d )"),
