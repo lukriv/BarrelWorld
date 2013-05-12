@@ -61,8 +61,8 @@
 // run all tests
 int main(int argc, char **argv)
 {
-	wxInitializer intialize (argc, argv);
-	if (!intialize.IsOk())
+	wxInitializer intializer(argc, argv);
+	if (!intializer.IsOk())
 	{
 		wxPrintf(wxT("Initializer failed"));
 		return -1;

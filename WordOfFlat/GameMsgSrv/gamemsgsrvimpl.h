@@ -4,7 +4,7 @@
 
 #include <wx/stream.h>
 #include <wx/vector.h>
-#include <wx/socket.h>
+#include <SFML/Network.hpp>
 #include "../GameSystem/gdefs.h"
 #include "../GameSystem/gerror.h"
 #include "../GameSystem/glog.h"
@@ -17,7 +17,7 @@
 
 
 
-class GameMsgSrv : public IGameMsgSrv, public GameCliClbkWorkerPool, public wxEvtHandler {
+class GameMsgSrv : public IGameMsgSrv, public GameCliClbkWorkerPool, protected GameThread {
 protected:
     
 	class ClientInfo {
@@ -27,7 +27,7 @@ protected:
 		bool m_local;
 		bool m_active;
 		GameAddrType m_reservedAddr;
-		wxSocketBase *m_pSocket;
+		sf::TcpSocket *m_pSocket;
 	public:
 		ClientInfo(GameMsgSrv *pOwner) : m_pOwner(pOwner),
 									m_local(false),
@@ -37,7 +37,8 @@ protected:
 		~ClientInfo() 
 		{
 			if(m_pSocket != NULL) {
-				m_pSocket->Destroy();
+				m_pSocket->disconnect();
+				delete m_pSocket;
 				m_pSocket = NULL;
 			}
 		}
@@ -47,13 +48,13 @@ protected:
 		
 		GameErrorCode SendMsg(IGameMessage& msg, long timeout);
 		
-		GameErrorCode ClientConnect(wxSocketBase *pSocket);
+		GameErrorCode ClientConnect(sf::Socket *pSocket);
 		GameErrorCode ClientDisconnect();
 		
 		inline bool IsActive() {return m_active;}
 		inline bool IsLocal() {return m_local;}
 		
-		void SocketEvent(wxSocketEvent &event);
+		inline sf::Socket& GetSocket() {return *m_pSocket;}
 	};
 	
 	typedef wxVector<ClientInfo*> ClientListType;
@@ -68,26 +69,38 @@ protected:
 	
 	
 	
-	ClientListType m_clientList;
+	
 	wxDword m_clientCount;
 	bool m_isInitialized;
+	bool m_stopRequest;
 	
+	
+	ClientListType m_clientList;
+	sf::SocketSelector m_socketSelector;
+	sf::TcpListener m_socketServer;
 	wxCriticalSection m_clientLock;
-	wxSocketServer *m_pSocketServer;
+	
+	
 
 // message server protected methods
 protected:
-	GameErrorCode ConnectRemoteClient(ClientInfo &client, wxSocketBase *pSocket);
+	
+	virtual void *Entry();
+	
+	GameErrorCode ConnectRemoteClient(ClientInfo &client, sf::Socket *pSocket);
+	ClientInfo* FindNonActiveClient();
+	GameErrorCode StopRequest();
 	
 // message server methods	
 public:
-	GameMsgSrv():m_refCount(1),
+	GameMsgSrv():GameThread(wxTHREAD_JOINABLE),
+				m_refCount(1),
 				m_addressPool(GAME_ADDR_SERVER+1),
 				m_address(GAME_ADDR_SERVER),
 				m_isConnected(false),
 				m_clientCount(0),
 				m_isInitialized(false),
-				m_pSocketServer(NULL){}
+				m_stopRequest(false){}
 	virtual ~GameMsgSrv();
 	
 	/*!
@@ -107,8 +120,6 @@ public:
 	 */
 	void Destroy();
 	
-	
-	void SocketReceiver(wxSocketEvent &event);
 	
 // message client interface	implementation
 public:
