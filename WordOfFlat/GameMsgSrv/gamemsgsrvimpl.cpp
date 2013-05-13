@@ -1,6 +1,5 @@
 #include <wx/scopedptr.h>
 #include <wx/scopeguard.h>
-#include <wx/sckstrm.h>
 #include "gamemsgsrvimpl.h"
 #include "../GameComm/GameMessageImpl.h"
 #include "../GameComm/gamemsgdata.h"
@@ -217,10 +216,7 @@ void GameMsgSrv::Destroy()
 {
 	StopRequest();
 	
-	if (m_socketServer.)
-	{
-		m_socketServer.close();
-	}
+	m_socketServer.close();
 	
 	Wait();
 	
@@ -232,14 +228,13 @@ void GameMsgSrv::Destroy()
 	
 }
 
-GameErrorCode GameMsgSrv::ConnectRemoteClient(ClientInfo& client, sf::Socket* pSocket)
-{
-}
 
 void* GameMsgSrv::Entry()
 {
 	//prepare selector
 	GameErrorCode result = FWG_NO_ERROR;
+	GameMsgSrv::ClientInfo* pClientInfo = NULL;
+	
 	m_socketSelector.add(m_socketServer);
 	
 	do {
@@ -249,15 +244,16 @@ void* GameMsgSrv::Entry()
 				// add new connection
 				// The listener is ready: there is a pending connection
 				sf::TcpSocket* client = new sf::TcpSocket;
-				if (FWG_SUCCEDED(result = GameConvertSocketStatus2GameErr(m_socketSelector.accept(*client))))
+				if (FWG_SUCCEDED(result = GameConvertSocketStatus2GameErr(m_socketServer.accept(*client))))
 				{
 					// Add the new client to the clients list
-					ClientInfo* pClinetInfo = FindNonActiveClient();
 					
-					if (FWG_SUCCEDED(result = ClientInfo->ClientConnect(client))) {
-						selector.add(*client);
+					pClientInfo = FindNonActiveClient();
+					
+					if (FWG_SUCCEDED(result = pClientInfo->ClientConnect(client))) {
+						m_socketSelector.add(*client);
 						FWGLOG_INFO_FORMAT(wxT("GameMsgSrv::Entry() : Client succesfully connected: %d"),
-										m_pLogger, ClientInfo->GetAddress(), FWGLOG_ENDVAL);
+										m_pLogger, pClientInfo->GetAddress(), FWGLOG_ENDVAL);
 					} else {
 						FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::Entry() : Client connection failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
 						delete client;
@@ -270,21 +266,20 @@ void* GameMsgSrv::Entry()
 				}
 			} else {
 				// try find what happen
-				wxDword i = 0;
 				ClientListType::iterator iter;
 				for (iter = m_clientList.begin(); iter != m_clientList.end(); iter++)
 				{
-					if(m_socketSelector.isReady((*iter).GetSocket()))
+					if(m_socketSelector.isReady((**iter).GetSocket()))
 					{
 						sf::Packet packet;
-						if(FWG_SUCCEDED(result = GameConvertSocketStatus2GameErr((*iter).GetSocket().receive(packet))))
+						if(FWG_SUCCEDED(result = GameConvertSocketStatus2GameErr((**iter).GetSocket().receive(packet))))
 						{
 							//todo: Receive packet
 							wxScopedPtr<GameMessage> spMessage;
 							wxMemoryInputStream packetStream(packet.getData(), packet.getDataSize());
 							spMessage.reset(new (std::nothrow) GameMessage);
 							
-							if (FWG_FAILED(result = message.Load(packetStream))) {
+							if (FWG_FAILED(result = spMessage->Load(packetStream))) {
 								FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::Entry() : Load message from packet failed: 0x%08x"), m_pLogger,
 														result,
 														FWGLOG_ENDVAL);
@@ -295,7 +290,7 @@ void* GameMsgSrv::Entry()
 															FWGLOG_ENDVAL);
 								} else {
 									FWGLOG_TRACE_FORMAT(wxT("GameMsgSrv::Entry() : Message was succesfully received: %d"), m_pLogger,
-															(*iter).GetAddress(), FWGLOG_ENDVAL);
+															(**iter).GetAddress(), FWGLOG_ENDVAL);
 								}
 							}
 						} else {
@@ -307,22 +302,22 @@ void* GameMsgSrv::Entry()
 		}
 		
 	} while (!m_stopRequest);
-	
+	return 0;
 }
 
 GameErrorCode GameMsgSrv::StopRequest()
 {
 	m_stopRequest = true;	
+	return FWG_NO_ERROR;
 }
 
 
-ClientInfo* GameMsgSrv::FindNonActiveClient()
+GameMsgSrv::ClientInfo* GameMsgSrv::FindNonActiveClient()
 {
-	GameErrorCode result = FWG_NO_ERROR;
-	ClientListType iter;
+	ClientListType::iterator iter;
 	for (iter = m_clientList.begin(); iter != m_clientList.end(); iter++) 
 	{
-		if(!(*iter).IsActive()) return iter;
+		if(!(**iter).IsActive()) return (*iter);
 	}
 	
 	return NULL;
@@ -334,7 +329,7 @@ ClientInfo* GameMsgSrv::FindNonActiveClient()
 //--------------------GameMsgSrv::ClientInfo--------------------
 //--------------------------------------------------------------
 
-GameErrorCode GameMsgSrv::ClientInfo::ClientConnect(sf::Socket* pSocket)
+GameErrorCode GameMsgSrv::ClientInfo::ClientConnect(sf::TcpSocket* pSocket)
 {
 	GameErrorCode result = FWG_NO_ERROR;
 	m_active = true;
@@ -347,7 +342,7 @@ GameErrorCode GameMsgSrv::ClientInfo::ClientDisconnect()
 {
 	if (m_pSocket != NULL)
 	{
-		m_pSocket->close();
+		m_pSocket->disconnect();
 		delete m_pSocket;
 		m_pSocket = NULL;
 	}

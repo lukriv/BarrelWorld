@@ -30,7 +30,6 @@ public:
 			m_cliAddr(GAME_ADDR_UNKNOWN),
 			m_connected(false),
 			m_stopRequrest(false),
-			m_socketClient(NULL),
 			m_clientLock(wxCRITSEC_DEFAULT) {}
 	virtual ~GameMsgCli();
 	
