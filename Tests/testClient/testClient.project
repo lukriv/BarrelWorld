@@ -21,7 +21,8 @@
         <Library Value="GameMsgCli"/>
         <Library Value="GameComm"/>
         <Library Value="GameSystem"/>
-        <Library Value="wx_baseu_net-2.9.dll"/>
+        <Library Value="sfml-network"/>
+        <Library Value="sfml-system"/>
         <Library Value="wx_baseu-2.9.dll"/>
       </Linker>
       <ResourceCompiler Options=""/>

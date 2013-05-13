@@ -22,7 +22,6 @@ protected:
     
 	class ClientInfo {
 	private:
-		wxDECLARE_EVENT_TABLE();
 		GameMsgSrv *m_pOwner;
 		bool m_local;
 		bool m_active;
@@ -34,7 +33,7 @@ protected:
 									m_active(false),
 									m_reservedAddr(GAME_ADDR_UNKNOWN),
 									m_pSocket(NULL) {}
-		~ClientInfo() 
+		virtual ~ClientInfo() 
 		{
 			if(m_pSocket != NULL) {
 				m_pSocket->disconnect();
@@ -48,13 +47,13 @@ protected:
 		
 		GameErrorCode SendMsg(IGameMessage& msg, long timeout);
 		
-		GameErrorCode ClientConnect(sf::Socket *pSocket);
+		GameErrorCode ClientConnect(sf::TcpSocket *pSocket);
 		GameErrorCode ClientDisconnect();
 		
 		inline bool IsActive() {return m_active;}
 		inline bool IsLocal() {return m_local;}
 		
-		inline sf::Socket& GetSocket() {return *m_pSocket;}
+		inline sf::TcpSocket& GetSocket() {return *m_pSocket;}
 	};
 	
 	typedef wxVector<ClientInfo*> ClientListType;
@@ -87,7 +86,6 @@ protected:
 	
 	virtual void *Entry();
 	
-	GameErrorCode ConnectRemoteClient(ClientInfo &client, sf::Socket *pSocket);
 	ClientInfo* FindNonActiveClient();
 	GameErrorCode StopRequest();
 	
@@ -138,8 +136,6 @@ public:
 public:
 	virtual void addRef();
 	virtual wxInt32 release();
-private:
-	wxDECLARE_EVENT_TABLE();
 };
 
 
