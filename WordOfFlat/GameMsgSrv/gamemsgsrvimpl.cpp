@@ -70,12 +70,12 @@ GameErrorCode GameMsgSrv::SendMsg(IGameMessage &msg, long timeout)
 		}
 		
 	} else {
-		if((m_clientList.size() < msg.GetTarget())||(!m_clientList[msg.GetTarget()-1]->IsActive()))
+		if((m_clientList.size() < msg.GetTarget())||(!m_clientList[msg.GetTarget()-1].IsActive()))
 		{
 			return FWG_E_UNKNOWN_TARGET_ERROR;
 		}
 		
-		if(FWG_FAILED(result = m_clientList[msg.GetTarget() - 1]->SendMsg(msg, timeout)))
+		if(FWG_FAILED(result = m_clientList[msg.GetTarget() - 1].SendMsg(msg, timeout)))
 		{
 			FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::SendMsg() : Send message failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
 			return result;
@@ -95,7 +95,6 @@ GameErrorCode GameMsgSrv::Initialize(GameLogger* pLogger)
 	//TODO: scope guard
 	GameErrorCode result = FWG_NO_ERROR;
 	ClientListType::iterator iter;
-	ClientInfo *pClientInfo = NULL;
 	
 	if(m_isInitialized) {
 		return FWG_NO_ERROR;
@@ -106,14 +105,9 @@ GameErrorCode GameMsgSrv::Initialize(GameLogger* pLogger)
 	//initialize client list
 	for (wxDword i = 0; i < CLIENT_LIST_SIZE; ++i)
 	{
-		pClientInfo = new (std::nothrow) ClientInfo(this);
-		if (pClientInfo == NULL) {
-			FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::Initialize() : Create client info failed: 0x%08x"),
-							pLogger, FWG_E_MEMORY_ALLOCATION_ERROR, FWGLOG_ENDVAL);
-			return FWG_E_MEMORY_ALLOCATION_ERROR;
-		}
-		pClientInfo->SetAddress((GameAddrType) (i+1));
-		m_clientList.push_back(pClientInfo);
+		ClientInfo clientInfo(this);
+		clientInfo.SetAddress((GameAddrType) (i+1));
+		m_clientList.push_back(clientInfo);
 	}
 	
 	if(FWG_FAILED(result = GameCliClbkWorkerPool::Initialize(CALLBACK_THREAD_NR, pLogger)))
@@ -136,10 +130,18 @@ GameErrorCode GameMsgSrv::Initialize(GameLogger* pLogger)
 	m_socketSelector.add(m_socketServer);
 	
 	// create socket worker thread
-	this->Create();
+	if (FWG_FAILED(result = this->Create())) {
+		FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::Initialize() : Create worker thread failed: 0x%08x"),
+						pLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
 	
 	// run socket worker thread
-	this->Run();
+	if (FWG_FAILED(result = this->Run())) {
+		FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::Initialize() : Start thread failed: 0x%08x"),
+						pLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
 	
 	scopeGuard.Dismiss();
 	
@@ -158,7 +160,7 @@ GameErrorCode GameMsgSrv::Connect()
 	}
 	
 	//activate server-client in client list
-	if (FWG_FAILED(result = m_clientList[m_address-1]->ClientConnect(NULL)))
+	if (FWG_FAILED(result = m_clientList[m_address-1].ClientConnect(NULL)))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::Connect() : Client connect failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
 		return result;
@@ -178,7 +180,7 @@ GameErrorCode GameMsgSrv::Disconnect()
 		return FWG_E_OBJECT_NOT_INITIALIZED_ERROR;
 	}
 	
-	if(FWG_FAILED(result = m_clientList[m_address-1]->ClientDisconnect()))
+	if(FWG_FAILED(result = m_clientList[m_address-1].ClientDisconnect()))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::Disconnect() : Client disconnecting failed: 0x%08x"),
 				m_pLogger, result, FWGLOG_ENDVAL);
@@ -218,12 +220,9 @@ void GameMsgSrv::Destroy()
 	
 	m_socketServer.close();
 	
-	Wait();
-	
 	for (wxDword i = 0; i < m_clientList.size(); ++i)
 	{
-		delete m_clientList[i];
-		m_clientList[i] = NULL;
+		m_clientList[i].ClientDisconnect();
 	}
 	
 }
@@ -239,6 +238,7 @@ void* GameMsgSrv::Entry()
 	
 	do {
 		if(m_socketSelector.wait(sf::milliseconds(5000))){
+			wxCriticalSectionLocker lock(m_clientLock);
 			if(m_socketSelector.isReady(m_socketServer))
 			{
 				// add new connection
@@ -249,7 +249,7 @@ void* GameMsgSrv::Entry()
 					// Add the new client to the clients list
 					
 					pClientInfo = FindNonActiveClient();
-					
+					client->setBlocking(true);					
 					if (FWG_SUCCEDED(result = pClientInfo->ClientConnect(client))) {
 						m_socketSelector.add(*client);
 						FWGLOG_INFO_FORMAT(wxT("GameMsgSrv::Entry() : Client succesfully connected: %d"),
@@ -269,10 +269,10 @@ void* GameMsgSrv::Entry()
 				ClientListType::iterator iter;
 				for (iter = m_clientList.begin(); iter != m_clientList.end(); iter++)
 				{
-					if(m_socketSelector.isReady((**iter).GetSocket()))
+					if ((*iter).IsActive() && (!(*iter).IsLocal()) && m_socketSelector.isReady(*((*iter).GetSocket())))
 					{
 						sf::Packet packet;
-						if(FWG_SUCCEDED(result = GameConvertSocketStatus2GameErr((**iter).GetSocket().receive(packet))))
+						if(FWG_SUCCEDED(result = GameConvertSocketStatus2GameErr((*iter).GetSocket()->receive(packet))))
 						{
 							//todo: Receive packet
 							wxScopedPtr<GameMessage> spMessage;
@@ -284,14 +284,49 @@ void* GameMsgSrv::Entry()
 														result,
 														FWGLOG_ENDVAL);
 							} else {
-								if (FWG_FAILED(result = m_msgQueue.Post(spMessage.release()))) {
-									FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::Entry() : Post message to queue failed: 0x%08x"), m_pLogger,
-															result,
-															FWGLOG_ENDVAL);
-								} else {
-									FWGLOG_TRACE_FORMAT(wxT("GameMsgSrv::Entry() : Message was succesfully received: %d"), m_pLogger,
-															(**iter).GetAddress(), FWGLOG_ENDVAL);
+								switch(spMessage->GetType())
+								{
+								case GAME_MSG_TYPE_CLIENT_ID_REQUEST:
+								{
+									ClientIdRequestData data;
+									spMessage->SetSource(m_address);
+									data.SetClientId((*iter).GetAddress());
+									if(FWG_FAILED(result = spMessage->SetMessage(data, GAME_MSG_TYPE_CLIENT_ID_REQUEST))) {
+										FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::Entry() : Set data failed: 0x%08x"),
+														m_pLogger, result, FWGLOG_ENDVAL);
+										break;
+									}
+									
+									sf::Packet packet;
+									wxMemoryOutputStream stream;
+									if(FWG_FAILED(result = spMessage->Store(stream))) {
+										FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::Entry() : Serialize message failed: 0x%08x"),
+														m_pLogger, result, FWGLOG_ENDVAL);
+										break;
+									}
+									
+									packet.append(stream.GetOutputStreamBuffer()->GetBufferStart(), stream.GetOutputStreamBuffer()->GetBufferSize());
+									
+									if(FWG_FAILED(result = GameConvertSocketStatus2GameErr((*iter).GetSocket()->send(packet)))) {
+										FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::Entry() : Send packet failed: 0x%08x"),
+										m_pLogger, result, FWGLOG_ENDVAL);
+										break;
+									}
+									break;
 								}
+								default:
+
+									if (FWG_FAILED(result = m_msgQueue.Post(spMessage.release()))) {
+										FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::Entry() : Post message to queue failed: 0x%08x"), m_pLogger,
+															result, FWGLOG_ENDVAL);
+									} else {
+										FWGLOG_TRACE_FORMAT(wxT("GameMsgSrv::Entry() : Message was succesfully received: %d"), m_pLogger,
+																(*iter).GetAddress(), FWGLOG_ENDVAL);
+									}
+									break;
+									
+								}
+
 							}
 						} else {
 							FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::Entry() : Packet receive failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
@@ -307,7 +342,8 @@ void* GameMsgSrv::Entry()
 
 GameErrorCode GameMsgSrv::StopRequest()
 {
-	m_stopRequest = true;	
+	m_stopRequest = true;
+	Wait();
 	return FWG_NO_ERROR;
 }
 
@@ -317,7 +353,7 @@ GameMsgSrv::ClientInfo* GameMsgSrv::FindNonActiveClient()
 	ClientListType::iterator iter;
 	for (iter = m_clientList.begin(); iter != m_clientList.end(); iter++) 
 	{
-		if(!(**iter).IsActive()) return (*iter);
+		if(!(*iter).IsActive()) return iter;
 	}
 	
 	return NULL;

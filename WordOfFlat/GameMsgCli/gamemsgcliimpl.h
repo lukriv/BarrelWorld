@@ -21,10 +21,11 @@ protected:
 	
 protected:
 	virtual void *Entry();
-	void SetStopRequest();
+	void StopRequest();
 	
 public:
 	GameMsgCli() : GameCliClbkWorkerPool(),
+			GameThread(wxTHREAD_JOINABLE),
 			m_isInitialized(false),
 			m_refCount(1),
 			m_cliAddr(GAME_ADDR_UNKNOWN),
