@@ -6,7 +6,7 @@
 
 static const long CLIENT_CONNECTION_TIMEOUT = 30;
 
-static void GameClientScopeGuard(GameMsgCli *pMsgCli) 
+static void GameClientConnectScopeGuard(GameMsgCli *pMsgCli) 
 {
 	if (pMsgCli){
 		pMsgCli->Destroy();
@@ -17,12 +17,17 @@ GameErrorCode GameMsgCli::Initialize(GameLogger* pLogger)
 {
 	GameErrorCode result = FWG_NO_ERROR;
 	
-	wxScopeGuard guard = wxMakeGuard(GameClientScopeGuard, this);
-	
 	// set hostname
-	m_hostName.assign(wxT("127.0.0.1"));
 	
-	guard.Dismiss();
+	if(FWG_FAILED(result = GameCliClbkWorkerPool::Initialize(2, pLogger))) {
+		FWGLOG_ERROR_FORMAT(wxT("GameMsgCli::Initialize() : Worker pool initialization failed: 0x%08x"),
+							pLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	m_hostName.assign(wxT("127.0.0.1"));
+	m_stopRequrest = false;
+	m_socketClient.setBlocking(true);
 	
 	m_isInitialized = true;	
 	return result;
@@ -44,11 +49,27 @@ GameErrorCode GameMsgCli::Connect()
 		return FWG_NO_ERROR;
 	}
 	
+	wxScopeGuard guard = wxMakeGuard(GameClientConnectScopeGuard, this);
+	
 	sf::IpAddress ipAddr(m_hostName.GetData().AsChar());
 
-	if(FWG_FAILED(result = GameConvertSocketStatus2GameErr(m_socketClient.connect( ipAddr, GAME_TCP_SERVICE_PORT, sf::milliseconds(5000)))))
+	if(FWG_FAILED(result = GameConvertSocketStatus2GameErr(m_socketClient.connect( ipAddr, GAME_TCP_SERVICE_PORT, sf::milliseconds(30000)))))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("GameMsgCli::Connect() : Client connect failed: 0x%08x"),
+						m_pLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	// create socket worker thread
+	if (FWG_FAILED(result = this->Create())) {
+		FWGLOG_ERROR_FORMAT(wxT("GameMsgCli::Connect() : Create worker thread failed: 0x%08x"),
+						m_pLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	// run socket worker thread
+	if (FWG_FAILED(result = this->Run())) {
+		FWGLOG_ERROR_FORMAT(wxT("GameMsgCli::Connect() : Start thread failed: 0x%08x"),
 						m_pLogger, result, FWGLOG_ENDVAL);
 		return result;
 	}
@@ -79,6 +100,8 @@ GameErrorCode GameMsgCli::Connect()
 		}
 	}
 	
+	guard.Dismiss();
+	
 	m_connected = true;	
 	return FWG_NO_ERROR;
 }
@@ -93,6 +116,10 @@ GameErrorCode GameMsgCli::Disconnect()
 	}
 	
 	m_socketClient.disconnect();
+	
+	StopRequest();
+	
+	m_stopRequrest = true;
 	
 	return FWG_NO_ERROR;
 }
@@ -182,6 +209,10 @@ GameMsgCli::~GameMsgCli()
 
 void GameMsgCli::Destroy()
 {
+	if( IsRunning() || IsPaused()) {
+		StopRequest();
+	}
+
 	m_socketClient.disconnect();
 	
 	m_isInitialized = false;
@@ -232,13 +263,32 @@ void* GameMsgCli::Entry()
 										m_pLogger, result, FWGLOG_ENDVAL);
 						break;
 					}
-						
-					if (FWG_FAILED(result = m_msgQueue.Post(apMessage.release())))
+					
+					switch (apMessage->GetType())
 					{
-						FWGLOG_ERROR_FORMAT(wxT("GameMsgCli::Entry() : Message post failed: 0x%08x"), 
-										m_pLogger, result, FWGLOG_ENDVAL);
-						break;
+						case GAME_MSG_TYPE_CLIENT_ID_REQUEST:
+						{
+							ClientIdRequestData data;
+							if(FWG_FAILED(result = apMessage->GetMessage(data))) {
+								FWGLOG_ERROR_FORMAT(wxT("GameMsgCli::Entry() : Get data failed: 0x%08x"),
+											m_pLogger, result, FWGLOG_ENDVAL);
+								break;
+							}
+							
+							m_cliAddr = data.GetClientId();
+							
+							break;
+						}	
+						default:
+							if (FWG_FAILED(result = m_msgQueue.Post(apMessage.release())))
+							{
+								FWGLOG_ERROR_FORMAT(wxT("GameMsgCli::Entry() : Message post failed: 0x%08x"), 
+												m_pLogger, result, FWGLOG_ENDVAL);
+								break;
+							}
 					}
+	
+
 				} while (0);
 			}
 		}
@@ -247,8 +297,9 @@ void* GameMsgCli::Entry()
 	return 0;
 }
 
-void GameMsgCli::SetStopRequest()
+void GameMsgCli::StopRequest()
 {
-	wxCriticalSectionLocker lock(m_clientLock);
 	m_stopRequrest = true;
+	Wait();
+	m_stopRequrest = false;
 }

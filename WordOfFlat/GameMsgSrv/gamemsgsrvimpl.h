@@ -28,11 +28,18 @@ protected:
 		GameAddrType m_reservedAddr;
 		sf::TcpSocket *m_pSocket;
 	public:
-		ClientInfo(GameMsgSrv *pOwner) : m_pOwner(pOwner),
+		ClientInfo(GameMsgSrv *pOwner = NULL) : m_pOwner(pOwner),
 									m_local(false),
 									m_active(false),
 									m_reservedAddr(GAME_ADDR_UNKNOWN),
 									m_pSocket(NULL) {}
+		
+		ClientInfo(const ClientInfo &cliInfo) : m_pOwner(cliInfo.m_pOwner),
+									m_local(false),
+									m_active(false),
+									m_reservedAddr(cliInfo.m_reservedAddr),
+									m_pSocket(NULL) {}					
+	
 		virtual ~ClientInfo() 
 		{
 			if(m_pSocket != NULL) {
@@ -41,6 +48,8 @@ protected:
 				m_pSocket = NULL;
 			}
 		}
+		
+		void SetOwner(GameMsgSrv *pOwner) {m_pOwner = pOwner;}
 		
 		void SetAddress(GameAddrType gameAddr) {m_reservedAddr = gameAddr;}
 		GameAddrType GetAddress() {return m_reservedAddr;}
@@ -53,10 +62,10 @@ protected:
 		inline bool IsActive() {return m_active;}
 		inline bool IsLocal() {return m_local;}
 		
-		inline sf::TcpSocket& GetSocket() {return *m_pSocket;}
+		inline sf::TcpSocket* GetSocket() {return m_pSocket;}
 	};
 	
-	typedef wxVector<ClientInfo*> ClientListType;
+	typedef wxVector<ClientInfo> ClientListType;
 	
 	
 protected:

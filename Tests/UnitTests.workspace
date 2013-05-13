@@ -3,14 +3,14 @@
   <Project Name="GameSystem" Path="../WordOfFlat/GameSystem/GameSystem.project" Active="No"/>
   <Project Name="GameMsgCli" Path="../WordOfFlat/GameMsgCli/GameMsgCli.project" Active="No"/>
   <Project Name="GameMsgSrv" Path="../WordOfFlat/GameMsgSrv/GameMsgSrv.project" Active="No"/>
-  <Project Name="ClientServerTests" Path="ClientServerTests/ClientServerTests.project" Active="No"/>
+  <Project Name="ClientServerTests" Path="ClientServerTests/ClientServerTests.project" Active="Yes"/>
   <Project Name="Extern" Path="../WordOfFlat/Extern/Extern.project" Active="No"/>
   <Project Name="GameComm" Path="../WordOfFlat/GameComm/GameComm.project" Active="No"/>
   <Environment>
     <![CDATA[]]>
   </Environment>
   <Project Name="testServer" Path="testServer/testServer.project" Active="No"/>
-  <Project Name="testClient" Path="testClient/testClient.project" Active="Yes"/>
+  <Project Name="testClient" Path="testClient/testClient.project" Active="No"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="yes">
       <Project Name="ClientServerTests" ConfigName="Debug"/>
