@@ -131,6 +131,7 @@ void GameLogger::LogWrite(const wxString& msg, const wxLogRecordInfo& info, wxDw
 {	
 	wxString str = LogFormatter(LogSeverity2String(logSeverity), msg, info);
 	wxLogMessage(str.wx_str());
+	fflush(m_loggerFile);
 }
 
 void GameLogger::LogWriteFormat(const wxString& formatStr, const wxLogRecordInfo& info, wxDword logSeverity, ...)
@@ -140,6 +141,7 @@ void GameLogger::LogWriteFormat(const wxString& formatStr, const wxLogRecordInfo
 	wxString str = LogFormatterV(LogSeverity2String(logSeverity), formatStr, info, args);
 	va_end(args);
 	wxLogMessage(str.wx_str());
+	fflush(m_loggerFile);
 }
 
 GameLogger::~GameLogger()

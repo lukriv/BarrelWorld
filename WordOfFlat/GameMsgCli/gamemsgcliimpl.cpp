@@ -49,6 +49,8 @@ GameErrorCode GameMsgCli::Connect()
 		return FWG_NO_ERROR;
 	}
 	
+
+	
 	wxScopeGuard guard = wxMakeGuard(GameClientConnectScopeGuard, this);
 	
 	sf::IpAddress ipAddr(m_hostName.GetData().AsChar());
@@ -66,6 +68,10 @@ GameErrorCode GameMsgCli::Connect()
 						m_pLogger, result, FWGLOG_ENDVAL);
 		return result;
 	}
+	
+	// reset stop request and add client to selector
+	m_stopRequrest = false;
+	m_socketSelector.add(m_socketClient);
 	
 	// run socket worker thread
 	if (FWG_FAILED(result = this->Run())) {
@@ -108,18 +114,18 @@ GameErrorCode GameMsgCli::Connect()
 
 GameErrorCode GameMsgCli::Disconnect()
 {
-	wxCriticalSectionLocker lock(m_clientLock);
-	
-	if(!m_connected)
 	{
-		return FWG_NO_ERROR;
-	}
+		wxCriticalSectionLocker lock(m_clientLock);
+		if(!m_connected)
+		{
+			return FWG_NO_ERROR;
+		}
 	
-	m_socketClient.disconnect();
-	
-	StopRequest();
-	
-	m_stopRequrest = true;
+		m_socketClient.disconnect();
+		
+		StopRequest();
+	}	
+	Wait();
 	
 	return FWG_NO_ERROR;
 }
@@ -153,13 +159,13 @@ GameErrorCode GameMsgCli::SendMsg(IGameMessage& msg, long timeout)
 	
 	if(!m_connected)
 	{
-		return FWG_E_NOT_CONNECTED_ERROR;
+		return FWG_E_DISCONNECTED_ERROR;
 	}
 	
 	GameErrorCode result = FWG_NO_ERROR;
-	wxCriticalSectionLocker lock(m_clientLock);
 	wxMemoryOutputStream outputStream;
 	sf::Packet packet;
+	wxCriticalSectionLocker lock(m_clientLock);
 	
 	msg.SetSource(m_cliAddr);
 	
@@ -211,6 +217,7 @@ void GameMsgCli::Destroy()
 {
 	if( IsRunning() || IsPaused()) {
 		StopRequest();
+		Wait();
 	}
 
 	m_socketClient.disconnect();
@@ -228,15 +235,16 @@ GameErrorCode GameMsgCli::SetServerAddress(const wxString& hostName)
 void* GameMsgCli::Entry()
 {
 	GameErrorCode result = FWG_NO_ERROR;
-	m_socketSelector.add(m_socketClient);
+	
 	
 	
 	do {
 		
-		if( m_socketSelector.wait(sf::milliseconds(5000)))
+		if( m_socketSelector.wait(sf::milliseconds(2000))) //
 		{
-			
+			//wxPrintf(wxT("GameMsgCli::Entry() - wait on lock\n"));
 			wxCriticalSectionLocker lock(m_clientLock);
+			//wxPrintf(wxT("GameMsgCli::Entry() - lock\n"));
 			if (m_socketSelector.isReady(m_socketClient))
 			{
 				sf::Packet packet;
@@ -245,7 +253,14 @@ void* GameMsgCli::Entry()
 				do {
 					if (FWG_FAILED(result = GameConvertSocketStatus2GameErr(m_socketClient.receive(packet))))
 					{
-						FWGLOG_ERROR_FORMAT(wxT("GameMsgCli::Entry() : Packet receive failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
+						if(result == static_cast<GameErrorCode>(FWG_E_DISCONNECTED_ERROR))
+						{
+							FWGLOG_INFO_FORMAT(wxT("GameMsgCli::Entry() : Disconnect server %s"), m_pLogger, m_hostName.GetData().AsChar(), FWGLOG_ENDVAL);
+							m_stopRequrest = true;
+							m_connected = false;
+						} else {
+							FWGLOG_ERROR_FORMAT(wxT("GameMsgCli::Entry() : Packet receive failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
+						}
 						break;
 					}
 
@@ -288,9 +303,10 @@ void* GameMsgCli::Entry()
 							}
 					}
 	
-
+					//wxPrintf(wxT("GameMsgCli::Entry() - loop\n"));
 				} while (0);
 			}
+			//wxPrintf(wxT("GameMsgCli::Entry() - unlock\n"));
 		}
 	} while (!m_stopRequrest);
 	
@@ -300,6 +316,4 @@ void* GameMsgCli::Entry()
 void GameMsgCli::StopRequest()
 {
 	m_stopRequrest = true;
-	Wait();
-	m_stopRequrest = false;
 }

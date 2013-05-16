@@ -45,7 +45,7 @@ inline GameErrorCode GameConvertSocketStatus2GameErr( sf::Socket::Status status)
 	case sf::Socket::NotReady: 	
 		return FWG_E_INVALID_SOCKET_ERROR;  // Invalid operation.
 	case sf::Socket::Disconnected:
-		return FWG_E_NOT_CONNECTED_ERROR; // Input/Output error.
+		return FWG_E_DISCONNECTED_ERROR; // Input/Output error.
 	case sf::Socket::Error:
 	default:
 		return FWG_E_MISC_ERROR;

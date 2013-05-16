@@ -57,7 +57,7 @@ protected:
 		GameErrorCode SendMsg(IGameMessage& msg, long timeout);
 		
 		GameErrorCode ClientConnect(sf::TcpSocket *pSocket);
-		GameErrorCode ClientDisconnect();
+		void ClientDisconnect();
 		
 		inline bool IsActive() {return m_active;}
 		inline bool IsLocal() {return m_local;}
