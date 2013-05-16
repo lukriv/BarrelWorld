@@ -54,6 +54,7 @@ GameErrorCode GameMsgSrv::SendMsg(IGameMessage &msg, long timeout)
 		return FWG_E_UNKNOWN_TARGET_ERROR;
 	}
 	
+	wxCriticalSectionLocker lock(m_clientLock);
 	if (m_address == target)
 	{
 		IGameMessage* copy = NULL;
@@ -174,21 +175,16 @@ GameErrorCode GameMsgSrv::Connect()
 
 GameErrorCode GameMsgSrv::Disconnect()
 {
-	GameErrorCode result = FWG_NO_ERROR;
 		
 	if(!m_isInitialized) {
 		return FWG_E_OBJECT_NOT_INITIALIZED_ERROR;
 	}
 	
-	if(FWG_FAILED(result = m_clientList[m_address-1].ClientDisconnect()))
-	{
-		FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::Disconnect() : Client disconnecting failed: 0x%08x"),
-				m_pLogger, result, FWGLOG_ENDVAL);
-	}
+	m_clientList[m_address-1].ClientDisconnect();	
 	
 	m_isConnected = false;
 	
-	return result;
+	return FWG_NO_ERROR;
 }
 
 void GameMsgSrv::addRef()
@@ -237,7 +233,7 @@ void* GameMsgSrv::Entry()
 	m_socketSelector.add(m_socketServer);
 	
 	do {
-		if(m_socketSelector.wait(sf::milliseconds(5000))){
+		if(m_socketSelector.wait(sf::milliseconds(2000))){ //
 			wxCriticalSectionLocker lock(m_clientLock);
 			if(m_socketSelector.isReady(m_socketServer))
 			{
@@ -329,7 +325,14 @@ void* GameMsgSrv::Entry()
 
 							}
 						} else {
-							FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::Entry() : Packet receive failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
+							if (result == static_cast<GameErrorCode> (FWG_E_DISCONNECTED_ERROR))
+							{
+								(*iter).ClientDisconnect();
+								FWGLOG_INFO_FORMAT(wxT("GameMsgSrv::Entry() : Client disconnected: %d"),
+										m_pLogger, pClientInfo->GetAddress(), FWGLOG_ENDVAL);
+							} else {
+								FWGLOG_ERROR_FORMAT(wxT("GameMsgSrv::Entry() : Packet receive failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
+							}
 						}
 					}
 				}
@@ -374,7 +377,7 @@ GameErrorCode GameMsgSrv::ClientInfo::ClientConnect(sf::TcpSocket* pSocket)
 	return result;
 }
 
-GameErrorCode GameMsgSrv::ClientInfo::ClientDisconnect()
+void GameMsgSrv::ClientInfo::ClientDisconnect()
 {
 	if (m_pSocket != NULL)
 	{
@@ -384,13 +387,12 @@ GameErrorCode GameMsgSrv::ClientInfo::ClientDisconnect()
 	}
 	m_active = false;
 	m_local = false;
-	return FWG_NO_ERROR;
 }
 
 
 GameErrorCode GameMsgSrv::ClientInfo::SendMsg(IGameMessage& msg, long timeout)
 {
-	if((!m_active)||(m_pSocket != NULL))
+	if((!m_active)||(m_pSocket == NULL))
 	{
 		return FWG_E_INVALID_SOCKET_ERROR;
 	}

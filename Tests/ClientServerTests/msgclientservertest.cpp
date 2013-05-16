@@ -4,6 +4,7 @@
 #include <wx/string.h>
 #include <wx/log.h>
 #include <wx/scopedptr.h>
+#include <iostream>
 
 #include "../../WordOfFlat/GameSystem/glog.h"
 #include "../../WordOfFlat/GameMsgSrv/gamemsgsrvimpl.h"
@@ -169,8 +170,55 @@ SUITE(MsgServerClientTest)
 	}
 	
 	
-	TEST(ClientServer_BasicRemoteConnection_Test)
+	TEST(ClientServer_BasicRemoteConnectionTest)
 	{
+		RefObjSmPtr<GameLogger> spLogger;
+		if (FWG_FAILED(GameLoggerCreator::CreateLogger(spLogger.OutRef(),wxT("default"))))
+		{	
+			printf("Failed to initialize the logger, aborting.");
+		
+		}
+		
+		wxPrintf(wxT("ClientServer_BasicRemoteConnectionTest\n"));
+		
+		GameMsgSrv server;
+		GameMsgCli client;
+		CHECK(FWG_SUCCEDED(server.Initialize(spLogger.In())));
+		CHECK(FWG_SUCCEDED(client.Initialize(spLogger.In())));
+		
+		CHECK(FWG_SUCCEDED(server.Connect()));
+		CHECK(server.IsConnected());
+		
+		CHECK(FWG_SUCCEDED(client.Connect()));
+		CHECK(client.IsConnected());
+		
+		//std::cin.get();
+		wxThread::Sleep(1000);
+		CHECK(client.GetCliAddress() == GAME_ADDR_SERVER + 1);
+		CHECK(client.IsLocal() == false);
+	
+		CHECK(FWG_SUCCEDED(client.Disconnect()));
+		wxThread::Sleep(1000);
+
+		//std::cin.get();
+		CHECK(FWG_SUCCEDED(server.Disconnect()));
+	}
+	
+	
+	TEST(ClientServer_RemoteConnectionSendTest)
+	{
+		wxPrintf(wxT("ClientServer_RemoteConnectionSendTest\n"));
+		
+		wxDword serverTestValue = 111;
+		wxDword clientTestValue = 222;
+		
+		TestMessageData testMsgData;
+		GameMessage testMsg;
+		
+		TestMsgCallback serverTestClbk, clientTestClbk;
+		serverTestClbk.SetExpectedValue(serverTestValue);
+		clientTestClbk.SetExpectedValue(clientTestValue);
+		
 		GameMsgSrv server;
 		GameMsgCli client;
 		CHECK(FWG_SUCCEDED(server.Initialize(NULL)));
@@ -182,10 +230,33 @@ SUITE(MsgServerClientTest)
 		CHECK(FWG_SUCCEDED(client.Connect()));
 		CHECK(client.IsConnected());
 		
-		wxThread::Sleep(3000);
+		//std::cin.get();
+		wxThread::Sleep(1000);
+		CHECK(FWG_SUCCEDED(client.RegisterCallback(GAME_MSG_TYPE_TEST, &clientTestClbk)));
+		CHECK(FWG_SUCCEDED(server.RegisterCallback(GAME_MSG_TYPE_TEST, &serverTestClbk)));
 		CHECK(client.GetCliAddress() == GAME_ADDR_SERVER + 1);
 		
-		 
+		for (int i = 0; i < 5; i++)
+		{
+			testMsg.SetTarget(GAME_ADDR_SERVER);
+			testMsgData.SetTestValue(serverTestValue);
+			CHECK(FWG_SUCCEDED(testMsg.SetMessage(testMsgData, GAME_MSG_TYPE_TEST)));
+			CHECK(FWG_SUCCEDED(client.SendMsg(testMsg, 0)));
+			
+			testMsg.SetTarget(GAME_ADDR_SERVER + 1);
+			testMsgData.SetTestValue(clientTestValue);
+			CHECK(FWG_SUCCEDED(testMsg.SetMessage(testMsgData, GAME_MSG_TYPE_TEST)));
+			CHECK(FWG_SUCCEDED(server.SendMsg(testMsg, 0)));
+		}
+		
+		wxThread::Sleep(1000);
+		CHECK(FWG_SUCCEDED(client.UnregisterCallback(GAME_MSG_TYPE_TEST, &clientTestClbk)));
+		CHECK(FWG_SUCCEDED(server.UnregisterCallback(GAME_MSG_TYPE_TEST, &serverTestClbk)));
+		CHECK(5 == serverTestClbk.GetCallCount());
+		CHECK(0 == serverTestClbk.GetErrorCall());
+		
+		CHECK(5 == clientTestClbk.GetCallCount());
+		CHECK(0 == clientTestClbk.GetErrorCall());
 	}
 	
 }
