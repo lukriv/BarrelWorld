@@ -3,11 +3,7 @@
 
 #include <b2Math.h>
 #include "refobject.h"
-
-enum GameObjectType {
-	GAME_TYPE_TREE,
-	GAME_TYPE_GROUND
-};
+#include "../GameObjectsSrv/gameobjdef.h"
 
 class IGameObject : public IRefObject {
 public:
