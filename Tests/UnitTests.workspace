@@ -12,7 +12,7 @@
   <Project Name="testServer" Path="testServer/testServer.project" Active="No"/>
   <Project Name="testClient" Path="testClient/testClient.project" Active="No"/>
   <BuildMatrix>
-    <WorkspaceConfiguration Name="Debug" Selected="yes">
+    <WorkspaceConfiguration Name="Debug" Selected="no">
       <Project Name="ClientServerTests" ConfigName="Debug"/>
       <Project Name="Extern" ConfigName="Debug"/>
       <Project Name="GameComm" ConfigName="Debug"/>

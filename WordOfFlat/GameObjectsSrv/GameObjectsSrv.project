@@ -12,6 +12,7 @@
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="gamesrvobj.h"/>
+    <File Name="gameobjdef.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="impl">
     <File Name="gamesrvobjimpl.h"/>

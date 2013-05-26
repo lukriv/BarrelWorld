@@ -1,0 +1,9 @@
+#ifndef __GAME_OBJECT_DEFINITIONS_H__
+#define __GAME_OBJECT_DEFINITIONS_H__
+
+enum GameObjectType {
+	GAME_TYPE_TREE,
+	GAME_TYPE_GROUND
+};
+
+#endif //__GAME_OBJECT_DEFINITIONS_H__

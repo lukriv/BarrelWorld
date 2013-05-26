@@ -2,6 +2,7 @@
 #define __GAME_SERVER_OBJECT_H__
 
 #include "../GameSystem/refobject.h"
+#include "gameobjdef.h"
 
 class IGameObjectSrv : public IRefObject {
 public:
