@@ -1,8 +1,8 @@
 #include "flatworldsrvimpl.h"
 
-#include <wx/log.h>
 
-GameErrorCode FlatLocalWorldSrvImpl::Initialize()
+
+GameErrorCode FlatLocalWorldSrvImpl::Initialize(GameLogger* logger)
 {
 	GameErrorCode result = FWG_NO_ERROR;
 	
@@ -18,7 +18,7 @@ GameErrorCode FlatLocalWorldSrvImpl::Initialize()
 	
 	if (pWorld == NULL)
 	{
-		wxLogError(wxT("FlatLocalWorldSrv::Initialize() : New world creation failed"));
+		FWGLOG_ERROR(wxT("FlatLocalWorldSrv::Initialize() : New world creation failed"), logger );
 		return FWG_E_MEMORY_ALLOCATION_ERROR;
 	}
 	
@@ -31,6 +31,53 @@ GameErrorCode FlatLocalWorldSrvImpl::Initialize()
 	return result;	
 }
 
+
+
+
+GameFlatWorldID FlatLocalWorldSrvImpl::GetFWId()
+{
+	return m_wrldId;
+}
+
+
+wxInt32 FlatLocalWorldSrvImpl::release()
+{
+	wxInt32 refCount = wxAtomicDec(m_refCount);
+	if (refCount == 0)
+	{
+		delete this;
+	}
+	
+	return refCount;
+}
+
+
+void FlatLocalWorldSrvImpl::addRef()
+{
+	wxAtomicInc(m_refCount);
+}
+
+GameErrorCode FlatLocalWorldSrvImpl::AddNewObject(IGameObjectSrv* object)
+{
+	return FWG_E_NOT_IMPLEMENTED_ERROR;
+}
+
+GameErrorCode FlatLocalWorldSrvImpl::LoadWorld(const wxChar* worldName)
+{
+	return FWG_E_NOT_IMPLEMENTED_ERROR;
+}
+
+GameErrorCode FlatLocalWorldSrvImpl::SetWorldSize(const b2Vec2& LLpoint, const b2Vec2& RUpoint)
+{
+	return FWG_E_NOT_IMPLEMENTED_ERROR;
+}
+
+GameErrorCode FlatLocalWorldSrvImpl::StepWorld()
+{
+	return FWG_E_NOT_IMPLEMENTED_ERROR;
+}
+
+
 GameErrorCode FlatLocalWorldSrvImpl::GenerateTestStaticWorld()
 {
 	GameErrorCode result = FWG_NO_ERROR;
@@ -38,6 +85,11 @@ GameErrorCode FlatLocalWorldSrvImpl::GenerateTestStaticWorld()
 	{
 		return FWG_E_OBJECT_NOT_INITIALIZED_ERROR;
 	}
+	
+	m_wrldId = GAME_FLAT_WRLD_TEST;
+	
+	b2BodyDef bodyDef;
+	bodyDef.position.Set(0.0f, -10.0f);
 	
 	
 	

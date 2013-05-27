@@ -13,8 +13,8 @@
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="flatworldsrv.h"/>
-    <File Name="globalworldsrv.h"/>
     <File Name="worldsrvapi.h"/>
+    <File Name="globalworldsrv.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="impl">
     <File Name="flatworldsrvimpl.h"/>
