@@ -2,7 +2,7 @@
 
 bool GameTreeObject::Draw()
 {
-	
+	return false;
 }
 
 GameObjectType GameTreeObject::GetType()
@@ -10,6 +10,3 @@ GameObjectType GameTreeObject::GetType()
 	return GAME_TYPE_TREE;
 }
 
-wxInt32 GameTreeObject::GetId()
-{
-}

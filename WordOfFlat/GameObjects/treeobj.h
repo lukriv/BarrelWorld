@@ -1,7 +1,7 @@
 #ifndef __TREE_OBJECT_H__
 #define __TREE_OBJECT_H__
 
-#include "gameobj.h"
+#include "../GameObjects/gamedrawobj.h"
 
 
 class GameTreeObject : public IGameObject {
@@ -18,7 +18,6 @@ public:
 	virtual void SetId(wxInt32 id);
 	
 	bool Initialize();
-	
 	
 	/*! \brief Draw an object
 	 * 

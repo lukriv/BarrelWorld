@@ -9,12 +9,23 @@
  *  It could send updated objects from world
  * 
  */
+ 
+enum GameFlatWorldID {
+	GAME_FLAT_WRLD_UNKNOWN = 0,
+	GAME_FLAT_WRLD_TEST = 1
+};
 
-class IFlatLocalWorldSrv {
+class IFlatLocalWorldSrv : IRefObject {
 public:
 	
-	GameErrorCode AddNewObject(IGameObjectSrv *object) = 0;
-	GameErrorCode SetWorldSize(const b2Vec2 &LLpoint, const b2Vec2 &RUpoint) = 0;
+	virtual GameFlatWorldID GetFWId() = 0;
+	
+	virtual GameErrorCode StepWorld() = 0;
+	
+	virtual GameErrorCode AddNewObject(IGameObjectSrv *object) = 0;
+	virtual GameErrorCode SetWorldSize(const b2Vec2 &LLpoint, const b2Vec2 &RUpoint) = 0;
+	
+	virtual GameErrorCode LoadWorld(const wxChar* worldName)
 	
 }
 
