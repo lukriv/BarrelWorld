@@ -9,9 +9,11 @@
   <Dependencies/>
   <VirtualDirectory Name="src">
     <File Name="treeobj.cpp"/>
+    <File Name="genericobj.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="treeobj.h"/>
+    <File Name="genericobj.h"/>
   </VirtualDirectory>
   <Settings Type="Static Library">
     <GlobalSettings>

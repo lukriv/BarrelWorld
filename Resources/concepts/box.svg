@@ -1,0 +1,665 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="744.09448819"
+   height="1052.3622047"
+   id="svg2"
+   inkscape:label="Pozadí"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="box.svg">
+  <defs
+     id="defs3">
+    <linearGradient
+       id="linearGradient4109">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop4111" />
+      <stop
+         id="stop4131"
+         offset="0.31676486"
+         style="stop-color:#000000;stop-opacity:0.74901961;" />
+      <stop
+         id="stop4129"
+         offset="0.59103578"
+         style="stop-color:#000000;stop-opacity:0.49803922;" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0.24705882;"
+         offset="0.77913147"
+         id="stop4133" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0;"
+         offset="1"
+         id="stop4113" />
+    </linearGradient>
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4109"
+       id="radialGradient4115"
+       cx="104.10737"
+       cy="723.24957"
+       fx="104.10737"
+       fy="723.24957"
+       r="7.8571429"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.4312935,-0.6717004,0.60009142,1.2787054,-478.73837,-131.46062)" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4109-2"
+       id="radialGradient4115-1"
+       cx="104.10737"
+       cy="723.24957"
+       fx="104.10737"
+       fy="723.24957"
+       r="7.8571429"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.4312935,-0.6717004,0.60009142,1.2787054,-478.73837,-131.46062)" />
+    <linearGradient
+       id="linearGradient4109-2">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop4111-1" />
+      <stop
+         id="stop4131-4"
+         offset="0.31676486"
+         style="stop-color:#000000;stop-opacity:0.74901961;" />
+      <stop
+         id="stop4129-9"
+         offset="0.59103578"
+         style="stop-color:#000000;stop-opacity:0.49803922;" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0.24705882;"
+         offset="0.77913147"
+         id="stop4133-8" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0;"
+         offset="1"
+         id="stop4113-2" />
+    </linearGradient>
+    <radialGradient
+       r="7.8571429"
+       fy="723.24957"
+       fx="104.10737"
+       cy="723.24957"
+       cx="104.10737"
+       gradientTransform="matrix(1.4312935,-0.6717004,0.60009142,1.2787054,-478.73837,-131.46062)"
+       gradientUnits="userSpaceOnUse"
+       id="radialGradient4153"
+       xlink:href="#linearGradient4109-2"
+       inkscape:collect="always" />
+    <radialGradient
+       r="7.8571429"
+       fy="723.24957"
+       fx="104.10737"
+       cy="723.24957"
+       cx="104.10737"
+       gradientTransform="matrix(1.4312935,-0.6717004,0.60009142,1.2787054,-478.73837,-131.46062)"
+       gradientUnits="userSpaceOnUse"
+       id="radialGradient4153-5"
+       xlink:href="#linearGradient4109-2-2"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient4109-2-2">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop4111-1-9" />
+      <stop
+         id="stop4131-4-9"
+         offset="0.31676486"
+         style="stop-color:#000000;stop-opacity:0.74901961;" />
+      <stop
+         id="stop4129-9-8"
+         offset="0.59103578"
+         style="stop-color:#000000;stop-opacity:0.49803922;" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0.24705882;"
+         offset="0.77913147"
+         id="stop4133-8-3" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0;"
+         offset="1"
+         id="stop4113-2-8" />
+    </linearGradient>
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4109-9"
+       id="radialGradient4115-6"
+       cx="104.10737"
+       cy="723.24957"
+       fx="104.10737"
+       fy="723.24957"
+       r="7.8571429"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.4312935,-0.6717004,0.60009142,1.2787054,-478.73837,-131.46062)" />
+    <linearGradient
+       id="linearGradient4109-9">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop4111-8" />
+      <stop
+         id="stop4131-6"
+         offset="0.31676486"
+         style="stop-color:#000000;stop-opacity:0.74901961;" />
+      <stop
+         id="stop4129-6"
+         offset="0.59103578"
+         style="stop-color:#000000;stop-opacity:0.49803922;" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0.24705882;"
+         offset="0.77913147"
+         id="stop4133-2" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0;"
+         offset="1"
+         id="stop4113-3" />
+    </linearGradient>
+    <radialGradient
+       r="7.8571429"
+       fy="723.24957"
+       fx="104.10737"
+       cy="723.24957"
+       cx="104.10737"
+       gradientTransform="matrix(1.4312935,-0.6717004,0.60009142,1.2787054,-478.73837,-131.46062)"
+       gradientUnits="userSpaceOnUse"
+       id="radialGradient4153-2"
+       xlink:href="#linearGradient4109-2-7"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient4109-2-7">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop4111-1-5" />
+      <stop
+         id="stop4131-4-7"
+         offset="0.31676486"
+         style="stop-color:#000000;stop-opacity:0.74901961;" />
+      <stop
+         id="stop4129-9-82"
+         offset="0.59103578"
+         style="stop-color:#000000;stop-opacity:0.49803922;" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0.24705882;"
+         offset="0.77913147"
+         id="stop4133-8-7" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0;"
+         offset="1"
+         id="stop4113-2-80" />
+    </linearGradient>
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4109-0"
+       id="radialGradient4115-2"
+       cx="104.10737"
+       cy="723.24957"
+       fx="104.10737"
+       fy="723.24957"
+       r="7.8571429"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.4312935,-0.6717004,0.60009142,1.2787054,-478.73837,-131.46062)" />
+    <linearGradient
+       id="linearGradient4109-0">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop4111-89" />
+      <stop
+         id="stop4131-2"
+         offset="0.31676486"
+         style="stop-color:#000000;stop-opacity:0.74901961;" />
+      <stop
+         id="stop4129-8"
+         offset="0.59103578"
+         style="stop-color:#000000;stop-opacity:0.49803922;" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0.24705882;"
+         offset="0.77913147"
+         id="stop4133-20" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0;"
+         offset="1"
+         id="stop4113-5" />
+    </linearGradient>
+    <radialGradient
+       r="7.8571429"
+       fy="723.24957"
+       fx="104.10737"
+       cy="723.24957"
+       cx="104.10737"
+       gradientTransform="matrix(1.4312935,-0.6717004,0.60009142,1.2787054,-478.73837,-131.46062)"
+       gradientUnits="userSpaceOnUse"
+       id="radialGradient4153-8"
+       xlink:href="#linearGradient4109-2-78"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient4109-2-78">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop4111-1-1" />
+      <stop
+         id="stop4131-4-6"
+         offset="0.31676486"
+         style="stop-color:#000000;stop-opacity:0.74901961;" />
+      <stop
+         id="stop4129-9-0"
+         offset="0.59103578"
+         style="stop-color:#000000;stop-opacity:0.49803922;" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0.24705882;"
+         offset="0.77913147"
+         id="stop4133-8-9" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0;"
+         offset="1"
+         id="stop4113-2-5" />
+    </linearGradient>
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4109-90"
+       id="radialGradient4115-8"
+       cx="104.10737"
+       cy="723.24957"
+       fx="104.10737"
+       fy="723.24957"
+       r="7.8571429"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.4312935,-0.6717004,0.60009142,1.2787054,-478.73837,-131.46062)" />
+    <linearGradient
+       id="linearGradient4109-90">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop4111-0" />
+      <stop
+         id="stop4131-0"
+         offset="0.31676486"
+         style="stop-color:#000000;stop-opacity:0.74901961;" />
+      <stop
+         id="stop4129-7"
+         offset="0.59103578"
+         style="stop-color:#000000;stop-opacity:0.49803922;" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0.24705882;"
+         offset="0.77913147"
+         id="stop4133-25" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0;"
+         offset="1"
+         id="stop4113-52" />
+    </linearGradient>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="10.241967"
+     inkscape:cy="534.28531"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer3"
+     showgrid="false"
+     inkscape:snap-global="false"
+     inkscape:snap-grids="true"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     inkscape:window-width="1280"
+     inkscape:window-height="962"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata6">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Vrstva 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     style="display:inline">
+    <path
+       sodipodi:type="arc"
+       style="fill:#d39f66;fill-opacity:1;stroke:none"
+       id="path3767"
+       sodipodi:cx="-170.35715"
+       sodipodi:cy="957.00507"
+       sodipodi:rx="28.214285"
+       sodipodi:ry="28.928572"
+       d="m -142.14286,957.00507 a 28.214285,28.928572 0 1 1 -56.42857,0 28.214285,28.928572 0 1 1 56.42857,0 z"
+       transform="translate(-10.714286,-174.28571)" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#8d5942;fill-opacity:1;stroke:none"
+       id="path3773"
+       sodipodi:cx="-267.85715"
+       sodipodi:cy="880.57648"
+       sodipodi:rx="25.714285"
+       sodipodi:ry="26.785715"
+       d="m -242.14286,880.57648 a 25.714285,26.785715 0 1 1 -51.42857,0 25.714285,26.785715 0 1 1 51.42857,0 z"
+       transform="translate(88.571429,-169.28571)" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#e0be81;fill-opacity:1;stroke:none"
+       id="path3775"
+       sodipodi:cx="-183.57143"
+       sodipodi:cy="852.36218"
+       sodipodi:rx="25.714285"
+       sodipodi:ry="25"
+       d="m -157.85714,852.36218 a 25.714285,25 0 1 1 -51.42857,0 25.714285,25 0 1 1 51.42857,0 z"
+       transform="translate(3.5714286,-2.1428571)" />
+    <rect
+       style="fill:#d39f66;fill-opacity:1;stroke:none"
+       id="rect3777"
+       width="254.55844"
+       height="254.55844"
+       x="83.842659"
+       y="482.63614"
+       inkscape:export-filename="C:\Users\Lukas\Pictures\textures\woodbox.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="fill:#e0be81;fill-opacity:1;stroke:none"
+       id="rect3777-1"
+       width="171.70129"
+       height="171.70129"
+       x="125.27123"
+       y="524.0647"
+       inkscape:export-filename="C:\Users\Lukas\Pictures\textures\woodbox.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="fill:#8d5942;fill-opacity:1;stroke:none"
+       id="rect3777-1-1"
+       width="174.55844"
+       height="174.55844"
+       x="123.84266"
+       y="522.63611"
+       inkscape:export-filename="C:\Users\Lukas\Pictures\textures\woodbox.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="fill:#d39f66;fill-opacity:1;stroke:none"
+       id="rect3777-1-1-5"
+       width="145.98701"
+       height="145.98701"
+       x="138.12837"
+       y="536.92181"
+       inkscape:export-filename="C:\Users\Lukas\Pictures\textures\woodbox.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="fill:#000000;fill-opacity:0;stroke:none"
+       id="rect3984"
+       width="146.72466"
+       height="33.082497"
+       x="137.63329"
+       y="650.32147"
+       inkscape:export-filename="C:\Users\Lukas\Pictures\textures\woodbox.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Layer">
+    <path
+       style="fill:#8d5942;fill-opacity:1;stroke:none;display:inline"
+       d="M 131.96233,696.00857 297.68682,575.96515 288.40111,526.57471 131.60519,639.28494 z"
+       id="path3986"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-filename="C:\Users\Lukas\Pictures\textures\woodbox.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:#d39f66;fill-opacity:1;stroke:none;display:inline"
+       d="m 137.87604,673.91884 146.19581,-104.34831 0,-24.62074 -146.19581,105.80258 z"
+       id="path3986-2"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-filename="C:\Users\Lukas\Pictures\textures\woodbox.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:#e0be81;fill-opacity:1;stroke:none"
+       d="m 138.85464,651.80033 0.0373,9.59185 144.16356,-104.09045 -0.0843,-10.29067 z"
+       id="path4028"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-filename="C:\Users\Lukas\Pictures\textures\woodbox.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:#8d5942;fill-opacity:1;stroke:none;display:inline"
+       d="m 131.96232,526.5747 165.7245,120.04341 -9.28571,49.39045 -156.79593,-112.71024 z"
+       id="path3986-7"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-filename="C:\Users\Lukas\Pictures\textures\woodbox.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:#d39f66;fill-opacity:1;stroke:none;display:inline"
+       d="m 138.09083,547.2636 145.94327,105.611 0,24.62074 -145.94327,-107.06527 z"
+       id="path3986-2-6"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-filename="C:\Users\Lukas\Pictures\textures\woodbox.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:#e0be81;fill-opacity:1;stroke:none"
+       d="m 139.10718,558.91672 0.0373,-9.59185 143.91102,105.35314 -0.0843,10.29067 z"
+       id="path4028-1"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-filename="C:\Users\Lukas\Pictures\textures\woodbox.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="fill:#e0be81;fill-opacity:1;stroke:none"
+       id="rect4054"
+       width="250"
+       height="10.714286"
+       x="86.428574"
+       y="485.21933"
+       inkscape:export-filename="C:\Users\Lukas\Pictures\textures\woodbox.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="fill:#e0be81;fill-opacity:1;stroke:none"
+       id="rect4056"
+       width="174.55844"
+       height="9.9133425"
+       x="123.84266"
+       y="698.70984"
+       inkscape:export-filename="C:\Users\Lukas\Pictures\textures\woodbox.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="Layerx">
+    <path
+       sodipodi:type="arc"
+       style="fill:#e6e6e6;fill-opacity:1;stroke:none"
+       id="path4061"
+       sodipodi:cx="102.85714"
+       sodipodi:cy="720.04077"
+       sodipodi:rx="7.8571429"
+       sodipodi:ry="7.8571429"
+       d="m 110.71428,720.04077 a 7.8571429,7.8571429 0 1 1 -15.714283,0 7.8571429,7.8571429 0 1 1 15.714283,0 z"
+       inkscape:export-filename="C:\Users\Lukas\Pictures\textures\woodbox.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       transform="translate(3.378601e-7,4.0580749e-6)"
+       sodipodi:type="arc"
+       style="fill:url(#radialGradient4115);fill-opacity:1;stroke:none;opacity:1"
+       id="path4061-5"
+       sodipodi:cx="102.85714"
+       sodipodi:cy="720.04077"
+       sodipodi:rx="7.8571429"
+       sodipodi:ry="7.8571429"
+       d="m 110.71428,720.04077 a 7.8571429,7.8571429 0 1 1 -15.714283,0 7.8571429,7.8571429 0 1 1 15.714283,0 z"
+       inkscape:export-filename="C:\Users\Lukas\Pictures\textures\woodbox.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       transform="translate(3.378601e-7,4.0580749e-6)"
+       sodipodi:type="arc"
+       style="fill:url(#radialGradient4153);fill-opacity:1;stroke:none"
+       id="path4061-5-4"
+       sodipodi:cx="102.85714"
+       sodipodi:cy="720.04077"
+       sodipodi:rx="7.8571429"
+       sodipodi:ry="7.8571429"
+       d="m 110.71428,720.04077 a 7.8571429,7.8571429 0 1 1 -15.714283,0 7.8571429,7.8571429 0 1 1 15.714283,0 z"
+       inkscape:export-filename="C:\Users\Lukas\Pictures\textures\woodbox.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       transform="translate(214.86423,4.0580749e-6)"
+       sodipodi:type="arc"
+       style="fill:#e6e6e6;fill-opacity:1;stroke:none"
+       id="path4061-8"
+       sodipodi:cx="102.85714"
+       sodipodi:cy="720.04077"
+       sodipodi:rx="7.8571429"
+       sodipodi:ry="7.8571429"
+       d="m 110.71428,720.04077 a 7.8571429,7.8571429 0 1 1 -15.714283,0 7.8571429,7.8571429 0 1 1 15.714283,0 z"
+       inkscape:export-filename="C:\Users\Lukas\Pictures\textures\woodbox.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       transform="translate(214.86423,1.4058075e-5)"
+       sodipodi:type="arc"
+       style="fill:url(#radialGradient4115-6);fill-opacity:1;stroke:none"
+       id="path4061-5-2"
+       sodipodi:cx="102.85714"
+       sodipodi:cy="720.04077"
+       sodipodi:rx="7.8571429"
+       sodipodi:ry="7.8571429"
+       d="m 110.71428,720.04077 a 7.8571429,7.8571429 0 1 1 -15.714283,0 7.8571429,7.8571429 0 1 1 15.714283,0 z"
+       inkscape:export-filename="C:\Users\Lukas\Pictures\textures\woodbox.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       transform="translate(214.86423,1.4058075e-5)"
+       sodipodi:type="arc"
+       style="fill:url(#radialGradient4153-5);fill-opacity:1;stroke:none"
+       id="path4061-5-4-6"
+       sodipodi:cx="102.85714"
+       sodipodi:cy="720.04077"
+       sodipodi:rx="7.8571429"
+       sodipodi:ry="7.8571429"
+       d="m 110.71428,720.04077 a 7.8571429,7.8571429 0 1 1 -15.714283,0 7.8571429,7.8571429 0 1 1 15.714283,0 z"
+       inkscape:export-filename="C:\Users\Lukas\Pictures\textures\woodbox.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       transform="translate(3.378601e-7,-218.69802)"
+       sodipodi:type="arc"
+       style="fill:#e6e6e6;fill-opacity:1;stroke:none"
+       id="path4061-52"
+       sodipodi:cx="102.85714"
+       sodipodi:cy="720.04077"
+       sodipodi:rx="7.8571429"
+       sodipodi:ry="7.8571429"
+       d="m 110.71428,720.04077 a 7.8571429,7.8571429 0 1 1 -15.714283,0 7.8571429,7.8571429 0 1 1 15.714283,0 z"
+       inkscape:export-filename="C:\Users\Lukas\Pictures\textures\woodbox.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       transform="translate(1.3378601e-6,-218.69801)"
+       sodipodi:type="arc"
+       style="fill:url(#radialGradient4115-2);fill-opacity:1;stroke:none"
+       id="path4061-5-7"
+       sodipodi:cx="102.85714"
+       sodipodi:cy="720.04077"
+       sodipodi:rx="7.8571429"
+       sodipodi:ry="7.8571429"
+       d="m 110.71428,720.04077 a 7.8571429,7.8571429 0 1 1 -15.714283,0 7.8571429,7.8571429 0 1 1 15.714283,0 z"
+       inkscape:export-filename="C:\Users\Lukas\Pictures\textures\woodbox.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       transform="translate(1.3378601e-6,-218.69801)"
+       sodipodi:type="arc"
+       style="fill:url(#radialGradient4153-2);fill-opacity:1;stroke:none"
+       id="path4061-5-4-67"
+       sodipodi:cx="102.85714"
+       sodipodi:cy="720.04077"
+       sodipodi:rx="7.8571429"
+       sodipodi:ry="7.8571429"
+       d="m 110.71428,720.04077 a 7.8571429,7.8571429 0 1 1 -15.714283,0 7.8571429,7.8571429 0 1 1 15.714283,0 z"
+       inkscape:export-filename="C:\Users\Lukas\Pictures\textures\woodbox.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       transform="translate(214.65742,-219.70817)"
+       sodipodi:type="arc"
+       style="fill:#e6e6e6;fill-opacity:1;stroke:none"
+       id="path4061-1"
+       sodipodi:cx="102.85714"
+       sodipodi:cy="720.04077"
+       sodipodi:rx="7.8571429"
+       sodipodi:ry="7.8571429"
+       d="m 110.71428,720.04077 a 7.8571429,7.8571429 0 1 1 -15.714283,0 7.8571429,7.8571429 0 1 1 15.714283,0 z"
+       inkscape:export-filename="C:\Users\Lukas\Pictures\textures\woodbox.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       transform="translate(214.65742,-219.70816)"
+       sodipodi:type="arc"
+       style="fill:url(#radialGradient4115-8);fill-opacity:1;stroke:none"
+       id="path4061-5-48"
+       sodipodi:cx="102.85714"
+       sodipodi:cy="720.04077"
+       sodipodi:rx="7.8571429"
+       sodipodi:ry="7.8571429"
+       d="m 110.71428,720.04077 a 7.8571429,7.8571429 0 1 1 -15.714283,0 7.8571429,7.8571429 0 1 1 15.714283,0 z"
+       inkscape:export-filename="C:\Users\Lukas\Pictures\textures\woodbox.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       transform="translate(214.65742,-219.70816)"
+       sodipodi:type="arc"
+       style="fill:url(#radialGradient4153-8);fill-opacity:1;stroke:none"
+       id="path4061-5-4-64"
+       sodipodi:cx="102.85714"
+       sodipodi:cy="720.04077"
+       sodipodi:rx="7.8571429"
+       sodipodi:ry="7.8571429"
+       d="m 110.71428,720.04077 a 7.8571429,7.8571429 0 1 1 -15.714283,0 7.8571429,7.8571429 0 1 1 15.714283,0 z"
+       inkscape:export-filename="C:\Users\Lukas\Pictures\textures\woodbox.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+  </g>
+</svg>
