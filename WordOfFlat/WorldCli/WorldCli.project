@@ -7,7 +7,9 @@
   </Plugins>
   <Description/>
   <Dependencies/>
-  <VirtualDirectory Name="src"/>
+  <VirtualDirectory Name="src">
+    <File Name="flatworldcliimpl.cpp"/>
+  </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="flatworldcli.h"/>
   </VirtualDirectory>
