@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="744.09448819"
+   height="1052.3622047"
+   id="svg2"
+   inkscape:label="Pozadí"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="ground.svg">
+  <defs
+     id="defs3" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="312.84655"
+     inkscape:cy="690.70906"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:window-width="1280"
+     inkscape:window-height="962"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:snap-grids="false">
+    <inkscape:grid
+       type="xygrid"
+       id="grid2986" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata6">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Vrstva 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#784421;fill-opacity:1;stroke:none"
+       id="rect2988"
+       width="250"
+       height="250"
+       x="105"
+       y="102.36218"
+       inkscape:export-filename="C:\git\firstwxgame\Resources\concepts\ground.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:#338000;fill-opacity:1;stroke:none"
+       d="m 105,102.36218 250,0 0,65.64717 c -20.53927,-1.47029 -46.18204,6.16191 -73.91343,4.03417 -27.7314,-2.12773 -57.55141,-14.01541 -78.36396,-14.11933 -41.6251,-0.20785 -55.30155,6.3132 -97.72261,10.08516 z"
+       id="rect2988-1"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccsscc"
+       inkscape:export-filename="C:\git\firstwxgame\Resources\concepts\ground.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:#e5a851;fill-opacity:1;stroke:none"
+       d="m 151.52288,186.15638 47.98225,1.01015 c 8.95201,0.18846 21.3883,8.89166 16.16243,16.16244 l -11.61675,16.16245 c -5.22587,7.27078 -5.2346,16.2616 -14.14213,17.17259 l -44.44672,4.54569 c -8.90752,0.911 -17.17259,-4.68307 -17.17259,-13.63706 l 0,-24.24367 c 0,-8.95399 14.2815,-17.36106 23.23351,-17.17259 z"
+       id="rect3008"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="sssssssss"
+       inkscape:export-filename="C:\git\firstwxgame\Resources\concepts\ground.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:#c87137;fill-opacity:1;stroke:none"
+       d="m 182.83761,271.51427 20.20306,0.50508 c 8.95119,0.22378 18.86353,-0.71166 17.17259,8.08122 l -2.52538,13.13198 c -1.69094,8.79288 -0.33227,9.25369 -9.09137,11.11168 l -16.66752,3.53553 c -8.7591,1.85799 -9.76112,-0.83758 -15.65737,-7.57614 l -10.6066,-12.12183 c -5.89624,-6.73856 8.2214,-16.8913 17.17259,-16.66752 z"
+       id="rect3806"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="sssssssss"
+       inkscape:export-filename="C:\git\firstwxgame\Resources\concepts\ground.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:#d38d5f;fill-opacity:1;stroke:none"
+       d="m 132.32997,253.33153 16.16245,-4.04061 c 8.68665,-2.17167 13.49748,7.81983 12.12183,16.66751 -3.54323,22.7889 2.72528,22.64448 10.60661,31.31482 15.35549,16.89274 -3.77716,17.93176 -16.16244,16.16244 l -17.67768,-2.52538 c -8.864,-1.26629 -26.50475,-15.96863 -24.74874,-24.74874 l 4.04061,-20.20314 c 1.75601,-8.78011 6.97072,-10.45524 15.65736,-12.6269 z"
+       id="rect3808"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="sssssssss"
+       inkscape:export-filename="C:\git\firstwxgame\Resources\concepts\ground.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:#916a12;fill-opacity:1;stroke:none"
+       d="m 285.3681,283.63609 c 12.31842,-2.9742 21.44392,-8.50274 39.90102,-6.56599 8.90511,0.93443 15.93647,7.2113 16.16244,16.16244 0.2841,11.25373 2.13079,23.28875 0,33.33503 -1.85779,8.75914 -7.45822,14.06227 -16.16244,16.16244 -26.69787,6.44171 -41.14891,3.08596 -61.6193,4.54569 -8.93131,0.63688 -23.47008,-12.58747 -19.69797,-20.70813 5.06434,-10.90259 10.7615,-19.90672 17.17259,-26.76904 6.11267,-6.54288 15.53977,-14.06094 24.24366,-16.16244 z"
+       id="rect3810"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="sssssssss"
+       inkscape:export-filename="C:\git\firstwxgame\Resources\concepts\ground.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:#96552a;fill-opacity:1;stroke:none"
+       d="m 271.22596,181.61069 c 11.48088,-3.09938 25.91584,-2.26 41.41626,0 8.86031,1.29186 13.64166,7.57061 16.16244,16.16244 3.71679,12.66832 3.00151,22.67739 0,31.31473 -2.93914,8.45786 -7.28053,17.2963 -16.16244,16.16244 l -23.73859,-3.03046 c -8.88191,-1.13386 -11.41684,-8.56947 -16.16244,-16.16244 l -17.67767,-28.28427 c -4.74561,-7.59297 7.51791,-13.82876 16.16244,-16.16244 z"
+       id="rect3812"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="sssssssss"
+       inkscape:export-filename="C:\git\firstwxgame\Resources\concepts\ground.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:#916a12;fill-opacity:1;stroke:none"
+       d="m 830.85047,126.05229 c 12.31842,-2.9742 21.44392,-8.50274 39.90102,-6.56599 8.90511,0.93443 15.93647,7.2113 16.16244,16.16244 0.2841,11.25373 2.13079,23.28875 0,33.33503 -1.85779,8.75914 -7.45822,14.06227 -16.16244,16.16244 -26.69787,6.44171 -41.14891,3.08596 -61.6193,4.54569 -8.93131,0.63688 -23.47008,-12.58747 -19.69797,-20.70813 5.06434,-10.90259 10.7615,-19.90672 17.17259,-26.76904 6.11267,-6.54288 15.53977,-14.06094 24.24366,-16.16244 z"
+       id="rect3810-4"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="sssssssss" />
+    <path
+       style="fill:#96552a;fill-opacity:1;stroke:none"
+       d="m 823.7794,228.07771 c 11.48088,-3.09938 25.91584,-2.26 41.41626,0 8.86031,1.29186 13.64166,7.57061 16.16244,16.16244 3.71679,12.66832 3.00151,22.67739 0,31.31473 -2.93914,8.45786 -7.28053,17.2963 -16.16244,16.16244 l -23.73859,-3.03046 c -8.88191,-1.13386 -11.41684,-8.56947 -16.16244,-16.16244 l -17.67767,-28.28427 c -4.74561,-7.59297 7.51791,-13.82876 16.16244,-16.16244 z"
+       id="rect3812-3"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="sssssssss" />
+    <path
+       style="fill:#e5a851;fill-opacity:1;stroke:none"
+       d="m 812.16264,331.61835 47.98225,1.01015 c 8.95201,0.18846 21.3883,8.89166 16.16243,16.16244 l -11.61675,16.16245 c -5.22587,7.27078 -5.2346,16.2616 -14.14213,17.17259 l -44.44672,4.54569 c -8.90752,0.911 -17.17259,-4.68307 -17.17259,-13.63706 l 0,-24.24367 c 0,-8.95399 14.2815,-17.36106 23.23351,-17.17259 z"
+       id="rect3008-1"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="sssssssss" />
+    <path
+       style="fill:#d38d5f;fill-opacity:1;stroke:none"
+       d="m 810.14233,425.05746 16.16245,-4.04061 c 8.68665,-2.17167 13.49748,7.81983 12.12183,16.66751 -3.54323,22.7889 2.72528,22.64448 10.60661,31.31482 15.35549,16.89274 -3.77716,17.93176 -16.16244,16.16244 l -17.67768,-2.52538 c -8.864,-1.26629 -26.50475,-15.96863 -24.74874,-24.74874 l 4.04061,-20.20314 c 1.75601,-8.78011 6.97072,-10.45524 15.65736,-12.6269 z"
+       id="rect3808-2"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="sssssssss" />
+    <path
+       style="fill:#c87137;fill-opacity:1;stroke:none"
+       d="m 830.34539,523.04225 20.20306,0.50508 c 8.95119,0.22378 18.86353,-0.71166 17.17259,8.08122 l -2.52538,13.13198 c -1.69094,8.79288 -0.33227,9.25369 -9.09137,11.11168 l -16.66752,3.53553 c -8.7591,1.85799 -9.76112,-0.83758 -15.65737,-7.57614 l -10.6066,-12.12183 c -5.89624,-6.73856 8.2214,-16.8913 17.17259,-16.66752 z"
+       id="rect3806-3"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="sssssssss" />
+    <path
+       style="fill:#d38d5f;fill-opacity:1;stroke:none"
+       d="m 231.32492,203.29571 25.25382,12.69288 c 8.05406,4.04807 4.88064,10.77904 11.11168,18.4788 14.98272,18.51429 20.81106,17.1324 12.62692,35.72802 -4.34675,9.87646 -24.49554,22.90063 -25.25382,22.9696 l -24.74875,2.25094 c -8.93759,0.81289 0.13412,-28.43864 -5.55584,-36.5296 l -17.17259,-24.41896 c -5.68996,-8.09096 15.68453,-35.21975 23.73858,-31.17168 z"
+       id="rect3808-2-3"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="sssssssss"
+       inkscape:export-filename="C:\git\firstwxgame\Resources\concepts\ground.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:#d38d5f;fill-opacity:1;stroke:none"
+       d="m 828.32507,591.19429 25.25382,12.69288 c 8.05406,4.04807 4.88064,10.77904 11.11168,18.4788 14.98272,18.51429 20.81106,17.1324 12.62692,35.72802 -4.34675,9.87646 -24.49554,22.90063 -25.25382,22.9696 l -24.74875,2.25094 c -8.93759,0.81289 0.13412,-28.43864 -5.55584,-36.5296 l -17.17259,-24.41896 c -5.68996,-8.09096 15.68453,-35.21975 23.73858,-31.17168 z"
+       id="rect3808-2-3-4"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="sssssssss" />
+    <rect
+       style="fill:#784421;fill-opacity:1;stroke:none"
+       id="rect2988-11"
+       width="250"
+       height="250"
+       x="99.949234"
+       y="480.15924" />
+    <rect
+       style="fill:#338000;fill-opacity:1;stroke:none"
+       id="rect2988-1-3"
+       width="250"
+       height="65.647163"
+       x="99.949234"
+       y="480.15924" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Layer">
+    <path
+       style="fill:#338000;fill-opacity:1;stroke:none"
+       d="m 279.59516,138.0306 -0.77151,25.48763 -34.0296,40.36377 15.83621,-54.77115 z"
+       id="rect3835"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"
+       inkscape:export-filename="C:\git\firstwxgame\Resources\concepts\ground.png" />
+    <path
+       style="fill:#338000;fill-opacity:1;stroke:none"
+       d="m 257.97776,132.49728 25.18196,15.97447 16.70609,64.50724 -44.09953,-51.27272 z"
+       id="rect3835-7"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"
+       inkscape:export-filename="C:\git\firstwxgame\Resources\concepts\ground.png" />
+    <path
+       style="fill:#338000;fill-opacity:1;stroke:none"
+       d="m 263.62132,138.2547 26.53554,3.69408 37.95659,47.54447 -55.26556,-25.95702 z"
+       id="rect3835-7-4"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"
+       inkscape:export-filename="C:\git\firstwxgame\Resources\concepts\ground.png" />
+    <path
+       style="fill:#338000;fill-opacity:1;stroke:none"
+       d="m 152.92933,129.13604 12.59001,37.73943 -37.10107,81.10605 -2.40479,-90.32158 z"
+       id="rect3835-7-0"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-filename="C:\git\firstwxgame\Resources\concepts\ground.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:#338000;fill-opacity:1;stroke:none"
+       d="m 145.89581,137.46421 21.51622,18.8808 8.88436,66.98598 -35.35069,-56.60035 z"
+       id="rect3835-7-9"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-filename="C:\git\firstwxgame\Resources\concepts\ground.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:#338000;fill-opacity:1;stroke:none"
+       d="m 148.24107,154.11683 22.70728,-2.48736 40.34686,38.08714 -50.69194,-12.817 z"
+       id="rect3835-7-48"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"
+       inkscape:export-filename="C:\git\firstwxgame\Resources\concepts\ground.png" />
+    <g
+       id="g4046">
+      <path
+         sodipodi:nodetypes="ccccc"
+         inkscape:connector-curvature="0"
+         id="rect3835-7-0-5"
+         d="m 619.61981,438.24272 12.59001,37.73943 -37.10107,81.10605 -2.40479,-90.32158 z"
+         style="fill:#338000;fill-opacity:1;stroke:none" />
+      <path
+         sodipodi:nodetypes="ccccc"
+         inkscape:connector-curvature="0"
+         id="rect3835-7-9-7"
+         d="m 612.58629,446.57089 21.51622,18.8808 8.88436,66.98598 -35.35069,-56.60035 z"
+         style="fill:#338000;fill-opacity:1;stroke:none" />
+      <path
+         sodipodi:nodetypes="ccccc"
+         inkscape:connector-curvature="0"
+         id="rect3835-7-48-6"
+         d="m 614.93155,463.22351 22.70728,-2.48736 40.34686,38.08714 -50.69194,-12.817 z"
+         style="fill:#338000;fill-opacity:1;stroke:none" />
+    </g>
+    <path
+       style="fill:#338000;fill-opacity:1;stroke:none"
+       d="m 152.92933,129.13604 12.59001,37.73943 -37.10107,81.10605 -2.40479,-90.32158 z"
+       id="rect3835-7-0-1"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-filename="C:\git\firstwxgame\Resources\concepts\ground.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:#338000;fill-opacity:1;stroke:none"
+       d="m 145.89581,137.46421 21.51622,18.8808 8.88436,66.98598 -35.35069,-56.60035 z"
+       id="rect3835-7-9-8"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-filename="C:\git\firstwxgame\Resources\concepts\ground.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:#338000;fill-opacity:1;stroke:none"
+       d="m 148.24107,154.11683 22.70728,-2.48736 40.34686,38.08714 -50.69194,-12.817 z"
+       id="rect3835-7-48-9"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"
+       inkscape:export-filename="C:\git\firstwxgame\Resources\concepts\ground.png" />
+    <g
+       id="g4086">
+      <path
+         sodipodi:nodetypes="ccccc"
+         inkscape:connector-curvature="0"
+         id="rect3835-2"
+         d="m 645.27038,133.98999 -0.77151,25.48763 -34.0296,40.36377 15.83621,-54.77115 z"
+         style="fill:#338000;fill-opacity:1;stroke:none" />
+      <path
+         sodipodi:nodetypes="ccccc"
+         inkscape:connector-curvature="0"
+         id="rect3835-7-79"
+         d="m 623.65298,128.45667 25.18196,15.97447 16.70609,64.50724 -44.09953,-51.27272 z"
+         style="fill:#338000;fill-opacity:1;stroke:none" />
+      <path
+         sodipodi:nodetypes="ccccc"
+         inkscape:connector-curvature="0"
+         id="rect3835-7-4-5"
+         d="m 629.29654,134.21409 26.53554,3.69408 37.95659,47.54447 -55.26556,-25.95702 z"
+         style="fill:#338000;fill-opacity:1;stroke:none" />
+    </g>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="Layer#1">
+    <g
+       id="g4014"
+       transform="translate(160.61425,-60.609153)">
+      <path
+         sodipodi:nodetypes="ccccc"
+         inkscape:connector-curvature="0"
+         id="rect3835-7-8-14"
+         d="m 463.55639,346.74657 3.92336,24.36723 -34.62818,45.38134 9.21911,-55.29869 z"
+         style="fill:#338000;fill-opacity:1;stroke:none" />
+      <path
+         sodipodi:nodetypes="ccccc"
+         inkscape:connector-curvature="0"
+         id="rect3835-7-2-2"
+         d="m 463.54552,347.45462 23.89728,13.29516 -6.92496,53.99544 -32.00563,-42.80599 z"
+         style="fill:#338000;fill-opacity:1;stroke:none" />
+      <path
+         sodipodi:nodetypes="ccccc"
+         inkscape:connector-curvature="0"
+         id="rect3835-7-45-3"
+         d="m 453.08492,346.864 29.04398,-3.16298 51.63983,41.4906 -64.64223,-12.14514 z"
+         style="fill:#338000;fill-opacity:1;stroke:none" />
+      <path
+         sodipodi:nodetypes="ccccc"
+         inkscape:connector-curvature="0"
+         id="rect3835-7-5-22"
+         d="m 440.04493,358.87688 25.59984,-26.57417 83.23081,-4.98048 -73.46101,41.07111 z"
+         style="fill:#338000;fill-opacity:1;stroke:none" />
+      <path
+         sodipodi:nodetypes="ccccc"
+         inkscape:connector-curvature="0"
+         id="rect3835-7-1-1"
+         d="m 493.44383,356.90751 -28.36344,18.04132 -68.55806,-24.67787 71.16739,-15.75725 z"
+         style="fill:#338000;fill-opacity:1;stroke:none" />
+      <path
+         sodipodi:nodetypes="ccccc"
+         inkscape:connector-curvature="0"
+         id="rect3835-7-7-68"
+         d="m 485.26479,368.86771 5.9905,-13.63879 -50.86633,-54.34466 13.20923,43.46016 z"
+         style="fill:#338000;fill-opacity:1;stroke:none" />
+    </g>
+  </g>
+</svg>
