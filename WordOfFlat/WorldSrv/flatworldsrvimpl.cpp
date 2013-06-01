@@ -2,7 +2,7 @@
 
 
 
-GameErrorCode FlatLocalWorldSrvImpl::Initialize(GameLogger* logger)
+GameErrorCode GameFlatWorldSrv::Initialize(GameLogger* logger)
 {
 	GameErrorCode result = FWG_NO_ERROR;
 	
@@ -34,13 +34,13 @@ GameErrorCode FlatLocalWorldSrvImpl::Initialize(GameLogger* logger)
 
 
 
-GameFlatWorldID FlatLocalWorldSrvImpl::GetFWId()
+GameFlatWorldID GameFlatWorldSrv::GetFWId()
 {
 	return m_wrldId;
 }
 
 
-wxInt32 FlatLocalWorldSrvImpl::release()
+wxInt32 GameFlatWorldSrv::release()
 {
 	wxInt32 refCount = wxAtomicDec(m_refCount);
 	if (refCount == 0)
@@ -52,33 +52,33 @@ wxInt32 FlatLocalWorldSrvImpl::release()
 }
 
 
-void FlatLocalWorldSrvImpl::addRef()
+void GameFlatWorldSrv::addRef()
 {
 	wxAtomicInc(m_refCount);
 }
 
-GameErrorCode FlatLocalWorldSrvImpl::AddNewObject(IGameObjectSrv* object)
+GameErrorCode GameFlatWorldSrv::AddNewObject(IGameObjectSrv* object)
 {
 	return FWG_E_NOT_IMPLEMENTED_ERROR;
 }
 
-GameErrorCode FlatLocalWorldSrvImpl::LoadWorld(const wxChar* worldName)
+GameErrorCode GameFlatWorldSrv::LoadWorld(const wxChar* worldName)
 {
 	return FWG_E_NOT_IMPLEMENTED_ERROR;
 }
 
-GameErrorCode FlatLocalWorldSrvImpl::SetWorldSize(const b2Vec2& LLpoint, const b2Vec2& RUpoint)
+GameErrorCode GameFlatWorldSrv::SetWorldSize(const b2Vec2& LLpoint, const b2Vec2& RUpoint)
 {
 	return FWG_E_NOT_IMPLEMENTED_ERROR;
 }
 
-GameErrorCode FlatLocalWorldSrvImpl::StepWorld()
+GameErrorCode GameFlatWorldSrv::StepWorld()
 {
 	return FWG_E_NOT_IMPLEMENTED_ERROR;
 }
 
 
-GameErrorCode FlatLocalWorldSrvImpl::GenerateTestStaticWorld()
+GameErrorCode GameFlatWorldSrv::GenerateTestStaticWorld()
 {
 	GameErrorCode result = FWG_NO_ERROR;
 	if(!m_isInitialized)

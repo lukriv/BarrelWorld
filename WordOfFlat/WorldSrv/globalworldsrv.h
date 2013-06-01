@@ -20,7 +20,7 @@ class IGlobalWorldSrv {
 	 * \retval FWG_NO_ERROR when succeded
 	 * 
 	 */
-	virtual GameErrorCode GetFlatWorld(GameFlatWorldID wrldId, IFlatLocalWorldSrv *& pFlatWorld ) = 0;
+	virtual GameErrorCode GetFlatWorld(GameFlatWorldID wrldId, IGameFlatWorldSrv *& pFlatWorld ) = 0;
 	
 }
 
