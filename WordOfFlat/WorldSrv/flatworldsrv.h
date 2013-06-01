@@ -1,7 +1,6 @@
 #ifndef __GAME_FLAT_WORLD_SERVER_H__
 #define __GAME_FLAT_WORLD_SERVER_H__
 
-#include <scopedptr.h>
 #include "../GameSystem/gerror.h"
 /*! This could store world object for 2D
  *  It could add new object. 
@@ -15,7 +14,7 @@ enum GameFlatWorldID {
 	GAME_FLAT_WRLD_TEST = 1
 };
 
-class IFlatLocalWorldSrv : IRefObject {
+class IGameFlatWorldSrv : IRefObject {
 public:
 	
 	virtual GameFlatWorldID GetFWId() = 0;

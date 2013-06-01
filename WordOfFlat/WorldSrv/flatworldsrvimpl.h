@@ -11,7 +11,7 @@
  * 
  */
 
-class FlatLocalWorldSrvImpl : public IFlatLocalWorldSrv{
+class GameFlatWorldSrv : public IGameFlatWorldSrv{
 private:
 	
 	wxAtomicInt m_refCount;
@@ -22,7 +22,7 @@ private:
 	std::set<IGameObjectSrv*> m_objectMap;
 	bool m_isInitialized;
 public:
-	FlatLocalWorldSrvImpl() :m_refCount(1), 
+	GameFlatWorldSrv() :m_refCount(1), 
 							m_wrldId(GAME_FLAT_WRLD_UNKNOWN),
 							 m_isInitialized(false) {}
 	

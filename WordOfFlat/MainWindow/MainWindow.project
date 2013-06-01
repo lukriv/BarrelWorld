@@ -9,8 +9,11 @@
   <Dependencies/>
   <VirtualDirectory Name="src">
     <File Name="main.cpp"/>
+    <File Name="gclientengine.cpp"/>
   </VirtualDirectory>
-  <VirtualDirectory Name="header"/>
+  <VirtualDirectory Name="header">
+    <File Name="gclientengine.h"/>
+  </VirtualDirectory>
   <Settings Type="Executable">
     <GlobalSettings>
       <Compiler Options="" C_Options="">
