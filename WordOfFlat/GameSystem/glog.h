@@ -117,6 +117,7 @@ public:
 class GameLoggerCreator {
 	typedef std::set<GameLogger*> LoggerSetType;
 private:
+	static GameLoggerCreator* m_pLoggerCreator;
 	LoggerSetType m_loggerSet;
 	wxCriticalSection m_creatorLock;
 private:
@@ -132,7 +133,7 @@ public:
 
 typedef RefObjSmPtr<GameLogger> GameLoggerPtr;
 
-extern GameLoggerCreator* g_pLoggerCreator;
+
 
 
 
