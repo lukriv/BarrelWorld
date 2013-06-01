@@ -5,8 +5,8 @@
 #include "glogconst.h"
 #include <stdarg.h>
 
-
-GameLoggerCreator* g_pLoggerCreator = NULL;
+// initilize global variable
+GameLoggerCreator* GameLoggerCreator::m_pLoggerCreator = NULL;
 
 
 class MyLogFormatter: public wxLogFormatter
@@ -204,14 +204,14 @@ GameErrorCode GameLoggerCreator::CreateLogger(GameLogger*& pLogger, const wxChar
 void GameLoggerCreator::DestroyLogger(GameLogger* pLogger)
 {
 	LoggerSetType::iterator iter;
-	if (g_pLoggerCreator)
+	if (m_pLoggerCreator)
 	{
-		wxCriticalSectionLocker locker(g_pLoggerCreator->m_creatorLock);
+		wxCriticalSectionLocker locker(m_pLoggerCreator->m_creatorLock);
 		
-		iter = g_pLoggerCreator->m_loggerSet.find(pLogger);
-		if(g_pLoggerCreator->m_loggerSet.end() != iter)
+		iter = m_pLoggerCreator->m_loggerSet.find(pLogger);
+		if(m_pLoggerCreator->m_loggerSet.end() != iter)
 		{
-			g_pLoggerCreator->m_loggerSet.erase(iter);
+			m_pLoggerCreator->m_loggerSet.erase(iter);
 		}
 	}
 	
@@ -219,7 +219,7 @@ void GameLoggerCreator::DestroyLogger(GameLogger* pLogger)
 }
 GameLoggerCreator::~GameLoggerCreator()
 {
-	g_pLoggerCreator = NULL;
+	m_pLoggerCreator = NULL;
 }
 
 
