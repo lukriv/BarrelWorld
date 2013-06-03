@@ -37,7 +37,7 @@ public:
 	
 	GameErrorCode StepWorld();
 	
-	GameErrorCode AddNewObject(IGameObjectSrv *object);
+	GameErrorCode CreateNewObject(b2BodyDef &bodyDef, IGameObjectSrv *&object);
 	GameErrorCode SetWorldSize(const b2Vec2 &LLpoint, const b2Vec2 &RUpoint);
 	
 	GameErrorCode LoadWorld(const wxChar* worldName);

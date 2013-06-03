@@ -57,11 +57,6 @@ void GameFlatWorldSrv::addRef()
 	wxAtomicInc(m_refCount);
 }
 
-GameErrorCode GameFlatWorldSrv::AddNewObject(IGameObjectSrv* object)
-{
-	return FWG_E_NOT_IMPLEMENTED_ERROR;
-}
-
 GameErrorCode GameFlatWorldSrv::LoadWorld(const wxChar* worldName)
 {
 	return FWG_E_NOT_IMPLEMENTED_ERROR;
@@ -89,9 +84,13 @@ GameErrorCode GameFlatWorldSrv::GenerateTestStaticWorld()
 	m_wrldId = GAME_FLAT_WRLD_TEST;
 	
 	b2BodyDef bodyDef;
-	bodyDef.position.Set(0.0f, -10.0f);
+	
 	
 	
 	
 	return result;
+}
+GameErrorCode GameFlatWorldSrv::CreateNewObject(b2BodyDef &bodyDef, IGameObjectSrv *&object)
+{
+	return FWG_E_NOT_IMPLEMENTED_ERROR;
 }
