@@ -47,8 +47,7 @@ int main(int argc, char **argv)
 	FWGLOG_WARNING_FORMAT(wxT("Format: %s"), spLogger, wxT("Warning message"), FWGLOG_ENDVAL);
 	FWGLOG_ERROR_FORMAT(wxT("Format: %s"), spLogger, wxT("Error message"), FWGLOG_ENDVAL);
 
-	// Create the main window
-	sf::RenderWindow window(sf::VideoMode(800, 600), "SFML window");
+
  
      // Load a sprite to display
      sf::Texture texture;
@@ -61,31 +60,7 @@ int main(int argc, char **argv)
 		 
 
 	
-      // Start the game loop
-	while (window.isOpen())
-    {
-        // Process events
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            // Close window : exit
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
-		 
 
-        // Clear screen
-        window.clear();
- 
-        // Draw the sprite
-        window.draw(sprite);
- 
-        // Draw the string
-        //App.Draw(Text);
-		
-		// Update the window
-        window.display();
-    }
 	 
 	return 0;
 }

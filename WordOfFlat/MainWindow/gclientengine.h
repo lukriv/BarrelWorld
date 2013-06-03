@@ -10,11 +10,13 @@
 struct GameEngineSettings {
 	wxDword m_screenWidth;
 	wxDword m_screenHeight;
+	wxChar* m_screenTitle;
 	wxChar* m_worldName;
 	
 	GameEngineSettings() : 
 		m_screenWidth(800),
 		m_screenHeight(600),
+		m_screenTitle(nullptr),
 		m_worldName(nullptr) {}
 }
 
@@ -26,6 +28,7 @@ class GameClientEngine {
 private:
 	static GameClientEngine* m_pClientEngine;
 private:
+	GameLoggerPtr m_pLogger;
 	GameEngineSettings m_settings;
 	GameFlatWorldSrv *m_pActualFlatWorldServer;
 	GameFlatWorldClient *m_pActualFlatWorldClient; 
@@ -41,7 +44,12 @@ private:
 					m_isSettingLoaded(false),
 					m_isInitialized(false) {}
 	GameErrorCode CreateWindow();
-	GameErrorCode LoadSettings();
+	GameErrorCode LoadSettings(wxChar* pFileName = nullptr);
+
+	GameErrorCode LoadTextures();
+	GameErrorCode LoadShapes();
+	GameErrorCode LoadObjects();
+	
 public:
 	/*! \brief Destructor */
 	~GameClietEngine() {}
@@ -50,9 +58,10 @@ public:
 	 * 	It loads settings, create window and initialize events.
 	 * \return 
 	 */
-	GameErrorCode Initialize();
+	GameErrorCode Initialize(GameLogger* pLogger = nullptr);
 	GameErrorCode MainLoop();
 	
+	GameErrorCode CreateTestingWorld();
 
 // static methods
 public:
