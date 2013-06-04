@@ -5,8 +5,8 @@
 #include "flatworldcli.h"
 
 typedef std::map<GameTextureId, sf::Texture*> GameTextureMapType;
-typedef std::map<GameShapeId, sf::Shape*> GameShapeMapType;
-typedef std::map<wxInt32, IGameObject*> GameObjectMapType;
+typedef std::map<GameShapeId, sf::Drawable*> GameShapeMapType;
+typedef std::map<GameObjectId, IGameObject*> GameObjectMapType;
 
 class GameFlatWorldClient : public IGameFlatWorldClient {
 private:
@@ -24,9 +24,9 @@ public:
 	 * \retval FWG_NO_ERROR on success
 	 * \retval error on failed
 	 */
-	GameErrorCode AddDrawableObject( wxInt32 objectId, IGameObject* pObject);
+	GameErrorCode AddDrawableObject( GameObjectId objId, IGameObject* pObject);
 	GameErrorCode AddTexture( GameTextureId texId, sf::Texture* pTexture);
-	GameErrorCode AddShape( GameShapeId shapeId, sf::Shape* pShape);
+	GameErrorCode AddShape( GameShapeId shapeId, sf::Drawable* pShape);
 	
 	/*! \brief Get texture for corespond ID
 	 * \param texId Texture ID
@@ -44,7 +44,7 @@ public:
 	 * \param objId Object ID
 	 * \return Pointer to object on success, NULL if object will not found
 	 */
-	IGameObject* GetObject(wxInt32 objId);
+	IGameObject* GetObject(GameObjectId objId);
 public:
 	virtual bool DrawScreen();
 	

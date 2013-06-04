@@ -90,7 +90,27 @@ GameErrorCode GameFlatWorldSrv::GenerateTestStaticWorld()
 	
 	return result;
 }
-GameErrorCode GameFlatWorldSrv::CreateNewObject(b2BodyDef &bodyDef, IGameObjectSrv *&object)
+GameErrorCode GameFlatWorldSrv::CreateNewObject(b2BodyDef &bodyDef, IGameObjectSrv *&pObject)
+{
+	GameErrorCode result = FWG_NO_ERROR;
+	b2Body *pBody = nullptr;
+	pBody = m_apWorld->CreateBody(&bodyDef);
+	
+	wxScopedPtr<GameObjectSrv> apObject;
+	apObject.reset(new (std::nothrow) GameObjectSrv(this, pBody));
+	if ((apObject.get() == nullptr)||(pBody == nullptr))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("GameFlatWorldSrv::CreateNewObject() : Create new object failed: 0x%08x"),
+			m_spLogger, FWG_E_MEMORY_ALLOCATION_ERROR, FWGLOG_ENDVAL);
+		return FWG_E_MEMORY_ALLOCATION_ERROR;
+	}
+	
+	pObject = apObject.release();
+	
+	return FWG_NO_ERROR;
+}
+
+GameErrorCode GameFlatWorldSrv::AddNewObject(GameObjectId objID, IGameObjectSrv* pObject)
 {
 	return FWG_E_NOT_IMPLEMENTED_ERROR;
 }

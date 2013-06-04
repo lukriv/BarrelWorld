@@ -7,9 +7,8 @@
 
 class IGameObjectSrv : public IRefObject {
 public:
-	virtual GameObjectType GetType() = 0;
-	virtual wxInt32 GetId() = 0;
-	virtual void SetId(wxInt32 id) = 0;
+	virtual GameObjectType GetObjType() = 0;
+	virtual GameObjectId GetObjId() = 0;
 	virtual void SetDrawableObj(IGameObject *pDrawableObj) = 0;
 }
 

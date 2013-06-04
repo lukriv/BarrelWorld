@@ -2,18 +2,20 @@
 #define __GAME_FLAT_WORLD_SERVER_H__
 
 #include "../GameSystem/gerror.h"
+#include "../GameObjectsSrv/gameobjdef.h"
+
+enum GameFlatWorldID {
+	GAME_FLAT_WRLD_UNKNOWN = 0,
+	GAME_FLAT_WRLD_TEST = 1
+};
+
+
 /*! This could store world object for 2D
  *  It could add new object. 
  *  It could simulate this part of world
  *  It could send updated objects from world
  * 
  */
- 
-enum GameFlatWorldID {
-	GAME_FLAT_WRLD_UNKNOWN = 0,
-	GAME_FLAT_WRLD_TEST = 1
-};
-
 class IGameFlatWorldSrv : IRefObject {
 public:
 	

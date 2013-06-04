@@ -20,10 +20,6 @@ GameErrorCode GameClientEngine::CreateWindow()
 
 }
 
-GameClientEngine* GameClientEngine::GetEngine()
-{
-}
-
 GameErrorCode GameClientEngine::Initialize(GameLogger* pLogger)
 {
 	GameErrorCode result = FWG_NO_ERROR;
@@ -184,10 +180,67 @@ GameErrorCode GameClientEngine::LoadTextures()
 
 GameErrorCode GameClientEngine::LoadObjects()
 {
-	GameObjectSrvImpl *pSrvObj = nullptr;
+	GameErrorCode result = FWG_NO_ERROR;
+	GameObjectSrv *pSrvObj = nullptr;
+	Game
 	b2BodyDef bodyDef;
 	bodyDef.position.Set(0.0f, -10.0f);
-	m_pActualFlatWorldServer->CreateNewObject()
+	if(FWG_FAILED(result = m_pActualFlatWorldServer->CreateNewObject(bodyDef, pSrvObj))) {
+		FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::LoadObjects() : Create object failed: 0x%08x"),
+			m_pLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	b2PolygonShape polyShape;
+	polyShape.SetAsBox(50.0f, 1.0f);
+	
+	b2FixtureDef fixDef;
+	fixDef.shape = &polyShape;
+	fixDef.density = 0.0f;
+	
+	if(FWG_FAILED(result = pSrvObj->AddPart(fixDef))) {
+		FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::LoadObjects() : Create object failed: 0x%08x"),
+			m_pLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	
+	
+	pSrvObj->SetObjID(1);
+	
+	
+	
+	
+	
 	
 }
 
+GameErrorCode GameClientEngine::CreateEngine(GameClientEngine*& pEngine, GameLogger* pLogger)
+{
+	GameErrorCode result = FWG_NO_ERROR;
+	if(!m_pClientEngine) 
+	{
+		m_pClientEngine = new (std::nothrow) GameClientEngine();
+		if (m_pClientEngine == nullptr)
+		{
+			FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::CreateEngine() : Memory allocation error: 0x%08x"),
+						pLogger, FWG_E_MEMORY_ALLOCATION_ERROR, FWGLOG_ENDVAL);
+			return FWG_E_MEMORY_ALLOCATION_ERROR;
+		}
+		
+		if (FWG_FAILED(result = m_pClientEngine->Initialize(pLogger)))
+		{
+			FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::CreateEngine() : Engine initialization failed: 0x%08x"),
+						pLogger, result, FWGLOG_ENDVAL);
+			return result;
+		}
+	}
+	
+	pEngine = m_pClientEngine;
+	return FWG_NO_ERROR;
+}
+
+GameClientEngine* GameClientEngine::GetEngine()
+{
+	return m_pClientEngine;
+}
