@@ -4,6 +4,7 @@
 #include <scopedptr.h>
 #include "../GameSystem/gerror.h"
 #include "../GameSystem/glog.h"
+#include "flatworldsrv.h"
 /*! This could store world object for 2D
  *  It could add new object. 
  *  It could simulate this part of world
@@ -31,13 +32,34 @@ public:
 	
 	GameErrorCode GenerateTestStaticWorld();
 	
+	GameLogger* GetLogger() {return m_spLogger.In()}
+	
 public:
 
 	GameFlatWorldID GetFWId();
 	
 	GameErrorCode StepWorld();
 	
+	/*! \brief Create new object within this world
+	 * 
+	 * This object is not initialized and must be added in this world with unique ID.
+	 * \param bodyDef Body definition (Box2d)
+	 * \param object Created object
+	 * \retval FWG_NO_ERROR On success
+	 * \retval Other errorcode on fail
+	 * \warning Object created within this world cannot be used in other GameFlatWorldSrv!
+	 */
 	GameErrorCode CreateNewObject(b2BodyDef &bodyDef, IGameObjectSrv *&object);
+	
+	/*! \brief Add new object to world with unique ID
+	 * 
+	 * \param objID Unique Id (must be unique within this world)
+	 * \param object Added object (cannot be NULL)
+	 * \retval FWG_NO_ERROR On success
+	 * \retval FWG_E_INVALID_PARAMETER_ERROR if objID is not unique or pObject is NULL
+	 */
+	GameErrorCode AddNewObject(GameObjectId objID, IGameObjectSrv *pObject);
+	
 	GameErrorCode SetWorldSize(const b2Vec2 &LLpoint, const b2Vec2 &RUpoint);
 	
 	GameErrorCode LoadWorld(const wxChar* worldName);

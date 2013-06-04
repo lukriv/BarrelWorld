@@ -65,6 +65,19 @@ public:
 
 // static methods
 public:
+	/*! \brief Create new engine
+	 * 
+	 *  If engine already exists it returns the existing one. Engine is also initialized in this method.
+	 * \param[out] pEngine Returned GameClientEngine
+	 * \param[in] pLogger Logger for initialization
+	 * \retval FWG_NO_ERROR On success
+	 * \retval Some errorcode when failed
+	 */
+	static GameErrorCode CreateEngine(GameClientEngine *&pEngine, GameLogger *pLogger = nullptr);
+	
+	/*! \brief Get game engine
+	 * \return Actual game engine (can be NULL)
+	 */
 	static GameClientEngine* GetEngine();
 
 };

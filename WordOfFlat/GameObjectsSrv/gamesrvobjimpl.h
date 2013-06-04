@@ -3,25 +3,33 @@
 
 #include "gamesrvobj.h"
 #include "../GameSystem/glog.h"
+#include "gameobjdef.h"
 
-class GameObjectSrvImpl : public IGameObjectSrv {
+class GameObjectSrv : public IGameObjectSrv {
 private:
-	wxVector<b2Fixture*> m_pFixtureList;
-	wxVector<b2Shape*> m_pShapeList;
+	GameObjectType m_objType;
+	GameObjectId m_objID;
+	GameFlatWorldSrv *m_pParent;
 	b2Body* m_pBody;
 	IGameObject* m_pDrawableObj;
 public:
-	virtual GameObjectType GetType();
-	virtual wxInt32 GetId();
+	void SetObjID(GameObjectId objID) { m_objID = objID;}
+	void SetObjType(GameObjectType objType) { m_objType = objType;}
+	
+	virtual GameObjectType GetObjType() { return m_objType; }
+	virtual GameObjectId GetObjId() { return m_objID; }
 	virtual void SetDrawableObj(IGameObject *pDrawableObj);
 	
 public:
-	GameObjectSrvImpl(): m_pBody(nullptr), m_pDrawableObj(nullptr) {}
+	GameObjectSrv(GameFlatWorldSrv* pParent, b2Body* pBody): m_objType(GAME_OBJECT_TYPE_UNKNOWN),
+						m_objID(GAME_OBJECT_ID_UNKNOWN),
+						m_pParent(pParent),
+						m_pBody(pBody),
+						m_pDrawableObj(nullptr) {}
 	
-	GameErrorCode Initialize( b2BodyDef* pBodyDef,  GameLogger* pLogger = NULL);
-	bool IsInitialized() { return (m_pBody != nullptr); }
+	bool IsInitialized() { return (m_objID != GAME_OBJECT_ID_UNKNOWN); }
 	
-	GameErrorCode AddPart(b2Shape* pShape, b2FixtureDef* pFixture = NULL);
+	GameErrorCode AddPart( b2FixtureDef& pFixture);
 };
 
 #endif //__GAME_SERVER_OBJECT_IMPL_H__

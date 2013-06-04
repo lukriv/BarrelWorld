@@ -1,18 +1,21 @@
 #ifndef __GENERIC_OBJECT_H__
 #define __GENERIC_OBJECT_H__
 
-#include "../GameObjects/gamedrawobj.h"
+#include "../GameObjectsSrv/gameobjdef.h"
+#include "../GameObjectsSrv/gamedrawobj.h"
+
 
 
 class GameGenericObject : public IGameObject {
-	typedef wxVector<sf::Shape*> ShapeListType;
 private:
-	ShapeListType m_shapeList;
-	
+	GameObjectId m_objId;
+	sf::Drawable* m_pDrawable;
+	sf::Texture* m_pTexture;
 public:
 	GameGenericObject(){}
 	
-	GameErrorCode AddShape( sf::Shape *pShape);
+	void SetShape( sf::Drawable *pShape) {m_pDrawable = pShape;}
+	void SetTexture( sf::Texture *pTexture) {m_pTexture = pTexture; }
 	
 	
 public:
@@ -20,11 +23,7 @@ public:
 	virtual void SetSrvObj(IGameObjectSrv *pSrvObj);
 	
 	virtual void UpdateObject(const b2Transform &mat);
-	virtual void UpdateObject(const b2Transform &mat);
-	
-	virtual void UpdatePart(const b2Transform &mat, wxDword index);
-	virtual void UpdatePart(const b2Transform &mat, wxDword index);
-	
+
 	virtual b2Vec2 GetMiddlePoint();
 	virtual b2Vec2 GetLLPoint();
 	virtual b2Vec2 GetRUPoint();
