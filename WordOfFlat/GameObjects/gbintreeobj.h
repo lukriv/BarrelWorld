@@ -1,15 +1,11 @@
-#ifndef __TREE_OBJECT_H__
-#define __TREE_OBJECT_H__
+#ifndef __GAME_BINARY_TREE_OBJECT_H__
+#define __GAME_BINARY_TREE_OBJECT_H__
 
-#include "../GameObjects/gameupdobj.h"
+#include "gobjbase.h"
 
 
-class GameTreeObject : public IGameObject {
+class GameObjectBinaryTree : public GameObjectBase {
 
-public:
-enum TreeType {
-	TREE_SPRUCE
-}
 	
 public:
 //from IGameObject
@@ -30,4 +26,4 @@ public:
 }
 
 
-#endif //__TREE_OBJECT_H__
+#endif //__GAME_BINARY_TREE_OBJECT_H__

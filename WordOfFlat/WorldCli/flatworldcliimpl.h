@@ -1,7 +1,7 @@
 #ifndef __GAME_FLAT_WORLD_CLIENT_IMPL_H__
 #define __GAME_FLAT_WORLD_CLIENT_IMPL_H__
 
-#include "../GameObjectsSrv/gamedrawobj.h"
+#include "../GameObjectsSrv/gameupdobj.h"
 #include "flatworldcli.h"
 
 typedef std::map<GameTextureId, sf::Texture*> GameTextureMapType;

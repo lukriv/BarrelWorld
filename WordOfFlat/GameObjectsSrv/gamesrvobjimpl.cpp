@@ -2,16 +2,27 @@
 
 
 
-void GameObjectSrv::SetDrawableObj(IGameObject* pDrawableObj)
+
+GameErrorCode GameObjectSrv::AddBody(b2Body* pBody)
 {
 }
 
-GameErrorCode GameObjectSrv::Initialize(b2Body* pBody)
+void GameObjectSrv::DoAction(GameActionCode action, void* pActionData)
 {
 }
 
-GameErrorCode GameObjectSrv::AddPart(b2FixtureDef& fixture)
+void GameObjectSrv::SetUpdObj(IGameObject* pUpdObj)
 {
-	m_pBody->CreateFixture(&fixture);
-	return FWG_NO_ERROR;
+}
+
+GameErrorCode GameObjectSrv::Synchronize()
+{
+}
+
+void GameObjectSrv::addRef()
+{
+}
+
+wxInt32 GameObjectSrv::release()
+{
 }
