@@ -20,7 +20,7 @@ private:
 	GameLoggerPtr m_spLogger;
 	b2Vec2 m_gravity;
 	wxScopedPtr<b2World> m_apWorld;
-	std::set<IGameObjectSrv*> m_objectMap;
+	wxVector<IGameObjectSrv*> m_objectsVec;
 	bool m_isInitialized;
 public:
 	GameFlatWorldSrv() :m_refCount(1), 

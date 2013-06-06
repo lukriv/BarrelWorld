@@ -11,4 +11,25 @@ typedef wxDword GameObjectId;
 
 static const GameObjectId GAME_OBJECT_ID_UNKNOWN = 0;
 
+
+enum GameActionCode {
+	GAME_ACTION_NOTHING = 0
+};
+
+enum GameObjectFlags {
+	GAME_OBJECT_FLAG_NOTHING 	 =	0,
+	GAME_OBJECT_FLAG_DESTROYABLE = (1<<0),
+	GAME_OBJECT_FLAG_MOVEABLE    = (1<<1)
+};
+
+enum GameObjectState {
+	GAME_OBJECT_STATE_UNKNOWN = 0
+};
+
+
+struct GameObjStateStruct {
+	GameObjectState m_state;
+};
+
+
 #endif //__GAME_OBJECT_DEFINITIONS_H__
