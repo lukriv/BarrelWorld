@@ -1756,13 +1756,6 @@
   </VirtualDirectory>
   <Description/>
   <Dependencies/>
-  <Dependencies Name="Debug">
-    <Project Name="GameSystem"/>
-    <Project Name="GameComm"/>
-    <Project Name="GameMsgCli"/>
-    <Project Name="GameMsgSrv"/>
-    <Project Name="ClientServerTests"/>
-  </Dependencies>
   <Settings Type="Executable">
     <GlobalSettings>
       <Compiler Options="" C_Options="">
@@ -1814,4 +1807,11 @@
       </Completion>
     </Configuration>
   </Settings>
+  <Dependencies Name="Debug">
+    <Project Name="GameSystem"/>
+    <Project Name="GameComm"/>
+    <Project Name="GameMsgCli"/>
+    <Project Name="GameMsgSrv"/>
+    <Project Name="ClientServerTests"/>
+  </Dependencies>
 </CodeLite_Project>

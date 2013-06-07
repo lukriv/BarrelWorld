@@ -1,19 +1,23 @@
 #ifndef __GAME_OBJECT_DEFINITIONS_H__
 #define __GAME_OBJECT_DEFINITIONS_H__
 
+
+
+typedef wxDword GameTextureId; //!< Texture id type
+typedef wxDword GameShapeId; //!< Shape id type
+typedef wxDword GameObjectId; //!< Object id type
+
+
+
+static const GameTextureId GAME_TEXTURE_ID_UNKNOWN = UINT_MAX;
+static const GameShapeId GAME_SHAPE_ID_UNKNOWN = UINT_MAX;
+static const GameObjectId GAME_OBJECT_ID_UNKNOWN = UINT_MAX;
+
+
 enum GameObjectType {
 	GAME_OBJECT_TYPE_UNKNOWN = 0,
 	GAME_OBJECT_TYPE_BOX = 1,
 	GAME_OBJECT_TYPE_GROUND = 2
-};
-
-typedef wxDword GameObjectId;
-
-static const GameObjectId GAME_OBJECT_ID_UNKNOWN = 0;
-
-
-enum GameActionCode {
-	GAME_ACTION_NOTHING = 0
 };
 
 enum GameObjectFlags {

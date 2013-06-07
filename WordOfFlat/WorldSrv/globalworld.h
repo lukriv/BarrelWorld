@@ -1,7 +1,7 @@
 #ifndef __GAME_GLOBAL_WORLD_SERVER_H__
 #define __GAME_GLOBAL_WORLD_SERVER_H__
 
-#include "flatworldsrv.h"
+#include "gflatworld.h"
 
 class IGlobalWorldSrv {
 	

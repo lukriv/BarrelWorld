@@ -17,7 +17,6 @@
     <File Name="gamemsgdata.h"/>
     <File Name="gamedata.h"/>
   </VirtualDirectory>
-  <Dependencies Name="Release"/>
   <Settings Type="Static Library">
     <GlobalSettings>
       <Compiler Options="-Wall" C_Options="">
@@ -100,4 +99,5 @@
     </Configuration>
   </Settings>
   <Dependencies Name="Debug"/>
+  <Dependencies Name="Release"/>
 </CodeLite_Project>

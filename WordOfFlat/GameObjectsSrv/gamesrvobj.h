@@ -3,7 +3,7 @@
 
 #include "../GameSystem/refobject.h"
 #include "gameobjdef.h"
-#include "gameupdobj.h"
+#include "gobject.h"
 
 class IGameObjectSrv : public IRefObject {
 public:

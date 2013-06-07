@@ -1,7 +1,7 @@
 #ifndef __TREE_OBJECT_H__
 #define __TREE_OBJECT_H__
 
-#include "../GameObjects/gameupdobj.h"
+#include "../GameObjects/gobject.h"
 
 
 class GameTreeObject : public IGameObject {
