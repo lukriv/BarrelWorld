@@ -8,10 +8,11 @@
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="src">
-    <File Name="flatworldcliimpl.cpp"/>
+    <File Name="gflatworldcliimpl.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
-    <File Name="flatworldcli.h"/>
+    <File Name="gflatworldcliimpl.h"/>
+    <File Name="../WorldSrv/globalworldimpl.h"/>
   </VirtualDirectory>
   <Settings Type="Dynamic Library">
     <GlobalSettings>
@@ -96,7 +97,4 @@
   </Settings>
   <Dependencies Name="Debug"/>
   <Dependencies Name="Release"/>
-  <VirtualDirectory Name="impl">
-    <File Name="flatworldcliimpl.h"/>
-  </VirtualDirectory>
 </CodeLite_Project>

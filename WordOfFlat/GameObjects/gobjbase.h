@@ -1,36 +1,22 @@
-#ifndef __GENERIC_OBJECT_H__
-#define __GENERIC_OBJECT_H__
+#ifndef __GAME_OBJECT_BASE_H__
+#define __GAME_OBJECT_BASE_H__
 
-#include "../GameObjectsSrv/gameobjdef.h"
-#include "../GameObjectsSrv/gameupdobj.h"
+#include "gameobjdef.h"
+#include "gobject.h"
 
-class IGameObjectSrv;
-
-class GameObjectBase : public IGameObject, public sf::Drawable {
+class GameObjectBase : public IGameObject {
 private:
 	GameObjectId m_objId;
-	IGameObjectSrv* m_pSrvObj;
-	
+
 public:
-	GameObjectBase(){}
-	void SetSrvObj(IGameObjectSrv *pSrvObj) { m_pSrvObj = pSrvObj;}
+	GameObjectBase() : m_objId(GAME_OBJECT_ID_UNKNOWN) {}
 	void SetObjID(GameObjectId objID) { m_objId = objID;}
 	
 public:
 //from IGameObject
 	virtual GameObjectId GetObjID() { return m_objId;}
-	virtual IGameObjectSrv* GetSrvObj() { return m_pSrvObj;}
 	
-	//virtual void UpdateObject(const b2Transform &mat);
-	//virtual void UpdateObject(const b2Transform &mat, const GameObjStateStruct &state);
-	
-	virtual b2Vec2 GetMiddlePoint();
-	virtual b2AABB GetAABB();
-public:
-// from IRefObject
-	virtual void addRef();
-	virtual wxInt32 release();
 }
 
 
-#endif //__GENERIC_OBJECT_H__
+#endif //__GAME_OBJECT_BASE_H__

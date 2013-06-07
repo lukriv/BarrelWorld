@@ -3,8 +3,8 @@
 
 
 
-#include "../WorldCli/flatworldcliimpl.h"
-#include "../WorldSrv/flatworldsrvimpl.h"
+#include "../WorldCli/gflatworldcliimpl.h"
+#include "../WorldSrv/gflatworldsrvimpl.h"
 
 
 struct GameEngineSettings {

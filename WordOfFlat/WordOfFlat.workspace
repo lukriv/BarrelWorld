@@ -7,7 +7,6 @@
   <Project Name="GameObjects" Path="GameObjects/GameObjects.project" Active="Yes"/>
   <Project Name="GameSystem" Path="GameSystem/GameSystem.project" Active="No"/>
   <Project Name="Extern" Path="Extern/Extern.project" Active="No"/>
-  <Project Name="GameObjectsSrv" Path="GameObjectsSrv/GameObjectsSrv.project" Active="No"/>
   <Project Name="WorldSrv" Path="WorldSrv/WorldSrv.project" Active="No"/>
   <Project Name="WorldCli" Path="WorldCli/WorldCli.project" Active="No"/>
   <Project Name="GameMsgCli" Path="GameMsgCli/GameMsgCli.project" Active="No"/>
@@ -20,7 +19,6 @@
       <Project Name="GameMsgCli" ConfigName="Debug"/>
       <Project Name="GameMsgSrv" ConfigName="Debug"/>
       <Project Name="GameObjects" ConfigName="Debug"/>
-      <Project Name="GameObjectsSrv" ConfigName="Debug"/>
       <Project Name="GameSystem" ConfigName="Debug"/>
       <Project Name="MainWindow" ConfigName="Debug"/>
       <Project Name="WorldCli" ConfigName="Debug"/>
@@ -31,7 +29,6 @@
       <Project Name="GameObjects" ConfigName="Release"/>
       <Project Name="GameSystem" ConfigName="Release"/>
       <Project Name="Extern" ConfigName="Debug"/>
-      <Project Name="GameObjectsSrv" ConfigName="Release"/>
       <Project Name="WorldSrv" ConfigName="Release"/>
       <Project Name="WorldCli" ConfigName="Release"/>
       <Project Name="GameMsgCli" ConfigName="Release"/>

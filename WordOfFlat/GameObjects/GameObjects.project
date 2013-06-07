@@ -9,12 +9,13 @@
   <Dependencies/>
   <VirtualDirectory Name="src">
     <File Name="treeobj.cpp"/>
-    <File Name="gobjbase.cpp"/>
+    <File Name="../GameObjectsSrv/gamesrvobjimpl.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
-    <File Name="treeobj.h"/>
-    <File Name="gobjbase.h"/>
     <File Name="gbintreeobj.h"/>
+    <File Name="../GameObjectsSrv/gameobjdef.h"/>
+    <File Name="../GameObjectsSrv/gamesrvobj.h"/>
+    <File Name="../GameObjectsSrv/gobject.h"/>
   </VirtualDirectory>
   <Settings Type="Static Library">
     <GlobalSettings>
@@ -97,6 +98,12 @@
       </Completion>
     </Configuration>
   </Settings>
+  <VirtualDirectory Name="impl">
+    <File Name="../GameObjectsSrv/gamesrvobjimpl.h"/>
+    <File Name="gobjbase.h"/>
+    <File Name="treeobj.h"/>
+    <File Name="../GameObjectsSrv/gsceneobj.h"/>
+  </VirtualDirectory>
   <Dependencies Name="Debug"/>
   <Dependencies Name="Release"/>
 </CodeLite_Project>

@@ -7,17 +7,9 @@
   </Plugins>
   <Description/>
   <Dependencies/>
-  <VirtualDirectory Name="src">
-    <File Name="gamesrvobjimpl.cpp"/>
-  </VirtualDirectory>
-  <VirtualDirectory Name="include">
-    <File Name="gamesrvobj.h"/>
-    <File Name="gameobjdef.h"/>
-    <File Name="gameupdobj.h"/>
-  </VirtualDirectory>
-  <VirtualDirectory Name="impl">
-    <File Name="gamesrvobjimpl.h"/>
-  </VirtualDirectory>
+  <VirtualDirectory Name="src"/>
+  <VirtualDirectory Name="include"/>
+  <VirtualDirectory Name="impl"/>
   <Settings Type="Static Library">
     <GlobalSettings>
       <Compiler Options="-Wall" C_Options="">

@@ -4,7 +4,7 @@
 #include <scopedptr.h>
 #include "../GameSystem/gerror.h"
 #include "../GameSystem/glog.h"
-#include "flatworldsrv.h"
+#include "gflatworld.h"
 /*! This could store world object for 2D
  *  It could add new object. 
  *  It could simulate this part of world
@@ -12,15 +12,14 @@
  * 
  */
 
-class GameFlatWorldSrv : public IGameFlatWorldSrv{
+class GameFlatWorldSrv : public IGameFlatWorld{
 private:
 	
-	wxAtomicInt m_refCount;
 	GameFlatWorldID m_wrldId;
 	GameLoggerPtr m_spLogger;
 	b2Vec2 m_gravity;
 	wxScopedPtr<b2World> m_apWorld;
-	wxVector<IGameObjectSrv*> m_objectsVec;
+	wxVector<IGameObject*> m_objectsVec;
 	bool m_isInitialized;
 public:
 	GameFlatWorldSrv() :m_refCount(1), 
@@ -65,8 +64,14 @@ public:
 	GameErrorCode LoadWorld(const wxChar* worldName);
 	
 public:
-	virtual void addRef();
-	virtual wxInt32 release();
+	virtual GameFlatWorldID GetFWId();
+	
+	virtual GameErrorCode SimulationStep();
+	virtual GameErrorCode DrawStep();
+	virtual GameErrorCode EventStep();
+	virtual GameErrorCode AIStep();
+	
+	virtual GameErrorCode GetUpdateList(GameUpdateStruct** &updList, wxDword &listSize);
 }
 
 #endif //__GAME_FLAT_WORLD_SERVER_IMPL_H__

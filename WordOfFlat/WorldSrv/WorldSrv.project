@@ -8,17 +8,16 @@
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="src">
-    <File Name="flatworldsrvimpl.cpp"/>
-    <File Name="globalworldsrvimpl.cpp"/>
+    <File Name="globalworldimpl.cpp"/>
+    <File Name="gflatworldsrvimpl.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
-    <File Name="flatworldsrv.h"/>
-    <File Name="worldsrvapi.h"/>
-    <File Name="globalworldsrv.h"/>
+    <File Name="gflatworld.h"/>
+    <File Name="globalworld.h"/>
+    <File Name="gworldapi.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="impl">
-    <File Name="flatworldsrvimpl.h"/>
-    <File Name="globalworldsrvimpl.h"/>
+    <File Name="gflatworldsrvimpl.h"/>
   </VirtualDirectory>
   <Settings Type="Dynamic Library">
     <GlobalSettings>

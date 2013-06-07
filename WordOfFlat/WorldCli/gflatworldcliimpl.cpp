@@ -1,4 +1,4 @@
-#include "flatworldcliimpl.h"
+#include "gflatworldcliimpl.h"
 
 GameErrorCode GameFlatWorldClient::AddDrawableObject(wxInt32 objectId, IGameObject* pObject)
 {
