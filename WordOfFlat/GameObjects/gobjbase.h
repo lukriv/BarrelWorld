@@ -10,7 +10,7 @@ private:
 
 public:
 	GameObjectBase() : m_objId(GAME_OBJECT_ID_UNKNOWN) {}
-	void SetObjID(GameObjectId objID) { m_objId = objID;}
+	inline void SetObjID(GameObjectId objID) { m_objId = objID;}
 	
 public:
 //from IGameObject
