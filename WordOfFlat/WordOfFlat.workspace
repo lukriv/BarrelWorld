@@ -4,17 +4,16 @@
   <Environment>
     <![CDATA[]]>
   </Environment>
-  <Project Name="GameObjects" Path="GameObjects/GameObjects.project" Active="Yes"/>
+  <Project Name="GameObjects" Path="GameObjects/GameObjects.project" Active="No"/>
   <Project Name="GameSystem" Path="GameSystem/GameSystem.project" Active="No"/>
-  <Project Name="Extern" Path="Extern/Extern.project" Active="No"/>
   <Project Name="WorldSrv" Path="WorldSrv/WorldSrv.project" Active="No"/>
   <Project Name="WorldCli" Path="WorldCli/WorldCli.project" Active="No"/>
   <Project Name="GameMsgCli" Path="GameMsgCli/GameMsgCli.project" Active="No"/>
   <Project Name="GameMsgSrv" Path="GameMsgSrv/GameMsgSrv.project" Active="No"/>
   <Project Name="GameComm" Path="GameComm/GameComm.project" Active="No"/>
+  <Project Name="Extern" Path="Extern/Extern.project" Active="Yes"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="no">
-      <Project Name="Extern" ConfigName="Debug"/>
       <Project Name="GameComm" ConfigName="Debug"/>
       <Project Name="GameMsgCli" ConfigName="Debug"/>
       <Project Name="GameMsgSrv" ConfigName="Debug"/>
@@ -23,17 +22,18 @@
       <Project Name="MainWindow" ConfigName="Debug"/>
       <Project Name="WorldCli" ConfigName="Debug"/>
       <Project Name="WorldSrv" ConfigName="Debug"/>
+      <Project Name="Extern" ConfigName="Debug"/>
     </WorkspaceConfiguration>
     <WorkspaceConfiguration Name="Release" Selected="yes">
       <Project Name="MainWindow" ConfigName="Release"/>
       <Project Name="GameObjects" ConfigName="Release"/>
       <Project Name="GameSystem" ConfigName="Release"/>
-      <Project Name="Extern" ConfigName="Debug"/>
       <Project Name="WorldSrv" ConfigName="Release"/>
       <Project Name="WorldCli" ConfigName="Release"/>
       <Project Name="GameMsgCli" ConfigName="Release"/>
       <Project Name="GameMsgSrv" ConfigName="Release"/>
       <Project Name="GameComm" ConfigName="Release"/>
+      <Project Name="Extern" ConfigName="Debug"/>
     </WorkspaceConfiguration>
   </BuildMatrix>
 </CodeLite_Workspace>

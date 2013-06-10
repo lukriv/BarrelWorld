@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Project Name="Extern" InternalType="">
-  <Plugins>
-    <Plugin Name="qmake">
-      <![CDATA[00010001N0005Debug000000000000]]>
-    </Plugin>
-  </Plugins>
   <VirtualDirectory Name="wx">
     <VirtualDirectory Name="x11">
       <VirtualDirectory Name="nanox">
@@ -1566,6 +1561,86 @@
     <File Name="../../extern/include/wx/zipstrm.h"/>
     <File Name="../../extern/include/wx/zstream.h"/>
   </VirtualDirectory>
+  <VirtualDirectory Name="vectorlib2">
+    <VirtualDirectory Name="altivec">
+      <File Name="../../extern/include/vectorlib2/altivec/load_vec_float4.h"/>
+      <File Name="../../extern/include/vectorlib2/altivec/load_vec_int4.h"/>
+      <File Name="../../extern/include/vectorlib2/altivec/load_vec_uint4.h"/>
+      <File Name="../../extern/include/vectorlib2/altivec/load_vec_unaligned.h"/>
+      <File Name="../../extern/include/vectorlib2/altivec/sqrtf_vec.h"/>
+      <File Name="../../extern/include/vectorlib2/altivec/store_vec_unaligned.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="nonvector">
+      <File Name="../../extern/include/vectorlib2/nonvector/load_vector.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/store_vector.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_add.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_all_eq.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_all_ge.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_all_gt.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_all_le.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_all_lt.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_and.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_andnot.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_any_eq.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_any_ge.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_any_gt.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_any_le.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_any_lt.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_any_ne.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_cmpeq.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_cmpge.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_cmpgt.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_cmple.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_cmplt.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_cvt.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_div.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_extract.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_insert.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_madd.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_max.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_min.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_mul.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_nmsub.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_nor.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_or.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_re.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_rsqrt.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_sel.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_shifts.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_splat.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_splats.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_sqrt.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_struct.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_sub.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_xor.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="sse">
+      <File Name="../../extern/include/vectorlib2/sse/vector_extract.h"/>
+      <File Name="../../extern/include/vectorlib2/sse/vector_insert.h"/>
+      <File Name="../../extern/include/vectorlib2/sse/vector_sse_max.h"/>
+      <File Name="../../extern/include/vectorlib2/sse/vector_sse_min.h"/>
+      <File Name="../../extern/include/vectorlib2/sse/vector_sse_splat.h"/>
+    </VirtualDirectory>
+    <File Name="../../extern/include/vectorlib2/vectoraritc.h"/>
+    <File Name="../../extern/include/vectorlib2/vectoraritf.h"/>
+    <File Name="../../extern/include/vectorlib2/vectoraritsi.h"/>
+    <File Name="../../extern/include/vectorlib2/vectoraritui.h"/>
+    <File Name="../../extern/include/vectorlib2/vectorcmpc.h"/>
+    <File Name="../../extern/include/vectorlib2/vectorcmpf.h"/>
+    <File Name="../../extern/include/vectorlib2/vectorcmpsi.h"/>
+    <File Name="../../extern/include/vectorlib2/vectorcmpui.h"/>
+    <File Name="../../extern/include/vectorlib2/vectorlib.h"/>
+    <File Name="../../extern/include/vectorlib2/vectorloadc.h"/>
+    <File Name="../../extern/include/vectorlib2/vectorloadf.h"/>
+    <File Name="../../extern/include/vectorlib2/vectorloadsi.h"/>
+    <File Name="../../extern/include/vectorlib2/vectorloadui.h"/>
+    <File Name="../../extern/include/vectorlib2/vectorlogicc.h"/>
+    <File Name="../../extern/include/vectorlib2/vectorlogicf.h"/>
+    <File Name="../../extern/include/vectorlib2/vectorlogicsi.h"/>
+    <File Name="../../extern/include/vectorlib2/vectorlogicui.h"/>
+    <File Name="../../extern/include/vectorlib2/vectormisc.h"/>
+    <File Name="../../extern/include/vectorlib2/vectorstruct.h"/>
+  </VirtualDirectory>
   <VirtualDirectory Name="msvc">
     <VirtualDirectory Name="wx">
       <File Name="../../extern/include/msvc/wx/setup.h"/>
@@ -1643,7 +1718,7 @@
       <File Name="../../extern/include/SFML/Network/Export.hpp"/>
       <File Name="../../extern/include/SFML/Network/Ftp.hpp"/>
       <File Name="../../extern/include/SFML/Network/Http.hpp"/>
-      <File Name="../../extern/include/SFML/Network/IPAddress.hpp"/>
+      <File Name="../../extern/include/SFML/Network/IpAddress.hpp"/>
       <File Name="../../extern/include/SFML/Network/Packet.hpp"/>
       <File Name="../../extern/include/SFML/Network/Socket.hpp"/>
       <File Name="../../extern/include/SFML/Network/SocketHandle.hpp"/>
@@ -1754,6 +1829,11 @@
     </VirtualDirectory>
     <File Name="../../extern/include/Box2D/Box2D.h"/>
   </VirtualDirectory>
+  <Plugins>
+    <Plugin Name="qmake">
+      <![CDATA[00010001N0005Debug000000000000]]>
+    </Plugin>
+  </Plugins>
   <Description/>
   <Dependencies/>
   <Settings Type="Executable">
