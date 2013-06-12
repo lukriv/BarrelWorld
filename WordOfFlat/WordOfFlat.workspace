@@ -5,13 +5,13 @@
     <![CDATA[]]>
   </Environment>
   <Project Name="GameObjects" Path="GameObjects/GameObjects.project" Active="No"/>
-  <Project Name="GameSystem" Path="GameSystem/GameSystem.project" Active="No"/>
+  <Project Name="GameSystem" Path="GameSystem/GameSystem.project" Active="Yes"/>
   <Project Name="WorldSrv" Path="WorldSrv/WorldSrv.project" Active="No"/>
   <Project Name="WorldCli" Path="WorldCli/WorldCli.project" Active="No"/>
   <Project Name="GameMsgCli" Path="GameMsgCli/GameMsgCli.project" Active="No"/>
   <Project Name="GameMsgSrv" Path="GameMsgSrv/GameMsgSrv.project" Active="No"/>
   <Project Name="GameComm" Path="GameComm/GameComm.project" Active="No"/>
-  <Project Name="Extern" Path="Extern/Extern.project" Active="Yes"/>
+  <Project Name="Extern" Path="Extern/Extern.project" Active="No"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="no">
       <Project Name="GameComm" ConfigName="Debug"/>
