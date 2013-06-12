@@ -47,7 +47,9 @@ public:
 	 */
 	GameErrorCode AddDrawableObject( GameObjectId objId, IGameObject* pObject);
 	GameErrorCode AddTexture( GameTextureId texId, sf::Texture* pTexture);
-	GameErrorCode AddShape( GameShapeId shapeId, sf::Drawable* pShape);
+	GameErrorCode AddGeometry( GameShapeId shapeId, IGameGeometry* pShape);
+	
+	//TODO: Getters for texture, geometry, entities
 	
 	/*! \brief Create new object within this world
 	 * 
