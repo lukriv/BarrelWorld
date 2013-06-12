@@ -8,14 +8,16 @@
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="src">
-    <File Name="../GameObjectsSrv/gamesrvobjimpl.cpp"/>
     <File Name="gbvhtreeobj.cpp"/>
+    <File Name="gentityobj.cpp"/>
+    <File Name="ggengeom.cpp"/>
+    <File Name="gkdtreeobj.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="gbintreeobj.h"/>
-    <File Name="../GameObjectsSrv/gameobjdef.h"/>
-    <File Name="../GameObjectsSrv/gamesrvobj.h"/>
-    <File Name="../GameObjectsSrv/gobject.h"/>
+    <File Name="ggeometry.h"/>
+    <File Name="gameobjdef.h"/>
+    <File Name="gobject.h"/>
   </VirtualDirectory>
   <Settings Type="Static Library">
     <GlobalSettings>
@@ -99,11 +101,13 @@
     </Configuration>
   </Settings>
   <VirtualDirectory Name="impl">
-    <File Name="../GameObjectsSrv/gamesrvobjimpl.h"/>
     <File Name="gobjbase.h"/>
-    <File Name="../GameObjectsSrv/gsceneobj.h"/>
     <File Name="gbvhtreeobj.h"/>
-    <File Name="../GameObjectsSrv/gkdtreeobj.h"/>
+    <File Name="gentityobj.h"/>
+    <File Name="ggengeom.h"/>
+    <File Name="gkdtreeobj.h"/>
+    <File Name="gsceneobj.h"/>
+    <File Name="gsfmlgeom.h"/>
   </VirtualDirectory>
   <Dependencies Name="Debug"/>
   <Dependencies Name="Release"/>

@@ -13,6 +13,7 @@ class GameSceneObject: public GameObjectBase, public sf::Drawable {
 public:
 	GameSceneObject() : m_pParentObj(nullptr) {}
 	inline GameSceneObject* GetParentObj() { return m_pParentObj;}
+	inline void SetParentObj(GameSceneObject* pParent) {m_pParentObj = pParent;}
 	inline b2AABB& GetAABB() { return m_AABB;}
 	inline wxUint32 GetLeafCount();
 	

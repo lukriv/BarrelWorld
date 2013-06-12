@@ -1,12 +1,16 @@
 #ifndef __GAME_FLAT_WORLD_CLIENT_IMPL_H__
 #define __GAME_FLAT_WORLD_CLIENT_IMPL_H__
 
+#include <wx/vector.h>
 #include "../GameObjects/gobject.h"
 #include "../WorldSrv/gflatworld.h"
 #include "../GameObjects/gsceneobj.h"
 
-typedef std::map<GameTextureId, sf::Texture*> GameTextureMapType;
-typedef std::map<GameShapeId, sf::Drawable*> GameShapeMapType;
+typedef wxVector<sf::Texture*> TGameTextureList;
+typedef wxVector<IGameGeometry*> TGameGeometryList;
+typedef wxVector<GameEntityBase*> TGameEntityList;
+
+static const wxDword RESERVE_CONSTANT = 100;
 
 class GameFlatWorldClient : public IGameFlatWorld {
 private:
@@ -18,14 +22,21 @@ private:
 	
 	wxVector<IGameObject*> m_objectsVec; //!< all world objects (every object must be deleted at the end)
 
-	GameTextureMapType m_textureMap;
-	GameShapeMapType m_dynamicShapeMap;
+	TGameTextureList m_textureMap;
+	TGameGeometryList m_geometryMap;
+	TGameEntityList m_entitiesList;
 	wxVector<GameSceneObject*> m_objectMap;
+	wxVector<IGameGeometry*> m_geometryObj;
 		
 	bool m_isInitialized;
 
 public: 
-	GameFlatWorldClient() {}
+	GameFlatWorldClient() {
+		m_entitiesList.reserve(RESERVE_CONSTANT);
+		m_textureMap.reserve(RESERVE_CONSTANT);
+		m_geometryMap.reserve(RESERVE_CONSTANT); 
+	}
+	
 	~GameFlatWorldClient();
 	
 	/*! \brief Add drawable object to flat world client
