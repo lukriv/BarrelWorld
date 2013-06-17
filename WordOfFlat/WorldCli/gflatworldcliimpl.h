@@ -9,6 +9,7 @@
 typedef wxVector<sf::Texture*> TGameTextureList;
 typedef wxVector<IGameGeometry*> TGameGeometryList;
 typedef wxVector<GameEntityBase*> TGameEntityList;
+typedef wxVector<GameSceneObject*> TSceneGraph;
 
 static const wxDword RESERVE_CONSTANT = 100;
 
@@ -20,14 +21,13 @@ private:
 	b2Vec2 m_gravity;
 	wxScopedPtr<b2World> m_apWorld;
 	
-	wxVector<IGameObject*> m_objectsVec; //!< all world objects (every object must be deleted at the end)
-
 	TGameTextureList m_textureMap;
 	TGameGeometryList m_geometryMap;
-	TGameEntityList m_entitiesList;
-	wxVector<GameSceneObject*> m_objectMap;
-	wxVector<IGameGeometry*> m_geometryObj;
-		
+	TGameEntityList m_entitiesList; // all entity list in world - should be divide to characters list, static entities and logic (senzor) entities
+	TSceneGraph m_objectMap;
+			
+	wxCriticalSection m_objectListLock;
+	
 	bool m_isInitialized;
 
 public: 
@@ -39,51 +39,36 @@ public:
 	
 	~GameFlatWorldClient();
 	
-	/*! \brief Add drawable object to flat world client
-	 * \param pObject added object
-	 * \param objectId returned ID
-	 * \retval FWG_NO_ERROR on success
-	 * \retval error on failed
+	/*! \brief Add new entity to world with unique ID
+	 * 
+	 * \param objID Unique Id (must be unique within this world)
+	 * \param pEntity Added entity (cannot be NULL)
+	 * \retval FWG_NO_ERROR On success
+	 * \retval FWG_E_INVALID_PARAMETER_ERROR if objID is not unique or pEntity is NULL
 	 */
-	GameErrorCode AddDrawableObject( GameObjectId objId, IGameObject* pObject);
+	GameErrorCode AddEntity( GameObjectId objId, GameEntityBase* pEntity);
 	GameErrorCode AddTexture( GameTextureId texId, sf::Texture* pTexture);
 	GameErrorCode AddGeometry( GameShapeId shapeId, IGameGeometry* pShape);
 	
 	//TODO: Getters for texture, geometry, entities
-	
-	/*! \brief Create new object within this world
-	 * 
-	 * This object is not initialized and must be added in this world with unique ID.
-	 * \param bodyDef Body definition (Box2d)
-	 * \param object Created object
-	 * \retval FWG_NO_ERROR On success
-	 * \retval Other errorcode on fail
-	 * \warning Object created within this world cannot be used in other GameFlatWorldSrv!
+	/*! \brief Get entity with coresponding ID
+	 * \param objId entity id
+	 * \return NULL if object with coresponding ID is not found or returns object poiter.
 	 */
-	GameErrorCode CreateNewObject(b2BodyDef &bodyDef, IGameObjectSrv *&object);
+	GameEntityBase* GetEntity( GameObjectId objId);
+	sf::Texture* GetTexture( GameTextureId texId);
+	IGameGeometry* GetGeometry( GameShapeId shapeId);
 	
-	/*! \brief Add new object to world with unique ID
-	 * 
-	 * \param objID Unique Id (must be unique within this world)
-	 * \param object Added object (cannot be NULL)
-	 * \retval FWG_NO_ERROR On success
-	 * \retval FWG_E_INVALID_PARAMETER_ERROR if objID is not unique or pObject is NULL
-	 */
-	GameErrorCode AddNewObject(GameObjectId objID, IGameObjectSrv *pObject);
-	
-	GameErrorCode SetWorldSize(const b2Vec2 &LLpoint, const b2Vec2 &RUpoint);
-	
-	GameErrorCode LoadWorld(const wxChar* worldName);
+	GameErrorCode SetWorldSize(const b2AABB wrldAABB);
 public:
-	virtual GameFlatWorldID GetFWId() = 0;
+	virtual GameFlatWorldID GetFWId();
 	
-	virtual GameErrorCode SimulationStep() = 0;
-	virtual GameErrorCode DrawStep() = 0;
-	virtual GameErrorCode EventStep() = 0;
-	virtual GameErrorCode AIStep() = 0;
+	virtual GameErrorCode SimulationStep();
+	virtual GameErrorCode DrawStep();
+	virtual GameErrorCode EventStep();
+	virtual GameErrorCode AIStep();
 	
-	virtual GameErrorCode GetUpdateList(GameUpdateStruct** &updList, wxDword &listSize) = 0;
-	
+	virtual GameErrorCode GetUpdateList(GameUpdateStruct** &updList, wxDword &listSize);
 }
 
 

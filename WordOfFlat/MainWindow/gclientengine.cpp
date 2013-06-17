@@ -114,13 +114,6 @@ GameErrorCode GameClientEngine::CreateTestingWorld()
 		return FWG_E_MEMORY_ALLOCATION_ERROR;
 	}
 	
-	m_pActualFlatWorldServer = new (std::nothrow) GameFlatWorldSrv();
-	if(m_pActualFlatWorldServer == nullptr)
-	{
-		FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::CreateTestingWorld() : Create flat world server failed: 0x%08x"),
-			m_pLogger, FWG_E_MEMORY_ALLOCATION_ERROR, FWGLOG_ENDVAL)
-		return FWG_E_MEMORY_ALLOCATION_ERROR;
-	}
 	
 	if(FWG_FAILED(result = m_pActualFlatWorldClient->Initialize(pLogger)))
 	{
@@ -129,12 +122,6 @@ GameErrorCode GameClientEngine::CreateTestingWorld()
 		return result;
 	}
 	
-	if(FWG_FAILED(result = m_pActualFlatWorldServer->Initialize(pLogger)))
-	{
-		FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::CreateTestingWorld() : Initialize flat world server failed: 0x%08x"),
-			m_pLogger, result, FWGLOG_ENDVAL);
-		return result;
-	}
 
 	
 	
