@@ -40,6 +40,7 @@ public:
 	inline sf::Texture* GetTexture () { return m_pTexture;}
 	inline b2Body* GetBody () { return m_pBody;}
 	
+	b2Body* CreateNewBody(b2World* pWorld);
 public:	
 	virtual void draw( sf::RenderTarget& target, sf::RenderStates states) const;
 	

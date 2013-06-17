@@ -1,10 +1,16 @@
 #include "gflatworldcliimpl.h"
 
-GameErrorCode GameFlatWorldClient::AddDrawableObject(wxInt32 objectId, IGameObject* pObject)
+
+
+GameErrorCode GameFlatWorldClient::AIStep()
 {
 }
 
-GameErrorCode GameFlatWorldClient::AddShape(GameShapeId shapeId, sf::Shape* pShape)
+GameErrorCode GameFlatWorldClient::AddEntity(GameObjectId objId, GameEntityBase* pEntity)
+{
+}
+
+GameErrorCode GameFlatWorldClient::AddGeometry(GameShapeId shapeId, IGameGeometry* pShape)
 {
 }
 
@@ -12,19 +18,39 @@ GameErrorCode GameFlatWorldClient::AddTexture(GameTextureId texId, sf::Texture* 
 {
 }
 
-bool GameFlatWorldClient::DrawScreen()
+GameErrorCode GameFlatWorldClient::DrawStep()
 {
 }
 
-IGameObject* GameFlatWorldClient::GetObject(wxInt32 objId)
+GameErrorCode GameFlatWorldClient::EventStep()
 {
 }
 
-sf::Shape* GameFlatWorldClient::GetShape(GameShapeId shapeId)
+GameEntityBase* GameFlatWorldClient::GetEntity(GameObjectId objId)
+{
+}
+
+GameFlatWorldID GameFlatWorldClient::GetFWId()
+{
+}
+
+IGameGeometry* GameFlatWorldClient::GetGeometry(GameShapeId shapeId)
 {
 }
 
 sf::Texture* GameFlatWorldClient::GetTexture(GameTextureId texId)
+{
+}
+
+GameErrorCode GameFlatWorldClient::GetUpdateList(GameUpdateStruct**& updList, wxDword& listSize)
+{
+}
+
+GameErrorCode GameFlatWorldClient::SetWorldSize(const b2AABB wrldAABB)
+{
+}
+
+GameErrorCode GameFlatWorldClient::SimulationStep()
 {
 }
 

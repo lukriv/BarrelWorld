@@ -5,7 +5,7 @@
 #include <Box2D/Collision/b2Collision.h>
 
 
-/*! \brief Implementation of BVH tree node
+/*! \brief Implementation of KD tree node
  */
 struct GameKDTreeNode {
 	wxDword m_rightChild; //!< Index to left child (if node is internal) node or first triangle pointer (if node is terminal)
@@ -14,7 +14,7 @@ struct GameKDTreeNode {
 	wxDword m_pad; //!< alignment to 32B
 };
 
-/*! \brief Implementation of BVH tree
+/*! \brief Implementation of KD tree
  */
 class GameKDTreeObject : public GameSceneObject {
 	wxVector<GameKDTreeNode*> m_treeNodes; // list of nodes
