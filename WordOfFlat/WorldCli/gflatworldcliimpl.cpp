@@ -1,6 +1,14 @@
 #include "gflatworldcliimpl.h"
 
 
+static const wxDword RESERVE_CONSTANT = 100;
+
+GameFlatWorldClient::GameFlatWorldClient() {
+	m_entitiesList.reserve(RESERVE_CONSTANT);
+	m_textureMap.reserve(RESERVE_CONSTANT);
+	m_geometryMap.reserve(RESERVE_CONSTANT); 
+}
+
 
 GameErrorCode GameFlatWorldClient::AIStep()
 {

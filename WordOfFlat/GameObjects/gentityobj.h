@@ -10,9 +10,11 @@
  */
 class GameEntityBase : public GameSceneObject, public sf::Transformable {
 	GameObjStateStruct m_state;
+protected:
+	GameObjectType m_enType;
 public:
-
 	GameObjStateStruct& GetObjectState() { return m_state;}
+	GameObjectType GetType() {return m_enType;}
 };
 
 
@@ -28,7 +30,9 @@ class GameEntity : public GameEntityBase {
 	sf::Texture *m_pTexture;
 	b2Body *m_pBody;
 public:
-	GameEntity() : m_pGeometry(nullptr),
+	GameEntity(GameObjectType enType) : 
+				m_enType(),
+				m_pGeometry(nullptr),
 				m_pTexture(nullptr),
 				m_pBody(nullptr) {}
 	
@@ -57,7 +61,7 @@ public:
 class GameEntityGroup : public GameEntityBase {
 	wxVector<GameEntity*> m_entityGroup;	
 public:
-	GameEntityGroup() {}
+	GameEntityGroup() : {}
 	
 	void PushBackEntity (GameEntity* pEntity) {
 		m_entityGroup.push_back(pEntity);
