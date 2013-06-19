@@ -168,37 +168,30 @@ GameErrorCode GameClientEngine::LoadTextures()
 GameErrorCode GameClientEngine::LoadObjects()
 {
 	GameErrorCode result = FWG_NO_ERROR;
-	GameObjectSrv *pSrvObj = nullptr;
-	Game
-	b2BodyDef bodyDef;
-	bodyDef.position.Set(0.0f, -10.0f);
-	if(FWG_FAILED(result = m_pActualFlatWorldServer->CreateNewObject(bodyDef, pSrvObj))) {
-		FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::LoadObjects() : Create object failed: 0x%08x"),
-			m_pLogger, result, FWGLOG_ENDVAL);
-		return result;
-	}
+		
 	
-	b2PolygonShape polyShape;
-	polyShape.SetAsBox(50.0f, 1.0f);
+	wxScopedPtr<GameEntity> apEntity;
+
+	apEntity.reset(new (std::nothrow) GameEntity(GAME_OBJECT_TYPE_DYNAMIC_ENTITY));
+	if (apEntity.get() == nullptr) return FWG_E_MEMORY_ALLOCATION_ERROR;
 	
-	b2FixtureDef fixDef;
-	fixDef.shape = &polyShape;
-	fixDef.density = 0.0f;
+	apEntity->SetTexture(m_pActualFlatWorldClient->GetTexture(1));
+	apEntity->SetGeometry(m_pActualFlatWorldClient->GetGeometry(1));
+	apEntity->setPosition(0.0f, 5.0f);
 	
-	if(FWG_FAILED(result = pSrvObj->AddPart(fixDef))) {
-		FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::LoadObjects() : Create object failed: 0x%08x"),
-			m_pLogger, result, FWGLOG_ENDVAL);
-		return result;
-	}
+	m_pActualFlatWorldClient->AddEntity(1, apEntity.release());
+
+
+	apEntity.reset(new (std::nothrow) GameEntity(GAME_OBJECT_TYPE_STATIC_ENTITY));
+	if (apEntity.get() == nullptr) return FWG_E_MEMORY_ALLOCATION_ERROR;
 	
+	apEntity->SetTexture(m_pActualFlatWorldClient->GetTexture(2));
+	apEntity->SetGeometry(m_pActualFlatWorldClient->GetGeometry(2));
+	apEntity->setPosition(0.0f, -10.0f);
 	
+	m_pActualFlatWorldClient->AddEntity(2, apEntity.release());	
 	
-	pSrvObj->SetObjID(1);
-	
-	
-	
-	
-	
+	return result;	
 	
 }
 
@@ -230,4 +223,43 @@ GameErrorCode GameClientEngine::CreateEngine(GameClientEngine*& pEngine, GameLog
 GameClientEngine* GameClientEngine::GetEngine()
 {
 	return m_pClientEngine;
+}
+
+GameErrorCode GameClientEngine::LoadShapes()
+{
+	wxScopedPtr<sf::VertexArray> apVertexArray;
+	wxScopedPtr<GameSFMLGeometry> apGeometry;
+	
+	apVertexArray.reset(new (std::nothrow) sf::VertexArray(sf::Quads, 4));
+	(*apVertexArray)[0].position = sf::Vector2f(-0.5f, -0.5f);
+	(*apVertexArray)[1].position = sf::Vector2f(0.5f, -0.5f);
+	(*apVertexArray)[2].position = sf::Vector2f(0.5f, 0.5f);
+	(*apVertexArray)[3].position = sf::Vector2f(-0.5f, 0.5f);
+	
+	(*apVertexArray)[0].texCoords = sf::Vector2f(0, 0);
+	(*apVertexArray)[1].texCoords = sf::Vector2f(256, 0);
+	(*apVertexArray)[2].texCoords = sf::Vector2f(256, 256);
+	(*apVertexArray)[3].texCoords = sf::Vector2f(0, 256);
+	
+	apGeometry = new (std::nothrow) GameSFMLGeometry(apVertexArray.release());
+	
+	m_pActualFlatWorldClient.AddGeometry(1, apGeometry.release());
+	
+	apVertexArray.reset(new (std::nothrow) sf::VertexArray(sf::Quads, 4));
+	(*apVertexArray)[0].position = sf::Vector2f(-10, -0.5f);
+	(*apVertexArray)[1].position = sf::Vector2f(10, -0.5f);
+	(*apVertexArray)[2].position = sf::Vector2f(10, 0.5f);
+	(*apVertexArray)[3].position = sf::Vector2f(-10, 0.5f);
+	
+	(*apVertexArray)[0].texCoords = sf::Vector2f(0, 0);
+	(*apVertexArray)[1].texCoords = sf::Vector2f(256, 0);
+	(*apVertexArray)[2].texCoords = sf::Vector2f(256, 256);
+	(*apVertexArray)[3].texCoords = sf::Vector2f(0, 256);
+	
+	apGeometry = new (std::nothrow) GameSFMLGeometry(apVertexArray.release());
+	
+	m_pActualFlatWorldClient.AddGeometry(2, apGeometry.release());
+	
+	return FWG_NO_ERROR;
+	
 }

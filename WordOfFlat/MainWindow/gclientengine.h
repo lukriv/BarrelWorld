@@ -30,7 +30,6 @@ private:
 private:
 	GameLoggerPtr m_pLogger;
 	GameEngineSettings m_settings;
-	GameFlatWorldSrv *m_pActualFlatWorldServer;
 	GameFlatWorldClient *m_pActualFlatWorldClient; 
 	sf::RenderWindow *m_renderWindow;
 	bool m_isWindowCreated;

@@ -11,7 +11,7 @@ typedef wxVector<IGameGeometry*> TGameGeometryList;
 typedef wxVector<GameEntityBase*> TGameEntityList;
 typedef wxVector<GameSceneObject*> TSceneGraph;
 
-static const wxDword RESERVE_CONSTANT = 100;
+
 
 class GameFlatWorldClient : public IGameFlatWorld {
 private:
@@ -31,11 +31,7 @@ private:
 	bool m_isInitialized;
 
 public: 
-	GameFlatWorldClient() {
-		m_entitiesList.reserve(RESERVE_CONSTANT);
-		m_textureMap.reserve(RESERVE_CONSTANT);
-		m_geometryMap.reserve(RESERVE_CONSTANT); 
-	}
+	GameFlatWorldClient();
 	
 	~GameFlatWorldClient();
 	

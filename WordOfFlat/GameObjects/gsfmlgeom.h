@@ -23,12 +23,22 @@ private:
 	}
 
 public:
+	GameSFMLGeometry() : m_pVertexArray(nullptr) {}
 	GameSFMLGeometry(sf::VertexArray *pVerArr) : m_pVertexArray(pVerArr) {
 		SetAABB();
 	}	
-	virtual ~GameSFMLGeometry {}
+	virtual ~GameSFMLGeometry {
+		if(m_pVertexArray != nullptr) {
+			delete m_pVertexArray;
+			m_pVertexArray = nullptr;
+		}
+	}
 	
 	void SetGeometry(sf::VertexArray *pVerArr) {
+		if (m_pVertexArray != nullptr) {
+			delete m_pVertexArray;
+		}
+		
 		m_pVertexArray = pVerArr;
 		SetAABB();
 	}
