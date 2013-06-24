@@ -3,34 +3,31 @@
   <Project Name="GameSystem" Path="../WordOfFlat/GameSystem/GameSystem.project" Active="No"/>
   <Project Name="GameMsgCli" Path="../WordOfFlat/GameMsgCli/GameMsgCli.project" Active="No"/>
   <Project Name="GameMsgSrv" Path="../WordOfFlat/GameMsgSrv/GameMsgSrv.project" Active="No"/>
-  <Project Name="ClientServerTests" Path="ClientServerTests/ClientServerTests.project" Active="Yes"/>
+  <Project Name="ClientServerTests" Path="ClientServerTests/ClientServerTests.project" Active="No"/>
   <Project Name="Extern" Path="../WordOfFlat/Extern/Extern.project" Active="No"/>
   <Project Name="GameComm" Path="../WordOfFlat/GameComm/GameComm.project" Active="No"/>
   <Environment>
     <![CDATA[]]>
   </Environment>
-  <Project Name="testServer" Path="testServer/testServer.project" Active="No"/>
-  <Project Name="testClient" Path="testClient/testClient.project" Active="No"/>
+  <Project Name="GameSystemTests" Path="GameSystemTests/GameSystemTests.project" Active="Yes"/>
   <BuildMatrix>
-    <WorkspaceConfiguration Name="Debug" Selected="no">
+    <WorkspaceConfiguration Name="Debug" Selected="yes">
       <Project Name="ClientServerTests" ConfigName="Debug"/>
       <Project Name="Extern" ConfigName="Debug"/>
       <Project Name="GameComm" ConfigName="Debug"/>
       <Project Name="GameMsgCli" ConfigName="Debug"/>
       <Project Name="GameMsgSrv" ConfigName="Debug"/>
       <Project Name="GameSystem" ConfigName="Debug"/>
-      <Project Name="testServer" ConfigName="Debug"/>
-      <Project Name="testClient" ConfigName="Debug"/>
+      <Project Name="GameSystemTests" ConfigName="Debug"/>
     </WorkspaceConfiguration>
-    <WorkspaceConfiguration Name="Release" Selected="yes">
+    <WorkspaceConfiguration Name="Release" Selected="no">
       <Project Name="GameSystem" ConfigName="Release"/>
       <Project Name="GameMsgCli" ConfigName="Release"/>
       <Project Name="GameMsgSrv" ConfigName="Release"/>
       <Project Name="ClientServerTests" ConfigName="Release"/>
       <Project Name="Extern" ConfigName="Debug"/>
       <Project Name="GameComm" ConfigName="Release"/>
-      <Project Name="testServer" ConfigName="Release"/>
-      <Project Name="testClient" ConfigName="Release"/>
+      <Project Name="GameSystemTests" ConfigName="Release"/>
     </WorkspaceConfiguration>
   </BuildMatrix>
 </CodeLite_Workspace>

@@ -12,9 +12,10 @@ struct GameLoggerRow{
 static const GameLoggerRow DefaultLogger = GameLoggerRow(wxT("default"), wxT("default.log"));
 
 static const GameLoggerRow GameLoggerTable[] = {
-	GameLoggerRow(wxT("default"),wxT("default.log"))
+	GameLoggerRow(wxT("default"),wxT("default.log")),
+	GameLoggerRow(wxT("test"),wxT("test.log"))
 };
 
-static const wxDword GameLoggerTableSize = 1;
+static const wxDword GameLoggerTableSize = 2;
 
 #endif
