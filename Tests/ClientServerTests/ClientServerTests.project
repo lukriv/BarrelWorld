@@ -12,13 +12,13 @@
     <File Name="msgclientservertest.cpp"/>
     <File Name="messagetests.cpp"/>
   </VirtualDirectory>
-  <Dependencies Name="Release"/>
   <Dependencies Name="Debug">
     <Project Name="GameSystem"/>
     <Project Name="GameComm"/>
     <Project Name="GameMsgCli"/>
     <Project Name="GameMsgSrv"/>
   </Dependencies>
+  <Dependencies Name="Release"/>
   <Settings Type="Executable">
     <GlobalSettings>
       <Compiler Options="-Wall" C_Options="">

@@ -43,6 +43,7 @@ GameErrorCode GameLogger::Destroy()
 
 const wxChar* GameLogger::GetLoggerName() const
 {
+	return m_loggerName.GetData();
 }
 
 GameErrorCode GameLogger::Initialize(const wxChar* loggerName, const wxChar* loggerFileName)
@@ -54,7 +55,7 @@ GameErrorCode GameLogger::Initialize(const wxChar* loggerName, const wxChar* log
 		return result;
 	}
 	
-	if (!(m_loggerFile.Open(wxString(loggerFileName), wxString("w"))))
+	if (!(m_loggerFile.Open(wxString(loggerFileName), wxString("a"))))
 	{
 		printf("Failed to open logger file, aborting.");
         return -1;
@@ -119,7 +120,6 @@ void GameLogger::LogWrite(const wxString& msg, const wxLogRecordInfo& info, wxDw
 {	
 	wxString str = LogFormatter(LogSeverity2String(logSeverity), msg, info);
 	LogFileWrite(str);
-	fflush(m_loggerFile);
 }
 
 void GameLogger::LogWriteFormat(const wxString& formatStr, const wxLogRecordInfo& info, wxDword logSeverity, ...)
@@ -129,7 +129,6 @@ void GameLogger::LogWriteFormat(const wxString& formatStr, const wxLogRecordInfo
 	wxString str = LogFormatterV(LogSeverity2String(logSeverity), formatStr, info, args);
 	va_end(args);
 	LogFileWrite(str);
-	fflush(m_loggerFile);
 }
 
 GameLogger::~GameLogger()
@@ -144,7 +143,8 @@ GameLogger::~GameLogger()
 void GameLogger::LogFileWrite(const wxString& msg)
 {
 	wxCriticalSectionLocker lock(m_writeLock);
-	m_loggerFile.Write(str);
+	m_loggerFile.Write(msg);
+	m_loggerFile.Write(wxT("\n")); // add new line
 }
 
 
@@ -162,42 +162,57 @@ GameErrorCode GameLoggerCreator::CreateLogger(GameLogger*& pLogger, const wxChar
 	const wxChar* loggerFileName = NULL;
 	GameLogger* pLog = NULL;
 	FWG_UNREFERENCED_PARAMETER(logSeverity);
+	TLoggerMap::iterator iter;
 	
-	if (m_pLoggerCreator == nullptr)
+	if (m_pLoggerCreator == NULL)
 	{
 		m_pLoggerCreator = new (std::nothrow) GameLoggerCreator();
-		if (m_pLoggerCreator == nullptr) return FWG_E_MEMORY_ALLOCATION_ERROR;
+		if (m_pLoggerCreator == NULL) return FWG_E_MEMORY_ALLOCATION_ERROR;
 	}
 	
 	if (loggerName)
 	{
-		for(wxDword i = 0; i < GameLoggerTableSize; ++i)
+		wxDword i;
+		for(i = 0; i < GameLoggerTableSize; ++i)
 		{
-			if(wxString(GameLoggerTable[i].m_loggerName).compare(loggerName))
+			if(wxString(GameLoggerTable[i].m_loggerName).Cmp(loggerName) == 0)
 			{
 				loggerFileName = GameLoggerTable[i].m_logFileName;
 				break;
 			}
 		}
-		
-		loggerName = DefaultLogger.m_loggerName;
-		loggerFileName = DefaultLogger.m_logFileName;
+		// if logger name was not found set name to default
+		if (i == GameLoggerTableSize) {
+			loggerName = DefaultLogger.m_loggerName;
+			loggerFileName = DefaultLogger.m_logFileName;
+		}
 		
 	} else {
 		loggerName = DefaultLogger.m_loggerName;
 		loggerFileName = DefaultLogger.m_logFileName;
 	}
 	
-	pLog = new (std::nothrow) GameLogger();
-	if(pLog)
-	{
-		if(FWG_FAILED(result = pLog->Initialize(loggerName, loggerFileName)))
+	iter = m_pLoggerCreator->m_loggerMap.find(loggerName);
+	if (iter == m_pLoggerCreator->m_loggerMap.end()) {
+	
+		pLog = new (std::nothrow) GameLogger();
+		if(pLog)
 		{
-			delete pLog;
-			return result;
+			if(FWG_FAILED(result = pLog->Initialize(loggerName, loggerFileName)))
+			{
+				delete pLog;
+				return result;
+			}
+			
+			//insert into map
+			m_pLoggerCreator->m_loggerMap.insert(TLoggerMapItem(loggerName, pLog));
+			
+		} else {
+			return FWG_E_MEMORY_ALLOCATION_ERROR;
 		}
 	} else {
-		return FWG_E_MEMORY_ALLOCATION_ERROR;
+		pLog = iter->second;
+		pLog->addRef();
 	}
 	
 	pLogger = pLog;
@@ -205,17 +220,17 @@ GameErrorCode GameLoggerCreator::CreateLogger(GameLogger*& pLogger, const wxChar
 	return result;
 }
 
-void GameLoggerCreator::DestroyLogger(wxChar* loggerName)
+void GameLoggerCreator::DestroyLogger(GameLogger* pLogger)
 {
 	TLoggerMap::iterator iter;
 	if (m_pLoggerCreator)
 	{
 		wxCriticalSectionLocker locker(m_pLoggerCreator->m_creatorLock);
 		
-		iter = m_pLoggerCreator->m_loggerSet.find(loggerName);
-		if(m_pLoggerCreator->m_loggerSet.end() != iter)
+		iter = m_pLoggerCreator->m_loggerMap.find(pLogger->GetLoggerName());
+		if(m_pLoggerCreator->m_loggerMap.end() != iter)
 		{
-			m_pLoggerCreator->m_loggerSet.erase(iter);
+			m_pLoggerCreator->m_loggerMap.erase(iter);
 		}
 	}
 	
@@ -224,6 +239,14 @@ void GameLoggerCreator::DestroyLogger(wxChar* loggerName)
 GameLoggerCreator::~GameLoggerCreator()
 {
 	m_pLoggerCreator = NULL;
+	
+	TLoggerMap::iterator iter;
+	for (iter = m_loggerMap.begin(); iter != m_loggerMap.end(); iter++)
+	{
+		delete iter->second;
+	}
+	
+	m_loggerMap.clear();
 }
 
 

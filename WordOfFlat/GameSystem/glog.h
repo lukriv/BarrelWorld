@@ -2,11 +2,13 @@
 #define __GAME_LOG_H__
 
 #include "gdefs.h"
-#include <set>
+#include <map>
 #include <wx/log.h>
 #include <wx/thread.h>
 #include <wx/vector.h>
 #include <wx/atomic.h>
+#include <wx/ffile.h>
+
 #include "gerror.h"
 #include "refobject.h"
 #include "refobjectsmptr.h"
@@ -118,8 +120,19 @@ public:
 	wxInt32 release();
 };
 
+
+
+class StrCmp {
+public:
+	bool operator() (const wxChar* a, const wxChar* b) {
+		wxString str(a);
+		return (str.Cmp(b) > 0);
+	}
+};
+
 class GameLoggerCreator {
-	typedef std::map<wxString, GameLogger*> TLoggerMap;
+	typedef std::map<const wxChar*, GameLogger*, StrCmp> TLoggerMap;
+	typedef std::pair<const wxChar*,GameLogger*> TLoggerMapItem;
 private:
 	static GameLoggerCreator* m_pLoggerCreator;
 	TLoggerMap m_loggerMap;

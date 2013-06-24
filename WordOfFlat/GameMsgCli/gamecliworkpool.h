@@ -2,7 +2,7 @@
 #define __GAME_CLIENT_WORKER_POOL_H__
 
 
-#include <map>
+#include <set>
 #include <wx/stream.h>
 #include "../GameSystem/gdefs.h"
 #include "../GameSystem/gerror.h"
