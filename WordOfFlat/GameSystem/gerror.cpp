@@ -86,6 +86,9 @@ void GameConvertErrCode2String(GameErrorCode errCode, wxString &errorStr)
 	case FWG_E_DISCONNECTED_ERROR:
 		errorStr.assign(FWG_E_DISCONNECTED_ERROR_STR);
 		break;
+	case FWG_E_INVALID_INDEX_ERROR:
+		errorStr.assign(FWG_E_INVALID_INDEX_ERROR_STR);
+		break;
 	default:
 		errorStr.assign(_T("Unknown Error"));
 		break;

@@ -35,6 +35,12 @@ public:
 	
 	~GameFlatWorldClient();
 	
+	/*!
+	 * \brief Initialize GameFlatWorldClient
+	 * \return 
+	 */
+	GameErrorCode Initialize(GameLogger *pLogger);
+	
 	/*! \brief Add new entity to world with unique ID
 	 * 
 	 * \param objID Unique Id (must be unique within this world)

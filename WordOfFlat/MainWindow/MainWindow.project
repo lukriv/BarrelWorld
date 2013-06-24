@@ -10,9 +10,11 @@
   <VirtualDirectory Name="src">
     <File Name="main.cpp"/>
     <File Name="gclientengine.cpp"/>
+    <File Name="gresholder.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="gclientengine.h"/>
+    <File Name="gresholder.h"/>
   </VirtualDirectory>
   <Settings Type="Executable">
     <GlobalSettings>

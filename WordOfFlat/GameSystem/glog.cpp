@@ -47,31 +47,19 @@ const wxChar* GameLogger::GetLoggerName() const
 
 GameErrorCode GameLogger::Initialize(const wxChar* loggerName, const wxChar* loggerFileName)
 {
-	FILE * pLoggerFile = NULL;
 	GameErrorCode result = FWG_NO_ERROR;
-	wxCharBuffer charBuff = wxString(loggerFileName).ToAscii();
 	
 	if(m_isInitialized)
 	{
 		return result;
 	}
 	
-	if (!(pLoggerFile = fopen(charBuff.data(), "w")))
+	if (!(m_loggerFile.Open(wxString(loggerFileName), wxString("w"))))
 	{
 		printf("Failed to open logger file, aborting.");
         return -1;
 	}
 		
-	wxLogStderr *pStdLogger = new (std::nothrow) wxLogStderr(pLoggerFile);
-	if(!pStdLogger)
-	{
-		return FWG_E_MEMORY_ALLOCATION_ERROR;
-	}
-	
-	delete wxLog::SetActiveTarget(pStdLogger);
-	
-	wxLog::DisableTimestamp();
-	
 	m_loggerName.assign(loggerName);
 	
 	m_isInitialized = true;
@@ -130,7 +118,7 @@ const wxChar* GameLogger::LogSeverity2String(wxDword logSeverity)
 void GameLogger::LogWrite(const wxString& msg, const wxLogRecordInfo& info, wxDword logSeverity)
 {	
 	wxString str = LogFormatter(LogSeverity2String(logSeverity), msg, info);
-	wxLogMessage(str.wx_str());
+	LogFileWrite(str);
 	fflush(m_loggerFile);
 }
 
@@ -140,12 +128,23 @@ void GameLogger::LogWriteFormat(const wxString& formatStr, const wxLogRecordInfo
 	va_start(args, FWGLOG_ENDVAL);
 	wxString str = LogFormatterV(LogSeverity2String(logSeverity), formatStr, info, args);
 	va_end(args);
-	wxLogMessage(str.wx_str());
+	LogFileWrite(str);
 	fflush(m_loggerFile);
 }
 
 GameLogger::~GameLogger()
 {
+	if(m_loggerFile.IsOpened())
+	{
+		m_loggerFile.Flush();
+		m_loggerFile.Close();
+	}
+}
+
+void GameLogger::LogFileWrite(const wxString& msg)
+{
+	wxCriticalSectionLocker lock(m_writeLock);
+	m_loggerFile.Write(str);
 }
 
 
@@ -164,6 +163,11 @@ GameErrorCode GameLoggerCreator::CreateLogger(GameLogger*& pLogger, const wxChar
 	GameLogger* pLog = NULL;
 	FWG_UNREFERENCED_PARAMETER(logSeverity);
 	
+	if (m_pLoggerCreator == nullptr)
+	{
+		m_pLoggerCreator = new (std::nothrow) GameLoggerCreator();
+		if (m_pLoggerCreator == nullptr) return FWG_E_MEMORY_ALLOCATION_ERROR;
+	}
 	
 	if (loggerName)
 	{
@@ -201,14 +205,14 @@ GameErrorCode GameLoggerCreator::CreateLogger(GameLogger*& pLogger, const wxChar
 	return result;
 }
 
-void GameLoggerCreator::DestroyLogger(GameLogger* pLogger)
+void GameLoggerCreator::DestroyLogger(wxChar* loggerName)
 {
-	LoggerSetType::iterator iter;
+	TLoggerMap::iterator iter;
 	if (m_pLoggerCreator)
 	{
 		wxCriticalSectionLocker locker(m_pLoggerCreator->m_creatorLock);
 		
-		iter = m_pLoggerCreator->m_loggerSet.find(pLogger);
+		iter = m_pLoggerCreator->m_loggerSet.find(loggerName);
 		if(m_pLoggerCreator->m_loggerSet.end() != iter)
 		{
 			m_pLoggerCreator->m_loggerSet.erase(iter);
