@@ -85,8 +85,9 @@ class GameLogger : public IRefObject {
 private:
 	bool m_isInitialized;
 	wxAtomicInt m_refCount;
-	FILE * m_loggerFile;
+	wxFFile m_loggerFile;
 	wxString m_loggerName;
+	wxCriticalSection m_writeLock;
 	
 private:
 	GameLogger() : m_isInitialized(false),
@@ -101,6 +102,9 @@ private:
 	wxString LogTimeFormatter(const time_t time);
 	wxString LogFormatter(const wxChar* Severity, const wxString& msg, const wxLogRecordInfo& info);
 	wxString LogFormatterV(const wxChar* Severity, const wxString& msg, const wxLogRecordInfo& info, va_list args);
+	
+	void LogFileWrite(const wxString& msg);
+	
 	const wxChar* LogSeverity2String(wxDword logSeverity);
 	
 	friend class GameLoggerCreator;
@@ -115,10 +119,10 @@ public:
 };
 
 class GameLoggerCreator {
-	typedef std::set<GameLogger*> LoggerSetType;
+	typedef std::map<wxString, GameLogger*> TLoggerMap;
 private:
 	static GameLoggerCreator* m_pLoggerCreator;
-	LoggerSetType m_loggerSet;
+	TLoggerMap m_loggerMap;
 	wxCriticalSection m_creatorLock;
 private:
 	GameLoggerCreator(){}

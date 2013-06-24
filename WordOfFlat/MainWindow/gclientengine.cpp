@@ -122,8 +122,28 @@ GameErrorCode GameClientEngine::CreateTestingWorld()
 		return result;
 	}
 	
-
+	if(FWG_FAILED(result = LoadTextures()))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::CreateTestingWorld() : Load textures failed: 0x%08x"),
+			m_pLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
 	
+	if(FWG_FAILED(result = LoadShapes()))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::CreateTestingWorld() : Load shapes failed: 0x%08x"),
+			m_pLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	if(FWG_FAILED(result = LoadObjects()))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::CreateTestingWorld() : Load objects failed: 0x%08x"),
+			m_pLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+
+	return result;
 	
 }
 
