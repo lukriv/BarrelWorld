@@ -13,24 +13,23 @@ GameErrorCode GameTestResourceLoader::Initialize(GameLogger* pLogger)
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode GameTestResourceLoader::LoadGeometryList(wxVector<TGameGeometryMapItem>& geomList)
+GameErrorCode GameTestResourceLoader::LoadGeometryList(TGameGeometryMap& geomList)
 {
 	TGameGeometryMapItem item;
 	item.first.assign(wxT("wood_box"));
-	geomList.push_back(item);
+	geomList.insert(item);
 	
 	item.first.assign(wxT("ground"));
-	geomList.push_back(item);
+	geomList.insert(item);
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode GameTestResourceLoader::LoadShape(const wxChar* geomName, IGameGeometry*& pShape)
+GameErrorCode GameTestResourceLoader::LoadShape(GameShapeId geomID, IGameGeometry*& pShape)
 {	wxScopedPtr<sf::VertexArray> apVertexArray;
 	wxScopedPtr<GameSFMLGeometry> apGeometry;
-	wxString geomNameStr(geomName);
 	pShape = NULL;
 	
-	if (geomNameStr.Cmp(wxT("wood_box")) == 0)
+	if (geomID == 1)
 	{
 		apVertexArray.reset(new (std::nothrow) sf::VertexArray(sf::Quads, 4));
 		(*apVertexArray)[0].position = sf::Vector2f(-0.5f, -0.5f);
@@ -47,7 +46,7 @@ GameErrorCode GameTestResourceLoader::LoadShape(const wxChar* geomName, IGameGeo
 		if (apGeometry.get() == NULL) return FWG_E_MEMORY_ALLOCATION_ERROR;
 	}
 	
-	if (geomNameStr.Cmp(wxT("ground")) == 0)
+	if (geomID == 2)
 	{
 		apVertexArray.reset(new (std::nothrow) sf::VertexArray(sf::Quads, 4));
 		(*apVertexArray)[0].position = sf::Vector2f(-10, -0.5f);
@@ -69,21 +68,21 @@ GameErrorCode GameTestResourceLoader::LoadShape(const wxChar* geomName, IGameGeo
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode GameTestResourceLoader::LoadTexture(const wxChar* texName, sf::Texture*& pTex)
+GameErrorCode GameTestResourceLoader::LoadTexture(GameTextureId texID, sf::Texture*& pTex)
 {
 	return FWG_E_NOT_IMPLEMENTED_ERROR;
 }
 
-GameErrorCode GameTestResourceLoader::LoadTextureList(wxVector<TGameTextureMapItem>& texList)
+GameErrorCode GameTestResourceLoader::LoadTextureList(TGameTextureMap& texList)
 {
 	TGameTextureMapItem item;
-	item.first.assign(wxT("ground"));
+	item.first = 1;
 	item.second.m_texFileName.assign(wxT("res/img/ground.png"));
-	texList.push_back(item);
+	texList.insert(item);
 	
-	item.first.assign(wxT("wood_box"));
+	item.first = 2;
 	item.second.m_texFileName.assign(wxT("res/img/woodbox.png"));
-	texList.push_back(item);
+	texList.insert(item);
 	
 	return FWG_NO_ERROR;
 	
@@ -105,3 +104,5 @@ GameErrorCode GameTestResourceLoader::LoadTextureFromFile(const wxChar* texFileN
 	 
 	 return FWG_NO_ERROR;
 }
+
+
