@@ -18,21 +18,21 @@ public:
 	GameTexResItem() : m_refCount(0), m_pGeometry(NULL) {}
 };
 
-typedef std::map<wxString, GameTexResItem> TGameTextureMap;
-typedef std::pair<wxString, GameTexResItem> TGameTextureMapItem;
+typedef std::map<GameTextureId, GameTexResItem> TGameTextureMap;
+typedef std::pair<GameTextureId, GameTexResItem> TGameTextureMapItem;
 	
-typedef std::map<wxString, GameGeomResItem> TGameGeometryMap;
-typedef std::pair<wxString, GameGeomResItem> TGameGeometryMapItem;
+typedef std::map<GameShapeId, GameGeomResItem> TGameGeometryMap;
+typedef std::pair<GameShapeId, GameGeomResItem> TGameGeometryMapItem;
 
 class IGameResourceLoader {
 public:
-	virtual GameErrorCode LoadTexture(const wxChar* texName, sf::Texture *&pTex) = 0;
+	virtual GameErrorCode LoadTexture(GameTextureId texID, sf::Texture *&pTex) = 0;
 	virtual GameErrorCode LoadTextureFromFile(const wxChar* texFileName, sf::Texture *&pTex) = 0;
 	
-	virtual GameErrorCode LoadShape(const wxChar* geomName, IGameGeometry *&pShape) = 0;
+	virtual GameErrorCode LoadShape(GameShapeId geomID, IGameGeometry *&pShape) = 0;
 	
-	virtual GameErrorCode LoadTextureList(wxVector<TGameTextureMapItem> &texList) = 0;
-	virtual GameErrorCode LoadGeometryList(wxVector<TGameGeometryMapItem> &geomList) = 0;
+	virtual GameErrorCode LoadTextureList(TGameTextureMap &texList) = 0;
+	virtual GameErrorCode LoadGeometryList(TGameGeometryMap &geomList) = 0;
 	
 	virtual ~IGameResourceLoader() {};
 };
@@ -50,13 +50,13 @@ public:
 	GameErrorCode Initialize(GameLogger *pLogger = NULL);
 	
 public:
-	virtual GameErrorCode LoadTexture(const wxChar* texName, sf::Texture *&pTex);
+	virtual GameErrorCode LoadTexture(GameTextureId texID, sf::Texture *&pTex);
 	virtual GameErrorCode LoadTextureFromFile(const wxChar* texFileName, sf::Texture *&pTex);
 	
-	virtual GameErrorCode LoadShape(const wxChar* geomName, IGameGeometry *&pShape);
+	virtual GameErrorCode LoadShape(GameShapeId geomID, IGameGeometry *&pShape);
 	
-	virtual GameErrorCode LoadTextureList(wxVector<TGameTextureMapItem> &texList);
-	virtual GameErrorCode LoadGeometryList(wxVector<TGameGeometryMapItem> &geomList);
+	virtual GameErrorCode LoadTextureList(TGameTextureMap &texList);
+	virtual GameErrorCode LoadGeometryList(TGameGeometryMap &geomList);
 	
 };
 
