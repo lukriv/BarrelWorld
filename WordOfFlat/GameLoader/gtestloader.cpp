@@ -24,7 +24,7 @@ GameErrorCode GameTestResourceLoader::LoadGeometryList(TGameGeometryMap& geomLis
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode GameTestResourceLoader::LoadShape(GameShapeId geomID, IGameGeometry*& pShape)
+GameErrorCode GameTestResourceLoader::LoadGeometry(GameShapeId geomID, IGameGeometry*& pShape)
 {	wxScopedPtr<sf::VertexArray> apVertexArray;
 	wxScopedPtr<GameSFMLGeometry> apGeometry;
 	pShape = NULL;

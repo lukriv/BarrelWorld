@@ -13,6 +13,8 @@
   <Project Name="GameComm" Path="GameComm/GameComm.project" Active="No"/>
   <Project Name="Extern" Path="Extern/Extern.project" Active="No"/>
   <Project Name="GameLogic" Path="GameLogic/GameLogic.project"/>
+  <Project Name="GameResHold" Path="GameResHold/GameResHold.project"/>
+  <Project Name="GameLoader" Path="GameLoader/GameLoader.project"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="no">
       <Project Name="GameComm" ConfigName="Debug"/>
@@ -26,6 +28,8 @@
       <Project Name="Extern" ConfigName="Debug"/>
       <Project Name="GameLogic" ConfigName="Debug"/>
       <Project Name="GameLogic" ConfigName="Debug"/>
+      <Project Name="GameResHold" ConfigName="Debug"/>
+      <Project Name="GameLoader" ConfigName="Debug"/>
     </WorkspaceConfiguration>
     <WorkspaceConfiguration Name="Release" Selected="yes">
       <Project Name="MainWindow" ConfigName="Release"/>
@@ -39,6 +43,8 @@
       <Project Name="Extern" ConfigName="Debug"/>
       <Project Name="GameLogic" ConfigName="Release"/>
       <Project Name="GameLogic" ConfigName="Release"/>
+      <Project Name="GameResHold" ConfigName="Release"/>
+      <Project Name="GameLoader" ConfigName="Release"/>
     </WorkspaceConfiguration>
   </BuildMatrix>
 </CodeLite_Workspace>

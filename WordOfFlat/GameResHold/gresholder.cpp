@@ -15,7 +15,7 @@ IGameGeometry* GameResourceHolder::GetGeometry(GameShapeId geomID)
 	if (iter == m_geomMap.end()) return NULL;
 	if (iter->second.m_pGeometry == NULL)
 	{
-		if(FWG_FAILED(result = m_pResLoader->LoadShape(geomID, iter->second.m_pGeometry))){
+		if(FWG_FAILED(result = m_pResLoader->LoadGeometry(geomID, iter->second.m_pGeometry))){
 			FWGLOG_ERROR_FORMAT(wxT("GameResourceHolder::GetGeometry() : Load geometry failed: 0x%08x"),
 				m_spLogger, result, FWGLOG_ENDVAL);
 			return result;
