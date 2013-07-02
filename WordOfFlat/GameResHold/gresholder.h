@@ -18,6 +18,9 @@ private:
 	
 	TGameTextureMap m_texMap;
 	TGameGeometryMap m_geomMap;
+	TGamePhysJointMap m_physJointMap;
+	TGamePhysBodyMap m_physBodyMap;
+	TGamePhysFixMap m_physFixMap;
 	
 	wxCriticalSection m_resouceLocker;
 	
@@ -27,6 +30,15 @@ private:
 	~GameResourceHolder();
 	
 	GameErrorCode Initialize(GameLogger *pLogger, IGameResourceLoader *pLoader);
+	
+	/*! \brief Load initial values to the maps
+	 * \retval FWG_NO_ERROR on success
+	 * \retval Error code on fail
+	 */
+	GameErrorCode LoadResourceMaps();
+	
+	/*! \brief Clear and release all maps and resources */
+	void ClearResourceMaps();
 	
 public:
 	/*! \brief Set right resource holder
@@ -53,6 +65,33 @@ public:
 	 * \return Pointer to geometry object or NULL if geometry object was not found
 	 */
 	IGameGeometry* GetGeometry(GameShapeId geomID);
+	
+	/*! \brief Get joint definition
+	 * \param[in] jointID Joint identificator
+	 * \param[out] pJointDef Joint definition
+	 * \param[out] bodyList Body list for joint
+	 * \retval FWG_NO_ERROR on success
+	 * \retval Error code on failture	
+	 */
+	GameErrorCode GetJointDef(GamePhysObjId jointID, b2JointDef *&pJointDef, wxVector<GamePhysObjId> &bodyList);
+	
+	/*! \brief Get body definition
+	 * \param[in] bodyID Body identificator
+	 * \param[out] pBodyDef Body definition 
+	 * \param[out] fixtureList Fixture reference list
+	 * \retval FWG_NO_ERROR on success
+	 * \retval Error code on failture	
+	 */
+	GameErrorCode GetBodyDef(GamePhysObjId bodyID, b2BodyDef *&pBodyDef, wxVector<GamePhysObjId> &fixtureList);
+	
+	/*! \brief Get fixture definition
+	 * \param[in] fixID
+	 * \param[out] pFixtureDef
+	 * \param[out] shapeID
+	 * \retval FWG_NO_ERROR on success
+	 * \retval Error code on failture
+	 */
+	GameErrorCode GetFixtureDef(GamePhysObjId fixID, b2FixtureDef *&pFixtureDef, GameShapeId &shapeID);
 	
 	/*! \brief Release texture
 	 * 

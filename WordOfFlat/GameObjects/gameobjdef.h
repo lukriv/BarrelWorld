@@ -5,6 +5,7 @@
 
 typedef wxDword GameTextureId; //!< Texture id type
 typedef wxDword GameShapeId; //!< Shape id type
+typedef wxDword GamePhysObjId; //!< Physics object id type
 typedef wxDword GameObjectId; //!< Object id type
 
 
