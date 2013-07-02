@@ -19,17 +19,27 @@ public:
 };
 
 struct GamePhysJointItem {
-	b2DistanceJointDef
+	wxInt32 m_refCount;
+	b2JointDef *m_pJointDef;
+	wxVector<GamePhysObjId> m_bodyRefList;
+public:
+	GamePhysJointItem() : m_refCount(0), m_pJointDef(NULL) {}
 };
 
 struct GamePhysBodyItem {
-	b2BodyDef m_bodyDef;
-	wxVector<wxDword> m_fixtureRefList; // reference indet to Fixture map
+	wxInt32 m_refCount;
+	b2BodyDef *m_pBodyDef;
+	wxVector<GamePhysObjId> m_fixtureRefList; // reference indet to Fixture map
+public:
+	GamePhysBodyItem() : m_refCount(0), b2BodyDef(NULL) {}
 };
 
 struct GamePhysFixItem {
-	b2FixtureDef m_fixtureDef;
+	wxInt32 m_refCount;
+	b2FixtureDef *m_pFixtureDef;
 	wxDword m_shapeRef; //reference index to Geometry map
+public:
+	GamePhysFixItem() : m_refCount(0), m_fixtureDef(NULL) {}
 };
 
 typedef std::map<GameTextureId, GameTexResItem> TGameTextureMap;
@@ -38,22 +48,24 @@ typedef std::pair<GameTextureId, GameTexResItem> TGameTextureMapItem;
 typedef std::map<GameShapeId, GameGeomResItem> TGameGeometryMap;
 typedef std::pair<GameShapeId, GameGeomResItem> TGameGeometryMapItem;
 
-typedef std::map<wxDword, GamePhysJointItem> TGamePhysJointMap;
-typedef std::pair<wxDword, GamePhysJointItem> TGamePhysJointMapItem;
+typedef std::map<GamePhysObjId, GamePhysJointItem> TGamePhysJointMap;
+typedef std::pair<GamePhysObjId, GamePhysJointItem> TGamePhysJointMapItem;
 
-typedef std::map<wxDword, GamePhysBodyItem> TGamePhysBodyMap;
-typedef std::pair<wxDword, GamePhysBodyItem> TGamePhysBodyMapItem;
+typedef std::map<GamePhysObjId, GamePhysBodyItem> TGamePhysBodyMap;
+typedef std::pair<GamePhysObjId, GamePhysBodyItem> TGamePhysBodyMapItem;
 
-typedef std::map<wxDword, GamePhysFixItem> TGamePhysFixMap;
-typedef std::pair<wxDword, GamePhysFixItem> TGamePhysFixMapItem;
+typedef std::map<GamePhysObjId, GamePhysFixItem> TGamePhysFixMap;
+typedef std::pair<GamePhysObjId, GamePhysFixItem> TGamePhysFixMapItem;
 
 class IGameResourceLoader {
 public:
-	virtual GameErrorCode LoadTexture(GameTextureId texID, sf::Texture *&pTex) = 0;
 	virtual GameErrorCode LoadTextureFromFile(const wxChar* texFileName, sf::Texture *&pTex) = 0;
 	
+	virtual GameErrorCode LoadTexture(GameTextureId texID, sf::Texture *&pTex) = 0;
 	virtual GameErrorCode LoadGeometry(GameShapeId geomID, IGameGeometry *&pShape) = 0;
-
+	virtual GameErrorCode LoadPhysJoint(GamePhysObjId jointID, b2JointDef *&pJointDef) = 0;
+	virtual GameErrorCode LoadPhysBody(GamePhysObjId bodyID, b2BodyDef *&pBodyDef) = 0;
+	virtual GameErrorCode LoadPhysFixture(GamePhysObjId fixID, b2FixtureDef *&pFixDef) = 0;
 	
 	virtual GameErrorCode LoadTextureList(TGameTextureMap &texList) = 0;
 	virtual GameErrorCode LoadGeometryList(TGameGeometryMap &geomList) = 0;

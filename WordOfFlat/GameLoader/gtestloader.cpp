@@ -1,4 +1,5 @@
 #include "gresloader.h"
+#include <Box2D/Box2D.h>
 
 GameErrorCode GameTestResourceLoader::Initialize(GameLogger* pLogger)
 {
@@ -25,7 +26,8 @@ GameErrorCode GameTestResourceLoader::LoadGeometryList(TGameGeometryMap& geomLis
 }
 
 GameErrorCode GameTestResourceLoader::LoadGeometry(GameShapeId geomID, IGameGeometry*& pShape)
-{	wxScopedPtr<sf::VertexArray> apVertexArray;
+{	
+	wxScopedPtr<sf::VertexArray> apVertexArray;
 	wxScopedPtr<GameSFMLGeometry> apGeometry;
 	pShape = NULL;
 	
@@ -91,7 +93,7 @@ GameErrorCode GameTestResourceLoader::LoadTextureList(TGameTextureMap& texList)
 GameErrorCode GameTestResourceLoader::LoadTextureFromFile(const wxChar* texFileName, sf::Texture*& pTex)
 {
 	 // Load a sprite to display
-	 wxScopedPtr<sf::Texture> apTexture = nullptr;
+	 wxScopedPtr<sf::Texture> apTexture;
 	 apTexture.reset(new (std::nothrow) sf::Texture());
 	 std::string fileNameStr();
 	 fileNameStr.assign(texFileName);
@@ -104,5 +106,109 @@ GameErrorCode GameTestResourceLoader::LoadTextureFromFile(const wxChar* texFileN
 	 
 	 return FWG_NO_ERROR;
 }
+
+GameErrorCode GameTestResourceLoader::LoadPhysJointList(TGamePhysJointMap& physJointList)
+{
+	FWG_UNREFERENCED_PARAMETER(physJointList);
+	return FWG_NO_ERROR;
+}
+
+GameErrorCode GameTestResourceLoader::LoadPhysBodyList(TGamePhysBodyMap& physBodyList)
+{
+	TGamePhysBodyMapItem item;
+	item.first = 1;
+	item.second.m_fixtureRefList.push_back(1);
+	physBodyList.insert(item);
+	
+	item.second.m_fixtureRefList.clear();
+	
+	item.first = 2;
+	item.second.m_fixtureRefList.push_back(2);
+	physBodyList.insert(item);
+	
+	return FWG_NO_ERROR;
+}
+
+GameErrorCode GameTestResourceLoader::LoadPhysFixList(TGamePhysFixMap& physFixList)
+{
+	TGamePhysFixMapItem item;
+	item.first = 1;
+	item.second.m_shapeRef = 1;
+	physFixList.insert(item);
+	
+	item.first = 2;
+	item.second.m_shapeRef = 2;
+	physFixList.insert(item);
+	
+	return FWG_NO_ERROR;
+}
+
+GameErrorCode GameTestResourceLoader::LoadPhysJoint(GamePhysObjId jointID, b2JointDef*& pJointDef)
+{
+	FWG_UNREFERENCED_PARAMETER(jointID);
+	pJointDef = NULL;
+	return FWG_NO_ERROR;
+}
+
+GameErrorCode GameTestResourceLoader::LoadPhysBody(GamePhysObjId bodyID, b2BodyDef*& pBodyDef)
+{
+	wxScopedPtr<b2BodyDef> apBodyDef;
+	pBodyDef = NULL;
+	
+	apBodyDef.reset(new (std::nothrow) b2BodyDef());
+	if (apBodyDef.get() == NULL)
+	{
+		return FWG_E_MEMORY_ALLOCATION_ERROR;
+	}
+	
+	switch (bodyID)
+	{
+	case 1:
+		apBodyDef->type = b2_dynamicBody;
+		break;
+	case 2: 
+		apBodyDef->type = b2_staticBody;
+		break;
+	default:
+		return FWG_E_OBJECT_NOT_FOUND_ERROR;
+	}
+	
+	pBodyDef = apBodyDef.release();
+	
+	return FWG_NO_ERROR;
+
+}
+
+GameErrorCode GameTestResourceLoader::LoadPhysFixture(GamePhysObjId fixID, b2FixtureDef*& pFixDef)
+{
+	wxScopedPtr<b2FixtureDef> apFixtureDef;
+	pFixDef = NULL;
+	
+	apFixtureDef.reset(new (std::nothrow) b2FixtureDef());
+	if (apFixtureDef.get() == NULL)
+	{
+		return FWG_E_MEMORY_ALLOCATION_ERROR;
+	}
+	
+	switch (fixID)
+	{
+	case 1:
+		apFixtureDef->friction = 0.5;
+		apFixtureDef->restitution = 0.2;
+		apFixtureDef->density = 100;
+	case 2:
+		apFixtureDef->friction = 0.7;
+		apFixtureDef->restitution = 0.2;
+		apFixtureDef->density = 0;
+	default:
+		return FWG_E_OBJECT_NOT_FOUND_ERROR;
+	}
+	
+	pFixDef = apFixtureDef.release();
+	
+	return FWG_NO_ERROR;
+}
+
+
 
 
