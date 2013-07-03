@@ -259,48 +259,6 @@ GameResourceHolder::~GameResourceHolder()
 	ClearResourceMaps();
 }
 
-
-//----------- Static methods --------------//
-
-GameResourceHolder* GameResourceHolder::GetResourceHolder()
-{
-	if (g_pResourceHolder != NULL){
-		g_pResourceHolder->addRef();	
-	}
-	return g_pResourceHolder;
-}
-
-GameErrorCode GameResourceHolder::InitializeResourceHolder(GameLogger* pLogger)
-{
-	GameErrorCode result = FWG_NO_ERROR;
-	if (g_pResourceHolder != NULL) {
-		return FWG_NO_ERROR;
-	}
-	
-	wxScopedPtr<GameResourceHolder> apResHolder;
-	apResHolder.reset(new (std::nothrow) GameResourceHolder());
-	
-	if (FWG_FAILED(result = apResHolder->Initialize(pLogger)))
-	{
-		FWGLOG_ERROR_FORMAT(wxT("GameResourceHolder::InitializeResourceHolder() : Resource holder initialization failed: 0x%08x"),
-						pLogger, result, FWGLOG_ENDVAL);
-		return result;
-	}
-	
-	g_pResourceHolder = apResHolder.release();
-	
-	return result;
-}
-
-
-void GameResourceHolder::ReleaseResourceHolder()
-{
-	if(g_pResourceHolder != NULL) {
-		g_pResourceHolder->release();
-		g_pResourceHolder = NULL;
-	}
-}
-
 GameErrorCode GameResourceHolder::GetBodyDef(GamePhysObjId bodyID, b2BodyDef*& pBodyDef, wxVector<GamePhysObjId>& fixtureList)
 {
 	TGamePhysBodyMap::iterator iter;
@@ -372,3 +330,106 @@ GameErrorCode GameResourceHolder::GetJointDef(GamePhysObjId jointID, b2JointDef*
 	bodyList = iter->second.m_bodyRefList;
 	return iter->second.m_pJointDef;
 }
+
+void GameResourceHolder::ReleaseBody(GamePhysObjId bodyID)
+{
+	TGamePhysBodyMap::iterator iter;
+	GameErrorCode result = FWG_NO_ERROR;
+	
+	wxCriticalSectionLocker locker(m_resouceLocker);
+	
+	iter = m_physBodyMap.find(bodyID);
+	if (iter == m_physBodyMap.end()) return NULL;
+	if (iter->second.m_pBodyDef != NULL)
+	{
+		iter->second.m_refCount--;
+		if (iter->second.m_refCount == 0)
+		{
+			delete iter->second.m_pBodyDef;
+			iter->second.m_pBodyDef = NULL;
+		}
+	}
+}
+
+void GameResourceHolder::ReleaseFixture(GamePhysObjId fixID)
+{
+	TGamePhysFixMap::iterator iter;
+	GameErrorCode result = FWG_NO_ERROR;
+	
+	wxCriticalSectionLocker locker(m_resouceLocker);
+	
+	iter = m_physFixMap.find(fixID);
+	if (iter == m_physFixMap.end()) return NULL;
+	if (iter->second.m_pFixtureDef != NULL)
+	{
+		iter->second.m_refCount--;
+		if (iter->second.m_refCount == 0)
+		{
+			delete iter->second.m_pFixtureDef;
+			iter->second.m_pFixtureDef = NULL;
+		}
+	}
+}
+
+void GameResourceHolder::ReleaseJoint(GamePhysObjId jointID)
+{
+	TGamePhysJointMap::iterator iter;
+	GameErrorCode result = FWG_NO_ERROR;
+	
+	wxCriticalSectionLocker locker(m_resouceLocker);
+	
+	iter = m_physJointMap.find(jointID);
+	if (iter == m_physJointMap.end()) return NULL;
+	if (iter->second.m_pJointDef != NULL)
+	{
+		iter->second.m_refCount--;
+		if (iter->second.m_refCount == 0)
+		{
+			delete iter->second.m_pJointDef;
+			iter->second.m_pJointDef = NULL;
+		}
+	}
+}
+
+//----------- Static methods --------------//
+
+GameResourceHolder* GameResourceHolder::GetResourceHolder()
+{
+	if (g_pResourceHolder != NULL){
+		g_pResourceHolder->addRef();	
+	}
+	return g_pResourceHolder;
+}
+
+GameErrorCode GameResourceHolder::InitializeResourceHolder(GameLogger* pLogger)
+{
+	GameErrorCode result = FWG_NO_ERROR;
+	if (g_pResourceHolder != NULL) {
+		return FWG_NO_ERROR;
+	}
+	
+	wxScopedPtr<GameResourceHolder> apResHolder;
+	apResHolder.reset(new (std::nothrow) GameResourceHolder());
+	
+	if (FWG_FAILED(result = apResHolder->Initialize(pLogger)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("GameResourceHolder::InitializeResourceHolder() : Resource holder initialization failed: 0x%08x"),
+						pLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	g_pResourceHolder = apResHolder.release();
+	
+	return result;
+}
+
+
+void GameResourceHolder::ReleaseResourceHolder()
+{
+	if(g_pResourceHolder != NULL) {
+		g_pResourceHolder->release();
+		g_pResourceHolder = NULL;
+	}
+}
+
+

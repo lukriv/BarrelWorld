@@ -13,7 +13,6 @@
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="gclientengine.h"/>
-    <File Name="gresloader.h"/>
   </VirtualDirectory>
   <Settings Type="Executable">
     <GlobalSettings>
