@@ -1,7 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Project Name="GameResHold" InternalType="Library">
+  <Plugins>
+    <Plugin Name="qmake">
+      <![CDATA[00010001N0007Release000000000000]]>
+    </Plugin>
+  </Plugins>
   <Description/>
   <Dependencies/>
+  <VirtualDirectory Name="src">
+    <File Name="gresholder.cpp"/>
+    <File Name="gscenegenimpl.cpp"/>
+    <File Name="gentityfactory.cpp"/>
+  </VirtualDirectory>
+  <VirtualDirectory Name="include">
+    <File Name="gresloader.h"/>
+    <File Name="gresholder.h"/>
+    <File Name="gscenegen.h"/>
+    <File Name="gentityfactory.h"/>
+  </VirtualDirectory>
+  <VirtualDirectory Name="impl">
+    <File Name="gscenegenimpl.h"/>
+  </VirtualDirectory>
   <Settings Type="Static Library">
     <GlobalSettings>
       <Compiler Options="" C_Options="">
@@ -49,7 +68,7 @@
         <SearchPaths/>
       </Completion>
     </Configuration>
-    <Configuration Name="Release" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+    <Configuration Name="Release" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Static Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="" C_Options="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags="">
         <IncludePath Value="."/>
       </Compiler>
@@ -87,12 +106,4 @@
       </Completion>
     </Configuration>
   </Settings>
-  <VirtualDirectory Name="src">
-    <File Name="gresholder.cpp"/>
-  </VirtualDirectory>
-  <VirtualDirectory Name="include">
-    <File Name="gresloader.h"/>
-    <File Name="gresholder.h"/>
-  </VirtualDirectory>
-  <VirtualDirectory Name="impl"/>
 </CodeLite_Project>

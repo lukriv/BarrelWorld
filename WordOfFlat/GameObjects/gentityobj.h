@@ -10,9 +10,11 @@
  */
 class GameEntityBase : public GameSceneObject, public sf::Transformable {
 	GameObjStateStruct m_state;
-protected:
+private:
 	GameObjectType m_enType;
 public:
+	GameEntityBase(GameObjectType enType) : m_enType(enType){}
+	
 	GameObjStateStruct& GetObjectState() { return m_state;}
 	GameObjectType GetType() {return m_enType;}
 };
@@ -31,7 +33,7 @@ class GameEntity : public GameEntityBase {
 	b2Body *m_pBody;
 public:
 	GameEntity(GameObjectType enType) : 
-				m_enType(),
+				GameEntityBase(enType),
 				m_pGeometry(nullptr),
 				m_pTexture(nullptr),
 				m_pBody(nullptr) {}
@@ -44,7 +46,6 @@ public:
 	inline sf::Texture* GetTexture () { return m_pTexture;}
 	inline b2Body* GetBody () { return m_pBody;}
 	
-	b2Body* CreateNewBody(b2World* pWorld);
 public:	
 	virtual void draw( sf::RenderTarget& target, sf::RenderStates states) const;
 	
@@ -61,7 +62,7 @@ public:
 class GameEntityGroup : public GameEntityBase {
 	wxVector<GameEntity*> m_entityGroup;	
 public:
-	GameEntityGroup() : {}
+	GameEntityGroup() : GameEntityBase(GAME_OBJECT_TYPE_ENTITY_GROUP) {}
 	
 	void PushBackEntity (GameEntity* pEntity) {
 		m_entityGroup.push_back(pEntity);

@@ -108,6 +108,30 @@ public:
 	 * \param geomID Released geometry object
 	 */
 	void ReleaseGeometry(GameShapeId geomID);
+	
+	/*! \brief Release joint
+	 * 
+	 * Decrement reference count for the joint.
+	 * 
+	 * \param jointID Released joint
+	 */
+	void ReleaseJoint(GamePhysObjId jointID);
+	
+	/*! \brief Release body
+	 * 
+	 * Decrement reference count for the body.
+	 * 
+	 * \param bodyID Released body
+	 */
+	void ReleaseBody(GamePhysObjId bodyID);
+	
+	/*! \brief Release fixture
+	 * 
+	 * Decrement reference count for the fixture.
+	 * 
+	 * \param fixID Released fixture
+	 */
+	void ReleaseFixture(GamePhysObjId fixID);
 
 public:
 	virtual void addRef();
