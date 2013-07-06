@@ -2,10 +2,10 @@
 #define __GAME_SCENE_GENERATOR_IMPLEMENTATION_H__
 
 
-class GameSceneGenerator : public IGameSceneGenerator {
+class GameTestSceneGenerator : public IGameSceneGenerator {
 	wxAtomicInt m_refCount;
 public:
-	GameSceneGenerator () : m_refCount(1) {}
+	GameTestSceneGenerator () : m_refCount(1) {}
 
 public:
 	GameErrorCode GenLandscape(const TGameWorldSegmentID &wrldID, wxVector<EntityDef> &landscape);
