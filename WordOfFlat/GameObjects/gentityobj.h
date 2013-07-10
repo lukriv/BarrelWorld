@@ -17,6 +17,8 @@ public:
 	
 	GameObjStateStruct& GetObjectState() { return m_state;}
 	GameObjectType GetType() {return m_enType;}
+	
+	virtual void UpdatePosition() = 0;
 };
 
 
@@ -46,6 +48,9 @@ public:
 	inline sf::Texture* GetTexture () { return m_pTexture;}
 	inline b2Body* GetBody () { return m_pBody;}
 	
+public:
+	virtual void UpdatePosition();
+	
 public:	
 	virtual void draw( sf::RenderTarget& target, sf::RenderStates states) const;
 	
@@ -67,6 +72,9 @@ public:
 	void PushBackEntity (GameEntity* pEntity) {
 		m_entityGroup.push_back(pEntity);
 	}
+
+public:
+	virtual void UpdatePosition();
 	
 public:	
 	virtual void draw( sf::RenderTarget& target, sf::RenderStates states) const;

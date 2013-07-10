@@ -28,10 +28,7 @@ GameErrorCode GameClientEngine::Initialize(GameLogger* pLogger)
 		return FWG_NO_ERROR;
 	}
 	
-	m_pLogger.Attach(pLogger);
-	if(pLogger) {
-		pLogger->addRef();
-	}
+	m_pLogger = pLogger;
 	
 	if(FWG_FAILED(result = LoadSettings()))
 	{
@@ -47,7 +44,23 @@ GameErrorCode GameClientEngine::Initialize(GameLogger* pLogger)
 		return result;
 	}
 	
-
+	if(FWG_FAILED(result = GameResourceHolder::InitializeResourceHolder(pLogger))) 
+	{
+		FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::Initialize() : Initialize resource holder failed: 0x%08x"),
+			m_pLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	m_spResHolder.Attach(GameResourceHolder::GetResourceHolder());
+	
+	m_pSceneGenerator = new (std::nothrow) GameTestSceneGenerator();
+	if (m_pSceneGenerator == NULL) 
+	{
+		return FWG_E_MEMORY_ALLOCATION_ERROR;
+	}
+	
+	m_pEntityFactory = new (std::nothrow) GameEntityFactory(m_spResHolder.In());
+	if (m_pEntityFactory == NULL) return FWG_E_MEMORY_ALLOCATION_ERROR;
 	
 	m_isInitialized = false;
 	return result;
@@ -70,7 +83,7 @@ GameErrorCode GameClientEngine::LoadSettings(wxChar* pFileName)
 
 GameErrorCode GameClientEngine::MainLoop()
 {
-	
+	GameErrorCode result = FWG_NO_ERROR;
 	      // Start the game loop
 	while (window.isOpen())
     {
@@ -83,18 +96,20 @@ GameErrorCode GameClientEngine::MainLoop()
                 window.close();
         }
 		 
-
-        // Clear screen
-        window.clear();
- 
-        // Draw the sprite
-        window.draw(sprite);
- 
-        // Draw the string
-        //App.Draw(Text);
+		if (FWG_FAILED(result = m_pActualFlatWorldClient->DrawStep()))
+		{
+			FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::MainLoop() : DrawStep failed: 0x%08x"),
+				m_pLogger, result, FWGLOG_ENDVAL);
+			return result;
+		}
 		
-		// Update the window
-        window.display();
+		if (FWG_FAILED(result = m_pActualFlatWorldClient->SimulationStep()))
+		{
+			FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::MainLoop() : SimulationStep failed: 0x%08x"),
+				m_pLogger, result, FWGLOG_ENDVAL);
+			return result;
+		}
+
     }
 }
 
@@ -103,11 +118,12 @@ GameErrorCode GameClientEngine::MainLoop()
 GameErrorCode GameClientEngine::CreateTestingWorld()
 {
 	GameErrorCode result = FWG_NO_ERROR;
-	sf::Texture* pTexture = nullptr;
-	sf::Shape* pShape = nullptr;
+	sf::Texture* pTexture = NULL;
+	sf::Shape* pShape = NULL;
+	GameEntityBase* pEntity = NULL;
 	
 	m_pActualFlatWorldClient = new (std::nothrow) GameFlatWorldClient();
-	if(m_pActualFlatWorldClient == nullptr)
+	if(m_pActualFlatWorldClient == NULL)
 	{
 		FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::CreateTestingWorld() : Create flat world client failed: 0x%08x"),
 			m_pLogger, FWG_E_MEMORY_ALLOCATION_ERROR, FWGLOG_ENDVAL)
@@ -122,96 +138,44 @@ GameErrorCode GameClientEngine::CreateTestingWorld()
 		return result;
 	}
 	
-	if(FWG_FAILED(result = LoadTextures()))
+	// create scene
+	wxVector<EntityDef> worldObjDefs;
+	wxVector<EntityDef>::iterator entDefIter;
+	
+	if(FWG_FAILED(result = m_pSceneGenerator->GenLandscape(0, worldObjDefs)))
 	{
-		FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::CreateTestingWorld() : Load textures failed: 0x%08x"),
+		FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::CreateTestingWorld() : Load entity definitions (landscape) failed: 0x%08x"),
 			m_pLogger, result, FWGLOG_ENDVAL);
 		return result;
 	}
 	
-	if(FWG_FAILED(result = LoadShapes()))
+	if(FWG_FAILED(result = m_pSceneGenerator->GenMoveableObj(0, worldObjDefs)))
 	{
-		FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::CreateTestingWorld() : Load shapes failed: 0x%08x"),
+		FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::CreateTestingWorld() : Load entity definitions (moveable) failed: 0x%08x"),
 			m_pLogger, result, FWGLOG_ENDVAL);
 		return result;
 	}
-	
-	if(FWG_FAILED(result = LoadObjects()))
+	wxInt32 i = 0;
+	for (entDefIter = worldObjDefs.begin(); entDefIter != worldObjDefs.end(); entDefIter++)
 	{
-		FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::CreateTestingWorld() : Load objects failed: 0x%08x"),
-			m_pLogger, result, FWGLOG_ENDVAL);
-		return result;
+		
+		if(FWG_FAILED(result = m_pEntityFactory->CreateEntity(*entDefIter, *m_pActualFlatWorldClient->GetPhysWorld(), pEntity)))
+		{
+			FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::CreateTestingWorld() : Create entity failed: 0x%08x"),
+				m_pLogger, result, FWGLOG_ENDVAL);
+			return result;
+		}
+		
+		if(FWG_FAILED(result = m_pActualFlatWorldClient->AddEntity(i, pEntity)))
+		{
+			FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::CreateTestingWorld() : Add entity failed: 0x%08x"),
+				m_pLogger, result, FWGLOG_ENDVAL);
+			return result;
+		}
+		
 	}
 
 	return result;
-	
-}
-
-GameErrorCode GameClientEngine::LoadTextures()
-{
-	 // Load a sprite to display
-	 GameErrorCode result = FWG_NO_ERROR;
-     wxScopedPtr<sf::Texture> apTexture = nullptr;
-	 apTexture.reset(new (std::nothrow) sf::Texture());
-	 
-	 if (!apTexture->loadFromFile(loadFromFile("res/img/ground.png")))
-	 {
-		 FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::LoadTextures(): Loading resource file \"%s\" failed"),
-				spLogger, wxT("res/img/ground.png"), FWGLOG_ENDVAL);
-		 return FWG_E_MISC_ERROR;
-	 }
-	 
-	 if(FWG_FAILED(result = m_pActualFlatWorldClient->AddTexture(1, apTexture.release())))
-	 {
-		 FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::LoadTextures() : Add texture 1 failed: 0x%08x"),
-					spLogger, result, FWGLOG_ENDVAL);
-		 return result;
-	 }
-	 
-	 if (!apTexture->loadFromFile(loadFromFile("res/img/woodbox.png")))
-	 {
-		 FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::LoadTextures(): Loading resource file \"%s\" failed"),
-				spLogger, wxT("res/img/woodbox.png"), FWGLOG_ENDVAL);
-		 return FWG_E_MISC_ERROR;
-	 }
-	 
-	 if(FWG_FAILED(result = m_pActualFlatWorldClient->AddTexture(2, apTexture.release())))
-	 {
-		 FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::LoadTextures() : Add texture 2 failed: 0x%08x"),
-					spLogger, result, FWGLOG_ENDVAL);
-		 return result;
-	 }
-	 
-	 return FWG_NO_ERROR;
-}
-
-GameErrorCode GameClientEngine::LoadObjects()
-{
-	GameErrorCode result = FWG_NO_ERROR;
-		
-	
-	wxScopedPtr<GameEntity> apEntity;
-
-	apEntity.reset(new (std::nothrow) GameEntity(GAME_OBJECT_TYPE_DYNAMIC_ENTITY));
-	if (apEntity.get() == nullptr) return FWG_E_MEMORY_ALLOCATION_ERROR;
-	
-	apEntity->SetTexture(m_pActualFlatWorldClient->GetTexture(1));
-	apEntity->SetGeometry(m_pActualFlatWorldClient->GetGeometry(1));
-	apEntity->setPosition(0.0f, 5.0f);
-	
-	m_pActualFlatWorldClient->AddEntity(1, apEntity.release());
-
-
-	apEntity.reset(new (std::nothrow) GameEntity(GAME_OBJECT_TYPE_STATIC_ENTITY));
-	if (apEntity.get() == nullptr) return FWG_E_MEMORY_ALLOCATION_ERROR;
-	
-	apEntity->SetTexture(m_pActualFlatWorldClient->GetTexture(2));
-	apEntity->SetGeometry(m_pActualFlatWorldClient->GetGeometry(2));
-	apEntity->setPosition(0.0f, -10.0f);
-	
-	m_pActualFlatWorldClient->AddEntity(2, apEntity.release());	
-	
-	return result;	
 	
 }
 
@@ -245,41 +209,4 @@ GameClientEngine* GameClientEngine::GetEngine()
 	return m_pClientEngine;
 }
 
-GameErrorCode GameClientEngine::LoadShapes()
-{
-	wxScopedPtr<sf::VertexArray> apVertexArray;
-	wxScopedPtr<GameSFMLGeometry> apGeometry;
-	
-	apVertexArray.reset(new (std::nothrow) sf::VertexArray(sf::Quads, 4));
-	(*apVertexArray)[0].position = sf::Vector2f(-0.5f, -0.5f);
-	(*apVertexArray)[1].position = sf::Vector2f(0.5f, -0.5f);
-	(*apVertexArray)[2].position = sf::Vector2f(0.5f, 0.5f);
-	(*apVertexArray)[3].position = sf::Vector2f(-0.5f, 0.5f);
-	
-	(*apVertexArray)[0].texCoords = sf::Vector2f(0, 0);
-	(*apVertexArray)[1].texCoords = sf::Vector2f(256, 0);
-	(*apVertexArray)[2].texCoords = sf::Vector2f(256, 256);
-	(*apVertexArray)[3].texCoords = sf::Vector2f(0, 256);
-	
-	apGeometry = new (std::nothrow) GameSFMLGeometry(apVertexArray.release());
-	
-	m_pActualFlatWorldClient.AddGeometry(1, apGeometry.release());
-	
-	apVertexArray.reset(new (std::nothrow) sf::VertexArray(sf::Quads, 4));
-	(*apVertexArray)[0].position = sf::Vector2f(-10, -0.5f);
-	(*apVertexArray)[1].position = sf::Vector2f(10, -0.5f);
-	(*apVertexArray)[2].position = sf::Vector2f(10, 0.5f);
-	(*apVertexArray)[3].position = sf::Vector2f(-10, 0.5f);
-	
-	(*apVertexArray)[0].texCoords = sf::Vector2f(0, 0);
-	(*apVertexArray)[1].texCoords = sf::Vector2f(256, 0);
-	(*apVertexArray)[2].texCoords = sf::Vector2f(256, 256);
-	(*apVertexArray)[3].texCoords = sf::Vector2f(0, 256);
-	
-	apGeometry = new (std::nothrow) GameSFMLGeometry(apVertexArray.release());
-	
-	m_pActualFlatWorldClient.AddGeometry(2, apGeometry.release());
-	
-	return FWG_NO_ERROR;
-	
-}
+

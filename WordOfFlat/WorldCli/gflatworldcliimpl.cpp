@@ -3,105 +3,174 @@
 
 static const wxDword RESERVE_CONSTANT = 10000;
 
-GameFlatWorldClient::GameFlatWorldClient() {
+GameFlatWorldClient::GameFlatWorldClient() : m_wrldId(0), m_pRenderTarget(NULL) {
 	m_entitiesList.reserve(RESERVE_CONSTANT);
 	for(TGameEntityList::iterator iter = m_entitiesList.begin(); iter != m_entitiesList.end(); iter++) { *iter = nullptr; }
-	
-	m_textureMap.reserve(RESERVE_CONSTANT);
-	for(TGameTextureList::iterator iter = m_textureMap.begin(); iter != m_textureMap.end(); iter++) { *iter = nullptr; }
-	
-	m_geometryMap.reserve(RESERVE_CONSTANT); 
-	for(TGameGeometryList::iterator iter = m_geometryMap.begin(); iter != m_geometryMap.end(); iter++) { *iter = nullptr; }
 }
 
 
 GameErrorCode GameFlatWorldClient::AIStep()
 {
-}
-
-GameErrorCode GameFlatWorldClient::AddEntity(GameObjectId objId, GameEntityBase* pEntity)
-{
-	GameErrorCode result = FWG_NO_ERROR;	
-	if (objId >= RESERVE_CONSTANT) return FWG_E_MEMORY_ALLOCATION_ERROR;
-	if (m_geometryMap[objId] != nullptr) return FWG_E_INVALID_INDEX_ERROR;
-	pEntity->SetObjID(objId);
-	switch (pEntity->GetType())
-	{
-		case GAME_OBJECT_TYPE_DYNAMIC_ENTITY:
-		case GAME_OBJECT_TYPE_KINEMATIC_ENTITY;
-		case GAME_OBJECT_TYPE_STATIC_ENTITY:
-		case GAME_OBJECT_TYPE_SENZOR_ENTITY:
-		{
-			GameEntity *pEnt = static_cast<GameEntity*> (pEntity);
-			pEnt->CreateNewBody(m_apWorld.get());
-		}
-		break;
-	}
-	
-	m_geometryMap[objId] = pEntity;
-	return result;
-}
-
-GameErrorCode GameFlatWorldClient::AddGeometry(GameShapeId shapeId, IGameGeometry* pShape)
-{
-	if (shapeId >= RESERVE_CONSTANT) return FWG_E_MEMORY_ALLOCATION_ERROR;
-	if (m_geometryMap[shapeId] != nullptr) return FWG_E_INVALID_INDEX_ERROR;
-	m_geometryMap[shapeId] = pShape;
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode GameFlatWorldClient::AddTexture(GameTextureId texId, sf::Texture* pTexture)
-{
-	if (texId >= RESERVE_CONSTANT) return FWG_E_MEMORY_ALLOCATION_ERROR;
-	if (m_textureMap[texId] != nullptr) return FWG_E_INVALID_INDEX_ERROR;
-	m_textureMap[texId] = pTexture;
-	return FWG_NO_ERROR;
-}
 
 GameErrorCode GameFlatWorldClient::DrawStep()
 {
+	TSceneGraph::iterator iter;
+	GameSceneObject *pSceneObj = NULL;
+	for (iter = m_objectMap.begin(); iter != m_objectMap.end(); iter++)
+	{
+		pSceneObj = *iter;
+		pSceneObj->draw(m_pRenderTarget, sf::RenderStates());
+	}
 }
 
 GameErrorCode GameFlatWorldClient::EventStep()
 {
-}
-
-GameEntityBase* GameFlatWorldClient::GetEntity(GameObjectId objId)
-{
+	return FWG_NO_ERROR;
 }
 
 GameFlatWorldID GameFlatWorldClient::GetFWId()
 {
-}
-
-IGameGeometry* GameFlatWorldClient::GetGeometry(GameShapeId shapeId)
-{
-}
-
-sf::Texture* GameFlatWorldClient::GetTexture(GameTextureId texId)
-{
+	return m_wrldId;
 }
 
 GameErrorCode GameFlatWorldClient::GetUpdateList(GameUpdateStruct**& updList, wxDword& listSize)
 {
+	FWG_UNREFERENCED_PARAMETER(updList);
+	FWG_UNREFERENCED_PARAMETER(listSize);
+	return FWG_NO_ERROR;
 }
 
 GameErrorCode GameFlatWorldClient::SetWorldSize(const b2AABB wrldAABB)
 {
+	FWG_UNREFERENCED_PARAMETER(wrldAABB);
+	return FWG_NO_ERROR;
 }
 
 GameErrorCode GameFlatWorldClient::SimulationStep()
 {
+	GameErrorCode result = FWG_NO_ERROR;
+	m_apWorld->Step(m_timeStep, m_velocityIter, m_positionIter);
+	
+	TGameEntityList::iterator iter;
+	
+	for (iter = m_moveAbleObj.begin(); iter != m_moveAbleObj.end(); iter++)
+	{
+		(**iter).UpdatePosition();
+	}
+	
+	return result;
 }
 
 GameFlatWorldClient::~GameFlatWorldClient()
 {
 }
 
-GameErrorCode GameFlatWorldClient::Initialize(GameLogger* pLogger)
+GameErrorCode GameFlatWorldClient::Initialize(sf::RenderTarget *pTarget, GameLogger* pLogger )
 {
 	pLogger.addRef();
 	m_spLogger.Attach(pLogger);
+	
+	m_timeStep = 1.0f / 60.0f;
+	m_velocityIter = 8;
+	m_positionIter = 3;
+	m_gravity.Set(0.0f, -10.0f);
+	m_apWorld.reset(new (std::nothrow) b2World(m_gravity, true));
+	
+	m_pRenderTarget = pTarget;
+	
 	m_isInitialized = true;
 	return FWG_NO_ERROR;
+}
+
+GameErrorCode GameFlatWorldClient::AddCharacterEntity(GameObjectId objId, GameEntityBase* pEntity)
+{
+	GameErrorCode result = FWG_NO_ERROR;	
+	if (objId >= RESERVE_CONSTANT) return FWG_E_MEMORY_ALLOCATION_ERROR;
+	pEntity->SetObjID(objId);
+	
+	m_characters[objId] = pEntity;
+	
+	m_objectMap.push_back(pEntity);
+
+	return result;
+}
+
+GameErrorCode GameFlatWorldClient::AddLandscapeEntity(GameObjectId objId, GameEntityBase* pEntity)
+{
+	GameErrorCode result = FWG_NO_ERROR;	
+	if (objId >= RESERVE_CONSTANT) return FWG_E_MEMORY_ALLOCATION_ERROR;
+	pEntity->SetObjID(objId);
+	
+	m_landscape[objId] = pEntity;
+	
+	m_objectMap.push_back(pEntity);
+
+	return result;
+}
+
+GameErrorCode GameFlatWorldClient::AddMoveableEntity(GameObjectId objId, GameEntityBase* pEntity)
+{
+	GameErrorCode result = FWG_NO_ERROR;	
+	if (objId >= RESERVE_CONSTANT) return FWG_E_MEMORY_ALLOCATION_ERROR;
+	pEntity->SetObjID(objId);
+	
+	m_moveAbleObj[objId] = pEntity;
+	
+	m_objectMap.push_back(pEntity);
+
+	return result;
+}
+
+GameErrorCode GameFlatWorldClient::AddSenzorEntity(GameObjectId objId, GameEntityBase* pEntity)
+{
+	GameErrorCode result = FWG_NO_ERROR;	
+	if (objId >= RESERVE_CONSTANT) return FWG_E_MEMORY_ALLOCATION_ERROR;
+	pEntity->SetObjID(objId);
+	
+	m_senzors[objId] = pEntity;
+	
+	m_objectMap.push_back(pEntity);
+
+	return result;
+}
+
+GameErrorCode GameFlatWorldClient::AddStaticEntity(GameObjectId objId, GameEntityBase* pEntity)
+{
+	GameErrorCode result = FWG_NO_ERROR;	
+	if (objId >= RESERVE_CONSTANT) return FWG_E_MEMORY_ALLOCATION_ERROR;
+	pEntity->SetObjID(objId);
+	
+	m_staticObj[objId] = pEntity;
+	
+	m_objectMap.push_back(pEntity);
+
+	return result;
+}
+
+GameEntityBase* GameFlatWorldClient::GetCharacterEntity(GameObjectId objId)
+{
+	return m_characters[objId];
+}
+
+GameEntityBase* GameFlatWorldClient::GetLandscapeEntity(GameObjectId objId)
+{
+	return m_landscape[objId];
+}
+
+GameEntityBase* GameFlatWorldClient::GetMoveableEntity(GameObjectId objId)
+{
+	return m_moveAbleObj[objId];
+}
+
+GameEntityBase* GameFlatWorldClient::GetSenzorEntity(GameObjectId objId)
+{
+	return m_senzors[objId];
+}
+
+GameEntityBase* GameFlatWorldClient::GetStaticEntity(GameObjectId objId)
+{
+	return m_staticObj[objId];
 }

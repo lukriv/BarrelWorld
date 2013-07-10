@@ -18,12 +18,20 @@ private:
 	GameFlatWorldID m_wrldId;
 	GameLoggerPtr m_spLogger;
 	
+	wxInt32 m_velocityIter;
+	wxInt32 m_positionIter;
+	float m_timeStep;
 	b2Vec2 m_gravity;
 	wxScopedPtr<b2World> m_apWorld;
 	
-	TGameTextureList m_textureMap;
-	TGameGeometryList m_geometryMap;
-	TGameEntityList m_entitiesList; // all entity list in world - should be divide to characters list, static entities and logic (senzor) entities
+	sf::RenderTarget* m_pRenderTarget;
+	
+	TGameEntityList m_landscape; // all entity list in world - should be divide to characters list, static entities and logic (senzor) entities
+	TGameEntityList m_staticObj;
+	TGameEntityList m_moveAbleObj;
+	TGameEntityList m_characters;
+	TGameEntityList m_senzors;
+	
 	TSceneGraph m_objectMap;
 			
 	wxCriticalSection m_objectListLock;
@@ -39,7 +47,7 @@ public:
 	 * \brief Initialize GameFlatWorldClient
 	 * \return 
 	 */
-	GameErrorCode Initialize(GameLogger *pLogger);
+	GameErrorCode Initialize(sf::RenderTarget *pTarget, GameLogger* pLogger);
 	
 	/*! \brief Add new entity to world with unique ID
 	 * 
@@ -48,21 +56,29 @@ public:
 	 * \retval FWG_NO_ERROR On success
 	 * \retval FWG_E_INVALID_PARAMETER_ERROR if objID is not unique or pEntity is NULL
 	 */
-	GameErrorCode AddEntity( GameObjectId objId, GameEntityBase* pEntity);
-	GameErrorCode AddTexture( GameTextureId texId, sf::Texture* pTexture);
-	GameErrorCode AddGeometry( GameShapeId shapeId, IGameGeometry* pShape);
+	GameErrorCode AddLandscapeEntity( GameObjectId objId, GameEntityBase* pEntity);
+	GameErrorCode AddStaticEntity( GameObjectId objId, GameEntityBase* pEntity);
+	GameErrorCode AddMoveableEntity( GameObjectId objId, GameEntityBase* pEntity);
+	GameErrorCode AddCharacterEntity( GameObjectId objId, GameEntityBase* pEntity);
+	GameErrorCode AddSenzorEntity( GameObjectId objId, GameEntityBase* pEntity);
 	
 	//TODO: Getters for texture, geometry, entities
 	/*! \brief Get entity with coresponding ID
 	 * \param objId entity id
 	 * \return NULL if object with coresponding ID is not found or returns object poiter.
 	 */
-	GameEntityBase* GetEntity( GameObjectId objId);
-	sf::Texture* GetTexture( GameTextureId texId);
-	IGameGeometry* GetGeometry( GameShapeId shapeId);
+	GameEntityBase* GetLandscapeEntity( GameObjectId objId);
+	GameEntityBase* GetStaticEntity( GameObjectId objId);
+	GameEntityBase* GetMoveableEntity( GameObjectId objId);
+	GameEntityBase* GetCharacterEntity( GameObjectId objId);
+	GameEntityBase* GetSenzorEntity( GameObjectId objId);
+	
+	inline b2World* GetPhysWorld() { return m_apWorld.get();}
 	
 	GameErrorCode SetWorldSize(const b2AABB wrldAABB);
 public:
+
+
 	virtual GameFlatWorldID GetFWId();
 	
 	virtual GameErrorCode SimulationStep();
