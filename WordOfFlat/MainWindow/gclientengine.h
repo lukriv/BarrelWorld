@@ -32,23 +32,23 @@ private:
 	GameEngineSettings m_settings;
 	GameFlatWorldClient *m_pActualFlatWorldClient; 
 	sf::RenderWindow *m_renderWindow;
+	RefObjSmPtr<GameResourceHolder> *m_spResHolder;
+	IGameSceneGenerator *m_pSceneGenerator;
+	GameEntityFactory *m_pEntityFactory;
 	bool m_isWindowCreated;
 	bool m_isSettingLoaded;
 	bool m_isInitialized;
 private:
-	GameClientEngine() : m_pActualFlatWorldServer(nullptr),
-					m_pActualFlatWorldClient(nullptr),
-					m_renderWindow(nullptr),
+	GameClientEngine() : m_pActualFlatWorldServer(NULL),
+					m_pActualFlatWorldClient(NULL),
+					m_renderWindow(NULL),
+					m_pEntityFactory(NULL),
 					m_isWindowCreated(false),
 					m_isSettingLoaded(false),
 					m_isInitialized(false) {}
 	GameErrorCode CreateWindow();
-	GameErrorCode LoadSettings(wxChar* pFileName = nullptr);
+	GameErrorCode LoadSettings(wxChar* pFileName = NULL);
 
-	GameErrorCode LoadTextures();
-	GameErrorCode LoadShapes();
-	GameErrorCode LoadObjects();
-	
 public:
 	/*! \brief Destructor */
 	~GameClietEngine() {}
@@ -57,7 +57,7 @@ public:
 	 * 	It loads settings, create window and initialize events.
 	 * \return 
 	 */
-	GameErrorCode Initialize(GameLogger* pLogger = nullptr);
+	GameErrorCode Initialize(GameLogger* pLogger = NULL);
 	GameErrorCode MainLoop();
 	
 	GameErrorCode CreateTestingWorld();
@@ -72,7 +72,7 @@ public:
 	 * \retval FWG_NO_ERROR On success
 	 * \retval Some errorcode when failed
 	 */
-	static GameErrorCode CreateEngine(GameClientEngine *&pEngine, GameLogger *pLogger = nullptr);
+	static GameErrorCode CreateEngine(GameClientEngine *&pEngine, GameLogger *pLogger = NULL);
 	
 	/*! \brief Get game engine
 	 * \return Actual game engine (can be NULL)

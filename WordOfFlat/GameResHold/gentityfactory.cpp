@@ -1,7 +1,7 @@
 #include "gentityfactory.h"
 
 
-GameErrorCode GameEngineFactory::CreateEntity(const EntityDef& entityDef, b2World& world, GameEntityBase*& pEntity)
+GameErrorCode GameEntityFactory::CreateEntity(const EntityDef& entityDef, b2World& world, GameEntityBase*& pEntity)
 {
 	switch(entityDef.m_entType)
 	{
@@ -17,7 +17,7 @@ GameErrorCode GameEngineFactory::CreateEntity(const EntityDef& entityDef, b2Worl
 	}
 }
 
-GameErrorCode GameEngineFactory::CreateEntityBasic(const EntityDef& entityDef, b2World& world, GameEntityBase*& pEntity)
+GameErrorCode GameEntityFactory::CreateEntityBasic(const EntityDef& entityDef, b2World& world, GameEntityBase*& pEntity)
 {
 	wxScopedPtr<GameEntity> spEntity;
 	wxDword i = 0;
@@ -36,16 +36,16 @@ GameErrorCode GameEngineFactory::CreateEntityBasic(const EntityDef& entityDef, b
 	
 }
 
-GameErrorCode GameEngineFactory::CreateEntityGroup(const EntityDef& entityDef, b2World& world, GameEntityBase*& pEntity)
+GameErrorCode GameEntityFactory::CreateEntityGroup(const EntityDef& entityDef, b2World& world, GameEntityBase*& pEntity)
 {
 }
 
-void GameEngineFactory::addRef()
+void GameEntityFactory::addRef()
 {
 	wxAtomicInc(m_refCount);
 }
 
-wxInt32 GameEngineFactory::release()
+wxInt32 GameEntityFactory::release()
 {
 	wxInt32 refCount = wxAtomicDec(m_refCount);
 	if (refCount == 0)
