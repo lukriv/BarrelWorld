@@ -179,34 +179,4 @@ GameErrorCode GameClientEngine::CreateTestingWorld()
 	
 }
 
-GameErrorCode GameClientEngine::CreateEngine(GameClientEngine*& pEngine, GameLogger* pLogger)
-{
-	GameErrorCode result = FWG_NO_ERROR;
-	if(!m_pClientEngine) 
-	{
-		m_pClientEngine = new (std::nothrow) GameClientEngine();
-		if (m_pClientEngine == nullptr)
-		{
-			FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::CreateEngine() : Memory allocation error: 0x%08x"),
-						pLogger, FWG_E_MEMORY_ALLOCATION_ERROR, FWGLOG_ENDVAL);
-			return FWG_E_MEMORY_ALLOCATION_ERROR;
-		}
-		
-		if (FWG_FAILED(result = m_pClientEngine->Initialize(pLogger)))
-		{
-			FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::CreateEngine() : Engine initialization failed: 0x%08x"),
-						pLogger, result, FWGLOG_ENDVAL);
-			return result;
-		}
-	}
-	
-	pEngine = m_pClientEngine;
-	return FWG_NO_ERROR;
-}
-
-GameClientEngine* GameClientEngine::GetEngine()
-{
-	return m_pClientEngine;
-}
-
 

@@ -2,6 +2,7 @@
 #define __GAME_SFML_GEOMETRY_OBJECT_H__
 
 #include "ggeometry.h"
+#include <sfml/Graphics.hpp>
 
 /*!
  * \class GameGeometry 
@@ -23,25 +24,28 @@ private:
 	}
 
 public:
-	GameSFMLGeometry() : m_pVertexArray(nullptr) {}
+	GameSFMLGeometry() : m_pVertexArray(NULL) {}
 	GameSFMLGeometry(sf::VertexArray *pVerArr) : m_pVertexArray(pVerArr) {
 		SetAABB();
-	}	
-	virtual ~GameSFMLGeometry {
-		if(m_pVertexArray != nullptr) {
+	}
+	
+	virtual ~GameSFMLGeometry() {
+		if(m_pVertexArray != NULL) {
 			delete m_pVertexArray;
-			m_pVertexArray = nullptr;
+			m_pVertexArray = NULL;
 		}
 	}
 	
 	void SetGeometry(sf::VertexArray *pVerArr) {
-		if (m_pVertexArray != nullptr) {
+		if (m_pVertexArray != NULL) {
 			delete m_pVertexArray;
 		}
 		
 		m_pVertexArray = pVerArr;
 		SetAABB();
 	}
+	
+	virtual b2Shape* CreatePhysShape() const;
 	
 	const b2AABB& GetAABB() const { return m_AABB;}
 	/*! \brief Draw geometry to RenderTarget
