@@ -12,6 +12,7 @@
     <File Name="gentityobj.cpp"/>
     <File Name="ggengeom.cpp"/>
     <File Name="gkdtreeobj.cpp"/>
+    <File Name="gsfmlgeom.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="gbintreeobj.h"/>

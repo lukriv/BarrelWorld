@@ -1,5 +1,9 @@
-#include "gresloader.h"
-#include <Box2D/Box2D.h>
+#include "gtestloader.h"
+#include <map>
+#include <wx/scopedptr.h>
+#include <sfml/Graphics.hpp>
+#include "../GameObjects/gsfmlgeom.h"
+
 
 GameErrorCode GameTestResourceLoader::Initialize(GameLogger* pLogger)
 {
@@ -17,10 +21,10 @@ GameErrorCode GameTestResourceLoader::Initialize(GameLogger* pLogger)
 GameErrorCode GameTestResourceLoader::LoadGeometryList(TGameGeometryMap& geomList)
 {
 	TGameGeometryMapItem item;
-	item.first.assign(wxT("wood_box"));
+	item.first = 1;
 	geomList.insert(item);
 	
-	item.first.assign(wxT("ground"));
+	item.first = 2;
 	geomList.insert(item);
 	return FWG_NO_ERROR;
 }
@@ -44,7 +48,7 @@ GameErrorCode GameTestResourceLoader::LoadGeometry(GameShapeId geomID, IGameGeom
 		(*apVertexArray)[2].texCoords = sf::Vector2f(256, 256);
 		(*apVertexArray)[3].texCoords = sf::Vector2f(0, 256);
 		
-		apGeometry = new (std::nothrow) GameSFMLGeometry(apVertexArray.release());
+		apGeometry.reset(new (std::nothrow) GameSFMLGeometry(apVertexArray.release()));
 		if (apGeometry.get() == NULL) return FWG_E_MEMORY_ALLOCATION_ERROR;
 	}
 	
@@ -61,7 +65,7 @@ GameErrorCode GameTestResourceLoader::LoadGeometry(GameShapeId geomID, IGameGeom
 		(*apVertexArray)[2].texCoords = sf::Vector2f(256, 256);
 		(*apVertexArray)[3].texCoords = sf::Vector2f(0, 256);
 		
-		apGeometry = new (std::nothrow) GameSFMLGeometry(apVertexArray.release());
+		apGeometry.reset(new (std::nothrow) GameSFMLGeometry(apVertexArray.release()));
 		if (apGeometry.get() == NULL) return FWG_E_MEMORY_ALLOCATION_ERROR;
 	}
 	
@@ -94,13 +98,13 @@ GameErrorCode GameTestResourceLoader::LoadTextureFromFile(const wxChar* texFileN
 {
 	 // Load a sprite to display
 	 wxScopedPtr<sf::Texture> apTexture;
+	 wxString fileName(texFileName);
 	 apTexture.reset(new (std::nothrow) sf::Texture());
-	 std::string fileNameStr();
-	 fileNameStr.assign(texFileName);
+	 std::string fileNameStr(fileName.c_str().AsChar());
 	 if (!apTexture->loadFromFile(fileNameStr))
 	 {
 		 FWGLOG_ERROR_FORMAT(wxT("GameTestResourceLoader::LoadTextureFromFile() : Load texture from \"%s\" failed: 0x%08x"),
-					spLogger, texFileName, FWG_E_MISC_ERROR, FWGLOG_ENDVAL);
+					m_spLogger, texFileName, FWG_E_MISC_ERROR, FWGLOG_ENDVAL);
 		 return FWG_E_MISC_ERROR;
 	 }
 	 

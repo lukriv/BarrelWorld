@@ -1,7 +1,14 @@
 #ifndef __GAME_RESOURCE_LOADER_H__
 #define __GAME_RESOURCE_LOADER_H__
 
+#include <SFML/Graphics/Texture.hpp>
+#include <Box2D/box2D.h>
+
 #include "../GameSystem/glog.h"
+#include "../GameObjects/ggeometry.h"
+#include "../GameObjects/gameobjdef.h"
+
+
 
 struct GameTexResItem {
 	wxString m_texFileName;
@@ -15,7 +22,7 @@ struct GameGeomResItem {
 	wxInt32 m_refCount;
 	IGameGeometry *m_pGeometry;
 public:
-	GameTexResItem() : m_refCount(0), m_pGeometry(NULL) {}
+	GameGeomResItem() : m_refCount(0), m_pGeometry(NULL) {}
 };
 
 struct GamePhysJointItem {
@@ -31,7 +38,7 @@ struct GamePhysBodyItem {
 	b2BodyDef *m_pBodyDef;
 	wxVector<GamePhysObjId> m_fixtureRefList; // reference indet to Fixture map
 public:
-	GamePhysBodyItem() : m_refCount(0), b2BodyDef(NULL) {}
+	GamePhysBodyItem() : m_refCount(0), m_pBodyDef(NULL) {}
 };
 
 struct GamePhysFixItem {
@@ -39,7 +46,7 @@ struct GamePhysFixItem {
 	b2FixtureDef *m_pFixtureDef;
 	wxDword m_shapeRef; //reference index to Geometry map
 public:
-	GamePhysFixItem() : m_refCount(0), m_fixtureDef(NULL) {}
+	GamePhysFixItem() : m_refCount(0), m_pFixtureDef(NULL) {}
 };
 
 typedef std::map<GameTextureId, GameTexResItem> TGameTextureMap;

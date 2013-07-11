@@ -26,8 +26,6 @@ struct GameEngineSettings {
  */
 class GameClientEngine {
 private:
-	static GameClientEngine* m_pClientEngine;
-private:
 	GameLoggerPtr m_pLogger;
 	GameEngineSettings m_settings;
 	GameFlatWorldClient *m_pActualFlatWorldClient; 
@@ -39,6 +37,10 @@ private:
 	bool m_isSettingLoaded;
 	bool m_isInitialized;
 private:
+	GameErrorCode CreateWindow();
+	GameErrorCode LoadSettings(wxChar* pFileName = NULL);
+
+public:
 	GameClientEngine() : m_pActualFlatWorldServer(NULL),
 					m_pActualFlatWorldClient(NULL),
 					m_renderWindow(NULL),
@@ -46,12 +48,10 @@ private:
 					m_isWindowCreated(false),
 					m_isSettingLoaded(false),
 					m_isInitialized(false) {}
-	GameErrorCode CreateWindow();
-	GameErrorCode LoadSettings(wxChar* pFileName = NULL);
 
-public:
 	/*! \brief Destructor */
 	~GameClietEngine() {}
+
 	/*! \brief Initialize game engine
 	 * 
 	 * 	It loads settings, create window and initialize events.
@@ -61,23 +61,6 @@ public:
 	GameErrorCode MainLoop();
 	
 	GameErrorCode CreateTestingWorld();
-
-// static methods
-public:
-	/*! \brief Create new engine
-	 * 
-	 *  If engine already exists it returns the existing one. Engine is also initialized in this method.
-	 * \param[out] pEngine Returned GameClientEngine
-	 * \param[in] pLogger Logger for initialization
-	 * \retval FWG_NO_ERROR On success
-	 * \retval Some errorcode when failed
-	 */
-	static GameErrorCode CreateEngine(GameClientEngine *&pEngine, GameLogger *pLogger = NULL);
-	
-	/*! \brief Get game engine
-	 * \return Actual game engine (can be NULL)
-	 */
-	static GameClientEngine* GetEngine();
 
 };
 

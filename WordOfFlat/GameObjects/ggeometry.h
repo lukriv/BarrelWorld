@@ -2,7 +2,7 @@
 #define __GAME_GEOMETRY_OBJECT_H__
 
 #include <sfml/graphics/Drawable.hpp>
-
+#include <Box2D/Collision/b2Collision.h>
 /*!
  * \class GameGeometry 
  * \author Lukas
@@ -15,6 +15,8 @@ public:
 	virtual ~IGameGeometry() {}
 	
 	virtual const b2AABB& GetAABB() const = 0;
+	
+	virtual b2Shape* CreatePhysShape() const = 0;
 	
 	/*! \brief Draw geometry to RenderTarget
 	 * 

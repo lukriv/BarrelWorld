@@ -48,15 +48,28 @@ int main(int argc, char **argv)
 	FWGLOG_ERROR_FORMAT(wxT("Format: %s"), spLogger, wxT("Error message"), FWGLOG_ENDVAL);
 
 
- 
-     // Load a sprite to display
-     sf::Texture texture;
-     if (!texture.loadFromFile("res/img/body.png"))
-	 {
-		 FWGLOG_ERROR_FORMAT(wxT("Loading resource file \"%s\" failed"), spLogger, wxT("res/img/body.png"));
-		 return -1;
-	 }
-     sf::Sprite sprite(texture);
+	GameClientEngine gameEngine;
+	
+	if (FWG_FAILED(result = gameEngine.Initialize(pLogger)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::CreateEngine() : Engine initialization failed: 0x%08x"),
+					pLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	if (FWG_FAILED(result = gameEngine.CreateTestingWorld()))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::CreateEngine() : Create testing world failed: 0x%08x"),
+					pLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	if (FWG_FAILED(result = gameEngine.MainLoop()))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::CreateEngine() : Main loop failed: 0x%08x"),
+					pLogger, result, FWGLOG_ENDVAL);
+		return result;		
+	}
 		 
 
 	
