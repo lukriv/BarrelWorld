@@ -2,9 +2,16 @@
 #define __GAME_FLAT_WORLD_CLIENT_IMPL_H__
 
 #include <wx/vector.h>
+#include <wx/scopedptr.h>
+#include <wx/thread.h>
+#include "../GameSystem/glog.h"
 #include "../GameObjects/gobject.h"
-#include "../WorldSrv/gflatworld.h"
 #include "../GameObjects/gsceneobj.h"
+#include "../GameObjects/ggeometry.h"
+#include "../GameObjects/gentityobj.h"
+#include "../WorldSrv/gflatworld.h"
+
+
 
 typedef wxVector<sf::Texture*> TGameTextureList;
 typedef wxVector<IGameGeometry*> TGameGeometryList;
@@ -87,7 +94,7 @@ public:
 	virtual GameErrorCode AIStep();
 	
 	virtual GameErrorCode GetUpdateList(GameUpdateStruct** &updList, wxDword &listSize);
-}
+};
 
 
 #endif //__GAME_FLAT_WORLD_CLIENT_IMPL_H__

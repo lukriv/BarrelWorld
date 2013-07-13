@@ -2,7 +2,10 @@
 #define __GAME_CLIENT_ENGINE_H__
 
 
-
+#include "../GameSystem/refobjectsmptr.h"
+#include "../GameResHold/gresholder.h"
+#include "../GameResHold/gscenegen.h"
+#include "../GameResHold/gentityfactory.h"
 #include "../WorldCli/gflatworldcliimpl.h"
 #include "../WorldSrv/gflatworldsrvimpl.h"
 
@@ -10,15 +13,13 @@
 struct GameEngineSettings {
 	wxDword m_screenWidth;
 	wxDword m_screenHeight;
-	wxChar* m_screenTitle;
-	wxChar* m_worldName;
+	wxString m_screenTitle;
+	wxString m_worldName;
 	
 	GameEngineSettings() : 
 		m_screenWidth(800),
-		m_screenHeight(600),
-		m_screenTitle(nullptr),
-		m_worldName(nullptr) {}
-}
+		m_screenHeight(600) {}
+};
 
 /*! \brief Engine for control game states and processes
  * 
@@ -30,7 +31,7 @@ private:
 	GameEngineSettings m_settings;
 	GameFlatWorldClient *m_pActualFlatWorldClient; 
 	sf::RenderWindow *m_renderWindow;
-	RefObjSmPtr<GameResourceHolder> *m_spResHolder;
+	RefObjSmPtr<GameResourceHolder> m_spResHolder;
 	IGameSceneGenerator *m_pSceneGenerator;
 	GameEntityFactory *m_pEntityFactory;
 	bool m_isWindowCreated;
@@ -41,8 +42,7 @@ private:
 	GameErrorCode LoadSettings(wxChar* pFileName = NULL);
 
 public:
-	GameClientEngine() : m_pActualFlatWorldServer(NULL),
-					m_pActualFlatWorldClient(NULL),
+	GameClientEngine() : m_pActualFlatWorldClient(NULL),
 					m_renderWindow(NULL),
 					m_pEntityFactory(NULL),
 					m_isWindowCreated(false),
@@ -50,7 +50,7 @@ public:
 					m_isInitialized(false) {}
 
 	/*! \brief Destructor */
-	~GameClietEngine() {}
+	~GameClientEngine() {}
 
 	/*! \brief Initialize game engine
 	 * 

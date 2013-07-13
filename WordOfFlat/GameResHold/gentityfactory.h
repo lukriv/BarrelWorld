@@ -1,6 +1,12 @@
 #ifndef __GAME_ENTITY_FACTORY_H__
 #define __GAME_ENTITY_FACTORY_H__
 
+#include <wx/atomic.h>
+#include "../GameSystem/refobjectsmptr.h"
+
+#include "../GameObjects/gentityobj.h"
+#include "gresholder.h"
+#include "gscenegen.h"
 
 class GameEntityFactory : IRefObject {
 	wxAtomicInt m_refCount;

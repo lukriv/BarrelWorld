@@ -1,6 +1,11 @@
 #ifndef __GAME_ENTITY_OBJECT_H__
 #define __GAME_ENTITY_OBJECT_H__
 
+
+#include <SFML/Graphics.hpp>
+#include <wx/vector.h>
+#include "gsceneobj.h"
+#include "ggeometry.h"
 /*!
  * \class GameEntityBase
  * \author Lukas
@@ -36,9 +41,9 @@ class GameEntity : public GameEntityBase {
 public:
 	GameEntity(GameObjectType enType) : 
 				GameEntityBase(enType),
-				m_pGeometry(nullptr),
-				m_pTexture(nullptr),
-				m_pBody(nullptr) {}
+				m_pGeometry(NULL),
+				m_pTexture(NULL),
+				m_pBody(NULL) {}
 	
 	inline void SetGeometry (IGameGeometry *pGeometry) { m_pGeometry = pGeometry;}
 	inline void SetTexture (sf::Texture *pTexture) {m_pTexture = pTexture;}
@@ -82,4 +87,4 @@ public:
 };
 
 
-#endif __GAME_ENTITY_OBJECT_H__
+#endif //__GAME_ENTITY_OBJECT_H__

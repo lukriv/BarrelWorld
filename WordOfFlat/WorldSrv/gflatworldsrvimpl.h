@@ -1,9 +1,11 @@
 #ifndef __GAME_FLAT_WORLD_SERVER_IMPL_H__
 #define __GAME_FLAT_WORLD_SERVER_IMPL_H__
 
-#include <scopedptr.h>
+#include <wx/scopedptr.h>
+#include <Box2D/Box2D.h>
 #include "../GameSystem/gerror.h"
 #include "../GameSystem/glog.h"
+#include "../GameObjects/gobject.h"
 #include "gflatworld.h"
 /*! This could store world object for 2D
  *  It could add new object. 
@@ -14,7 +16,7 @@
 
 class GameFlatWorldSrv : public IGameFlatWorld{
 private:
-	
+	wxAtomicInt m_refCount;
 	GameFlatWorldID m_wrldId;
 	GameLoggerPtr m_spLogger;
 	b2Vec2 m_gravity;
@@ -31,7 +33,7 @@ public:
 	
 	GameErrorCode GenerateTestStaticWorld();
 	
-	GameLogger* GetLogger() {return m_spLogger.In()}
+	GameLogger* GetLogger() {return m_spLogger.In();}
 	
 public:
 
@@ -48,7 +50,7 @@ public:
 	 * \retval Other errorcode on fail
 	 * \warning Object created within this world cannot be used in other GameFlatWorldSrv!
 	 */
-	GameErrorCode CreateNewObject(b2BodyDef &bodyDef, IGameObjectSrv *&object);
+	GameErrorCode CreateNewObject(b2BodyDef &bodyDef, IGameObject *&object);
 	
 	/*! \brief Add new object to world with unique ID
 	 * 
@@ -57,14 +59,13 @@ public:
 	 * \retval FWG_NO_ERROR On success
 	 * \retval FWG_E_INVALID_PARAMETER_ERROR if objID is not unique or pObject is NULL
 	 */
-	GameErrorCode AddNewObject(GameObjectId objID, IGameObjectSrv *pObject);
+	GameErrorCode AddNewObject(GameObjectId objID, IGameObject *pObject);
 	
 	GameErrorCode SetWorldSize(const b2Vec2 &LLpoint, const b2Vec2 &RUpoint);
 	
 	GameErrorCode LoadWorld(const wxChar* worldName);
 	
 public:
-	virtual GameFlatWorldID GetFWId();
 	
 	virtual GameErrorCode SimulationStep();
 	virtual GameErrorCode DrawStep();
@@ -72,6 +73,6 @@ public:
 	virtual GameErrorCode AIStep();
 	
 	virtual GameErrorCode GetUpdateList(GameUpdateStruct** &updList, wxDword &listSize);
-}
+};
 
 #endif //__GAME_FLAT_WORLD_SERVER_IMPL_H__

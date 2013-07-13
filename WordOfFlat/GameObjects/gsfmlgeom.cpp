@@ -1,8 +1,11 @@
 #include "gsfmlgeom.h"
 
+#include <wx/scopedptr.h>
+#include <Box2D/Box2D.h>
+
 b2Shape* GameSFMLGeometry::CreatePhysShape() const
 {
-	switch(m_pVertexArray.getPrimitiveType())
+	switch(m_pVertexArray->getPrimitiveType())
 	{
 	case sf::Points:         ///< List of individual points
 	case sf::Lines:          ///< List of individual lines

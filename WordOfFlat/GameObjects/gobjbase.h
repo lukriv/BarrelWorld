@@ -16,7 +16,7 @@ public:
 //from IGameObject
 	virtual GameObjectId GetObjID() { return m_objId;}
 	
-}
+};
 
 
 #endif //__GAME_OBJECT_BASE_H__
