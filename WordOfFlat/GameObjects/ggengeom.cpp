@@ -21,7 +21,7 @@ GameErrorCode GameGLGeometry::CreateList()
 	m_glList = glGenLists(1);
 	glNewList(m_glList, GL_COMPILE);
 		glBegin(m_geomType);
-		for (wxDword i = 0; i < m_vertexList.size; ++i)
+		for (wxDword i = 0; i < m_vertexList.size(); ++i)
 		{
 			if (normSize > i) {
 				const b2Vec3& norm = m_normalList[i];
@@ -38,16 +38,19 @@ GameErrorCode GameGLGeometry::CreateList()
 
 void GameGLGeometry::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	glMatrixMode(GL_MODELVIEW_MATRIX);
+	FWG_UNREFERENCED_PARAMETER(target);
+	FWG_UNREFERENCED_PARAMETER(states);
+	/*glMatrixMode(GL_MODELVIEW_MATRIX);
 	glLoadMatrixf(states.transform.getMatrix());
-	if(states.texture != nullptr) {
-		states.texture.bind(); //bind normalized texture
-	}
+
 	if (m_glList == 0) {
 		glBegin(m_geomType);
+		if(states.texture != NULL) {
+			sf::Texture::bind(states.texture ); //bind normalized texture
+		}
 		for (wxDword i = 0; i < m_vertexList.size; ++i)
 		{
-			if (normSize > i) {
+			if (m_normalList.size() > i) {
 				const b2Vec3& norm = m_normalList[i];
 				glNormal3f(norm.x, norm.y, norm.z);
 			}
@@ -57,7 +60,7 @@ void GameGLGeometry::draw(sf::RenderTarget& target, sf::RenderStates states) con
 		glEnd();
 	} else {
 		glCallList(m_glList);
-	}
+	}*/
 }
 
 GameGLGeometry::~GameGLGeometry()

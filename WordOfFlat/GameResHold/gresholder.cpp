@@ -1,5 +1,8 @@
 #include "gresholder.h"
 
+#include <wx/scopedptr.h>
+#include "../GameLoader/gtestloader.h"
+
 GameResourceHolder* GameResourceHolder::g_pResourceHolder = NULL;
 
 GameErrorCode GameResourceHolder::Initialize(GameLogger* pLogger, IGameResourceLoader* pResLoader)
@@ -82,9 +85,9 @@ void GameResourceHolder::ClearResourceMaps()
 	TGamePhysFixMap::iterator fixIter;
 	for (fixIter = m_physFixMap.begin(); fixIter != m_physFixMap.end(); fixIter++)
 	{
-		if (fixIter->second.m_pJointDef != NULL) {
-			delete fixIter->second.m_pJointDef;
-			fixIter->second.m_pJointDef = NULL;
+		if (fixIter->second.m_pFixtureDef != NULL) {
+			delete fixIter->second.m_pFixtureDef;
+			fixIter->second.m_pFixtureDef = NULL;
 		}
 	}
 	m_physFixMap.clear();
@@ -94,33 +97,33 @@ void GameResourceHolder::ClearResourceMaps()
 GameErrorCode GameResourceHolder::LoadResourceMaps()
 {
 	GameErrorCode result = FWG_NO_ERROR;
-	if (FWG_FAILED(result = pResLoader->LoadTextureList(m_texMap))) {
+	if (FWG_FAILED(result = m_pResLoader->LoadTextureList(m_texMap))) {
 		FWGLOG_ERROR_FORMAT(wxT("GameResourceHolder::LoadResourceMaps(): Load texture map failed: 0x%08x"),
-				pLogger, result, FWGLOG_ENDVAL);
+				m_spLogger, result, FWGLOG_ENDVAL);
 		return result;
 	}
 	
-	if (FWG_FAILED(result = pResLoader->LoadGeometryList(m_geomMap))) {
+	if (FWG_FAILED(result = m_pResLoader->LoadGeometryList(m_geomMap))) {
 		FWGLOG_ERROR_FORMAT(wxT("GameResourceHolder::LoadResourceMaps(): Load geometry map failed: 0x%08x"),
-				pLogger, result, FWGLOG_ENDVAL);
+				m_spLogger, result, FWGLOG_ENDVAL);
 		return result;
 	}
 	
-	if (FWG_FAILED(result = pResLoader->LoadPhysJointList(m_physJointMap))) {
+	if (FWG_FAILED(result = m_pResLoader->LoadPhysJointList(m_physJointMap))) {
 		FWGLOG_ERROR_FORMAT(wxT("GameResourceHolder::LoadResourceMaps(): Load joint map failed: 0x%08x"),
-				pLogger, result, FWGLOG_ENDVAL);
+				m_spLogger, result, FWGLOG_ENDVAL);
 		return result;
 	}
 	
-	if (FWG_FAILED(result = pResLoader->LoadPhysBodyList(m_physBodyMap))) {
+	if (FWG_FAILED(result = m_pResLoader->LoadPhysBodyList(m_physBodyMap))) {
 		FWGLOG_ERROR_FORMAT(wxT("GameResourceHolder::LoadResourceMaps(): Load body map failed: 0x%08x"),
-				pLogger, result, FWGLOG_ENDVAL);
+				m_spLogger, result, FWGLOG_ENDVAL);
 		return result;
 	}
 	
-	if (FWG_FAILED(result = pResLoader->LoadPhysFixList(m_physFixMap))) {
+	if (FWG_FAILED(result = m_pResLoader->LoadPhysFixList(m_physFixMap))) {
 		FWGLOG_ERROR_FORMAT(wxT("GameResourceHolder::LoadResourceMaps(): Load fixture map failed: 0x%08x"),
-				pLogger, result, FWGLOG_ENDVAL);
+				m_spLogger, result, FWGLOG_ENDVAL);
 		return result;
 	}
 	
@@ -142,7 +145,7 @@ IGameGeometry* GameResourceHolder::GetGeometry(GameShapeId geomID)
 		if(FWG_FAILED(result = m_pResLoader->LoadGeometry(geomID, iter->second.m_pGeometry))){
 			FWGLOG_ERROR_FORMAT(wxT("GameResourceHolder::GetGeometry() : Load geometry failed: 0x%08x"),
 				m_spLogger, result, FWGLOG_ENDVAL);
-			return result;
+			return NULL;
 		}
 
 	}
@@ -168,7 +171,7 @@ sf::Texture* GameResourceHolder::GetTexture(GameTextureId texID)
 		{
 			FWGLOG_ERROR_FORMAT(wxT("GameResourceHolder::GetTexture() : Load texture failed: 0x%08x"),
 				m_spLogger, result, FWGLOG_ENDVAL);
-			return result;
+			return NULL;
 		}
 	}
 	// increment reference counter
@@ -207,7 +210,7 @@ void GameResourceHolder::ReleaseTexture(GameTextureId texID)
 	wxCriticalSectionLocker locker(m_resouceLocker);
 	
 	iter = m_texMap.find(texID);
-	if (iter == m_texMap.end()) return NULL;
+	if (iter == m_texMap.end()) return;
 	if (iter->second.m_pTexture != NULL)
 	{
 		iter->second.m_refCount--;
@@ -268,7 +271,7 @@ GameErrorCode GameResourceHolder::GetBodyDef(GamePhysObjId bodyID, b2BodyDef*& p
 	
 	//find geometry
 	iter = m_physBodyMap.find(bodyID);
-	if (iter == m_physBodyMap.end()) return NULL;
+	if (iter == m_physBodyMap.end()) return FWG_E_OBJECT_NOT_FOUND_ERROR;
 	if (iter->second.m_pBodyDef == NULL)
 	{
 		if(FWG_FAILED(result = m_pResLoader->LoadPhysBody(bodyID, iter->second.m_pBodyDef))){
@@ -280,7 +283,8 @@ GameErrorCode GameResourceHolder::GetBodyDef(GamePhysObjId bodyID, b2BodyDef*& p
 	// increment reference counter
 	iter->second.m_refCount++;
 	fixtureList = iter->second.m_fixtureRefList;
-	return iter->second.m_pBodyDef;
+	pBodyDef = iter->second.m_pBodyDef;
+	return FWG_NO_ERROR;
 }
 
 GameErrorCode GameResourceHolder::GetFixtureDef(GamePhysObjId fixID, b2FixtureDef*& pFixtureDef, GameShapeId& shapeID)
@@ -292,7 +296,7 @@ GameErrorCode GameResourceHolder::GetFixtureDef(GamePhysObjId fixID, b2FixtureDe
 	
 	//find geometry
 	iter = m_physFixMap.find(fixID);
-	if (iter == m_physFixMap.end()) return NULL;
+	if (iter == m_physFixMap.end()) return FWG_E_OBJECT_NOT_FOUND_ERROR;
 	if (iter->second.m_pFixtureDef == NULL)
 	{
 		if(FWG_FAILED(result = m_pResLoader->LoadPhysFixture(fixID, iter->second.m_pFixtureDef))){
@@ -304,7 +308,9 @@ GameErrorCode GameResourceHolder::GetFixtureDef(GamePhysObjId fixID, b2FixtureDe
 	// increment reference counter
 	iter->second.m_refCount++;
 	shapeID = iter->second.m_shapeRef;
-	return iter->second.m_pFixtureDef;
+	pFixtureDef = iter->second.m_pFixtureDef;
+	
+	return FWG_NO_ERROR;
 }
 
 GameErrorCode GameResourceHolder::GetJointDef(GamePhysObjId jointID, b2JointDef*& pJointDef, wxVector<GamePhysObjId>& bodyList)
@@ -316,7 +322,7 @@ GameErrorCode GameResourceHolder::GetJointDef(GamePhysObjId jointID, b2JointDef*
 	
 	//find geometry
 	iter = m_physJointMap.find(jointID);
-	if (iter == m_physJointMap.end()) return NULL;
+	if (iter == m_physJointMap.end()) return FWG_E_OBJECT_NOT_FOUND_ERROR;
 	if (iter->second.m_pJointDef == NULL)
 	{
 		if(FWG_FAILED(result = m_pResLoader->LoadPhysJoint(jointID, iter->second.m_pJointDef))){
@@ -328,7 +334,8 @@ GameErrorCode GameResourceHolder::GetJointDef(GamePhysObjId jointID, b2JointDef*
 	// increment reference counter
 	iter->second.m_refCount++;
 	bodyList = iter->second.m_bodyRefList;
-	return iter->second.m_pJointDef;
+	pJointDef = iter->second.m_pJointDef;
+	return FWG_NO_ERROR;
 }
 
 void GameResourceHolder::ReleaseBody(GamePhysObjId bodyID)
@@ -339,7 +346,7 @@ void GameResourceHolder::ReleaseBody(GamePhysObjId bodyID)
 	wxCriticalSectionLocker locker(m_resouceLocker);
 	
 	iter = m_physBodyMap.find(bodyID);
-	if (iter == m_physBodyMap.end()) return NULL;
+	if (iter == m_physBodyMap.end()) return;
 	if (iter->second.m_pBodyDef != NULL)
 	{
 		iter->second.m_refCount--;
@@ -359,7 +366,7 @@ void GameResourceHolder::ReleaseFixture(GamePhysObjId fixID)
 	wxCriticalSectionLocker locker(m_resouceLocker);
 	
 	iter = m_physFixMap.find(fixID);
-	if (iter == m_physFixMap.end()) return NULL;
+	if (iter == m_physFixMap.end()) return;
 	if (iter->second.m_pFixtureDef != NULL)
 	{
 		iter->second.m_refCount--;
@@ -379,7 +386,7 @@ void GameResourceHolder::ReleaseJoint(GamePhysObjId jointID)
 	wxCriticalSectionLocker locker(m_resouceLocker);
 	
 	iter = m_physJointMap.find(jointID);
-	if (iter == m_physJointMap.end()) return NULL;
+	if (iter == m_physJointMap.end()) return;
 	if (iter->second.m_pJointDef != NULL)
 	{
 		iter->second.m_refCount--;
@@ -408,17 +415,23 @@ GameErrorCode GameResourceHolder::InitializeResourceHolder(GameLogger* pLogger)
 		return FWG_NO_ERROR;
 	}
 	
-	wxScopedPtr<GameResourceHolder> apResHolder;
-	apResHolder.reset(new (std::nothrow) GameResourceHolder());
+	wxScopedPtr<GameTestResourceLoader> apLoader;
+	apLoader.reset(new (std::nothrow) GameTestResourceLoader());
 	
-	if (FWG_FAILED(result = apResHolder->Initialize(pLogger)))
+	GameResourceHolder* pResHolder = NULL;
+	pResHolder = new (std::nothrow) GameResourceHolder();
+	
+	if (FWG_FAILED(result = pResHolder->Initialize(pLogger, apLoader.get())))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("GameResourceHolder::InitializeResourceHolder() : Resource holder initialization failed: 0x%08x"),
 						pLogger, result, FWGLOG_ENDVAL);
 		return result;
 	}
 	
-	g_pResourceHolder = apResHolder.release();
+	//release pointer
+	apLoader.release();
+	
+	g_pResourceHolder = pResHolder;
 	
 	return result;
 }

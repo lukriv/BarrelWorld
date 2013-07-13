@@ -1,6 +1,15 @@
 #ifndef __GAME_SCENE_GENERATOR_H__
 #define __GAME_SCENE_GENERATOR_H__
 
+
+#include <wx/vector.h>
+#include <Box2D/Box2D.h>
+#include "../GameSystem/refobject.h"
+#include "../GameSystem/gerror.h"
+#include "../GameObjects/gameobjdef.h"
+
+
+
 struct EntityDef {
 	GameObjectType m_entType;
 	wxVector<GameTextureId> m_textureRefs; //!< List of textures - can be empty (dep. on type)
@@ -13,11 +22,11 @@ typedef wxDword TGameWorldSegmentID;
 
 class IGameSceneGenerator : public IRefObject {
 public:
-	GameErrorCode GenLandscape(const TGameWorldSegmentID &wrldID, wxVector<EntityDef> &landscape) = 0;
-	GameErrorCode GenStaticObj(const TGameWorldSegmentID &wrldID, wxVector<EntityDef> &staticObjs) = 0;
-	GameErrorCode GenMoveableObj(const TGameWorldSegmentID &wrldID, wxVector<EntityDef> &moveableObjs) = 0;
-	GameErrorCode GenAnimals(const TGameWorldSegmentID &wrldID, wxVector<EntityDef> &animals) = 0;
-	GameErrorCode GenCharacters(const TGameWorldSegmentID &wrldID, wxVector<EntityDef> &characters) = 0;
+	virtual GameErrorCode GenLandscape(const TGameWorldSegmentID &wrldID, wxVector<EntityDef> &landscape) = 0;
+	virtual GameErrorCode GenStaticObj(const TGameWorldSegmentID &wrldID, wxVector<EntityDef> &staticObjs) = 0;
+	virtual GameErrorCode GenMoveableObj(const TGameWorldSegmentID &wrldID, wxVector<EntityDef> &moveableObjs) = 0;
+	virtual GameErrorCode GenAnimals(const TGameWorldSegmentID &wrldID, wxVector<EntityDef> &animals) = 0;
+	virtual GameErrorCode GenCharacters(const TGameWorldSegmentID &wrldID, wxVector<EntityDef> &characters) = 0;
 	
 };
 

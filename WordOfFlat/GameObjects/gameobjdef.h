@@ -1,7 +1,7 @@
 #ifndef __GAME_OBJECT_DEFINITIONS_H__
 #define __GAME_OBJECT_DEFINITIONS_H__
 
-
+#include "../GameSystem/gdefs.h"
 
 typedef wxDword GameTextureId; //!< Texture id type
 typedef wxDword GameShapeId; //!< Shape id type

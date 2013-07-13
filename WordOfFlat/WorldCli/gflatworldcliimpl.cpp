@@ -1,12 +1,25 @@
 #include "gflatworldcliimpl.h"
-
+#include "../GameSystem/gdefs.h"
 
 static const wxDword RESERVE_CONSTANT = 10000;
 
 GameFlatWorldClient::GameFlatWorldClient() : m_wrldId(0), m_pRenderTarget(NULL) {
-	m_entitiesList.reserve(RESERVE_CONSTANT);
-	for(TGameEntityList::iterator iter = m_entitiesList.begin(); iter != m_entitiesList.end(); iter++) { *iter = nullptr; }
+	m_characters.reserve(RESERVE_CONSTANT);
+	for(TGameEntityList::iterator iter = m_characters.begin(); iter != m_characters.end(); iter++) { *iter = NULL; }
+	
+	m_landscape.reserve(RESERVE_CONSTANT);
+	for(TGameEntityList::iterator iter = m_landscape.begin(); iter != m_landscape.end(); iter++) { *iter = NULL; }
+	
+	m_moveAbleObj.reserve(RESERVE_CONSTANT);
+	for(TGameEntityList::iterator iter = m_moveAbleObj.begin(); iter != m_moveAbleObj.end(); iter++) { *iter = NULL; }
+	
+	m_senzors.reserve(RESERVE_CONSTANT);
+	for(TGameEntityList::iterator iter = m_senzors.begin(); iter != m_senzors.end(); iter++) { *iter = NULL; }
+	
+	m_staticObj.reserve(RESERVE_CONSTANT);
+	for(TGameEntityList::iterator iter = m_staticObj.begin(); iter != m_staticObj.end(); iter++) { *iter = NULL; }
 }
+
 
 
 GameErrorCode GameFlatWorldClient::AIStep()
@@ -22,8 +35,9 @@ GameErrorCode GameFlatWorldClient::DrawStep()
 	for (iter = m_objectMap.begin(); iter != m_objectMap.end(); iter++)
 	{
 		pSceneObj = *iter;
-		pSceneObj->draw(m_pRenderTarget, sf::RenderStates());
+		pSceneObj->draw(*m_pRenderTarget, sf::RenderStates());
 	}
+	return FWG_NO_ERROR;
 }
 
 GameErrorCode GameFlatWorldClient::EventStep()
@@ -70,14 +84,14 @@ GameFlatWorldClient::~GameFlatWorldClient()
 
 GameErrorCode GameFlatWorldClient::Initialize(sf::RenderTarget *pTarget, GameLogger* pLogger )
 {
-	pLogger.addRef();
-	m_spLogger.Attach(pLogger);
+
+	m_spLogger = pLogger;
 	
 	m_timeStep = 1.0f / 60.0f;
 	m_velocityIter = 8;
 	m_positionIter = 3;
 	m_gravity.Set(0.0f, -10.0f);
-	m_apWorld.reset(new (std::nothrow) b2World(m_gravity, true));
+	m_apWorld.reset(new (std::nothrow) b2World(m_gravity));
 	
 	m_pRenderTarget = pTarget;
 	

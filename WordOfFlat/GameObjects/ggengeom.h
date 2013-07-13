@@ -1,6 +1,9 @@
 #ifndef __GAME_GENERIC_GEOMETRY_H__
 #define __GAME_GENERIC_GEOMETRY_H__
 
+#include <GL/gl.h>
+#include <wx/vector.h>
+#include "../GameSystem/gerror.h"
 #include "ggeometry.h"
 
 /*! \brief Geometry types

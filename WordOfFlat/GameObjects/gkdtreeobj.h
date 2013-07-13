@@ -1,8 +1,12 @@
 #ifndef __KD_TREE_OBJECT_H__
 #define __KD_TREE_OBJECT_H__
 
-#include "../GameObjects/gobject.h"
+
 #include <Box2D/Collision/b2Collision.h>
+#include <wx/vector.h>
+#include "../GameSystem/gerror.h"
+#include "gsceneobj.h"
+
 
 
 /*! \brief Implementation of KD tree node
@@ -21,7 +25,7 @@ class GameKDTreeObject : public GameSceneObject {
 	wxVector<GameSceneObject*> m_objList;//!< list of Drawable objects
 
 public:
-	GameKDTreeObject() : m_objList(objList) {}
+	GameKDTreeObject() {}
 	GameErrorCode CreateTree(const wxVector<GameSceneObject*> &objList);
 	GameErrorCode UpdateTree(const wxVector<GameSceneObject*> &updList);
 	

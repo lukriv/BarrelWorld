@@ -10,7 +10,7 @@ public:
 		
 	virtual ~IGameObject() {}
 		
-}
+};
 
 
 #endif //__GAME_DRAWABLE_OBJECT_H__

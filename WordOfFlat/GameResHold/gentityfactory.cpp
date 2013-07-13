@@ -1,5 +1,6 @@
 #include "gentityfactory.h"
 
+#include <wx/scopedptr.h>
 
 GameErrorCode GameEntityFactory::CreateEntity(const EntityDef& entityDef, b2World& world, GameEntityBase*& pEntity)
 {
@@ -73,7 +74,7 @@ GameErrorCode GameEntityFactory::CreateEntityBasic(const EntityDef& entityDef, b
 			apShape.reset(pGeometry->CreatePhysShape());
 		}
 		
-		pFixtureDef.shape = apShape.get();
+		pFixtureDef->shape = apShape.get();
 		pBody->CreateFixture(pFixtureDef);
 	}
 	

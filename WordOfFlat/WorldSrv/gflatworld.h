@@ -9,7 +9,9 @@ typedef wxDword GameFlatWorldID;
 static const GameFlatWorldID GAME_FLAT_WRLD_UNKNOWN = 0;
 
 
-
+struct GameUpdateStruct {
+	wxDword m_category;
+};
 
 /*! This could store world object for 2D
  *  It could simulate this part of world
@@ -28,6 +30,6 @@ public:
 	
 	virtual GameErrorCode GetUpdateList(GameUpdateStruct** &updList, wxDword &listSize) = 0;
 	
-}
+};
 
 #endif //__GAME_FLAT_WORLD_SERVER_H__

@@ -1,6 +1,8 @@
 #ifndef __GAME_SCENE_GENERATOR_IMPLEMENTATION_H__
 #define __GAME_SCENE_GENERATOR_IMPLEMENTATION_H__
 
+#include <wx/atomic.h>
+#include "gscenegen.h"
 
 class GameTestSceneGenerator : public IGameSceneGenerator {
 	wxAtomicInt m_refCount;
