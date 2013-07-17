@@ -1,5 +1,8 @@
 #include "ggengeom.h"
 
+#include <wx/scopedptr.h>
+#include <Box2D/Box2D.h>
+
 void GameGLGeometry::AddVertex(const b2Vec2& vertex, const b2Vec2& texCoords)
 {
 	m_vertexList.push_back(vertex);

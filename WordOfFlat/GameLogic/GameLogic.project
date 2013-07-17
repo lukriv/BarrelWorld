@@ -91,4 +91,5 @@
   <VirtualDirectory Name="include">
     <File Name="glogicobj.h"/>
   </VirtualDirectory>
+  <Dependencies Name="Debug"/>
 </CodeLite_Project>

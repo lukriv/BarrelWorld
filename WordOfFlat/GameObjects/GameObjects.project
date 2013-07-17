@@ -13,6 +13,7 @@
     <File Name="ggengeom.cpp"/>
     <File Name="gkdtreeobj.cpp"/>
     <File Name="gsfmlgeom.cpp"/>
+    <File Name="ggeometry.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="gbintreeobj.h"/>
@@ -110,6 +111,6 @@
     <File Name="gsceneobj.h"/>
     <File Name="gsfmlgeom.h"/>
   </VirtualDirectory>
-  <Dependencies Name="Debug"/>
   <Dependencies Name="Release"/>
+  <Dependencies Name="Debug"/>
 </CodeLite_Project>

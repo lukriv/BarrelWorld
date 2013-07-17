@@ -1,7 +1,9 @@
 #ifndef __GAME_RESOURCE_HOLDER_H__
 #define __GAME_RESOURCE_HOLDER_H__
 
+#include <sfml/system/Mutex.hpp>
 #include "../GameSystem/glog.h"
+
 
 #include "gresloader.h"
 
@@ -12,6 +14,7 @@ class GameResourceHolder : public IRefObject {
 private:
 	static GameResourceHolder* g_pResourceHolder;
 private:
+	sf::Mutex m_resouceLocker;
 	wxAtomicInt m_refCount;
 	GameLoggerPtr m_spLogger;
 	IGameResourceLoader *m_pResLoader;
@@ -21,12 +24,12 @@ private:
 	TGamePhysJointMap m_physJointMap;
 	TGamePhysBodyMap m_physBodyMap;
 	TGamePhysFixMap m_physFixMap;
-	
-	wxCriticalSection m_resouceLocker;
-	
+		
 	bool m_isInitialized; 
 private:
-	GameResourceHolder(): m_refCount(1), m_pResLoader(NULL), m_isInitialized(false){}
+	GameResourceHolder(): m_refCount(1),
+				m_pResLoader(NULL),
+				m_isInitialized(false){}
 	~GameResourceHolder();
 	
 	GameErrorCode Initialize(GameLogger *pLogger, IGameResourceLoader *pLoader);
@@ -64,7 +67,7 @@ public:
 	 * \param[in] geomID wanted geometry object
 	 * \return Pointer to geometry object or NULL if geometry object was not found
 	 */
-	IGameGeometry* GetGeometry(GameShapeId geomID);
+	GameGeometryContainer* GetGeometry(GameShapeId geomID);
 	
 	/*! \brief Get joint definition
 	 * \param[in] jointID Joint identificator

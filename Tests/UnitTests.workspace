@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Workspace Name="UnitTests" Database="./UnitTests.tags">
   <Project Name="GameSystem" Path="../WordOfFlat/GameSystem/GameSystem.project" Active="No"/>
-  <Project Name="GameMsgCli" Path="../WordOfFlat/GameMsgCli/GameMsgCli.project" Active="No"/>
+  <Project Name="GameMsgCli" Path="../WordOfFlat/GameMsgCli/GameMsgCli.project" Active="Yes"/>
   <Project Name="GameMsgSrv" Path="../WordOfFlat/GameMsgSrv/GameMsgSrv.project" Active="No"/>
   <Project Name="ClientServerTests" Path="ClientServerTests/ClientServerTests.project" Active="No"/>
   <Project Name="Extern" Path="../WordOfFlat/Extern/Extern.project" Active="No"/>
@@ -9,7 +9,7 @@
   <Environment>
     <![CDATA[]]>
   </Environment>
-  <Project Name="GameSystemTests" Path="GameSystemTests/GameSystemTests.project" Active="Yes"/>
+  <Project Name="GameSystemTests" Path="GameSystemTests/GameSystemTests.project" Active="No"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="yes">
       <Project Name="ClientServerTests" ConfigName="Debug"/>

@@ -4,6 +4,8 @@
 #include "ggeometry.h"
 #include <sfml/Graphics.hpp>
 
+static const float Pixelize = 50.0f;
+
 /*!
  * \class GameGeometry 
  * \author Lukas
@@ -12,40 +14,25 @@
  * \brief Basic game geometry interface
  */
 class GameSFMLGeometry : public IGameGeometry {
-	sf::VertexArray *m_pVertexArray;
+	sf::VertexArray m_vertexArray;
 	b2AABB m_AABB;
 private:
 	void SetAABB() {
-		sf::FloatRect boundBox = m_pVertexArray->getBounds();
+		sf::FloatRect boundBox = m_vertexArray.getBounds();
 		m_AABB.lowerBound.x = boundBox.left;
-		m_AABB.lowerBound.y = boundBox.top - boundBox.height;
+		m_AABB.lowerBound.y = boundBox.top;
 		m_AABB.upperBound.x = boundBox.left + boundBox.width;
-		m_AABB.upperBound.y = boundBox.top;
+		m_AABB.upperBound.y = boundBox.top + boundBox.height;
 	}
 
 public:
-	GameSFMLGeometry() : m_pVertexArray(NULL) {}
-	GameSFMLGeometry(sf::VertexArray *pVerArr) : m_pVertexArray(pVerArr) {
-		SetAABB();
-	}
+	GameSFMLGeometry() {}
 	
 	virtual ~GameSFMLGeometry() {
-		if(m_pVertexArray != NULL) {
-			delete m_pVertexArray;
-			m_pVertexArray = NULL;
-		}
+		m_vertexArray.clear();
 	}
 	
-	void SetGeometry(sf::VertexArray *pVerArr) {
-		if (m_pVertexArray != NULL) {
-			delete m_pVertexArray;
-		}
-		
-		m_pVertexArray = pVerArr;
-		SetAABB();
-	}
-	
-	virtual b2Shape* CreatePhysShape() const;
+	virtual GameErrorCode Create(const GameGeometryContainer& geomCont);
 	
 	const b2AABB& GetAABB() const { return m_AABB;}
 	/*! \brief Draw geometry to RenderTarget
@@ -57,7 +44,7 @@ public:
 	 */
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const 
 	{
-		target.draw(*m_pVertexArray, states);
+		target.draw(m_vertexArray, states);
 	}
 };
 

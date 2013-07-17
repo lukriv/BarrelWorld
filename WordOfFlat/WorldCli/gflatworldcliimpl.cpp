@@ -73,6 +73,7 @@ GameErrorCode GameFlatWorldClient::SimulationStep()
 	for (iter = m_moveAbleObj.begin(); iter != m_moveAbleObj.end(); iter++)
 	{
 		(**iter).UpdatePosition();
+		(**iter).TraceLogInfo(m_spLogger);
 	}
 	
 	return result;
@@ -99,66 +100,46 @@ GameErrorCode GameFlatWorldClient::Initialize(sf::RenderTarget *pTarget, GameLog
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode GameFlatWorldClient::AddCharacterEntity(GameObjectId objId, GameEntityBase* pEntity)
+GameErrorCode GameFlatWorldClient::AddCharacterEntity(GameEntityBase* pEntity)
 {
 	GameErrorCode result = FWG_NO_ERROR;	
-	if (objId >= RESERVE_CONSTANT) return FWG_E_MEMORY_ALLOCATION_ERROR;
-	pEntity->SetObjID(objId);
-	
-	m_characters[objId] = pEntity;
-	
+	m_characters.push_back(pEntity);
 	m_objectMap.push_back(pEntity);
 
 	return result;
 }
 
-GameErrorCode GameFlatWorldClient::AddLandscapeEntity(GameObjectId objId, GameEntityBase* pEntity)
+GameErrorCode GameFlatWorldClient::AddLandscapeEntity( GameEntityBase* pEntity)
 {
 	GameErrorCode result = FWG_NO_ERROR;	
-	if (objId >= RESERVE_CONSTANT) return FWG_E_MEMORY_ALLOCATION_ERROR;
-	pEntity->SetObjID(objId);
-	
-	m_landscape[objId] = pEntity;
-	
+	m_landscape.push_back(pEntity);
 	m_objectMap.push_back(pEntity);
 
 	return result;
 }
 
-GameErrorCode GameFlatWorldClient::AddMoveableEntity(GameObjectId objId, GameEntityBase* pEntity)
+GameErrorCode GameFlatWorldClient::AddMoveableEntity(GameEntityBase* pEntity)
 {
 	GameErrorCode result = FWG_NO_ERROR;	
-	if (objId >= RESERVE_CONSTANT) return FWG_E_MEMORY_ALLOCATION_ERROR;
-	pEntity->SetObjID(objId);
-	
-	m_moveAbleObj[objId] = pEntity;
-	
+	m_moveAbleObj.push_back(pEntity);
 	m_objectMap.push_back(pEntity);
 
 	return result;
 }
 
-GameErrorCode GameFlatWorldClient::AddSenzorEntity(GameObjectId objId, GameEntityBase* pEntity)
+GameErrorCode GameFlatWorldClient::AddSenzorEntity(GameEntityBase* pEntity)
 {
 	GameErrorCode result = FWG_NO_ERROR;	
-	if (objId >= RESERVE_CONSTANT) return FWG_E_MEMORY_ALLOCATION_ERROR;
-	pEntity->SetObjID(objId);
-	
-	m_senzors[objId] = pEntity;
-	
+	m_senzors.push_back(pEntity);
 	m_objectMap.push_back(pEntity);
 
 	return result;
 }
 
-GameErrorCode GameFlatWorldClient::AddStaticEntity(GameObjectId objId, GameEntityBase* pEntity)
+GameErrorCode GameFlatWorldClient::AddStaticEntity(GameEntityBase* pEntity)
 {
 	GameErrorCode result = FWG_NO_ERROR;	
-	if (objId >= RESERVE_CONSTANT) return FWG_E_MEMORY_ALLOCATION_ERROR;
-	pEntity->SetObjID(objId);
-	
-	m_staticObj[objId] = pEntity;
-	
+	m_staticObj.push_back(pEntity);
 	m_objectMap.push_back(pEntity);
 
 	return result;

@@ -10,18 +10,35 @@
  * 
  *  Reflects OpenGL geometry types. Involve vertex order.
  */ 
-enum GameGometryType {
-	GAME_POINTS = GL_POINTS,
-	GAME_LINES = GL_LINES,
-	GAME_LINE_LOOP = GL_LINE_LOOP,
-	GAME_LINE_STRIP = GL_LINE_STRIP,
-	GAME_TRIANGLES = GL_TRIANGLES,
-	GAME_TRIANGLE_STRIP = GL_TRIANGLE_STRIP,
-	GAME_TRIANGLE_FAN = GL_TRIANGLE_FAN,
-	GAME_QUADS = GL_QUADS,
-	GAME_QUAD_STRIP = GL_QUAD_STRIP,
-	GAME_POLYGON = GL_POLYGON
-};
+ inline GameGeometryType ConversionGlPrimitives2GameGeomType(wxInt32 glPrim)
+ {
+	 switch (glPrim)
+	 {
+	 case GL_POINTS:
+		return GAME_GEOM_POINTS;
+	 case GL_LINES:
+		return GAME_GEOM_LINES;
+	 case GL_LINE_LOOP:
+		return GAME_GEOM_LINE_LOOP;
+	 case GL_LINE_STRIP:
+		return GAME_GEOM_LINE_STRIP;
+	 case GL_TRIANGLES:
+		return GAME_GEOM_TRIANGLES;
+	 case GL_TRIANGLE_STRIP:
+		return GAME_GEOM_TRIANGLE_STRIP;
+	 case GL_TRIANGLE_FAN:
+		return GAME_GEOM_TRIANGLE_FAN;
+	 case GL_QUADS:
+		return GAME_GEOM_QUADS;
+	 case GL_QUAD_STRIP:
+		return GAME_GEOM_QUAD_STRIP;
+	 case GL_POLYGON:
+		return GAME_GEOM_POLYGON;
+	 default:
+		return GAME_GEOM_UNDEFINED;
+	 }
+ }
+
 
 
 /*!
@@ -32,7 +49,7 @@ enum GameGometryType {
  * \brief Basic game geometry
  */
 class GameGLGeometry : public IGameGeometry {
-	GameGometryType m_geomType;
+	GameGeometryType m_geomType;
 	wxVector<b2Vec2> m_vertexList;
 	wxVector<b2Vec2> m_texCoordsList;
 	wxVector<b2Vec3> m_normalList;
@@ -41,10 +58,10 @@ class GameGLGeometry : public IGameGeometry {
 private:
 	void DeleteList();
 public:
-	GameGLGeometry(GameGometryType geomType) : m_geomType(geomType), m_glList(0) {}
+	GameGLGeometry(GameGeometryType geomType) : m_geomType(geomType), m_glList(0) {}
 	virtual ~GameGLGeometry();
 	
-	GameGometryType GetType() { return m_geomType;}
+	GameGeometryType GetType() { return m_geomType;}
 	
 	const b2AABB& GetAABB() const {return m_AABB;}
 	
