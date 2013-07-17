@@ -18,7 +18,7 @@ public:
 	virtual GameErrorCode LoadTextureFromFile(const wxChar* texFileName, sf::Texture *&pTex);
 
 	virtual GameErrorCode LoadTexture(GameTextureId texID, sf::Texture *&pTex);
-	virtual GameErrorCode LoadGeometry(GameShapeId geomID, IGameGeometry *&pShape);
+	virtual GameErrorCode LoadGeometry(GameShapeId geomID, GameGeometryContainer *&pShape);
 	virtual GameErrorCode LoadPhysJoint(GamePhysObjId jointID, b2JointDef *&pJointDef);
 	virtual GameErrorCode LoadPhysBody(GamePhysObjId bodyID, b2BodyDef *&pBodyDef);
 	virtual GameErrorCode LoadPhysFixture(GamePhysObjId fixID, b2FixtureDef *&pFixDef);

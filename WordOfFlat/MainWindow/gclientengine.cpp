@@ -55,7 +55,7 @@ GameErrorCode GameClientEngine::Initialize(GameLogger* pLogger)
 		return result;
 	}
 	
-	m_spResHolder.Attach(GameResourceHolder::GetResourceHolder());
+	m_spResHolder = GameResourceHolder::GetResourceHolder();
 	
 	m_pSceneGenerator = new (std::nothrow) GameTestSceneGenerator();
 	if (m_pSceneGenerator == NULL) 
@@ -63,8 +63,15 @@ GameErrorCode GameClientEngine::Initialize(GameLogger* pLogger)
 		return FWG_E_MEMORY_ALLOCATION_ERROR;
 	}
 	
-	m_pEntityFactory = new (std::nothrow) GameEntityFactory(m_spResHolder.In());
+	m_pEntityFactory = new (std::nothrow) GameEntityFactory();
 	if (m_pEntityFactory == NULL) return FWG_E_MEMORY_ALLOCATION_ERROR;
+	
+	if(FWG_FAILED(result = m_pEntityFactory->Initialize(m_spResHolder.In(), pLogger))) 
+	{
+		FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::Initialize() : Initialize entity factory failed: 0x%08x"),
+			m_pLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
 	
 	m_isInitialized = false;
 	return result;
@@ -99,6 +106,9 @@ GameErrorCode GameClientEngine::MainLoop()
             if (event.type == sf::Event::Closed)
                 m_renderWindow->close();
         }
+		
+		 // Clear screen
+		m_renderWindow->clear();
 		 
 		if (FWG_FAILED(result = m_pActualFlatWorldClient->DrawStep()))
 		{
@@ -107,12 +117,14 @@ GameErrorCode GameClientEngine::MainLoop()
 			return result;
 		}
 		
-		if (FWG_FAILED(result = m_pActualFlatWorldClient->SimulationStep()))
+		/*if (FWG_FAILED(result = m_pActualFlatWorldClient->SimulationStep()))
 		{
 			FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::MainLoop() : SimulationStep failed: 0x%08x"),
 				m_pLogger, result, FWGLOG_ENDVAL);
 			return result;
-		}
+		}*/
+		
+		m_renderWindow->display();
 
     }
 	
@@ -125,7 +137,6 @@ GameErrorCode GameClientEngine::CreateTestingWorld()
 {
 	GameErrorCode result = FWG_NO_ERROR;
 	GameEntityBase* pEntity = NULL;
-	wxInt32 i = 0;
 	m_pActualFlatWorldClient = new (std::nothrow) GameFlatWorldClient();
 	if(m_pActualFlatWorldClient == NULL)
 	{
@@ -153,7 +164,6 @@ GameErrorCode GameClientEngine::CreateTestingWorld()
 		return result;
 	}
 	
-	i = 0;
 	for (entDefIter = worldObjDefs.begin(); entDefIter != worldObjDefs.end(); entDefIter++)
 	{
 		
@@ -164,7 +174,7 @@ GameErrorCode GameClientEngine::CreateTestingWorld()
 			return result;
 		}
 		
-		if(FWG_FAILED(result = m_pActualFlatWorldClient->AddLandscapeEntity(i, pEntity)))
+		if(FWG_FAILED(result = m_pActualFlatWorldClient->AddLandscapeEntity(pEntity)))
 		{
 			FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::CreateTestingWorld() : Add entity failed: 0x%08x"),
 				m_pLogger, result, FWGLOG_ENDVAL);
@@ -181,7 +191,6 @@ GameErrorCode GameClientEngine::CreateTestingWorld()
 		return result;
 	}
 	
-	i = 0;
 	for (entDefIter = worldObjDefs.begin(); entDefIter != worldObjDefs.end(); entDefIter++)
 	{
 		
@@ -192,7 +201,7 @@ GameErrorCode GameClientEngine::CreateTestingWorld()
 			return result;
 		}
 		
-		if(FWG_FAILED(result = m_pActualFlatWorldClient->AddMoveableEntity(i, pEntity)))
+		if(FWG_FAILED(result = m_pActualFlatWorldClient->AddMoveableEntity(pEntity)))
 		{
 			FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::CreateTestingWorld() : Add entity failed: 0x%08x"),
 				m_pLogger, result, FWGLOG_ENDVAL);

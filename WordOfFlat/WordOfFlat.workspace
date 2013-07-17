@@ -16,35 +16,33 @@
   <Project Name="GameResHold" Path="GameResHold/GameResHold.project" Active="No"/>
   <Project Name="GameLoader" Path="GameLoader/GameLoader.project" Active="No"/>
   <BuildMatrix>
-    <WorkspaceConfiguration Name="Debug" Selected="no">
+    <WorkspaceConfiguration Name="Debug" Selected="yes">
+      <Project Name="Extern" ConfigName="Debug"/>
       <Project Name="GameComm" ConfigName="Debug"/>
+      <Project Name="GameLoader" ConfigName="Debug"/>
+      <Project Name="GameLogic" ConfigName="Debug"/>
       <Project Name="GameMsgCli" ConfigName="Debug"/>
       <Project Name="GameMsgSrv" ConfigName="Debug"/>
       <Project Name="GameObjects" ConfigName="Debug"/>
+      <Project Name="GameResHold" ConfigName="Debug"/>
       <Project Name="GameSystem" ConfigName="Debug"/>
       <Project Name="MainWindow" ConfigName="Debug"/>
       <Project Name="WorldCli" ConfigName="Debug"/>
       <Project Name="WorldSrv" ConfigName="Debug"/>
-      <Project Name="Extern" ConfigName="Debug"/>
-      <Project Name="GameLogic" ConfigName="Debug"/>
-      <Project Name="GameLogic" ConfigName="Debug"/>
-      <Project Name="GameResHold" ConfigName="Debug"/>
-      <Project Name="GameLoader" ConfigName="Debug"/>
     </WorkspaceConfiguration>
-    <WorkspaceConfiguration Name="Release" Selected="yes">
-      <Project Name="MainWindow" ConfigName="Release"/>
-      <Project Name="GameObjects" ConfigName="Release"/>
-      <Project Name="GameSystem" ConfigName="Release"/>
-      <Project Name="WorldSrv" ConfigName="Release"/>
-      <Project Name="WorldCli" ConfigName="Release"/>
+    <WorkspaceConfiguration Name="Release" Selected="no">
+      <Project Name="Extern" ConfigName="Debug"/>
+      <Project Name="GameComm" ConfigName="Release"/>
+      <Project Name="GameLoader" ConfigName="Release"/>
+      <Project Name="GameLogic" ConfigName="Release"/>
       <Project Name="GameMsgCli" ConfigName="Release"/>
       <Project Name="GameMsgSrv" ConfigName="Release"/>
-      <Project Name="GameComm" ConfigName="Release"/>
-      <Project Name="Extern" ConfigName="Debug"/>
-      <Project Name="GameLogic" ConfigName="Release"/>
-      <Project Name="GameLogic" ConfigName="Release"/>
+      <Project Name="GameObjects" ConfigName="Release"/>
       <Project Name="GameResHold" ConfigName="Release"/>
-      <Project Name="GameLoader" ConfigName="Release"/>
+      <Project Name="GameSystem" ConfigName="Release"/>
+      <Project Name="MainWindow" ConfigName="Release"/>
+      <Project Name="WorldCli" ConfigName="Release"/>
+      <Project Name="WorldSrv" ConfigName="Release"/>
     </WorkspaceConfiguration>
   </BuildMatrix>
 </CodeLite_Workspace>

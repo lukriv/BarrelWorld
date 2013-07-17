@@ -24,6 +24,7 @@ GameErrorCode GameEntityFactory::CreateEntityBasic(const EntityDef& entityDef, b
 	wxScopedPtr<GameEntity> spEntity;
 	wxVector<GamePhysObjId> physObjsList;
 	wxVector<GamePhysObjId>::iterator iter;
+	GameGeometryContainer *pGeomCont = NULL;
 	wxDword i = 0;
 	b2Body *pBody = NULL;
 	
@@ -32,17 +33,34 @@ GameErrorCode GameEntityFactory::CreateEntityBasic(const EntityDef& entityDef, b
 		return FWG_E_MEMORY_ALLOCATION_ERROR;
 	}
 	
-	if (entityDef.m_textureRefs.size() > 1) {
+	if (entityDef.m_textureRefs.size() > 0) {
 		sf::Texture *pTexture = m_spResHolder->GetTexture(entityDef.m_textureRefs[0]);
+		if (pTexture == NULL)
+		{
+			FWGLOG_WARNING_FORMAT(wxT("GameEntityFactory::CreateEntityBasic() : Texture (%u) not found"),
+				m_spLogger, entityDef.m_textureRefs[0], FWGLOG_ENDVAL);
+		}
 		spEntity->SetTexture(pTexture);
 	}
 	
-	if (entityDef.m_geometryRefs.size() > 1) {
-		
-		spEntity->SetGeometry(m_spResHolder->GetGeometry(entityDef.m_geometryRefs[0]));
+	if (entityDef.m_geometryRefs.size() > 0) {
+		pGeomCont = m_spResHolder->GetGeometry(entityDef.m_geometryRefs[0]));
+		if(pGeomCont == NULL) {
+			FWGLOG_ERROR(wxT("GameEntityFactory::CreateEntityBasic() : Geometry not found"), m_spLogger);
+			return result;
+		}
+		wxScopedPtr<IGameGeometry> apGeom(new (std::nothrow) GameSFMLGeometry());
+		if (apGeom.get() == NULL) return FWG_E_MEMORY_ALLOCATION_ERROR;
+		if (FWG_FAILED(result = apGeom->Create(*pGeom)))
+		{
+			FWGLOG_ERROR_FORMAT(wxT("GameEntityFactory::CreateEntityBasic() : Geometry creation failed: 0x%08x"),
+				m_spLogger, result, FWGLOG_ENDVAL);
+			return result;
+		}
+		spEntity->SetGeometry(apGeom.release());
 	}
 	
-	if (entityDef.m_physRefs.size() > 1) {
+	if (entityDef.m_physRefs.size() > 0) {
 		b2BodyDef *pBodyDef = NULL;
 		if (FWG_FAILED(result = m_spResHolder->GetBodyDef(entityDef.m_physRefs[0], pBodyDef, physObjsList)))
 		{
@@ -54,6 +72,10 @@ GameErrorCode GameEntityFactory::CreateEntityBasic(const EntityDef& entityDef, b
 		pBodyDef->userData = static_cast<void*>(spEntity.get());
 		pBody = world.CreateBody(pBodyDef);
 		spEntity->SetBody(pBody);
+		FWGLOG_DEBUG_FORMAT(wxT("GameEntityFactory::CreateEntityBasic() : Body created position[%0.3f, %0.3f], angle[%0.3f]"),
+			m_spLogger, entityDef.m_tranformation.p.x, entityDef.m_tranformation.p.y,
+			entityDef.m_tranformation.q.GetAngle(),
+			FWGLOG_ENDVAL);
 	}
 	
 	for (iter = physObjsList.begin(); iter != physObjsList.end(); iter++)
@@ -66,17 +88,20 @@ GameErrorCode GameEntityFactory::CreateEntityBasic(const EntityDef& entityDef, b
 		{
 			FWGLOG_ERROR_FORMAT(wxT("GameEntityFactory::CreateEntityBasic() : Get body def failed: 0x%08x"),
 				m_spLogger, result, FWGLOG_ENDVAL);
+			return result;
 		}
 		
-		pGeometry = m_spResHolder->GetGeometry(shapeId);
-		if(pGeometry != NULL)
+		pGeomCont = m_spResHolder->GetGeometry(shapeId);
+		if(pGeomCont != NULL)
 		{
-			apShape.reset(pGeometry->CreatePhysShape());
+			apShape.reset(pGeomCont->CreatePhysShape());
 		}
 		
 		pFixtureDef->shape = apShape.get();
 		pBody->CreateFixture(pFixtureDef);
 	}
+	spEntity->setPosition(Pixelize * entityDef.m_tranformation.p.x, Pixelize * entityDef.m_tranformation.p.y);
+	spEntity->setRotation(entityDef.m_tranformation.q.GetAngle());
 	
 	pEntity = spEntity.release();
 	
@@ -105,6 +130,13 @@ wxInt32 GameEntityFactory::release()
 		delete this;
 	}
 	return refCount;
+}
+
+GameErrorCode GameEntityFactory::Initialize(GameResourceHolder* pResHolder, GameLogger* pLogger)
+{
+	m_spResHolder = pResHolder;
+	m_spLogger = pLogger;
+	return FWG_NO_ERROR;
 }
 
 

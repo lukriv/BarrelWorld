@@ -63,11 +63,11 @@ public:
 	 * \retval FWG_NO_ERROR On success
 	 * \retval FWG_E_INVALID_PARAMETER_ERROR if objID is not unique or pEntity is NULL
 	 */
-	GameErrorCode AddLandscapeEntity( GameObjectId objId, GameEntityBase* pEntity);
-	GameErrorCode AddStaticEntity( GameObjectId objId, GameEntityBase* pEntity);
-	GameErrorCode AddMoveableEntity( GameObjectId objId, GameEntityBase* pEntity);
-	GameErrorCode AddCharacterEntity( GameObjectId objId, GameEntityBase* pEntity);
-	GameErrorCode AddSenzorEntity( GameObjectId objId, GameEntityBase* pEntity);
+	GameErrorCode AddLandscapeEntity( GameEntityBase* pEntity);
+	GameErrorCode AddStaticEntity( GameEntityBase* pEntity);
+	GameErrorCode AddMoveableEntity( GameEntityBase* pEntity);
+	GameErrorCode AddCharacterEntity( GameEntityBase* pEntity);
+	GameErrorCode AddSenzorEntity( GameEntityBase* pEntity);
 	
 	//TODO: Getters for texture, geometry, entities
 	/*! \brief Get entity with coresponding ID

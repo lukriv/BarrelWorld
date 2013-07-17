@@ -1,12 +1,12 @@
-#include "gsfmlgeom.h"
+#include "ggeometry.h"
+
+#include <wx/scopedptr.h>
+#include <Box2D/Box2D.h>
 
 
-
-GameErrorCode GameSFMLGeometry::Create(const GameGeometryContainer& geomCont)
+b2Shape* GameGeometryContainer::CreatePhysShape() const
 {
-	m_vertexArray.clear();
-	
-	switch(geomCont.m_type)
+	switch(m_type)
 	{
 	case GAME_GEOM_POINTS:         ///< List of individual points
 	case GAME_GEOM_LINES:          ///< List of individual lines
@@ -18,33 +18,20 @@ GameErrorCode GameSFMLGeometry::Create(const GameGeometryContainer& geomCont)
 		break;
 		
     case GAME_GEOM_QUADS: 
-		// set type
-		m_vertexArray.setPrimitiveType(sf::Quads);
-		m_vertexArray.resize(4);
+		wxScopedPtr<b2PolygonShape> apPolyShape;
+		apPolyShape.reset(new (std::nothrow) b2PolygonShape());
+		b2Vec2 vertices[4];
 		for (wxInt32 i = 0; i < 4; i++)
 		{
-			if(geomCont.m_vertexes.size() > i)
-			{
-				m_vertexArray[i].position = sf::Vector2f(Pixelize * geomCont.m_vertexes[i].x, Pixelize * geomCont.m_vertexes[i].y);
-			}
-			
-			if(geomCont.m_texCoords.size() > i)
-			{
-				m_vertexArray[i].texCoords = sf::Vector2f(geomCont.m_texCoords[i].x, geomCont.m_texCoords[i].y);
-			}
-			
-			if (geomCont.m_colors.size() > i)
-			{
-				m_vertexArray[i].color = geomCont.m_colors[i];
-			}
+			vertices[i].Set((m_vertexes[i].x, m_vertexes[i].y);
 		}
-
-		return FWG_NO_ERROR;
+		apPolyShape->Set(vertices, 4);
+		return apPolyShape.release();
 		
 	case GAME_GEOM_QUAD_STRIP:
 	case GAME_GEOM_POLYGON:
 		break;
 	}
 	
-	return FWG_E_NOT_IMPLEMENTED_ERROR;
+	return NULL;
 }

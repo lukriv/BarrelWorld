@@ -1,8 +1,9 @@
-
 #include <stdio.h>
 #include <iostream>
-#include <wx/init.h>
 
+#include <wx/init.h>
+#include <wx/wxcrtvararg.h>
+#include <wx/log.h>
 //#include "../../extern/include/wx/string.h"
 //#include "../../extern/include/wx/file.h"
 
@@ -19,11 +20,13 @@ int main(int argc, char **argv)
 	wxInitializer initializer;
 	RefObjSmPtr<GameLogger> spLogger;
 	
-    if ( !initializer )
-    {
-        printf("Failed to initialize the wxWidgets library, aborting.");
-        return -1;
-    }
+	
+	wxInitializer intializer(argc, argv);
+	if (!intializer.IsOk())
+	{
+		wxPrintf(wxT("Failed to initialize the wxWidgets library, aborting."));
+		return -1;
+	}
 	
  	if (FWG_FAILED(GameLoggerCreator::CreateLogger(spLogger.OutRef(),wxT("default"))))
 	{

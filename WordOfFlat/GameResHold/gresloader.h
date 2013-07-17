@@ -20,7 +20,7 @@ public:
 
 struct GameGeomResItem {
 	wxInt32 m_refCount;
-	IGameGeometry *m_pGeometry;
+	GameGeometryContainer *m_pGeometry;
 public:
 	GameGeomResItem() : m_refCount(0), m_pGeometry(NULL) {}
 };
@@ -69,7 +69,7 @@ public:
 	virtual GameErrorCode LoadTextureFromFile(const wxChar* texFileName, sf::Texture *&pTex) = 0;
 	
 	virtual GameErrorCode LoadTexture(GameTextureId texID, sf::Texture *&pTex) = 0;
-	virtual GameErrorCode LoadGeometry(GameShapeId geomID, IGameGeometry *&pShape) = 0;
+	virtual GameErrorCode LoadGeometry(GameShapeId geomID, GameGeometryContainer *&pShape) = 0;
 	virtual GameErrorCode LoadPhysJoint(GamePhysObjId jointID, b2JointDef *&pJointDef) = 0;
 	virtual GameErrorCode LoadPhysBody(GamePhysObjId bodyID, b2BodyDef *&pBodyDef) = 0;
 	virtual GameErrorCode LoadPhysFixture(GamePhysObjId fixID, b2FixtureDef *&pFixDef) = 0;

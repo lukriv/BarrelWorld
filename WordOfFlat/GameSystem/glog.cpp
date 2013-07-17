@@ -1,5 +1,4 @@
 #include "glog.h"
-#include <wx/log.h>
 #include <wx/datetime.h>
 #include <cstdio>
 #include "glogconst.h"

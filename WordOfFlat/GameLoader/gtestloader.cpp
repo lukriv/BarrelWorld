@@ -12,7 +12,7 @@ GameErrorCode GameTestResourceLoader::Initialize(GameLogger* pLogger)
 		return FWG_NO_ERROR;
 	}
 	
-	m_spLogger.Attach(pLogger);
+	m_spLogger = pLogger;
 	
 	m_isInitialized = true;
 	return FWG_NO_ERROR;
@@ -29,44 +29,40 @@ GameErrorCode GameTestResourceLoader::LoadGeometryList(TGameGeometryMap& geomLis
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode GameTestResourceLoader::LoadGeometry(GameShapeId geomID, IGameGeometry*& pShape)
+GameErrorCode GameTestResourceLoader::LoadGeometry(GameShapeId geomID, GameGeometryContainer*& pShape)
 {	
-	wxScopedPtr<sf::VertexArray> apVertexArray;
-	wxScopedPtr<GameSFMLGeometry> apGeometry;
+	wxScopedPtr<GameGeometryContainer> apGeometry;
 	pShape = NULL;
 	
-	if (geomID == 1)
-	{
-		apVertexArray.reset(new (std::nothrow) sf::VertexArray(sf::Quads, 4));
-		(*apVertexArray)[0].position = sf::Vector2f(-0.5f, -0.5f);
-		(*apVertexArray)[1].position = sf::Vector2f(0.5f, -0.5f);
-		(*apVertexArray)[2].position = sf::Vector2f(0.5f, 0.5f);
-		(*apVertexArray)[3].position = sf::Vector2f(-0.5f, 0.5f);
-		
-		(*apVertexArray)[0].texCoords = sf::Vector2f(0, 0);
-		(*apVertexArray)[1].texCoords = sf::Vector2f(256, 0);
-		(*apVertexArray)[2].texCoords = sf::Vector2f(256, 256);
-		(*apVertexArray)[3].texCoords = sf::Vector2f(0, 256);
-		
-		apGeometry.reset(new (std::nothrow) GameSFMLGeometry(apVertexArray.release()));
-		if (apGeometry.get() == NULL) return FWG_E_MEMORY_ALLOCATION_ERROR;
-	}
+	apGeometry.reset(new (std::nothrow) GameGeometryContainer());
+	if (apGeometry.get() == NULL) return FWG_E_MEMORY_ALLOCATION_ERROR;
 	
-	if (geomID == 2)
+	switch (geomID)
 	{
-		apVertexArray.reset(new (std::nothrow) sf::VertexArray(sf::Quads, 4));
-		(*apVertexArray)[0].position = sf::Vector2f(-10, -0.5f);
-		(*apVertexArray)[1].position = sf::Vector2f(10, -0.5f);
-		(*apVertexArray)[2].position = sf::Vector2f(10, 0.5f);
-		(*apVertexArray)[3].position = sf::Vector2f(-10, 0.5f);
+	case 1:
+		apGeometry->m_type = GAME_GEOM_QUADS;
+		apGeometry->m_vertexes[0] = b2Vec2(-0.5f, -0.5f);
+		apGeometry->m_vertexes[1] = b2Vec2(0.5f, -0.5f);
+		apGeometry->m_vertexes[2] = b2Vec2(0.5f, 0.5f);
+		apGeometry->m_vertexes[3] = b2Vec2(-0.5f, 0.5f);
 		
-		(*apVertexArray)[0].texCoords = sf::Vector2f(0, 0);
-		(*apVertexArray)[1].texCoords = sf::Vector2f(256, 0);
-		(*apVertexArray)[2].texCoords = sf::Vector2f(256, 256);
-		(*apVertexArray)[3].texCoords = sf::Vector2f(0, 256);
+		apGeometry->m_texCoords[0] = b2Vec2(0, 0);
+		apGeometry->m_texCoords[1] = b2Vec2(255, 0);
+		apGeometry->m_texCoords[2] = b2Vec2(255, 255);
+		apGeometry->m_texCoords[3] = b2Vec2(0, 255);
+		break;
+	case 2:
+		apGeometry->m_type = GAME_GEOM_QUADS;
+		apGeometry->m_vertexes[0] = b2Vec2(-10, -0.5f);
+		apGeometry->m_vertexes[1] = b2Vec2(10, -0.5f);
+		apGeometry->m_vertexes[2] = b2Vec2(10, 0.5f);
+		apGeometry->m_vertexes[3] = b2Vec2(-10, 0.5f);
 		
-		apGeometry.reset(new (std::nothrow) GameSFMLGeometry(apVertexArray.release()));
-		if (apGeometry.get() == NULL) return FWG_E_MEMORY_ALLOCATION_ERROR;
+		apGeometry->m_texCoords[0] = b2Vec2(0, 0);
+		apGeometry->m_texCoords[1] = b2Vec2(255, 0);
+		apGeometry->m_texCoords[2] = b2Vec2(255, 255);
+		apGeometry->m_texCoords[3] = b2Vec2(0, 255);
+		break;
 	}
 	
 	pShape = apGeometry.release();
@@ -200,10 +196,12 @@ GameErrorCode GameTestResourceLoader::LoadPhysFixture(GamePhysObjId fixID, b2Fix
 		apFixtureDef->friction = 0.5;
 		apFixtureDef->restitution = 0.2;
 		apFixtureDef->density = 100;
+		break;
 	case 2:
 		apFixtureDef->friction = 0.7;
 		apFixtureDef->restitution = 0.2;
 		apFixtureDef->density = 0;
+		break;
 	default:
 		return FWG_E_OBJECT_NOT_FOUND_ERROR;
 	}

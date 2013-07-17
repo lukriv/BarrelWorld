@@ -4,6 +4,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <wx/vector.h>
+#include "../GameSystem/glog.h"
 #include "gsceneobj.h"
 #include "ggeometry.h"
 /*!
@@ -24,6 +25,7 @@ public:
 	GameObjectType GetType() {return m_enType;}
 	
 	virtual void UpdatePosition() = 0;
+	virtual void TraceLogInfo(GameLogger *pLogger) = 0;
 };
 
 
@@ -55,6 +57,7 @@ public:
 	
 public:
 	virtual void UpdatePosition();
+	virtual void TraceLogInfo(GameLogger *pLogger);
 	
 public:	
 	virtual void draw( sf::RenderTarget& target, sf::RenderStates states) const;
@@ -80,6 +83,7 @@ public:
 
 public:
 	virtual void UpdatePosition();
+	virtual void TraceLogInfo(GameLogger *pLogger);
 	
 public:	
 	virtual void draw( sf::RenderTarget& target, sf::RenderStates states) const;

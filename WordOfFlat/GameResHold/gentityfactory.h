@@ -16,7 +16,9 @@ private:
 	GameErrorCode CreateEntityBasic(const EntityDef &entityDef, b2World &world, GameEntityBase *&pEntity);
 	GameErrorCode CreateEntityGroup(const EntityDef &entityDef, b2World &world, GameEntityBase *&pEntity);
 public:
-	GameEntityFactory(GameResourceHolder *pResHolder) : m_refCount(1){}
+	GameEntityFactory() : m_refCount(1){}
+	
+	GameErrorCode Initialize(GameResourceHolder *pResHolder, GameLogger *pLogger);
 	
 	GameErrorCode CreateEntity(const EntityDef &entityDef, b2World &world, GameEntityBase *&pEntity);
 	

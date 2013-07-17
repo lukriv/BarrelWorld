@@ -11,3 +11,9 @@ void GameEntity::UpdatePosition()
 	setPosition(m_pBody->GetPosition().x, m_pBody->GetPosition().y);
 	setRotation(m_pBody->GetAngle());
 }
+
+void GameEntity::TraceLogInfo(GameLogger* pLogger)
+{
+	FWGLOG_TRACE_FORMAT(wxT("GameEntity::TraceLogInfo() : Entity position [%0.3f,%0.3f], angle [%0.3f]"),
+		pLogger, m_pBody->GetPosition().x, m_pBody->GetPosition().y, m_pBody->GetAngle(), FWGLOG_ENDVAL);
+}
