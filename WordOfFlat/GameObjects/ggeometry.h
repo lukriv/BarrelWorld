@@ -35,6 +35,7 @@ public:
 	}
 	
 	b2Shape* CreatePhysShape() const;
+	b2AABB ComputeAABB() const;
 	
 };
 

@@ -4,8 +4,6 @@
 #include "ggeometry.h"
 #include <sfml/Graphics.hpp>
 
-static const float Pixelize = 50.0f;
-
 /*!
  * \class GameGeometry 
  * \author Lukas

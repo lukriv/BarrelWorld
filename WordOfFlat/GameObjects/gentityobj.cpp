@@ -3,13 +3,13 @@
 void GameEntity::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	sf::RenderStates renStates(sf::BlendNone, getTransform(), m_pTexture, NULL);
-	m_pGeometry->draw(target, states);
+	m_pGeometry->draw(target, renStates);
 }
 
 void GameEntity::UpdatePosition()
 {
-	setPosition(m_pBody->GetPosition().x, m_pBody->GetPosition().y);
-	setRotation(m_pBody->GetAngle());
+	SetPosition(m_pBody->GetPosition().x, m_pBody->GetPosition().y);
+	SetRotation(m_pBody->GetAngle());
 }
 
 void GameEntity::TraceLogInfo(GameLogger* pLogger)

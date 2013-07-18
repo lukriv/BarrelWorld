@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include <wx/vector.h>
 #include "../GameSystem/glog.h"
+#include "gtransformable.h"
 #include "gsceneobj.h"
 #include "ggeometry.h"
 /*!
@@ -14,7 +15,7 @@
  * \file gentityobj.h
  * \brief Entity base class
  */
-class GameEntityBase : public GameSceneObject, public sf::Transformable {
+class GameEntityBase : public GameSceneObject, public GameTransformable {
 	GameObjStateStruct m_state;
 private:
 	GameObjectType m_enType;
@@ -24,6 +25,9 @@ public:
 	GameObjStateStruct& GetObjectState() { return m_state;}
 	GameObjectType GetType() {return m_enType;}
 	
+
+	
+public:
 	virtual void UpdatePosition() = 0;
 	virtual void TraceLogInfo(GameLogger *pLogger) = 0;
 };
