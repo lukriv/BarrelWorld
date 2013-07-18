@@ -110,6 +110,7 @@
     <File Name="gkdtreeobj.h"/>
     <File Name="gsceneobj.h"/>
     <File Name="gsfmlgeom.h"/>
+    <File Name="gtransformable.h"/>
   </VirtualDirectory>
   <Dependencies Name="Release"/>
   <Dependencies Name="Debug"/>

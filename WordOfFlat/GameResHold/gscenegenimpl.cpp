@@ -22,7 +22,8 @@ GameErrorCode GameTestSceneGenerator::GenLandscape(const TGameWorldSegmentID& wr
 	entity.m_physRefs.push_back(2);
 	entity.m_textureRefs.push_back(2);
 	entity.m_tranformation.p.Set(0.0f, -10.0f);
-	
+	entity.m_tranformation.q.Set(0.0f);
+	entity.m_textureRepeat = true;
 	landscape.push_back(entity);
 	
 	return FWG_NO_ERROR;
@@ -37,7 +38,8 @@ GameErrorCode GameTestSceneGenerator::GenMoveableObj(const TGameWorldSegmentID& 
 	entity.m_geometryRefs.push_back(1);
 	entity.m_physRefs.push_back(1);
 	entity.m_textureRefs.push_back(1);
-	entity.m_tranformation.p.Set(0.0f, 0.0f);
+	entity.m_tranformation.p.Set(0.0f, 2.0f);
+	entity.m_tranformation.q.Set(0.0f);
 	
 	moveableObjs.push_back(entity);
 	

@@ -9,6 +9,8 @@ typedef wxDword GamePhysObjId; //!< Physics object id type
 typedef wxDword GameObjectId; //!< Object id type
 
 
+static const float Pixelize = 50.0f; //!< Conversion from meters to pixels (one meter is 50 pixels)
+
 
 static const GameTextureId GAME_TEXTURE_ID_UNKNOWN = UINT_MAX;
 static const GameShapeId GAME_SHAPE_ID_UNKNOWN = UINT_MAX;

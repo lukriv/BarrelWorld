@@ -14,7 +14,7 @@ class GameResourceHolder : public IRefObject {
 private:
 	static GameResourceHolder* g_pResourceHolder;
 private:
-	sf::Mutex m_resouceLocker;
+	wxCriticalSection m_resouceLocker;
 	wxAtomicInt m_refCount;
 	GameLoggerPtr m_spLogger;
 	IGameResourceLoader *m_pResLoader;

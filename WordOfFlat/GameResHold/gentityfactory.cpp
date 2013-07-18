@@ -1,6 +1,7 @@
 #include "gentityfactory.h"
 
 #include <wx/scopedptr.h>
+#include "../GameObjects/gsfmlgeom.h"
 
 GameErrorCode GameEntityFactory::CreateEntity(const EntityDef& entityDef, b2World& world, GameEntityBase*& pEntity)
 {
@@ -39,19 +40,21 @@ GameErrorCode GameEntityFactory::CreateEntityBasic(const EntityDef& entityDef, b
 		{
 			FWGLOG_WARNING_FORMAT(wxT("GameEntityFactory::CreateEntityBasic() : Texture (%u) not found"),
 				m_spLogger, entityDef.m_textureRefs[0], FWGLOG_ENDVAL);
+		} else {
+			pTexture->setRepeated(entityDef.m_textureRepeat);
 		}
 		spEntity->SetTexture(pTexture);
 	}
 	
 	if (entityDef.m_geometryRefs.size() > 0) {
-		pGeomCont = m_spResHolder->GetGeometry(entityDef.m_geometryRefs[0]));
+		pGeomCont = m_spResHolder->GetGeometry(entityDef.m_geometryRefs[0]);
 		if(pGeomCont == NULL) {
 			FWGLOG_ERROR(wxT("GameEntityFactory::CreateEntityBasic() : Geometry not found"), m_spLogger);
 			return result;
 		}
 		wxScopedPtr<IGameGeometry> apGeom(new (std::nothrow) GameSFMLGeometry());
 		if (apGeom.get() == NULL) return FWG_E_MEMORY_ALLOCATION_ERROR;
-		if (FWG_FAILED(result = apGeom->Create(*pGeom)))
+		if (FWG_FAILED(result = apGeom->Create(*pGeomCont)))
 		{
 			FWGLOG_ERROR_FORMAT(wxT("GameEntityFactory::CreateEntityBasic() : Geometry creation failed: 0x%08x"),
 				m_spLogger, result, FWGLOG_ENDVAL);
@@ -100,8 +103,8 @@ GameErrorCode GameEntityFactory::CreateEntityBasic(const EntityDef& entityDef, b
 		pFixtureDef->shape = apShape.get();
 		pBody->CreateFixture(pFixtureDef);
 	}
-	spEntity->setPosition(Pixelize * entityDef.m_tranformation.p.x, Pixelize * entityDef.m_tranformation.p.y);
-	spEntity->setRotation(entityDef.m_tranformation.q.GetAngle());
+	spEntity->SetPosition(entityDef.m_tranformation.p.x, entityDef.m_tranformation.p.y);
+	spEntity->SetRotation(entityDef.m_tranformation.q.GetAngle());
 	
 	pEntity = spEntity.release();
 	

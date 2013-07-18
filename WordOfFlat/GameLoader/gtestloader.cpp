@@ -41,27 +41,31 @@ GameErrorCode GameTestResourceLoader::LoadGeometry(GameShapeId geomID, GameGeome
 	{
 	case 1:
 		apGeometry->m_type = GAME_GEOM_QUADS;
+		apGeometry->m_vertexes.resize(4);
 		apGeometry->m_vertexes[0] = b2Vec2(-0.5f, -0.5f);
 		apGeometry->m_vertexes[1] = b2Vec2(0.5f, -0.5f);
 		apGeometry->m_vertexes[2] = b2Vec2(0.5f, 0.5f);
 		apGeometry->m_vertexes[3] = b2Vec2(-0.5f, 0.5f);
 		
-		apGeometry->m_texCoords[0] = b2Vec2(0, 0);
-		apGeometry->m_texCoords[1] = b2Vec2(255, 0);
-		apGeometry->m_texCoords[2] = b2Vec2(255, 255);
-		apGeometry->m_texCoords[3] = b2Vec2(0, 255);
+		apGeometry->m_texCoords.resize(4);
+		apGeometry->m_texCoords[0] = b2Vec2(0, 255);
+		apGeometry->m_texCoords[1] = b2Vec2(255, 255);
+		apGeometry->m_texCoords[2] = b2Vec2(255, 0);
+		apGeometry->m_texCoords[3] = b2Vec2(0, 0);
 		break;
 	case 2:
 		apGeometry->m_type = GAME_GEOM_QUADS;
+		apGeometry->m_vertexes.resize(4);
 		apGeometry->m_vertexes[0] = b2Vec2(-10, -0.5f);
 		apGeometry->m_vertexes[1] = b2Vec2(10, -0.5f);
 		apGeometry->m_vertexes[2] = b2Vec2(10, 0.5f);
 		apGeometry->m_vertexes[3] = b2Vec2(-10, 0.5f);
 		
-		apGeometry->m_texCoords[0] = b2Vec2(0, 0);
-		apGeometry->m_texCoords[1] = b2Vec2(255, 0);
-		apGeometry->m_texCoords[2] = b2Vec2(255, 255);
-		apGeometry->m_texCoords[3] = b2Vec2(0, 255);
+		apGeometry->m_texCoords.resize(4);
+		apGeometry->m_texCoords[0] = b2Vec2(0, 255);
+		apGeometry->m_texCoords[1] = b2Vec2(5100, 255);
+		apGeometry->m_texCoords[2] = b2Vec2(5100, 0);
+		apGeometry->m_texCoords[3] = b2Vec2(0, 0);
 		break;
 	}
 	
@@ -79,11 +83,11 @@ GameErrorCode GameTestResourceLoader::LoadTextureList(TGameTextureMap& texList)
 {
 	TGameTextureMapItem item;
 	item.first = 1;
-	item.second.m_texFileName.assign(wxT("res/img/ground.png"));
+	item.second.m_texFileName.assign(wxT("res/img/woodbox.png"));
 	texList.insert(item);
 	
 	item.first = 2;
-	item.second.m_texFileName.assign(wxT("res/img/woodbox.png"));
+	item.second.m_texFileName.assign(wxT("res/img/ground.png"));
 	texList.insert(item);
 	
 	return FWG_NO_ERROR;
@@ -103,6 +107,8 @@ GameErrorCode GameTestResourceLoader::LoadTextureFromFile(const wxChar* texFileN
 					m_spLogger, texFileName, FWG_E_MISC_ERROR, FWGLOG_ENDVAL);
 		 return FWG_E_MISC_ERROR;
 	 }
+	 
+	 pTex = apTexture.release();
 	 
 	 return FWG_NO_ERROR;
 }

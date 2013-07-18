@@ -20,6 +20,8 @@ GameErrorCode GameClientEngine::CreateWindow()
 		return result;
 	}
 	
+	m_renderWindow->setVerticalSyncEnabled(true);
+	
 	
 	return result;
 }
@@ -95,21 +97,33 @@ GameErrorCode GameClientEngine::LoadSettings(wxChar* pFileName)
 GameErrorCode GameClientEngine::MainLoop()
 {
 	GameErrorCode result = FWG_NO_ERROR;
-	      // Start the game loop
+	sf::Clock clock;
+	sf::Time time;
+	// Start the game loop
 	while (m_renderWindow->isOpen())
     {
-        // Process events
+        
+		clock.restart();
+		// Process events
         sf::Event event;
         while (m_renderWindow->pollEvent(event))
         {
             // Close window : exit
-            if (event.type == sf::Event::Closed)
-                m_renderWindow->close();
+			switch (event.type)
+			{
+				case sf::Event::Closed:
+					m_renderWindow->close();
+					break;
+				default:
+					m_pActualFlatWorldClient->EventProcess(event);
+					break;
+			}
         }
 		
-		 // Clear screen
+		m_pActualFlatWorldClient->EventStep();
+		
 		m_renderWindow->clear();
-		 
+		
 		if (FWG_FAILED(result = m_pActualFlatWorldClient->DrawStep()))
 		{
 			FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::MainLoop() : DrawStep failed: 0x%08x"),
@@ -117,14 +131,18 @@ GameErrorCode GameClientEngine::MainLoop()
 			return result;
 		}
 		
-		/*if (FWG_FAILED(result = m_pActualFlatWorldClient->SimulationStep()))
+		m_renderWindow->display();
+		
+		if (FWG_FAILED(result = m_pActualFlatWorldClient->SimulationStep()))
 		{
 			FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::MainLoop() : SimulationStep failed: 0x%08x"),
 				m_pLogger, result, FWGLOG_ENDVAL);
 			return result;
-		}*/
-		
-		m_renderWindow->display();
+		}
+		time = clock.getElapsedTime();
+		if (time.asMilliseconds() < 16) {
+			wxMilliSleep(16 - time.asMilliseconds());
+		}
 
     }
 	

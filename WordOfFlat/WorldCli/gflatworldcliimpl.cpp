@@ -32,6 +32,7 @@ GameErrorCode GameFlatWorldClient::DrawStep()
 {
 	TSceneGraph::iterator iter;
 	GameSceneObject *pSceneObj = NULL;
+	
 	for (iter = m_objectMap.begin(); iter != m_objectMap.end(); iter++)
 	{
 		pSceneObj = *iter;
@@ -40,9 +41,98 @@ GameErrorCode GameFlatWorldClient::DrawStep()
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode GameFlatWorldClient::EventStep()
+void GameFlatWorldClient::EventProcess(sf::Event& event)
 {
-	return FWG_NO_ERROR;
+	switch (event.type)
+	{
+		case sf::Event::KeyPressed:
+		{
+			switch (event.key.code)
+			{
+				case sf::Keyboard::Left:
+					m_controls.SetLeft();
+					break;
+				case sf::Keyboard::Right:
+					m_controls.SetRight();
+					break;
+				case sf::Keyboard::Up:
+					m_controls.SetUp();
+					break;
+				case sf::Keyboard::Down:
+					m_controls.SetDown();
+					break;
+				default:
+					break;
+			}
+			break;
+		}
+		
+		case sf::Event::KeyReleased:
+		{
+			switch (event.key.code)
+			{
+				case sf::Keyboard::Left:
+					m_controls.RelLeft();
+					break;
+				case sf::Keyboard::Right:
+					m_controls.RelRight();
+					break;
+				case sf::Keyboard::Up:
+					m_controls.RelUp();
+					break;
+				case sf::Keyboard::Down:
+					m_controls.RelDown();
+					break;
+				default:
+					break;
+			}
+			break;
+		}
+		
+		case sf::Event::MouseButtonPressed:
+		{
+			switch (event.mouseButton.button)
+			{
+				case sf::Mouse::Left:
+					m_controls.SetMouseLeft();
+					m_controls.SetLastMousePosition(sf::Vector2i(event.mouseButton.x, event.mouseButton.y));
+					
+					FWGLOG_TRACE_FORMAT(wxT("GameFlatWorldClient::EventProcess() : Mouse left butt pressed[ %d, %d]"),
+					m_spLogger, event.mouseButton.x, event.mouseButton.y, FWGLOG_ENDVAL);
+					break;
+				case sf::Mouse::Right:
+					m_controls.SetMouseRight();
+					m_controls.SetLastMousePosition(sf::Vector2i(event.mouseButton.x, event.mouseButton.y));
+					
+					FWGLOG_TRACE_FORMAT(wxT("GameFlatWorldClient::EventProcess() : Mouse right butt pressed [ %d, %d]"),
+					m_spLogger, event.mouseButton.x, event.mouseButton.y, FWGLOG_ENDVAL);
+					break;
+				default:
+					break;
+			}
+			break;
+		}
+		
+		case sf::Event::MouseButtonReleased:
+		{
+			switch (event.mouseButton.button)
+			{
+				case sf::Mouse::Left:
+					m_controls.RelMouseLeft();
+					break;
+				case sf::Mouse::Right:
+					m_controls.RelMouseRight();
+					break;
+				default:
+					break;
+			}
+			break;
+		}
+		
+		default:
+			break;
+				
+	}
 }
 
 GameFlatWorldID GameFlatWorldClient::GetFWId()
@@ -73,7 +163,7 @@ GameErrorCode GameFlatWorldClient::SimulationStep()
 	for (iter = m_moveAbleObj.begin(); iter != m_moveAbleObj.end(); iter++)
 	{
 		(**iter).UpdatePosition();
-		(**iter).TraceLogInfo(m_spLogger);
+		//(**iter).TraceLogInfo(m_spLogger);
 	}
 	
 	return result;
@@ -83,7 +173,7 @@ GameFlatWorldClient::~GameFlatWorldClient()
 {
 }
 
-GameErrorCode GameFlatWorldClient::Initialize(sf::RenderTarget *pTarget, GameLogger* pLogger )
+GameErrorCode GameFlatWorldClient::Initialize(sf::RenderWindow *pTarget, GameLogger* pLogger )
 {
 
 	m_spLogger = pLogger;
@@ -168,4 +258,17 @@ GameEntityBase* GameFlatWorldClient::GetSenzorEntity(GameObjectId objId)
 GameEntityBase* GameFlatWorldClient::GetStaticEntity(GameObjectId objId)
 {
 	return m_staticObj[objId];
+}
+
+GameErrorCode GameFlatWorldClient::EventStep()
+{
+	
+	if (m_controls.IsMouseLeftPressed())
+	{
+		sf::Vector2i vec(sf::Mouse::getPosition(*m_pRenderTarget));
+		MoveViewport(m_controls.GetLastMousePosition() - vec);
+		m_controls.SetLastMousePosition(vec);
+	}
+	
+	return FWG_NO_ERROR;
 }

@@ -32,7 +32,7 @@ GameErrorCode GameResourceHolder::Initialize(GameLogger* pLogger, IGameResourceL
 
 void GameResourceHolder::ClearResourceMaps()
 {
-	sf::Lock locker(m_resouceLocker);
+	wxCriticalSectionLocker locker(m_resouceLocker);
 	//texture map
 	TGameTextureMap::iterator texIter;
 	for (texIter = m_texMap.begin(); texIter != m_texMap.end(); texIter++)
@@ -131,12 +131,12 @@ GameErrorCode GameResourceHolder::LoadResourceMaps()
 	return result;
 }
 
-IGameGeometry* GameResourceHolder::GetGeometry(GameShapeId geomID)
+GameGeometryContainer* GameResourceHolder::GetGeometry(GameShapeId geomID)
 {
 	TGameGeometryMap::iterator iter;
 	GameErrorCode result = FWG_NO_ERROR;
 	
-	sf::Lock locker(m_resouceLocker);
+	wxCriticalSectionLocker locker(m_resouceLocker);
 	
 	//find geometry
 	iter = m_geomMap.find(geomID);
@@ -162,7 +162,7 @@ sf::Texture* GameResourceHolder::GetTexture(GameTextureId texID)
 	TGameTextureMap::iterator iter;
 	GameErrorCode result = FWG_NO_ERROR;
 	
-	sf::Lock locker(m_resouceLocker);
+	wxCriticalSectionLocker locker(m_resouceLocker);
 	
 	iter = m_texMap.find(texID);
 	if (iter == m_texMap.end()) return NULL;
@@ -187,7 +187,7 @@ void GameResourceHolder::ReleaseGeometry(GameShapeId geomID)
 	TGameGeometryMap::iterator iter;
 	GameErrorCode result = FWG_NO_ERROR;
 	
-	sf::Lock locker(m_resouceLocker);
+	wxCriticalSectionLocker locker(m_resouceLocker);
 	
 	//find geometry
 	iter = m_geomMap.find(geomID);
@@ -208,7 +208,7 @@ void GameResourceHolder::ReleaseTexture(GameTextureId texID)
 	TGameTextureMap::iterator iter;
 	GameErrorCode result = FWG_NO_ERROR;
 	
-	sf::Lock locker(m_resouceLocker);
+	wxCriticalSectionLocker locker(m_resouceLocker);
 	
 	iter = m_texMap.find(texID);
 	if (iter == m_texMap.end()) return;
@@ -268,7 +268,7 @@ GameErrorCode GameResourceHolder::GetBodyDef(GamePhysObjId bodyID, b2BodyDef*& p
 	TGamePhysBodyMap::iterator iter;
 	GameErrorCode result = FWG_NO_ERROR;
 	
-	sf::Lock locker(m_resouceLocker);
+	wxCriticalSectionLocker locker(m_resouceLocker);
 	
 	//find geometry
 	iter = m_physBodyMap.find(bodyID);
@@ -293,7 +293,7 @@ GameErrorCode GameResourceHolder::GetFixtureDef(GamePhysObjId fixID, b2FixtureDe
 	TGamePhysFixMap::iterator iter;
 	GameErrorCode result = FWG_NO_ERROR;
 	
-	sf::Lock locker(m_resouceLocker);
+	wxCriticalSectionLocker locker(m_resouceLocker);
 	
 	//find geometry
 	iter = m_physFixMap.find(fixID);
@@ -319,7 +319,7 @@ GameErrorCode GameResourceHolder::GetJointDef(GamePhysObjId jointID, b2JointDef*
 	TGamePhysJointMap::iterator iter;
 	GameErrorCode result = FWG_NO_ERROR;
 	
-	sf::Lock locker(m_resouceLocker);
+	wxCriticalSectionLocker locker(m_resouceLocker);
 	
 	//find geometry
 	iter = m_physJointMap.find(jointID);
@@ -344,7 +344,7 @@ void GameResourceHolder::ReleaseBody(GamePhysObjId bodyID)
 	TGamePhysBodyMap::iterator iter;
 	GameErrorCode result = FWG_NO_ERROR;
 	
-	sf::Lock locker(m_resouceLocker);
+	wxCriticalSectionLocker locker(m_resouceLocker);
 	
 	iter = m_physBodyMap.find(bodyID);
 	if (iter == m_physBodyMap.end()) return;
@@ -364,7 +364,7 @@ void GameResourceHolder::ReleaseFixture(GamePhysObjId fixID)
 	TGamePhysFixMap::iterator iter;
 	GameErrorCode result = FWG_NO_ERROR;
 	
-	sf::Lock locker(m_resouceLocker);
+	wxCriticalSectionLocker locker(m_resouceLocker);
 	
 	iter = m_physFixMap.find(fixID);
 	if (iter == m_physFixMap.end()) return;
@@ -384,7 +384,7 @@ void GameResourceHolder::ReleaseJoint(GamePhysObjId jointID)
 	TGamePhysJointMap::iterator iter;
 	GameErrorCode result = FWG_NO_ERROR;
 	
-	sf::Lock locker(m_resouceLocker);
+	wxCriticalSectionLocker locker(m_resouceLocker);
 	
 	iter = m_physJointMap.find(jointID);
 	if (iter == m_physJointMap.end()) return;

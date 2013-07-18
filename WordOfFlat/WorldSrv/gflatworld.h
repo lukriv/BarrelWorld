@@ -25,7 +25,6 @@ public:
 	
 	virtual GameErrorCode SimulationStep() = 0;
 	virtual GameErrorCode DrawStep() = 0;
-	virtual GameErrorCode EventStep() = 0;
 	virtual GameErrorCode AIStep() = 0;
 	
 	virtual GameErrorCode GetUpdateList(GameUpdateStruct** &updList, wxDword &listSize) = 0;
