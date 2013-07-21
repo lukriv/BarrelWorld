@@ -33,7 +33,7 @@ private:
 	sf::RenderWindow *m_renderWindow;
 	RefObjSmPtr<GameResourceHolder> m_spResHolder;
 	IGameSceneGenerator *m_pSceneGenerator;
-	GameEntityFactory *m_pEntityFactory;
+	RefObjSmPtr<GameEntityFactory> m_spEntityFactory;
 	bool m_isWindowCreated;
 	bool m_isSettingLoaded;
 	bool m_isInitialized;
@@ -44,7 +44,6 @@ private:
 public:
 	GameClientEngine() : m_pActualFlatWorldClient(NULL),
 					m_renderWindow(NULL),
-					m_pEntityFactory(NULL),
 					m_isWindowCreated(false),
 					m_isSettingLoaded(false),
 					m_isInitialized(false) {}

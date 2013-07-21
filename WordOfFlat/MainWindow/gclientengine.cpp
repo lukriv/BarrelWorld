@@ -65,10 +65,10 @@ GameErrorCode GameClientEngine::Initialize(GameLogger* pLogger)
 		return FWG_E_MEMORY_ALLOCATION_ERROR;
 	}
 	
-	m_pEntityFactory = new (std::nothrow) GameEntityFactory();
-	if (m_pEntityFactory == NULL) return FWG_E_MEMORY_ALLOCATION_ERROR;
+	m_spEntityFactory.Attach(new (std::nothrow) GameEntityFactory());
+	if (m_spEntityFactory == NULL) return FWG_E_MEMORY_ALLOCATION_ERROR;
 	
-	if(FWG_FAILED(result = m_pEntityFactory->Initialize(m_spResHolder.In(), pLogger))) 
+	if(FWG_FAILED(result = m_spEntityFactory->Initialize(m_spResHolder.In(), pLogger))) 
 	{
 		FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::Initialize() : Initialize entity factory failed: 0x%08x"),
 			m_pLogger, result, FWGLOG_ENDVAL);
@@ -164,7 +164,7 @@ GameErrorCode GameClientEngine::CreateTestingWorld()
 	}
 	
 	
-	if(FWG_FAILED(result = m_pActualFlatWorldClient->Initialize(m_renderWindow, m_pLogger.In())))
+	if(FWG_FAILED(result = m_pActualFlatWorldClient->Initialize(m_renderWindow, m_spEntityFactory.Ref(), m_pLogger.In())))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::CreateTestingWorld() : Initialize flat world client failed: 0x%08x"),
 			m_pLogger, result, FWGLOG_ENDVAL);
@@ -185,7 +185,7 @@ GameErrorCode GameClientEngine::CreateTestingWorld()
 	for (entDefIter = worldObjDefs.begin(); entDefIter != worldObjDefs.end(); entDefIter++)
 	{
 		
-		if(FWG_FAILED(result = m_pEntityFactory->CreateEntity(*entDefIter, *m_pActualFlatWorldClient->GetPhysWorld(), pEntity)))
+		if(FWG_FAILED(result = m_spEntityFactory->CreateEntity(*entDefIter, *m_pActualFlatWorldClient->GetPhysWorld(), pEntity)))
 		{
 			FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::CreateTestingWorld() : Create entity failed: 0x%08x"),
 				m_pLogger, result, FWGLOG_ENDVAL);
@@ -212,7 +212,7 @@ GameErrorCode GameClientEngine::CreateTestingWorld()
 	for (entDefIter = worldObjDefs.begin(); entDefIter != worldObjDefs.end(); entDefIter++)
 	{
 		
-		if(FWG_FAILED(result = m_pEntityFactory->CreateEntity(*entDefIter, *m_pActualFlatWorldClient->GetPhysWorld(), pEntity)))
+		if(FWG_FAILED(result = m_spEntityFactory->CreateEntity(*entDefIter, *m_pActualFlatWorldClient->GetPhysWorld(), pEntity)))
 		{
 			FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::CreateTestingWorld() : Create entity failed: 0x%08x"),
 				m_pLogger, result, FWGLOG_ENDVAL);

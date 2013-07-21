@@ -11,6 +11,7 @@
 #include "../GameObjects/ggeometry.h"
 #include "../GameObjects/gentityobj.h"
 #include "../WorldSrv/gflatworld.h"
+#include "../GameResHold/gentityfactory.h"
 
 #include "debugrender.h"
 
@@ -21,20 +22,22 @@ typedef wxVector<IGameGeometry*> TGameGeometryList;
 typedef wxVector<GameEntityBase*> TGameEntityList;
 typedef wxVector<GameSceneObject*> TSceneGraph;
 
-struct ControlStruct {
+class ControlStruct {
 public:
 	enum StateFlags {
-		SF_LEFT = 		(1<<0),
-		SF_RIGHT = 		(1<<1),
-		SF_UP =			(1<<2),
-		SF_DOWN = 		(1<<3),
-		SF_MOUSE_LEFT = (1<<4),
-		SF_MOUSE_RIGHT =(1<<5)
+		SF_LEFT = 				(1<<0),
+		SF_RIGHT = 				(1<<1),
+		SF_UP =					(1<<2),
+		SF_DOWN = 				(1<<3),
+		SF_MOUSE_LEFT = 		(1<<4),
+		SF_MOUSE_RIGHT =		(1<<5),
+		SF_MOUSE_WHEEL_MOVE =	(1<<6)
 	};
 private:
 	wxDword m_state;
 	sf::Vector2i m_lastMousePosition;
 	sf::Vector2i m_lastMousePositionPressed;
+	wxInt32 m_mouseWheelDelta;
 public:
 	inline void SetLeft() { m_state |= SF_LEFT; }
 	inline void SetRight() { m_state |= SF_RIGHT; }
@@ -42,6 +45,7 @@ public:
 	inline void SetDown() { m_state |= SF_DOWN; }
 	inline void SetMouseLeft() { m_state |= SF_MOUSE_LEFT; }
 	inline void SetMouseRight() { m_state |= SF_MOUSE_RIGHT; }
+	inline void SetMouseWheel() { m_state |= SF_MOUSE_WHEEL_MOVE; }
 	
 	inline void RelLeft() { m_state &= ~((wxDword) SF_LEFT); }
 	inline void RelRight() { m_state &= ~((wxDword) SF_RIGHT); }
@@ -49,6 +53,7 @@ public:
 	inline void RelDown() { m_state &= ~((wxDword) SF_DOWN); }
 	inline void RelMouseLeft() { m_state &= ~((wxDword) SF_MOUSE_LEFT); }
 	inline void RelMouseRight() { m_state &= ~((wxDword) SF_MOUSE_RIGHT); }
+	inline void RelMouseWheel() { m_state &= ~((wxDword) SF_MOUSE_WHEEL_MOVE); }
 	
 	inline bool IsLeftPressed() { return ((m_state & SF_LEFT) != 0); }
 	inline bool IsRightPressed() { return ((m_state & SF_RIGHT) != 0); }
@@ -56,6 +61,7 @@ public:
 	inline bool IsDownPressed() { return ((m_state & SF_DOWN) != 0); }
 	inline bool IsMouseLeftPressed() { return ((m_state & SF_MOUSE_LEFT) != 0); }
 	inline bool IsMouseRightPressed() { return ((m_state & SF_MOUSE_RIGHT) != 0); }
+	inline bool IsMouseWheelMove() { return ((m_state & SF_MOUSE_WHEEL_MOVE) != 0); }
 
 	inline const sf::Vector2i& GetLastMousePosition() { return m_lastMousePosition; }
 	inline void SetLastMousePosition(const sf::Vector2i& mousePos) { m_lastMousePosition = mousePos; }
@@ -63,7 +69,19 @@ public:
 	inline const sf::Vector2i& GetLastMousePositionPressed() { return m_lastMousePositionPressed; }
 	inline void SetLastMousePositionPressed(const sf::Vector2i& mousePos) { m_lastMousePositionPressed = mousePos; }
 	
+	inline const wxInt32 GetMouseWheelDelta() {return m_mouseWheelDelta;}
+	inline void SetMouseWheelDelta(wxInt32 mouseWheelDelta) { m_mouseWheelDelta = mouseWheelDelta;}
+	
 };
+
+
+struct DisplayState{
+	float actualZoom;
+
+public:
+	DisplayState() : actualZoom(1.0f) {}
+};
+
 
 class GameFlatWorldClient : public IGameFlatWorld {
 private:
@@ -77,6 +95,7 @@ private:
 	wxScopedPtr<b2World> m_apWorld;
 	
 	sf::RenderWindow* m_pRenderTarget;
+	RefObjSmPtr<GameEntityFactory> m_spEntityFactory;
 	
 	TGameEntityList m_landscape; // all entity list in world - should be divide to characters list, static entities and logic (senzor) entities
 	TGameEntityList m_staticObj;
@@ -89,6 +108,8 @@ private:
 	wxCriticalSection m_objectListLock;
 	
 	ControlStruct m_controls;
+	
+	DisplayState m_dispState;
 	
 	DebugDraw *m_pB2DebugDraw;
 	
@@ -103,7 +124,7 @@ public:
 	 * \brief Initialize GameFlatWorldClient
 	 * \return 
 	 */
-	GameErrorCode Initialize(sf::RenderWindow *pTarget, GameLogger* pLogger);
+	GameErrorCode Initialize(sf::RenderWindow *pTarget, GameEntityFactory *pEntFactory, GameLogger* pLogger);
 	
 	/*! \brief Add new entity to world with unique ID
 	 * 
@@ -137,10 +158,16 @@ public:
 	inline void MoveViewport(const sf::Vector2i& moveVector) 
 	{
 		sf::View view = m_pRenderTarget->getView();
-		view.move(sf::Vector2f(moveVector));
+		view.move(sf::Vector2f(moveVector) * m_dispState.actualZoom);
 		m_pRenderTarget->setView(view);	
 	}
 	
+	inline void ZoomViewport( float zoomFactor )
+	{
+		sf::View view = m_pRenderTarget->getView();
+		view.zoom( zoomFactor );
+		m_pRenderTarget->setView(view);	
+	}
 	
 	void EventProcess(sf::Event &event);
 	
