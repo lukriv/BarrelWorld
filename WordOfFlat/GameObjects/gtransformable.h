@@ -22,7 +22,7 @@ public:
 	}
 	
 	inline void SetRotation(float rot) {
-		setRotation((rot/b2_pi)*180);
+		setRotation(-(rot/b2_pi)*180);
 	}
 	
 	inline b2Vec2 GetPosition() {
@@ -41,7 +41,7 @@ public:
 	}
 	
 	inline float GetRotation() {
-		return ((getRotation()/180.0f)*b2_pi);
+		return (-(getRotation()/180.0f)*b2_pi);
 	}
 };
 

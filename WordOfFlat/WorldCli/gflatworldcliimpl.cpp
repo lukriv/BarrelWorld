@@ -282,6 +282,7 @@ void GameFlatWorldClient::EnableDebugDraw()
 	{
 		m_pB2DebugDraw = new (std::nothrow) DebugDraw(m_pRenderTarget);
 		if (m_pB2DebugDraw == NULL) return;
+		m_pB2DebugDraw->SetFlags( 1|2 );
 		m_apWorld->SetDebugDraw(m_pB2DebugDraw);
 	}
 }

@@ -7,13 +7,18 @@
 
 void DebugDraw::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
 {
+	int32 i = 0;
 	sf::Color sfcolor((sf::Uint8)(255.0f * color.r), (sf::Uint8)(255.0f * color.g), (sf::Uint8)(255.0f * color.b), 255);
-	sf::VertexArray polygonLines(sf::LinesStrip, vertexCount);
-	for (int32 i = 0; i < vertexCount; ++i)
+	sf::VertexArray polygonLines(sf::LinesStrip, vertexCount + 1);
+	for (i = 0; i < vertexCount; ++i)
 	{
 		polygonLines[i].position = sf::Vector2f(vertices[i].x * Pixelize, -(vertices[i].y * Pixelize));
 		polygonLines[i].color = sfcolor;
 	}
+		
+	polygonLines[i].position = sf::Vector2f(vertices[0].x * Pixelize, -(vertices[0].y * Pixelize));
+	polygonLines[i].color = sfcolor;
+	
 	m_pRenderTarget->draw(polygonLines);
 }
 
@@ -37,26 +42,35 @@ void DebugDraw::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, cons
 		glVertex2f(vertices[i].x, vertices[i].y);
 	}
 	glEnd();*/
+	DrawPolygon(vertices, vertexCount, color);
 }
 
 void DebugDraw::DrawCircle(const b2Vec2& center, float32 radius, const b2Color& color)
 {
+	int32 i = 0;
 	const float32 k_segments = 16.0f;
 	const float32 k_increment = 2.0f * b2_pi / k_segments;
 	float32 theta = 0.0f;
 	sf::Color sfcolor((sf::Uint8)(255.0f * color.r), (sf::Uint8)(255.0f * color.g), (sf::Uint8)(255.0f * color.b), 255);
-	sf::VertexArray polygonLines(sf::LinesStrip, k_segments);
-	for (int32 i = 0; i < k_segments; ++i)
+	sf::VertexArray polygonLines(sf::LinesStrip, k_segments + 1);
+	for (i = 0; i < k_segments; ++i)
 	{
 		b2Vec2 v = center + radius * b2Vec2(cosf(theta), sinf(theta));
 		polygonLines[i].position = sf::Vector2f(v.x * Pixelize, -(v.y * Pixelize));
 		polygonLines[i].color = sfcolor;
 		theta += k_increment;
 	}
+	b2Vec2 vend = center + radius * b2Vec2(cosf(theta), sinf(theta));
+	polygonLines[i].position = sf::Vector2f(vend.x * Pixelize, -(vend.y * Pixelize));
+	polygonLines[i].color = sfcolor;
+	
 	m_pRenderTarget->draw(polygonLines);
 }
 
-void DebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Vec2& axis, const b2Color& color) {}
+void DebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Vec2& axis, const b2Color& color) 
+{
+	DrawCircle(center, radius, color);
+}
 
 void DebugDraw::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color)
 {
