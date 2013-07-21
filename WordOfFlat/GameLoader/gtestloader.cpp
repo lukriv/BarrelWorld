@@ -74,7 +74,7 @@ GameErrorCode GameTestResourceLoader::LoadGeometry(GameShapeId geomID, GameGeome
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode GameTestResourceLoader::LoadTexture(GameTextureId texID, sf::Texture*& pTex)
+GameErrorCode GameTestResourceLoader::LoadTexture(GameTextureId texID, sf::Image*& pTexImage)
 {
 	return FWG_E_NOT_IMPLEMENTED_ERROR;
 }
@@ -94,21 +94,21 @@ GameErrorCode GameTestResourceLoader::LoadTextureList(TGameTextureMap& texList)
 	
 }
 
-GameErrorCode GameTestResourceLoader::LoadTextureFromFile(const wxChar* texFileName, sf::Texture*& pTex)
+GameErrorCode GameTestResourceLoader::LoadTextureFromFile(const wxChar* texFileName, sf::Image*& pTexImage)
 {
 	 // Load a sprite to display
-	 wxScopedPtr<sf::Texture> apTexture;
+	 wxScopedPtr<sf::Image> apTexImage;
 	 wxString fileName(texFileName);
-	 apTexture.reset(new (std::nothrow) sf::Texture());
+	 apTexImage.reset(new (std::nothrow) sf::Image());
 	 std::string fileNameStr(fileName.c_str().AsChar());
-	 if (!apTexture->loadFromFile(fileNameStr))
+	 if (!apTexImage->loadFromFile(fileNameStr))
 	 {
 		 FWGLOG_ERROR_FORMAT(wxT("GameTestResourceLoader::LoadTextureFromFile() : Load texture from \"%s\" failed: 0x%08x"),
 					m_spLogger, texFileName, FWG_E_MISC_ERROR, FWGLOG_ENDVAL);
 		 return FWG_E_MISC_ERROR;
 	 }
 	 
-	 pTex = apTexture.release();
+	 pTexImage = apTexImage.release();
 	 
 	 return FWG_NO_ERROR;
 }

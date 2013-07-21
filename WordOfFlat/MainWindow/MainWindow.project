@@ -15,6 +15,14 @@
     <File Name="gclientengine.h"/>
   </VirtualDirectory>
   <Dependencies Name="Release"/>
+  <Dependencies Name="Debug">
+    <Project Name="GameLoader"/>
+    <Project Name="GameObjects"/>
+    <Project Name="GameResHold"/>
+    <Project Name="GameSystem"/>
+    <Project Name="WorldCli"/>
+    <Project Name="GameLogic"/>
+  </Dependencies>
   <Settings Type="Executable">
     <GlobalSettings>
       <Compiler Options="" C_Options="">
@@ -100,14 +108,14 @@
       </Debugger>
       <PreBuild/>
       <PostBuild>
-        <Command Enabled="yes">cp $(OutDir)/$(ProjectName).exe ../../bin/</Command>
-        <Command Enabled="yes">cp ../../extern/lib/wxbase294u_gcc_custom.dll ../../bin/</Command>
-        <Command Enabled="yes">cp ../../extern/lib/wxmsw294u_core_gcc_custom.dll ../../bin/</Command>
-        <Command Enabled="yes">cp ../../extern/lib/sfml-system-2.dll ../../bin/</Command>
-        <Command Enabled="yes">cp ../../extern/lib/sfml-graphics-2.dll ../../bin/</Command>
-        <Command Enabled="yes">cp ../../extern/lib/sfml-window-2.dll ../../bin/</Command>
-        <Command Enabled="yes">cp ../../extern/lib/sfml-window-2.dll ../../bin/</Command>
-        <Command Enabled="yes">cp ../../Resources/images/*.png ../../bin/res/img/</Command>
+        <Command Enabled="yes">c:\MinGW\msys\1.0\bin\cp.exe $(OutDir)/$(ProjectName).exe ../../bin/</Command>
+        <Command Enabled="yes">c:\MinGW\msys\1.0\bin\cp.exe ../../extern/lib/wxbase294u_gcc_custom.dll ../../bin/</Command>
+        <Command Enabled="yes">c:\MinGW\msys\1.0\bin\cp.exe ../../extern/lib/wxmsw294u_core_gcc_custom.dll ../../bin/</Command>
+        <Command Enabled="yes">c:\MinGW\msys\1.0\bin\cp.exe ../../extern/lib/sfml-system-2.dll ../../bin/</Command>
+        <Command Enabled="yes">c:\MinGW\msys\1.0\bin\cp.exe ../../extern/lib/sfml-graphics-2.dll ../../bin/</Command>
+        <Command Enabled="yes">c:\MinGW\msys\1.0\bin\cp.exe ../../extern/lib/sfml-window-2.dll ../../bin/</Command>
+        <Command Enabled="yes">c:\MinGW\msys\1.0\bin\cp.exe ../../extern/lib/sfml-window-2.dll ../../bin/</Command>
+        <Command Enabled="yes">c:\MinGW\msys\1.0\bin\cp.exe ../../Resources/images/*.png ../../bin/res/img/</Command>
       </PostBuild>
       <CustomBuild Enabled="no">
         <RebuildCommand/>
@@ -131,12 +139,4 @@
       </Completion>
     </Configuration>
   </Settings>
-  <Dependencies Name="Debug">
-    <Project Name="GameLoader"/>
-    <Project Name="GameObjects"/>
-    <Project Name="GameResHold"/>
-    <Project Name="GameSystem"/>
-    <Project Name="WorldCli"/>
-    <Project Name="GameLogic"/>
-  </Dependencies>
 </CodeLite_Project>

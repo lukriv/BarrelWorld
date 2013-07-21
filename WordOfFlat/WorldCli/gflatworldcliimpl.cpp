@@ -1,6 +1,7 @@
 #include "gflatworldcliimpl.h"
 #include "../GameSystem/gdefs.h"
 
+
 static const wxDword RESERVE_CONSTANT = 10000;
 
 GameFlatWorldClient::GameFlatWorldClient() : m_wrldId(0), m_pRenderTarget(NULL) {
@@ -38,6 +39,8 @@ GameErrorCode GameFlatWorldClient::DrawStep()
 		pSceneObj = *iter;
 		pSceneObj->draw(*m_pRenderTarget, sf::RenderStates());
 	}
+	
+	m_apWorld->DrawDebugData();
 	return FWG_NO_ERROR;
 }
 
@@ -271,4 +274,14 @@ GameErrorCode GameFlatWorldClient::EventStep()
 	}
 	
 	return FWG_NO_ERROR;
+}
+
+void GameFlatWorldClient::EnableDebugDraw()
+{
+	if (m_pRenderTarget != NULL)
+	{
+		m_pB2DebugDraw = new (std::nothrow) DebugDraw(m_pRenderTarget);
+		if (m_pB2DebugDraw == NULL) return;
+		m_apWorld->SetDebugDraw(m_pB2DebugDraw);
+	}
 }

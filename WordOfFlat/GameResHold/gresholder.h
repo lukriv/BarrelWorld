@@ -55,10 +55,10 @@ public:
 	 * 
 	 * Increment internal reference counter for given the texture
 	 * 
-	 * \param[in] texID wanted texture
-	 * \return Pointer to texture or NULL if texture was not found
+	 * \param[in] texID wanted texture image
+	 * \return Pointer to texture image or NULL if texture image was not found
 	 */
-	sf::Texture* GetTexture(GameTextureId texID);
+	sf::Image* GetTexture(GameTextureId texID);
 	
 	/*! \brief Get geometry object with given parameter
 	 * 

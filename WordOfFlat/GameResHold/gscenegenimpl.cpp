@@ -43,6 +43,15 @@ GameErrorCode GameTestSceneGenerator::GenMoveableObj(const TGameWorldSegmentID& 
 	
 	moveableObjs.push_back(entity);
 	
+	entity.m_entType = GAME_OBJECT_TYPE_DYNAMIC_ENTITY;
+	entity.m_geometryRefs.push_back(1);
+	entity.m_physRefs.push_back(1);
+	entity.m_textureRefs.push_back(1);
+	entity.m_tranformation.p.Set(3.0f, 2.0f);
+	entity.m_tranformation.q.Set(1.0f);
+	
+	moveableObjs.push_back(entity);
+	
 	return FWG_NO_ERROR;}
 
 GameErrorCode GameTestSceneGenerator::GenStaticObj(const TGameWorldSegmentID& wrldID, wxVector<EntityDef>& staticObjs)

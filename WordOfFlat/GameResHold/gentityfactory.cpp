@@ -35,15 +35,30 @@ GameErrorCode GameEntityFactory::CreateEntityBasic(const EntityDef& entityDef, b
 	}
 	
 	if (entityDef.m_textureRefs.size() > 0) {
-		sf::Texture *pTexture = m_spResHolder->GetTexture(entityDef.m_textureRefs[0]);
-		if (pTexture == NULL)
+		sf::Image *pTexImage = m_spResHolder->GetTexture(entityDef.m_textureRefs[0]);
+		wxScopedPtr<sf::Texture> apTexture;
+		apTexture.reset(new (std::nothrow) sf::Texture());
+		if (NULL == apTexture.get())
 		{
-			FWGLOG_WARNING_FORMAT(wxT("GameEntityFactory::CreateEntityBasic() : Texture (%u) not found"),
-				m_spLogger, entityDef.m_textureRefs[0], FWGLOG_ENDVAL);
-		} else {
-			pTexture->setRepeated(entityDef.m_textureRepeat);
+
+			return FWG_E_MEMORY_ALLOCATION_ERROR;
 		}
-		spEntity->SetTexture(pTexture);
+		if (pTexImage == NULL)
+		{
+			FWGLOG_WARNING_FORMAT(wxT("GameEntityFactory::CreateEntityBasic() : Texture image (%u) not found"),
+				m_spLogger, entityDef.m_textureRefs[0], FWGLOG_ENDVAL);
+			apTexture.reset();
+		} else {
+			if(!apTexture->create(pTexImage->getSize().x, pTexImage->getSize().y))
+			{			
+				FWGLOG_WARNING_FORMAT(wxT("GameEntityFactory::CreateEntityBasic() : Texture creation failed: 0x%08x"),
+					m_spLogger, FWG_E_MEMORY_ALLOCATION_ERROR, FWGLOG_ENDVAL);
+				return FWG_E_MEMORY_ALLOCATION_ERROR;
+			}
+			apTexture->update(*pTexImage);
+			apTexture->setRepeated(entityDef.m_textureRepeat);
+		}
+		spEntity->SetTexture(apTexture.release());
 	}
 	
 	if (entityDef.m_geometryRefs.size() > 0) {
