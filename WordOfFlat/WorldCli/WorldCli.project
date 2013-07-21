@@ -9,10 +9,12 @@
   <Dependencies/>
   <VirtualDirectory Name="src">
     <File Name="gflatworldcliimpl.cpp"/>
+    <File Name="debugrender.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="gflatworldcliimpl.h"/>
     <File Name="../WorldSrv/globalworldimpl.h"/>
+    <File Name="debugrender.h"/>
   </VirtualDirectory>
   <Dependencies Name="Release"/>
   <Settings Type="Static Library">

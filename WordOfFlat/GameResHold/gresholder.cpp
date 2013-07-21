@@ -37,9 +37,9 @@ void GameResourceHolder::ClearResourceMaps()
 	TGameTextureMap::iterator texIter;
 	for (texIter = m_texMap.begin(); texIter != m_texMap.end(); texIter++)
 	{
-		if (texIter->second.m_pTexture != NULL) {
-			delete texIter->second.m_pTexture;
-			texIter->second.m_pTexture = NULL;
+		if (texIter->second.m_pTexImage != NULL) {
+			delete texIter->second.m_pTexImage;
+			texIter->second.m_pTexImage = NULL;
 		}
 		
 		texIter->second.m_texFileName.Clear();
@@ -157,27 +157,25 @@ GameGeometryContainer* GameResourceHolder::GetGeometry(GameShapeId geomID)
 
 
 
-sf::Texture* GameResourceHolder::GetTexture(GameTextureId texID)
+sf::Image* GameResourceHolder::GetTexture(GameTextureId texID)
 {
 	TGameTextureMap::iterator iter;
 	GameErrorCode result = FWG_NO_ERROR;
 	
-	wxCriticalSectionLocker locker(m_resouceLocker);
+	wxCriticalSectionLocker locker(GameTextureId texID);
 	
 	iter = m_texMap.find(texID);
 	if (iter == m_texMap.end()) return NULL;
-	if (iter->second.m_pTexture == NULL)
+	if (iter->second.m_pTexImage == NULL)
 	{
-		if(FWG_FAILED(result = m_pResLoader->LoadTextureFromFile(iter->second.m_texFileName, iter->second.m_pTexture)))
+		if(FWG_FAILED(result = m_pResLoader->LoadTextureFromFile(iter->second.m_texFileName, iter->second.m_pTexImage)))
 		{
 			FWGLOG_ERROR_FORMAT(wxT("GameResourceHolder::GetTexture() : Load texture failed: 0x%08x"),
 				m_spLogger, result, FWGLOG_ENDVAL);
 			return NULL;
 		}
 	}
-	// increment reference counter
-	iter->second.m_refCount++;	
-	return iter->second.m_pTexture;
+	return iter->second.m_pTexImage;
 }
 
 
@@ -212,14 +210,10 @@ void GameResourceHolder::ReleaseTexture(GameTextureId texID)
 	
 	iter = m_texMap.find(texID);
 	if (iter == m_texMap.end()) return;
-	if (iter->second.m_pTexture != NULL)
+	if (iter->second.m_pTexImage != NULL)
 	{
-		iter->second.m_refCount--;
-		if (iter->second.m_refCount == 0)
-		{
-			delete iter->second.m_pTexture;
-			iter->second.m_pTexture = NULL;
-		}
+		delete iter->second.m_pTexImage;
+		iter->second.m_pTexImage = NULL;
 	}
 }
 

@@ -21,6 +21,7 @@ private:
 	GameObjectType m_enType;
 public:
 	GameEntityBase(GameObjectType enType) : m_enType(enType){}
+	virtual ~GameEntityBase() {}
 	
 	GameObjStateStruct& GetObjectState() { return m_state;}
 	GameObjectType GetType() {return m_enType;}
@@ -50,6 +51,15 @@ public:
 				m_pGeometry(NULL),
 				m_pTexture(NULL),
 				m_pBody(NULL) {}
+	
+	~GameEntity() 
+	{
+		if(m_pTexture != NULL)
+		{
+			delete m_pTexture;
+			m_pTexture = NULL;
+		}
+	}
 	
 	inline void SetGeometry (IGameGeometry *pGeometry) { m_pGeometry = pGeometry;}
 	inline void SetTexture (sf::Texture *pTexture) {m_pTexture = pTexture;}

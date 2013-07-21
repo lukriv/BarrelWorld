@@ -12,6 +12,8 @@
 #include "../GameObjects/gentityobj.h"
 #include "../WorldSrv/gflatworld.h"
 
+#include "debugrender.h"
+
 
 
 typedef wxVector<sf::Texture*> TGameTextureList;
@@ -88,6 +90,8 @@ private:
 	
 	ControlStruct m_controls;
 	
+	DebugDraw *m_pB2DebugDraw;
+	
 	bool m_isInitialized;
 
 public: 
@@ -139,6 +143,8 @@ public:
 	
 	
 	void EventProcess(sf::Event &event);
+	
+	void EnableDebugDraw();
 public:
 	
 

@@ -228,6 +228,7 @@ GameErrorCode GameClientEngine::CreateTestingWorld()
 		
 	}
 
+	m_pActualFlatWorldClient->EnableDebugDraw();
 
 	return result;
 	
