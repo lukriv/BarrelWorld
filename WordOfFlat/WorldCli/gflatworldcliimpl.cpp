@@ -132,6 +132,14 @@ void GameFlatWorldClient::EventProcess(sf::Event& event)
 			break;
 		}
 		
+		case sf::Event::MouseWheelMoved:
+		{
+			m_controls.SetMouseWheel();
+			m_controls.SetMouseWheelDelta(event.mouseWheel.delta);
+			m_controls.SetLastMousePositionPressed(sf::Vector2i(event.mouseWheel.x, event.mouseWheel.y));
+			break;
+		}
+		
 		default:
 			break;
 				
@@ -176,7 +184,7 @@ GameFlatWorldClient::~GameFlatWorldClient()
 {
 }
 
-GameErrorCode GameFlatWorldClient::Initialize(sf::RenderWindow *pTarget, GameLogger* pLogger )
+GameErrorCode GameFlatWorldClient::Initialize(sf::RenderWindow* pTarget, GameEntityFactory* pEntFactory, GameLogger* pLogger)
 {
 
 	m_spLogger = pLogger;
@@ -188,6 +196,7 @@ GameErrorCode GameFlatWorldClient::Initialize(sf::RenderWindow *pTarget, GameLog
 	m_apWorld.reset(new (std::nothrow) b2World(m_gravity));
 	
 	m_pRenderTarget = pTarget;
+	m_spEntityFactory = pEntFactory;
 	
 	m_isInitialized = true;
 	return FWG_NO_ERROR;
@@ -266,11 +275,19 @@ GameEntityBase* GameFlatWorldClient::GetStaticEntity(GameObjectId objId)
 GameErrorCode GameFlatWorldClient::EventStep()
 {
 	
-	if (m_controls.IsMouseLeftPressed())
+	if (m_controls.IsMouseRightPressed())
 	{
 		sf::Vector2i vec(sf::Mouse::getPosition(*m_pRenderTarget));
 		MoveViewport(m_controls.GetLastMousePosition() - vec);
 		m_controls.SetLastMousePosition(vec);
+	}
+	
+	if (m_controls.IsMouseWheelMove())
+	{
+		float zoom = ((float)m_controls.GetMouseWheelDelta())*0.1f + 1.0f;
+		m_dispState.actualZoom *= zoom;
+		ZoomViewport(zoom);
+		m_controls.RelMouseWheel();
 	}
 	
 	return FWG_NO_ERROR;
