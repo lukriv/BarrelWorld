@@ -45,6 +45,16 @@ public:
 	}
 };
 
+class GameTransform {
+public:
+	inline static b2Vec2 Display2PhysicsPosition(const sf::Vector2f& displayCoords ) {
+		return b2Vec2(displayCoords.x/Pixelize, -(displayCoords.y/Pixelize));
+	}
+	
+	inline static sf::Vector2f Physics2DisplayPosition(const b2Vec2& physicsCoords) {
+		return sf::Vector2f(Pixelize * x, -(Pixelize * y));
+	}
+}
 
 
 #endif //__GAME_TRASFORMABLE_H__

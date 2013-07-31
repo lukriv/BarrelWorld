@@ -6,7 +6,7 @@ void GameEntity::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	m_pGeometry->draw(target, renStates);
 }
 
-void GameEntity::UpdatePosition()
+void GameEntity::UpdateEntity()
 {
 	SetPosition(m_pBody->GetPosition().x, m_pBody->GetPosition().y);
 	SetRotation(m_pBody->GetAngle());

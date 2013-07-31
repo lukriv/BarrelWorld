@@ -26,10 +26,11 @@ public:
 	GameObjStateStruct& GetObjectState() { return m_state;}
 	GameObjectType GetType() {return m_enType;}
 	
+	virtual bool IsEntity() { return true; }
 
 	
 public:
-	virtual void UpdatePosition() = 0;
+	virtual void UpdateEntity() = 0;
 	virtual void TraceLogInfo(GameLogger *pLogger) = 0;
 };
 
@@ -70,7 +71,7 @@ public:
 	inline b2Body* GetBody () { return m_pBody;}
 	
 public:
-	virtual void UpdatePosition();
+	virtual void UpdateEntity;
 	virtual void TraceLogInfo(GameLogger *pLogger);
 	
 public:	
@@ -96,7 +97,7 @@ public:
 	}
 
 public:
-	virtual void UpdatePosition();
+	virtual void UpdateEntity;
 	virtual void TraceLogInfo(GameLogger *pLogger);
 	
 public:	

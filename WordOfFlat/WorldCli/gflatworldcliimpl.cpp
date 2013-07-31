@@ -173,7 +173,7 @@ GameErrorCode GameFlatWorldClient::SimulationStep()
 	
 	for (iter = m_moveAbleObj.begin(); iter != m_moveAbleObj.end(); iter++)
 	{
-		(**iter).UpdatePosition();
+		(**iter).UpdateEntity();
 		//(**iter).TraceLogInfo(m_spLogger);
 	}
 	
@@ -274,6 +274,12 @@ GameEntityBase* GameFlatWorldClient::GetStaticEntity(GameObjectId objId)
 
 GameErrorCode GameFlatWorldClient::EventStep()
 {
+	if (m_controls.IsMouseLeftPressed()&& (!m_controls.WasMouseLeftProcessed()))
+	{
+		sf::Vector2i vec(sf::Mouse::getPosition(*m_pRenderTarget));
+		// todo create short life entity
+		m_controls.SetMouseLeftProcessed();
+	}
 	
 	if (m_controls.IsMouseRightPressed())
 	{
@@ -284,7 +290,7 @@ GameErrorCode GameFlatWorldClient::EventStep()
 	
 	if (m_controls.IsMouseWheelMove())
 	{
-		float zoom = ((float)m_controls.GetMouseWheelDelta())*0.1f + 1.0f;
+		float zoom = -((float)m_controls.GetMouseWheelDelta())*0.1f + 1.0f;
 		m_dispState.actualZoom *= zoom;
 		ZoomViewport(zoom);
 		m_controls.RelMouseWheel();
