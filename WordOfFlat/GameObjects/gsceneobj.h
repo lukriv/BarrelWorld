@@ -15,10 +15,10 @@ public:
 	inline GameSceneObject* GetParentObj() { return m_pParentObj;}
 	inline void SetParentObj(GameSceneObject* pParent) {m_pParentObj = pParent;}
 	inline b2AABB& GetAABB() { return m_AABB;}
-	inline wxUint32 GetLeafCount();
-	
+		
 public:
 	virtual void draw( sf::RenderTarget& target, sf::RenderStates states) const = 0;
+	virtual bool IsEntity() = 0;
 };
 
 

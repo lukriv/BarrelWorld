@@ -90,6 +90,14 @@ GameErrorCode GameTestResourceLoader::LoadTextureList(TGameTextureMap& texList)
 	item.second.m_texFileName.assign(wxT("res/img/ground.png"));
 	texList.insert(item);
 	
+	item.first = 3;
+	item.second.m_texFileName.assign(wxT("res/img/redball.png"));
+	texList.insert(item);
+	
+	item.first = 4;
+	item.second.m_texFileName.assign(wxT("res/img/redballempty.png"));
+	texList.insert(item);
+	
 	return FWG_NO_ERROR;
 	
 }

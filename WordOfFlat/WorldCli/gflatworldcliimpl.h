@@ -34,7 +34,8 @@ public:
 		SF_MOUSE_WHEEL_MOVE =	(1<<6)
 	};
 private:
-	wxDword m_state;
+	wxDword m_state; //control state vector
+	wxDword m_processed; //note thate state was processed yet - reseted by release
 	sf::Vector2i m_lastMousePosition;
 	sf::Vector2i m_lastMousePositionPressed;
 	wxInt32 m_mouseWheelDelta;
@@ -47,13 +48,13 @@ public:
 	inline void SetMouseRight() { m_state |= SF_MOUSE_RIGHT; }
 	inline void SetMouseWheel() { m_state |= SF_MOUSE_WHEEL_MOVE; }
 	
-	inline void RelLeft() { m_state &= ~((wxDword) SF_LEFT); }
-	inline void RelRight() { m_state &= ~((wxDword) SF_RIGHT); }
-	inline void RelUp() { m_state &= ~((wxDword) SF_UP); }
-	inline void RelDown() { m_state &= ~((wxDword) SF_DOWN); }
-	inline void RelMouseLeft() { m_state &= ~((wxDword) SF_MOUSE_LEFT); }
-	inline void RelMouseRight() { m_state &= ~((wxDword) SF_MOUSE_RIGHT); }
-	inline void RelMouseWheel() { m_state &= ~((wxDword) SF_MOUSE_WHEEL_MOVE); }
+	inline void RelLeft() { m_state &= ~((wxDword) SF_LEFT); m_processed &= ~((wxDword) SF_LEFT);}
+	inline void RelRight() { m_state &= ~((wxDword) SF_RIGHT); m_processed &= ~((wxDword) SF_RIGHT);}
+	inline void RelUp() { m_state &= ~((wxDword) SF_UP); m_processed &= ~((wxDword) SF_UP); }
+	inline void RelDown() { m_state &= ~((wxDword) SF_DOWN); m_processed &= ~((wxDword) SF_DOWN);  }
+	inline void RelMouseLeft() { m_state &= ~((wxDword) SF_MOUSE_LEFT); m_processed &= ~((wxDword) SF_MOUSE_LEFT);}
+	inline void RelMouseRight() { m_state &= ~((wxDword) SF_MOUSE_RIGHT); m_processed &= ~((wxDword) SF_MOUSE_RIGHT);}
+	inline void RelMouseWheel() { m_state &= ~((wxDword) SF_MOUSE_WHEEL_MOVE); m_processed &= ~((wxDword) SF_MOUSE_WHEEL_MOVE);}
 	
 	inline bool IsLeftPressed() { return ((m_state & SF_LEFT) != 0); }
 	inline bool IsRightPressed() { return ((m_state & SF_RIGHT) != 0); }
@@ -62,6 +63,22 @@ public:
 	inline bool IsMouseLeftPressed() { return ((m_state & SF_MOUSE_LEFT) != 0); }
 	inline bool IsMouseRightPressed() { return ((m_state & SF_MOUSE_RIGHT) != 0); }
 	inline bool IsMouseWheelMove() { return ((m_state & SF_MOUSE_WHEEL_MOVE) != 0); }
+	
+	inline void SetLeftProcessed() { m_processed |= SF_LEFT; }
+	inline void SetRightProcessed() { m_processed |= SF_RIGHT; }
+	inline void SetUpProcessed() { m_processed |= SF_UP; }
+	inline void SetDownProcessed() { m_processed |= SF_DOWN; }
+	inline void SetMouseLeftProcessed() { m_processed |= SF_MOUSE_LEFT; }
+	inline void SetMouseRightProcessed() { m_processed |= SF_MOUSE_RIGHT; }
+	inline void SetMouseWheelProcessed() { m_processed |= SF_MOUSE_WHEEL_MOVE; }
+	
+	inline bool WasLeftProcessed() { return ((m_processed & SF_LEFT) != 0); }
+	inline bool WasRightProcessed() { return ((m_processed & SF_RIGHT) != 0); }
+	inline bool WasUpProcessed() { return ((m_processed & SF_UP) != 0); }
+	inline bool WasDownProcessed() { return ((m_processed & SF_DOWN) != 0); }
+	inline bool WasMouseLeftProcessed() { return ((m_processed & SF_MOUSE_LEFT) != 0); }
+	inline bool WasMouseRightProcessed() { return ((m_processed & SF_MOUSE_RIGHT) != 0); }
+	inline bool WasMouseWheelMove() { return ((m_processed & SF_MOUSE_WHEEL_MOVE) != 0); }
 
 	inline const sf::Vector2i& GetLastMousePosition() { return m_lastMousePosition; }
 	inline void SetLastMousePosition(const sf::Vector2i& mousePos) { m_lastMousePosition = mousePos; }
