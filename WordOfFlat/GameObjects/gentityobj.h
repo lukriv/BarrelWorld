@@ -8,6 +8,20 @@
 #include "gtransformable.h"
 #include "gsceneobj.h"
 #include "ggeometry.h"
+
+enum GameEntityReason {
+	ENTITY_REASON_UNDEFINED = 0,
+	ENTITY_REASON_DIED 		= 1
+};
+
+//forward declaration
+class GameEntityBase;
+
+class GameEntityCallback {
+public:
+	void ChangeEntityStatus(const GameEntityReason &reason, const GameEntityBase *pEntity);
+};
+
 /*!
  * \class GameEntityBase
  * \author Lukas

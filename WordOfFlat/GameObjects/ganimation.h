@@ -4,18 +4,7 @@
 #include "../GameSystem/gdefs.h"
 #include <sfml/system/Time.hpp>
 
-/*!
- * \class GameAnimationFrame
- * \author Lukas
- * \date 29.7.2013
- * \file ganimation.h
- * \brief Definition of one frame
- */
-struct GameAnimationFrame {
-	sf::Time m_keyTime;
-	wxDword m_texIndex;
-};
-
+typedef wxVector<sf::Texture> TFrameTextureList;
 
 /*!
  * \class GameAnimationList
@@ -26,22 +15,40 @@ struct GameAnimationFrame {
  * 
  * This could be used also as lifecycle
  */
-class GameAnimationList {
+class GameAnimation {
+public:
+	enum InterpolationType {
+		FRAMES_NONE = 0,
+		FRAMES_LINEAR = 1
+	};
 private:
 	bool m_keyFramesEnabled;
 	bool m_endlessLoop;
+	
 	sf::Time m_actualTime;
 	sf::Time m_durationTotal;
-	wxVector<GameAnimationFrame> m_framesList;
+	
+	wxVector<sf::Time> m_staticFrameTimes;
+	wxVector<sf::Time> m_keyFrameTimes;
+	
+	wxDword m_staticFrameOffset;
+	wxDword m_keyFrameOffset;
+	
 	wxDword m_actualFrame;
+	wxDword m_actualKeyframes[2];
+	
+	TFrameTextureList *m_pStaticFrames;
+	TFrameTextureList *m_pKeyFrames;
+	
+	sf::RenderTexture m_renderTexture;
 	
 public:
-	GameAnimationList() : m_keyFramesEnabled(false)
+	GameAnimation() : m_keyFramesEnabled(false)
 						, m_endlessLoop(true)
 						, m_actualTime(0.0f)
 						, m_durationTotal(0.0f)
 						, m_actualFrame(0) {}
-	~GameAnimationList() {}
+	~GameAnimation() {}
 	
 	/*!
 	 * \brief Add new frame to animation
