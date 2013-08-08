@@ -3,23 +3,7 @@
 #include <wx/scopedptr.h>
 #include "../GameObjects/gsfmlgeom.h"
 
-GameErrorCode GameEntityFactory::CreateEntity(const EntityDef& entityDef, b2World& world, GameEntityBase*& pEntity)
-{
-	switch(entityDef.m_entType)
-	{
-	case GAME_OBJECT_TYPE_STATIC_ENTITY:
-	case GAME_OBJECT_TYPE_DYNAMIC_ENTITY:
-	case GAME_OBJECT_TYPE_KINEMATIC_ENTITY:
-	case GAME_OBJECT_TYPE_SENZOR_ENTITY:
-		return CreateEntityBasic(entityDef, world, pEntity);
-	case GAME_OBJECT_TYPE_ENTITY_GROUP:
-		return CreateEntityGroup(entityDef, world, pEntity);
-	default:
-		return FWG_E_INVALID_PARAMETER_ERROR;
-	}
-}
-
-GameErrorCode GameEntityFactory::CreateEntityBasic(const EntityDef& entityDef, b2World& world, GameEntityBase*& pEntity)
+GameErrorCode GameEntityFactory::CreateBasicEntity(const BasicEntityDef& entityDef, b2World& world, GameEntity& entity)
 {
 	GameErrorCode result = FWG_NO_ERROR;
 	wxScopedPtr<GameEntity> spEntity;
@@ -29,40 +13,25 @@ GameErrorCode GameEntityFactory::CreateEntityBasic(const EntityDef& entityDef, b
 	wxDword i = 0;
 	b2Body *pBody = NULL;
 	
-	spEntity.reset(new (std::nothrow) GameEntity(entityDef.m_entType));
-	if(spEntity.get() == NULL) {
-		return FWG_E_MEMORY_ALLOCATION_ERROR;
-	}
-	
-	if (entityDef.m_textureRefs.size() > 0) {
-		sf::Image *pTexImage = m_spResHolder->GetTexture(entityDef.m_textureRefs[0]);
-		wxScopedPtr<sf::Texture> apTexture;
-		apTexture.reset(new (std::nothrow) sf::Texture());
-		if (NULL == apTexture.get())
-		{
-
-			return FWG_E_MEMORY_ALLOCATION_ERROR;
-		}
+	if (entityDef.m_textureRef != GAME_TEXTURE_ID_INVALID) {
+		sf::Image *pTexImage = m_spResHolder->GetTexture(entityDef.m_textureRef);
 		if (pTexImage == NULL)
 		{
 			FWGLOG_WARNING_FORMAT(wxT("GameEntityFactory::CreateEntityBasic() : Texture image (%u) not found"),
 				m_spLogger, entityDef.m_textureRefs[0], FWGLOG_ENDVAL);
-			apTexture.reset();
 		} else {
-			if(!apTexture->create(pTexImage->getSize().x, pTexImage->getSize().y))
+			if(entity.CreateTexture(*pTexImage))
 			{			
 				FWGLOG_WARNING_FORMAT(wxT("GameEntityFactory::CreateEntityBasic() : Texture creation failed: 0x%08x"),
 					m_spLogger, FWG_E_MEMORY_ALLOCATION_ERROR, FWGLOG_ENDVAL);
 				return FWG_E_MEMORY_ALLOCATION_ERROR;
 			}
-			apTexture->update(*pTexImage);
-			apTexture->setRepeated(entityDef.m_textureRepeat);
+			entity.GetTexture()->setRepeated(entityDef.m_textureRepeat);
 		}
-		spEntity->SetTexture(apTexture.release());
 	}
 	
-	if (entityDef.m_geometryRefs.size() > 0) {
-		pGeomCont = m_spResHolder->GetGeometry(entityDef.m_geometryRefs[0]);
+	if (entityDef.m_geometryRef != GAME_SHAPE_ID_INVALID) {
+		pGeomCont = m_spResHolder->GetGeometry(entityDef.m_geometryRef);
 		if(pGeomCont == NULL) {
 			FWGLOG_ERROR(wxT("GameEntityFactory::CreateEntityBasic() : Geometry not found"), m_spLogger);
 			return result;
@@ -75,7 +44,7 @@ GameErrorCode GameEntityFactory::CreateEntityBasic(const EntityDef& entityDef, b
 				m_spLogger, result, FWGLOG_ENDVAL);
 			return result;
 		}
-		spEntity->SetGeometry(apGeom.release());
+		entity.SetGeometry(apGeom.release());
 	}
 	
 	if (entityDef.m_physRefs.size() > 0) {
@@ -89,7 +58,7 @@ GameErrorCode GameEntityFactory::CreateEntityBasic(const EntityDef& entityDef, b
 		pBodyDef->angle = entityDef.m_tranformation.q.GetAngle();
 		pBodyDef->userData = static_cast<void*>(spEntity.get());
 		pBody = world.CreateBody(pBodyDef);
-		spEntity->SetBody(pBody);
+		entity.SetBody(pBody);
 		FWGLOG_DEBUG_FORMAT(wxT("GameEntityFactory::CreateEntityBasic() : Body created position[%0.3f, %0.3f], angle[%0.3f]"),
 			m_spLogger, entityDef.m_tranformation.p.x, entityDef.m_tranformation.p.y,
 			entityDef.m_tranformation.q.GetAngle(),
@@ -118,21 +87,13 @@ GameErrorCode GameEntityFactory::CreateEntityBasic(const EntityDef& entityDef, b
 		pFixtureDef->shape = apShape.get();
 		pBody->CreateFixture(pFixtureDef);
 	}
-	spEntity->SetPosition(entityDef.m_tranformation.p.x, entityDef.m_tranformation.p.y);
-	spEntity->SetRotation(entityDef.m_tranformation.q.GetAngle());
+	entity.SetPosition(entityDef.m_tranformation.p.x, entityDef.m_tranformation.p.y);
+	entity.SetRotation(entityDef.m_tranformation.q.GetAngle());
 	
-	pEntity = spEntity.release();
+
 	
 	return FWG_NO_ERROR;
 	
-}
-
-GameErrorCode GameEntityFactory::CreateEntityGroup(const EntityDef& entityDef, b2World& world, GameEntityBase*& pEntity)
-{
-	FWG_UNREFERENCED_PARAMETER(entityDef);
-	FWG_UNREFERENCED_PARAMETER(world);
-	FWG_UNREFERENCED_PARAMETER(pEntity);
-	return FWG_E_NOT_IMPLEMENTED_ERROR;
 }
 
 void GameEntityFactory::addRef()
@@ -156,5 +117,10 @@ GameErrorCode GameEntityFactory::Initialize(GameResourceHolder* pResHolder, Game
 	m_spLogger = pLogger;
 	return FWG_NO_ERROR;
 }
+
+GameErrorCode GameEntityFactory::CreateAnimatedEntity(const AnimatedEntityDef& entityDef, b2World& world, GameEntity& entity)
+{
+}
+
 
 

@@ -6,10 +6,15 @@ void GameEntity::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	m_pGeometry->draw(target, renStates);
 }
 
-void GameEntity::UpdateEntity()
+void GameEntity::UpdateEntity(const GameEntityUpdateStruct& updStruct)
 {
 	SetPosition(m_pBody->GetPosition().x, m_pBody->GetPosition().y);
 	SetRotation(m_pBody->GetAngle());
+	if(m_pAnimation != NULL) 
+	{
+		m_pAnimation->UpdateTime(updStruct.m_timeDiff);
+		m_pTexture = m_pAnimation->GetActualFrame();
+	}
 }
 
 void GameEntity::TraceLogInfo(GameLogger* pLogger)

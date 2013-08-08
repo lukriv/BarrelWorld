@@ -9,7 +9,7 @@ private:
 	GameObjectId m_objId;
 
 public:
-	GameObjectBase() : m_objId(GAME_OBJECT_ID_UNKNOWN) {}
+	GameObjectBase() : m_objId(GAME_OBJECT_ID_INVALID) {}
 	inline void SetObjID(GameObjectId objID) { m_objId = objID;}
 	
 public:

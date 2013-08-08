@@ -9,12 +9,12 @@
   <Dependencies/>
   <VirtualDirectory Name="src">
     <File Name="gbvhtreeobj.cpp"/>
-    <File Name="gentityobj.cpp"/>
     <File Name="ggengeom.cpp"/>
     <File Name="gkdtreeobj.cpp"/>
     <File Name="gsfmlgeom.cpp"/>
     <File Name="ggeometry.cpp"/>
     <File Name="ganimation.cpp"/>
+    <File Name="gentity.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="gbintreeobj.h"/>
@@ -113,6 +113,7 @@
     <File Name="gsfmlgeom.h"/>
     <File Name="gtransformable.h"/>
     <File Name="ganimation.h"/>
+    <File Name="gentity.h"/>
   </VirtualDirectory>
   <Dependencies Name="Release"/>
   <Dependencies Name="Debug"/>

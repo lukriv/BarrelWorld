@@ -52,9 +52,9 @@ public:
 	}
 	
 	inline static sf::Vector2f Physics2DisplayPosition(const b2Vec2& physicsCoords) {
-		return sf::Vector2f(Pixelize * x, -(Pixelize * y));
+		return sf::Vector2f(Pixelize * physicsCoords.x, -(Pixelize * physicsCoords.y));
 	}
-}
+};
 
 
 #endif //__GAME_TRASFORMABLE_H__
