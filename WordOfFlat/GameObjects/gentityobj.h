@@ -14,12 +14,19 @@ enum GameEntityReason {
 	ENTITY_REASON_DIED 		= 1
 };
 
+struct GameEntityUpdateStruct {
+	sf::Time m_timeDiff;
+};
+
 //forward declaration
 class GameEntityBase;
 
 class GameEntityCallback {
 public:
 	void ChangeEntityStatus(const GameEntityReason &reason, const GameEntityBase *pEntity);
+	
+	sf::RenderTexture& GetRenderTexture();
+	sf::RenderTexture& GetRenderTexture(const sf::Vector2f& neededSize);
 };
 
 /*!
@@ -33,9 +40,13 @@ class GameEntityBase : public GameSceneObject, public GameTransformable {
 	GameObjStateStruct m_state;
 private:
 	GameObjectType m_enType;
+	GameEntityCallback *m_pEntityCallback;
 public:
-	GameEntityBase(GameObjectType enType) : m_enType(enType){}
+	GameEntityBase(GameObjectType enType) : m_enType(enType), m_pEntityCallback(NULL) {}
 	virtual ~GameEntityBase() {}
+	
+	inline void SetCallback(GameEntityCallback *pEntityCallback) {m_pEntityCallback = pEntityCallback;}
+	inline GameEntityCallback* GetCallback() { return m_pEntityCallback; }
 	
 	GameObjStateStruct& GetObjectState() { return m_state;}
 	GameObjectType GetType() {return m_enType;}
@@ -44,54 +55,12 @@ public:
 
 	
 public:
-	virtual void UpdateEntity() = 0;
+	virtual void UpdateEntity(const GameEntityUpdateStruct& updStruct) = 0;
 	virtual void TraceLogInfo(GameLogger *pLogger) = 0;
 };
 
 
-/*!
- * \class GameEntity
- * \author Lukas
- * \date 12.6.2013
- * \file gentityobj.h
- * \brief Geometric entity with state and transform
- */
-class GameEntity : public GameEntityBase {
-	IGameGeometry *m_pGeometry;
-	sf::Texture *m_pTexture;
-	b2Body *m_pBody;
-public:
-	GameEntity(GameObjectType enType) : 
-				GameEntityBase(enType),
-				m_pGeometry(NULL),
-				m_pTexture(NULL),
-				m_pBody(NULL) {}
-	
-	~GameEntity() 
-	{
-		if(m_pTexture != NULL)
-		{
-			delete m_pTexture;
-			m_pTexture = NULL;
-		}
-	}
-	
-	inline void SetGeometry (IGameGeometry *pGeometry) { m_pGeometry = pGeometry;}
-	inline void SetTexture (sf::Texture *pTexture) {m_pTexture = pTexture;}
-	inline void SetBody (b2Body *pBody) {m_pBody = pBody;}
-	
-	inline IGameGeometry* GetGeometry () { return m_pGeometry;}
-	inline sf::Texture* GetTexture () { return m_pTexture;}
-	inline b2Body* GetBody () { return m_pBody;}
-	
-public:
-	virtual void UpdateEntity;
-	virtual void TraceLogInfo(GameLogger *pLogger);
-	
-public:	
-	virtual void draw( sf::RenderTarget& target, sf::RenderStates states) const;
-	
-};
+
 
 
 /*!
@@ -111,7 +80,7 @@ public:
 	}
 
 public:
-	virtual void UpdateEntity;
+	virtual void UpdateEntity(const GameEntityUpdateStruct& updStruct);
 	virtual void TraceLogInfo(GameLogger *pLogger);
 	
 public:	

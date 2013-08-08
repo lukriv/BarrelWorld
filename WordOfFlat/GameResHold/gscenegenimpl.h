@@ -4,6 +4,8 @@
 #include <wx/atomic.h>
 #include "gscenegen.h"
 
+#include "gentityfactory.h"
+
 class GameTestSceneGenerator : public IGameSceneGenerator {
 	wxAtomicInt m_refCount;
 public:

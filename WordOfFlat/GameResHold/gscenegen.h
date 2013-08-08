@@ -10,16 +10,7 @@
 
 
 
-struct EntityDef {
-	GameObjectType m_entType;
-	wxVector<GameTextureId> m_textureRefs; //!< List of textures - can be empty (dep. on type)
-	wxVector<GameShapeId> m_geometryRefs; //!< List of geometry objects - can be empty (dep. on type)
-	wxVector<GamePhysObjId> m_physRefs; //!< List of Joints or Bodys - depend on type
-	b2Transform m_tranformation;
-	bool m_textureRepeat; //!< texture repetition
-	
-	EntityDef() : m_textureRepeat(false) {}
-};
+
 
 typedef wxDword TGameWorldSegmentID;
 

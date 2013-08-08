@@ -34,7 +34,7 @@ GameErrorCode GameTestSceneGenerator::GenMoveableObj(const TGameWorldSegmentID& 
 	FWG_UNREFERENCED_PARAMETER(wrldID);
 	EntityDef entity;
 	
-	entity.m_entType = GAME_OBJECT_TYPE_DYNAMIC_ENTITY;
+	entity.m_entType = GAME_OBJECT_TYPE_BASIC_MOVEABLE_ENTITY;
 	entity.m_geometryRefs.push_back(1);
 	entity.m_physRefs.push_back(1);
 	entity.m_textureRefs.push_back(1);
@@ -43,7 +43,7 @@ GameErrorCode GameTestSceneGenerator::GenMoveableObj(const TGameWorldSegmentID& 
 	
 	moveableObjs.push_back(entity);
 	
-	entity.m_entType = GAME_OBJECT_TYPE_DYNAMIC_ENTITY;
+	entity.m_entType = GAME_OBJECT_TYPE_BASIC_MOVEABLE_ENTITY;
 	entity.m_geometryRefs.push_back(1);
 	entity.m_physRefs.push_back(1);
 	entity.m_textureRefs.push_back(1);
