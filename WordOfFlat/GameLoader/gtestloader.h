@@ -15,9 +15,9 @@ public:
 	GameErrorCode Initialize(GameLogger *pLogger = NULL);
 	
 public:
-	virtual GameErrorCode LoadTextureFromFile(const wxChar* texFileName, sf::Image *&pTexImage);
+	virtual GameErrorCode LoadTextureFromFile(const wxChar* texFileName, sf::Texture *&pTexImage);
 
-	virtual GameErrorCode LoadTexture(GameTextureId texID, sf::Image *&pTexImage);
+	virtual GameErrorCode LoadTexture(GameTextureId texID, sf::Texture *&pTexImage);
 	virtual GameErrorCode LoadGeometry(GameShapeId geomID, GameGeometryContainer *&pShape);
 	virtual GameErrorCode LoadPhysJoint(GamePhysObjId jointID, b2JointDef *&pJointDef);
 	virtual GameErrorCode LoadPhysBody(GamePhysObjId bodyID, b2BodyDef *&pBodyDef);

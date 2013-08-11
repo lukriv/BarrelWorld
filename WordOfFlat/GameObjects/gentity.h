@@ -13,7 +13,8 @@
  */
 class GameEntity : public GameEntityBase {
 	IGameGeometry *m_pGeometry;
-	sf::Texture *m_pTexture;
+	sf::Texture *m_pTexture; //!< Actual texture which will be displayed in the next display loop iteration
+	sf::Texture *m_pBaseTexture; //!< Base texture on which will be added the modifications
 	b2Body *m_pBody;
 	GameAnimation *m_pAnimation;
 	sf::Texture m_internalTexture;
@@ -40,9 +41,13 @@ public:
 		m_pTexture = &m_internalTexture;
 	}
 	
-	inline void CopyTexture(const sf::Texture& texture) 
+	inline void SetBaseTexture(sf::Texture *pTexture) 
 	{
-		m_internalTexture = texture; 
+		m_pBaseTexture = pTexture;
+		if (pTexture != NULL) 
+		{
+			m_internalTexture = *pTexture;
+		}
 		m_pTexture = &m_internalTexture;
 	}
 	

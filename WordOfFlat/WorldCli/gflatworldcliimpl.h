@@ -100,7 +100,7 @@ public:
 };
 
 
-class GameFlatWorldClient : public IGameFlatWorld {
+class GameFlatWorldClient : public IGameFlatWorld, public GameEntityCallback {
 private:
 	GameFlatWorldID m_wrldId;
 	GameLoggerPtr m_spLogger;
@@ -200,6 +200,11 @@ public:
 	virtual GameErrorCode AIStep();
 	
 	virtual GameErrorCode GetUpdateList(GameUpdateStruct** &updList, wxDword &listSize);
+public:
+	void ChangeEntityStatus(const GameEntityReason &reason, const GameEntityBase *pEntity);
+	
+	sf::RenderTexture& GetRenderTexture();
+	sf::RenderTexture& GetRenderTexture(const sf::Vector2f& neededSize);
 };
 
 
