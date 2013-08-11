@@ -58,7 +58,7 @@ public:
 	 * \param[in] texID wanted texture image
 	 * \return Pointer to texture image or NULL if texture image was not found
 	 */
-	sf::Image* GetTexture(GameTextureId texID);
+	sf::Texture* GetTexture(GameTextureId texID);
 	
 	/*! \brief Get geometry object with given parameter
 	 * 

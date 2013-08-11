@@ -9,18 +9,18 @@
 #include "../GameObjects/gameobjdef.h"
 
 
-
+#include "gentityfactory.h"
 
 
 typedef wxDword TGameWorldSegmentID;
 
 class IGameSceneGenerator : public IRefObject {
 public:
-	virtual GameErrorCode GenLandscape(const TGameWorldSegmentID &wrldID, wxVector<EntityDef> &landscape) = 0;
-	virtual GameErrorCode GenStaticObj(const TGameWorldSegmentID &wrldID, wxVector<EntityDef> &staticObjs) = 0;
-	virtual GameErrorCode GenMoveableObj(const TGameWorldSegmentID &wrldID, wxVector<EntityDef> &moveableObjs) = 0;
-	virtual GameErrorCode GenAnimals(const TGameWorldSegmentID &wrldID, wxVector<EntityDef> &animals) = 0;
-	virtual GameErrorCode GenCharacters(const TGameWorldSegmentID &wrldID, wxVector<EntityDef> &characters) = 0;
+	virtual GameErrorCode GenLandscape(const TGameWorldSegmentID &wrldID, wxVector<BasicEntityDef> &landscape) = 0;
+	virtual GameErrorCode GenStaticObj(const TGameWorldSegmentID &wrldID, wxVector<BasicEntityDef> &staticObjs) = 0;
+	virtual GameErrorCode GenMoveableObj(const TGameWorldSegmentID &wrldID, wxVector<BasicEntityDef> &moveableObjs) = 0;
+	virtual GameErrorCode GenAnimals(const TGameWorldSegmentID &wrldID, wxVector<BasicEntityDef> &animals) = 0;
+	virtual GameErrorCode GenCharacters(const TGameWorldSegmentID &wrldID, wxVector<BasicEntityDef> &characters) = 0;
 	
 };
 

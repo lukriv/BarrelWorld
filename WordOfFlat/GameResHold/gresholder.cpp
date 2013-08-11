@@ -157,7 +157,7 @@ GameGeometryContainer* GameResourceHolder::GetGeometry(GameShapeId geomID)
 
 
 
-sf::Image* GameResourceHolder::GetTexture(GameTextureId texID)
+sf::Texture* GameResourceHolder::GetTexture(GameTextureId texID)
 {
 	TGameTextureMap::iterator iter;
 	GameErrorCode result = FWG_NO_ERROR;
@@ -175,6 +175,7 @@ sf::Image* GameResourceHolder::GetTexture(GameTextureId texID)
 			return NULL;
 		}
 	}
+	iter->second.m_refCount++;
 	return iter->second.m_pTexImage;
 }
 
@@ -212,8 +213,12 @@ void GameResourceHolder::ReleaseTexture(GameTextureId texID)
 	if (iter == m_texMap.end()) return;
 	if (iter->second.m_pTexImage != NULL)
 	{
-		delete iter->second.m_pTexImage;
-		iter->second.m_pTexImage = NULL;
+		iter->second.m_refCount--;
+		if (iter->second.m_refCount == 0)
+		{
+			delete iter->second.m_pTexImage;
+			iter->second.m_pTexImage = NULL;	
+		}
 	}
 }
 

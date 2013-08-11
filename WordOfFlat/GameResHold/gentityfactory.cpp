@@ -14,18 +14,13 @@ GameErrorCode GameEntityFactory::CreateBasicEntity(const BasicEntityDef& entityD
 	b2Body *pBody = NULL;
 	
 	if (entityDef.m_textureRef != GAME_TEXTURE_ID_INVALID) {
-		sf::Image *pTexImage = m_spResHolder->GetTexture(entityDef.m_textureRef);
+		sf::Texture *pTexImage = m_spResHolder->GetTexture(entityDef.m_textureRef);
 		if (pTexImage == NULL)
 		{
 			FWGLOG_WARNING_FORMAT(wxT("GameEntityFactory::CreateEntityBasic() : Texture image (%u) not found"),
 				m_spLogger, entityDef.m_textureRefs[0], FWGLOG_ENDVAL);
 		} else {
-			if(entity.CreateTexture(*pTexImage))
-			{			
-				FWGLOG_WARNING_FORMAT(wxT("GameEntityFactory::CreateEntityBasic() : Texture creation failed: 0x%08x"),
-					m_spLogger, FWG_E_MEMORY_ALLOCATION_ERROR, FWGLOG_ENDVAL);
-				return FWG_E_MEMORY_ALLOCATION_ERROR;
-			}
+			entity.SetBaseTexture(*pTexImage);
 			entity.GetTexture()->setRepeated(entityDef.m_textureRepeat);
 		}
 	}
@@ -120,6 +115,7 @@ GameErrorCode GameEntityFactory::Initialize(GameResourceHolder* pResHolder, Game
 
 GameErrorCode GameEntityFactory::CreateAnimatedEntity(const AnimatedEntityDef& entityDef, b2World& world, GameEntity& entity)
 {
+	
 }
 
 

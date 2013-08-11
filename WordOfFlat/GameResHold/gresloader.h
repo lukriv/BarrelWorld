@@ -11,10 +11,11 @@
 
 
 struct GameTexResItem {
+	wxInt32 m_refCount;
 	wxString m_texFileName;
-	sf::Image *m_pTexImage;
+	sf::Texture *m_pTexture;
 public:
-	GameTexResItem() : m_pTexImage(NULL) {}
+	GameTexResItem() : m_refCount(0), m_pTexImage(NULL) {}
 };
 
 struct GameGeomResItem {
@@ -65,9 +66,9 @@ typedef std::pair<GamePhysObjId, GamePhysFixItem> TGamePhysFixMapItem;
 
 class IGameResourceLoader {
 public:
-	virtual GameErrorCode LoadTextureFromFile(const wxChar* texFileName, sf::Image *&pTexImage) = 0;
+	virtual GameErrorCode LoadTextureFromFile(const wxChar* texFileName, sf::Texture *&pTexImage) = 0;
 	
-	virtual GameErrorCode LoadTexture(GameTextureId texID, sf::Image *&pTexImage) = 0;
+	virtual GameErrorCode LoadTexture(GameTextureId texID, sf::Texture *&pTexImage) = 0;
 	virtual GameErrorCode LoadGeometry(GameShapeId geomID, GameGeometryContainer *&pShape) = 0;
 	virtual GameErrorCode LoadPhysJoint(GamePhysObjId jointID, b2JointDef *&pJointDef) = 0;
 	virtual GameErrorCode LoadPhysBody(GamePhysObjId bodyID, b2BodyDef *&pBodyDef) = 0;

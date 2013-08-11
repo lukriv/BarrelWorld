@@ -309,3 +309,15 @@ void GameFlatWorldClient::EnableDebugDraw()
 		m_apWorld->SetDebugDraw(m_pB2DebugDraw);
 	}
 }
+
+void GameFlatWorldClient::ChangeEntityStatus(const GameEntityReason& reason, const GameEntityBase* pEntity)
+{
+}
+
+sf::RenderTexture& GameFlatWorldClient::GetRenderTexture()
+{
+}
+
+sf::RenderTexture& GameFlatWorldClient::GetRenderTexture(const sf::Vector2f& neededSize)
+{
+}
