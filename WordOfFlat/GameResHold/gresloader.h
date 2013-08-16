@@ -15,7 +15,7 @@ struct GameTexResItem {
 	wxString m_texFileName;
 	sf::Texture *m_pTexture;
 public:
-	GameTexResItem() : m_refCount(0), m_pTexImage(NULL) {}
+	GameTexResItem() : m_refCount(0), m_pTexture(NULL) {}
 };
 
 struct GameGeomResItem {

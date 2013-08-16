@@ -1,4 +1,5 @@
 #include "ganimation.h"
+#include <sfml/graphics/Sprite.hpp>
 
 void GameAnimation::AddFrame(const sf::Texture& frame, sf::Time duration)
 {
@@ -7,34 +8,28 @@ void GameAnimation::AddFrame(const sf::Texture& frame, sf::Time duration)
 	m_durationTotal += duration;
 }
 
-void GameAnimation::GetFrameConstant(GameAnimationFrame& frame)
-{
-	frame = m_framesList[m_actualFrame];
-}
-
 void GameAnimation::GetFrameLinearInterpolation(float& ratio)
 {
-	wxDword nextIndex = 0;
-	sf::Time deltaTime = 0;
+	sf::Time deltaTime;
 	
 	if(m_actualKeyframes[0] == m_actualKeyframes[1]) return;
 	
 	if (m_actualKeyframes[0] < m_actualKeyframes[1])
 	{
 		deltaTime = m_keyFrameTimes[m_actualKeyframes[1]] - m_keyFrameTimes[m_actualKeyframes[0]];
-		ratio = ((float)(m_actualTime - m_keyFrameTimes[m_actualKeyframes[0]])) / ((float) deltaTime);
+		ratio = (m_actualTime.asSeconds() - m_keyFrameTimes[m_actualKeyframes[0]].asSeconds()) / (deltaTime.asSeconds());
 	} else {
 		if (m_endlessLoop)
 		{
 			deltaTime = m_durationTotal - m_keyFrameTimes[m_actualKeyframes[0]];
-			ratio = ((float)(m_actualTime - m_keyFrameTimes[m_actualKeyframes[0]])) / ((float) deltaTime);
+			ratio = (m_actualTime.asSeconds() - m_keyFrameTimes[m_actualKeyframes[0]].asSeconds()) / (deltaTime.asSeconds());
 		} else {
 			m_actualKeyframes[1] = m_actualKeyframes[0];
 			ratio = 0.0f;
 		}
 	}
 	
-	FWGLOG_TRACE_FORMAT(wxT("GameAnimation::GetFrameLinearInterpolation() : Frame1[ %u ], frame2[ %u ], %0.4f")
+	FWGLOG_TRACE_FORMAT(wxT("GameAnimation::GetFrameLinearInterpolation() : Frame1[ %u ], frame2[ %u ], %0.4f"),
 		m_spLogger, m_actualKeyframes[0], m_actualKeyframes[1], ratio, FWGLOG_ENDVAL);
 	
 }
@@ -42,7 +37,7 @@ void GameAnimation::GetFrameLinearInterpolation(float& ratio)
 void GameAnimation::Reset()
 {
 	m_actualFrame = 0;
-	m_actualTime = 0;
+	m_actualTime = sf::Time::Zero;
 }
 
 void GameAnimation::UpdateTime(sf::Time timeIncrement)
@@ -62,7 +57,7 @@ void GameAnimation::UpdateTime(sf::Time timeIncrement)
 			m_actualFrame = 0;
 		}
 			
-		while((m_staticFrameTimes.size() > (m_actualFrame+1)) && (m_staticFrameTimes[m_actualFrame+1].m_keyTime < m_actualTime ))
+		while((m_staticFrameTimes.size() > (m_actualFrame+1)) && (m_staticFrameTimes[m_actualFrame+1].asMicroseconds() < m_actualTime.asMicroseconds() ))
 		{
 			m_actualFrame++;
 		}
@@ -71,7 +66,7 @@ void GameAnimation::UpdateTime(sf::Time timeIncrement)
 			m_spLogger, m_actualTime, m_actualFrame, FWGLOG_ENDVAL);
 		
 	} else {
-		bool change = false;
+		//bool change = false;
 		if (m_keyFrames.size() < 2)
 		{
 			m_actualKeyframes[0] = m_actualKeyframes[1] = 0;
@@ -80,32 +75,33 @@ void GameAnimation::UpdateTime(sf::Time timeIncrement)
 
 		if ((m_actualTime > m_durationTotal)&&(m_endlessLoop))
 		{
-			change = true;
+			//change = true;
 			m_actualTime = m_actualTime - m_durationTotal;
 			m_actualKeyframes[0] = 0;
 		}
 		
-		while((m_keyFrameTimes.size() > (m_actualKeyframes[0]+1)) && (m_keyFrameTimes[m_actualKeyframes[0]+1].m_keyTime < m_actualTime ))
+		while((m_keyFrameTimes.size() > (m_actualKeyframes[0]+1)) && (m_keyFrameTimes[m_actualKeyframes[0]+1].asMicroseconds() < m_actualTime.asMicroseconds() ))
 		{
-			change = true;
+			//change = true;
 			m_actualKeyframes[0]++;
 		}
 		
 		if (m_endlessLoop)
 		{
-			m_actualKeyframes[1] = (m_keyFrameTimes.size() > (m_actualKeyframes[0]+1))? 0 : (m_actualKeyframes[0]+1);
+			m_actualKeyframes[1] = (m_keyFrameTimes.size() <= (m_actualKeyframes[0]+1))? 0 : (m_actualKeyframes[0]+1);
 		} else {
-			m_actualKeyframes[1] = (m_keyFrameTimes.size() > (m_actualKeyframes[0]+1))? m_actualKeyframes[0] : (m_actualKeyframes[0]+1);
+			m_actualKeyframes[1] = (m_keyFrameTimes.size() <= (m_actualKeyframes[0]+1))? m_actualKeyframes[0] : (m_actualKeyframes[0]+1);
 		}
 		
 		FWGLOG_TRACE_FORMAT(wxT("GameAnimation::UpdateTime() : actualTime( %llu ), actualKeyFrame[0]( %u ), actualKeyFrame[1]( %u )"),
 			m_spLogger, m_actualTime, m_actualKeyframes[0], m_actualKeyframes[1], FWGLOG_ENDVAL);
 			
-		if (change) 
 		{
 			float ratio = 0.0f;
 			GetFrameLinearInterpolation(ratio);
 			RenderInterpolatedTexture(ratio);
+			FWGLOG_TRACE_FORMAT(wxT("GameAnimation::UpdateTime() : ratio = %.4f"),
+				m_spLogger, ratio, FWGLOG_ENDVAL);
 		}
 	}
 }
@@ -120,8 +116,8 @@ void GameAnimation::AddKeyFrame(const sf::Texture& keyFrame, sf::Time duration)
 	
 	if(m_keyFrameTimes.empty())
 	{
-		m_durationTotal = 0.0f;
-		m_actualTime = 0.0f;
+		m_durationTotal = sf::Time::Zero;
+		m_actualTime = sf::Time::Zero;
 		m_animationType = FRAMES_LINEAR;
 	}
 	
@@ -138,8 +134,8 @@ void GameAnimation::Clear()
 	m_keyFrames.clear();
 	m_keyFrameTimes.clear();
 	
-	m_durationTotal = 0.0f;
-	m_actualTime = 0.0f;
+	m_durationTotal = sf::Time::Zero;
+	m_actualTime = sf::Time::Zero;
 	
 	m_actualFrame = 0;
 	m_actualKeyframes[0] = m_actualKeyframes[1] = 0;
@@ -151,7 +147,7 @@ sf::Texture* GameAnimation::GetActualFrame()
 {
 	if(m_staticFrames.empty())
 	{
-		return &m_renderTexture.getTexture();
+		return &m_intenalTexture;
 	} else {
 		return &m_staticFrames[m_actualFrame];
 	}
@@ -172,19 +168,21 @@ void GameAnimation::RenderInterpolatedTexture(float& ratio)
 	sf::Sprite sprite2(m_keyFrames[m_actualKeyframes[1]]);
 	renderStates.blendMode = sf::BlendMultiply;
 	
-	m_renderTexture.clear(sf::Color(alfa, alfa, alfa, alfa));
+	m_renderTexture.clear(sf::Color(255, 255, 255, alfa));
 	m_renderTexture.draw(sprite2, renderStates);
 	m_renderTexture.display();
 	
-	sprite2.setTexture(m_renderTexture.getTexture());
+//	sprite2.setTexture(m_renderTexture.getTexture());
 	
-	m_renderTexture.clear(sf::Color(255- alfa, 255- alfa, 255- alfa, 255 - alfa));
-	m_renderTexture.draw(sprite1, renderStates);
-	m_renderTexture.display();
+//	m_renderTexture.clear(sf::Color(255- alfa, 255- alfa, 255- alfa, 255 - alfa));
+//	m_renderTexture.draw(sprite1, renderStates);
+//	m_renderTexture.display();
 	
-	renderStates.blendMode = sf::BlendAdd;
+//	renderStates.blendMode = sf::BlendAdd;
 	
-	m_renderTexture.draw(sprite2, renderStates);
+//	m_renderTexture.draw(sprite2, renderStates);
 	
-	m_renderTexture.display();
+//	m_renderTexture.display();
+	
+	m_intenalTexture = m_renderTexture.getTexture();
 }

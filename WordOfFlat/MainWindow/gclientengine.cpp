@@ -122,7 +122,7 @@ GameErrorCode GameClientEngine::MainLoop()
 		
 		m_pActualFlatWorldClient->EventStep();
 		
-		m_renderWindow->clear();
+		m_renderWindow->clear(sf::Color(0,0,50));
 		
 		if (FWG_FAILED(result = m_pActualFlatWorldClient->DrawStep()))
 		{
@@ -154,7 +154,8 @@ GameErrorCode GameClientEngine::MainLoop()
 GameErrorCode GameClientEngine::CreateTestingWorld()
 {
 	GameErrorCode result = FWG_NO_ERROR;
-	GameEntityBase* pEntity = NULL;
+	GameEntity* pEntity = NULL;
+	
 	m_pActualFlatWorldClient = new (std::nothrow) GameFlatWorldClient();
 	if(m_pActualFlatWorldClient == NULL)
 	{
@@ -172,8 +173,8 @@ GameErrorCode GameClientEngine::CreateTestingWorld()
 	}
 	
 	// create scene
-	wxVector<EntityDef> worldObjDefs;
-	wxVector<EntityDef>::iterator entDefIter;
+	wxVector<BasicEntityDef> worldObjDefs;
+	wxVector<BasicEntityDef>::iterator entDefIter;
 	
 	if(FWG_FAILED(result = m_pSceneGenerator->GenLandscape(0, worldObjDefs)))
 	{
@@ -184,10 +185,15 @@ GameErrorCode GameClientEngine::CreateTestingWorld()
 	
 	for (entDefIter = worldObjDefs.begin(); entDefIter != worldObjDefs.end(); entDefIter++)
 	{
-		
-		if(FWG_FAILED(result = m_spEntityFactory->CreateEntity(*entDefIter, *m_pActualFlatWorldClient->GetPhysWorld(), pEntity)))
+		if(FWG_FAILED(result = m_pActualFlatWorldClient->CreateNewEntity(pEntity)))
 		{
-			FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::CreateTestingWorld() : Create entity failed: 0x%08x"),
+			FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::CreateTestingWorld() : Create new entity failed: 0x%08x"),
+				m_pLogger, result, FWGLOG_ENDVAL);
+		}
+		
+		if(FWG_FAILED(result = m_spEntityFactory->CreateBasicEntity(*entDefIter, *m_pActualFlatWorldClient->GetPhysWorld(), *pEntity)))
+		{
+			FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::CreateTestingWorld() : Create entity in factory failed: 0x%08x"),
 				m_pLogger, result, FWGLOG_ENDVAL);
 			return result;
 		}
@@ -212,7 +218,14 @@ GameErrorCode GameClientEngine::CreateTestingWorld()
 	for (entDefIter = worldObjDefs.begin(); entDefIter != worldObjDefs.end(); entDefIter++)
 	{
 		
-		if(FWG_FAILED(result = m_spEntityFactory->CreateEntity(*entDefIter, *m_pActualFlatWorldClient->GetPhysWorld(), pEntity)))
+		if(FWG_FAILED(result = m_pActualFlatWorldClient->CreateNewEntity(pEntity)))
+		{
+			FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::CreateTestingWorld() : Create new entity failed: 0x%08x"),
+				m_pLogger, result, FWGLOG_ENDVAL);
+			return result;
+		}
+		
+		if(FWG_FAILED(result = m_spEntityFactory->CreateBasicEntity(*entDefIter, *m_pActualFlatWorldClient->GetPhysWorld(), *pEntity)))
 		{
 			FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::CreateTestingWorld() : Create entity failed: 0x%08x"),
 				m_pLogger, result, FWGLOG_ENDVAL);
@@ -225,6 +238,54 @@ GameErrorCode GameClientEngine::CreateTestingWorld()
 				m_pLogger, result, FWGLOG_ENDVAL);
 			return result;
 		}
+		
+	}
+	
+	{
+		GameAnimation *pAnimation = NULL;
+		AnimationDef animdef;
+		BasicEntityDef entitydef;
+		animdef.m_frameRefs.push_back(3);
+		animdef.m_frameRefs.push_back(4);
+		animdef.m_frameRefs.push_back(5);
+		animdef.m_frameDurations.push_back(sf::milliseconds(500));
+		animdef.m_frameDurations.push_back(sf::milliseconds(500));
+		animdef.m_frameDurations.push_back(sf::milliseconds(500));
+		animdef.m_repeat = true;
+		
+		entitydef.m_geometryRef = 1;
+		
+		if(FWG_FAILED(result = m_pActualFlatWorldClient->CreateNewEntity(pEntity)))
+		{
+			FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::CreateTestingWorld() : Create new entity failed: 0x%08x"),
+				m_pLogger, result, FWGLOG_ENDVAL);
+			return result;
+		}
+		
+		if(FWG_FAILED(result = m_pActualFlatWorldClient->CreateNewAnimation(pAnimation)))
+		{
+			FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::CreateTestingWorld() : Create new animation failed: 0x%08x"),
+				m_pLogger, result, FWGLOG_ENDVAL);
+			return result;
+		}
+		
+		if(FWG_FAILED(result = m_spEntityFactory->CreateBasicEntity(entitydef, *m_pActualFlatWorldClient->GetPhysWorld(), *pEntity)))
+		{
+			FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::CreateTestingWorld() : Set entity failed: 0x%08x"),
+				m_pLogger, result, FWGLOG_ENDVAL);
+			return result;
+		}
+		
+		if(FWG_FAILED(result = m_spEntityFactory->CreateAnimation(animdef, *pAnimation)))
+		{
+			FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::CreateTestingWorld() : Set animation failed: 0x%08x"),
+				m_pLogger, result, FWGLOG_ENDVAL);
+			return result;
+		}
+		//pAnimation->SetLogger(m_pLogger);
+		pEntity->SetAnimation(pAnimation);
+		pEntity->SetBlendMode(sf::BlendAlpha);
+		m_pActualFlatWorldClient->AddMoveableEntity(pEntity);
 		
 	}
 

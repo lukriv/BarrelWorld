@@ -1,4 +1,5 @@
 #include "gentitycreator.h"
+#include "../GameObjects/gtransformable.h"
 
 void GameEntityCreator::addRef()
 {
@@ -15,20 +16,21 @@ wxInt32 GameEntityCreator::release()
 	return refCount;
 }
 
-GameEntityBase* GameEntityCreator::CreateTestingOrb(const sf::Vector2f& displayCoords)
+GameErrorCode GameEntityCreator::CreateTestingOrb(const sf::Vector2f& displayCoords, GameEntity& entity)
 {
-	EntityDef entDef;
-	GameEntityBase *pEntity = NULL;
+	AnimationDef animEntDef;
 	
-	entDef.m_entType = GAME_OBJECT_TYPE_EFECT_ENTITY;
-	entDef.m_geometryRefs.push_back(1);
-	entDef.m_textureRefs.push_back(3);
-	entDef.m_textureRefs.push_back(4);
-	entDef.m_tranformation.p = GameTransform::Display2PhysicsPosition(displayCoords);
 	
-	m_spEntityFactory->CreateEntity(entDef, m_pWorld, pEntity);
+	animEntDef.m_frameRefs.push_back(3);
+	animEntDef.m_frameDurations.push_back(sf::milliseconds(500));
 	
-	return pEntity;	
+	animEntDef.m_frameRefs.push_back(4);
+	animEntDef.m_frameDurations.push_back(sf::milliseconds(500));
+	
+	
+	//animEntDef.m_tranformation.p = GameTransform::Display2PhysicsPosition(displayCoords);
+	
+	return FWG_NO_ERROR;
 }
 
 GameErrorCode GameEntityCreator::Initialize(GameEntityFactory* pEntityFactory, b2World* pWorld)

@@ -9,6 +9,7 @@
 #include "gsceneobj.h"
 #include "ggeometry.h"
 
+
 enum GameEntityReason {
 	ENTITY_REASON_UNDEFINED = 0,
 	ENTITY_REASON_DIED 		= 1
@@ -53,6 +54,7 @@ public:
 	
 	virtual bool IsEntity() { return true; }
 
+	virtual void DebugInfo(GameLogger *pLogger) {}
 	
 public:
 	virtual void UpdateEntity(const GameEntityUpdateStruct& updStruct) = 0;
@@ -61,7 +63,7 @@ public:
 
 
 
-
+class GameEntity;
 
 /*!
  * \class GameEntity

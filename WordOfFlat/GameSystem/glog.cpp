@@ -144,6 +144,7 @@ void GameLogger::LogFileWrite(const wxString& msg)
 	wxCriticalSectionLocker lock(m_writeLock);
 	m_loggerFile.Write(msg);
 	m_loggerFile.Write(wxT("\n")); // add new line
+	m_loggerFile.Flush();
 }
 
 

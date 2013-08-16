@@ -6,19 +6,19 @@ static const wxDword RESERVE_CONSTANT = 10000;
 
 GameFlatWorldClient::GameFlatWorldClient() : m_wrldId(0), m_pRenderTarget(NULL) {
 	m_characters.reserve(RESERVE_CONSTANT);
-	for(TGameEntityList::iterator iter = m_characters.begin(); iter != m_characters.end(); iter++) { *iter = NULL; }
+	for(TGameEntityBasePtrList::iterator iter = m_characters.begin(); iter != m_characters.end(); iter++) { *iter = NULL; }
 	
 	m_landscape.reserve(RESERVE_CONSTANT);
-	for(TGameEntityList::iterator iter = m_landscape.begin(); iter != m_landscape.end(); iter++) { *iter = NULL; }
+	for(TGameEntityBasePtrList::iterator iter = m_landscape.begin(); iter != m_landscape.end(); iter++) { *iter = NULL; }
 	
 	m_moveAbleObj.reserve(RESERVE_CONSTANT);
-	for(TGameEntityList::iterator iter = m_moveAbleObj.begin(); iter != m_moveAbleObj.end(); iter++) { *iter = NULL; }
+	for(TGameEntityBasePtrList::iterator iter = m_moveAbleObj.begin(); iter != m_moveAbleObj.end(); iter++) { *iter = NULL; }
 	
 	m_senzors.reserve(RESERVE_CONSTANT);
-	for(TGameEntityList::iterator iter = m_senzors.begin(); iter != m_senzors.end(); iter++) { *iter = NULL; }
+	for(TGameEntityBasePtrList::iterator iter = m_senzors.begin(); iter != m_senzors.end(); iter++) { *iter = NULL; }
 	
 	m_staticObj.reserve(RESERVE_CONSTANT);
-	for(TGameEntityList::iterator iter = m_staticObj.begin(); iter != m_staticObj.end(); iter++) { *iter = NULL; }
+	for(TGameEntityBasePtrList::iterator iter = m_staticObj.begin(); iter != m_staticObj.end(); iter++) { *iter = NULL; }
 }
 
 
@@ -37,6 +37,7 @@ GameErrorCode GameFlatWorldClient::DrawStep()
 	for (iter = m_objectMap.begin(); iter != m_objectMap.end(); iter++)
 	{
 		pSceneObj = *iter;
+		//pSceneObj->DebugInfo(m_spLogger.In());
 		pSceneObj->draw(*m_pRenderTarget, sf::RenderStates());
 	}
 	
@@ -167,13 +168,15 @@ GameErrorCode GameFlatWorldClient::SetWorldSize(const b2AABB wrldAABB)
 GameErrorCode GameFlatWorldClient::SimulationStep()
 {
 	GameErrorCode result = FWG_NO_ERROR;
+	GameEntityUpdateStruct updateState;
+	updateState.m_timeDiff = sf::milliseconds(20);
 	m_apWorld->Step(m_timeStep, m_velocityIter, m_positionIter);
 	
-	TGameEntityList::iterator iter;
+	TGameEntityBasePtrList::iterator iter;
 	
 	for (iter = m_moveAbleObj.begin(); iter != m_moveAbleObj.end(); iter++)
 	{
-		(**iter).UpdateEntity();
+		(**iter).UpdateEntity(updateState);
 		//(**iter).TraceLogInfo(m_spLogger);
 	}
 	
@@ -197,6 +200,10 @@ GameErrorCode GameFlatWorldClient::Initialize(sf::RenderWindow* pTarget, GameEnt
 	
 	m_pRenderTarget = pTarget;
 	m_spEntityFactory = pEntFactory;
+	
+	m_renderTexture256.create(256, 256);
+	m_renderTexture512.create(512, 512);
+	
 	
 	m_isInitialized = true;
 	return FWG_NO_ERROR;
@@ -312,12 +319,78 @@ void GameFlatWorldClient::EnableDebugDraw()
 
 void GameFlatWorldClient::ChangeEntityStatus(const GameEntityReason& reason, const GameEntityBase* pEntity)
 {
+	switch(reason) 
+	{
+		case ENTITY_REASON_DIED:
+		{
+			break;
+		}
+		case ENTITY_REASON_UNDEFINED:
+		default:
+		{
+			break;
+		}
+	}
 }
 
 sf::RenderTexture& GameFlatWorldClient::GetRenderTexture()
 {
+	return m_renderTexture256;
 }
 
 sf::RenderTexture& GameFlatWorldClient::GetRenderTexture(const sf::Vector2f& neededSize)
 {
+	return m_renderTexture256;
+}
+
+GameErrorCode GameFlatWorldClient::CreateNewAnimation(GameAnimation *&pAnim)
+{
+	if(m_freeAnimations.empty())
+	{
+		wxScopedPtr<GameAnimation> apAnim;
+		apAnim.reset(new (std::nothrow) GameAnimation());
+		if(apAnim.get() == NULL)
+		{
+			FWGLOG_ERROR_FORMAT(wxT("GameFlatWorldClient::CreateNewAnimation() : Animation allocation failed: 0x%08x"),
+				m_spLogger, FWG_E_MEMORY_ALLOCATION_ERROR, FWGLOG_ENDVAL);
+			return FWG_E_MEMORY_ALLOCATION_ERROR;
+		}
+		
+		pAnim = apAnim.release();
+		FWGLOG_DEBUG(wxT("GameFlatWorldClient::CreateNewAnimation() : New animation was successfully created"), m_spLogger);
+	} else {
+		wxCriticalSectionLocker lock(m_objectListLock);
+		pAnim = m_freeAnimations.back();
+		m_freeAnimations.pop_back();
+		FWGLOG_DEBUG(wxT("GameFlatWorldClient::CreateNewAnimation() : Animation was reused from free animations"), m_spLogger);
+	}
+	
+	
+	return FWG_NO_ERROR;
+}
+
+GameErrorCode GameFlatWorldClient::CreateNewEntity(GameEntity *&pEntity)
+{
+	if(m_freeEntities.empty())
+	{
+		wxScopedPtr<GameEntity> apEntity;
+		apEntity.reset(new (std::nothrow) GameEntity());
+		if(apEntity.get() == NULL)
+		{
+			FWGLOG_ERROR_FORMAT(wxT("GameFlatWorldClient::CreateNewEntity() : Entity allocation failed: 0x%08x"),
+				m_spLogger, FWG_E_MEMORY_ALLOCATION_ERROR, FWGLOG_ENDVAL);
+			return FWG_E_MEMORY_ALLOCATION_ERROR;
+		}
+		
+		pEntity = apEntity.release();
+		FWGLOG_DEBUG(wxT("GameFlatWorldClient::CreateNewEntity() : New entity was successfully created"), m_spLogger);
+	} else {
+		wxCriticalSectionLocker lock(m_objectListLock);
+		pEntity = m_freeEntities.back();
+		m_freeEntities.pop_back();
+		FWGLOG_DEBUG(wxT("GameFlatWorldClient::CreateNewEntity() : Entity was reused from free entities"), m_spLogger);
+	}
+	
+	
+	return FWG_NO_ERROR;
 }

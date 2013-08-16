@@ -4,6 +4,7 @@
 #include "gobjbase.h"
 #include <sfml/graphics/Drawable.hpp>
 #include <Box2D/Box2D.h>
+#include "../GameSystem/glog.h"
 /*! \brief Object used for drawing scene graph
  */ 
 class GameSceneObject: public GameObjectBase, public sf::Drawable {
@@ -19,6 +20,7 @@ public:
 public:
 	virtual void draw( sf::RenderTarget& target, sf::RenderStates states) const = 0;
 	virtual bool IsEntity() = 0;
+	virtual void DebugInfo(GameLogger* pLogger) = 0;
 };
 
 

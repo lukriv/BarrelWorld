@@ -15,9 +15,8 @@ GameErrorCode GameTestSceneGenerator::GenCharacters(const TGameWorldSegmentID& w
 GameErrorCode GameTestSceneGenerator::GenLandscape(const TGameWorldSegmentID& wrldID, wxVector<BasicEntityDef>& landscape)
 {
 	FWG_UNREFERENCED_PARAMETER(wrldID);
-	EntityDef entity;
+	BasicEntityDef entity;
 	
-	entity.m_entType = GAME_OBJECT_TYPE_STATIC_ENTITY;
 	entity.m_geometryRef = 2;
 	entity.m_physRef = 2;
 	entity.m_textureRef = 2;
@@ -32,9 +31,8 @@ GameErrorCode GameTestSceneGenerator::GenLandscape(const TGameWorldSegmentID& wr
 GameErrorCode GameTestSceneGenerator::GenMoveableObj(const TGameWorldSegmentID& wrldID, wxVector<BasicEntityDef>& moveableObjs)
 {
 	FWG_UNREFERENCED_PARAMETER(wrldID);
-	EntityDef entity;
+	BasicEntityDef entity;
 	
-	entity.m_entType = GAME_OBJECT_TYPE_BASIC_MOVEABLE_ENTITY;
 	entity.m_geometryRef = 1;
 	entity.m_physRef = 1;
 	entity.m_textureRef = 1;
@@ -43,7 +41,6 @@ GameErrorCode GameTestSceneGenerator::GenMoveableObj(const TGameWorldSegmentID& 
 	
 	moveableObjs.push_back(entity);
 	
-	entity.m_entType = GAME_OBJECT_TYPE_BASIC_MOVEABLE_ENTITY;
 	entity.m_geometryRef = 1;
 	entity.m_physRef = 1;
 	entity.m_textureRef = 1;

@@ -2,11 +2,11 @@
 
 #include <wx/scopedptr.h>
 #include "../GameObjects/gsfmlgeom.h"
+#include "../GameObjects/gentity.h"
 
 GameErrorCode GameEntityFactory::CreateBasicEntity(const BasicEntityDef& entityDef, b2World& world, GameEntity& entity)
 {
 	GameErrorCode result = FWG_NO_ERROR;
-	wxScopedPtr<GameEntity> spEntity;
 	wxVector<GamePhysObjId> physObjsList;
 	wxVector<GamePhysObjId>::iterator iter;
 	GameGeometryContainer *pGeomCont = NULL;
@@ -18,9 +18,9 @@ GameErrorCode GameEntityFactory::CreateBasicEntity(const BasicEntityDef& entityD
 		if (pTexImage == NULL)
 		{
 			FWGLOG_WARNING_FORMAT(wxT("GameEntityFactory::CreateEntityBasic() : Texture image (%u) not found"),
-				m_spLogger, entityDef.m_textureRefs[0], FWGLOG_ENDVAL);
+				m_spLogger, entityDef.m_textureRef, FWGLOG_ENDVAL);
 		} else {
-			entity.SetBaseTexture(*pTexImage);
+			entity.SetBaseTexture(pTexImage);
 			entity.GetTexture()->setRepeated(entityDef.m_textureRepeat);
 		}
 	}
@@ -39,19 +39,21 @@ GameErrorCode GameEntityFactory::CreateBasicEntity(const BasicEntityDef& entityD
 				m_spLogger, result, FWGLOG_ENDVAL);
 			return result;
 		}
-		entity.SetGeometry(apGeom.release());
+		
+		entity.SetGeometry(apGeom.get());
+		apGeom.release();
 	}
 	
-	if (entityDef.m_physRefs.size() > 0) {
+	if (entityDef.m_physRef != GAME_PHYSICS_ID_INVALID) {
 		b2BodyDef *pBodyDef = NULL;
-		if (FWG_FAILED(result = m_spResHolder->GetBodyDef(entityDef.m_physRefs[0], pBodyDef, physObjsList)))
+		if (FWG_FAILED(result = m_spResHolder->GetBodyDef(entityDef.m_physRef, pBodyDef, physObjsList)))
 		{
 			FWGLOG_ERROR_FORMAT(wxT("GameEntityFactory::CreateEntityBasic() : Get body def failed: 0x%08x"),
 				m_spLogger, result, FWGLOG_ENDVAL);
 		}
 		pBodyDef->position.Set(entityDef.m_tranformation.p.x, entityDef.m_tranformation.p.y);
 		pBodyDef->angle = entityDef.m_tranformation.q.GetAngle();
-		pBodyDef->userData = static_cast<void*>(spEntity.get());
+		pBodyDef->userData = static_cast<void*>(&entity);
 		pBody = world.CreateBody(pBodyDef);
 		entity.SetBody(pBody);
 		FWGLOG_DEBUG_FORMAT(wxT("GameEntityFactory::CreateEntityBasic() : Body created position[%0.3f, %0.3f], angle[%0.3f]"),
@@ -113,9 +115,26 @@ GameErrorCode GameEntityFactory::Initialize(GameResourceHolder* pResHolder, Game
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode GameEntityFactory::CreateAnimatedEntity(const AnimatedEntityDef& entityDef, b2World& world, GameEntity& entity)
+GameErrorCode GameEntityFactory::CreateAnimation(const AnimationDef& animDef, GameAnimation& animation)
 {
+	GameErrorCode result = FWG_NO_ERROR;
+	wxDword i = 0;
+	animation.Clear();
+	for(i = 0; (i < animDef.m_frameRefs.size()) && (i < animDef.m_frameDurations.size()); ++i)
+	{
+		sf::Texture *pTexImage = m_spResHolder->GetTexture(animDef.m_frameRefs[i]);
+		if (pTexImage == NULL)
+		{
+			FWGLOG_WARNING_FORMAT(wxT("GameEntityFactory::CreateEntityBasic() : Texture image (%u) not found"),
+				m_spLogger, animDef.m_frameRefs[i], FWGLOG_ENDVAL);
+		} else {
+			animation.AddKeyFrame(*pTexImage, animDef.m_frameDurations[i]);
+		}
+	}
 	
+	animation.SetEndless(animDef.m_repeat);
+	
+	return FWG_NO_ERROR;
 }
 
 

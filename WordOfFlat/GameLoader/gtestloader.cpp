@@ -98,6 +98,10 @@ GameErrorCode GameTestResourceLoader::LoadTextureList(TGameTextureMap& texList)
 	item.second.m_texFileName.assign(wxT("res/img/redballempty.png"));
 	texList.insert(item);
 	
+	item.first = 5;
+	item.second.m_texFileName.assign(wxT("res/img/empty.png"));
+	texList.insert(item);
+	
 	return FWG_NO_ERROR;
 	
 }
