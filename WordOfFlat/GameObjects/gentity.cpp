@@ -1,15 +1,19 @@
-#include "gentityobj.h"
+#include "gentity.h"
 
 void GameEntity::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	sf::RenderStates renStates(sf::BlendNone, getTransform(), m_pTexture, NULL);
+	sf::RenderStates renStates(m_blendmode, getTransform(), m_pTexture, NULL);
 	m_pGeometry->draw(target, renStates);
 }
 
 void GameEntity::UpdateEntity(const GameEntityUpdateStruct& updStruct)
 {
-	SetPosition(m_pBody->GetPosition().x, m_pBody->GetPosition().y);
-	SetRotation(m_pBody->GetAngle());
+	if (m_pBody != NULL)
+	{
+		SetPosition(m_pBody->GetPosition().x, m_pBody->GetPosition().y);
+		SetRotation(m_pBody->GetAngle());
+	}
+	
 	if(m_pAnimation != NULL) 
 	{
 		m_pAnimation->UpdateTime(updStruct.m_timeDiff);
@@ -21,4 +25,14 @@ void GameEntity::TraceLogInfo(GameLogger* pLogger)
 {
 	FWGLOG_TRACE_FORMAT(wxT("GameEntity::TraceLogInfo() : Entity position [%0.3f,%0.3f], angle [%0.3f]"),
 		pLogger, m_pBody->GetPosition().x, m_pBody->GetPosition().y, m_pBody->GetAngle(), FWGLOG_ENDVAL);
+}
+
+void GameEntity::DebugInfo(GameLogger* pLogger)
+{
+	FWGLOG_DEBUG_FORMAT(wxT("GameEntity::EntityDebugInfo() : Entity info: Internal texture [%u, %u]; m_pGeometry (0x%x)")
+		, pLogger
+		, m_internalTexture.getSize().x
+		, m_internalTexture.getSize().y
+		, m_pGeometry
+		, FWGLOG_ENDVAL);
 }

@@ -10,6 +10,8 @@
 #include "../GameObjects/gsceneobj.h"
 #include "../GameObjects/ggeometry.h"
 #include "../GameObjects/gentityobj.h"
+#include "../GameObjects/gentity.h"
+#include "../GameObjects/ganimation.h"
 #include "../WorldSrv/gflatworld.h"
 #include "../GameResHold/gentityfactory.h"
 
@@ -19,7 +21,9 @@
 
 typedef wxVector<sf::Texture*> TGameTextureList;
 typedef wxVector<IGameGeometry*> TGameGeometryList;
-typedef wxVector<GameEntityBase*> TGameEntityList;
+typedef wxVector<GameEntityBase*> TGameEntityBasePtrList;
+typedef wxVector<GameEntity*> TGameEntityPtrList;
+typedef wxVector<GameAnimation*> TGameAnimPtrList;
 typedef wxVector<GameSceneObject*> TSceneGraph;
 
 class ControlStruct {
@@ -114,11 +118,14 @@ private:
 	sf::RenderWindow* m_pRenderTarget;
 	RefObjSmPtr<GameEntityFactory> m_spEntityFactory;
 	
-	TGameEntityList m_landscape; // all entity list in world - should be divide to characters list, static entities and logic (senzor) entities
-	TGameEntityList m_staticObj;
-	TGameEntityList m_moveAbleObj;
-	TGameEntityList m_characters;
-	TGameEntityList m_senzors;
+	TGameEntityBasePtrList m_landscape; // all entity list in world - should be divide to characters list, static entities and logic (senzor) entities
+	TGameEntityBasePtrList m_staticObj;
+	TGameEntityBasePtrList m_moveAbleObj;
+	TGameEntityBasePtrList m_characters;
+	TGameEntityBasePtrList m_senzors;
+	
+	TGameEntityPtrList m_freeEntities;
+	TGameAnimPtrList m_freeAnimations;
 	
 	TSceneGraph m_objectMap;
 			
@@ -129,6 +136,10 @@ private:
 	DisplayState m_dispState;
 	
 	DebugDraw *m_pB2DebugDraw;
+	
+	sf::RenderTexture m_renderTexture256;
+	sf::RenderTexture m_renderTexture512;
+	sf::RenderTexture m_renderTexture1024;
 	
 	bool m_isInitialized;
 
@@ -142,6 +153,16 @@ public:
 	 * \return 
 	 */
 	GameErrorCode Initialize(sf::RenderWindow *pTarget, GameEntityFactory *pEntFactory, GameLogger* pLogger);
+	
+	
+	/*!
+	 * \brief CreateNew* gets new entity
+	 * This can return new entity or not used instance (life of item ends)
+	 * 
+	 * \return FWG_NO_ERROR on succes, errorcode otherwise
+	 */
+	GameErrorCode CreateNewEntity(GameEntity *&pEntity);
+	GameErrorCode CreateNewAnimation(GameAnimation *&pAnim);
 	
 	/*! \brief Add new entity to world with unique ID
 	 * 

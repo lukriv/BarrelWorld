@@ -2,7 +2,7 @@
 #define __GAME_ANIMATED_ENTITY_H__
 
 #include "gentityobj.h"
-
+#include "ganimation.h"
 
 /*!
  * \class GameEntity
@@ -18,13 +18,15 @@ class GameEntity : public GameEntityBase {
 	b2Body *m_pBody;
 	GameAnimation *m_pAnimation;
 	sf::Texture m_internalTexture;
+	sf::BlendMode m_blendmode;
 public:
-	GameEntity(GameObjectType enType) : 
-				GameEntityBase(enType),
+	GameEntity() : GameEntityBase(GAME_OBJECT_TYPE_BASIC_ENTITY),
 				m_pGeometry(NULL),
 				m_pTexture(NULL),
+				m_pBaseTexture(NULL),
 				m_pBody(NULL),
-				m_pAnimation(NULL){}
+				m_pAnimation(NULL),
+				m_blendmode(sf::BlendNone){}
 	
 	~GameEntity() 
 	{
@@ -37,8 +39,9 @@ public:
 	
 	inline bool CreateTexture (const sf::Image& image)
 	{
-		m_internalTexture.loadFromImage(image);
+		bool result = m_internalTexture.loadFromImage(image);
 		m_pTexture = &m_internalTexture;
+		return result;
 	}
 	
 	inline void SetBaseTexture(sf::Texture *pTexture) 
@@ -55,7 +58,8 @@ public:
 	inline void SetGeometry (IGameGeometry *pGeometry) { m_pGeometry = pGeometry;}
 	inline void SetTexture (sf::Texture *pTexture) {m_pTexture = pTexture;}
 	inline void SetBody (b2Body *pBody) {m_pBody = pBody;}
-	inline void SetAnimation (GameAnimation *pAnimation);
+	inline void SetAnimation (GameAnimation *pAnimation) {m_pAnimation = pAnimation;}
+	inline void SetBlendMode(sf::BlendMode blendmode) {m_blendmode = blendmode;}
 	
 	inline IGameGeometry* GetGeometry () { return m_pGeometry;}
 	inline sf::Texture* GetTexture () { return m_pTexture;}
@@ -65,6 +69,7 @@ public:
 public:
 	virtual void UpdateEntity(const GameEntityUpdateStruct& updStruct);
 	virtual void TraceLogInfo(GameLogger *pLogger);
+	virtual void DebugInfo (GameLogger* pLogger);
 	
 public:	
 	virtual void draw( sf::RenderTarget& target, sf::RenderStates states) const;

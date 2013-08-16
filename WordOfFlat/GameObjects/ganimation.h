@@ -42,6 +42,7 @@ private:
 	TFrameTextureList m_keyFrames;
 	
 	sf::RenderTexture m_renderTexture;
+	sf::Texture m_intenalTexture;
 	
 	GameLoggerPtr m_spLogger;
 	
@@ -65,8 +66,6 @@ protected:
 	
 public:
 	GameAnimation() : m_animationType(FRAMES_NONE)
-						, m_actualTime(0.0f)
-						, m_durationTotal(0.0f)
 						, m_actualFrame(0) 
 						, m_endlessLoop(true)
 						, m_isInitialized(false)
@@ -124,7 +123,6 @@ public:
 	inline void SetInterpolation( InterpolationType interType) { m_animationType = interType; }
 	inline void SetEndless( bool isEndless) { m_endlessLoop = isEndless; }
 	
-	inline bool IsKeyFramesList() { return m_keyFramesEnabled;}
 	inline bool IsEndless() { return m_endlessLoop;}
 	
 	inline void SetLogger( GameLogger* pLogger) { m_spLogger = pLogger; }

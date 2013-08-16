@@ -37,9 +37,9 @@ void GameResourceHolder::ClearResourceMaps()
 	TGameTextureMap::iterator texIter;
 	for (texIter = m_texMap.begin(); texIter != m_texMap.end(); texIter++)
 	{
-		if (texIter->second.m_pTexImage != NULL) {
-			delete texIter->second.m_pTexImage;
-			texIter->second.m_pTexImage = NULL;
+		if (texIter->second.m_pTexture != NULL) {
+			delete texIter->second.m_pTexture;
+			texIter->second.m_pTexture = NULL;
 		}
 		
 		texIter->second.m_texFileName.Clear();
@@ -166,9 +166,9 @@ sf::Texture* GameResourceHolder::GetTexture(GameTextureId texID)
 	
 	iter = m_texMap.find(texID);
 	if (iter == m_texMap.end()) return NULL;
-	if (iter->second.m_pTexImage == NULL)
+	if (iter->second.m_pTexture == NULL)
 	{
-		if(FWG_FAILED(result = m_pResLoader->LoadTextureFromFile(iter->second.m_texFileName, iter->second.m_pTexImage)))
+		if(FWG_FAILED(result = m_pResLoader->LoadTextureFromFile(iter->second.m_texFileName, iter->second.m_pTexture)))
 		{
 			FWGLOG_ERROR_FORMAT(wxT("GameResourceHolder::GetTexture() : Load texture failed: 0x%08x"),
 				m_spLogger, result, FWGLOG_ENDVAL);
@@ -176,7 +176,7 @@ sf::Texture* GameResourceHolder::GetTexture(GameTextureId texID)
 		}
 	}
 	iter->second.m_refCount++;
-	return iter->second.m_pTexImage;
+	return iter->second.m_pTexture;
 }
 
 
@@ -211,13 +211,13 @@ void GameResourceHolder::ReleaseTexture(GameTextureId texID)
 	
 	iter = m_texMap.find(texID);
 	if (iter == m_texMap.end()) return;
-	if (iter->second.m_pTexImage != NULL)
+	if (iter->second.m_pTexture != NULL)
 	{
 		iter->second.m_refCount--;
 		if (iter->second.m_refCount == 0)
 		{
-			delete iter->second.m_pTexImage;
-			iter->second.m_pTexImage = NULL;	
+			delete iter->second.m_pTexture;
+			iter->second.m_pTexture = NULL;	
 		}
 	}
 }
