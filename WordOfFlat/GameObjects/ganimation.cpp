@@ -1,5 +1,11 @@
 #include "ganimation.h"
 #include <sfml/graphics/Sprite.hpp>
+#include <string>
+#include <sstream>
+static const char* DEBUG_IMAGE_NAME = "debugImage";
+static const char* DEBUG_IMAGE_EXT = ".png";
+
+static wxInt32 debugImageNr = 0;
 
 void GameAnimation::AddFrame(const sf::Texture& frame, sf::Time duration)
 {
@@ -155,12 +161,12 @@ sf::Texture* GameAnimation::GetActualFrame()
 
 void GameAnimation::RenderInterpolatedTexture(float& ratio)
 {
-	if(!m_isInitialized) 
-	{
-		sf::Vector2u size = m_keyFrames[0].getSize();
-		m_renderTexture.create(size.x, size.y, false);
-		m_isInitialized = true;
-	}
+
+	sf::Vector2u size = m_keyFrames[0].getSize();
+	sf::RenderTexture texture1, texture2;
+	texture1.create(size.x, size.y, false);
+	texture2.create(size.x, size.y, false);
+	
 	wxDword alfaExt = static_cast<wxDword>(ratio * 255.0f);
 	sf::Uint8 alfa = (alfaExt > 255)? 255 : static_cast<sf::Uint8>(alfaExt);
 	sf::RenderStates renderStates;
@@ -168,21 +174,35 @@ void GameAnimation::RenderInterpolatedTexture(float& ratio)
 	sf::Sprite sprite2(m_keyFrames[m_actualKeyframes[1]]);
 	renderStates.blendMode = sf::BlendMultiply;
 	
-	m_renderTexture.clear(sf::Color(255, 255, 255, alfa));
-	m_renderTexture.draw(sprite2, renderStates);
-	m_renderTexture.display();
+	texture2.clear(sf::Color(alfa, alfa, alfa, alfa));
+	texture2.draw(sprite2, renderStates);
+	texture2.display();
 	
-//	sprite2.setTexture(m_renderTexture.getTexture());
+	/*{
+		std::ostringstream filenamestream;
+		filenamestream << DEBUG_IMAGE_NAME << debugImageNr << DEBUG_IMAGE_EXT;
+		debugImageNr++;
+		texture2.getTexture().copyToImage().saveToFile(filenamestream.str());
+	}*/
+
+	sprite2.setTexture(texture2.getTexture());
 	
-//	m_renderTexture.clear(sf::Color(255- alfa, 255- alfa, 255- alfa, 255 - alfa));
-//	m_renderTexture.draw(sprite1, renderStates);
-//	m_renderTexture.display();
+	texture1.clear(sf::Color(255- alfa, 255- alfa, 255- alfa, 255 - alfa));
+	texture1.draw(sprite1, renderStates);
+	//m_renderTexture.display();
 	
-//	renderStates.blendMode = sf::BlendAdd;
+	renderStates.blendMode = sf::BlendAdd;
 	
-//	m_renderTexture.draw(sprite2, renderStates);
+	texture1.draw(sprite2, renderStates);
 	
-//	m_renderTexture.display();
+	texture1.display();
 	
-	m_intenalTexture = m_renderTexture.getTexture();
+	m_intenalTexture = texture1.getTexture();
+	
+	/*{
+		std::ostringstream filenamestream;
+		filenamestream << DEBUG_IMAGE_NAME << debugImageNr << DEBUG_IMAGE_EXT;
+		debugImageNr++;
+		texture1.getTexture().copyToImage().saveToFile(filenamestream.str());	
+	}*/
 }
