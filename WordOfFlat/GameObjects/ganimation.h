@@ -41,7 +41,6 @@ private:
 	TFrameTextureList m_staticFrames;
 	TFrameTextureList m_keyFrames;
 	
-	sf::RenderTexture m_renderTexture;
 	sf::Texture m_intenalTexture;
 	
 	GameLoggerPtr m_spLogger;
