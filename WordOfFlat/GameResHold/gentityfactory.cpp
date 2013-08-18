@@ -132,7 +132,8 @@ GameErrorCode GameEntityFactory::CreateAnimation(const AnimationDef& animDef, Ga
 		}
 	}
 	
-	animation.SetEndless(animDef.m_repeat);
+	animation.SetRepeat(animDef.m_repeat);
+	animation.SetEndless(animDef.m_endless);
 	
 	return FWG_NO_ERROR;
 }

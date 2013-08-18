@@ -46,69 +46,79 @@ void GameAnimation::Reset()
 	m_actualTime = sf::Time::Zero;
 }
 
-void GameAnimation::UpdateTime(sf::Time timeIncrement)
+
+void GameAnimation::UpdateKeyFramesIndex()
+{
+	//bool change = false;
+	if (m_keyFrames.size() < 2)
+	{
+		m_actualKeyframes[0] = m_actualKeyframes[1] = 0;
+		return;
+	}
+
+	if ((m_actualTime > m_durationTotal)&&(m_repeat))
+	{
+		//change = true;
+		m_actualTime = m_actualTime - m_durationTotal;
+		m_actualKeyframes[0] = 0;
+	}
+		
+	while((m_keyFrameTimes.size() > (m_actualKeyframes[0]+1)) && (m_keyFrameTimes[m_actualKeyframes[0]+1].asMicroseconds() < m_actualTime.asMicroseconds() ))
+	{
+		//change = true;
+		m_actualKeyframes[0]++;
+	}
+		
+	if (m_endlessLoop)
+	{
+		m_actualKeyframes[1] = (m_keyFrameTimes.size() <= (m_actualKeyframes[0]+1))? 0 : (m_actualKeyframes[0]+1);
+	} else {
+		m_actualKeyframes[1] = (m_keyFrameTimes.size() <= (m_actualKeyframes[0]+1))? m_actualKeyframes[0] : (m_actualKeyframes[0]+1);
+	}
+		
+	FWGLOG_TRACE_FORMAT(wxT("GameAnimation::UpdateTime() : actualTime( %llu ), actualKeyFrame[0]( %u ), actualKeyFrame[1]( %u )"),
+		m_spLogger, m_actualTime, m_actualKeyframes[0], m_actualKeyframes[1], FWGLOG_ENDVAL);
+		
+	{
+		float ratio = 0.0f;
+		GetFrameLinearInterpolation(ratio);
+		RenderInterpolatedTexture(ratio, m_intenalTexture);
+		FWGLOG_TRACE_FORMAT(wxT("GameAnimation::UpdateTime() : ratio = %.4f"),
+			m_spLogger, ratio, FWGLOG_ENDVAL);
+	}
+}
+
+void GameAnimation::UpdateStaticFrameIndex()
+{
+	if (m_staticFrameTimes.size() < 2)
+	{
+		m_actualFrame = 0;
+		return;
+	}
+		
+	if ((m_actualTime > m_durationTotal)&&(m_repeat))
+	{
+		m_actualTime = m_actualTime - m_durationTotal;
+		m_actualFrame = 0;
+	}
+			
+	while((m_staticFrameTimes.size() > (m_actualFrame+1)) && (m_staticFrameTimes[m_actualFrame+1].asMicroseconds() < m_actualTime.asMicroseconds() ))
+	{
+		m_actualFrame++;
+	}
+		
+	FWGLOG_TRACE_FORMAT(wxT("GameAnimation::UpdateTime() : actualTime( %llu ), actualFrame( %u )"),
+		m_spLogger, m_actualTime, m_actualFrame, FWGLOG_ENDVAL);
+}
+
+void GameAnimation::UpdateTimeIncremental(sf::Time timeIncrement)
 {
 	m_actualTime += timeIncrement;
 	if (!m_staticFrameTimes.empty())
 	{
-		if (m_staticFrameTimes.size() < 2)
-		{
-			m_actualFrame = 0;
-			return;
-		}
-		
-		if ((m_actualTime > m_durationTotal)&&(m_endlessLoop))
-		{
-			m_actualTime = m_actualTime - m_durationTotal;
-			m_actualFrame = 0;
-		}
-			
-		while((m_staticFrameTimes.size() > (m_actualFrame+1)) && (m_staticFrameTimes[m_actualFrame+1].asMicroseconds() < m_actualTime.asMicroseconds() ))
-		{
-			m_actualFrame++;
-		}
-		
-		FWGLOG_TRACE_FORMAT(wxT("GameAnimation::UpdateTime() : actualTime( %llu ), actualFrame( %u )"),
-			m_spLogger, m_actualTime, m_actualFrame, FWGLOG_ENDVAL);
-		
+		UpdateStaticFrameIndex();
 	} else {
-		//bool change = false;
-		if (m_keyFrames.size() < 2)
-		{
-			m_actualKeyframes[0] = m_actualKeyframes[1] = 0;
-			return;
-		}
-
-		if ((m_actualTime > m_durationTotal)&&(m_endlessLoop))
-		{
-			//change = true;
-			m_actualTime = m_actualTime - m_durationTotal;
-			m_actualKeyframes[0] = 0;
-		}
-		
-		while((m_keyFrameTimes.size() > (m_actualKeyframes[0]+1)) && (m_keyFrameTimes[m_actualKeyframes[0]+1].asMicroseconds() < m_actualTime.asMicroseconds() ))
-		{
-			//change = true;
-			m_actualKeyframes[0]++;
-		}
-		
-		if (m_endlessLoop)
-		{
-			m_actualKeyframes[1] = (m_keyFrameTimes.size() <= (m_actualKeyframes[0]+1))? 0 : (m_actualKeyframes[0]+1);
-		} else {
-			m_actualKeyframes[1] = (m_keyFrameTimes.size() <= (m_actualKeyframes[0]+1))? m_actualKeyframes[0] : (m_actualKeyframes[0]+1);
-		}
-		
-		FWGLOG_TRACE_FORMAT(wxT("GameAnimation::UpdateTime() : actualTime( %llu ), actualKeyFrame[0]( %u ), actualKeyFrame[1]( %u )"),
-			m_spLogger, m_actualTime, m_actualKeyframes[0], m_actualKeyframes[1], FWGLOG_ENDVAL);
-			
-		{
-			float ratio = 0.0f;
-			GetFrameLinearInterpolation(ratio);
-			RenderInterpolatedTexture(ratio);
-			FWGLOG_TRACE_FORMAT(wxT("GameAnimation::UpdateTime() : ratio = %.4f"),
-				m_spLogger, ratio, FWGLOG_ENDVAL);
-		}
+		UpdateKeyFramesIndex();
 	}
 }
 
@@ -159,13 +169,20 @@ sf::Texture* GameAnimation::GetActualFrame()
 	}
 }
 
-void GameAnimation::RenderInterpolatedTexture(float& ratio)
+void GameAnimation::RenderInterpolatedTexture(float& ratio, sf::Texture &outputTexture)
 {
 
 	sf::Vector2u size = m_keyFrames[0].getSize();
-	sf::RenderTexture texture1, texture2;
-	texture1.create(size.x, size.y, false);
-	texture2.create(size.x, size.y, false);
+	sf::RenderTexture renTex1, renTex2;
+	
+	if(m_actualKeyframes[0] == m_actualKeyframes[1])
+	{
+		outputTexture = m_keyFrames[m_actualKeyframes[0]];
+		return;
+	}
+	
+	renTex1.create(size.x, size.y, false);
+	renTex2.create(size.x, size.y, false);
 	
 	wxDword alfaExt = static_cast<wxDword>(ratio * 255.0f);
 	sf::Uint8 alfa = (alfaExt > 255)? 255 : static_cast<sf::Uint8>(alfaExt);
@@ -174,9 +191,9 @@ void GameAnimation::RenderInterpolatedTexture(float& ratio)
 	sf::Sprite sprite2(m_keyFrames[m_actualKeyframes[1]]);
 	renderStates.blendMode = sf::BlendMultiply;
 	
-	texture2.clear(sf::Color(alfa, alfa, alfa, alfa));
-	texture2.draw(sprite2, renderStates);
-	texture2.display();
+	renTex2.clear(sf::Color(alfa, alfa, alfa, alfa));
+	renTex2.draw(sprite2, renderStates);
+	renTex2.display();
 	
 	/*{
 		std::ostringstream filenamestream;
@@ -185,19 +202,19 @@ void GameAnimation::RenderInterpolatedTexture(float& ratio)
 		texture2.getTexture().copyToImage().saveToFile(filenamestream.str());
 	}*/
 
-	sprite2.setTexture(texture2.getTexture());
+	sprite2.setTexture(renTex2.getTexture());
 	
-	texture1.clear(sf::Color(255- alfa, 255- alfa, 255- alfa, 255 - alfa));
-	texture1.draw(sprite1, renderStates);
+	renTex1.clear(sf::Color(255- alfa, 255- alfa, 255- alfa, 255 - alfa));
+	renTex1.draw(sprite1, renderStates);
 	//m_renderTexture.display();
 	
 	renderStates.blendMode = sf::BlendAdd;
 	
-	texture1.draw(sprite2, renderStates);
+	renTex1.draw(sprite2, renderStates);
 	
-	texture1.display();
+	renTex1.display();
 	
-	m_intenalTexture = texture1.getTexture();
+	outputTexture = renTex1.getTexture();
 	
 	/*{
 		std::ostringstream filenamestream;
@@ -206,3 +223,37 @@ void GameAnimation::RenderInterpolatedTexture(float& ratio)
 		texture1.getTexture().copyToImage().saveToFile(filenamestream.str());	
 	}*/
 }
+
+GameErrorCode GameAnimation::PrecomputeFrames(sf::Time constFrameDuration)
+{
+	wxInt32 totalFramesCount = 0;
+	float ratio;
+	if (constFrameDuration == sf::Time::Zero)
+	{
+		constFrameDuration = sf::milliseconds(20); // 25 frames per second
+	}
+	
+	totalFramesCount = (m_durationTotal.asMilliseconds() / constFrameDuration.asMilliseconds()) + 1;
+	
+	// preallocate vector 
+	m_staticFrames.resize(totalFramesCount);
+	m_staticFrameTimes.resize(totalFramesCount);
+	
+	Reset();
+	
+	for(wxInt32 i = 0; i < totalFramesCount; i++)
+	{
+		GetFrameLinearInterpolation(ratio);
+		RenderInterpolatedTexture(ratio, m_staticFrames[i]);
+		m_staticFrameTimes[i] = m_actualTime;
+		m_actualTime += constFrameDuration;
+		UpdateKeyFramesIndex();
+	}
+	
+	Reset();
+	
+	return FWG_NO_ERROR;
+	
+}
+
+

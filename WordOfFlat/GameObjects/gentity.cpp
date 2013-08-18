@@ -16,7 +16,7 @@ void GameEntity::UpdateEntity(const GameEntityUpdateStruct& updStruct)
 	
 	if(m_pAnimation != NULL) 
 	{
-		m_pAnimation->UpdateTime(updStruct.m_timeDiff);
+		m_pAnimation->UpdateTimeIncremental(updStruct.m_timeDiff);
 		m_pTexture = m_pAnimation->GetActualFrame();
 	}
 }
