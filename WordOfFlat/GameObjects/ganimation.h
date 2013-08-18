@@ -32,8 +32,8 @@ private:
 	sf::Time m_actualTime;
 	sf::Time m_durationTotal;
 	
-	wxVector<sf::Time> m_staticFrameTimes;
-	wxVector<sf::Time> m_keyFrameTimes;
+	wxVector<sf::Time> m_staticFrameTimes; //!< Start frame time (index in array refer to index in m_staticFrames array)
+	wxVector<sf::Time> m_keyFrameTimes; //!< Start key frame time (index in array refer to index in m_keyFrames array)
 	
 	wxDword m_actualFrame;
 	wxDword m_actualKeyframes[2];
@@ -46,6 +46,7 @@ private:
 	GameLoggerPtr m_spLogger;
 	
 	bool m_endlessLoop;
+	bool m_repeat;
 	bool m_isInitialized;
 protected:
 	/*!
@@ -60,13 +61,17 @@ protected:
 	 * Result is stored in m_renderTexture.
 	 * 
 	 * \param ratio Ratio between first and second frame
+	 * \param outputTexture Texture for storing the result
 	 */
-	void RenderInterpolatedTexture(float &ratio);
+	void RenderInterpolatedTexture(float& ratio, sf::Texture& outputTexture);
 	
+	void UpdateStaticFrameIndex();
+	void UpdateKeyFramesIndex();
 public:
 	GameAnimation() : m_animationType(FRAMES_NONE)
 						, m_actualFrame(0) 
-						, m_endlessLoop(true)
+						, m_endlessLoop(false)
+						, m_repeat(false)
 						, m_isInitialized(false)
 	{
 		m_actualKeyframes[0] = 0;
@@ -101,7 +106,7 @@ public:
 	 * \brief Update time and internal frame couter
 	 * \param timeIncrement
 	 */
-	void UpdateTime(sf::Time timeIncrement);
+	void UpdateTimeIncremental(sf::Time timeIncrement);
 	
 	/*!
 	 * \brief Get actual frame
@@ -118,11 +123,21 @@ public:
 	 * \brief Erase all frames
 	 */
 	void Clear();
+	
+	/*!
+	 * \brief Precompute frames from keyframes
+	 * \param constFrameDuration Constant time duration of every frame
+	 * \retval FWG_NO_ERROR On success
+	 * \retval Error code on fail
+	 */
+	GameErrorCode PrecomputeFrames(sf::Time constFrameDuration = sf::Time::Zero);
 		
 	inline void SetInterpolation( InterpolationType interType) { m_animationType = interType; }
 	inline void SetEndless( bool isEndless) { m_endlessLoop = isEndless; }
+	inline void SetRepeat( bool repeat) { m_repeat = repeat;}
 	
 	inline bool IsEndless() { return m_endlessLoop;}
+	inline bool IsRepeat() { return m_repeat;}
 	
 	inline void SetLogger( GameLogger* pLogger) { m_spLogger = pLogger; }
 	

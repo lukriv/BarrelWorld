@@ -283,6 +283,7 @@ GameErrorCode GameClientEngine::CreateTestingWorld()
 			return result;
 		}
 		//pAnimation->SetLogger(m_pLogger);
+		pAnimation->PrecomputeFrames(sf::milliseconds(100));
 		pEntity->SetAnimation(pAnimation);
 		pEntity->SetBlendMode(sf::BlendAlpha);
 		m_pActualFlatWorldClient->AddMoveableEntity(pEntity);

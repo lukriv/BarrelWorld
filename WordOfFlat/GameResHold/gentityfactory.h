@@ -26,8 +26,9 @@ struct AnimationDef {
 	wxVector<GameTextureId> m_frameRefs;
 	wxVector<sf::Time> m_frameDurations;
 	bool m_repeat;
+	bool m_endless;
 	
-	AnimationDef() : m_repeat(false){}
+	AnimationDef() : m_repeat(false), m_endless(false){}
 };
 
 class GameEntityFactory : IRefObject {
