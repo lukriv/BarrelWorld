@@ -23,12 +23,13 @@ struct BasicEntityDef {
 };
 
 struct AnimationDef {
+	GameAnimation::AnimationType m_animType;
 	wxVector<GameTextureId> m_frameRefs;
 	wxVector<sf::Time> m_frameDurations;
 	bool m_repeat;
 	bool m_endless;
 	
-	AnimationDef() : m_repeat(false), m_endless(false){}
+	AnimationDef() :m_animType(GameAnimation::ANIM_TYPE_STATIC), m_repeat(false), m_endless(false){}
 };
 
 class GameEntityFactory : IRefObject {

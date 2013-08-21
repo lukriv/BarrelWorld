@@ -243,6 +243,7 @@ GameErrorCode GameClientEngine::CreateTestingWorld()
 	
 	{
 		GameAnimation *pAnimation = NULL;
+		GameAnimation *pAnimation2 = NULL;
 		AnimationDef animdef;
 		BasicEntityDef entitydef;
 		animdef.m_frameRefs.push_back(3);
@@ -252,6 +253,7 @@ GameErrorCode GameClientEngine::CreateTestingWorld()
 		animdef.m_frameDurations.push_back(sf::milliseconds(500));
 		animdef.m_frameDurations.push_back(sf::milliseconds(500));
 		animdef.m_repeat = true;
+		animdef.m_animType = GameAnimation::ANIM_TYPE_LINEAR;
 		
 		entitydef.m_geometryRef = 1;
 		
@@ -282,9 +284,22 @@ GameErrorCode GameClientEngine::CreateTestingWorld()
 				m_pLogger, result, FWGLOG_ENDVAL);
 			return result;
 		}
-		//pAnimation->SetLogger(m_pLogger);
-		pAnimation->PrecomputeFrames(sf::milliseconds(100));
-		pEntity->SetAnimation(pAnimation);
+		
+		if(FWG_FAILED(result = m_pActualFlatWorldClient->CreateNewAnimation(pAnimation2)))
+		{
+			FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::CreateTestingWorld() : Create new animation2 failed: 0x%08x"),
+				m_pLogger, result, FWGLOG_ENDVAL);
+			return result;
+		}
+		pAnimation2->SetLogger(m_pLogger);
+		pAnimation->SetLogger(m_pLogger);
+		if(FWG_FAILED(result = pAnimation->GenerateStaticAnimation(*pAnimation2, sf::milliseconds(100))))
+		{
+			FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::CreateTestingWorld() : Generate static animation failed: 0x%08x"),
+				m_pLogger, result, FWGLOG_ENDVAL);
+			return result;
+		}
+		pEntity->SetAnimation(pAnimation2);
 		pEntity->SetBlendMode(sf::BlendAlpha);
 		m_pActualFlatWorldClient->AddMoveableEntity(pEntity);
 		

@@ -1,14 +1,54 @@
-#ifndef __GAME_ANIMATION_H__
-#define __GAME_ANIMATION_H__
+#ifndef __GAME_ANIMATION_IMPLEMENTATION_H__
+#define __GAME_ANIMATION_IMPLEMENTATION_H__
 
-#include "../GameSystem/gdefs.h"
+
 #include <sfml/system/Time.hpp>
-#include <sfml/graphics/Texture.hpp>
 #include <sfml/graphics/RenderTexture.hpp>
 #include <wx/vector.h>
 #include "../GameSystem/glog.h"
 
+#include "ganimation.h"
+
+
 typedef wxVector<sf::Texture> TFrameTextureList;
+
+
+/*!
+ * \class AnimFrameSequence
+ * \author Lukas
+ * \date 19.8.2013
+ * \file ganimationimpl.h
+ * \brief Shared animation frame sequence
+ */
+class AnimFrameSequence : public IRefObject {
+	wxAtomicInt32 m_refCount;
+	TFrameTextureList m_frameSequence;
+public:
+	AnimFrameSequence() : m_refCount(1) {}
+	inline TFrameTextureList& GetSequence() { return m_frameSequence; }
+
+public:
+	virtual void addRef()
+	{
+		wxAtomicInc(m_refCount);
+	}
+	
+	virtual wxInt32 release()
+	{
+		wxInt32 refCount = wxAtomicDec(m_refCount);
+		if (refCount == 0)
+		{
+			delete this;
+		}
+		return refCount;
+	}
+private:
+	~AnimFrameSequence()
+	{
+		m_frameSequence.clear();
+	}
+};
+
 
 /*!
  * \class GameAnimationList
@@ -21,33 +61,31 @@ typedef wxVector<sf::Texture> TFrameTextureList;
  */
 class GameAnimation {
 public:
-	enum InterpolationType {
-		FRAMES_NONE = 0,
-		FRAMES_LINEAR = 1
+	enum AnimationType {
+		ANIM_TYPE_STATIC = 0,
+		ANIM_TYPE_LINEAR = 1
 	};
 private:
 
-	InterpolationType m_animationType;
+	AnimationType m_animationType;
 	
 	sf::Time m_actualTime;
 	sf::Time m_durationTotal;
 	
-	wxVector<sf::Time> m_staticFrameTimes; //!< Start frame time (index in array refer to index in m_staticFrames array)
-	wxVector<sf::Time> m_keyFrameTimes; //!< Start key frame time (index in array refer to index in m_keyFrames array)
+	wxVector<sf::Time> m_frameTimes; //!< Start frame time (index in array refer to index in m_staticFrames array)
 	
-	wxDword m_actualFrame;
-	wxDword m_actualKeyframes[2];
 	
-	TFrameTextureList m_staticFrames;
-	TFrameTextureList m_keyFrames;
+	wxDword m_actualFrame; //!< actual frame
+	wxDword m_secondaryFrame; //!< second frame for non-static animations 
 	
+	RefObjSmPtr<AnimFrameSequence> m_spFrameSequence;
+		
 	sf::Texture m_intenalTexture;
 	
 	GameLoggerPtr m_spLogger;
 	
 	bool m_endlessLoop;
 	bool m_repeat;
-	bool m_isInitialized;
 protected:
 	/*!
 	 * \brief Get two actual frames with 
@@ -68,15 +106,11 @@ protected:
 	void UpdateStaticFrameIndex();
 	void UpdateKeyFramesIndex();
 public:
-	GameAnimation() : m_animationType(FRAMES_NONE)
+	GameAnimation() : m_animationType(ANIM_TYPE_STATIC)
 						, m_actualFrame(0) 
+						, m_secondaryFrame(0)
 						, m_endlessLoop(false)
-						, m_repeat(false)
-						, m_isInitialized(false)
-	{
-		m_actualKeyframes[0] = 0;
-		m_actualKeyframes[1] = 0;
-	}
+						, m_repeat(false){}
 	
 	~GameAnimation() {}
 	
@@ -88,19 +122,7 @@ public:
 	 * \param frame New frame
  	 * \param duration Duration of frame
 	 */
-	void AddFrame(const sf::Texture &frame, sf::Time duration);
-	
-	/*!
-	 * \brief Add new key frame to animation
-	 * 
-	 * Key frame is added at the end of sequence. The start time in animation is set by the animation time.
-	 * You should not mix static frames and key frames.
-	 * 	
-	 * \param frame New frame
- 	 * \param duration Duration of frame
-	 * \warning After calling this method, static frames will be cleared!
-	 */
-	void AddKeyFrame(const sf::Texture &keyFrame, sf::Time duration);
+	GameErrorCode AddFrame(const sf::Texture &frame, sf::Time duration);
 	
 	/*!
 	 * \brief Update time and internal frame couter
@@ -128,11 +150,12 @@ public:
 	 * \brief Precompute frames from keyframes
 	 * \param constFrameDuration Constant time duration of every frame
 	 * \retval FWG_NO_ERROR On success
+	 * \retval FWG_E_INVALID_OPERATION_ERROR When animation is already static
 	 * \retval Error code on fail
 	 */
-	GameErrorCode PrecomputeFrames(sf::Time constFrameDuration = sf::Time::Zero);
+	GameErrorCode GenerateStaticAnimation(GameAnimation& staticAnim, sf::Time constFrameDuration = sf::Time::Zero);
 		
-	inline void SetInterpolation( InterpolationType interType) { m_animationType = interType; }
+	inline void SetAnimType( AnimationType animType) { m_animationType = animType; }
 	inline void SetEndless( bool isEndless) { m_endlessLoop = isEndless; }
 	inline void SetRepeat( bool repeat) { m_repeat = repeat;}
 	
@@ -146,4 +169,5 @@ public:
 
 
 
-#endif //__GAME_ANIMATION_H__
+
+#endif //__GAME_ANIMATION_IMPLEMENTATION_H__

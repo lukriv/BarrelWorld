@@ -128,10 +128,10 @@ GameErrorCode GameEntityFactory::CreateAnimation(const AnimationDef& animDef, Ga
 			FWGLOG_WARNING_FORMAT(wxT("GameEntityFactory::CreateEntityBasic() : Texture image (%u) not found"),
 				m_spLogger, animDef.m_frameRefs[i], FWGLOG_ENDVAL);
 		} else {
-			animation.AddKeyFrame(*pTexImage, animDef.m_frameDurations[i]);
+			animation.AddFrame(*pTexImage, animDef.m_frameDurations[i]);
 		}
 	}
-	
+	animation.SetAnimType(animDef.m_animType);
 	animation.SetRepeat(animDef.m_repeat);
 	animation.SetEndless(animDef.m_endless);
 	
