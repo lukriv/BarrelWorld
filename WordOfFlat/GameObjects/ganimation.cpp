@@ -7,36 +7,48 @@ static const char* DEBUG_IMAGE_EXT = ".png";
 
 static wxInt32 debugImageNr = 0;
 
-void GameAnimation::AddFrame(const sf::Texture& frame, sf::Time duration)
+GameErrorCode GameAnimation::AddFrame(const sf::Texture& frame, sf::Time duration)
 {
-	m_staticFrames.push_back(frame);
-	m_staticFrameTimes.push_back(m_durationTotal);
+	if(m_spFrameSequence.IsEmpty())
+	{
+		m_spFrameSequence.Attach(new (std::nothrow) AnimFrameSequence());
+		if(m_spFrameSequence.IsEmpty())
+		{
+			FWGLOG_ERROR_FORMAT(wxT("GameAnimation::AddFrame() : Create new animation sequence failed: 0x%08x"),
+				m_spLogger, (GameErrorCode) FWG_E_MEMORY_ALLOCATION_ERROR, FWGLOG_ENDVAL);
+			return FWG_E_MEMORY_ALLOCATION_ERROR;
+		}
+	}
+	m_spFrameSequence->GetSequence().push_back(frame);
+	m_frameTimes.push_back(m_durationTotal);
 	m_durationTotal += duration;
+	
+	return FWG_NO_ERROR;
 }
 
 void GameAnimation::GetFrameLinearInterpolation(float& ratio)
 {
 	sf::Time deltaTime;
 	
-	if(m_actualKeyframes[0] == m_actualKeyframes[1]) return;
+	if(m_actualFrame == m_secondaryFrame) return;
 	
-	if (m_actualKeyframes[0] < m_actualKeyframes[1])
+	if (m_actualFrame < m_secondaryFrame)
 	{
-		deltaTime = m_keyFrameTimes[m_actualKeyframes[1]] - m_keyFrameTimes[m_actualKeyframes[0]];
-		ratio = (m_actualTime.asSeconds() - m_keyFrameTimes[m_actualKeyframes[0]].asSeconds()) / (deltaTime.asSeconds());
+		deltaTime = m_frameTimes[m_secondaryFrame] - m_frameTimes[m_actualFrame];
+		ratio = (m_actualTime.asSeconds() - m_frameTimes[m_actualFrame].asSeconds()) / (deltaTime.asSeconds());
 	} else {
 		if (m_endlessLoop)
 		{
-			deltaTime = m_durationTotal - m_keyFrameTimes[m_actualKeyframes[0]];
-			ratio = (m_actualTime.asSeconds() - m_keyFrameTimes[m_actualKeyframes[0]].asSeconds()) / (deltaTime.asSeconds());
+			deltaTime = m_durationTotal - m_frameTimes[m_actualFrame];
+			ratio = (m_actualTime.asSeconds() - m_frameTimes[m_actualFrame].asSeconds()) / (deltaTime.asSeconds());
 		} else {
-			m_actualKeyframes[1] = m_actualKeyframes[0];
+			m_secondaryFrame = m_actualFrame;
 			ratio = 0.0f;
 		}
 	}
 	
 	FWGLOG_TRACE_FORMAT(wxT("GameAnimation::GetFrameLinearInterpolation() : Frame1[ %u ], frame2[ %u ], %0.4f"),
-		m_spLogger, m_actualKeyframes[0], m_actualKeyframes[1], ratio, FWGLOG_ENDVAL);
+		m_spLogger, m_actualFrame, m_secondaryFrame, ratio, FWGLOG_ENDVAL);
 	
 }
 
@@ -50,9 +62,9 @@ void GameAnimation::Reset()
 void GameAnimation::UpdateKeyFramesIndex()
 {
 	//bool change = false;
-	if (m_keyFrames.size() < 2)
+	if (m_spFrameSequence->GetSequence().size() < 2)
 	{
-		m_actualKeyframes[0] = m_actualKeyframes[1] = 0;
+		m_actualFrame = m_secondaryFrame = 0;
 		return;
 	}
 
@@ -60,24 +72,24 @@ void GameAnimation::UpdateKeyFramesIndex()
 	{
 		//change = true;
 		m_actualTime = m_actualTime - m_durationTotal;
-		m_actualKeyframes[0] = 0;
+		m_actualFrame = 0;
 	}
 		
-	while((m_keyFrameTimes.size() > (m_actualKeyframes[0]+1)) && (m_keyFrameTimes[m_actualKeyframes[0]+1].asMicroseconds() < m_actualTime.asMicroseconds() ))
+	while((m_frameTimes.size() > (m_actualFrame+1)) && (m_frameTimes[m_actualFrame+1].asMicroseconds() < m_actualTime.asMicroseconds() ))
 	{
 		//change = true;
-		m_actualKeyframes[0]++;
+		m_actualFrame++;
 	}
 		
 	if (m_endlessLoop)
 	{
-		m_actualKeyframes[1] = (m_keyFrameTimes.size() <= (m_actualKeyframes[0]+1))? 0 : (m_actualKeyframes[0]+1);
+		m_secondaryFrame = (m_frameTimes.size() <= (m_actualFrame+1))? 0 : (m_actualFrame+1);
 	} else {
-		m_actualKeyframes[1] = (m_keyFrameTimes.size() <= (m_actualKeyframes[0]+1))? m_actualKeyframes[0] : (m_actualKeyframes[0]+1);
+		m_secondaryFrame = (m_frameTimes.size() <= (m_actualFrame+1))? m_actualFrame : (m_actualFrame+1);
 	}
 		
-	FWGLOG_TRACE_FORMAT(wxT("GameAnimation::UpdateTime() : actualTime( %llu ), actualKeyFrame[0]( %u ), actualKeyFrame[1]( %u )"),
-		m_spLogger, m_actualTime, m_actualKeyframes[0], m_actualKeyframes[1], FWGLOG_ENDVAL);
+	FWGLOG_TRACE_FORMAT(wxT("GameAnimation::UpdateTime() : actualTime( %llu ), m_actualFrame( %u ), m_secondaryFrame( %u )"),
+		m_spLogger, m_actualTime, m_actualFrame, m_secondaryFrame, FWGLOG_ENDVAL);
 		
 	{
 		float ratio = 0.0f;
@@ -90,7 +102,7 @@ void GameAnimation::UpdateKeyFramesIndex()
 
 void GameAnimation::UpdateStaticFrameIndex()
 {
-	if (m_staticFrameTimes.size() < 2)
+	if (m_spFrameSequence->GetSequence().size() < 2)
 	{
 		m_actualFrame = 0;
 		return;
@@ -102,7 +114,7 @@ void GameAnimation::UpdateStaticFrameIndex()
 		m_actualFrame = 0;
 	}
 			
-	while((m_staticFrameTimes.size() > (m_actualFrame+1)) && (m_staticFrameTimes[m_actualFrame+1].asMicroseconds() < m_actualTime.asMicroseconds() ))
+	while((m_frameTimes.size() > (m_actualFrame+1)) && (m_frameTimes[m_actualFrame+1].asMicroseconds() < m_actualTime.asMicroseconds() ))
 	{
 		m_actualFrame++;
 	}
@@ -114,7 +126,7 @@ void GameAnimation::UpdateStaticFrameIndex()
 void GameAnimation::UpdateTimeIncremental(sf::Time timeIncrement)
 {
 	m_actualTime += timeIncrement;
-	if (!m_staticFrameTimes.empty())
+	if (ANIM_TYPE_STATIC == m_animationType)
 	{
 		UpdateStaticFrameIndex();
 	} else {
@@ -122,62 +134,44 @@ void GameAnimation::UpdateTimeIncremental(sf::Time timeIncrement)
 	}
 }
 
-void GameAnimation::AddKeyFrame(const sf::Texture& keyFrame, sf::Time duration)
-{
-	if(!m_staticFrameTimes.empty())
-	{
-		m_staticFrameTimes.clear();
-		m_staticFrames.clear();
-	}
-	
-	if(m_keyFrameTimes.empty())
-	{
-		m_durationTotal = sf::Time::Zero;
-		m_actualTime = sf::Time::Zero;
-		m_animationType = FRAMES_LINEAR;
-	}
-	
-	m_keyFrames.push_back(keyFrame);
-	m_keyFrameTimes.push_back(m_durationTotal);
-	m_durationTotal += duration;
-}
 
 void GameAnimation::Clear()
 {
-	m_staticFrames.clear();
-	m_staticFrameTimes.clear();
+	m_spFrameSequence.Release();
 	
-	m_keyFrames.clear();
-	m_keyFrameTimes.clear();
-	
+	m_frameTimes.clear();
+		
 	m_durationTotal = sf::Time::Zero;
 	m_actualTime = sf::Time::Zero;
 	
 	m_actualFrame = 0;
-	m_actualKeyframes[0] = m_actualKeyframes[1] = 0;
+	m_secondaryFrame = 0;
 	
-	m_animationType = FRAMES_NONE;
+	m_animationType = ANIM_TYPE_STATIC;
+	
+	m_endlessLoop = false;
+	m_repeat = false;
 }
 
 sf::Texture* GameAnimation::GetActualFrame()
 {
-	if(m_staticFrames.empty())
+	if(ANIM_TYPE_STATIC == m_animationType)
 	{
-		return &m_intenalTexture;
+		return &m_spFrameSequence->GetSequence()[m_actualFrame];
 	} else {
-		return &m_staticFrames[m_actualFrame];
+		return &m_intenalTexture;
 	}
 }
 
 void GameAnimation::RenderInterpolatedTexture(float& ratio, sf::Texture &outputTexture)
 {
 
-	sf::Vector2u size = m_keyFrames[0].getSize();
+	sf::Vector2u size = m_spFrameSequence->GetSequence()[0].getSize();
 	sf::RenderTexture renTex1, renTex2;
 	
-	if(m_actualKeyframes[0] == m_actualKeyframes[1])
+	if(m_actualFrame == m_secondaryFrame)
 	{
-		outputTexture = m_keyFrames[m_actualKeyframes[0]];
+		outputTexture = m_spFrameSequence->GetSequence()[m_actualFrame];
 		return;
 	}
 	
@@ -187,8 +181,8 @@ void GameAnimation::RenderInterpolatedTexture(float& ratio, sf::Texture &outputT
 	wxDword alfaExt = static_cast<wxDword>(ratio * 255.0f);
 	sf::Uint8 alfa = (alfaExt > 255)? 255 : static_cast<sf::Uint8>(alfaExt);
 	sf::RenderStates renderStates;
-	sf::Sprite sprite1(m_keyFrames[m_actualKeyframes[0]]);
-	sf::Sprite sprite2(m_keyFrames[m_actualKeyframes[1]]);
+	sf::Sprite sprite1(m_spFrameSequence->GetSequence()[m_actualFrame]);
+	sf::Sprite sprite2(m_spFrameSequence->GetSequence()[m_secondaryFrame]);
 	renderStates.blendMode = sf::BlendMultiply;
 	
 	renTex2.clear(sf::Color(alfa, alfa, alfa, alfa));
@@ -224,10 +218,16 @@ void GameAnimation::RenderInterpolatedTexture(float& ratio, sf::Texture &outputT
 	}*/
 }
 
-GameErrorCode GameAnimation::PrecomputeFrames(sf::Time constFrameDuration)
+GameErrorCode GameAnimation::GenerateStaticAnimation(GameAnimation& staticAnim, sf::Time constFrameDuration)
 {
 	wxInt32 totalFramesCount = 0;
 	float ratio;
+	
+	if(ANIM_TYPE_STATIC == m_animationType)
+	{
+		return FWG_E_INVALID_OPERATION_ERROR;
+	}
+	
 	if (constFrameDuration == sf::Time::Zero)
 	{
 		constFrameDuration = sf::milliseconds(20); // 25 frames per second
@@ -235,22 +235,22 @@ GameErrorCode GameAnimation::PrecomputeFrames(sf::Time constFrameDuration)
 	
 	totalFramesCount = (m_durationTotal.asMilliseconds() / constFrameDuration.asMilliseconds()) + 1;
 	
-	// preallocate vector 
-	m_staticFrames.resize(totalFramesCount);
-	m_staticFrameTimes.resize(totalFramesCount);
+	staticAnim.Clear();
 	
 	Reset();
 	
-	for(wxInt32 i = 0; i < totalFramesCount; i++)
+	GetFrameLinearInterpolation(ratio);
+	RenderInterpolatedTexture(ratio, m_intenalTexture);
+	FWG_RETURN_FAIL(staticAnim.AddFrame(m_intenalTexture, constFrameDuration));
+	for(wxInt32 i = 1; i < totalFramesCount; i++)
 	{
-		GetFrameLinearInterpolation(ratio);
-		RenderInterpolatedTexture(ratio, m_staticFrames[i]);
-		m_staticFrameTimes[i] = m_actualTime;
-		m_actualTime += constFrameDuration;
-		UpdateKeyFramesIndex();
+		UpdateTimeIncremental(constFrameDuration);
+		FWG_RETURN_FAIL(staticAnim.AddFrame(m_intenalTexture, constFrameDuration));
 	}
 	
-	Reset();
+	//flags same as parent
+	staticAnim.m_endlessLoop = this->m_endlessLoop;
+	staticAnim.m_repeat = this->m_repeat;
 	
 	return FWG_NO_ERROR;
 	

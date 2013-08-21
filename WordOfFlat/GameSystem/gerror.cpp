@@ -92,6 +92,8 @@ void GameConvertErrCode2String(GameErrorCode errCode, wxString &errorStr)
 	case FWG_E_OBJECT_NOT_FOUND_ERROR:
 		errorStr.assign(FWG_E_OBJECT_NOT_FOUND_ERROR_STR);
 		break;
+	case FWG_E_ANIMATION_ENDS_INFORMATION:
+		errorStr.assign(FWG_E_ANIMATION_ENDS_INFORMATION_STR);
 	default:
 		errorStr.assign(_T("Unknown Error"));
 		break;
