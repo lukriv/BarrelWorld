@@ -86,6 +86,7 @@ private:
 	
 	bool m_endlessLoop;
 	bool m_repeat;
+	bool m_cloned;
 protected:
 	/*!
 	 * \brief Get two actual frames with 
@@ -110,9 +111,38 @@ public:
 						, m_actualFrame(0) 
 						, m_secondaryFrame(0)
 						, m_endlessLoop(false)
-						, m_repeat(false){}
+						, m_repeat(false)
+						, m_cloned(false){}
 	
 	~GameAnimation() {}
+	
+	/*!
+	 * \brief Clone animation
+	 * \param clone Empty animation will be filled with this animation clone
+	 * \retval FWG_NO_ERROR on success
+	 * \retval error on fail
+	 */
+	GameErrorCode Clone(GameAnimation &clone);
+	
+	
+	/*!
+	 * \brief Scale animation time
+	 * 
+	 * Scale animation times according to ratio. Less than one the animation will be shorter, more than one 
+	 * the animation will be longer.
+	 * 
+	 * \param scale ratio (1 means that no change will be made)
+	 */
+	void TimeScale(float scale);
+	
+	/*!
+	 * \brief Scale animation time
+	 * 
+	 * This version set new total animation duration and recomputes frame duration in ratio.
+	 * 
+	 * \param newTotalDuration Absolute animation time duration.
+	 */
+	void TimeScale(sf::Time newTotalDuration);
 	
 	/*!
 	 * \brief Add new frame to animation
