@@ -256,4 +256,37 @@ GameErrorCode GameAnimation::GenerateStaticAnimation(GameAnimation& staticAnim, 
 	
 }
 
+GameErrorCode GameAnimation::Clone(GameAnimation& clone)
+{
+	clone.Clear();
+	
+	clone.m_actualFrame = 0;
+	clone.m_secondaryFrame = 0;
+	clone.m_actualTime = sf::Time::Zero;
+	clone.m_animationType = m_animationType;
+	clone.m_durationTotal = m_durationTotal;
+	clone.m_endlessLoop = m_endlessLoop;
+	wxVector<sf::Time>::iterator timeIter;
+	timeIter = m_frameTimes.begin();
+	while(timeIter != m_frameTimes.end())
+	{
+		clone.m_frameTimes.push_back(*timeIter);
+		timeIter++;
+	}
+	clone.m_repeat = m_repeat;
+	clone.m_spFrameSequence = m_spFrameSequence;
+	
+	clone.m_cloned = m_cloned = true;
+	
+	return FWG_NO_ERROR;
+}
+
+void GameAnimation::TimeScale(float scale)
+{
+}
+
+void GameAnimation::TimeScale(sf::Time newTotalDuration)
+{
+}
+
 
