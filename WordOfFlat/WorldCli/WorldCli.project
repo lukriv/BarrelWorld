@@ -10,13 +10,11 @@
   <VirtualDirectory Name="src">
     <File Name="gflatworldcliimpl.cpp"/>
     <File Name="debugrender.cpp"/>
-    <File Name="gentitycreator.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="gflatworldcliimpl.h"/>
     <File Name="../WorldSrv/globalworldimpl.h"/>
     <File Name="debugrender.h"/>
-    <File Name="gentitycreator.h"/>
   </VirtualDirectory>
   <Dependencies Name="Release"/>
   <Settings Type="Static Library">

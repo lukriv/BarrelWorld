@@ -11,12 +11,18 @@
     <File Name="gresholder.cpp"/>
     <File Name="gscenegenimpl.cpp"/>
     <File Name="gentityfactory.cpp"/>
+    <File Name="gentitycreator.cpp"/>
+    <File Name="gdefholder.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="gresloader.h"/>
     <File Name="gresholder.h"/>
     <File Name="gscenegen.h"/>
     <File Name="gentityfactory.h"/>
+    <File Name="gentitycreator.h"/>
+    <File Name="gdefholder.h"/>
+    <File Name="gdeftables.h"/>
+    <File Name="gdefloader.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="impl">
     <File Name="gscenegenimpl.h"/>

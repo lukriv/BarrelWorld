@@ -25,6 +25,7 @@ class AnimFrameSequence : public IRefObject {
 	TFrameTextureList m_frameSequence;
 public:
 	AnimFrameSequence() : m_refCount(1) {}
+	AnimFrameSequence( const AnimFrameSequence& seq);
 	inline TFrameTextureList& GetSequence() { return m_frameSequence; }
 
 public:
@@ -114,7 +115,10 @@ public:
 						, m_repeat(false)
 						, m_cloned(false){}
 	
-	~GameAnimation() {}
+	~GameAnimation() {
+		m_spFrameSequence.Release();
+		m_spLogger.Release();
+	}
 	
 	/*!
 	 * \brief Clone animation
