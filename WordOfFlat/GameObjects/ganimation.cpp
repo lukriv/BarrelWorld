@@ -6,6 +6,21 @@ static const char* DEBUG_IMAGE_NAME = "debugImage";
 static const char* DEBUG_IMAGE_EXT = ".png";
 
 static wxInt32 debugImageNr = 0;
+///////////////////////////////////
+//////// AnimFrameSequence ////////
+///////////////////////////////////
+AnimFrameSequence::AnimFrameSequence(const AnimFrameSequence& seq) : m_refCount(1)
+{
+	m_frameSequence.reserve(seq.m_frameSequence.size());
+	for (size_t i = 0; i < seq.m_frameSequence.size(); ++i)
+	{
+		m_frameSequence.push_back(seq.m_frameSequence[i]);
+	}
+}
+
+///////////////////////////////////
+/////////// GameAnimation /////////
+///////////////////////////////////
 
 GameErrorCode GameAnimation::AddFrame(const sf::Texture& frame, sf::Time duration)
 {
@@ -283,10 +298,37 @@ GameErrorCode GameAnimation::Clone(GameAnimation& clone)
 
 void GameAnimation::TimeScale(float scale)
 {
+	sf::Time timediff, timescale, time1000;
+	size_t i = 0;
+	wxVector<sf::Time> newTimes;
+	
+	timescale = sf::milliseconds( static_cast<wxInt32>(1000.0f * scale));
+	time1000 = sf::milliseconds(1000);
+	
+	newTimes.reserve(m_frameTimes.size());
+	
+	for (i = 0; i < (m_frameTimes.size() - 1); i++)
+	{
+		timediff = m_frameTimes[i+1] - m_frameTimes[i];
+		timediff = sf::milliseconds((timediff.asMilliseconds() * timescale.asMilliseconds()) / time1000.asMilliseconds());
+		newTimes.push_back(timediff);
+	}
+	
+	timediff = m_durationTotal - m_frameTimes[i];
+	timediff = sf::milliseconds((timediff.asMilliseconds() * timescale.asMilliseconds()) / time1000.asMilliseconds());
+	newTimes.push_back(timediff);
+	
+	m_durationTotal = sf::milliseconds((m_durationTotal.asMilliseconds() * timescale.asMilliseconds()) / time1000.asMilliseconds());
+	m_frameTimes.swap(newTimes);
+	
 }
 
 void GameAnimation::TimeScale(sf::Time newTotalDuration)
 {
+	float scale;
+	scale = newTotalDuration.asSeconds() / m_durationTotal.asSeconds();
+	TimeScale(scale);
 }
+
 
 
