@@ -1,12 +1,12 @@
 #ifndef __GAME_DEFINITION_HOLDER_H__
 #define __GAME_DEFINITION_HOLDER_H__
 
-enum 
-
 
 class GameDefinitionHolder : public IRefObject {
-
-	
+public:
+	GameErrorCode GetEntityDef(wxDword entityID, BasicEntityDef &basEntityDef); 
+	GameErrorCode GetAnimDef(wxDword animID, AnimationDef &animDef);
+		
 };
 
 
