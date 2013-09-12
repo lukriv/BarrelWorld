@@ -3,4 +3,9 @@
 
 
 
+class IGameDefLoader {
+public:
+	
+};
+
 #endif //__GAME_DEFINITIONS_LOADER_H__
