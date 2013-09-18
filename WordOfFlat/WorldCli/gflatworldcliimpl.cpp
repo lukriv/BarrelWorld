@@ -254,27 +254,27 @@ GameErrorCode GameFlatWorldClient::AddStaticEntity(GameEntityBase* pEntity)
 	return result;
 }
 
-GameEntityBase* GameFlatWorldClient::GetCharacterEntity(GameObjectId objId)
+GameEntityBase* GameFlatWorldClient::GetCharacterEntity(GameObjectID objId)
 {
 	return m_characters[objId];
 }
 
-GameEntityBase* GameFlatWorldClient::GetLandscapeEntity(GameObjectId objId)
+GameEntityBase* GameFlatWorldClient::GetLandscapeEntity(GameObjectID objId)
 {
 	return m_landscape[objId];
 }
 
-GameEntityBase* GameFlatWorldClient::GetMoveableEntity(GameObjectId objId)
+GameEntityBase* GameFlatWorldClient::GetMoveableEntity(GameObjectID objId)
 {
 	return m_moveAbleObj[objId];
 }
 
-GameEntityBase* GameFlatWorldClient::GetSenzorEntity(GameObjectId objId)
+GameEntityBase* GameFlatWorldClient::GetSenzorEntity(GameObjectID objId)
 {
 	return m_senzors[objId];
 }
 
-GameEntityBase* GameFlatWorldClient::GetStaticEntity(GameObjectId objId)
+GameEntityBase* GameFlatWorldClient::GetStaticEntity(GameObjectID objId)
 {
 	return m_staticObj[objId];
 }

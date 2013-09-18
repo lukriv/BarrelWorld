@@ -19,8 +19,6 @@
   <VirtualDirectory Name="include">
     <File Name="gbintreeobj.h"/>
     <File Name="ggeometry.h"/>
-    <File Name="gameobjdef.h"/>
-    <File Name="gobject.h"/>
   </VirtualDirectory>
   <Settings Type="Static Library">
     <GlobalSettings>

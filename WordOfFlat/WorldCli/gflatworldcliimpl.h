@@ -182,11 +182,11 @@ public:
 	 * \param objId entity id
 	 * \return NULL if object with coresponding ID is not found or returns object poiter.
 	 */
-	GameEntityBase* GetLandscapeEntity( GameObjectId objId);
-	GameEntityBase* GetStaticEntity( GameObjectId objId);
-	GameEntityBase* GetMoveableEntity( GameObjectId objId);
-	GameEntityBase* GetCharacterEntity( GameObjectId objId);
-	GameEntityBase* GetSenzorEntity( GameObjectId objId);
+	GameEntityBase* GetLandscapeEntity( GameObjectID objId);
+	GameEntityBase* GetStaticEntity( GameObjectID objId);
+	GameEntityBase* GetMoveableEntity( GameObjectID objId);
+	GameEntityBase* GetCharacterEntity( GameObjectID objId);
+	GameEntityBase* GetSenzorEntity( GameObjectID objId);
 	
 	inline b2World* GetPhysWorld() { return m_apWorld.get();}
 	

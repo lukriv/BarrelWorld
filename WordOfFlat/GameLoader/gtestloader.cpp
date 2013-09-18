@@ -29,7 +29,7 @@ GameErrorCode GameTestResourceLoader::LoadGeometryList(TGameGeometryMap& geomLis
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode GameTestResourceLoader::LoadGeometry(GameShapeId geomID, GameGeometryContainer*& pShape)
+GameErrorCode GameTestResourceLoader::LoadGeometry(GameObjectID geomID, GameGeometryContainer*& pShape)
 {	
 	wxScopedPtr<GameGeometryContainer> apGeometry;
 	pShape = NULL;
@@ -74,7 +74,7 @@ GameErrorCode GameTestResourceLoader::LoadGeometry(GameShapeId geomID, GameGeome
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode GameTestResourceLoader::LoadTexture(GameTextureId texID, sf::Texture*& pTexImage)
+GameErrorCode GameTestResourceLoader::LoadTexture(GameObjectID texID, sf::Texture*& pTexImage)
 {
 	return FWG_E_NOT_IMPLEMENTED_ERROR;
 }
@@ -161,14 +161,14 @@ GameErrorCode GameTestResourceLoader::LoadPhysFixList(TGamePhysFixMap& physFixLi
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode GameTestResourceLoader::LoadPhysJoint(GamePhysObjId jointID, b2JointDef*& pJointDef)
+GameErrorCode GameTestResourceLoader::LoadPhysJoint(GameObjectID jointID, b2JointDef*& pJointDef)
 {
 	FWG_UNREFERENCED_PARAMETER(jointID);
 	pJointDef = NULL;
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode GameTestResourceLoader::LoadPhysBody(GamePhysObjId bodyID, b2BodyDef*& pBodyDef)
+GameErrorCode GameTestResourceLoader::LoadPhysBody(GameObjectID bodyID, b2BodyDef*& pBodyDef)
 {
 	wxScopedPtr<b2BodyDef> apBodyDef;
 	pBodyDef = NULL;
@@ -197,7 +197,7 @@ GameErrorCode GameTestResourceLoader::LoadPhysBody(GamePhysObjId bodyID, b2BodyD
 
 }
 
-GameErrorCode GameTestResourceLoader::LoadPhysFixture(GamePhysObjId fixID, b2FixtureDef*& pFixDef)
+GameErrorCode GameTestResourceLoader::LoadPhysFixture(GameObjectID fixID, b2FixtureDef*& pFixDef)
 {
 	wxScopedPtr<b2FixtureDef> apFixtureDef;
 	pFixDef = NULL;

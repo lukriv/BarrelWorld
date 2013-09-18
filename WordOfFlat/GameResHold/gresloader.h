@@ -28,7 +28,7 @@ public:
 struct GamePhysJointItem {
 	wxInt32 m_refCount;
 	b2JointDef *m_pJointDef;
-	wxVector<GamePhysObjId> m_bodyRefList;
+	wxVector<GameObjectID> m_bodyRefList;
 public:
 	GamePhysJointItem() : m_refCount(0), m_pJointDef(NULL) {}
 };
@@ -36,7 +36,7 @@ public:
 struct GamePhysBodyItem {
 	wxInt32 m_refCount;
 	b2BodyDef *m_pBodyDef;
-	wxVector<GamePhysObjId> m_fixtureRefList; // reference indet to Fixture map
+	wxVector<GameObjectID> m_fixtureRefList; // reference indet to Fixture map
 public:
 	GamePhysBodyItem() : m_refCount(0), m_pBodyDef(NULL) {}
 };
@@ -49,30 +49,30 @@ public:
 	GamePhysFixItem() : m_refCount(0), m_pFixtureDef(NULL) {}
 };
 
-typedef std::map<GameTextureId, GameTexResItem> TGameTextureMap;
-typedef std::pair<GameTextureId, GameTexResItem> TGameTextureMapItem;
+typedef std::map<GameObjectID, GameTexResItem> TGameTextureMap;
+typedef std::pair<GameObjectID, GameTexResItem> TGameTextureMapItem;
 	
-typedef std::map<GameShapeId, GameGeomResItem> TGameGeometryMap;
-typedef std::pair<GameShapeId, GameGeomResItem> TGameGeometryMapItem;
+typedef std::map<GameObjectID, GameGeomResItem> TGameGeometryMap;
+typedef std::pair<GameObjectID, GameGeomResItem> TGameGeometryMapItem;
 
-typedef std::map<GamePhysObjId, GamePhysJointItem> TGamePhysJointMap;
-typedef std::pair<GamePhysObjId, GamePhysJointItem> TGamePhysJointMapItem;
+typedef std::map<GameObjectID, GamePhysJointItem> TGamePhysJointMap;
+typedef std::pair<GameObjectID, GamePhysJointItem> TGamePhysJointMapItem;
 
-typedef std::map<GamePhysObjId, GamePhysBodyItem> TGamePhysBodyMap;
-typedef std::pair<GamePhysObjId, GamePhysBodyItem> TGamePhysBodyMapItem;
+typedef std::map<GameObjectID, GamePhysBodyItem> TGamePhysBodyMap;
+typedef std::pair<GameObjectID, GamePhysBodyItem> TGamePhysBodyMapItem;
 
-typedef std::map<GamePhysObjId, GamePhysFixItem> TGamePhysFixMap;
-typedef std::pair<GamePhysObjId, GamePhysFixItem> TGamePhysFixMapItem;
+typedef std::map<GameObjectID, GamePhysFixItem> TGamePhysFixMap;
+typedef std::pair<GameObjectID, GamePhysFixItem> TGamePhysFixMapItem;
 
 class IGameResourceLoader {
 public:
 	virtual GameErrorCode LoadTextureFromFile(const wxChar* texFileName, sf::Texture *&pTexImage) = 0;
 	
-	virtual GameErrorCode LoadTexture(GameTextureId texID, sf::Texture *&pTexImage) = 0;
-	virtual GameErrorCode LoadGeometry(GameShapeId geomID, GameGeometryContainer *&pShape) = 0;
-	virtual GameErrorCode LoadPhysJoint(GamePhysObjId jointID, b2JointDef *&pJointDef) = 0;
-	virtual GameErrorCode LoadPhysBody(GamePhysObjId bodyID, b2BodyDef *&pBodyDef) = 0;
-	virtual GameErrorCode LoadPhysFixture(GamePhysObjId fixID, b2FixtureDef *&pFixDef) = 0;
+	virtual GameErrorCode LoadTexture(GameObjectID texID, sf::Texture *&pTexImage) = 0;
+	virtual GameErrorCode LoadGeometry(GameObjectID geomID, GameGeometryContainer *&pShape) = 0;
+	virtual GameErrorCode LoadPhysJoint(GameObjectID jointID, b2JointDef *&pJointDef) = 0;
+	virtual GameErrorCode LoadPhysBody(GameObjectID bodyID, b2BodyDef *&pBodyDef) = 0;
+	virtual GameErrorCode LoadPhysFixture(GameObjectID fixID, b2FixtureDef *&pFixDef) = 0;
 	
 	virtual GameErrorCode LoadTextureList(TGameTextureMap &texList) = 0;
 	virtual GameErrorCode LoadGeometryList(TGameGeometryMap &geomList) = 0;

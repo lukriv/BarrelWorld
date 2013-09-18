@@ -6,15 +6,15 @@
 
 class GameObjectBase : public IGameObject {
 private:
-	GameObjectId m_objId;
+	GameObjectID m_objId;
 
 public:
 	GameObjectBase() : m_objId(GAME_OBJECT_ID_INVALID) {}
-	inline void SetObjID(GameObjectId objID) { m_objId = objID;}
+	inline void SetObjID(GameObjectID objID) { m_objId = objID;}
 	
 public:
 //from IGameObject
-	virtual GameObjectId GetObjID() { return m_objId;}
+	virtual GameObjectID GetObjID() { return m_objId;}
 	
 };
 

@@ -58,7 +58,7 @@ public:
 	 * \param[in] texID wanted texture image
 	 * \return Pointer to texture image or NULL if texture image was not found
 	 */
-	sf::Texture* GetTexture(GameTextureId texID);
+	sf::Texture* GetTexture(GameObjectID texID);
 	
 	/*! \brief Get geometry object with given parameter
 	 * 
@@ -67,7 +67,7 @@ public:
 	 * \param[in] geomID wanted geometry object
 	 * \return Pointer to geometry object or NULL if geometry object was not found
 	 */
-	GameGeometryContainer* GetGeometry(GameShapeId geomID);
+	GameGeometryContainer* GetGeometry(GameObjectID geomID);
 	
 	/*! \brief Get joint definition
 	 * \param[in] jointID Joint identificator
@@ -76,7 +76,7 @@ public:
 	 * \retval FWG_NO_ERROR on success
 	 * \retval Error code on failture	
 	 */
-	GameErrorCode GetJointDef(GamePhysObjId jointID, b2JointDef *&pJointDef, wxVector<GamePhysObjId> &bodyList);
+	GameErrorCode GetJointDef(GameObjectID jointID, b2JointDef *&pJointDef, wxVector<GameObjectID> &bodyList);
 	
 	/*! \brief Get body definition
 	 * \param[in] bodyID Body identificator
@@ -85,7 +85,7 @@ public:
 	 * \retval FWG_NO_ERROR on success
 	 * \retval Error code on failture	
 	 */
-	GameErrorCode GetBodyDef(GamePhysObjId bodyID, b2BodyDef *&pBodyDef, wxVector<GamePhysObjId> &fixtureList);
+	GameErrorCode GetBodyDef(GameObjectID bodyID, b2BodyDef *&pBodyDef, wxVector<GameObjectID> &fixtureList);
 	
 	/*! \brief Get fixture definition
 	 * \param[in] fixID
@@ -94,7 +94,7 @@ public:
 	 * \retval FWG_NO_ERROR on success
 	 * \retval Error code on failture
 	 */
-	GameErrorCode GetFixtureDef(GamePhysObjId fixID, b2FixtureDef *&pFixtureDef, GameShapeId &shapeID);
+	GameErrorCode GetFixtureDef(GameObjectID fixID, b2FixtureDef *&pFixtureDef, GameObjectID &shapeID);
 	
 	/*! \brief Release texture
 	 * 
@@ -102,7 +102,7 @@ public:
 	 * 
 	 * \param texID Released texture
 	 */
-	void ReleaseTexture(GameTextureId texID);
+	void ReleaseTexture(GameObjectID texID);
 	
 	/*! \brief Release geometry object
 	 * 
@@ -110,7 +110,7 @@ public:
 	 * 
 	 * \param geomID Released geometry object
 	 */
-	void ReleaseGeometry(GameShapeId geomID);
+	void ReleaseGeometry(GameObjectID geomID);
 	
 	/*! \brief Release joint
 	 * 
@@ -118,7 +118,7 @@ public:
 	 * 
 	 * \param jointID Released joint
 	 */
-	void ReleaseJoint(GamePhysObjId jointID);
+	void ReleaseJoint(GameObjectID jointID);
 	
 	/*! \brief Release body
 	 * 
@@ -126,7 +126,7 @@ public:
 	 * 
 	 * \param bodyID Released body
 	 */
-	void ReleaseBody(GamePhysObjId bodyID);
+	void ReleaseBody(GameObjectID bodyID);
 	
 	/*! \brief Release fixture
 	 * 
@@ -134,7 +134,7 @@ public:
 	 * 
 	 * \param fixID Released fixture
 	 */
-	void ReleaseFixture(GamePhysObjId fixID);
+	void ReleaseFixture(GameObjectID fixID);
 
 public:
 	virtual void addRef();
