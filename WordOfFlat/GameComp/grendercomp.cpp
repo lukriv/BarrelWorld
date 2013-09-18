@@ -1,4 +1,4 @@
-#include "gentity.h"
+#include "grendercomp.h"
 
 void GameEntity::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {

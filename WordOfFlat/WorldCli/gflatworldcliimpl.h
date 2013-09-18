@@ -10,7 +10,7 @@
 #include "../GameObjects/gsceneobj.h"
 #include "../GameObjects/ggeometry.h"
 #include "../GameObjects/gentityobj.h"
-#include "../GameObjects/gentity.h"
+#include "../GameObjects/grendercomp.h"
 #include "../GameObjects/ganimation.h"
 #include "../WorldSrv/gflatworld.h"
 #include "../GameResHold/gentityfactory.h"
