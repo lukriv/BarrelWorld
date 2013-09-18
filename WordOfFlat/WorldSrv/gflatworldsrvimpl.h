@@ -59,7 +59,7 @@ public:
 	 * \retval FWG_NO_ERROR On success
 	 * \retval FWG_E_INVALID_PARAMETER_ERROR if objID is not unique or pObject is NULL
 	 */
-	GameErrorCode AddNewObject(GameObjectId objID, IGameObject *pObject);
+	GameErrorCode AddNewObject(GameObjectID objID, IGameObject *pObject);
 	
 	GameErrorCode SetWorldSize(const b2Vec2 &LLpoint, const b2Vec2 &RUpoint);
 	

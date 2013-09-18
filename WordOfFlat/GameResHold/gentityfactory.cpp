@@ -7,13 +7,13 @@
 GameErrorCode GameEntityFactory::CreateBasicEntity(const BasicEntityDef& entityDef, b2World& world, GameEntity& entity)
 {
 	GameErrorCode result = FWG_NO_ERROR;
-	wxVector<GamePhysObjId> physObjsList;
-	wxVector<GamePhysObjId>::iterator iter;
+	wxVector<GameObjectID> physObjsList;
+	wxVector<GameObjectID>::iterator iter;
 	GameGeometryContainer *pGeomCont = NULL;
 	wxDword i = 0;
 	b2Body *pBody = NULL;
 	
-	if (entityDef.m_textureRef != GAME_TEXTURE_ID_INVALID) {
+	if (entityDef.m_textureRef != GAME_OBJECT_ID_INVALID) {
 		sf::Texture *pTexImage = m_spResHolder->GetTexture(entityDef.m_textureRef);
 		if (pTexImage == NULL)
 		{
@@ -25,7 +25,7 @@ GameErrorCode GameEntityFactory::CreateBasicEntity(const BasicEntityDef& entityD
 		}
 	}
 	
-	if (entityDef.m_geometryRef != GAME_SHAPE_ID_INVALID) {
+	if (entityDef.m_geometryRef != GAME_OBJECT_ID_INVALID) {
 		pGeomCont = m_spResHolder->GetGeometry(entityDef.m_geometryRef);
 		if(pGeomCont == NULL) {
 			FWGLOG_ERROR(wxT("GameEntityFactory::CreateEntityBasic() : Geometry not found"), m_spLogger);
@@ -44,7 +44,7 @@ GameErrorCode GameEntityFactory::CreateBasicEntity(const BasicEntityDef& entityD
 		apGeom.release();
 	}
 	
-	if (entityDef.m_physRef != GAME_PHYSICS_ID_INVALID) {
+	if (entityDef.m_physRef != GAME_OBJECT_ID_INVALID) {
 		b2BodyDef *pBodyDef = NULL;
 		if (FWG_FAILED(result = m_spResHolder->GetBodyDef(entityDef.m_physRef, pBodyDef, physObjsList)))
 		{
@@ -65,7 +65,7 @@ GameErrorCode GameEntityFactory::CreateBasicEntity(const BasicEntityDef& entityD
 	for (iter = physObjsList.begin(); iter != physObjsList.end(); iter++)
 	{
 		b2FixtureDef *pFixtureDef = NULL;
-		GameShapeId shapeId;
+		GameObjectID shapeId;
 		IGameGeometry *pGeometry = NULL;
 		wxScopedPtr<b2Shape> apShape;
 		if (FWG_FAILED(result = m_spResHolder->GetFixtureDef(*iter, pFixtureDef, shapeId)))
