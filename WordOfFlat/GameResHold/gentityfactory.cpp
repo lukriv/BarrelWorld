@@ -2,7 +2,7 @@
 
 #include <wx/scopedptr.h>
 #include "../GameObjects/gsfmlgeom.h"
-#include "../GameObjects/gentity.h"
+#include "../GameObjects/grendercomp.h"
 
 GameErrorCode GameEntityFactory::CreateBasicEntity(const BasicEntityDef& entityDef, b2World& world, GameEntity& entity)
 {

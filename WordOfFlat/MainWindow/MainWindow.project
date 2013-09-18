@@ -14,15 +14,6 @@
   <VirtualDirectory Name="include">
     <File Name="gclientengine.h"/>
   </VirtualDirectory>
-  <Dependencies Name="Release"/>
-  <Dependencies Name="Debug">
-    <Project Name="GameLoader"/>
-    <Project Name="GameObjects"/>
-    <Project Name="GameResHold"/>
-    <Project Name="GameSystem"/>
-    <Project Name="WorldCli"/>
-    <Project Name="GameLogic"/>
-  </Dependencies>
   <Settings Type="Executable">
     <GlobalSettings>
       <Compiler Options="" C_Options="">
@@ -139,4 +130,11 @@
       </Completion>
     </Configuration>
   </Settings>
+  <Dependencies Name="Debug">
+    <Project Name="GameLoader"/>
+    <Project Name="GameResHold"/>
+    <Project Name="GameSystem"/>
+    <Project Name="WorldCli"/>
+  </Dependencies>
+  <Dependencies Name="Release"/>
 </CodeLite_Project>

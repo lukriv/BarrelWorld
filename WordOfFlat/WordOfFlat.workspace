@@ -4,15 +4,13 @@
   <Environment>
     <![CDATA[]]>
   </Environment>
-  <Project Name="GameObjects" Path="GameObjects/GameObjects.project" Active="Yes"/>
   <Project Name="GameSystem" Path="GameSystem/GameSystem.project" Active="No"/>
   <Project Name="WorldSrv" Path="WorldSrv/WorldSrv.project" Active="No"/>
   <Project Name="WorldCli" Path="WorldCli/WorldCli.project" Active="No"/>
   <Project Name="GameMsgCli" Path="GameMsgCli/GameMsgCli.project" Active="No"/>
   <Project Name="GameMsgSrv" Path="GameMsgSrv/GameMsgSrv.project" Active="No"/>
   <Project Name="GameComm" Path="GameComm/GameComm.project" Active="No"/>
-  <Project Name="Extern" Path="Extern/Extern.project" Active="No"/>
-  <Project Name="GameLogic" Path="GameLogic/GameLogic.project" Active="No"/>
+  <Project Name="Extern" Path="Extern/Extern.project" Active="Yes"/>
   <Project Name="GameResHold" Path="GameResHold/GameResHold.project" Active="No"/>
   <Project Name="GameLoader" Path="GameLoader/GameLoader.project" Active="No"/>
   <Project Name="GameComp" Path="GameComp/GameComp.project"/>
@@ -21,10 +19,8 @@
       <Project Name="Extern" ConfigName="Debug"/>
       <Project Name="GameComm" ConfigName="Debug"/>
       <Project Name="GameLoader" ConfigName="Debug"/>
-      <Project Name="GameLogic" ConfigName="Debug"/>
       <Project Name="GameMsgCli" ConfigName="Debug"/>
       <Project Name="GameMsgSrv" ConfigName="Debug"/>
-      <Project Name="GameObjects" ConfigName="Debug"/>
       <Project Name="GameResHold" ConfigName="Debug"/>
       <Project Name="GameSystem" ConfigName="Debug"/>
       <Project Name="MainWindow" ConfigName="Debug"/>
@@ -36,10 +32,8 @@
       <Project Name="Extern" ConfigName="Debug"/>
       <Project Name="GameComm" ConfigName="Release"/>
       <Project Name="GameLoader" ConfigName="Release"/>
-      <Project Name="GameLogic" ConfigName="Release"/>
       <Project Name="GameMsgCli" ConfigName="Release"/>
       <Project Name="GameMsgSrv" ConfigName="Release"/>
-      <Project Name="GameObjects" ConfigName="Release"/>
       <Project Name="GameResHold" ConfigName="Release"/>
       <Project Name="GameSystem" ConfigName="Release"/>
       <Project Name="MainWindow" ConfigName="Release"/>

@@ -1,5 +1,5 @@
-#ifndef __GAME_ANIMATED_ENTITY_H__
-#define __GAME_ANIMATED_ENTITY_H__
+#ifndef __GAME_RENDER_COMPONENT_H__
+#define __GAME_RENDER_COMPONENT_H__
 
 #include "gentityobj.h"
 #include "ganimation.h"
@@ -77,4 +77,4 @@ public:
 };
 
 
-#endif //__GAME_ANIMATED_ENTITY_H__
+#endif //__GAME_RENDER_COMPONENT_H__

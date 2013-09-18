@@ -16,7 +16,6 @@
     <File Name="../WorldSrv/globalworldimpl.h"/>
     <File Name="debugrender.h"/>
   </VirtualDirectory>
-  <Dependencies Name="Release"/>
   <Settings Type="Static Library">
     <GlobalSettings>
       <Compiler Options="-Wall" C_Options="-Wall">
@@ -99,4 +98,5 @@
     </Configuration>
   </Settings>
   <Dependencies Name="Debug"/>
+  <Dependencies Name="Release"/>
 </CodeLite_Project>
