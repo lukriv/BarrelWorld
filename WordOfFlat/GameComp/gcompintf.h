@@ -34,13 +34,21 @@ public:
  * 
  * Aggregate components of one type
  */
-class IGameComponentMgr {
+class IGameComponentMgr : public IRefObject {
 public:	
 	virtual GameCompType GetType() = 0;
-		
+	
+	virtual GameErrorCode AddComponent(IGameComponent *pComp) = 0;
+	virtual void RemoveComponent(const GameObjectID &objID) = 0;
+	virtual IGameComponent* GetComponent(const GameObjectID &objID) = 0;
+	
 	virtual ~IGameComponentMgr() {}
 		
 };
+
+typedef std::map<GameObjectID, RefObjSmPtr<IGameComponent>> TComponentMap;
+typedef std::pair<GameObjectID, RefObjSmPtr<IGameComponent>> TComponentMapItem;
+
 
 
 #endif //__GAME_COMPONENT_INTERFACE_H__
