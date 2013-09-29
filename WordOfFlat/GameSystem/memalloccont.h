@@ -1,8 +1,15 @@
 #ifndef __MEMORY_ALLOCATOR_CONTAINER_H__
 #define __MEMORY_ALLOCATOR_CONTAINER_H__
 
+
+/*! \brief Simple memory allocator
+ * 
+ * Memory allocator for allocation simple struct objects.
+ */
 template <class T>
 class MemoryAllocContainer {
+public:
+	static const wxDword INVALID_INDEX = wxUINT32_MAX;
 private:
 	static const wxByte VALID = 1;
 	static const wxByte INVALID = 0;
@@ -11,9 +18,10 @@ private:
 	wxVector<wxDword> m_freeGaps;
 	wxVector<wxByte> m_validItem;
 	wxDword m_iterIndex;
+	wxDword m_itemCount;
 	wxCriticalSection m_criticalSection;
 public:
-	MemoryAllocContainer(wxDword expectedSize) : m_iterIndex(0) {
+	MemoryAllocContainer(wxDword expectedSize) : m_iterIndex(0), m_itemCount(0) {
 		if (expectedSize > 0)
 		{
 			m_itemVector.reserve(expectedSize);
@@ -41,14 +49,17 @@ public:
 			m_validItem[index] = 1;
 			m_freeGaps.pop_back();
 		}
+		m_itemCount++;
+		return FWG_NO_ERROR;
 	}
 	/*!
 	 * \brief Return pointer to item with given index
 	 * \param index Item index
 	 * \return Return NULL if method fails, else it returns valid pointer.
 	 */
-	T* GetItem(wxDword index) 
+	inline T* GetItem(wxDword index) 
 	{
+		wxCriticalSectionLocker lock(m_criticalSection);
 		if((index < m_itemVector.size()) && (m_validItem[index] == 1))
 		{
 			return &m_itemVector[index];
@@ -62,9 +73,15 @@ public:
 	 */
 	void FreeItem(wxDword index) 
 	{
+		wxCriticalSectionLocker lock(m_criticalSection);
 		if((index < m_itemVector.size())
 		{
-			m_validItem[index] = 0;
+			if (m_validItem[index] == VALID)
+			{
+				m_itemCount--;
+				m_validItem[index] = 0;
+			}
+			
 		}
 	}
 	/*!
@@ -72,6 +89,7 @@ public:
 	 */
 	void FreeAll() 
 	{
+		wxCriticalSectionLocker lock(m_criticalSection);
 		wxVector<wxByte>::iterator iter;
 		for(iter = m_validItem.begin(); iter != m_validItem.end(); iter++)
 		{
@@ -81,21 +99,32 @@ public:
 	
 	/*!
 	 * \brief Reset iterator to first item
+	 * \retval FWG_NO_ERROR on success
+	 * \retval FWG_E_END_OF_SEQUENCE_INFORMATION if sequence is empty
 	 */
-	void Reset() 
+	GameErrorCode Reset() 
 	{
 		m_iterIndex = 0;
+		wxCriticalSectionLocker lock(m_criticalSection);
 		while ((m_iterIndex < m_validItem.size())&&(m_validItem[m_iterIndex] != 1))
 		{
 			m_iterIndex++;
 		}
+		
+		if (m_validItem.empty || (m_validItem.size() >= m_iterIndex))
+		{
+			return FWG_E_END_OF_SEQUENCE_INFORMATION;
+		}
+		
+		return FWG_NO_ERROR;
 	}
 	/*!
 	 * \brief Get actual iterator value
 	 * \return Value
 	 */
-	T& GetActualValue() 
+	inline T& GetActualValue() 
 	{
+		wxCriticalSectionLocker lock(m_criticalSection);
 		return m_itemVector[m_iterIndex];
 	}
 	/*!
@@ -104,7 +133,18 @@ public:
 	 */
 	inline wxDword GetActualIndex() 
 	{
+		wxCriticalSectionLocker lock(m_criticalSection);
 		return m_iterIndex;
+	}
+	
+	/*!
+	 * \brief Ask for actual index item
+	 * \return 
+	 */
+	inline bool IsActualValid()
+	{
+		wxCriticalSectionLocker lock(m_criticalSection);
+		return ((m_iterIndex < m_validItem.size())&&(m_validItem[m_iterIndex] == VALID));
 	}
 	/*!
 	 * \brief Move iterator to next item
@@ -113,6 +153,7 @@ public:
 	 */
 	GameErrorCode Next() 
 	{
+		wxCriticalSectionLocker lock(m_criticalSection);
 		while ((m_iterIndex < m_validItem.size())&&(m_validItem[m_iterIndex] != 1))
 		{
 			m_iterIndex++;
@@ -127,6 +168,11 @@ public:
 
 	}
 
+	inline wxDword GetSize()
+	{
+		wxCriticalSectionLocker lock(m_criticalSection);
+		return m_itemCount;
+	}
 	
 	
 };
