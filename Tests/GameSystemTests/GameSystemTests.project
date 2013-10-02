@@ -10,7 +10,7 @@
   <VirtualDirectory Name="src">
     <File Name="main.cpp"/>
     <File Name="loggertest.cpp"/>
-    <File Name="memalloccont.cpp"/>
+    <File Name="memallocconttest.cpp"/>
   </VirtualDirectory>
   <Settings Type="Executable">
     <GlobalSettings>

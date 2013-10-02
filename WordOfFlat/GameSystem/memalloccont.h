@@ -1,6 +1,7 @@
 #ifndef __MEMORY_ALLOCATOR_CONTAINER_H__
 #define __MEMORY_ALLOCATOR_CONTAINER_H__
 
+static const wxDword ConstExpectedSize = 1000;
 
 /*! \brief Simple memory allocator
  * 
@@ -21,6 +22,14 @@ private:
 	wxDword m_itemCount;
 	wxCriticalSection m_criticalSection;
 public:
+	MemoryAllocContainer() : m_iterIndex(0), m_itemCount(0) {
+		if (expectedSize > 0)
+		{
+			m_itemVector.reserve(ConstExpectedSize);
+			m_validItem.reserve(ConstExpectedSize);
+		}
+	}
+	
 	MemoryAllocContainer(wxDword expectedSize) : m_iterIndex(0), m_itemCount(0) {
 		if (expectedSize > 0)
 		{
