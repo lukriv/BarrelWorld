@@ -23,6 +23,7 @@
     <GlobalSettings>
       <Compiler Options="-Wall" C_Options="">
         <IncludePath Value="../../extern/include"/>
+        <Preprocessor Value="UNICODE"/>
       </Compiler>
       <Linker Options="">
         <LibraryPath Value="../../extern/lib"/>
@@ -33,7 +34,7 @@
         <Library Value="GameSystem"/>
         <Library Value="sfml-network"/>
         <Library Value="sfml-system"/>
-        <Library Value="wx_baseu-2.9.dll"/>
+        <Library Value="wxbase29ul"/>
       </Linker>
       <ResourceCompiler Options=""/>
     </GlobalSettings>
@@ -51,6 +52,7 @@
         <![CDATA[]]>
       </Environment>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
+        <DebuggerSearchPaths/>
         <PostConnectCommands/>
         <StartupCommands/>
       </Debugger>
@@ -92,6 +94,7 @@
         <![CDATA[]]>
       </Environment>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
+        <DebuggerSearchPaths/>
         <PostConnectCommands/>
         <StartupCommands/>
       </Debugger>
