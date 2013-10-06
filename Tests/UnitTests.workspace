@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Workspace Name="UnitTests" Database="./UnitTests.tags">
   <Project Name="GameSystem" Path="../WordOfFlat/GameSystem/GameSystem.project" Active="No"/>
-  <Project Name="GameMsgCli" Path="../WordOfFlat/GameMsgCli/GameMsgCli.project" Active="Yes"/>
+  <Project Name="GameMsgCli" Path="../WordOfFlat/GameMsgCli/GameMsgCli.project" Active="No"/>
   <Project Name="GameMsgSrv" Path="../WordOfFlat/GameMsgSrv/GameMsgSrv.project" Active="No"/>
   <Project Name="ClientServerTests" Path="ClientServerTests/ClientServerTests.project" Active="No"/>
-  <Project Name="Extern" Path="../WordOfFlat/Extern/Extern.project" Active="No"/>
   <Project Name="GameComm" Path="../WordOfFlat/GameComm/GameComm.project" Active="No"/>
-  <Environment>
-    <![CDATA[]]>
-  </Environment>
-  <Project Name="GameSystemTests" Path="GameSystemTests/GameSystemTests.project" Active="No"/>
+  <Project Name="GameSystemTests" Path="GameSystemTests/GameSystemTests.project" Active="Yes"/>
+  <Project Name="Extern" Path="../WordOfFlat/Extern/Extern.project" Active="No"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="yes">
       <Project Name="ClientServerTests" ConfigName="Debug"/>
-      <Project Name="Extern" ConfigName="Debug"/>
       <Project Name="GameComm" ConfigName="Debug"/>
       <Project Name="GameMsgCli" ConfigName="Debug"/>
       <Project Name="GameMsgSrv" ConfigName="Debug"/>
       <Project Name="GameSystem" ConfigName="Debug"/>
       <Project Name="GameSystemTests" ConfigName="Debug"/>
+      <Project Name="Extern" ConfigName="Debug"/>
     </WorkspaceConfiguration>
-    <WorkspaceConfiguration Name="Release" Selected="no">
+    <WorkspaceConfiguration Name="Release" Selected="yes">
       <Project Name="GameSystem" ConfigName="Release"/>
       <Project Name="GameMsgCli" ConfigName="Release"/>
       <Project Name="GameMsgSrv" ConfigName="Release"/>
       <Project Name="ClientServerTests" ConfigName="Release"/>
-      <Project Name="Extern" ConfigName="Debug"/>
       <Project Name="GameComm" ConfigName="Release"/>
       <Project Name="GameSystemTests" ConfigName="Release"/>
+      <Project Name="Extern" ConfigName="Debug"/>
     </WorkspaceConfiguration>
   </BuildMatrix>
+  <Environment>
+    <![CDATA[-DUNICODE]]>
+  </Environment>
 </CodeLite_Workspace>

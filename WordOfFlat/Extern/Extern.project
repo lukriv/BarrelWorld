@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Project Name="Extern" InternalType="">
-  <Plugins>
-    <Plugin Name="qmake">
-      <![CDATA[00010001N0005Debug000000000000]]>
-    </Plugin>
-  </Plugins>
   <VirtualDirectory Name="wx">
     <VirtualDirectory Name="x11">
       <VirtualDirectory Name="nanox">
@@ -52,11 +47,14 @@
     <VirtualDirectory Name="unix">
       <VirtualDirectory Name="private">
         <File Name="../../extern/include/wx/unix/private/epolldispatcher.h"/>
+        <File Name="../../extern/include/wx/unix/private/executeiohandler.h"/>
         <File Name="../../extern/include/wx/unix/private/fdiounix.h"/>
         <File Name="../../extern/include/wx/unix/private/fswatcher_inotify.h"/>
         <File Name="../../extern/include/wx/unix/private/fswatcher_kqueue.h"/>
+        <File Name="../../extern/include/wx/unix/private/pipestream.h"/>
         <File Name="../../extern/include/wx/unix/private/sockunix.h"/>
         <File Name="../../extern/include/wx/unix/private/timer.h"/>
+        <File Name="../../extern/include/wx/unix/private/wakeuppipe.h"/>
       </VirtualDirectory>
       <File Name="../../extern/include/wx/unix/app.h"/>
       <File Name="../../extern/include/wx/unix/apptbase.h"/>
@@ -99,6 +97,7 @@
         <File Name="../../extern/include/wx/osx/core/cfstring.h"/>
         <File Name="../../extern/include/wx/osx/core/colour.h"/>
         <File Name="../../extern/include/wx/osx/core/dataview.h"/>
+        <File Name="../../extern/include/wx/osx/core/evtloop.h"/>
         <File Name="../../extern/include/wx/osx/core/hid.h"/>
         <File Name="../../extern/include/wx/osx/core/joystick.h"/>
         <File Name="../../extern/include/wx/osx/core/mimetype.h"/>
@@ -213,7 +212,6 @@
       <File Name="../../extern/include/wx/osx/slider.h"/>
       <File Name="../../extern/include/wx/osx/sound.h"/>
       <File Name="../../extern/include/wx/osx/spinbutt.h"/>
-      <File Name="../../extern/include/wx/osx/spinctrl.h"/>
       <File Name="../../extern/include/wx/osx/srchctrl.h"/>
       <File Name="../../extern/include/wx/osx/statbmp.h"/>
       <File Name="../../extern/include/wx/osx/statbox.h"/>
@@ -331,6 +329,7 @@
         <File Name="../../extern/include/wx/msw/ole/dropsrc.h"/>
         <File Name="../../extern/include/wx/msw/ole/droptgt.h"/>
         <File Name="../../extern/include/wx/msw/ole/oleutils.h"/>
+        <File Name="../../extern/include/wx/msw/ole/safearray.h"/>
         <File Name="../../extern/include/wx/msw/ole/uuid.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="private">
@@ -343,7 +342,9 @@
         <File Name="../../extern/include/wx/msw/private/keyboard.h"/>
         <File Name="../../extern/include/wx/msw/private/metrics.h"/>
         <File Name="../../extern/include/wx/msw/private/msgdlg.h"/>
+        <File Name="../../extern/include/wx/msw/private/pipestream.h"/>
         <File Name="../../extern/include/wx/msw/private/sockmsw.h"/>
+        <File Name="../../extern/include/wx/msw/private/textmeasure.h"/>
         <File Name="../../extern/include/wx/msw/private/timer.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="wince">
@@ -402,6 +403,7 @@
       <File Name="../../extern/include/wx/msw/dragimag.h"/>
       <File Name="../../extern/include/wx/msw/enhmeta.h"/>
       <File Name="../../extern/include/wx/msw/evtloop.h"/>
+      <File Name="../../extern/include/wx/msw/evtloopconsole.h"/>
       <File Name="../../extern/include/wx/msw/fdrepdlg.h"/>
       <File Name="../../extern/include/wx/msw/filedlg.h"/>
       <File Name="../../extern/include/wx/msw/font.h"/>
@@ -487,6 +489,7 @@
       <File Name="../../extern/include/wx/msw/uxthemep.h"/>
       <File Name="../../extern/include/wx/msw/webviewhistoryitem_ie.h"/>
       <File Name="../../extern/include/wx/msw/webview_ie.h"/>
+      <File Name="../../extern/include/wx/msw/webview_missing.h"/>
       <File Name="../../extern/include/wx/msw/window.h"/>
       <File Name="../../extern/include/wx/msw/winundef.h"/>
       <File Name="../../extern/include/wx/msw/wrapcctl.h"/>
@@ -628,6 +631,8 @@
         <File Name="../../extern/include/wx/gtk/hildon/notifmsg.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="private">
+        <File Name="../../extern/include/wx/gtk/private/dialogcount.h"/>
+        <File Name="../../extern/include/wx/gtk/private/error.h"/>
         <File Name="../../extern/include/wx/gtk/private/event.h"/>
         <File Name="../../extern/include/wx/gtk/private/gdkconv.h"/>
         <File Name="../../extern/include/wx/gtk/private/gtk2-compat.h"/>
@@ -636,7 +641,9 @@
         <File Name="../../extern/include/wx/gtk/private/mnemonics.h"/>
         <File Name="../../extern/include/wx/gtk/private/object.h"/>
         <File Name="../../extern/include/wx/gtk/private/string.h"/>
+        <File Name="../../extern/include/wx/gtk/private/textmeasure.h"/>
         <File Name="../../extern/include/wx/gtk/private/timer.h"/>
+        <File Name="../../extern/include/wx/gtk/private/treeentry_gtk.h"/>
         <File Name="../../extern/include/wx/gtk/private/win_gtk.h"/>
       </VirtualDirectory>
       <File Name="../../extern/include/wx/gtk/accel.h"/>
@@ -697,6 +704,7 @@
       <File Name="../../extern/include/wx/gtk/msgdlg.h"/>
       <File Name="../../extern/include/wx/gtk/nonownedwnd.h"/>
       <File Name="../../extern/include/wx/gtk/notebook.h"/>
+      <File Name="../../extern/include/wx/gtk/notifmsg.h"/>
       <File Name="../../extern/include/wx/gtk/pen.h"/>
       <File Name="../../extern/include/wx/gtk/popupwin.h"/>
       <File Name="../../extern/include/wx/gtk/print.h"/>
@@ -721,7 +729,6 @@
       <File Name="../../extern/include/wx/gtk/toolbar.h"/>
       <File Name="../../extern/include/wx/gtk/tooltip.h"/>
       <File Name="../../extern/include/wx/gtk/toplevel.h"/>
-      <File Name="../../extern/include/wx/gtk/treeentry_gtk.h"/>
       <File Name="../../extern/include/wx/gtk/webviewhistoryitem_webkit.h"/>
       <File Name="../../extern/include/wx/gtk/webview_webkit.h"/>
       <File Name="../../extern/include/wx/gtk/window.h"/>
@@ -732,6 +739,7 @@
         <File Name="../../extern/include/wx/generic/private/listctrl.h"/>
         <File Name="../../extern/include/wx/generic/private/markuptext.h"/>
         <File Name="../../extern/include/wx/generic/private/richtooltip.h"/>
+        <File Name="../../extern/include/wx/generic/private/textmeasure.h"/>
         <File Name="../../extern/include/wx/generic/private/timer.h"/>
       </VirtualDirectory>
       <File Name="../../extern/include/wx/generic/aboutdlgg.h"/>
@@ -969,6 +977,7 @@
       <File Name="../../extern/include/wx/meta/int2type.h"/>
       <File Name="../../extern/include/wx/meta/movable.h"/>
       <File Name="../../extern/include/wx/meta/pod.h"/>
+      <File Name="../../extern/include/wx/meta/removeref.h"/>
     </VirtualDirectory>
     <VirtualDirectory Name="msdos">
       <File Name="../../extern/include/wx/msdos/apptrait.h"/>
@@ -982,8 +991,10 @@
       <File Name="../../extern/include/wx/persist/window.h"/>
     </VirtualDirectory>
     <VirtualDirectory Name="private">
+      <File Name="../../extern/include/wx/private/eventloopsourcesmanager.h"/>
       <File Name="../../extern/include/wx/private/fd.h"/>
       <File Name="../../extern/include/wx/private/fdiodispatcher.h"/>
+      <File Name="../../extern/include/wx/private/fdioeventloopsourcehandler.h"/>
       <File Name="../../extern/include/wx/private/fdiohandler.h"/>
       <File Name="../../extern/include/wx/private/fdiomanager.h"/>
       <File Name="../../extern/include/wx/private/fileback.h"/>
@@ -995,10 +1006,14 @@
       <File Name="../../extern/include/wx/private/markupparser.h"/>
       <File Name="../../extern/include/wx/private/markupparserattr.h"/>
       <File Name="../../extern/include/wx/private/overlay.h"/>
+      <File Name="../../extern/include/wx/private/pipestream.h"/>
+      <File Name="../../extern/include/wx/private/preferences.h"/>
       <File Name="../../extern/include/wx/private/richtooltip.h"/>
       <File Name="../../extern/include/wx/private/sckaddr.h"/>
       <File Name="../../extern/include/wx/private/selectdispatcher.h"/>
       <File Name="../../extern/include/wx/private/socket.h"/>
+      <File Name="../../extern/include/wx/private/streamtempinput.h"/>
+      <File Name="../../extern/include/wx/private/textmeasure.h"/>
       <File Name="../../extern/include/wx/private/threadinfo.h"/>
       <File Name="../../extern/include/wx/private/timer.h"/>
       <File Name="../../extern/include/wx/private/window.h"/>
@@ -1114,6 +1129,7 @@
     <VirtualDirectory Name="xrc">
       <File Name="../../extern/include/wx/xrc/xh_all.h"/>
       <File Name="../../extern/include/wx/xrc/xh_animatctrl.h"/>
+      <File Name="../../extern/include/wx/xrc/xh_auinotbk.h"/>
       <File Name="../../extern/include/wx/xrc/xh_bannerwindow.h"/>
       <File Name="../../extern/include/wx/xrc/xh_bmp.h"/>
       <File Name="../../extern/include/wx/xrc/xh_bmpbt.h"/>
@@ -1154,6 +1170,7 @@
       <File Name="../../extern/include/wx/xrc/xh_propdlg.h"/>
       <File Name="../../extern/include/wx/xrc/xh_radbt.h"/>
       <File Name="../../extern/include/wx/xrc/xh_radbx.h"/>
+      <File Name="../../extern/include/wx/xrc/xh_ribbon.h"/>
       <File Name="../../extern/include/wx/xrc/xh_richtext.h"/>
       <File Name="../../extern/include/wx/xrc/xh_scrol.h"/>
       <File Name="../../extern/include/wx/xrc/xh_scwin.h"/>
@@ -1177,6 +1194,7 @@
       <File Name="../../extern/include/wx/xrc/xh_unkwn.h"/>
       <File Name="../../extern/include/wx/xrc/xh_wizrd.h"/>
       <File Name="../../extern/include/wx/xrc/xmlres.h"/>
+      <File Name="../../extern/include/wx/xrc/xmlreshandler.h"/>
     </VirtualDirectory>
     <File Name="../../extern/include/wx/aboutdlg.h"/>
     <File Name="../../extern/include/wx/accel.h"/>
@@ -1208,7 +1226,6 @@
     <File Name="../../extern/include/wx/build.h"/>
     <File Name="../../extern/include/wx/busyinfo.h"/>
     <File Name="../../extern/include/wx/button.h"/>
-    <File Name="../../extern/include/wx/cairo.h"/>
     <File Name="../../extern/include/wx/calctrl.h"/>
     <File Name="../../extern/include/wx/caret.h"/>
     <File Name="../../extern/include/wx/chartype.h"/>
@@ -1233,6 +1250,7 @@
     <File Name="../../extern/include/wx/combo.h"/>
     <File Name="../../extern/include/wx/combobox.h"/>
     <File Name="../../extern/include/wx/commandlinkbutton.h"/>
+    <File Name="../../extern/include/wx/compiler.h"/>
     <File Name="../../extern/include/wx/compositewin.h"/>
     <File Name="../../extern/include/wx/confbase.h"/>
     <File Name="../../extern/include/wx/config.h"/>
@@ -1390,6 +1408,7 @@
     <File Name="../../extern/include/wx/metafile.h"/>
     <File Name="../../extern/include/wx/mimetype.h"/>
     <File Name="../../extern/include/wx/minifram.h"/>
+    <File Name="../../extern/include/wx/modalhook.h"/>
     <File Name="../../extern/include/wx/module.h"/>
     <File Name="../../extern/include/wx/mousemanager.h"/>
     <File Name="../../extern/include/wx/mousestate.h"/>
@@ -1418,6 +1437,7 @@
     <File Name="../../extern/include/wx/popupwin.h"/>
     <File Name="../../extern/include/wx/position.h"/>
     <File Name="../../extern/include/wx/power.h"/>
+    <File Name="../../extern/include/wx/preferences.h"/>
     <File Name="../../extern/include/wx/print.h"/>
     <File Name="../../extern/include/wx/printdlg.h"/>
     <File Name="../../extern/include/wx/prntbase.h"/>
@@ -1454,6 +1474,7 @@
     <File Name="../../extern/include/wx/setup_inc.h"/>
     <File Name="../../extern/include/wx/setup_redirect.h"/>
     <File Name="../../extern/include/wx/sharedptr.h"/>
+    <File Name="../../extern/include/wx/simplebook.h"/>
     <File Name="../../extern/include/wx/sizer.h"/>
     <File Name="../../extern/include/wx/slider.h"/>
     <File Name="../../extern/include/wx/snglinst.h"/>
@@ -1486,6 +1507,7 @@
     <File Name="../../extern/include/wx/tarstrm.h"/>
     <File Name="../../extern/include/wx/taskbar.h"/>
     <File Name="../../extern/include/wx/tbarbase.h"/>
+    <File Name="../../extern/include/wx/testing.h"/>
     <File Name="../../extern/include/wx/textbuf.h"/>
     <File Name="../../extern/include/wx/textcompleter.h"/>
     <File Name="../../extern/include/wx/textctrl.h"/>
@@ -1538,6 +1560,7 @@
     <File Name="../../extern/include/wx/weakref.h"/>
     <File Name="../../extern/include/wx/webview.h"/>
     <File Name="../../extern/include/wx/webviewarchivehandler.h"/>
+    <File Name="../../extern/include/wx/webviewfshandler.h"/>
     <File Name="../../extern/include/wx/wfstream.h"/>
     <File Name="../../extern/include/wx/window.h"/>
     <File Name="../../extern/include/wx/windowid.h"/>
@@ -1723,7 +1746,7 @@
       <File Name="../../extern/include/SFML/Network/Export.hpp"/>
       <File Name="../../extern/include/SFML/Network/Ftp.hpp"/>
       <File Name="../../extern/include/SFML/Network/Http.hpp"/>
-      <File Name="../../extern/include/SFML/Network/IpAddress.hpp"/>
+      <File Name="../../extern/include/SFML/Network/IPAddress.hpp"/>
       <File Name="../../extern/include/SFML/Network/Packet.hpp"/>
       <File Name="../../extern/include/SFML/Network/Socket.hpp"/>
       <File Name="../../extern/include/SFML/Network/SocketHandle.hpp"/>
@@ -1834,6 +1857,11 @@
     </VirtualDirectory>
     <File Name="../../extern/include/Box2D/Box2D.h"/>
   </VirtualDirectory>
+  <Plugins>
+    <Plugin Name="qmake">
+      <![CDATA[00010001N0005Debug000000000000]]>
+    </Plugin>
+  </Plugins>
   <Description/>
   <Dependencies/>
   <Settings Type="Executable">

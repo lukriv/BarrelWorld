@@ -12,16 +12,19 @@
     <File Name="loggertest.cpp"/>
     <File Name="memallocconttest.cpp"/>
   </VirtualDirectory>
+  <Dependencies Name="Debug"/>
+  <Dependencies Name="Release"/>
   <Settings Type="Executable">
     <GlobalSettings>
       <Compiler Options="-Wall" C_Options="">
         <IncludePath Value="../../extern/include"/>
+        <Preprocessor Value="UNICODE"/>
       </Compiler>
       <Linker Options="">
         <LibraryPath Value="../../extern/lib"/>
         <Library Value="libUnitTest++.a"/>
         <Library Value="GameSystem"/>
-        <Library Value="wx_baseu-2.9.dll"/>
+        <Library Value="wxbase29u"/>
       </Linker>
       <ResourceCompiler Options=""/>
     </GlobalSettings>
@@ -39,6 +42,7 @@
         <![CDATA[]]>
       </Environment>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
+        <DebuggerSearchPaths/>
         <PostConnectCommands/>
         <StartupCommands/>
       </Debugger>
@@ -79,6 +83,7 @@
         <![CDATA[]]>
       </Environment>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
+        <DebuggerSearchPaths/>
         <PostConnectCommands/>
         <StartupCommands/>
       </Debugger>

@@ -1,6 +1,10 @@
 #ifndef __MEMORY_ALLOCATOR_CONTAINER_H__
 #define __MEMORY_ALLOCATOR_CONTAINER_H__
 
+#include "gdefs.h"
+#include <wx/vector.h>
+#include <wx/thread.h>
+#include "gerror.h"
 static const wxDword ConstExpectedSize = 1000;
 
 /*! \brief Simple memory allocator
@@ -22,15 +26,11 @@ private:
 	wxDword m_itemCount;
 	wxCriticalSection m_criticalSection;
 public:
-	MemoryAllocContainer() : m_iterIndex(0), m_itemCount(0) {
-		if (expectedSize > 0)
-		{
-			m_itemVector.reserve(ConstExpectedSize);
-			m_validItem.reserve(ConstExpectedSize);
-		}
-	}
+	MemoryAllocContainer() : m_iterIndex(0), m_itemCount(0) 
+	{}
 	
-	MemoryAllocContainer(wxDword expectedSize) : m_iterIndex(0), m_itemCount(0) {
+	MemoryAllocContainer(wxDword expectedSize) : m_iterIndex(0), m_itemCount(0) 
+	{
 		if (expectedSize > 0)
 		{
 			m_itemVector.reserve(expectedSize);
@@ -52,10 +52,10 @@ public:
 		{
 			index = m_itemVector.size();
 			m_itemVector.push_back(T());
-			m_validItem.push_back(1);
+			m_validItem.push_back(static_cast<wxByte>(VALID));
 		} else {
 			index = m_freeGaps.back();
-			m_validItem[index] = 1;
+			m_validItem[index] = VALID;
 			m_freeGaps.pop_back();
 		}
 		m_itemCount++;
@@ -83,12 +83,13 @@ public:
 	void FreeItem(wxDword index) 
 	{
 		wxCriticalSectionLocker lock(m_criticalSection);
-		if((index < m_itemVector.size())
+		if(index < m_itemVector.size())
 		{
-			if (m_validItem[index] == VALID)
+			if (m_validItem[index] == MemoryAllocContainer::VALID)
 			{
 				m_itemCount--;
-				m_validItem[index] = 0;
+				m_validItem[index] = MemoryAllocContainer::INVALID;
+				m_freeGaps.push_back(index);
 			}
 			
 		}
@@ -99,11 +100,10 @@ public:
 	void FreeAll() 
 	{
 		wxCriticalSectionLocker lock(m_criticalSection);
-		wxVector<wxByte>::iterator iter;
-		for(iter = m_validItem.begin(); iter != m_validItem.end(); iter++)
-		{
-			*iter = 0;
-		}
+		m_freeGaps.clear();
+		m_itemCount = 0;
+		m_itemVector.clear();
+		m_validItem.clear();
 	}
 	
 	/*!
@@ -120,7 +120,7 @@ public:
 			m_iterIndex++;
 		}
 		
-		if (m_validItem.empty || (m_validItem.size() >= m_iterIndex))
+		if (m_validItem.empty() || (m_validItem.size() >= m_iterIndex))
 		{
 			return FWG_E_END_OF_SEQUENCE_INFORMATION;
 		}
@@ -153,7 +153,7 @@ public:
 	inline bool IsActualValid()
 	{
 		wxCriticalSectionLocker lock(m_criticalSection);
-		return ((m_iterIndex < m_validItem.size())&&(m_validItem[m_iterIndex] == VALID));
+		return ((m_iterIndex < m_validItem.size())&&(m_validItem[m_iterIndex] == MemoryAllocContainer::VALID));
 	}
 	/*!
 	 * \brief Move iterator to next item
