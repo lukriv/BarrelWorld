@@ -8,6 +8,17 @@ class GameRenderComponentMgr : public GameComponentMgrBase {
 // IGameComponent interface
 public:
 	virtual GameCompMgrType GetType() {return GAME_COMP_RENDER;}
+	GameErrorCode AddBackgroundObject();
+	GameErrorCode AddLandscapeObject();
+	GameErrorCode AddGenericObject();
+	
+	GameErrorCode RemoveBackGroundObject();
+	GameErrorCode RemoveLandscapeObject();
+	GameErrorCode RemoveGenericObject();
+	
+	GameErrorCode RenderBackground();
+	GameErrorCode RenderLandscape();
+	GameErrorCode RenderGeneric();
 	
 	GameErrorCode RenderAll(){}
 	
