@@ -173,8 +173,8 @@ GameErrorCode GameClientEngine::CreateTestingWorld()
 	}
 	
 	// create scene
-	wxVector<BasicEntityDef> worldObjDefs;
-	wxVector<BasicEntityDef>::iterator entDefIter;
+	wxVector<RenderCompDef> worldObjDefs;
+	wxVector<RenderCompDef>::iterator entDefIter;
 	
 	if(FWG_FAILED(result = m_pSceneGenerator->GenLandscape(0, worldObjDefs)))
 	{
@@ -245,7 +245,7 @@ GameErrorCode GameClientEngine::CreateTestingWorld()
 		GameAnimation *pAnimation = NULL;
 		GameAnimation *pAnimation2 = NULL;
 		AnimationDef animdef;
-		BasicEntityDef entitydef;
+		RenderCompDef entitydef;
 		animdef.m_frameRefs.push_back(3);
 		animdef.m_frameRefs.push_back(4);
 		animdef.m_frameRefs.push_back(5);

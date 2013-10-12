@@ -12,11 +12,11 @@ public:
 	GameTestSceneGenerator () : m_refCount(1) {}
 
 public:
-	GameErrorCode GenLandscape(const TGameWorldSegmentID &wrldID, wxVector<BasicEntityDef> &landscape);
-	GameErrorCode GenStaticObj(const TGameWorldSegmentID &wrldID, wxVector<BasicEntityDef> &staticObjs);
-	GameErrorCode GenMoveableObj(const TGameWorldSegmentID &wrldID, wxVector<BasicEntityDef> &moveableObjs);
-	GameErrorCode GenAnimals(const TGameWorldSegmentID &wrldID, wxVector<BasicEntityDef> &animals);
-	GameErrorCode GenCharacters(const TGameWorldSegmentID &wrldID, wxVector<BasicEntityDef> &characters);
+	GameErrorCode GenLandscape(const TGameWorldSegmentID &wrldID, wxVector<RenderCompDef> &landscape);
+	GameErrorCode GenStaticObj(const TGameWorldSegmentID &wrldID, wxVector<RenderCompDef> &staticObjs);
+	GameErrorCode GenMoveableObj(const TGameWorldSegmentID &wrldID, wxVector<RenderCompDef> &moveableObjs);
+	GameErrorCode GenAnimals(const TGameWorldSegmentID &wrldID, wxVector<RenderCompDef> &animals);
+	GameErrorCode GenCharacters(const TGameWorldSegmentID &wrldID, wxVector<RenderCompDef> &characters);
 public:
 	virtual void addRef();
 	virtual wxInt32 release();	
