@@ -1,21 +1,21 @@
 #include "gscenegenimpl.h"
 
-GameErrorCode GameTestSceneGenerator::GenAnimals(const TGameWorldSegmentID& wrldID, wxVector<BasicEntityDef>& animals)
+GameErrorCode GameTestSceneGenerator::GenAnimals(const TGameWorldSegmentID& wrldID, wxVector<RenderCompDef>& animals)
 {
 	FWG_UNREFERENCED_PARAMETER(wrldID);
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode GameTestSceneGenerator::GenCharacters(const TGameWorldSegmentID& wrldID, wxVector<BasicEntityDef>& characters)
+GameErrorCode GameTestSceneGenerator::GenCharacters(const TGameWorldSegmentID& wrldID, wxVector<RenderCompDef>& characters)
 {
 	FWG_UNREFERENCED_PARAMETER(wrldID);
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode GameTestSceneGenerator::GenLandscape(const TGameWorldSegmentID& wrldID, wxVector<BasicEntityDef>& landscape)
+GameErrorCode GameTestSceneGenerator::GenLandscape(const TGameWorldSegmentID& wrldID, wxVector<RenderCompDef>& landscape)
 {
 	FWG_UNREFERENCED_PARAMETER(wrldID);
-	BasicEntityDef entity;
+	RenderCompDef entity;
 	
 	entity.m_geometryRef = 2;
 	entity.m_physRef = 2;
@@ -28,10 +28,10 @@ GameErrorCode GameTestSceneGenerator::GenLandscape(const TGameWorldSegmentID& wr
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode GameTestSceneGenerator::GenMoveableObj(const TGameWorldSegmentID& wrldID, wxVector<BasicEntityDef>& moveableObjs)
+GameErrorCode GameTestSceneGenerator::GenMoveableObj(const TGameWorldSegmentID& wrldID, wxVector<RenderCompDef>& moveableObjs)
 {
 	FWG_UNREFERENCED_PARAMETER(wrldID);
-	BasicEntityDef entity;
+	RenderCompDef entity;
 	
 	entity.m_geometryRef = 1;
 	entity.m_physRef = 1;
@@ -51,7 +51,7 @@ GameErrorCode GameTestSceneGenerator::GenMoveableObj(const TGameWorldSegmentID& 
 	
 	return FWG_NO_ERROR;}
 
-GameErrorCode GameTestSceneGenerator::GenStaticObj(const TGameWorldSegmentID& wrldID, wxVector<BasicEntityDef>& staticObjs)
+GameErrorCode GameTestSceneGenerator::GenStaticObj(const TGameWorldSegmentID& wrldID, wxVector<RenderCompDef>& staticObjs)
 {
 	FWG_UNREFERENCED_PARAMETER(wrldID);
 	return FWG_NO_ERROR;

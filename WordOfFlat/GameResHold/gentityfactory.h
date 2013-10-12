@@ -20,7 +20,7 @@ public:
 	
 	GameErrorCode Initialize(GameResourceHolder *pResHolder, GameLogger *pLogger);
 	
-	GameErrorCode CreateBasicEntity(const BasicEntityDef &entityDef, b2World &world, GameEntity &entity);
+	GameErrorCode CreateBasicEntity(const RenderCompDef &entityDef, b2World &world, GameEntity &entity);
 	GameErrorCode CreateAnimation(const AnimationDef& entityDef, GameAnimation &animation);
 	
 	

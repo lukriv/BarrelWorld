@@ -8,14 +8,14 @@
 
 
 
-struct BasicEntityDef {
+struct RenderCompDef {
 	GameObjectID m_textureRef; //!< List of textures - can be empty (dep. on type)
 	GameObjectID m_geometryRef; //!< List of geometry objects - can be empty (dep. on type)
 	GameObjectID m_physRef; //!< List of Joints or Bodys - depend on type
 	b2Transform m_tranformation;
 	bool m_textureRepeat; //!< texture repetition
 	
-	BasicEntityDef() : m_textureRef(GAME_OBJECT_ID_INVALID)
+	RenderCompDef() : m_textureRef(GAME_OBJECT_ID_INVALID)
 			, m_geometryRef(GAME_OBJECT_ID_INVALID)
 			, m_physRef(GAME_OBJECT_ID_INVALID)
 			, m_textureRepeat(false) {}
