@@ -1,15 +1,10 @@
 #ifndef __GAME_RENDER_COMPONENT_MANAGER_H__
 #define __GAME_RENDER_COMPONENT_MANAGER_H__
 
+#include "../GameSystem/gdefs.h"
 #include "gcompmgrimpl.h"
 #include "gameobjdef.h"
 
-#include "../GameSystem/gdefs.h"
-
-typedef wxDword GameObjectId; //!< Object id type
-static const float Pixelize = 50.0f; //!< Conversion from meters to pixels (one meter is 50 pixels)
-
-static const GameObjectId GAME_OBJECT_ID_INVALID = UINT_MAX;
 
 struct RenderCompDef {
 	GameObjectID m_textureRef; //!< List of textures - can be empty (dep. on type)
@@ -34,9 +29,9 @@ public:
 	GameErrorCode CreateLandscapeObject(const RenderCompDef &entityDef, GameObjectId &compId);
 	GameErrorCode CreateGenericComponent(const RenderCompDef &entityDef, GameObjectId &compId);
 	
-	GameErrorCode RemoveBackGroundObject();
-	GameErrorCode RemoveLandscapeObject();
-	GameErrorCode RemoveGenericObject();
+	GameErrorCode DeleteBackGroundObject();
+	GameErrorCode DeleteLandscapeObject(GameObjectId compId);
+	GameErrorCode DeleteGenericObject(GameObjectId compId);
 	
 	GameErrorCode RenderBackground();
 	GameErrorCode RenderLandscape();
