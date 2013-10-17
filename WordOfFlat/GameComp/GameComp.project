@@ -119,6 +119,7 @@
         <File Name="ggeometry.cpp"/>
         <File Name="grendercomp.cpp"/>
         <File Name="gsfmlgeom.cpp"/>
+        <File Name="grendercmgr.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="physComp">
