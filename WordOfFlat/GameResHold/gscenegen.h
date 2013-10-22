@@ -6,7 +6,7 @@
 #include <Box2D/Box2D.h>
 #include "../GameSystem/refobject.h"
 #include "../GameSystem/gerror.h"
-#include "../GameObjects/gameobjdef.h"
+#include "../GameObjects/gobjdef.h"
 
 
 #include "gentityfactory.h"

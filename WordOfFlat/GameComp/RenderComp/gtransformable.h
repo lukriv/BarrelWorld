@@ -4,7 +4,7 @@
 #include <sfml/system/Vector2.hpp>
 #include <sfml/graphics/Transformable.hpp>
 #include <box2d/common/b2Math.h>
-#include "gameobjdef.h"
+#include "gobjdef.h"
 
 
 class GameTransformable : public sf::Transformable {

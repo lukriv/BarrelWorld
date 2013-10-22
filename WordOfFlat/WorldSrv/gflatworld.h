@@ -2,7 +2,7 @@
 #define __GAME_FLAT_WORLD_SERVER_H__
 
 #include "../GameSystem/gerror.h"
-#include "../GameObjects/gameobjdef.h"
+#include "../GameObjects/gobjdef.h"
 
 typedef wxDword GameFlatWorldID;
 

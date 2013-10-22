@@ -3,7 +3,7 @@
 
 #include "../GameSystem/gdefs.h"
 #include "gcompmgrimpl.h"
-#include "gameobjdef.h"
+#include "gobjdef.h"
 
 
 struct RenderCompDef {

@@ -21,12 +21,6 @@ void GameEntity::UpdateEntity(const GameEntityUpdateStruct& updStruct)
 	}
 }
 
-void GameEntity::TraceLogInfo(GameLogger* pLogger)
-{
-	FWGLOG_TRACE_FORMAT(wxT("GameEntity::TraceLogInfo() : Entity position [%0.3f,%0.3f], angle [%0.3f]"),
-		pLogger, m_pBody->GetPosition().x, m_pBody->GetPosition().y, m_pBody->GetAngle(), FWGLOG_ENDVAL);
-}
-
 void GameEntity::DebugInfo(GameLogger* pLogger)
 {
 	FWGLOG_DEBUG_FORMAT(wxT("GameEntity::EntityDebugInfo() : Entity info: Internal texture [%u, %u]; m_pGeometry (0x%x)")

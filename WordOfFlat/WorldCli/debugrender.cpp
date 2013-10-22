@@ -3,7 +3,7 @@
 #include <sfml/graphics/Color.hpp>
 #include <sfml/graphics/VertexArray.hpp>
 #include <SFML/Config.hpp>
-#include "../GameObjects/gameobjdef.h"
+#include "../GameObjects/gobjdef.h"
 
 void DebugDraw::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
 {

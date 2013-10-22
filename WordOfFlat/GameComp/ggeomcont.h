@@ -1,5 +1,5 @@
-#ifndef __GAME_COMPONENT_DEFINITIONS_H__
-#define __GAME_COMPONENT_DEFINITIONS_H__
+#ifndef __GAME_GEOMETRY_CONTAINER_H__
+#define __GAME_GEOMETRY_CONTAINER_H__
 
 enum GameGeometryType {
 	GAME_GEOM_UNDEFINED = 0,
@@ -34,4 +34,4 @@ public:
 
 
 
-#endif //__GAME_COMPONENT_DEFINITIONS_H__
+#endif //__GAME_GEOMETRY_CONTAINER_H__

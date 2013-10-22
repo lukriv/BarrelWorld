@@ -4,7 +4,7 @@
 #include <wx/vector.h>
 #include <box2d/common/b2Math.h>
 #include "../GameObjects/ganimation.h"
-#include "../GameObjects/gameobjdef.h"
+#include "../GameObjects/gobjdef.h"
 
 
 

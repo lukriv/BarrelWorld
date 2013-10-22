@@ -6,7 +6,7 @@
 
 #include "../GameSystem/glog.h"
 #include "../GameObjects/ggeometry.h"
-#include "../GameObjects/gameobjdef.h"
+#include "../GameObjects/gobjdef.h"
 
 
 

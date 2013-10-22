@@ -1,5 +1,5 @@
 #include "gsfmlgeom.h"
-#include "gameobjdef.h"
+#include "gobjdef.h"
 
 
 
