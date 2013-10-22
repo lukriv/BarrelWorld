@@ -8,10 +8,8 @@
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="include">
-    <File Name="gameobjdef.h"/>
-    <File Name="gcompdef.h"/>
-    <File Name="gcompmgr.h"/>
-    <File Name="gcompintf.h"/>
+    <File Name="ggeomcont.h"/>
+    <File Name="gobjdef.h"/>
   </VirtualDirectory>
   <Settings Type="Static Library">
     <GlobalSettings>
@@ -101,25 +99,25 @@
   <VirtualDirectory Name="comp">
     <VirtualDirectory Name="animComp">
       <VirtualDirectory Name="include">
-        <File Name="ganimation.h"/>
+        <File Name="AnimationComp/ganimation.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="src">
-        <File Name="ganimation.cpp"/>
+        <File Name="AnimationComp/ganimation.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="renderComp">
       <VirtualDirectory Name="include">
-        <File Name="ggeometry.h"/>
-        <File Name="grendercmgr.h"/>
-        <File Name="grendercomp.h"/>
-        <File Name="gsfmlgeom.h"/>
-        <File Name="gtransformable.h"/>
+        <File Name="RenderComp/ggeometry.h"/>
+        <File Name="RenderComp/grendercmgr.h"/>
+        <File Name="RenderComp/grendercomp.h"/>
+        <File Name="RenderComp/gsfmlgeom.h"/>
+        <File Name="RenderComp/gtransformable.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="src">
-        <File Name="ggeometry.cpp"/>
-        <File Name="grendercomp.cpp"/>
-        <File Name="gsfmlgeom.cpp"/>
-        <File Name="grendercmgr.cpp"/>
+        <File Name="RenderComp/ggeometry.cpp"/>
+        <File Name="RenderComp/grendercmgr.cpp"/>
+        <File Name="RenderComp/grendercomp.cpp"/>
+        <File Name="RenderComp/gsfmlgeom.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="physComp">
@@ -127,12 +125,7 @@
       <VirtualDirectory Name="src"/>
     </VirtualDirectory>
   </VirtualDirectory>
-  <VirtualDirectory Name="src">
-    <File Name="gcompmgrimpl.cpp"/>
-  </VirtualDirectory>
-  <VirtualDirectory Name="baseImpl">
-    <File Name="gcompmgrimpl.h"/>
-  </VirtualDirectory>
+  <VirtualDirectory Name="src"/>
   <Dependencies Name="Debug"/>
   <Dependencies Name="Release"/>
 </CodeLite_Project>
