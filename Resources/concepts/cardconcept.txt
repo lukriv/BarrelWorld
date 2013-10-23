@@ -1,0 +1,53 @@
+ Úvod do myšlenkového konceptu
+Všechny bitvy a boje se budou odehrávat v tazích s pomocí hracích karet. Všechny akce kromì základního pohybu budou vyvolávány kartami,
+které hráè bude v prùbìhu hry postupnì získávat.
+
+ Herní koncepty
+Je zde nìkolik druhù konceptù jak s hracími kartami na hracím poli naloit. Spoleèné mají herní koncepty toto:
+ - hráè má svùj vlastní balíèek karet, které v prùbìhu hry bude postupnì s rostoucími zkušenostmi rozšiøovat
+ - hráè si svoji akci bude moci vybrat z 3 a 7 karet (podle zkušeností a dovedností hráèovi postavy), které budou odkryté 
+	na herní ploše a hráèi k dispozici v libovolném poøadí. Ostatní karty jsou skryty a postupnì doplòovány z hráèova balíèku
+ - hráè má koneènı poèet ivotù a jeden z koncù boje je dosaení 0 ivotù u hráèe nebo jeho všech protivníkù
+ - obranné karty hráè "vyloí na stùl" a jsou pouity teprve v pøípadì útoku na nìj
+ - útoèné karty jsou pouity okamitì a jejich úèinek se projeví ihned
+ - karty se mohou v hráèovì balíèku libovolnì opakovat
+
+
+V poètu pouitıch karet za tah, konec boje i ovlivnìní úèinnosti hracích karet se rùzní podle nìkolika konceptù. Základy principù prozatím 
+pøedpokládají 1 hráèe proti 1 protivníkovi:
+
+1) 
+Základní definice:
+ - hráè smí pouít jednu kartu za tah (vèetnì pøípravy obrannıch)
+ - ádné energie
+ - ádné zkušenosti
+ - nové karty za peníze
+ - nové dovednosti = novı druh karty
+ - sílu karet ovlivòuje hodnota karty (s lepšími dovednostmi k dispozici lepší a úèinnìjší karty) a vybavení hráèovi postavy
+ 
+Hráèovi atributy:
+ - zdraví
+ 
+Karty v balíèku:
+ - hráèovi postupnì pøibıvají v jeho celkovém balíèku nové karty podle dovedností, které ovládá
+ - nové dovednosti (nové karty) si poøizuje u "uèitelù" za peníze
+ - kadı uèitel poskytne hráèovi pouze omezené mnoství stejnıch karet do balíèku (pojistka proti nadmìrnému naplnìní balíèku "ultimátními kartami")
+ - pøi bitvì mùe pouít hráè svùj celı balíèek karet bez omezení
+ - poøadí karet v balíèku si mùe hráè sám urèit pøed zaèátkem boje
+
+Karty "na stole":
+ - na stole má hráè na vıbìr ze 3 a 7 karet, které mùe vyuít v libovolném poøadí
+ - na konci kadého tahu je vzniklá mezera po pouité kartì doplnìna kartou z balíèku
+ - pokud dojdou karty v balíèku na stùl se karty doplòovat pøestanou
+ 
+Obranné karty:
+ - hráè mùe mít na sobì (dle dovedností) mít v jeden okamik 3 a 5 aktivních obrannıch karet
+ - v pøípadì, e hráè má plnı poèet aktivních obrannıch karet, je nejstarší z nich nahrazena novou hráèem vybranou obranou kartou
+ 
+Útoèné karty:
+
+Tah:
+ - v jednom tahu smí hráè pouít pouze jedinou kartu z karet vyloenıch na stole
+ - pokud není ádná karta na stole ani v balíèku, hráè neudìlá nic a èeká na tah protivníka
+ - pokud hráè ani protivník není schopen tahu, bitva konèí remízou
+ - pokud hráè nebo protivník nemá další ivoty bitva konèí vítìzstvím postavy s nenulovım poètem ivotù
