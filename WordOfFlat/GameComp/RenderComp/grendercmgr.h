@@ -30,8 +30,12 @@ public:
 	GameErrorCode CreateGenericComponent(const RenderCompDef &entityDef, GameObjectId &compId);
 	
 	GameErrorCode DeleteBackGroundObject();
-	GameErrorCode DeleteLandscapeObject(GameObjectId compId);
-	GameErrorCode DeleteGenericObject(GameObjectId compId);
+	GameErrorCode DeleteLandscapeObject(GameObjectID compId);
+	GameErrorCode DeleteGenericObject(GameObjectID compId);
+	
+	GameErrorCode GetBackgroundObject();
+	GameErrorCode GetLandscapeObject(GameObjectID compID);
+	GameErrorCode GetGenericObject(GameObjectID compID);
 	
 	GameErrorCode RenderBackground();
 	GameErrorCode RenderLandscape();

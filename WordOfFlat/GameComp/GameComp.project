@@ -100,9 +100,11 @@
     <VirtualDirectory Name="animComp">
       <VirtualDirectory Name="include">
         <File Name="AnimationComp/ganimation.h"/>
+        <File Name="AnimationComp/ganimcmgr.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="src">
         <File Name="AnimationComp/ganimation.cpp"/>
+        <File Name="AnimationComp/ganimcmgr.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="renderComp">
