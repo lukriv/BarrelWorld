@@ -1,8 +1,8 @@
-#include "grendercmgr.h"
+#include "gphyscmgr.h"
 
-GameErrorCode GameRenderComponentMgr::CreateGenericComponent(const RenderCompDef& entityDef, GameObjectId& compId)
+GameErrorCode GamePhysicsComponentMgr::CreatePhysicsComponent(const PhysCompDef& entityDef, GameObjectId& compId)
 {
-	GameErrorCode result = FWG_NO_ERROR;
+		GameErrorCode result = FWG_NO_ERROR;
 	wxVector<GameObjectID>::iterator iter;
 	GameGeometryContainer *pGeomCont = NULL;
 	wxDword i = 0;
@@ -87,54 +87,14 @@ GameErrorCode GameRenderComponentMgr::CreateGenericComponent(const RenderCompDef
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode GameRenderComponentMgr::CreateLandscapeObject(const RenderCompDef& entityDef, GameObjectId& compId)
+GameErrorCode GamePhysicsComponentMgr::DeletePhysicsComponent(GameObjectID compId)
 {
 }
 
-GameErrorCode GameRenderComponentMgr::DeleteGenericObject(GameObjectId compId)
+GameErrorCode GamePhysicsComponentMgr::GetPhysicsComponent(GameObjectID compID)
 {
 }
 
-GameErrorCode GameRenderComponentMgr::DeleteLandscapeObject(GameObjectId compId)
-{
-}
-
-GameErrorCode GameRenderComponentMgr::RenderGeneric()
-{
-}
-
-GameErrorCode GameRenderComponentMgr::RenderLandscape()
-{
-}
-
-GameErrorCode GameRenderComponentMgr::CreateBackgroundObject()
-{
-}
-
-GameErrorCode GameRenderComponentMgr::DeleteBackGroundObject()
-{
-}
-
-GameErrorCode GameRenderComponentMgr::DeleteGenericObject(GameObjectID compId)
-{
-}
-
-GameErrorCode GameRenderComponentMgr::DeleteLandscapeObject(GameObjectID compId)
-{
-}
-
-GameErrorCode GameRenderComponentMgr::GetBackgroundObject()
-{
-}
-
-GameErrorCode GameRenderComponentMgr::GetGenericObject(GameObjectID compID)
-{
-}
-
-GameErrorCode GameRenderComponentMgr::GetLandscapeObject(GameObjectID compID)
-{
-}
-
-GameErrorCode GameRenderComponentMgr::RenderBackground()
+GameErrorCode GamePhysicsComponentMgr::StepPhysics()
 {
 }
