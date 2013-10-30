@@ -123,8 +123,12 @@
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="physComp">
-      <VirtualDirectory Name="include"/>
-      <VirtualDirectory Name="src"/>
+      <VirtualDirectory Name="include">
+        <File Name="PhysicsComp/gphyscmgr.h"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="src">
+        <File Name="PhysicsComp/gphyscmgr.cpp"/>
+      </VirtualDirectory>
     </VirtualDirectory>
   </VirtualDirectory>
   <VirtualDirectory Name="src"/>
