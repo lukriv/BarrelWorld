@@ -154,7 +154,7 @@ GameErrorCode GameClientEngine::MainLoop()
 GameErrorCode GameClientEngine::CreateTestingWorld()
 {
 	GameErrorCode result = FWG_NO_ERROR;
-	GameEntity* pEntity = NULL;
+	GameRenderComp* pEntity = NULL;
 	
 	m_pActualFlatWorldClient = new (std::nothrow) GameFlatWorldClient();
 	if(m_pActualFlatWorldClient == NULL)

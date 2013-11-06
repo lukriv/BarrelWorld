@@ -1,12 +1,12 @@
 #include "grendercomp.h"
 
-void GameEntity::draw(sf::RenderTarget& target, sf::RenderStates states) const
+void GameRenderComp::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	sf::RenderStates renStates(m_blendmode, getTransform(), m_pTexture, NULL);
 	m_pGeometry->draw(target, renStates);
 }
 
-void GameEntity::UpdateEntity(const GameEntityUpdateStruct& updStruct)
+void GameRenderComp::UpdateEntity(const GameEntityUpdateStruct& updStruct)
 {
 	if (m_pBody != NULL)
 	{
@@ -21,7 +21,7 @@ void GameEntity::UpdateEntity(const GameEntityUpdateStruct& updStruct)
 	}
 }
 
-void GameEntity::DebugInfo(GameLogger* pLogger)
+void GameRenderComp::DebugInfo(GameLogger* pLogger)
 {
 	FWGLOG_DEBUG_FORMAT(wxT("GameEntity::EntityDebugInfo() : Entity info: Internal texture [%u, %u]; m_pGeometry (0x%x)")
 		, pLogger

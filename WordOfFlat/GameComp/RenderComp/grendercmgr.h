@@ -21,7 +21,9 @@ struct RenderCompDef {
 
 
 class GameRenderComponentMgr : public GameComponentMgrBase {
-	
+private:
+	MemoryAllocContainer<GameRenderComp> m_landObjMemory;
+	MemoryAllocContainer<GameRenderComp> m_genObjMemory;
 // IGameComponent interface
 public:
 	virtual GameCompMgrType GetType() {return GAME_COMP_RENDER;}
@@ -36,6 +38,10 @@ public:
 	GameErrorCode GetBackgroundObject();
 	GameErrorCode GetLandscapeObject(GameObjectID compID);
 	GameErrorCode GetGenericObject(GameObjectID compID);
+	
+	bool ExistsBackgroundObject();
+	bool ExistsLandscapeObject(GameObjectID compID);
+	bool ExistsGenericObject(GameObjectID compID);
 	
 	GameErrorCode RenderBackground();
 	GameErrorCode RenderLandscape();

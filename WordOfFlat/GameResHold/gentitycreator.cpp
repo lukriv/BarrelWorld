@@ -16,7 +16,7 @@ wxInt32 GameEntityCreator::release()
 	return refCount;
 }
 
-GameErrorCode GameEntityCreator::CreateTestingOrb(const sf::Vector2f& displayCoords, GameEntity& entity)
+GameErrorCode GameEntityCreator::CreateTestingOrb(const sf::Vector2f& displayCoords, GameRenderComp& entity)
 {
 	GameAnimation *pAnimation = NULL;
 	TAnimationCacheItem cacheItem;

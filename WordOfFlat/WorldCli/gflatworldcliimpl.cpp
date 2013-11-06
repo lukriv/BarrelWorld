@@ -369,12 +369,12 @@ GameErrorCode GameFlatWorldClient::CreateNewAnimation(GameAnimation *&pAnim)
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode GameFlatWorldClient::CreateNewEntity(GameEntity *&pEntity)
+GameErrorCode GameFlatWorldClient::CreateNewEntity(GameRenderComp *&pEntity)
 {
 	if(m_freeEntities.empty())
 	{
-		wxScopedPtr<GameEntity> apEntity;
-		apEntity.reset(new (std::nothrow) GameEntity());
+		wxScopedPtr<GameRenderComp> apEntity;
+		apEntity.reset(new (std::nothrow) GameRenderComp());
 		if(apEntity.get() == NULL)
 		{
 			FWGLOG_ERROR_FORMAT(wxT("GameFlatWorldClient::CreateNewEntity() : Entity allocation failed: 0x%08x"),
