@@ -10,7 +10,7 @@
  * \file gentityobj.h
  * \brief Geometric entity with state and transform
  */
-class GameEntity : public sf::Drawable, public GameTransformable {
+class GameRenderComp : public sf::Drawable, public GameTransformable {
 	IGameGeometry *m_pGeometry;
 	sf::Texture *m_pTexture; //!< Actual texture which will be displayed in the next display loop iteration
 	sf::Texture *m_pBaseTexture; //!< Base texture on which will be added the modifications
@@ -18,14 +18,14 @@ class GameEntity : public sf::Drawable, public GameTransformable {
 	sf::Texture m_internalTexture;
 	sf::BlendMode m_blendmode;
 public:
-	GameEntity() : GameEntityBase(GAME_OBJECT_TYPE_BASIC_ENTITY),
+	GameRenderComp() : GameEntityBase(GAME_OBJECT_TYPE_BASIC_ENTITY),
 				m_pGeometry(NULL),
 				m_pTexture(NULL),
 				m_pBaseTexture(NULL),
 				m_animID(GAME_OBJECT_ID_INVALID),
 				m_blendmode(sf::BlendNone){}
 	
-	~GameEntity() 
+	~GameRenderComp() 
 	{
 		if(m_pTexture != NULL)
 		{

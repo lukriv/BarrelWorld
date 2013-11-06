@@ -28,7 +28,7 @@ public:
 	
 	GameErrorCode Initialize(GameEntityFactory* pEntityFactory, b2World* pWorld);
 	
-	GameErrorCode CreateTestingOrb(const sf::Vector2f& displayCoords, GameEntity &entity);
+	GameErrorCode CreateTestingOrb(const sf::Vector2f& displayCoords, GameRenderComp &entity);
 	
 public:
 	virtual void addRef();

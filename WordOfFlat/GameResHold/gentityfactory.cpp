@@ -4,7 +4,7 @@
 #include "../GameObjects/gsfmlgeom.h"
 #include "../GameObjects/grendercomp.h"
 
-GameErrorCode GameEntityFactory::CreateBasicEntity(const RenderCompDef& entityDef, b2World& world, GameEntity& entity)
+GameErrorCode GameEntityFactory::CreateBasicEntity(const RenderCompDef& entityDef, b2World& world, GameRenderComp& entity)
 {
 	GameErrorCode result = FWG_NO_ERROR;
 	wxVector<GameObjectID> physObjsList;

@@ -22,7 +22,7 @@
 typedef wxVector<sf::Texture*> TGameTextureList;
 typedef wxVector<IGameGeometry*> TGameGeometryList;
 typedef wxVector<GameEntityBase*> TGameEntityBasePtrList;
-typedef wxVector<GameEntity*> TGameEntityPtrList;
+typedef wxVector<GameRenderComp*> TGameEntityPtrList;
 typedef wxVector<GameAnimation*> TGameAnimPtrList;
 typedef wxVector<GameSceneObject*> TSceneGraph;
 
@@ -161,7 +161,7 @@ public:
 	 * 
 	 * \return FWG_NO_ERROR on succes, errorcode otherwise
 	 */
-	GameErrorCode CreateNewEntity(GameEntity *&pEntity);
+	GameErrorCode CreateNewEntity(GameRenderComp *&pEntity);
 	GameErrorCode CreateNewAnimation(GameAnimation *&pAnim);
 	
 	/*! \brief Add new entity to world with unique ID
