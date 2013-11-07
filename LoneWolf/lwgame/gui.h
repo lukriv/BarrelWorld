@@ -22,7 +22,12 @@
 #include <wx/settings.h>
 #include <wx/html/htmlwin.h>
 #include <wx/choice.h>
+#include <wx/button.h>
 #include <wx/sizer.h>
+#include <wx/panel.h>
+#include <wx/listctrl.h>
+#include <wx/listbox.h>
+#include <wx/statbox.h>
 #include <wx/statusbr.h>
 #include <wx/frame.h>
 
@@ -42,13 +47,26 @@ class MainFrameBase : public wxFrame
 	protected:
 		wxMenuBar* m_menuBar;
 		wxMenu* m_menuFile;
-		wxHtmlWindow* m_htmlWin1;
-		wxChoice* m_choice1;
+		wxHtmlWindow* m_htmlDescription;
+		wxChoice* m_action;
+		wxButton* m_continueButton;
+		wxButton* m_dropWeaponButton;
+		wxButton* m_dropBagButton;
+		wxPanel* m_panel1;
+		wxListCtrl* m_disciplineList;
+		wxListCtrl* m_weaponList;
+		wxListBox* m_itemList;
+		wxListBox* m_specialItems;
+		wxListCtrl* m_listCtrl6;
 		wxStatusBar* m_statusBar;
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnCloseFrame( wxCloseEvent& event ) { event.Skip(); }
+		virtual void ResizeAll( wxSizeEvent& event ) { event.Skip(); }
 		virtual void OnExitClick( wxCommandEvent& event ) { event.Skip(); }
+		virtual void DoNextStep( wxCommandEvent& event ) { event.Skip(); }
+		virtual void DropWeapon( wxCommandEvent& event ) { event.Skip(); }
+		virtual void DropBagItem( wxCommandEvent& event ) { event.Skip(); }
 		
 	
 	public:

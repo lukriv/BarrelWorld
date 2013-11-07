@@ -92,10 +92,15 @@
   <VirtualDirectory Name="src">
     <File Name="gui.cpp"/>
     <File Name="main.cpp"/>
+    <File Name="actions.cpp"/>
+    <File Name="scenemgr.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="gui.h"/>
     <File Name="main.h"/>
+    <File Name="scenemgr.h"/>
+    <File Name="actions.h"/>
+    <File Name="character.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="resources">
     <File Name="gui.fbp"/>
