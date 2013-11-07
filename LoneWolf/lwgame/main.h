@@ -42,10 +42,16 @@ class MainFrame : public MainFrameBase
 		MainFrame( wxWindow *parent );
 		virtual ~MainFrame();
 		
+		
+		
 	protected:
 		// protected event handlers
 		virtual void OnCloseFrame( wxCloseEvent& event );
 		virtual void OnExitClick( wxCommandEvent& event );
+	
+	protected:
+		
+	
 };
 
 #endif //__main__

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<root>
+    <definitions>
+        <actions>
+            <action name="create_character" desc="Vytvoř postavu" />
+            <action name="lotery" desc="Náhodný výběr" />
+            <action name="move" />
+        </actions>
+        <disciplines>
+            <skill name="camouflage" title="Maskování" desc="Maskování umožňuje rytířům Kai splynout s okolím. Ve volné přírodě mohou beze stopy zmizet mezi stromy a skalami a přiblížit se nepozorovaně až těsně k nepříteli. Ve městě se rytíři řádu Kai stávají díky Maskování zcela nenápadnými, podobají se místnímu obyvatelstvu a mluví bez cizího přízvuku. Snadno najdou útočiště nebo bezpečnou skrýš." />
+            <skill name="hunting" title="Lov" desc="Umění lovu dává rytíři Kai jistotu, že v divočině nebude nikdy hladovět. Pokud se rytíř řádu Kai neocitne v nehostinné pustině nebo na poušti, bude vždy schopen obstarat si potravu. Tato dovednost se může hodit všude, protože umožňuje rytíři Kai rychlé a obratné přesuny z místa na místo." />
+            <skill name="sixth_sense" title="Šestý smysl" desc="Díky schopnosti Šestý smysl se může rytíř řádu Kai vyhnout bezprostřednímu nebezpečí. Pomůže mu odhalit pravé záměry neznámé osoby nebo odkrýt účel neobvyklého předmětu, se kterým se během dobrodružné výpravy setká." />
+            <skill name="tracking" title="Stopování" desc="Stopování je dovednost, která pomáhá rytíři Kai najít v divočině správnou cestu, vypátrat polohu jiného člověka či tvora a rozluštit tajemství šlépějí a stop." />
+            <skill name="healing" title="Léčitelství" desc="Léčitelství je disciplína, která slouží k regeneraci sil, tj. k obnově bodů za KONDICI, které rytíř Kai ztratil v boji. Pokud tuto dovednost ovládáš, můžeš si připočítat k bodům za KONDICI vždy po jednom bodu za každou očíslovanou pasáž knihy, kterou projdeš, aniž se zapleteš do nějaké potyčky. (Využít tohoto pravidla však můžeš jen tehdy, když počet bodů v okénku KONDICE klesne pod výchozí hodnotu.)
+								Nezapomeň, že tvoje KONDICE nemůže přerůst přes původní úroveň." />
+            <skill name="weaponskill" title="Ovládání zbraně" desc="Mniši kláštera Kai vycvičili každého učedníka v dokonalém ovládání jednoho druhu zbraně. Pokud ses rozhodl, že jednou z tvých disciplín Kai bude dovedné zacházení se zbraní, vyhledej obvyklým způsobem číslo v Tabulce náhody na poslední straně knihy. Podle čísla, které z ní získáš, zjistíš, kterou zbraň mistrně ovládáš (srovnej s přehledem níže). Když ji použiješ v boji, připočti si dva body do kolonky UMĚNÍ BOJE." choice="weapon" />
+            <skill name="mindshield" title="Nehmotná clona" desc="Temní páni i další ďábelské stvůry, kterým velí, ovládají schopnost útočit silou vlastní mysli. Proti jejich výpadům se můžeš bránit vytvořením nehmotné duchovní clony, štítu, a tak neztratíš body z konta KONDICE, i když se staneš terčem útoku touto skrytou zbraní." />
+            <skill name="mindblast" title="Útok duševní silou" desc="Rytíř Kai, který ovládá tuto dovednost, může místo běžné zbraně použít proti nepříteli svou duševní sílu. Připočítá si pak dva zvláštní body k hodnotě UMĚNÍ BOJE. Ale pozor, ne všem netvorům, se kterými se na své dlouhé dobrodružné cestě střetneš, duševní síla škodí. Včas se dozvíš, je-li tvůj nepřítel odolný." />
+            <skill name="animal_kinship" title="Spřízněnost se zvířaty" desc="Je disciplína, díky níž může rytíř Kai komunikovat s některými zvířaty a úmysly jiných může uhodnout." />
+            <skill name="mind_over_matter" title="Ovládání hmoty myšlenkou" desc="Dokonalé zvládnutí této disciplíny vybaví rytíře Kai schopností pohybovat malými předměty pouhou silou koncentrace, silou vůle soustředěné na určitý předmět." />
+        </disciplines>
+        <weapons>
+            <weapon name="dagger" title="Dýka" />
+            <weapon name="spear" title="Kopí" />
+            <weapon name="mace" title="Palcát" />
+            <weapon name="short_sword" title="Krátký meč" />
+            <weapon name="warhammer" title="Válečné kladivo" />
+            <weapon name="sword" title="Meč" />
+            <weapon name="axe" title="Sekyra" />
+            <weapon name="quaterstaff" title="Bojová hůl" />
+            <weapon name="broadsword" title="Meč s šírokou čepelí" />
+        </weapons>
+        <bag_items>
+            <bag_item name="meal" title="Porce jídla" />
+            <bag_item name="healing_potion" title="Léčivý elixír" desc="Vypiješ-li nápoj po boji, obnovíš si čtyři ze ztracených KONDIČNÍCH bodů. Množství elixíru je ale omezené, stačí jen na jedno použití." />
+        </bag_items>
+        <special_items>
+            <special_item name="helmet" title="Přilba" desc="Přidá další dva body k součtu v KONDICI" />
+            <special_item name="chainmail_waistcoat" title="Drátěná vesta" desc="Posílí součet KONDIČNÍCH bodů o čtyři." />
+        </special_items>
+
+        
+    </definitions>
+    <title>Lone Wolf: Útok ze tmy</title>
+    <scene id="0">
+        <desc>
+            <p>Na severu Sommerlundu panuje už po mnohá staletí mezi Bojovnými rytíři
+			zvyk posílat potomky v určitém věku do kláštera Kai. Po několik let tam
+			získávají dovednosti a smysl pro kázeň a řád, které od nepaměti šlechtí
+			jejich vznešený rod.</p>
+			<p>Mniši z kláštera Kai mistrně ovládají řadu bojových umění a výcvik pod
+			jejich velením je tvrdý a namáhavý. Přesto je jejich svěřenci oddaně milují
+			a váží si jich. V den, kdy mladí rytíři Kai zvládnou všechny dovednosti a
+			vědomosti řádu Kai (ostatním smrtelníkům nedostupné), vracejí se do
+			svých domovů tělesně i duševně připraveni pro boj, jenž neustále hrozí ze
+			strany Temných pánů ze západu: Před dávnými řasy, ve věku Černé luny,
+			vedli Temní páni válku proti Sommerlundu. Vleklý konflikt byl pro
+			sommerlundské těžkou a hořkou zkouškou odříkání a vzdoru, jež
+			vyvrcholila vítězstvím Sommerlundu ve velké bitvě u Maakengorgu.
+			Sommerlundský král Ulnar se spojenci z Durenoru zaútočili na vojsko
+			Temných pánů v Moyturském průsmyku a zatlačili je do bezedných pustin
+			Maakengorgu. Nejmocnějšího z Temných pánů, Vashnu, probodl vlastním
+			mečem král Ulnar, tím mečem, jenž je znám jako Sommerswerd, Slunečný
+			meč. Tehdy Temní páni přísahali pomstu celému Sommerlundu a zejména
+			Ulnarovu rodu.</p>
+			<p>Dnešního jitra se všichni rytíři řádu Kai shromáždili v klášteře, aby oslavili
+			Fehmarnův svátek. Náhle se západní obloha zlověstně zatahuje ohromným
+			černým mračnem, které se nezadržitelně přibližuje. Černí okřídlení netvoři
+			rychle zaplavují celé nebe, až mizí i slunce. To útočí Temní páni, odvěký
+			nepřítel Sommerlundu. Válka právě vypukla. V klášteře jsi dostal jméno
+			Lone Wolf. Tohoto osudného rána sbíráš v lese dříví na slavnostní oheň
+			(tak tě potrestali tvoji učitelé za nepozornost při učení). Už ses chystal ke
+			zpáteční cestě do kláštera, teï ale zcela ochromen hrůzou sleduješ, jak
+			nekonečné mračno černých nestvůr zaplavuje klášter. Vzápětí odhazuješ
+			dříví a bez rozmýšlení se dáváš do běhu, aby ses mohl zapojit do bitevní
+			vřavy, která od první minuty zuří plnou silou. V nezvyklém Šeru, které
+			zaplavilo krajinu, je běh obtížný, klopýtáš, až nakonec narážíš hlavou na
+			nízko rostoucí větev stromu. Poslední, co v matném světle tvoje oči
+			rozeznávají, jsou hroutící se zdi kláštera. Pak upadáš do mrákot. Trvalo
+			několik hodin, než jsi z bezvědomí procitl. Se slzami v očích nyní pohlížíš
+			na dílo zkázy. S tváří zdviženou k čistému nebi přísaháš pomstu Temným
+			pánům za krveprolití v klášteře Kai a náhle víš jasně, co dělat dál. Bez
+			otálení musíš vyrazit na nebezpečnou cestu do hlavního města, abys
+			upozornil krále na nebezpečí, před kterým stojí on i jeho poddaní. Zůstal jsi
+			nyní posledním z rytířů řádu Kai - jsi <i>Lone Wolf.</i></p>
+		</desc>
+        <actions><action name="create_character" target="1" /></actions>
+    </scene>
+    <scene id="1">
+        <desc>
+            <p>Cítíš, že otálení u doutnajících trosek kláštera není bezpečné a mohlo by
+			být osudné, kdyby se okřídlené nestvůry vrátily a našly tě tu. Je třeba co
+			nejrychleji vyrazit do sommerlundské metropole, do Holmgardu, a vylíčit
+			králi tragickou událost, která postihla klášter, oznámit mu, že výkvět
+			bojovníků Kai byl zákeřně do jednoho vyvražděn a ty, učedník Kai, jsi
+			stejnému osudu unikl jen náhodou. Ted stojí sommerlundští bezmocní proti
+			odvěkým nepřátelům, vždyť jen rytíři Kai mohli vést sommerlundská
+			vojska do úspěšného boje proti Temným pánům a všem, kteří jsou v jejich
+			službách.</p>
+			<p>Se stěží zadržovanými slzami dáváš věčné sbohem svým mrtvým druhům a
+			učitelům. Šeptáš třesoucím se hlasem slib pomsty za jejich úkladné zabití.
+			S hlavou sklopenou se obracíš zády k troskám a opatrně sestupuješ příkrou
+			strání dolů.</p>
+			<p>U úpatí vrchu se stezka dělí. Obě pěšiny, které vedou dál, míří k rozlehlým
+			lesům.</p>
+		</desc>
+        <actions>
+            <action name="move" desc="Vydat se po cestě, která mizí v lese napravo" target="85" />
+            <action name="move" desc="Držet se pěšiny směřující k lesu po levé straně" target="275" />
+            <action name="move" desc="Využít své zvláštní schopnosti a poradit se se svým Šestým smyslem" skill_needed="sixth_sense" target="141" optional />
+        </actions>
+    </scene>
+    <scene id="2">
+        <desc>
+            <p>Jak se prodíráš houstnoucím lesem dál a dál, výkřiky Giaků za tebou
+			slábnou, až konečně neslyšíš nic. Na vteřinku ztrácíš ostražitost a ulehčené
+			vydechuješ, ale to se nevyplácí: nevšiml sis včas nízko rostoucí sukovité
+			větve a tečí ležíš jak dlouhý tak široký zapleten do změti větví a hustého
+			podrostu.</p>
+		</desc>
+        <actions>
+            <action name="lotery">
+                <selection numbers="0-4" target="343" />
+                <selection numbers="5-9" target="276" />
+            </action>
+        </actions>
+    </scene>
+    <scene id="3">
+        <desc>
+            <p>Kráčíš těsně za důstojníkem, procházíte klenutým vchodem a vystupujete
+			po několika stupních nahoru do podlouhlého sálu. Ve velkém spěchu vás
+			míjejí vojáci, vybíhají ven a na zdobených pergamenových svitách
+			roznášejí rozkazy velitelům v ulicích města. Přistupuje k tobě muž
+			divokého vzezření se zjizveným obličejem, oděný do roucha v královských
+			barvách, a vyzývá tě, abys ho následoval dovnitř do Pevnosti.</p>
+		</desc>
+        <actions>
+            <action name="move" desc="Jeho návrh se ti zamlouvá a chceš s ním jít" target="196" />
+            <action name="move" desc="Raději jeho nabídku odmítneš a vrátíš se na hustě zalidněnou ulici" target="144" />
+        </actions>
+    </scene>
+    
+</root>

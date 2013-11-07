@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Workspace Name="LoneWolf" Database="">
   <Project Name="lwgame" Path="lwgame/lwgame.project" Active="Yes"/>
+  <Project Name="chapters" Path="chapters/chapters.project" Active="No"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="no">
       <Project Name="lwgame" ConfigName="Debug"/>
+      <Project Name="chapters" ConfigName="Debug"/>
     </WorkspaceConfiguration>
     <WorkspaceConfiguration Name="Release" Selected="yes">
       <Project Name="lwgame" ConfigName="Release"/>
+      <Project Name="chapters" ConfigName="Debug"/>
     </WorkspaceConfiguration>
   </BuildMatrix>
 </CodeLite_Workspace>
