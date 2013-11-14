@@ -140,6 +140,9 @@ MainFrameBase::MainFrameBase( wxWindow* parent, wxWindowID id, const wxString& t
 	// Connect Events
 	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( MainFrameBase::OnCloseFrame ) );
 	this->Connect( wxEVT_SIZE, wxSizeEventHandler( MainFrameBase::ResizeAll ) );
+	this->Connect( newGame->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrameBase::CreateNewGame ) );
+	this->Connect( loadGame->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrameBase::LoadGame ) );
+	this->Connect( saveGame->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrameBase::SaveGame ) );
 	this->Connect( menuFileExit->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrameBase::OnExitClick ) );
 	m_continueButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MainFrameBase::DoNextStep ), NULL, this );
 	m_dropWeaponButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MainFrameBase::DropWeapon ), NULL, this );
@@ -151,6 +154,9 @@ MainFrameBase::~MainFrameBase()
 	// Disconnect Events
 	this->Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( MainFrameBase::OnCloseFrame ) );
 	this->Disconnect( wxEVT_SIZE, wxSizeEventHandler( MainFrameBase::ResizeAll ) );
+	this->Disconnect( ID_NEW_GAME, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrameBase::CreateNewGame ) );
+	this->Disconnect( ID_LOAD_GAME, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrameBase::LoadGame ) );
+	this->Disconnect( ID_SAVE_GAME, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrameBase::SaveGame ) );
 	this->Disconnect( wxID_EXIT, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrameBase::OnExitClick ) );
 	m_continueButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MainFrameBase::DoNextStep ), NULL, this );
 	m_dropWeaponButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MainFrameBase::DropWeapon ), NULL, this );

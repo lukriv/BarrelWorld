@@ -94,6 +94,9 @@
     <File Name="main.cpp"/>
     <File Name="actions.cpp"/>
     <File Name="scenemgr.cpp"/>
+    <File Name="lwdefs.cpp"/>
+    <File Name="reader.cpp"/>
+    <File Name="lwengine.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="gui.h"/>
@@ -101,6 +104,10 @@
     <File Name="scenemgr.h"/>
     <File Name="actions.h"/>
     <File Name="character.h"/>
+    <File Name="lwdefs.h"/>
+    <File Name="lwxmldefs.h"/>
+    <File Name="reader.h"/>
+    <File Name="lwengine.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="resources">
     <File Name="gui.fbp"/>

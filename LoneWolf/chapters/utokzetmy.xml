@@ -13,15 +13,23 @@ and open the template in the editor.
             <action name="move" />
         </actions>
         <disciplines>
-            <skill name="camouflage" title="Maskování" desc="Maskování umožňuje rytířům Kai splynout s okolím. Ve volné přírodě mohou beze stopy zmizet mezi stromy a skalami a přiblížit se nepozorovaně až těsně k nepříteli. Ve městě se rytíři řádu Kai stávají díky Maskování zcela nenápadnými, podobají se místnímu obyvatelstvu a mluví bez cizího přízvuku. Snadno najdou útočiště nebo bezpečnou skrýš." />
-            <skill name="hunting" title="Lov" desc="Umění lovu dává rytíři Kai jistotu, že v divočině nebude nikdy hladovět. Pokud se rytíř řádu Kai neocitne v nehostinné pustině nebo na poušti, bude vždy schopen obstarat si potravu. Tato dovednost se může hodit všude, protože umožňuje rytíři Kai rychlé a obratné přesuny z místa na místo." />
-            <skill name="sixth_sense" title="Šestý smysl" desc="Díky schopnosti Šestý smysl se může rytíř řádu Kai vyhnout bezprostřednímu nebezpečí. Pomůže mu odhalit pravé záměry neznámé osoby nebo odkrýt účel neobvyklého předmětu, se kterým se během dobrodružné výpravy setká." />
+            <skill name="camouflage" title="Maskování" desc="Maskování umožňuje rytířům Kai splynout s okolím. Ve volné přírodě mohou beze stopy zmizet mezi stromy a skalami a přiblížit se nepozorovaně až těsně k nepříteli.
+				Ve městě se rytíři řádu Kai stávají díky Maskování zcela nenápadnými, podobají se místnímu obyvatelstvu a mluví bez cizího přízvuku. Snadno najdou útočiště nebo bezpečnou skrýš." />
+            <skill name="hunting" title="Lov" desc="Umění lovu dává rytíři Kai jistotu, že v divočině nebude nikdy hladovět. Pokud se rytíř řádu Kai neocitne v nehostinné pustině nebo na poušti, bude vždy schopen obstarat si potravu.
+				Tato dovednost se může hodit všude, protože umožňuje rytíři Kai rychlé a obratné přesuny z místa na místo." />
+            <skill name="sixth_sense" title="Šestý smysl" desc="Díky schopnosti Šestý smysl se může rytíř řádu Kai vyhnout bezprostřednímu nebezpečí. Pomůže mu odhalit pravé záměry neznámé osoby nebo odkrýt účel neobvyklého předmětu,
+				se kterým se během dobrodružné výpravy setká." />
             <skill name="tracking" title="Stopování" desc="Stopování je dovednost, která pomáhá rytíři Kai najít v divočině správnou cestu, vypátrat polohu jiného člověka či tvora a rozluštit tajemství šlépějí a stop." />
-            <skill name="healing" title="Léčitelství" desc="Léčitelství je disciplína, která slouží k regeneraci sil, tj. k obnově bodů za KONDICI, které rytíř Kai ztratil v boji. Pokud tuto dovednost ovládáš, můžeš si připočítat k bodům za KONDICI vždy po jednom bodu za každou očíslovanou pasáž knihy, kterou projdeš, aniž se zapleteš do nějaké potyčky. (Využít tohoto pravidla však můžeš jen tehdy, když počet bodů v okénku KONDICE klesne pod výchozí hodnotu.)
-								Nezapomeň, že tvoje KONDICE nemůže přerůst přes původní úroveň." />
-            <skill name="weaponskill" title="Ovládání zbraně" desc="Mniši kláštera Kai vycvičili každého učedníka v dokonalém ovládání jednoho druhu zbraně. Pokud ses rozhodl, že jednou z tvých disciplín Kai bude dovedné zacházení se zbraní, vyhledej obvyklým způsobem číslo v Tabulce náhody na poslední straně knihy. Podle čísla, které z ní získáš, zjistíš, kterou zbraň mistrně ovládáš (srovnej s přehledem níže). Když ji použiješ v boji, připočti si dva body do kolonky UMĚNÍ BOJE." choice="weapon" />
-            <skill name="mindshield" title="Nehmotná clona" desc="Temní páni i další ďábelské stvůry, kterým velí, ovládají schopnost útočit silou vlastní mysli. Proti jejich výpadům se můžeš bránit vytvořením nehmotné duchovní clony, štítu, a tak neztratíš body z konta KONDICE, i když se staneš terčem útoku touto skrytou zbraní." />
-            <skill name="mindblast" title="Útok duševní silou" desc="Rytíř Kai, který ovládá tuto dovednost, může místo běžné zbraně použít proti nepříteli svou duševní sílu. Připočítá si pak dva zvláštní body k hodnotě UMĚNÍ BOJE. Ale pozor, ne všem netvorům, se kterými se na své dlouhé dobrodružné cestě střetneš, duševní síla škodí. Včas se dozvíš, je-li tvůj nepřítel odolný." />
+            <skill name="healing" title="Léčitelství" desc="Léčitelství je disciplína, která slouží k regeneraci sil, tj. k obnově bodů za KONDICI, které rytíř Kai ztratil v boji. Pokud tuto dovednost ovládáš,
+				můžeš si připočítat k bodům za KONDICI vždy po jednom bodu za každou očíslovanou pasáž knihy, kterou projdeš, aniž se zapleteš do nějaké potyčky. (Využít tohoto pravidla však můžeš jen tehdy,
+				když počet bodů v okénku KONDICE klesne pod výchozí hodnotu.) Nezapomeň, že tvoje KONDICE nemůže přerůst přes původní úroveň." />
+            <skill name="weaponskill" title="Ovládání zbraně" desc="Mniši kláštera Kai vycvičili každého učedníka v dokonalém ovládání jednoho druhu zbraně. Pokud ses rozhodl, že jednou z tvých disciplín Kai bude dovedné zacházení se zbraní,
+				vyhledej obvyklým způsobem číslo v Tabulce náhody na poslední straně knihy. Podle čísla, které z ní získáš, zjistíš, kterou zbraň mistrně ovládáš (srovnej s přehledem níže). Když ji použiješ v boji,
+					připočti si dva body do kolonky UMĚNÍ BOJE." choice="weapon" />
+            <skill name="mindshield" title="Nehmotná clona" desc="Temní páni i další ďábelské stvůry, kterým velí, ovládají schopnost útočit silou vlastní mysli. Proti jejich výpadům se můžeš bránit vytvořením nehmotné duchovní clony,
+				štítu, a tak neztratíš body z konta KONDICE, i když se staneš terčem útoku touto skrytou zbraní." />
+            <skill name="mindblast" title="Útok duševní silou" desc="Rytíř Kai, který ovládá tuto dovednost, může místo běžné zbraně použít proti nepříteli svou duševní sílu. Připočítá si pak dva zvláštní body k hodnotě UMĚNÍ BOJE.
+				Ale pozor, ne všem netvorům, se kterými se na své dlouhé dobrodružné cestě střetneš, duševní síla škodí. Včas se dozvíš, je-li tvůj nepřítel odolný." />
             <skill name="animal_kinship" title="Spřízněnost se zvířaty" desc="Je disciplína, díky níž může rytíř Kai komunikovat s některými zvířaty a úmysly jiných může uhodnout." />
             <skill name="mind_over_matter" title="Ovládání hmoty myšlenkou" desc="Dokonalé zvládnutí této disciplíny vybaví rytíře Kai schopností pohybovat malými předměty pouhou silou koncentrace, silou vůle soustředěné na určitý předmět." />
         </disciplines>
@@ -113,7 +121,7 @@ and open the template in the editor.
         <actions>
             <action name="move" desc="Vydat se po cestě, která mizí v lese napravo" target="85" />
             <action name="move" desc="Držet se pěšiny směřující k lesu po levé straně" target="275" />
-            <action name="move" desc="Využít své zvláštní schopnosti a poradit se se svým Šestým smyslem" skill_needed="sixth_sense" target="141" optional />
+            <action name="move" desc="Využít své zvláštní schopnosti a poradit se se svým Šestým smyslem" skill_needed="sixth_sense" target="141" />
         </actions>
     </scene>
     <scene id="2">

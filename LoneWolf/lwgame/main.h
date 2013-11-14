@@ -50,7 +50,7 @@ class MainFrame : public MainFrameBase
 		virtual void OnExitClick( wxCommandEvent& event );
 	
 	protected:
-		
+		LWGameEngine m_gameEngine;
 	
 };
 
