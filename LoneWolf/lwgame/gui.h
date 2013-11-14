@@ -63,6 +63,9 @@ class MainFrameBase : public wxFrame
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnCloseFrame( wxCloseEvent& event ) { event.Skip(); }
 		virtual void ResizeAll( wxSizeEvent& event ) { event.Skip(); }
+		virtual void CreateNewGame( wxCommandEvent& event ) { event.Skip(); }
+		virtual void LoadGame( wxCommandEvent& event ) { event.Skip(); }
+		virtual void SaveGame( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnExitClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void DoNextStep( wxCommandEvent& event ) { event.Skip(); }
 		virtual void DropWeapon( wxCommandEvent& event ) { event.Skip(); }
@@ -71,7 +74,7 @@ class MainFrameBase : public wxFrame
 	
 	public:
 		
-		MainFrameBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("wxMiniApp"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 800,600 ), long style = wxCLOSE_BOX|wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		MainFrameBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Lone Wolf Game"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 800,600 ), long style = wxCLOSE_BOX|wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 		
 		~MainFrameBase();
 	

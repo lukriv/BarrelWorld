@@ -4,12 +4,31 @@
 
 class Scene {
 public:
+	wxDword m_sceneId;
 	wxString m_desc;
 	ActionVector m_actions;
+
+public:
+	Scene() : m_sceneId(0) {}
+	~Scene() {}
+	
+	Scene& operator=(const Scene& scene);
 };
 
 
 class SceneManager {
+private:
+	typedef std::map<wxDword, Scene> TSceneMap;
+	typedef std::pair<wxDword, Scene> TSceneMapPair;
+private:
+	TSceneMap m_sceneMap;
+public:
+	SceneManager() {}
+	~SceneManager() {}
+	
+	bool AddScene(const Scene& pScene);
+	void RemoveScene(wxDword sceneId);
+	Scene* GetScene(wxDword sceneId);
 	
 };
 

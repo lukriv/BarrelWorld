@@ -2,26 +2,33 @@
 #define __LONE_WOLF_CHARACTER_H__
 
 
-enum Disciplines {
-	DISCIPLINE_UNKNOWN		= 0,
-	DISCIPLINE_CAMOUFLAGE	= 1,
-	DISCIPLINE_HUNTING		= 2,
-	DISCIPLINE_SIXTH_SENSE	= 3,
-	DISCIPLINE_TRACKING		= 4,
-	DISCIPLINE_HEALING		= 5,
-	DISCIPLINE_WEAPONSKILL	= 6,
-	DISCIPLINE_MINDSHIELD	= 7,
-	DISCIPLINE_MINDBLAST	= 8,
-	DISCIPLINE_ANIMAL_KINDSHIP	= 9,
-	DISCIPLINE_MIND_OVER_MATTER = 10
-};
 
-class Character {
+struct Character {
+	// disciplines
+	wxVector<EDisciplines> m_disciplines;
+	wxDword m_maxDiscCount;
+	
+	wxVector<EWeapons> m_weapons;
+	wxDword m_maxWeaponCount;
+	
+	wxVector<EBagItems> m_bag;
+	wxDword m_maxBagItems;
+	
+	wxVector<ESpecialItems> m_specialItems;
+	
+	wxDword m_pouch;
+	wxDword m_maxGoldCount;
+	
+	wxDword m_baseAttackSkill;
+	wxDword m_baseCondition;	
 
+	wxDword m_actualAttackSkill;
+	wxDword m_actualCondition;
+	
 public:
-	Character() {}
+	Character(): m_maxDiscCount(5), m_maxWeaponCount(2), m_maxBagItems(8), m_maxGoldCount(50) {}
+	~Character() {}
 };
-
 
 
 #endif //__LONE_WOLF_CHARACTER_H__
