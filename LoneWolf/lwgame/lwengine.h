@@ -10,6 +10,7 @@ public:
 
 class LWGameEngine {
 	Scene* m_pActualScene;
+	
 public:
 	LWGameEngine() {}
 	~LWGameEngine() {}
