@@ -468,3 +468,12 @@ ConsoleWindowWrapper::~ConsoleWindowWrapper()
 		delete m_pScreenBuffer;
 	}
 }
+
+unsigned int ConsoleWindowWrapper::ConvertColorToBackgroundColor(int color)
+{
+	if(color & )
+}
+
+unsigned int ConsoleWindowWrapper::ConvertColorToForegroundColor(int color)
+{
+}

@@ -22,6 +22,13 @@ enum ConsoleFontSize {
 	CONSOLE_FONT_SIZE_10x18 = 10
 };
 
+enum ConsoleColor {
+	CONSOLE_COLOR_BLUE 		= 1,
+	CONSOLE_COLOR_GREEN		= 2,
+	CONSOLE_COLOR_RED		= 3,
+	CONSOLE_COLOR_INTENSITY = 4
+};
+
 
 struct ScreenBuffers;
 
@@ -46,6 +53,7 @@ public:
 	
 	bool WriteChar(char c);
 	bool WriteChar(char c, unsigned int x, unsigned int y);
+	bool WriteChar(char c, unsigned int x, unsigned int y, ConsoleColor foreGroundColor, ConsoleColor backGroundColor);
 	
 	bool ReadInput(std::string &inputStr);
 	
@@ -73,6 +81,8 @@ private:
 private:
 	static void ConsoleOutputBufferModeFlagsToString(long unsigned int consoleMode, std::string& outputString);
 	static void ConsoleInputBufferModeFlagsToString(long unsigned int consoleMode, std::string& outputString);
+	static unsigned int ConvertColorToForegroundColor(int color);
+	static unsigned int ConvertColorToBackgroundColor(int color);
 
 };
 
