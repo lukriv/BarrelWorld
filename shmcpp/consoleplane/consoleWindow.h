@@ -23,22 +23,7 @@ enum ConsoleFontSize {
 };
 
 
-enum ConsoleFlags {
-	CONSOLE_ECHO_INPUT 			= 1,
-	CONSOLE_LINE_INPUT			= 2,
-	CONSOLE_MOUSE_INPUT			= 4,
-	CONSOLE_WINDOW_INPUT		= 8,
-	CONSOLE_INSERT_MODE			= 16,
-	CONSOLE_QUICK_EDIT_MODE		= 32,
-	CONSOLE_PROCESSED_INPUT		= 64,
-
-};
-
-enum BufferFlags {
-	CONSOLE_PROCESSED_OUTPUT	= 1,
-	CONSOLE_WRAP_AT_EOL_OUTPUT	= 2	
-};
-
+struct ScreenBuffers;
 
 class ConsoleWindowWrapper {
 private:
@@ -49,42 +34,45 @@ private:
 	};
 
 	static const ConsoleWindowWrapper::RasterSize RasterTable[];
+private:
+	ScreenBuffers* m_pScreenBuffer;
 public:
-	ConsoleWindowWrapper() {}
-	~ConsoleWindowWrapper() {}
+	ConsoleWindowWrapper();
+	~ConsoleWindowWrapper();
 	
-	bool Initialize();
+	bool Initialize(short unsigned int width, short unsigned int height, bool doubleBuffer = false, ConsoleFontSize font = CONSOLE_FONT_SIZE_UNDEF);
 	
+	void ClearBuffer();
+	
+	bool WriteChar(char c);
+	bool WriteChar(char c, unsigned int x, unsigned int y);
+	
+	bool ReadInput(std::string &inputStr);
+	
+	void WriteConsoleInfo();
+
+protected:	
 	bool GetConsoleWindowSize(unsigned int &width, unsigned int &height);
 	bool GetConsoleBufferSize(unsigned int &width, unsigned int &height);
 	
 	bool SetConsoleWindowSize(short unsigned int width, short unsigned int height);
 	bool SetConsoleBufferSize(short unsigned int width, short unsigned int height);
 	
-	bool GetMode(unsigned int &flags);
-	bool SetMode(unsigned int flags);
-	
-	bool CreateBuffer(unsigned int flags);
-	
 	bool SetFontSize(ConsoleFontSize size);
 	
-	void WriteConsoleInfo();
-
-private:
-	
-
 //Get console information	
 private:
 	bool GetConsoleBufferInfo(std::string& outputString);
-	bool GetConsoleModeInfo(std::string& outputString);
+	bool GetConsoleInputModeInfo(std::string& outputString);
+	bool GetConsoleOutputModeInfo(std::string& outputString);
 	bool GetConsoleFontInfo(std::string& outputString);
 	
 	const RasterSize* GetFontRasterSize(ConsoleFontSize fontSize);
 	
 //static convert mehtods
 private:
-	static void ConsoleModeFlagsToString (long unsigned int consoleMode, std::string& outputString);
-	
+	static void ConsoleOutputBufferModeFlagsToString(long unsigned int consoleMode, std::string& outputString);
+	static void ConsoleInputBufferModeFlagsToString(long unsigned int consoleMode, std::string& outputString);
 
 };
 
