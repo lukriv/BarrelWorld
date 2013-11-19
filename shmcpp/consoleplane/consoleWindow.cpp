@@ -18,6 +18,19 @@ BOOL WINAPI SetConsoleFont(HANDLE, DWORD);
 }
 #endif
 
+//screen buffer definition
+struct ScreenBuffers {
+	HANDLE m_inputBuffer;
+	HANDLE m_outScreenBuffer[2];
+	unsigned int m_activeBuffer;
+	
+	ScreenBuffers() 
+	{
+		m_inputBuffer = GetStdHandle(STD_INPUT_HANDLE);
+		m_outScreenBuffer[0] = GetStdHandle(STD_OUTPUT_HANDLE);
+		m_activeBuffer = 0;
+	}
+};
 
 //Raster font table sizes
 
@@ -40,29 +53,21 @@ const ConsoleWindowWrapper::RasterSize ConsoleWindowWrapper::RasterTable[] = {
 using namespace std;
 
 
-HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
-
-bool ConsoleWindowWrapper::Initialize()
-{
-	if(!SetFontSize(CONSOLE_FONT_SIZE_8x8))
-	{
-		return false;
-	}
-	
-	
-	
-	return true;
-}
-	
-
-
 void ConsoleWindowWrapper::WriteConsoleInfo()
 {
 	string consoleModeStr;
 	
-	if(GetConsoleModeInfo(consoleModeStr))
+	if(GetConsoleInputModeInfo(consoleModeStr))
 	{
-		cout << "console mode: "<< consoleModeStr << endl;	
+		cout << "console input mode: "<< consoleModeStr << endl;	
+	}
+	
+	consoleModeStr.clear();
+	
+	cout << "-------------------------" << endl; 
+	if(GetConsoleOutputModeInfo(consoleModeStr))
+	{
+		cout << "console output mode: "<< consoleModeStr << endl;	
 	}
 	
 	consoleModeStr.clear();
@@ -88,7 +93,7 @@ void ConsoleWindowWrapper::WriteConsoleInfo()
 	
 	consoleModeStr.clear();
 	
-	cout << "Console max size:" << GetLargestConsoleWindowSize(console).X << "; " << GetLargestConsoleWindowSize(console).Y << endl;
+	cout << "Console max size:" << GetLargestConsoleWindowSize(m_pScreenBuffer->m_outScreenBuffer[0]).X << "; " << GetLargestConsoleWindowSize(m_pScreenBuffer->m_outScreenBuffer[0]).Y << endl;
 	
 }
 
@@ -96,7 +101,7 @@ bool ConsoleWindowWrapper::GetConsoleBufferInfo(std::string& outputString)
 {
 	CONSOLE_SCREEN_BUFFER_INFO screenBufferInfo;
 	stringstream ostr;
-	if(!GetConsoleScreenBufferInfo(console, &screenBufferInfo))
+	if(!GetConsoleScreenBufferInfo(m_pScreenBuffer->m_outScreenBuffer[0], &screenBufferInfo))
 	{
 		cout << "GetConsoleScreenBufferInfo failed" << endl;
 		return false;
@@ -116,25 +121,39 @@ bool ConsoleWindowWrapper::GetConsoleBufferInfo(std::string& outputString)
 	
 }
 
-bool ConsoleWindowWrapper::GetConsoleModeInfo(std::string& outputString)
+bool ConsoleWindowWrapper::GetConsoleInputModeInfo(std::string& outputString)
 {
 	long unsigned int consoleMode = 0;
-	if(!GetConsoleMode(console, &consoleMode))
+	if(!GetConsoleMode(m_pScreenBuffer->m_inputBuffer, &consoleMode))
 	{
 		return false;
 	}
 	
-	ConsoleModeFlagsToString(consoleMode, outputString);
+	ConsoleInputBufferModeFlagsToString(consoleMode, outputString);
 	
 	return true;
 }
+
+bool ConsoleWindowWrapper::GetConsoleOutputModeInfo(std::string& outputString)
+{
+	long unsigned int consoleMode = 0;
+	if(!GetConsoleMode(m_pScreenBuffer->m_outScreenBuffer[0], &consoleMode))
+	{
+		return false;
+	}
+	
+	ConsoleOutputBufferModeFlagsToString(consoleMode, outputString);
+	
+	return true;
+}
+
 
 bool ConsoleWindowWrapper::GetConsoleFontInfo(std::string& outputString)
 {
 	CONSOLE_FONT_INFO consoleFontInfo;
 	stringstream ostr;
 	
-	if(!GetCurrentConsoleFont(console, true, &consoleFontInfo))
+	if(!GetCurrentConsoleFont(m_pScreenBuffer->m_outScreenBuffer[0], true, &consoleFontInfo))
 	{
 		cout << "GetCurrentConsoleFont failed" << endl;
 		return false;
@@ -142,7 +161,7 @@ bool ConsoleWindowWrapper::GetConsoleFontInfo(std::string& outputString)
 	
 	ostr << "fontnumber: " << consoleFontInfo.nFont << "\n";
 	ostr << "fontsize: " << consoleFontInfo.dwFontSize.X << "; " << consoleFontInfo.dwFontSize.Y << "\n";
-	ostr << "fontsize: " << GetConsoleFontSize(console, consoleFontInfo.nFont).X << "; " << GetConsoleFontSize(console, consoleFontInfo.nFont).Y << "\n";
+	ostr << "fontsize: " << GetConsoleFontSize(m_pScreenBuffer->m_outScreenBuffer[0], consoleFontInfo.nFont).X << "; " << GetConsoleFontSize(m_pScreenBuffer->m_outScreenBuffer[0], consoleFontInfo.nFont).Y << "\n";
 
 	outputString = ostr.str();
 	
@@ -154,17 +173,9 @@ bool ConsoleWindowWrapper::GetConsoleFontInfo(std::string& outputString)
 bool ConsoleWindowWrapper::SetConsoleWindowSize(short unsigned int width, short unsigned int height)
 {
 	SMALL_RECT winRect;
-	CONSOLE_SCREEN_BUFFER_INFO screenBufferInfo;
 
 	if(!((width > 0)&&(height > 0)))
 	{
-		return false;
-	}
-	
-
-	if(!GetConsoleScreenBufferInfo(console, &screenBufferInfo))
-	{
-		cout << "GetConsoleScreenBufferInfo failed" << endl;
 		return false;
 	}
 	
@@ -173,16 +184,7 @@ bool ConsoleWindowWrapper::SetConsoleWindowSize(short unsigned int width, short 
 	winRect.Right = (SHORT) width - 1;
 	winRect.Bottom = (SHORT) height - 1;
 
-	if((width > screenBufferInfo.dwSize.X)||(height > screenBufferInfo.dwSize.Y))
-	{
-		if(!SetConsoleBufferSize(width, height))
-		{
-			cout << "SetConsoleBufferSize failed" << endl;
-			return false;
-		}
-	}
-
-	if(!SetConsoleWindowInfo(console, true, &winRect))
+	if(!SetConsoleWindowInfo(m_pScreenBuffer->m_outScreenBuffer[0], true, &winRect))
 	{
 		cout << "SetConsoleWindowInfo failed" << endl;
 		return false;
@@ -194,7 +196,7 @@ bool ConsoleWindowWrapper::SetConsoleWindowSize(short unsigned int width, short 
 
 
 
-void ConsoleWindowWrapper::ConsoleModeFlagsToString(long unsigned int consoleMode, std::string& outputString)
+void ConsoleWindowWrapper::ConsoleInputBufferModeFlagsToString(long unsigned int consoleMode, std::string& outputString)
 {
 	bool slashWrite = false;
 	if(consoleMode & ENABLE_ECHO_INPUT)
@@ -246,6 +248,23 @@ void ConsoleWindowWrapper::ConsoleModeFlagsToString(long unsigned int consoleMod
 	}		
 }
 
+void ConsoleWindowWrapper::ConsoleOutputBufferModeFlagsToString(long unsigned int consoleMode, std::string& outputString)
+{
+	bool slashWrite = false;
+	if(consoleMode & ENABLE_PROCESSED_OUTPUT)
+	{
+		outputString.append("ENABLE_PROCESSED_OUTPUT");
+		slashWrite = true;
+	}
+	
+	if(consoleMode & ENABLE_WRAP_AT_EOL_OUTPUT)
+	{
+		if(slashWrite) outputString.append(" | ");
+		outputString.append("ENABLE_WRAP_AT_EOL_OUTPUT");
+		slashWrite = true;
+	}
+}
+
 const ConsoleWindowWrapper::RasterSize* ConsoleWindowWrapper::GetFontRasterSize(ConsoleFontSize fontSize)
 {
 	for (size_t i = 0; i < SIZE_OF_TABLE(RasterTable); i++)
@@ -269,7 +288,7 @@ bool ConsoleWindowWrapper::SetConsoleBufferSize(short unsigned int width, short 
 		return false;
 	}
 	
-	if(!GetConsoleScreenBufferInfo(console, &screenBufferInfo))
+	if(!GetConsoleScreenBufferInfo(m_pScreenBuffer->m_outScreenBuffer[0], &screenBufferInfo))
 	{
 		cout << "GetConsoleScreenBufferInfo failed" << endl;
 		return false;
@@ -278,7 +297,7 @@ bool ConsoleWindowWrapper::SetConsoleBufferSize(short unsigned int width, short 
 	size.X = (SHORT) width;
 	size.Y = (SHORT) height;
 	
-	if(!SetConsoleScreenBufferSize(console, size))
+	if(!SetConsoleScreenBufferSize(m_pScreenBuffer->m_outScreenBuffer[0], size))
 	{
 		cout << "SetConsoleScreenBufferSize failed" << endl;
 		return false;
@@ -295,11 +314,11 @@ bool ConsoleWindowWrapper::SetFontSize(ConsoleFontSize size)
 	
 	for(DWORD i = 0; i < GetNumberOfConsoleFonts(); i++)
 	{
-		COORD fontSize = GetConsoleFontSize(console, i);
+		COORD fontSize = GetConsoleFontSize(m_pScreenBuffer->m_outScreenBuffer[0], i);
 		if ((fontSize.X == pFontSize->m_sizeX)&&(fontSize.Y == pFontSize->m_sizeY))
 		{
 			//we found correct font type and size
-			if(SetConsoleFont(console, i))
+			if(SetConsoleFont(m_pScreenBuffer->m_outScreenBuffer[0], i))
 			{
 				return true;
 			} else {
@@ -315,7 +334,7 @@ bool ConsoleWindowWrapper::SetFontSize(ConsoleFontSize size)
 bool ConsoleWindowWrapper::GetConsoleBufferSize(unsigned int& width, unsigned int& height)
 {
 	CONSOLE_SCREEN_BUFFER_INFO screenBufferInfo;
-	if(!GetConsoleScreenBufferInfo(console, &screenBufferInfo))
+	if(!GetConsoleScreenBufferInfo(m_pScreenBuffer->m_outScreenBuffer[0], &screenBufferInfo))
 	{
 		cout << "GetConsoleScreenBufferInfo failed" << endl;
 		return false;
@@ -331,7 +350,7 @@ bool ConsoleWindowWrapper::GetConsoleBufferSize(unsigned int& width, unsigned in
 bool ConsoleWindowWrapper::GetConsoleWindowSize(unsigned int& width, unsigned int& height)
 {
 	CONSOLE_SCREEN_BUFFER_INFO screenBufferInfo;
-	if(!GetConsoleScreenBufferInfo(console, &screenBufferInfo))
+	if(!GetConsoleScreenBufferInfo(m_pScreenBuffer->m_outScreenBuffer[0], &screenBufferInfo))
 	{
 		cout << "GetConsoleScreenBufferInfo failed" << endl;
 		return false;
@@ -343,57 +362,77 @@ bool ConsoleWindowWrapper::GetConsoleWindowSize(unsigned int& width, unsigned in
 	return true;
 }
 
-bool ConsoleWindowWrapper::GetMode(unsigned int& flags)
+void ConsoleWindowWrapper::ClearBuffer()
 {
-
-	
 }
 
-bool ConsoleWindowWrapper::SetMode(unsigned int flags)
+bool ConsoleWindowWrapper::Initialize(short unsigned int width, short unsigned int height, bool doubleBuffer, ConsoleFontSize font)
 {
-	DWORD consoleFlags = 0;
-	DWORD bufferFlags = 0;
-	
-	//console
-	if(flags & CONSOLE_ECHO_INPUT)
+	COORD bufferSize;
+	COORD windowSize;
+	COORD newWindowSize;
+	COORD minWindowSize;
+	CONSOLE_SCREEN_BUFFER_INFO screenBufferInfo;
+
+	if(m_pScreenBuffer == NULL) return false;
+
+	if(!((width > 0)&&(height > 0)))
 	{
-		consoleFlags |= ENABLE_ECHO_INPUT;
+		return false;
 	}
 	
-	if(flags & CONSOLE_LINE_INPUT)
+	if(font != CONSOLE_FONT_SIZE_UNDEF)
 	{
-		consoleFlags |= ENABLE_LINE_INPUT;
-	}
-	
-	if(flags & CONSOLE_MOUSE_INPUT
-	{
-		consoleFlags |= ENABLE_MOUSE_INPUT;
-	}
-	
-	if(flags & CONSOLE_WINDOW_INPUT
-	{
-		consoleFlags |= ENABLE_WINDOW_INPUT;
-	}
-	
-	if(flags & CONSOLE_PROCESSED_INPUT
-	{
-		consoleFlags |= ENABLE_PROCESSED_INPUT;
-	}	
-	
-	if(flags & CONSOLE_INSERT_MODE)
-	{
-		consoleFlags |= ENABLE_EXTENDED_FLAGS|ENABLE_INSERT_MODE;
-	}
-	
-	if(flags & CONSOLE_QUICK_EDIT_MODE)
-	{
-		consoleFlags |= ENABLE_EXTENDED_FLAGS|ENABLE_QUICK_EDIT_MODE;
+		//set font
+		if(!SetFontSize(font))
+		{
+			cout << "SetFontSize failed" << endl;
+			return false;
+		}
 	}
 
-	
-	if(!SetConsoleMode(console, consoleFlags))
+	// get screen buffer info
+	if(!GetConsoleScreenBufferInfo(m_pScreenBuffer->m_outScreenBuffer[0], &screenBufferInfo))
 	{
-		cout << "SetConsoleMode failed" << endl;
+		cout << "GetConsoleScreenBufferInfo failed" << endl;
+		return false;
+	}
+	
+	bufferSize = screenBufferInfo.dwSize;
+	windowSize.X = screenBufferInfo.srWindow.Right - screenBufferInfo.srWindow.Left + 1;
+	windowSize.Y = screenBufferInfo.srWindow.Bottom - screenBufferInfo.srWindow.Top + 1;
+	
+	// check if sizes are not 
+	newWindowSize.X = (width > screenBufferInfo.dwMaximumWindowSize.X) ? screenBufferInfo.dwMaximumWindowSize.X : width;
+	newWindowSize.Y = (height > screenBufferInfo.dwMaximumWindowSize.Y) ? screenBufferInfo.dwMaximumWindowSize.Y : height;
+	
+	minWindowSize.X = (width < windowSize.X) ? width : windowSize.X;
+	minWindowSize.Y = (height < windowSize.Y) ? height : windowSize.Y;
+	
+	// set window size to minimum
+	if(!SetConsoleWindowSize(minWindowSize.X, minWindowSize.Y))
+	{
+		cout << "SetConsoleWindowSize(minWindowSize.X, minWindowSize.Y) failed" << endl;
+		return false;
+	}
+	
+	if(!SetConsoleMode(m_pScreenBuffer->m_outScreenBuffer[0], ENABLE_PROCESSED_OUTPUT))
+	{
+		cout << "SetConsoleMode(m_pScreenBuffer->m_outScreenBuffer[0], ENABLE_PROCESSED_OUTPUT) failed" << endl;
+		return false;
+	}
+	
+	// set buffersize
+	if(!SetConsoleBufferSize(width, height))
+	{
+		cout << "SetConsoleBufferSize(width, height) failed" << endl;
+		return false;
+	}
+	
+	// set window size to correct size
+	if(!SetConsoleWindowSize(newWindowSize.X, newWindowSize.Y))
+	{
+		cout << "SetConsoleWindowSize(newWindowSize.X, newWindowSize.Y) failed" << endl;
 		return false;
 	}
 	
@@ -401,18 +440,31 @@ bool ConsoleWindowWrapper::SetMode(unsigned int flags)
 
 }
 
-bool ConsoleWindowWrapper::CreateBuffer (unsigned int flags)
+bool ConsoleWindowWrapper::ReadInput(std::string& inputStr)
 {
-	//buffer 
-	if(flags & CONSOLE_PROCESSED_OUTPUT)
+	return false;
+}
+
+bool ConsoleWindowWrapper::WriteChar(char c)
+{
+	return false;
+}
+
+bool ConsoleWindowWrapper::WriteChar(char c, unsigned int x, unsigned int y)
+{
+	return false;
+}
+
+ConsoleWindowWrapper::ConsoleWindowWrapper()
+{
+	// set buffer size to actual window size
+	m_pScreenBuffer = new ScreenBuffers();
+}
+
+ConsoleWindowWrapper::~ConsoleWindowWrapper()
+{
+	if(m_pScreenBuffer)
 	{
-		bufferFlags |= ENABLE_PROCESSED_OUTPUT;
+		delete m_pScreenBuffer;
 	}
-	
-	if(flags & CONSOLE_WRAP_AT_EOL_OUTPUT)
-	{
-		bufferFlags |= ENABLE_WRAP_AT_EOL_OUTPUT;
-	}
-	
-	return true;
 }
