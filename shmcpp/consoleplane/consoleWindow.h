@@ -4,8 +4,11 @@
 #include <string>
 
 struct ConsoleCoord {
-	unsigned int x;
-	unsigned int y;
+	short unsigned int x;
+	short unsigned int y;
+	
+	ConsoleCoord(): x(0), y(0) {}
+	ConsoleCoord(short unsigned int in_x, short unsigned int in_y) : x(in_x), y(in_y) {}
 };
 
 enum ConsoleFontSize {
@@ -51,9 +54,13 @@ public:
 	
 	void ClearBuffer();
 	
-	bool WriteChar(char c);
-	bool WriteChar(char c, unsigned int x, unsigned int y);
-	bool WriteChar(char c, unsigned int x, unsigned int y, ConsoleColor foreGroundColor, ConsoleColor backGroundColor);
+	void SetForeGroundColor(ConsoleColor color);
+	void SetBackGroundColor(ConsoleColor color);
+	
+	bool WriteChar(wchar_t c, short unsigned int x, short unsigned int y);
+	bool WriteChar(wchar_t c, const ConsoleCoord &coord);
+	
+	bool WriteChar(wchar_t c, const ConsoleCoord &coord, ConsoleColor foreGroundColor, ConsoleColor backGroundColor);
 	
 	bool ReadInput(std::string &inputStr);
 	

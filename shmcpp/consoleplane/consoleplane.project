@@ -92,8 +92,10 @@
   <VirtualDirectory Name="src">
     <File Name="main.cpp"/>
     <File Name="consoleWindow.cpp"/>
+    <File Name="engine.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="consoleWindow.h"/>
+    <File Name="engine.h"/>
   </VirtualDirectory>
 </CodeLite_Project>

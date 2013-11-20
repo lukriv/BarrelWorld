@@ -22,6 +22,7 @@ BOOL WINAPI SetConsoleFont(HANDLE, DWORD);
 struct ScreenBuffers {
 	HANDLE m_inputBuffer;
 	HANDLE m_outScreenBuffer[2];
+	COORD m_bufferSize[2];
 	unsigned int m_activeBuffer;
 	
 	ScreenBuffers() 
@@ -303,6 +304,9 @@ bool ConsoleWindowWrapper::SetConsoleBufferSize(short unsigned int width, short 
 		return false;
 	}
 	
+	//set actual size
+	m_pScreenBuffer->m_bufferSize[0] = size;
+	
 	return true;
 }
 
@@ -333,15 +337,8 @@ bool ConsoleWindowWrapper::SetFontSize(ConsoleFontSize size)
 
 bool ConsoleWindowWrapper::GetConsoleBufferSize(unsigned int& width, unsigned int& height)
 {
-	CONSOLE_SCREEN_BUFFER_INFO screenBufferInfo;
-	if(!GetConsoleScreenBufferInfo(m_pScreenBuffer->m_outScreenBuffer[0], &screenBufferInfo))
-	{
-		cout << "GetConsoleScreenBufferInfo failed" << endl;
-		return false;
-	}
-	
-	width = screenBufferInfo.dwSize.X;
-	height = screenBufferInfo.dwSize.Y;
+	width = m_pScreenBuffer->m_bufferSize[0].X;
+	height = m_pScreenBuffer->m_bufferSize[0].Y;
 	
 	return true;
 	
@@ -445,14 +442,31 @@ bool ConsoleWindowWrapper::ReadInput(std::string& inputStr)
 	return false;
 }
 
-bool ConsoleWindowWrapper::WriteChar(char c)
+bool ConsoleWindowWrapper::WriteChar(wchar_t c, short unsigned int x, short unsigned int y)
 {
-	return false;
-}
-
-bool ConsoleWindowWrapper::WriteChar(char c, unsigned int x, unsigned int y)
-{
-	return false;
+	if((x >= m_pScreenBuffer->m_bufferSize[0].X)||(y >= m_pScreenBuffer->m_bufferSize[0].Y))
+	{
+		return false;
+	}
+	
+	DWORD writtenChars = 0;
+	COORD position;
+	position.X = (SHORT) x;
+	position.Y = (SHORT) y;
+		
+	
+	
+	if(!SetConsoleCursorPosition(m_pScreenBuffer->m_outScreenBuffer[0], position))
+	{
+		return false;
+	}
+	
+	if(!WriteConsoleW(m_pScreenBuffer->m_outScreenBuffer[0], &c, 1, &writtenChars, NULL))
+	{
+		return false;
+	}
+	
+	return true;
 }
 
 ConsoleWindowWrapper::ConsoleWindowWrapper()
@@ -469,11 +483,66 @@ ConsoleWindowWrapper::~ConsoleWindowWrapper()
 	}
 }
 
+
 unsigned int ConsoleWindowWrapper::ConvertColorToBackgroundColor(int color)
 {
-	if(color & )
+	unsigned int result = 0;
+	if(color & CONSOLE_COLOR_BLUE)
+	{
+		result |= BACKGROUND_BLUE;
+	}
+	
+	if(color & CONSOLE_COLOR_GREEN)
+	{
+		result |= BACKGROUND_GREEN;
+	}
+	
+	if(color & CONSOLE_COLOR_BLUE)
+	{
+		result |= BACKGROUND_RED;
+	}
+	
+	if(color & CONSOLE_COLOR_INTENSITY)
+	{
+		result |= BACKGROUND_INTENSITY;
+	}
+	
+	return result;
 }
 
 unsigned int ConsoleWindowWrapper::ConvertColorToForegroundColor(int color)
 {
+	unsigned int result = 0;
+	if(color & CONSOLE_COLOR_BLUE)
+	{
+		result |= FOREGROUND_BLUE;
+	}
+	
+	if(color & CONSOLE_COLOR_GREEN)
+	{
+		result |= FOREGROUND_GREEN;
+	}
+	
+	if(color & CONSOLE_COLOR_BLUE)
+	{
+		result |= FOREGROUND_BLUE;
+	}
+	
+	if(color & CONSOLE_COLOR_INTENSITY)
+	{
+		result |= FOREGROUND_INTENSITY;
+	}
+	
+	return result;
 }
+
+bool ConsoleWindowWrapper::WriteChar(wchar_t c, const ConsoleCoord& coord)
+{
+	return WriteChar(c, coord.x, coord.y);
+}
+
+bool ConsoleWindowWrapper::WriteChar(wchar_t c, const ConsoleCoord& coord, ConsoleColor foreGroundColor, ConsoleColor backGroundColor)
+{
+	return false;
+}
+
