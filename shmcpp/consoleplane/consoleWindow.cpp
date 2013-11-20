@@ -196,76 +196,6 @@ bool ConsoleWindowWrapper::SetConsoleWindowSize(short unsigned int width, short 
 }
 
 
-
-void ConsoleWindowWrapper::ConsoleInputBufferModeFlagsToString(long unsigned int consoleMode, std::string& outputString)
-{
-	bool slashWrite = false;
-	if(consoleMode & ENABLE_ECHO_INPUT)
-	{
-		outputString.append("ENABLE_ECHO_INPUT");
-		slashWrite = true;
-	}
-	
-	if(consoleMode & ENABLE_INSERT_MODE)
-	{
-		if(slashWrite) outputString.append(" | ");
-		outputString.append("ENABLE_INSERT_MODE");
-		slashWrite = true;
-	}
-	
-	if(consoleMode & ENABLE_LINE_INPUT)
-	{
-		if(slashWrite) outputString.append(" | ");
-		outputString.append("ENABLE_LINE_INPUT");
-		slashWrite = true;
-	}
-
-	if(consoleMode & ENABLE_MOUSE_INPUT)
-	{
-		if(slashWrite) outputString.append(" | ");
-		outputString.append("ENABLE_MOUSE_INPUT");
-		slashWrite = true;
-	}
-
-	if(consoleMode & ENABLE_PROCESSED_INPUT)
-	{
-		if(slashWrite) outputString.append(" | ");
-		outputString.append("ENABLE_PROCESSED_INPUT");
-		slashWrite = true;
-	}
-
-	if(consoleMode & ENABLE_QUICK_EDIT_MODE)
-	{
-		if(slashWrite) outputString.append(" | ");
-		outputString.append("ENABLE_QUICK_EDIT_MODE");
-		slashWrite = true;
-	}
-
-	if(consoleMode & ENABLE_WINDOW_INPUT)
-	{
-		if(slashWrite) outputString.append(" | ");
-		outputString.append("ENABLE_WINDOW_INPUT");
-		slashWrite = true;
-	}		
-}
-
-void ConsoleWindowWrapper::ConsoleOutputBufferModeFlagsToString(long unsigned int consoleMode, std::string& outputString)
-{
-	bool slashWrite = false;
-	if(consoleMode & ENABLE_PROCESSED_OUTPUT)
-	{
-		outputString.append("ENABLE_PROCESSED_OUTPUT");
-		slashWrite = true;
-	}
-	
-	if(consoleMode & ENABLE_WRAP_AT_EOL_OUTPUT)
-	{
-		if(slashWrite) outputString.append(" | ");
-		outputString.append("ENABLE_WRAP_AT_EOL_OUTPUT");
-		slashWrite = true;
-	}
-}
-
 const ConsoleWindowWrapper::RasterSize* ConsoleWindowWrapper::GetFontRasterSize(ConsoleFontSize fontSize)
 {
 	for (size_t i = 0; i < SIZE_OF_TABLE(RasterTable); i++)
@@ -484,6 +414,32 @@ ConsoleWindowWrapper::~ConsoleWindowWrapper()
 }
 
 
+
+
+bool ConsoleWindowWrapper::WriteChar(wchar_t c, const ConsoleCoord& coord)
+{
+	return WriteChar(c, coord.x, coord.y);
+}
+
+bool ConsoleWindowWrapper::WriteChar(wchar_t c, const ConsoleCoord& coord, ConsoleColor foreGroundColor, ConsoleColor backGroundColor)
+{
+	return false;
+}
+
+void ConsoleWindowWrapper::SetBackGroundColor(ConsoleColor color)
+{
+}
+
+void ConsoleWindowWrapper::SetForeGroundColor(ConsoleColor color)
+{
+}
+
+bool ConsoleWindowWrapper::WriteRect(const wchar_t* buffer, const ConsoleCoord& position, const ConsoleCoord& bufferSize)
+{
+}
+//////////////////////////////////////////////////////
+// static methods
+//////////////////////////////////////////////////////
 unsigned int ConsoleWindowWrapper::ConvertColorToBackgroundColor(int color)
 {
 	unsigned int result = 0;
@@ -536,13 +492,117 @@ unsigned int ConsoleWindowWrapper::ConvertColorToForegroundColor(int color)
 	return result;
 }
 
-bool ConsoleWindowWrapper::WriteChar(wchar_t c, const ConsoleCoord& coord)
+void ConsoleWindowWrapper::ConvertConsoleAttributesToColor(short unsigned int conAttr, short unsigned int &foreColor, short unsigned int &backColor)
 {
-	return WriteChar(c, coord.x, coord.y);
+	foreColor = 0;
+	backColor = 0;
+	if(conAttr & BACKGROUND_BLUE)
+	{
+		backColor |= CONSOLE_COLOR_BLUE;
+	}
+	
+	if(conAttr & BACKGROUND_GREEN)
+	{
+		backColor |= CONSOLE_COLOR_GREEN;
+	}
+	
+	if(conAttr & BACKGROUND_RED)
+	{
+		backColor |= CONSOLE_COLOR_BLUE;
+	}
+	
+	if(conAttr & BACKGROUND_INTENSITY)
+	{
+		backColor |= CONSOLE_COLOR_INTENSITY;
+	}
+	
+	if(conAttr & FOREGROUND_BLUE)
+	{
+		foreColor |= CONSOLE_COLOR_BLUE;
+	}
+	
+	if(conAttr & FOREGROUND_GREEN)
+	{
+		foreColor |= CONSOLE_COLOR_GREEN;
+	}
+	
+	if(conAttr & FOREGROUND_BLUE)
+	{
+		foreColor |= CONSOLE_COLOR_BLUE;
+	}
+	
+	if(conAttr & FOREGROUND_INTENSITY)
+	{
+		foreColor |= CONSOLE_COLOR_INTENSITY;
+	}
+	
 }
 
-bool ConsoleWindowWrapper::WriteChar(wchar_t c, const ConsoleCoord& coord, ConsoleColor foreGroundColor, ConsoleColor backGroundColor)
+void ConsoleWindowWrapper::ConsoleInputBufferModeFlagsToString(long unsigned int consoleMode, std::string& outputString)
 {
-	return false;
+	bool slashWrite = false;
+	if(consoleMode & ENABLE_ECHO_INPUT)
+	{
+		outputString.append("ENABLE_ECHO_INPUT");
+		slashWrite = true;
+	}
+	
+	if(consoleMode & ENABLE_INSERT_MODE)
+	{
+		if(slashWrite) outputString.append(" | ");
+		outputString.append("ENABLE_INSERT_MODE");
+		slashWrite = true;
+	}
+	
+	if(consoleMode & ENABLE_LINE_INPUT)
+	{
+		if(slashWrite) outputString.append(" | ");
+		outputString.append("ENABLE_LINE_INPUT");
+		slashWrite = true;
+	}
+
+	if(consoleMode & ENABLE_MOUSE_INPUT)
+	{
+		if(slashWrite) outputString.append(" | ");
+		outputString.append("ENABLE_MOUSE_INPUT");
+		slashWrite = true;
+	}
+
+	if(consoleMode & ENABLE_PROCESSED_INPUT)
+	{
+		if(slashWrite) outputString.append(" | ");
+		outputString.append("ENABLE_PROCESSED_INPUT");
+		slashWrite = true;
+	}
+
+	if(consoleMode & ENABLE_QUICK_EDIT_MODE)
+	{
+		if(slashWrite) outputString.append(" | ");
+		outputString.append("ENABLE_QUICK_EDIT_MODE");
+		slashWrite = true;
+	}
+
+	if(consoleMode & ENABLE_WINDOW_INPUT)
+	{
+		if(slashWrite) outputString.append(" | ");
+		outputString.append("ENABLE_WINDOW_INPUT");
+		slashWrite = true;
+	}		
 }
 
+void ConsoleWindowWrapper::ConsoleOutputBufferModeFlagsToString(long unsigned int consoleMode, std::string& outputString)
+{
+	bool slashWrite = false;
+	if(consoleMode & ENABLE_PROCESSED_OUTPUT)
+	{
+		outputString.append("ENABLE_PROCESSED_OUTPUT");
+		slashWrite = true;
+	}
+	
+	if(consoleMode & ENABLE_WRAP_AT_EOL_OUTPUT)
+	{
+		if(slashWrite) outputString.append(" | ");
+		outputString.append("ENABLE_WRAP_AT_EOL_OUTPUT");
+		slashWrite = true;
+	}
+}
