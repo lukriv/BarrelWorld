@@ -46,6 +46,9 @@ private:
 	static const ConsoleWindowWrapper::RasterSize RasterTable[];
 private:
 	ScreenBuffers* m_pScreenBuffer;
+	ConsoleColor m_foreGroundColor;
+	ConsoleColor m_backGroundColor;
+	wchar_t* m_pClearBuffer;
 public:
 	ConsoleWindowWrapper();
 	~ConsoleWindowWrapper();
@@ -61,6 +64,8 @@ public:
 	bool WriteChar(wchar_t c, const ConsoleCoord &coord);
 	
 	bool WriteChar(wchar_t c, const ConsoleCoord &coord, ConsoleColor foreGroundColor, ConsoleColor backGroundColor);
+	
+	bool WriteRect(const wchar_t* buffer, const ConsoleCoord &position, const ConsoleCoord &bufferSize);
 	
 	bool ReadInput(std::string &inputStr);
 	
@@ -90,6 +95,7 @@ private:
 	static void ConsoleInputBufferModeFlagsToString(long unsigned int consoleMode, std::string& outputString);
 	static unsigned int ConvertColorToForegroundColor(int color);
 	static unsigned int ConvertColorToBackgroundColor(int color);
+	static void ConvertConsoleAttributesToColor(short unsigned int consoleColor, short unsigned int &foreColor, short unsigned int &backColor);
 
 };
 
