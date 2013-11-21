@@ -28,8 +28,8 @@ enum ConsoleFontSize {
 enum ConsoleColor {
 	CONSOLE_COLOR_BLUE 		= 1,
 	CONSOLE_COLOR_GREEN		= 2,
-	CONSOLE_COLOR_RED		= 3,
-	CONSOLE_COLOR_INTENSITY = 4
+	CONSOLE_COLOR_RED		= 4,
+	CONSOLE_COLOR_INTENSITY = 8
 };
 
 
@@ -46,8 +46,8 @@ private:
 	static const ConsoleWindowWrapper::RasterSize RasterTable[];
 private:
 	ScreenBuffers* m_pScreenBuffer;
-	ConsoleColor m_foreGroundColor;
-	ConsoleColor m_backGroundColor;
+	unsigned int m_foreGroundColor;
+	unsigned int m_backGroundColor;
 	wchar_t* m_pClearBuffer;
 public:
 	ConsoleWindowWrapper();
@@ -57,15 +57,15 @@ public:
 	
 	void ClearBuffer();
 	
-	void SetForeGroundColor(ConsoleColor color);
-	void SetBackGroundColor(ConsoleColor color);
+	void SetForeGroundColor(unsigned int color);
+	void SetBackGroundColor(unsigned int color);
 	
 	bool WriteChar(wchar_t c, short unsigned int x, short unsigned int y);
 	bool WriteChar(wchar_t c, const ConsoleCoord &coord);
 	
-	bool WriteChar(wchar_t c, const ConsoleCoord &coord, ConsoleColor foreGroundColor, ConsoleColor backGroundColor);
+	bool WriteChar(wchar_t c, const ConsoleCoord &coord, unsigned int foreGroundColor, unsigned int backGroundColor);
 	
-	bool WriteRect(const wchar_t* buffer, const ConsoleCoord &position, const ConsoleCoord &bufferSize);
+	bool WriteRect(const wchar_t* buffer, const ConsoleCoord &position, const ConsoleCoord &rectSize);
 	
 	bool ReadInput(std::string &inputStr);
 	
@@ -93,9 +93,10 @@ private:
 private:
 	static void ConsoleOutputBufferModeFlagsToString(long unsigned int consoleMode, std::string& outputString);
 	static void ConsoleInputBufferModeFlagsToString(long unsigned int consoleMode, std::string& outputString);
+	static void ConsoleAttrFlagsToString(short unsigned int attr, std::string& outputString);
 	static unsigned int ConvertColorToForegroundColor(int color);
 	static unsigned int ConvertColorToBackgroundColor(int color);
-	static void ConvertConsoleAttributesToColor(short unsigned int consoleColor, short unsigned int &foreColor, short unsigned int &backColor);
+	static void ConvertConsoleAttributesToColor(short unsigned int conAttr, unsigned int &foreColor, unsigned int &backColor);
 
 };
 

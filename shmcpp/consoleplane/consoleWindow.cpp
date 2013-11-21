@@ -102,6 +102,7 @@ bool ConsoleWindowWrapper::GetConsoleBufferInfo(std::string& outputString)
 {
 	CONSOLE_SCREEN_BUFFER_INFO screenBufferInfo;
 	stringstream ostr;
+	string str;
 	if(!GetConsoleScreenBufferInfo(m_pScreenBuffer->m_outScreenBuffer[0], &screenBufferInfo))
 	{
 		cout << "GetConsoleScreenBufferInfo failed" << endl;
@@ -115,7 +116,11 @@ bool ConsoleWindowWrapper::GetConsoleBufferInfo(std::string& outputString)
 	ostr << "displayed area size: " << screenBufferInfo.srWindow.Right - screenBufferInfo.srWindow.Left << "; " 
 		  << screenBufferInfo.srWindow.Bottom - screenBufferInfo.srWindow.Top << "\n";
  	ostr << "maximum size: " << screenBufferInfo.dwMaximumWindowSize.X << "; " << screenBufferInfo.dwMaximumWindowSize.Y << "\n";
+	ConsoleAttrFlagsToString(screenBufferInfo.wAttributes, str);
 	ostr << "attributes: 0x" << std::hex << screenBufferInfo.wAttributes;
+	ostr << "attributes: " << str;
+	
+	
 	
 	outputString = ostr.str();
 	return true;
@@ -336,6 +341,8 @@ bool ConsoleWindowWrapper::Initialize(short unsigned int width, short unsigned i
 	minWindowSize.X = (width < windowSize.X) ? width : windowSize.X;
 	minWindowSize.Y = (height < windowSize.Y) ? height : windowSize.Y;
 	
+	ConvertConsoleAttributesToColor(screenBufferInfo.wAttributes, m_foreGroundColor, m_backGroundColor);
+	
 	// set window size to minimum
 	if(!SetConsoleWindowSize(minWindowSize.X, minWindowSize.Y))
 	{
@@ -421,21 +428,51 @@ bool ConsoleWindowWrapper::WriteChar(wchar_t c, const ConsoleCoord& coord)
 	return WriteChar(c, coord.x, coord.y);
 }
 
-bool ConsoleWindowWrapper::WriteChar(wchar_t c, const ConsoleCoord& coord, ConsoleColor foreGroundColor, ConsoleColor backGroundColor)
+bool ConsoleWindowWrapper::WriteChar(wchar_t c, const ConsoleCoord &coord, unsigned int foreGroundColor, unsigned int backGroundColor)
 {
 	return false;
 }
 
-void ConsoleWindowWrapper::SetBackGroundColor(ConsoleColor color)
+void ConsoleWindowWrapper::SetBackGroundColor(unsigned int color)
 {
 }
 
-void ConsoleWindowWrapper::SetForeGroundColor(ConsoleColor color)
+void ConsoleWindowWrapper::SetForeGroundColor(unsigned int color)
 {
 }
 
-bool ConsoleWindowWrapper::WriteRect(const wchar_t* buffer, const ConsoleCoord& position, const ConsoleCoord& bufferSize)
+bool ConsoleWindowWrapper::WriteRect(const wchar_t* buffer, const ConsoleCoord& position, const ConsoleCoord& rectSize)
 {
+	if(((position.x + rectSize.x) >= m_pScreenBuffer->m_bufferSize[0].X)
+		||((position.y + rectSize.y) >= m_pScreenBuffer->m_bufferSize[0].Y))
+	{
+		return false;
+	}
+	
+	DWORD writtenChars = 0;
+	COORD origin, buffSize;
+	SMALL_RECT rect;
+	origin.X = (SHORT) position.x;
+	origin.Y = (SHORT) position.y;
+	
+	buffSize.X = (SHORT) rectSize.x;
+	buffSize.Y = (SHORT) rectSize.y;
+		
+	rect.Top = (SHORT) position.y;
+	rect.Left = (SHORT) position.x;
+	rect.Right = (SHORT) (position.x + rectSize.x);
+	rect.Bottom = (SHORT) (position.y + rectSize.y);
+	
+	if(!WriteConsoleOutputW(m_pScreenBuffer->m_outScreenBuffer[0],
+						buffer,
+						buffSize,
+						origin,
+						&rect))
+	{
+		return false;
+	}
+	
+	return true;
 }
 //////////////////////////////////////////////////////
 // static methods
@@ -492,10 +529,10 @@ unsigned int ConsoleWindowWrapper::ConvertColorToForegroundColor(int color)
 	return result;
 }
 
-void ConsoleWindowWrapper::ConvertConsoleAttributesToColor(short unsigned int conAttr, short unsigned int &foreColor, short unsigned int &backColor)
+void ConsoleWindowWrapper::ConvertConsoleAttributesToColor(short unsigned int conAttr, unsigned int &foreColor, unsigned int &backColor)
 {
-	foreColor = 0;
-	backColor = 0;
+	unsigned int foreColor = 0;
+	unsigned int backColor = 0;
 	if(conAttr & BACKGROUND_BLUE)
 	{
 		backColor |= CONSOLE_COLOR_BLUE;
@@ -603,6 +640,66 @@ void ConsoleWindowWrapper::ConsoleOutputBufferModeFlagsToString(long unsigned in
 	{
 		if(slashWrite) outputString.append(" | ");
 		outputString.append("ENABLE_WRAP_AT_EOL_OUTPUT");
+		slashWrite = true;
+	}
+}
+
+void ConsoleWindowWrapper::ConsoleAttrFlagsToString(short unsigned int attr, std::string& outputString)
+{	
+	bool slashWrite = false;
+	outputString.clear();
+	if(conAttr & BACKGROUND_BLUE)
+	{
+		outputString.append("BACKGROUND_BLUE");
+		slashWrite = true;
+	}
+	
+	if(conAttr & BACKGROUND_GREEN)
+	{
+		if(slashWrite) outputString.append(" | ");
+		outputString.append("BACKGROUND_GREEN");
+		slashWrite = true;
+	}
+	
+	if(conAttr & BACKGROUND_RED)
+	{
+		if(slashWrite) outputString.append(" | ");
+		outputString.append("BACKGROUND_RED");
+		slashWrite = true;
+	}
+	
+	if(conAttr & BACKGROUND_INTENSITY)
+	{
+		if(slashWrite) outputString.append(" | ");
+		outputString.append("BACKGROUND_INTENSITY");
+		slashWrite = true;
+	}
+	
+	if(conAttr & FOREGROUND_BLUE)
+	{
+		if(slashWrite) outputString.append(" | ");
+		outputString.append("FOREGROUND_BLUE");
+		slashWrite = true;
+	}
+	
+	if(conAttr & FOREGROUND_GREEN)
+	{
+		if(slashWrite) outputString.append(" | ");
+		outputString.append("FOREGROUND_GREEN");
+		slashWrite = true;
+	}
+	
+	if(conAttr & FOREGROUND_BLUE)
+	{
+		if(slashWrite) outputString.append(" | ");
+		outputString.append("FOREGROUND_BLUE");
+		slashWrite = true;
+	}
+	
+	if(conAttr & FOREGROUND_INTENSITY)
+	{
+		if(slashWrite) outputString.append(" | ");
+		outputString.append("FOREGROUND_INTENSITY");
 		slashWrite = true;
 	}
 }
