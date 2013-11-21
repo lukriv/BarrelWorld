@@ -2,17 +2,17 @@
 #define __LONE_WOLF_ACTIONS_H__
 
 
+#include "lwdefs.h"
 
 
 class ActionManager {
 public:
 	ActionManager() {}
 	
-	bool SetDefaultActionDesc(EActionType type, const wxString& title );
-	bool SetDefaultActionDesc(const wxString& actionName, const wxString& title );
+	bool SetDefaultActionDesc(EActionType type, const wxString& desc );
 	
-	const wxString& GetDefaultActionDesc(EActionType type);
-	static EActionType ConvertActionNameToType(const wxString &actionName);
+	bool GetDefaultActionDesc(EActionType type, wxString& desc );
+	
 };
 
 
