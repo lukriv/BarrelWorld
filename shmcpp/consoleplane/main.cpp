@@ -4,8 +4,8 @@
 #include "consoleWindow.h"
 #include "engine.h"
 
-#define WIDTH 	70
-#define HEIGHT 	70
+#define WIDTH 	52
+#define HEIGHT 	52
 
 using namespace std;
 
@@ -28,7 +28,9 @@ int main(int argc, char **argv)
 		return 1;		
 	}
 	
-	//console.WriteConsoleInfo();
+	cin >> c;
+	
+	console.ClearBuffer();
 	
 	cin >> c;
 	
