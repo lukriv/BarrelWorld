@@ -25,15 +25,38 @@ enum ConsoleFontSize {
 	CONSOLE_FONT_SIZE_10x18 = 10
 };
 
-enum ConsoleColor {
-	CONSOLE_COLOR_BLUE 		= 1,
-	CONSOLE_COLOR_GREEN		= 2,
-	CONSOLE_COLOR_RED		= 4,
-	CONSOLE_COLOR_INTENSITY = 8
+enum ConsoleAttr {
+	CONSOLE_FOREGROUND_BLUE				= 0x0001,
+	CONSOLE_FOREGROUND_GREEN			= 0x0002,
+	CONSOLE_FOREGROUND_RED				= 0x0004,
+	CONSOLE_FOREGROUND_INTENSITY		= 0x0008,
+	CONSOLE_BACKGROUND_BLUE 			= 0x0010,
+	CONSOLE_BACKGROUND_GREEN 			= 0x0020,
+	CONSOLE_BACKGROUND_RED 				= 0x0040,
+	CONSOLE_BACKGROUND_INTENSITY		= 0x0080,
+	//CONSOLE_COMMON_LVB_LEADING_BYTE		= 0x0100,
+	//CONSOLE_COMMON_LVB_TRAILING_BYTE	= 0x0200,
+	//CONSOLE_COMMON_LVB_GRID_HORIZONTAL	= 0x0400,
+	//CONSOLE_COMMON_LVB_GRID_LVERTICAL	= 0x0800,
+	//CONSOLE_COMMON_LVB_GRID_RVERTICAL	= 0x1000,
+	//CONSOLE_COMMON_LVB_REVERSE_VIDEO	= 0x4000,
+	//CONSOLE_COMMON_LVB_UNDERSCORE		= 0x8000,
 };
 
 
+struct CharObject {
+	wchar_t uniChar;
+	unsigned short Attr;
+};
+
 struct ScreenBuffers;
+
+
+class IConsoleEventCallback {
+public:
+	
+};
+
 
 class ConsoleWindowWrapper {
 private:
@@ -46,9 +69,8 @@ private:
 	static const ConsoleWindowWrapper::RasterSize RasterTable[];
 private:
 	ScreenBuffers* m_pScreenBuffer;
-	unsigned int m_foreGroundColor;
-	unsigned int m_backGroundColor;
-	wchar_t* m_pClearBuffer;
+	short unsigned int m_globalConsoleAttr;
+	
 public:
 	ConsoleWindowWrapper();
 	~ConsoleWindowWrapper();
@@ -57,15 +79,25 @@ public:
 	
 	void ClearBuffer();
 	
-	void SetForeGroundColor(unsigned int color);
-	void SetBackGroundColor(unsigned int color);
+	void SetGlobalAttr(short unsigned int attr);
+	bool EnableCursor(bool enable);
+	
+	bool SetCursorPosition(short unsigned int x, short unsigned int y);
+	
+	bool RegisterEventCallback();
 	
 	bool WriteChar(wchar_t c, short unsigned int x, short unsigned int y);
 	bool WriteChar(wchar_t c, const ConsoleCoord &coord);
 	
-	bool WriteChar(wchar_t c, const ConsoleCoord &coord, unsigned int foreGroundColor, unsigned int backGroundColor);
+	bool WriteChar(wchar_t c, const ConsoleCoord &coord, short unsigned int consoleAttr);
 	
-	bool WriteRect(const wchar_t* buffer, const ConsoleCoord &position, const ConsoleCoord &rectSize);
+	bool WriteString(const wchar_t* str, const ConsoleCoord &coord);
+	bool WriteString(const std::string &string, const ConsoleCoord &coord);
+	
+	bool WriteString(const wchar_t* str, const ConsoleCoord &coord, unsigned short int consoleAttr);
+	bool WriteString(const std::string &string, const ConsoleCoord &coord, unsigned short int consoleAttr);
+	
+	bool WriteRect(const CharObject* buffer, const ConsoleCoord &position, const ConsoleCoord &rectSize);
 	
 	bool ReadInput(std::string &inputStr);
 	
@@ -94,10 +126,6 @@ private:
 	static void ConsoleOutputBufferModeFlagsToString(long unsigned int consoleMode, std::string& outputString);
 	static void ConsoleInputBufferModeFlagsToString(long unsigned int consoleMode, std::string& outputString);
 	static void ConsoleAttrFlagsToString(short unsigned int attr, std::string& outputString);
-	static unsigned int ConvertColorToForegroundColor(int color);
-	static unsigned int ConvertColorToBackgroundColor(int color);
-	static void ConvertConsoleAttributesToColor(short unsigned int conAttr, unsigned int &foreColor, unsigned int &backColor);
-
 };
 
 

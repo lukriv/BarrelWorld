@@ -23,11 +23,11 @@ bool ConsoleGameEngine::WriteMargin(ConsoleWindowWrapper &console, const Console
 	if(!console.WriteChar(*TOP_RIGHT_CORNER, right, leftTopPos.y)) return false;
 	if(!console.WriteChar(*BOTTOM_RIGHT_CORNER, right, bottom)) return false;
 	
-	
+	short unsigned int colors = CONSOLE_FOREGROUND_GREEN | CONSOLE_FOREGROUND_INTENSITY;
 	
 	for(short unsigned int i = (leftTopPos.x + 1); i < right; i++)
 	{
-		if(!console.WriteChar(*HORIZONTAL_DOUBLE_LINE, i, leftTopPos.y)) return false;
+		if(!console.WriteChar(*HORIZONTAL_DOUBLE_LINE, ConsoleCoord(i, leftTopPos.y), colors)) return false;
 		if(!console.WriteChar(*HORIZONTAL_DOUBLE_LINE, i, bottom)) return false;
 	}
 	
