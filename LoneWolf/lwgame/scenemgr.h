@@ -22,6 +22,10 @@ private:
 	typedef std::pair<wxDword, Scene> TSceneMapPair;
 private:
 	TSceneMap m_sceneMap;
+	
+	// managers
+	ActionManager m_actionMgr;
+	
 public:
 	SceneManager() {}
 	~SceneManager() {}
@@ -29,6 +33,8 @@ public:
 	bool AddScene(const Scene& pScene);
 	void RemoveScene(wxDword sceneId);
 	Scene* GetScene(wxDword sceneId);
+	
+	inline ActionManager& GetActionMgr() {return m_actionMgr;}
 	
 };
 
