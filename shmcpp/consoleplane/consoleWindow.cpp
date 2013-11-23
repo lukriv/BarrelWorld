@@ -392,11 +392,6 @@ bool ConsoleWindowWrapper::Initialize(short unsigned int width, short unsigned i
 
 }
 
-bool ConsoleWindowWrapper::ReadInput(std::string& inputStr)
-{
-	return false;
-}
-
 bool ConsoleWindowWrapper::WriteChar(wchar_t c, short unsigned int x, short unsigned int y)
 {
 	if((x >= m_pScreenBuffer->m_bufferSize[0].X)||(y >= m_pScreenBuffer->m_bufferSize[0].Y))
@@ -418,7 +413,9 @@ bool ConsoleWindowWrapper::WriteChar(wchar_t c, short unsigned int x, short unsi
 	return true;
 }
 
-ConsoleWindowWrapper::ConsoleWindowWrapper()
+ConsoleWindowWrapper::ConsoleWindowWrapper() :
+	m_actualEvent(0),
+	m_bufferEventCount(0)
 {
 	// set buffer size to actual window size
 	m_pScreenBuffer = new ScreenBuffers();
@@ -494,26 +491,128 @@ bool ConsoleWindowWrapper::WriteRect(const CharObject* buffer, const ConsoleCoor
 
 bool ConsoleWindowWrapper::EnableCursor(bool enable)
 {
+	CONSOLE_CURSOR_INFO cursorInfo;
+	if(!GetConsoleCursorInfo(m_pScreenBuffer->m_outScreenBuffer[0], &cursorInfo))
+	{
+		return false;
+	}
+	
+	cursorInfo.bVisible = enable;
+	
+	if(!SetConsoleCursorInfo(m_pScreenBuffer->m_outScreenBuffer[0], &cursorInfo))
+	{
+		return false;
+	}
+	return true;
 }
 
-bool ConsoleWindowWrapper::Initialize(bool doubleBuffer, ConsoleFontSize font)
+bool ConsoleWindowWrapper::EnableManualProcessEvent(bool enable)
 {
+	DWORD flags = 0, newflags = 0;
+	if(!GetConsoleMode(m_pScreenBuffer->m_inputBuffer, &flags))
+	{
+		return false;
+	}
+	
+	if(flags & ENABLE_MOUSE_INPUT)
+	{
+		newflags = ENABLE_MOUSE_INPUT; 
+	}
+	
+	if(enable)
+	{
+		if(!SetConsoleMode(m_pScreenBuffer->m_inputBuffer, newflags))
+		{
+			return false;
+		}
+	} else {
+		flags |= ENABLE_ECHO_INPUT | ENABLE_INSERT_MODE | ENABLE_EXTENDED_FLAGS | ENABLE_PROCESSED_INPUT | ENABLE_LINE_INPUT;
+		if(!SetConsoleMode(m_pScreenBuffer->m_inputBuffer, newflags))
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+bool ConsoleWindowWrapper::EnableMouseEvents(bool enable)
+{
+	DWORD flags = 0;
+	if(!GetConsoleMode(m_pScreenBuffer->m_inputBuffer, &flags))
+	{
+		return false;
+	}
+	
+	if (enable)
+	{
+		flags |= ENABLE_MOUSE_INPUT;
+	} else {
+		flags &= (~((DWORD) ENABLE_MOUSE_INPUT));
+	}
+	
+	if(!SetConsoleMode(m_pScreenBuffer->m_inputBuffer, flags))
+	{
+		return false;
+	}
+	return true;
 }
 
 bool ConsoleWindowWrapper::WriteString(const std::string& string, const ConsoleCoord& coord)
 {
+	return false;
 }
 
 bool ConsoleWindowWrapper::WriteString(const wchar_t* str, const ConsoleCoord& coord)
 {
+	return false;
 }
 
 bool ConsoleWindowWrapper::WriteString(const wchar_t* str, const ConsoleCoord &coord, unsigned short int consoleAttr)
 {
+	return false;
 }
 
 bool ConsoleWindowWrapper::WriteString(const std::string &string, const ConsoleCoord &coord, unsigned short int consoleAttr)
 {
+	return false;
+}
+
+
+bool ConsoleWindowWrapper::ReadInputEvent(ConsoleEvent& event)
+{
+	DWORD numOfEvents = 0, numReadEvents = 0;
+	if(m_actualEvent < m_bufferEventCount)
+	{
+		event = m_eventBuffer[m_actualEvent];
+		m_actualEvent++;
+		return true;
+	}
+	
+	if(!GetNumberOfConsoleInputEvents(m_pScreenBuffer->m_inputBuffer, &numOfEvents))
+	{
+		return false;
+	}
+	
+	if(numOfEvents > 0)
+	{
+		m_actualEvent = 1;
+		//read events
+		if(!ReadConsoleInputW(m_pScreenBuffer->m_inputBuffer, (PINPUT_RECORD) m_eventBuffer, EVENT_BUFFER_SIZE, &numReadEvents))
+		{
+			return false;
+		}
+		m_bufferEventCount = numReadEvents;
+		event = m_eventBuffer[0];		
+		return true;
+	} else {
+		event.m_type = CONSOLE_EVENT_UNKNOWN;
+		return false;
+	}
+}
+
+bool ConsoleWindowWrapper::SetCursorPosition(short unsigned int x, short unsigned int y)
+{
+	return false;
 }
 
 //////////////////////////////////////////////////////
@@ -647,4 +746,7 @@ void ConsoleWindowWrapper::ConsoleAttrFlagsToString(short unsigned int conAttr, 
 		slashWrite = true;
 	}
 }
+
+
+
 

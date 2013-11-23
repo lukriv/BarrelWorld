@@ -97,5 +97,6 @@
   <VirtualDirectory Name="include">
     <File Name="consoleWindow.h"/>
     <File Name="engine.h"/>
+    <File Name="consoleKeyDef.h"/>
   </VirtualDirectory>
 </CodeLite_Project>

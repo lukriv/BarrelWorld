@@ -3,6 +3,10 @@
 
 #include <string>
 
+#include "consoleKeyDef.h"
+
+#define EVENT_BUFFER_SIZE 256
+
 struct ConsoleCoord {
 	short unsigned int x;
 	short unsigned int y;
@@ -44,6 +48,43 @@ enum ConsoleAttr {
 };
 
 
+enum EEventType {
+	CONSOLE_EVENT_UNKNOWN			= 0,
+	CONSOLE_EVENT_KEY 				= 1,
+	CONSOLE_EVENT_MOUSE				= 2,
+	CONSOLE_EVENT_WIN_BUFF_SIZE		= 3,
+	CONSOLE_EVENT_FOCUS				= 4,
+	CONSOLE_EVENT_MENU				= 5
+};
+
+enum EControlKeyState {
+	CONSOLE_KEY_STATE_NONE 					= 0,
+	CONSOLE_KEY_STATE_RIGHT_ALT_PRESSED 	= 0x0001,
+	CONSOLE_KEY_STATE_LEFT_ALT_PRESSED 		= 0x0002,
+	CONSOLE_KEY_STATE_RIGHT_CTRL_PRESSED 	= 0x0004,
+	CONSOLE_KEY_STATE_LEFT_CTRL_PRESSED 	= 0x0008,
+	CONSOLE_KEY_STATE_SHIFT_PRESSED			= 0x0010,
+	CONSOLE_KEY_STATE_NUMLOCK_ON 			= 0x0020,
+	CONSOLE_KEY_STATE_SCROLLLOCK_ON 		= 0x0040,
+	CONSOLE_KEY_STATE_CAPSLOCK_ON			= 0x0080,
+	CONSOLE_KEY_STATE_ENHANCED_KEY 			= 0x0100,
+};
+
+enum EButtonState {
+	CONSOLE_MOUSE_LEFT_1ST_PRESSED	= 0x0001,
+	CONSOLE_MOUSE_RIGHT_PRESSED		= 0x0002,
+	CONSOLE_MOUSE_LEFT_2ST_PRESSED	= 0x0004,
+	CONSOLE_MOUSE_LEFT_3ST_PRESSED	= 0x0008,
+	CONSOLE_MOUSE_LEFT_4ST_PRESSED	= 0x0010
+};
+
+enum EMouseEventFlag {	
+	CONSOLE_MOUSE_EVENT_MOVED			= 0x0001,
+	CONSOLE_MOUSE_EVENT_DOUBLE_CLICK	= 0x0002,
+	CONSOLE_MOUSE_EVENT_WHEELED			= 0x0004,
+	CONSOLE_MOUSE_EVENT_HWHEELED 		= 0x0008
+};
+
 struct CharObject {
 	wchar_t uniChar;
 	unsigned short Attr;
@@ -52,9 +93,33 @@ struct CharObject {
 struct ScreenBuffers;
 
 
-class IConsoleEventCallback {
-public:
-	
+struct ConsoleEvent {
+	short unsigned m_type;
+	union Event {
+		struct KeyEvent {
+			bool m_keyDown;
+			short unsigned m_repeatCount;
+			short unsigned m_virtualKeyCode; 
+			short unsigned m_virtualScanCode;
+			wchar_t m_char;
+			unsigned int m_controlKeyState;
+		};
+		struct MouseEvent {
+			ConsoleCoord m_mousePosition;
+			unsigned int m_buttonState;
+			unsigned int m_controlKeyState;
+			unsigned int m_eventFlags;
+		};
+		struct BuffSizeEvent {
+			ConsoleCoord m_size;
+		};
+		struct MenuEvent {
+			unsigned int m_commandId;
+		};
+		struct FocusEvent {
+			bool m_setFocus;
+		};
+	};
 };
 
 
@@ -67,9 +132,14 @@ private:
 	};
 
 	static const ConsoleWindowWrapper::RasterSize RasterTable[];
+	
 private:
 	ScreenBuffers* m_pScreenBuffer;
 	short unsigned int m_globalConsoleAttr;
+	
+	ConsoleEvent m_eventBuffer[EVENT_BUFFER_SIZE];
+	unsigned int m_actualEvent;
+	unsigned int m_bufferEventCount;
 	
 public:
 	ConsoleWindowWrapper();
@@ -81,6 +151,8 @@ public:
 	
 	void SetGlobalAttr(short unsigned int attr);
 	bool EnableCursor(bool enable);
+	bool EnableManualProcessEvent(bool enable);
+	bool EnableMouseEvents(bool enable);
 	
 	bool SetCursorPosition(short unsigned int x, short unsigned int y);
 	
@@ -99,7 +171,7 @@ public:
 	
 	bool WriteRect(const CharObject* buffer, const ConsoleCoord &position, const ConsoleCoord &rectSize);
 	
-	bool ReadInput(std::string &inputStr);
+	bool ReadInputEvent(ConsoleEvent &event);
 	
 	void WriteConsoleInfo();
 

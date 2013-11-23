@@ -37,5 +37,23 @@ bool ConsoleGameEngine::WriteMargin(ConsoleWindowWrapper &console, const Console
 		if(!console.WriteChar(*VERTICAL_DOUBLE_LINE, right, i)) return false;
 	}
 	
+	m_viewFieldMin.x = leftTopPos.x + 1;
+	m_viewFieldMin.y = leftTopPos.y + 1;
+	
+	m_viewFieldMax.x = leftTopPos.x + insizeSize.x;
+	m_viewFieldMax.y = leftTopPos.y + insizeSize.y;
+	
 	return true;	
+}
+
+
+bool ConsoleGameEngine::Play()
+{
+	m_avatar.pos.x = m_viewFieldMin.x;
+	m_avatar.pos.y = m_viewFieldMin.y;
+	
+	
+	
+	return true;
+	
 }
