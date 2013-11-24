@@ -10,9 +10,21 @@
 struct ConsoleCoord {
 	short unsigned int x;
 	short unsigned int y;
+};
+
+struct ConsoleCoordX : public ConsoleCoord {
 	
-	ConsoleCoord(): x(0), y(0) {}
-	ConsoleCoord(short unsigned int in_x, short unsigned int in_y) : x(in_x), y(in_y) {}
+	ConsoleCoordX() 
+	{
+		ConsoleCoord::x = 0;
+		ConsoleCoord::y = 0;
+	}
+	ConsoleCoordX(short unsigned int xx, short unsigned int yy) 
+	{
+		ConsoleCoord::x = xx;
+		ConsoleCoord::y = yy;
+	}
+	
 };
 
 enum ConsoleFontSize {
@@ -50,11 +62,12 @@ enum ConsoleAttr {
 
 enum EEventType {
 	CONSOLE_EVENT_UNKNOWN			= 0,
-	CONSOLE_EVENT_KEY 				= 1,
-	CONSOLE_EVENT_MOUSE				= 2,
-	CONSOLE_EVENT_WIN_BUFF_SIZE		= 3,
-	CONSOLE_EVENT_FOCUS				= 4,
-	CONSOLE_EVENT_MENU				= 5
+	CONSOLE_EVENT_KEY 				= 0x0001,
+	CONSOLE_EVENT_MOUSE				= 0x0002,
+	CONSOLE_EVENT_WIN_BUFF_SIZE		= 0x0004,
+	CONSOLE_EVENT_MENU				= 0x0008,
+	CONSOLE_EVENT_FOCUS				= 0x0010
+
 };
 
 enum EControlKeyState {
@@ -92,34 +105,39 @@ struct CharObject {
 
 struct ScreenBuffers;
 
+struct KeyEvent {
+	bool m_keyDown;
+	short unsigned m_repeatCount;
+	short unsigned m_virtualKeyCode; 
+	short unsigned m_virtualScanCode;
+	wchar_t m_char;
+	unsigned int m_controlKeyState;
+};
+struct MouseEvent {
+	ConsoleCoord m_mousePosition;
+	unsigned int m_buttonState;
+	unsigned int m_controlKeyState;
+	unsigned int m_eventFlags;
+};
+struct BuffSizeEvent {
+	ConsoleCoord m_size;
+};
+struct MenuEvent {
+	unsigned int m_commandId;
+};
+struct FocusEvent {
+	bool m_setFocus;
+};
 
 struct ConsoleEvent {
 	short unsigned m_type;
-	union Event {
-		struct KeyEvent {
-			bool m_keyDown;
-			short unsigned m_repeatCount;
-			short unsigned m_virtualKeyCode; 
-			short unsigned m_virtualScanCode;
-			wchar_t m_char;
-			unsigned int m_controlKeyState;
-		};
-		struct MouseEvent {
-			ConsoleCoord m_mousePosition;
-			unsigned int m_buttonState;
-			unsigned int m_controlKeyState;
-			unsigned int m_eventFlags;
-		};
-		struct BuffSizeEvent {
-			ConsoleCoord m_size;
-		};
-		struct MenuEvent {
-			unsigned int m_commandId;
-		};
-		struct FocusEvent {
-			bool m_setFocus;
-		};
-	};
+	union EVENT{
+		KeyEvent m_keyEvent;
+		MouseEvent m_mouseEvent;
+		BuffSizeEvent m_buffEvent;
+		MenuEvent m_menuEvent;
+		FocusEvent m_focusEvent;
+	} Event;
 };
 
 

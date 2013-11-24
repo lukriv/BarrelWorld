@@ -22,17 +22,11 @@ int main(int argc, char **argv)
 		return 1;
 	}
 	
-	if(!engine.WriteMargin(console, ConsoleCoord(0,0), ConsoleCoord(50,50)))
-	{
-		cout << "engine.WriteMargin error" << endl;
-		return 1;		
-	}
+	 
 	
-	cin >> c;
+	engine.Play(console);
 	
 	console.ClearBuffer();
-	
-	cin >> c;
 	
 	return 0;
 }

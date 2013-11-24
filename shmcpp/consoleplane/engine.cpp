@@ -1,6 +1,7 @@
 #include "engine.h"
 
 #include <iostream>
+#include <windows.h>
 
 using namespace std;
 
@@ -27,7 +28,7 @@ bool ConsoleGameEngine::WriteMargin(ConsoleWindowWrapper &console, const Console
 	
 	for(short unsigned int i = (leftTopPos.x + 1); i < right; i++)
 	{
-		if(!console.WriteChar(*HORIZONTAL_DOUBLE_LINE, ConsoleCoord(i, leftTopPos.y), colors)) return false;
+		if(!console.WriteChar(*HORIZONTAL_DOUBLE_LINE, ConsoleCoordX(i, leftTopPos.y), colors)) return false;
 		if(!console.WriteChar(*HORIZONTAL_DOUBLE_LINE, i, bottom)) return false;
 	}
 	
@@ -37,23 +38,145 @@ bool ConsoleGameEngine::WriteMargin(ConsoleWindowWrapper &console, const Console
 		if(!console.WriteChar(*VERTICAL_DOUBLE_LINE, right, i)) return false;
 	}
 	
-	m_viewFieldMin.x = leftTopPos.x + 1;
-	m_viewFieldMin.y = leftTopPos.y + 1;
-	
-	m_viewFieldMax.x = leftTopPos.x + insizeSize.x;
-	m_viewFieldMax.y = leftTopPos.y + insizeSize.y;
-	
 	return true;	
 }
 
 
-bool ConsoleGameEngine::Play()
+bool ConsoleGameEngine::Play(ConsoleWindowWrapper &console)
 {
+	bool ends = false;
+	short int moveX, moveY;
+	
+	unsigned int keystate = 0;
+	
+	ConsoleCoord marginOrigin = {0,0}, playGroundSize = {30, 30};
+	
+	m_viewFieldMin.x = marginOrigin.x + 1;
+	m_viewFieldMin.y = marginOrigin.y + 1;
+	
+	m_viewFieldMax.x = marginOrigin.x + playGroundSize.x;
+	m_viewFieldMax.y = marginOrigin.y + playGroundSize.y;
+	
 	m_avatar.pos.x = m_viewFieldMin.x;
 	m_avatar.pos.y = m_viewFieldMin.y;
+	
+	if(!console.EnableCursor(false))
+		return false;
+	if(!console.EnableManualProcessEvent(true))
+		return true;
+	
+	if(!WriteMargin(console, marginOrigin, playGroundSize))
+	{
+		return false;
+	}
+		
+	while (!ends)
+	{
+		ConsoleEvent event;
+		
+		while(console.ReadInputEvent(event))
+		{
+			switch (event.m_type)
+			{
+				case CONSOLE_EVENT_KEY:
+					switch(event.Event.m_keyEvent.m_virtualScanCode)
+					{
+						case CONSOLE_VK_LEFT:
+							SetUpFlag(KEY_STATE_LEFT, event.Event.m_keyEvent.m_keyDown, keystate);
+							break;
+						case CONSOLE_VK_UP:
+							SetUpFlag(KEY_STATE_UP, event.Event.m_keyEvent.m_keyDown, keystate);
+							break;
+						case CONSOLE_VK_RIGHT:
+							SetUpFlag(KEY_STATE_RIGHT, event.Event.m_keyEvent.m_keyDown, keystate);
+							break;
+						case CONSOLE_VK_DOWN:
+							SetUpFlag(KEY_STATE_DOWN, event.Event.m_keyEvent.m_keyDown, keystate);
+							break;
+						case CONSOLE_VK_ESCAPE:
+							return true;
+						default:
+							break;
+					}
+					break;
+				default:
+					break;
+			}
+		}
+		
+		moveX = 0;
+		moveY = 0;
+		
+		if(keystate & KEY_STATE_LEFT)
+		{
+			moveX--;
+		}
+		
+		if(keystate & KEY_STATE_RIGHT)
+		{
+			moveX++;
+		}
+			
+		if(keystate & KEY_STATE_UP)
+		{
+			moveY--;
+		}
+		
+		if(keystate & KEY_STATE_DOWN)
+		{
+			moveY++;
+		}
+		
+		if((moveX != 0)||(moveY != 0))
+		{
+			if(!console.WriteChar(' ', m_avatar.pos.x, m_avatar.pos.y))
+			{
+				return false;
+			}
+		}
+		
+		m_avatar.pos.x = (short unsigned)(((int)m_avatar.pos.x) + moveX);
+		m_avatar.pos.y = (short unsigned)(((int)m_avatar.pos.y) + moveY);
+		
+		if (m_avatar.pos.x < m_viewFieldMin.x)
+		{
+			m_avatar.pos.x = m_viewFieldMin.x;
+		}
+		
+		if (m_avatar.pos.x > m_viewFieldMax.x)
+		{
+			m_avatar.pos.x = m_viewFieldMax.x;
+		}
+
+		if (m_avatar.pos.y < m_viewFieldMin.y)
+		{
+			m_avatar.pos.y = m_viewFieldMin.y;
+		}		
+		
+		if (m_avatar.pos.y > m_viewFieldMax.y)
+		{
+			m_avatar.pos.y = m_viewFieldMax.y;
+		}
+		
+		if((moveX != 0)||(moveY != 0))
+		{
+			if(!console.WriteChar('X', m_avatar.pos.x, m_avatar.pos.y))
+			{
+				return false;
+			}
+		}		
+		
+		Sleep(100);
+		
+	}
+	
 	
 	
 	
 	return true;
 	
 }
+
+
+
+
