@@ -1,11 +1,15 @@
 #ifndef __LONE_WOLF_ACTIONS_H__
 #define __LONE_WOLF_ACTIONS_H__
 
-
+#include <map>
 #include "lwdefs.h"
 
 
 class ActionManager {
+	typedef std::map<EActionType,wxString> TActionTranslateMap;
+	typedef std::pair<EActionType,wxString> TActionTranslateMapPair;
+private:
+	TActionTranslateMap m_translateMap;
 public:
 	ActionManager() {}
 	

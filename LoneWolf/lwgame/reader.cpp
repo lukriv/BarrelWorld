@@ -92,7 +92,10 @@ bool LoneWolfXmlReader::ParseDefActions(wxXmlNode* defNode, SceneManager& sceneM
 			descValue = child->GetAttribute(wxString(GENERAL_ATTR_DESC_STR));
 			
 			// create new action definition
-			
+			if(ConvertActionNameToType(nameValue) != ACTION_UNKNOWN)
+			{
+				sceneMgr.GetActionMgr().SetDefaultActionDesc(ConvertActionNameToType(nameValue), desc);
+			}
 			
 		} else {
 			return false;
