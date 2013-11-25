@@ -38,3 +38,30 @@ void Action::SetLoteryTarget(wxDword fromId, wxDword toId, wxDword target)
 		m_loteryTargets[i] = target;
 	}
 }
+
+bool ActionManager::GetDefaultActionDesc(EActionType type, wxString& desc)
+{
+	TActionTranslateMap::iterator iter;
+	iter = m_translateMap.find(type);
+	if(iter != m_translateMap.end())
+	{
+		desc = iter->second;
+		return true;
+	} else {
+		return false;
+	}
+}
+
+bool ActionManager::SetDefaultActionDesc(EActionType type, const wxString& desc)
+{
+	TActionTranslateMap::iterator iter;
+	iter = m_translateMap.find(type);
+	if(iter == m_translateMap.end())
+	{
+		m_translateMap.insert(TActionTranslateMapPair(type, desc));
+	} else {
+		iter->second = desc;
+	}
+	
+	return true;	
+}
