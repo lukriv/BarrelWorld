@@ -97,6 +97,7 @@
     <File Name="lwdefs.cpp"/>
     <File Name="reader.cpp"/>
     <File Name="lwengine.cpp"/>
+    <File Name="disciplines.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="gui.h"/>
@@ -108,6 +109,7 @@
     <File Name="lwxmldefs.h"/>
     <File Name="reader.h"/>
     <File Name="lwengine.h"/>
+    <File Name="disciplines.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="resources">
     <File Name="gui.fbp"/>

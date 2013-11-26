@@ -138,25 +138,29 @@ bool LoneWolfXmlReader::ParseDefBagItems(wxXmlNode* defNode, SceneManager& scene
 
 bool LoneWolfXmlReader::ParseDefDisciplines(wxXmlNode* defNode, SceneManager& sceneMgr)
 {
+	wxString nameValue;
+	wxString descValue;
+	wxString titleValue;
 	wxXmlNode *child = defNode->GetChildren();
 	while(child)
 	{
-		if(child->GetName() == GENERAL_TAG_ACTIONS_STR)
-		{
-			if(!ParseDefActions(child, sceneMgr))
+		if(child->GetName() == GENERAL_TAG_SKILL_STR)
+		{		
+			// read attributes
+			nameValue.Clear();
+			if(!child->GetAttribute(wxString(GENERAL_ATTR_NAME_STR), &nameValue))
+			{
 				return false;
-		} else if(child->GetName() == GENERAL_TAG_DISCIPLINES_STR) {
-			if(!ParseDefDisciplines(child, sceneMgr))
-				return false;
-		} else if(child->GetName() == GENERAL_TAG_WEAPONS_STR) {
-			if(!ParseDefWeapons(child, sceneMgr))
-				return false;
-		} else if(child->GetName() == GENERAL_TAG_BAG_ITEMS_STR) {
-			if(!ParseDefBagItems(child, sceneMgr))
-				return false;
-		} else if(child->GetName() == GENERAL_TAG_SPECIAL_ITEMS_STR) {
-			if(!ParseDefSpecialItems(child, sceneMgr))
-				return false;
+			}
+			titleValue = child->GetAttribute(wxString(GENERAL_ATTR_TITLE_STR));
+			descValue = child->GetAttribute(wxString(GENERAL_ATTR_DESC_STR));
+			
+			// create new action definition
+			if(ConvertActionNameToType(nameValue) != ACTION_UNKNOWN)
+			{
+				sceneMgr.GetActionMgr().SetDefaultActionDesc(ConvertActionNameToType(nameValue), desc);
+			}
+
 		} else {
 			return false;
 		}
