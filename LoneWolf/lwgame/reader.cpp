@@ -156,9 +156,9 @@ bool LoneWolfXmlReader::ParseDefDisciplines(wxXmlNode* defNode, SceneManager& sc
 			descValue = child->GetAttribute(wxString(GENERAL_ATTR_DESC_STR));
 			
 			// create new action definition
-			if(ConvertActionNameToType(nameValue) != ACTION_UNKNOWN)
+			if(Convertor::ConvertDisciplineNameToType(nameValue) != DISCIPLINE_UNKNOWN)
 			{
-				sceneMgr.GetActionMgr().SetDefaultActionDesc(ConvertActionNameToType(nameValue), desc);
+				sceneMgr->GetDisciplineMgr().AddDisciplineDesc(Convertor::ConvertDisciplineNameToType(nameValue), titleValue, descValue);
 			}
 
 		} else {
@@ -174,22 +174,22 @@ bool LoneWolfXmlReader::ParseDefSpecialItems(wxXmlNode* defNode, SceneManager& s
 	wxXmlNode *child = defNode->GetChildren();
 	while(child)
 	{
-		if(child->GetName() == GENERAL_TAG_ACTIONS_STR)
+		if(child->GetName() == GENERAL_TAG_SPECIAL_ITEM_STR)
 		{
-			if(!ParseDefActions(child, sceneMgr))
+			// read attributes
+			nameValue.Clear();
+			if(!child->GetAttribute(wxString(GENERAL_ATTR_NAME_STR), &nameValue))
+			{
 				return false;
-		} else if(child->GetName() == GENERAL_TAG_DISCIPLINES_STR) {
-			if(!ParseDefDisciplines(child, sceneMgr))
-				return false;
-		} else if(child->GetName() == GENERAL_TAG_WEAPONS_STR) {
-			if(!ParseDefWeapons(child, sceneMgr))
-				return false;
-		} else if(child->GetName() == GENERAL_TAG_BAG_ITEMS_STR) {
-			if(!ParseDefBagItems(child, sceneMgr))
-				return false;
-		} else if(child->GetName() == GENERAL_TAG_SPECIAL_ITEMS_STR) {
-			if(!ParseDefSpecialItems(child, sceneMgr))
-				return false;
+			}
+			titleValue = child->GetAttribute(wxString(GENERAL_ATTR_TITLE_STR));
+			descValue = child->GetAttribute(wxString(GENERAL_ATTR_DESC_STR));
+			
+			// create new action definition
+			if(Convertor::ConvertDisciplineNameToType(nameValue) != DISCIPLINE_UNKNOWN)
+			{
+				sceneMgr->GetDisciplineMgr().AddDisciplineDesc(Convertor::ConvertDisciplineNameToType(nameValue), titleValue, descValue);
+			}
 		} else {
 			return false;
 		}
