@@ -1,0 +1,141 @@
+#ifndef __CONSOLE_KEY_DEFINITIONS_H__
+#define __CONSOLE_KEY_DEFINITIONS_H__
+
+
+//windows virtual key buttons
+#define CONSOLE_VK_LBUTTON		1
+#define CONSOLE_VK_RBUTTON		2
+#define CONSOLE_VK_CANCEL		3
+#define CONSOLE_VK_MBUTTON		4
+
+#define CONSOLE_VK_BACK			8
+#define CONSOLE_VK_TAB			9
+#define CONSOLE_VK_CLEAR		12
+#define CONSOLE_VK_RETURN		13
+#define CONSOLE_VK_SHIFT		16
+#define CONSOLE_VK_CONTROL		17
+#define CONSOLE_VK_MENU			18
+#define CONSOLE_VK_PAUSE		19
+#define CONSOLE_VK_CAPITAL		20
+#define CONSOLE_VK_KANA			0x15
+#define CONSOLE_VK_HANGEUL		0x15
+#define CONSOLE_VK_HANGUL		0x15
+#define CONSOLE_VK_JUNJA		0x17
+#define CONSOLE_VK_FINAL		0x18
+#define CONSOLE_VK_HANJA		0x19
+#define CONSOLE_VK_KANJI		0x19
+#define CONSOLE_VK_ESCAPE		0x1B
+#define CONSOLE_VK_CONVERT		0x1C
+#define CONSOLE_VK_NONCONVERT	0x1D
+#define CONSOLE_VK_ACCEPT		0x1E
+#define CONSOLE_VK_MODECHANGE	0x1F
+
+// space key
+#define CONSOLE_VK_SPACE		32
+
+#define CONSOLE_VK_PRIOR		33
+#define CONSOLE_VK_NEXT			34
+#define CONSOLE_VK_END			35
+#define CONSOLE_VK_HOME			36
+
+// cursor keys
+#define CONSOLE_VK_LEFT			37
+#define CONSOLE_VK_UP			38
+#define CONSOLE_VK_RIGHT		39
+#define CONSOLE_VK_DOWN			40
+
+
+#define CONSOLE_VK_SELECT		41
+#define CONSOLE_VK_PRINT		42
+#define CONSOLE_VK_EXECUTE		43
+#define CONSOLE_VK_SNAPSHOT		44
+
+#define CONSOLE_VK_INSERT		45
+#define CONSOLE_VK_DELETE		46
+
+#define CONSOLE_VK_HELP			47
+#define CONSOLE_VK_LWIN			0x5B
+#define CONSOLE_VK_RWIN			0x5C
+#define CONSOLE_VK_APPS			0x5D
+#define CONSOLE_VK_SLEEP		0x5F
+
+
+
+// numpad keys
+#define CONSOLE_VK_NUMPAD0		0x60
+#define CONSOLE_VK_NUMPAD1		0x61
+#define CONSOLE_VK_NUMPAD2		0x62
+#define CONSOLE_VK_NUMPAD3		0x63
+#define CONSOLE_VK_NUMPAD4		0x64
+#define CONSOLE_VK_NUMPAD5		0x65
+#define CONSOLE_VK_NUMPAD6		0x66
+#define CONSOLE_VK_NUMPAD7		0x67
+#define CONSOLE_VK_NUMPAD8		0x68
+#define CONSOLE_VK_NUMPAD9		0x69
+#define CONSOLE_VK_MULTIPLY		0x6A
+#define CONSOLE_VK_ADD			0x6B
+#define CONSOLE_VK_SEPARATOR	0x6C
+#define CONSOLE_VK_SUBTRACT		0x6D
+#define CONSOLE_VK_DECIMAL		0x6E
+#define CONSOLE_VK_DIVIDE		0x6F
+
+// functional keys
+#define CONSOLE_VK_F1			0x70
+#define CONSOLE_VK_F2			0x71
+#define CONSOLE_VK_F3			0x72
+#define CONSOLE_VK_F4			0x73
+#define CONSOLE_VK_F5			0x74
+#define CONSOLE_VK_F6			0x75
+#define CONSOLE_VK_F7			0x76
+#define CONSOLE_VK_F8			0x77
+#define CONSOLE_VK_F9			0x78
+#define CONSOLE_VK_F10			0x79
+#define CONSOLE_VK_F11			0x7A
+#define CONSOLE_VK_F12			0x7B
+#define CONSOLE_VK_F13			0x7C
+#define CONSOLE_VK_F14			0x7D
+#define CONSOLE_VK_F15			0x7E
+#define CONSOLE_VK_F16			0x7F
+#define CONSOLE_VK_F17			0x80
+#define CONSOLE_VK_F18			0x81
+#define CONSOLE_VK_F19			0x82
+#define CONSOLE_VK_F20			0x83
+#define CONSOLE_VK_F21			0x84
+#define CONSOLE_VK_F22			0x85
+#define CONSOLE_VK_F23			0x86
+#define CONSOLE_VK_F24			0x87
+#define CONSOLE_VK_NUMLOCK		0x90
+#define CONSOLE_VK_SCROLL		0x91
+
+// shift, controls
+#define CONSOLE_VK_LSHIFT		0xA0
+#define CONSOLE_VK_RSHIFT		0xA1
+#define CONSOLE_VK_LCONTROL		0xA2
+#define CONSOLE_VK_RCONTROL		0xA3
+#define CONSOLE_VK_LMENU		0xA4
+#define CONSOLE_VK_RMENU		0xA5
+			
+#define CONSOLE_VK_OEM_1		0xBA
+			
+#define CONSOLE_VK_OEM_2		0xBF
+#define CONSOLE_VK_OEM_3		0xC0
+#define CONSOLE_VK_OEM_4		0xDB
+#define CONSOLE_VK_OEM_5		0xDC
+#define CONSOLE_VK_OEM_6		0xDD
+#define CONSOLE_VK_OEM_7		0xDE
+#define CONSOLE_VK_OEM_8		0xDF
+        
+#define CONSOLE_VK_PROCESSKEY	0xE5
+        
+#define CONSOLE_VK_ATTN			0xF6
+#define CONSOLE_VK_CRSEL		0xF7
+#define CONSOLE_VK_EXSEL		0xF8
+#define CONSOLE_VK_EREOF		0xF9
+#define CONSOLE_VK_PLAY			0xFA
+#define CONSOLE_VK_ZOOM			0xFB
+#define CONSOLE_VK_NONAME		0xFC
+#define CONSOLE_VK_PA1			0xFD
+#define CONSOLE_VK_OEM_CLEAR	0xFE
+
+
+#endif //__CONSOLE_KEY_DEFINITIONS_H__
