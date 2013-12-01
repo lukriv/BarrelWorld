@@ -2,6 +2,10 @@
 #define __GAME_SCENE_MAP_H__
 
 
+#include "actions.h"
+#include "disciplines.h"
+
+
 class Scene {
 public:
 	wxDword m_sceneId;
@@ -25,6 +29,7 @@ private:
 	
 	// managers
 	ActionManager m_actionMgr;
+	DisciplinesManager m_disciplineMgr;
 	
 public:
 	SceneManager() {}
@@ -35,6 +40,7 @@ public:
 	Scene* GetScene(wxDword sceneId);
 	
 	inline ActionManager& GetActionMgr() {return m_actionMgr;}
+	inline DisciplinesManager& GetDisciplineMgr() {return m_disciplineMgr;}
 	
 };
 

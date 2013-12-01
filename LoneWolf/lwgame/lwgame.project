@@ -98,6 +98,7 @@
     <File Name="reader.cpp"/>
     <File Name="lwengine.cpp"/>
     <File Name="disciplines.cpp"/>
+    <File Name="items.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="gui.h"/>
@@ -110,6 +111,7 @@
     <File Name="reader.h"/>
     <File Name="lwengine.h"/>
     <File Name="disciplines.h"/>
+    <File Name="items.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="resources">
     <File Name="gui.fbp"/>
