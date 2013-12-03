@@ -1,6 +1,10 @@
 #include "lwdefs.h"	
 #include "lwxmldefs.h"
 
+/////////////////////////////////////////////////////////
+// Static tables
+/////////////////////////////////////////////////////////
+
 
 static const ConvertTable DisciplineConvert[] = 
 {
@@ -47,51 +51,99 @@ static const ConvertTable ActionConvert[] =
 	{ ACTION_MOVE, 			ACTION_MOVE_STR},
 	{ ACTION_LOTERY, 		ACTION_LOTERY_STR},
 }
+
+/////////////////////////////////////////////////////////
+// templates
+/////////////////////////////////////////////////////////
+template <typename T>
+T Convertor::ConvertNameToType(const wxString& name, const ConvertTable& table)
+{
+	wxDword tableSize = GetConvertTableSize(table);
+	for(wxDword i = 0; i < tableSize; i++)
+	{
+		if(actionName.Cmp(wxString(table[i].m_str)) == 0)
+		{
+			//strings are the same
+			return table[i].m_id;
+		}
+	}
+	
+	return 0;
+}
+
+template <typename T>
+const wxChar* Convertor::GetName(T type, const ConvertTable& table)
+{
+	wxDword tableSize = GetConvertTableSize(table);
+	for(wxDword i = 0; i < tableSize; i++)
+	{
+		if(table[i].m_id == type)
+		{
+			//strings are the same
+			return table[i].m_str;
+		}
+	}
+	
+	return NULL;
+}
+
+/////////////////////////////////////////////////////////
+// Static methods
+/////////////////////////////////////////////////////////
 	
 EActionType Convertor::ConvertActionNameToType(const wxString& actionName)
 {
+	return ConvertNameToType<EActionType>(actionName, ActionConvert);
 }
 
 EBagItems Convertor::ConvertBagItemNameToType(const wxString& bagItemName)
 {
+	return ConvertNameToType<EBagItems>(bagItemName, BagItemConvert);
 }
 
 EDisciplines Convertor::ConvertDisciplineNameToType(const wxString& disciplineName)
 {
+	return ConvertNameToType<EDisciplines>(disciplineName, DisciplineConvert);
 }
 
 ESpecialItems Convertor::ConvertSpecialItemNameToType(const wxString& specialItemName)
 {
+	return ConvertNameToType<ESpecialItems>(specialItemName, SpecialItemConvert);
 }
 
 EWeapons Convertor::ConvertWeaponNameToType(const wxString& weaponName)
 {
+	return ConvertNameToType<EWeapons>(weaponName, WeaponConvert);
 }
 
 const wxChar* Convertor::GetActionName(EActionType type)
 {
+	return GetName<EActionType>(type, ActionConvert);
 }
 
 const wxChar* Convertor::GetBagItemName(EBagItems type)
 {
-
+	return GetName<EBagItems>(type, BagItemConvert);
 }
 
 const wxChar* Convertor::GetDisciplineName(EDisciplines type)
 {
-
+	return GetName<EDisciplines>(type, DisciplineConvert);
 }
 
 const wxChar* Convertor::GetSpecialItemName(ESpecialItems type)
 {
+	return GetName<ESpecialItems>(type, SpecialItemConvert);
 }
 
 const wxChar* Convertor::GetWeaponName(EWeapons type)
 {
-
+	return GetName<EWeapons>(type, WeaponConvert);
 }
 
 const wxDword Convertor::GetConvertTableSize(const ConvertTable[] table)
 {
 	return (sizeof(table) / sizeof(ConvertTable));
 }
+
+
