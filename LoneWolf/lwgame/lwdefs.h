@@ -1,6 +1,7 @@
 #ifndef __LONE_WOLF_DEFINITIONS_H__
 #define __LONE_WOLF_DEFINITIONS_H__
 
+#include <wx/string.h>
 enum EDisciplines {
 	DISCIPLINE_UNKNOWN		= 0,
 	DISCIPLINE_CAMOUFLAGE	= 1,		//camouflage
@@ -58,6 +59,11 @@ struct ConvertTable {
 class Convertor {
 private:
 	static const wxDword GetConvertTableSize(const ConvertTable& table);
+	template <typename T> 
+		static T ConvertNameToType(const wxString &name, const ConvertTable& table);
+	template <typename T> 
+		static const wxChar* GetName(T type, const ConvertTable& table);
+
 public:
 	static const wxChar* GetDisciplineName(EDisciplines type);
 	static EDisciplines ConvertDisciplineNameToType(const wxString &disciplineName);
@@ -74,6 +80,7 @@ public:
 	static const wxChar* GetActionName(EActionType type);
 	static EActionType ConvertActionNameToType(const wxString &actionName);
 };
+
 
 
 #endif //__LONE_WOLF_DEFINITIONS_H__
