@@ -559,12 +559,29 @@ bool ConsoleWindowWrapper::EnableMouseEvents(bool enable)
 
 bool ConsoleWindowWrapper::WriteString(const std::string& string, const ConsoleCoord& coord)
 {
-	return false;
+	DWORD charsWritten = 0;
+	COORD coordWin;
+	coordWin.X = coord.x;
+	coordWin.Y = coord.y;
+	if(!WriteConsoleOutputCharacterW(m_pScreenBuffer->m_outScreenBuffer[0], (const wchar_t*)string.data(), string.length(), coordWin, &charsWritten))
+	{
+		return false;
+	}
+	
+	return true;
 }
 
 bool ConsoleWindowWrapper::WriteString(const wchar_t* str, const ConsoleCoord& coord)
 {
-	return false;
+	DWORD charsWritten = 0;
+	COORD coordWin;
+	coordWin.X = coord.x;
+	coordWin.Y = coord.y;
+	if(!WriteConsoleOutputCharacterW(m_pScreenBuffer->m_outScreenBuffer[0], str, wcslen(str), coordWin, &charsWritten))
+	{
+		return false;
+	}
+	return true;
 }
 
 bool ConsoleWindowWrapper::WriteString(const wchar_t* str, const ConsoleCoord &coord, unsigned short int consoleAttr)
