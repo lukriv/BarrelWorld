@@ -46,7 +46,7 @@ bool ConsoleGameEngine::Play(ConsoleWindowWrapper &console)
 {
 	bool ends = false;
 	short int moveX, moveY;
-	
+		
 	unsigned int keystate = 0;
 	
 	ConsoleCoord marginOrigin = {0,0}, playGroundSize = {30, 30};
@@ -66,6 +66,11 @@ bool ConsoleGameEngine::Play(ConsoleWindowWrapper &console)
 		return true;
 	
 	if(!WriteMargin(console, marginOrigin, playGroundSize))
+	{
+		return false;
+	}
+	
+	if(!console.WriteString( (wchar_t*)(L"Hello Game"), ConsoleCoordX(34, 0)))
 	{
 		return false;
 	}
