@@ -21,11 +21,8 @@ bool LoneWolfXmlReader::CreateGameFromXmlFile(const wxChar* xmlfilepath, SceneMa
 		{
 			if(!ParseDefinitions(child, sceneMgr))
 				return false;
-		} else if(child->GetName() == GENERAL_TAG_TITLE_STR) {
-			if(!ParseTitle(child, sceneMgr))
-				return false;
-		} else if(child->GetName() == GENERAL_TAG_SCENE_STR) {
-			if(!ParseScene(child, sceneMgr))
+		} else if(child->GetName() == GENERAL_TAG_CHAPTER_STR) {
+			if(!ParseChapter(child, sceneMgr))
 				return false;
 		} else {
 			return false;
@@ -68,9 +65,36 @@ bool LoneWolfXmlReader::ParseDefinitions(wxXmlNode* defNode, SceneManager& scene
 
 bool LoneWolfXmlReader::ParseScene(wxXmlNode* sceneNode, SceneManager& sceneMgr)
 {
+	wxXmlNode* child = defNode->GetChildren();
+	while(child)
+	{
+		if(child->GetName() == GENERAL_TAG_SCENE_STR)
+		{
+			if(!ParseDefActions(child, sceneMgr))
+				return false;
+		} else if(child->GetName() == GENERAL_TAG_DISCIPLINES_STR) {
+			if(!ParseDefDisciplines(child, sceneMgr))
+				return false;
+		} else if(child->GetName() == GENERAL_TAG_WEAPONS_STR) {
+			if(!ParseDefWeapons(child, sceneMgr))
+				return false;
+		} else if(child->GetName() == GENERAL_TAG_BAG_ITEMS_STR) {
+			if(!ParseDefBagItems(child, sceneMgr))
+				return false;
+		} else if(child->GetName() == GENERAL_TAG_SPECIAL_ITEMS_STR) {
+			if(!ParseDefSpecialItems(child, sceneMgr))
+				return false;
+		} else {
+			return false;
+		}
+		
+		child = child->GetNext();
+	}
+	
+	return true;
 }
 
-bool LoneWolfXmlReader::ParseTitle(wxXmlNode* titleNode, SceneManager& sceneMgr)
+bool LoneWolfXmlReader::ParseChapter(wxXmlNode* titleNode, SceneManager& sceneMgr)
 {
 }
 
@@ -109,31 +133,38 @@ bool LoneWolfXmlReader::ParseDefActions(wxXmlNode* defNode, SceneManager& sceneM
 
 bool LoneWolfXmlReader::ParseDefBagItems(wxXmlNode* defNode, SceneManager& sceneMgr)
 {
+	wxString nameValue;
+	wxString descValue;
+	wxString titleValue;
 	wxXmlNode *child = defNode->GetChildren();
 	while(child)
 	{
-		if(child->GetName() == GENERAL_TAG_ACTIONS_STR)
+		if(child->GetName() == GENERAL_TAG_BAG_ITEM_STR)
 		{
-			if(!ParseDefActions(child, sceneMgr))
+			nameValue.Clear();
+			if(!child->GetAttribute(wxString(GENERAL_ATTR_NAME_STR), &nameValue))
+			{
 				return false;
-		} else if(child->GetName() == GENERAL_TAG_DISCIPLINES_STR) {
-			if(!ParseDefDisciplines(child, sceneMgr))
-				return false;
-		} else if(child->GetName() == GENERAL_TAG_WEAPONS_STR) {
-			if(!ParseDefWeapons(child, sceneMgr))
-				return false;
-		} else if(child->GetName() == GENERAL_TAG_BAG_ITEMS_STR) {
-			if(!ParseDefBagItems(child, sceneMgr))
-				return false;
-		} else if(child->GetName() == GENERAL_TAG_SPECIAL_ITEMS_STR) {
-			if(!ParseDefSpecialItems(child, sceneMgr))
-				return false;
+			}
+			titleValue = child->GetAttribute(wxString(GENERAL_ATTR_TITLE_STR));
+			descValue = child->GetAttribute(wxString(GENERAL_ATTR_DESC_STR));
+			
+			// create new action definition
+			if(Convertor::ConvertBagItemNameToType(nameValue) != BAG_ITEM_UNKNOWN)
+			{
+				if(!sceneMgr->GetItemAndDiscMgr().AddBagItem(Convertor::ConvertBagItemNameToType(nameValue), titleValue, descValue)
+				{
+					return false;
+				}
+			}
 		} else {
 			return false;
 		}
 		
 		child = child->GetNext();
 	}
+	
+	return true;
 }
 
 bool LoneWolfXmlReader::ParseDefDisciplines(wxXmlNode* defNode, SceneManager& sceneMgr)
@@ -171,12 +202,14 @@ bool LoneWolfXmlReader::ParseDefDisciplines(wxXmlNode* defNode, SceneManager& sc
 
 bool LoneWolfXmlReader::ParseDefSpecialItems(wxXmlNode* defNode, SceneManager& sceneMgr)
 {
+	wxString nameValue;
+	wxString descValue;
+	wxString titleValue;
 	wxXmlNode *child = defNode->GetChildren();
 	while(child)
 	{
 		if(child->GetName() == GENERAL_TAG_SPECIAL_ITEM_STR)
 		{
-			// read attributes
 			nameValue.Clear();
 			if(!child->GetAttribute(wxString(GENERAL_ATTR_NAME_STR), &nameValue))
 			{
@@ -186,9 +219,12 @@ bool LoneWolfXmlReader::ParseDefSpecialItems(wxXmlNode* defNode, SceneManager& s
 			descValue = child->GetAttribute(wxString(GENERAL_ATTR_DESC_STR));
 			
 			// create new action definition
-			if(Convertor::ConvertDisciplineNameToType(nameValue) != DISCIPLINE_UNKNOWN)
+			if(Convertor::ConvertSpecialItemNameToType(nameValue) != BAG_ITEM_UNKNOWN)
 			{
-				sceneMgr->GetDisciplineMgr().AddDisciplineDesc(Convertor::ConvertDisciplineNameToType(nameValue), titleValue, descValue);
+				if(!sceneMgr->GetItemAndDiscMgr().AddSpecialItem(Convertor::ConvertSpecialItemNameToType(nameValue), titleValue, descValue))
+				{
+					return false;
+				}
 			}
 		} else {
 			return false;
@@ -196,33 +232,42 @@ bool LoneWolfXmlReader::ParseDefSpecialItems(wxXmlNode* defNode, SceneManager& s
 		
 		child = child->GetNext();
 	}
+	
+	return true;
 }
 
 bool LoneWolfXmlReader::ParseDefWeapons(wxXmlNode* defNode, SceneManager& sceneMgr)
 {
+	wxString nameValue;
+	wxString descValue;
+	wxString titleValue;
 	wxXmlNode *child = defNode->GetChildren();
 	while(child)
 	{
-		if(child->GetName() == GENERAL_TAG_ACTIONS_STR)
+		if(child->GetName() == GENERAL_TAG_WEAPON_STR)
 		{
-			if(!ParseDefActions(child, sceneMgr))
+			nameValue.Clear();
+			if(!child->GetAttribute(wxString(GENERAL_ATTR_NAME_STR), &nameValue))
+			{
 				return false;
-		} else if(child->GetName() == GENERAL_TAG_DISCIPLINES_STR) {
-			if(!ParseDefDisciplines(child, sceneMgr))
-				return false;
-		} else if(child->GetName() == GENERAL_TAG_WEAPONS_STR) {
-			if(!ParseDefWeapons(child, sceneMgr))
-				return false;
-		} else if(child->GetName() == GENERAL_TAG_BAG_ITEMS_STR) {
-			if(!ParseDefBagItems(child, sceneMgr))
-				return false;
-		} else if(child->GetName() == GENERAL_TAG_SPECIAL_ITEMS_STR) {
-			if(!ParseDefSpecialItems(child, sceneMgr))
-				return false;
+			}
+			titleValue = child->GetAttribute(wxString(GENERAL_ATTR_TITLE_STR));
+			descValue = child->GetAttribute(wxString(GENERAL_ATTR_DESC_STR));
+			
+			// create new action definition
+			if(Convertor::ConvertWeaponNameToType(nameValue) != BAG_ITEM_UNKNOWN)
+			{
+				if(!sceneMgr->GetItemAndDiscMgr().AddWeapon(Convertor::ConvertWeaponNameToType(nameValue), titleValue, descValue)
+				{
+					return false;
+				}
+			}
 		} else {
 			return false;
 		}
 		
 		child = child->GetNext();
 	}
+	
+	return true;
 }
