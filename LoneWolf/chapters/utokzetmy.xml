@@ -6,7 +6,7 @@ and open the template in the editor.
 
 
 <root>
-    <definitions>
+  <definitions>
         <actions>
             <action name="create_character" desc="Vytvoř postavu" />
             <action name="lotery" desc="Náhodný výběr" />
@@ -54,8 +54,8 @@ and open the template in the editor.
         </special_items>
 
         
-    </definitions>
-    <title>Lone Wolf: Útok ze tmy</title>
+  </definitions>
+  <chapter id="1" title="Lone Wolf: Útok ze tmy" >
     <scene id="0">
         <desc>
             <p>Na severu Sommerlundu panuje už po mnohá staletí mezi Bojovnými rytíři
@@ -153,5 +153,5 @@ and open the template in the editor.
             <action name="move" desc="Raději jeho nabídku odmítneš a vrátíš se na hustě zalidněnou ulici" target="144" />
         </actions>
     </scene>
-    
+  </chapter> 
 </root>

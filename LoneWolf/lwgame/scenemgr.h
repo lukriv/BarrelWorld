@@ -25,15 +25,20 @@ private:
 	typedef std::map<wxDword, Scene> TSceneMap;
 	typedef std::pair<wxDword, Scene> TSceneMapPair;
 private:
+	wxString m_title;
 	TSceneMap m_sceneMap;
 	
 	// managers
 	ActionManager m_actionMgr;
 	DisciplinesManager m_disciplineMgr;
+	ItemAndWeaponManager m_itemAndWeaponMgr;
 	
 public:
 	SceneManager() {}
 	~SceneManager() {}
+	
+	void SetTitle(const wxString& title) { m_title = title;}
+	inline wxString& GetTitle() { return m_title;}
 	
 	bool AddScene(const Scene& pScene);
 	void RemoveScene(wxDword sceneId);
@@ -41,6 +46,7 @@ public:
 	
 	inline ActionManager& GetActionMgr() {return m_actionMgr;}
 	inline DisciplinesManager& GetDisciplineMgr() {return m_disciplineMgr;}
+	inline ItemAndWeaponManager& GetItemAndDiscMgr() {return m_itemAndWeaponMgr;}
 	
 };
 

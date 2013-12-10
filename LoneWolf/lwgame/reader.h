@@ -10,7 +10,7 @@ public:
 	
 private:
 	static bool ParseDefinitions(wxXmlNode* defNode, SceneManager &sceneMgr);
-	static bool ParseTitle(wxXmlNode* titleNode, SceneManager &sceneMgr);
+	static bool ParseChapter(wxXmlNode* titleNode, SceneManager &sceneMgr);
 	static bool ParseScene(wxXmlNode* sceneNode, SceneManager &sceneMgr);
 	
 	
