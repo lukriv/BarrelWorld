@@ -96,6 +96,35 @@ bool LoneWolfXmlReader::ParseScene(wxXmlNode* sceneNode, SceneManager& sceneMgr)
 
 bool LoneWolfXmlReader::ParseChapter(wxXmlNode* titleNode, SceneManager& sceneMgr)
 {
+	wxString nameValue;
+	wxString descValue;
+	wxXmlNode *child = defNode->GetChildren();
+	while(child)
+	{
+		if(child->GetName() == GENERAL_TAG_SCENE_STR)
+		{
+			// read attributes
+			nameValue.Clear();
+			if(!child->GetAttribute(wxString(GENERAL_ATTR_NAME_STR), &nameValue))
+			{
+				return false;
+			}
+			descValue = child->GetAttribute(wxString(GENERAL_ATTR_DESC_STR));
+			
+			// create new action definition
+			if(ConvertActionNameToType(nameValue) != ACTION_UNKNOWN)
+			{
+				sceneMgr.GetActionMgr().SetDefaultActionDesc(ConvertActionNameToType(nameValue), desc);
+			}
+			
+		} else {
+			return false;
+		}
+		
+		child = child->GetNext();
+	}
+	
+	return true;
 }
 
 bool LoneWolfXmlReader::ParseDefActions(wxXmlNode* defNode, SceneManager& sceneMgr)
