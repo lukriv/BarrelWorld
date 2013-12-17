@@ -49,8 +49,8 @@ class MainFrame : public MainFrameBase
 		virtual void OnCloseFrame( wxCloseEvent& event );
 		virtual void OnExitClick( wxCommandEvent& event );
 	
-	protected:
-		LWGameEngine m_gameEngine;
+	//protected:
+		//LWGameEngine m_gameEngine;
 	
 };
 

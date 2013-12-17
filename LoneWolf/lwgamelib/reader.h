@@ -4,6 +4,8 @@
 
 
 
+#include <wx/xml.h>
+
 class LoneWolfXmlReader {
 public:
 	static bool CreateGameFromXmlFile(const wxChar* xmlfilepath, SceneManager &sceneMgr);
