@@ -8,12 +8,12 @@
 
 class Scene {
 public:
-	wxDword m_sceneId;
+	wxInt32 m_sceneId;
 	wxString m_desc;
 	ActionVector m_actions;
 
 public:
-	Scene() : m_sceneId(0) {}
+	Scene() : m_sceneId(-1) {}
 	~Scene() {}
 	
 	Scene& operator=(const Scene& scene);

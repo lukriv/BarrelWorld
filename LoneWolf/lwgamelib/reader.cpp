@@ -94,22 +94,36 @@ bool LoneWolfXmlReader::ParseScene(wxXmlNode* sceneNode, SceneManager& sceneMgr)
 	return true;
 }
 
-bool LoneWolfXmlReader::ParseChapter(wxXmlNode* titleNode, SceneManager& sceneMgr)
+bool LoneWolfXmlReader::ParseChapter(wxXmlNode* chapterNode, SceneManager& sceneMgr)
 {
 	wxString nameValue;
 	wxString descValue;
-	wxXmlNode *child = defNode->GetChildren();
+	wxString tempValue;
+	wxInt32 id;
+	wxXmlNode *child = chapterNode->GetChildren();
+	if(!chapterNode->GetAttribute(wxString(GENERAL_ATTR_TITLE_STR), &nameValue))
+	{
+		return false;
+	}
+	sceneMgr.SetTitle(nameValue);
+	if(!chapterNode->GetAttribute(wxString(GENERAL_ATTR_ID_STR), &tempValue))
+	{
+		return false;
+	}
+	tempValue.ToLong(&id);
+	sceneMgr.SetId(id);
 	while(child)
 	{
 		if(child->GetName() == GENERAL_TAG_SCENE_STR)
 		{
 			// read attributes
-			nameValue.Clear();
-			if(!child->GetAttribute(wxString(GENERAL_ATTR_NAME_STR), &nameValue))
+			tempValue.Clear();
+			if(!child->GetAttribute(wxString(GENERAL_ATTR_ID_STR), &tempValue))
 			{
 				return false;
 			}
 			descValue = child->GetAttribute(wxString(GENERAL_ATTR_DESC_STR));
+			
 			
 			// create new action definition
 			if(ConvertActionNameToType(nameValue) != ACTION_UNKNOWN)
