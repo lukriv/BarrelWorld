@@ -1,3 +1,4 @@
+#include "actions.h"
 
 
 wxDword Action::GetLoteryTarget(wxDword id)
@@ -39,6 +40,26 @@ void Action::SetLoteryTarget(wxDword fromId, wxDword toId, wxDword target)
 	}
 }
 
+wxDword Action::GetMoveTarget()
+{
+	if(!m_loteryTargets.empty())
+	{
+		return m_loteryTargets[0];
+	}
+	
+	return 0;
+}
+
+void Action::SetMoveTarget(wxDword target)
+{
+	if ( m_loteryTargets.empty() )
+	{
+		m_loteryTargets.resize(1);
+	}
+	
+	m_loteryTargets[0] = target;
+}
+
 bool ActionManager::GetDefaultActionDesc(EActionType type, wxString& desc)
 {
 	TActionTranslateMap::iterator iter;
@@ -64,4 +85,58 @@ bool ActionManager::SetDefaultActionDesc(EActionType type, const wxString& desc)
 	}
 	
 	return true;	
+}
+
+
+std::ostream& operator<< (std::ostream& output, const Action& action)
+{
+	switch(action.m_type)
+	{
+	case ACTION_CREATE_CHAR:
+		output << "Type: Create character; Target: " << action.m_loteryTargets[0] << "\n";
+		break;
+	case ACTION_MOVE:
+		output << "Type: Move; Target: " << action.m_loteryTargets[0] << "\n";
+		output << "   Desc: " << action.m_desc.c_str() << "\n";
+		break;
+	case ACTION_LOTERY:
+		output << "Type: Lotery; Targets: ";
+		for (int i = 0; i < 10; ++i)
+		{
+			output << action.m_loteryTargets[i] << ", ";
+		}
+		output << "\n";
+		break;
+	default:
+		break;
+	}
+	
+	return output;
+}
+
+
+std::wostream& operator<< (std::wostream& output, const Action& action)
+{
+		switch(action.m_type)
+	{
+	case ACTION_CREATE_CHAR:
+		output << L"Type: Create character; Target: " << action.m_loteryTargets[0] << L"\n";
+		break;
+	case ACTION_MOVE:
+		output << L"Type: Move; Target: " << action.m_loteryTargets[0] << L"\n";
+		output << L"   Desc: " << action.m_desc.ToStdWstring() << L"\n";
+		break;
+	case ACTION_LOTERY:
+		output << L"Type: Lotery; Targets: ";
+		for (int i = 0; i < 10; ++i)
+		{
+			output << action.m_loteryTargets[i] << L", ";
+		}
+		output << L"\n";
+		break;
+	default:
+		break;
+	}
+	
+	return output;
 }

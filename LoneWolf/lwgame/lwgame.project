@@ -100,4 +100,5 @@
   <VirtualDirectory Name="resources">
     <File Name="gui.fbp"/>
   </VirtualDirectory>
+  <Dependencies Name="Debug"/>
 </CodeLite_Project>

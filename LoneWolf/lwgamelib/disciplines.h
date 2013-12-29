@@ -1,6 +1,9 @@
 #ifndef __LONE_WOLF_DISCIPLINES_H__
 #define __LONE_WOLF_DISCIPLINES_H__
 
+#include <map>
+#include <wx/string.h>
+#include "lwdefs.h"
 
 struct Discipline {
 	EDisciplines m_type;
@@ -20,7 +23,7 @@ class DisciplinesManager {
 	typedef std::map<EDisciplines, Discipline> TDisciplinesMap;
 	typedef std::pair<EDisciplines, Discipline> TDisciplinesMapPair;
 	
-	const EDisciplines UNKNOWN_DISC;
+	static const Discipline UNKNOWN_DISC;
 private:
 	TDisciplinesMap m_disciplineDescMap;
 	
@@ -29,7 +32,7 @@ public:
 	~DisciplinesManager() {}
 	
 	bool AddDisciplineDesc(EDisciplines type, const wxString &title, wxString &desc);
-	Discipline& GetDiscipline(EDisciplines type);
+	const Discipline& GetDiscipline(EDisciplines type);
 };
 
 

@@ -3,6 +3,9 @@
 
 
 #include <map>
+#include <wx/defs.h>
+#include <wx/string.h>
+#include "lwdefs.h"
 
 
 struct Item {
@@ -32,7 +35,7 @@ public:
 class ItemAndWeaponManager {
 	typedef std::map<wxInt32,Item> TItemMap;
 	typedef std::pair<wxInt32,Item> TItemMapPair;
-	const Item UNKNOWN_ITEM;
+	static const Item UNKNOWN_ITEM;
 	
 private:
 	TItemMap m_weaponsMap;
@@ -43,17 +46,17 @@ public:
 	~ItemAndWeaponManager() {}
 	
 	bool AddWeapon(EWeapons type, const wxString& title, const wxString& desc);
-	Item& GetWeapon(EWeapons type);
+	const Item& GetWeapon(EWeapons type);
 	
 	bool AddBagItem(EBagItems type, const wxString& title, const wxString& desc);
-	Item& GetBagItem(EWeapons type);
+	const Item& GetBagItem(EWeapons type);
 	
 	bool AddSpecialItem(ESpecialItems type, const wxString& title, const wxString& desc);
-	Item& GetSpecialItem(EWeapons type);
+	const Item& GetSpecialItem(EWeapons type);
 
 private:
-	Item& AddItem(wxInt32 type, const wxString& title, const wxString& desc, TItemMap& itemMap);
-	Item& GetItem(wxInt32 type, TItemMap& itemMap);
+	bool AddItem(wxInt32 type, const wxString& title, const wxString& desc, TItemMap& itemMap);
+	const Item& GetItem(wxInt32 type, TItemMap& itemMap);
 };
 
 

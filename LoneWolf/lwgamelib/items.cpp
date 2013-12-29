@@ -17,34 +17,34 @@ bool ItemAndWeaponManager::AddWeapon(EWeapons type, const wxString& title, const
 	return AddItem(type, title, desc, m_weaponsMap);
 }
 
-Item& ItemAndWeaponManager::GetBagItem(EWeapons type)
+const Item& ItemAndWeaponManager::GetBagItem(EWeapons type)
 {
 	return GetItem(type, m_bagItemsMap);
 }
 
-Item& ItemAndWeaponManager::GetSpecialItem(EWeapons type)
+const Item& ItemAndWeaponManager::GetSpecialItem(EWeapons type)
 {
 	return GetItem(type, m_specialItemsMap);
 }
 
-Item& ItemAndWeaponManager::GetWeapon(EWeapons type)
+const Item& ItemAndWeaponManager::GetWeapon(EWeapons type)
 {	
 	return GetItem(type, m_weaponsMap);
 }
 
-Item& ItemAndWeaponManager::AddItem(wxInt32 type, const wxString& title, const wxString& desc, TItemMap& itemMap)
+bool ItemAndWeaponManager::AddItem(wxInt32 type, const wxString& title, const wxString& desc, TItemMap& itemMap)
 {
 	Item item;
 	item.m_id = type;
 	item.m_title = title;
 	item.m_desc = desc;
 	std::pair<TItemMap::iterator, bool> insertResult;
-	insertResult = itemMap.insert(item);
+	insertResult = itemMap.insert(TItemMapPair(type, item));
 	
 	return insertResult.second;
 }
 
-Item& ItemAndWeaponManager::GetItem(wxInt32 type, TItemMap& itemMap)
+const Item& ItemAndWeaponManager::GetItem(wxInt32 type, TItemMap& itemMap)
 {
 	TItemMap::iterator iter;
 	iter = itemMap.find(type);
@@ -53,5 +53,5 @@ Item& ItemAndWeaponManager::GetItem(wxInt32 type, TItemMap& itemMap)
 		return UNKNOWN_ITEM;
 	}
 	
-	return item->second;
+	return iter->second;
 }

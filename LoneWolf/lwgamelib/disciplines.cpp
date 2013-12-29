@@ -1,6 +1,6 @@
 #include "disciplines.h"
 
-const EDisciplines DisciplinesManager::UNKNOWN_DISC = Discipline();
+const Discipline DisciplinesManager::UNKNOWN_DISC = Discipline();
 
 bool DisciplinesManager::AddDisciplineDesc(EDisciplines type, const wxString& title, wxString& desc)
 {
@@ -10,7 +10,7 @@ bool DisciplinesManager::AddDisciplineDesc(EDisciplines type, const wxString& ti
 	{
 		//add new map item
 		std::pair<TDisciplinesMap::iterator, bool> insertPair;
-		insertPair = m_disciplineDescMap.insert(type);
+		insertPair = m_disciplineDescMap.insert(TDisciplinesMapPair(type, Discipline()));
 		if(insertPair.second)
 		{
 			insertPair.first->second.m_type = type;
@@ -28,7 +28,7 @@ bool DisciplinesManager::AddDisciplineDesc(EDisciplines type, const wxString& ti
 	return true;
 }
 
-Discipline& DisciplinesManager::GetDiscipline(EDisciplines type)
+const Discipline& DisciplinesManager::GetDiscipline(EDisciplines type)
 {
 	TDisciplinesMap::iterator iter;
 	iter = m_disciplineDescMap.find(type);

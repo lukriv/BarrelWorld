@@ -28,7 +28,8 @@ static const wxChar* GENERAL_ATTR_CHOICE_STR		= wxT("choice");
 static const wxChar* GENERAL_ATTR_ID_STR			= wxT("id");
 static const wxChar* GENERAL_ATTR_TARGET_STR		= wxT("target");
 static const wxChar* GENERAL_ATTR_SKILL_NEEDED_STR	= wxT("skill_needed");
-static const wxChar* GENERAL_ATTR_NUMBERS_STR		= wxT("numbers");
+static const wxChar* GENERAL_ATTR_NUMBERS_FROM_STR	= wxT("numbers_from");
+static const wxChar* GENERAL_ATTR_NUMBERS_TO_STR	= wxT("numbers_to");
 
 //////////////////////////////////////
 /////      Attribute values      /////

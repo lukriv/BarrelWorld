@@ -2,16 +2,16 @@
 <CodeLite_Workspace Name="LoneWolf" Database="">
   <Project Name="lwgame" Path="lwgame/lwgame.project" Active="No"/>
   <Project Name="chapters" Path="chapters/chapters.project" Active="No"/>
-  <Project Name="lwgamelib" Path="lwgamelib/lwgamelib.project" Active="Yes"/>
-  <Project Name="lwconsole" Path="lwconsole/lwconsole.project" Active="No"/>
+  <Project Name="lwgamelib" Path="lwgamelib/lwgamelib.project" Active="No"/>
+  <Project Name="lwconsole" Path="lwconsole/lwconsole.project" Active="Yes"/>
   <BuildMatrix>
-    <WorkspaceConfiguration Name="Debug" Selected="no">
+    <WorkspaceConfiguration Name="Debug" Selected="yes">
       <Project Name="lwgame" ConfigName="Debug"/>
       <Project Name="chapters" ConfigName="Debug"/>
       <Project Name="lwgamelib" ConfigName="Debug"/>
       <Project Name="lwconsole" ConfigName="Debug"/>
     </WorkspaceConfiguration>
-    <WorkspaceConfiguration Name="Release" Selected="yes">
+    <WorkspaceConfiguration Name="Release" Selected="no">
       <Project Name="lwgame" ConfigName="Release"/>
       <Project Name="chapters" ConfigName="Debug"/>
       <Project Name="lwgamelib" ConfigName="Release"/>
