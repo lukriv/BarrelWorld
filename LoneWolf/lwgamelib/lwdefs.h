@@ -52,17 +52,16 @@ enum EActionType {
 
 
 struct ConvertTable {
-	wxDword m_id;
-	wxChar* m_str;
+	wxInt32 m_id;
+	const wxChar* m_str;
 };
 
 class Convertor {
 private:
-	static const wxDword GetConvertTableSize(const ConvertTable& table);
 	template <typename T> 
-		static T ConvertNameToType(const wxString &name, const ConvertTable& table);
+		static T ConvertNameToType(const wxString &name, const ConvertTable table[], wxDword tableSize);
 	template <typename T> 
-		static const wxChar* GetName(T type, const ConvertTable& table);
+		static const wxChar* GetName(T type, const ConvertTable table[], wxDword tableSize);
 
 public:
 	static const wxChar* GetDisciplineName(EDisciplines type);

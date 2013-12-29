@@ -1,9 +1,11 @@
 #ifndef __GAME_SCENE_MAP_H__
 #define __GAME_SCENE_MAP_H__
 
-
+#include <map>
+#include <iostream>
+#include <wx/defs.h>
+#include <wx/string.h>
 #include "actions.h"
-#include "disciplines.h"
 
 
 class Scene {
@@ -17,7 +19,10 @@ public:
 	~Scene() {}
 	
 	Scene& operator=(const Scene& scene);
+	
 };
+
+
 
 
 class SceneManager {
@@ -29,10 +34,8 @@ private:
 	wxString m_title;
 	TSceneMap m_sceneMap;
 	
-	// managers
-	ActionManager m_actionMgr;
-	DisciplinesManager m_disciplineMgr;
-	ItemAndWeaponManager m_itemAndWeaponMgr;
+	friend std::ostream& operator<< (std::ostream &stream, const SceneManager& scene);
+	friend std::wostream& operator<< (std::wostream &stream, const SceneManager& scene);
 	
 public:
 	SceneManager() : m_id(0) {}
@@ -48,11 +51,24 @@ public:
 	void RemoveScene(wxDword sceneId);
 	Scene* GetScene(wxDword sceneId);
 	
-	inline ActionManager& GetActionMgr() {return m_actionMgr;}
-	inline DisciplinesManager& GetDisciplineMgr() {return m_disciplineMgr;}
-	inline ItemAndWeaponManager& GetItemAndDiscMgr() {return m_itemAndWeaponMgr;}
+	//scene map testing
+	/*! 
+		\brief Test to chapter completness
+	
+		It tests to missing scene IDs - no ID should be missing and it should be incremental sequence.
+		Test if all scenes is reacheable from scene 0.
+		
+		\retval true All testing cases pass.
+		\retval false Test fail.
+	*/
+	bool SceneMapTest();
 	
 };
 
+std::ostream& operator<< (std::ostream &stream, const Scene& scene);
+std::ostream& operator<< (std::ostream &stream, const SceneManager& scene);
+
+std::wostream& operator<< (std::wostream &stream, const Scene& scene);
+std::wostream& operator<< (std::wostream &stream, const SceneManager& scene);
 
 #endif //__GAME_SCENE_MAP_H__
