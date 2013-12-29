@@ -51,3 +51,43 @@ Tah:
  - pokud není ádná karta na stole ani v balíèku, hráè neudìlá nic a èeká na tah protivníka
  - pokud hráè ani protivník není schopen tahu, bitva konèí remízou
  - pokud hráè nebo protivník nemá další ivoty bitva konèí vítìzstvím postavy s nenulovım poètem ivotù
+
+2)
+Základní definice:
+ - hráè smí pouít libovolné kombo karet z karet vyloenıch na stùl (vèetnì obrannıch komb) s tím, e danné kombo hráèova postava musí znát
+ - ádné energie (energie suplují karty vyloené na stùl)
+ - ádné zkušenosti
+ - nové karty za peníze
+ - nové dovednosti = novı druh karty, nebo kombo karet
+ - sílu karet ovlivòuje hodnota karty (s lepšími dovednostmi k dispozici lepší a úèinnìjší karty) a vybavení hráèovi postavy
+ 
+Hráèovi atributy:
+ - zdraví
+ - síla 
+ - druh nesené zbranì
+ - druh nesené zbroje
+ 
+Karty v balíèku:
+ - hráèovi postupnì pøibıvají v jeho celkovém balíèku nové karty podle dovedností, které ovládá
+ - nové dovednosti (nové karty) si poøizuje u "uèitelù" za peníze
+ - kadı uèitel poskytne hráèovi pouze omezené mnoství stejnıch karet do balíèku (pojistka proti nadmìrnému naplnìní balíèku "ultimátními kartami")
+ - pøi bitvì mùe pouít hráè balíèek karet sestavenı dle vıbìru hráèe z karet, které u hráè obdrel nebo nakoupil
+	(v bojovém balíèku mohou bıt pouze karty, které odpovídají hráèovu aktuálnímu vybavení, tj. hráè nemùe pouít kartu "bodni" pokud nemá v ruce zbraò nebo kartu "odstrè štítem" nemáli v ruce štít)
+ - poøadí karet v balíèku se generuje náhodnì
+
+Karty "na stole":
+ - na stole má hráè na vıbìr ze 2 a 7 karet (dle zkušeností hráèe a jeho vybavení), které mùe vyuít v libovolném poøadí
+ - na konci kadého tahu se z balíèku doplní 1 a 7 karet na základì dovedností hráèovi postavi
+ - pokud dojdou karty v balíèku na stùl se karty doplòovat pøestanou 
+ 
+Obranné karty:
+ - hráè mùe mít na sobì (dle dovedností) mít v jeden okamik 3 a 5 aktivních obrannıch komb
+ - v pøípadì, e hráè má plnı poèet aktivních obrannıch komb, je libovolné (dle vıbìru hráèe) nahrazena novım obrannım kombem
+ 
+Útoèné karty:
+
+Tah:
+ - v jednom tahu smí hráè pouít pouze jedno kombo karet
+ - pokud není ádná karta na stole ani v balíèku, hráè neudìlá nic a èeká na tah protivníka (v tomto pøípadì mùe bıt zajmut - hráè je vysílen)
+ - pokud hráè ani protivník není schopen tahu, bitva konèí remízou
+ - pokud hráè nebo protivník nemá další ivoty bitva konèí vítìzstvím postavy s nenulovım poètem ivotù
