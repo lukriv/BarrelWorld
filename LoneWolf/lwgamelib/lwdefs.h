@@ -53,6 +53,8 @@ typedef wxInt32 EDisciplines;
 static const EItem ITEM_UNKNOWN = 0;
 static const EDisciplines DISCIPLINE_UNKNOWN = 0;
 
+static const wxInt32 TARGET_UNKNOWN = -1;
+
 enum EEventType {
 	EVENT_UNKNOWN 					= 0,
 	EVENT_ADD_ITEM_TO_CHARACTER 	= 1,
@@ -66,7 +68,8 @@ enum EActionType {
 	ACTION_UNKNOWN 		= 0,
 	ACTION_CREATE_CHAR	= 1,
 	ACTION_MOVE			= 2,
-	ACTION_LOTERY		= 3		
+	ACTION_LOTERY		= 3,
+	ACTION_FIGHT		= 4
 };
 
 enum EItemPlacement {

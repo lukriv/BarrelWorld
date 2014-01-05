@@ -288,7 +288,108 @@ bool Character::AddItem(EItem item)
 	return true;
 }
 
+bool Character::ApplyEvent(Event& event)
+{
+	if((event.m_property.m_neededSkill != DISCIPLINE_UNKNOWN)&&(!m_disciplines.Contains(event.m_property.m_neededSkill)))
+	{
+		// you dont have needed skill
+		return true;
+	}
+	
+	if(((event.m_property.m_neededItem != ITEM_UNKNOWN))&&(!ContainsItem(event.m_property.m_neededItem)))
+	{
+		// you dont have needed item
+		return true;
+	}
+	
+	if((event.m_property.m_cancelSkill != DISCIPLINE_UNKNOWN)&&(m_disciplines.Contains(event.m_property.m_cancelSkill)))
+	{
+		// you have cancel skill - break event
+		return true;
+	}
+	
+	if(((event.m_property.m_cancelItem != ITEM_UNKNOWN))&&(ContainsItem(event.m_property.m_cancelItem)))
+	{
+		// you have cancel item - you use it for stopping this event
+		if(m_pResMgr->GetItemAndDiscMgr().GetItem(event.m_property.m_cancelItem).m_properties.m_oneUse)
+		{
+			LoseItem(event.m_property.m_cancelItem);
+		}
+		return true;
+	}
+	
+	m_actualAttackSkill += event.m_property.m_actualAttack;	
+	m_actualCondition += event.m_property.m_actualCond;
+	m_baseAttackSkill += event.m_property.m_baseAttack;
+	m_baseCondition += event.m_property.m_baseCond;
+	AddGold(event.m_property.m_goldCount);
+	
+	return true;
+	
+}
 
+void Character::ApplySkills(Character& enemyCharacter)
+{
+	CharacterDisciplines::Iterator iter;
+	for(iter = m_disciplines.Begin(); iter != m_disciplines.End(); iter++)
+	{
+		if(!iter->second.m_fightSkill)
+		{
+			// skill is not useable in fight
+			continue;
+		}
+		if(((iter->second.m_neededItem != ITEM_UNKNOWN))&&(!ContainsItem(iter->second.m_neededItem)))
+		{
+			// you dont have needed item
+			continue;
+		}
+		
+		if((iter->second.m_cancelSkill != DISCIPLINE_UNKNOWN)&&(enemyCharacter.m_disciplines.Contains(iter->second.m_cancelSkill)))
+		{
+			// enemy cancel your skill
+			continue;
+		}
+		
+		if(((iter->second.m_cancelItem != ITEM_UNKNOWN))&&(enemyCharacter.ContainsItem(iter->second.m_cancelItem)))
+		{
+			// enemy cancel your skill by item
+			continue;
+		}
+		
+		m_actualAttackSkill += iter->second.m_actualAttack;
+		m_actualCondition += iter->second.m_actualCond;
+	}
+}
 
-
-
+void Character::ApplySkills()
+{
+	CharacterDisciplines::Iterator iter;
+	for(iter = m_disciplines.Begin(); iter != m_disciplines.End(); iter++)
+	{
+		if(iter->second.m_fightSkill)
+		{
+			// skill is useable in fight only
+			continue;
+		}
+		if(((iter->second.m_neededItem != ITEM_UNKNOWN))&&(!ContainsItem(iter->second.m_neededItem)))
+		{
+			// you dont have needed item
+			continue;
+		}
+		
+		if((iter->second.m_cancelSkill != DISCIPLINE_UNKNOWN)&&(enemyCharacter.m_disciplines.Contains(iter->second.m_cancelSkill)))
+		{
+			// enemy cancel your skill
+			continue;
+		}
+		
+		if(((iter->second.m_cancelItem != ITEM_UNKNOWN))&&(enemyCharacter.ContainsItem(iter->second.m_cancelItem)))
+		{
+			// enemy cancel your skill by item
+			continue;
+		}
+		
+		m_actualAttackSkill += iter->second.m_actualAttack;
+		m_actualCondition += iter->second.m_actualCond;
+	}
+}

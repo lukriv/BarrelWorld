@@ -113,8 +113,8 @@ public:
 class CharacterDisciplines {
 private:
 	// private types
-	typedef std::map<EDisciplines,EventProperties> TDiscInfo;
-	typedef std::pair<EDisciplines,EventProperties> TDiscInfoPair;
+	typedef std::map<EDisciplines,DisciplineProperties> TDiscInfo;
+	typedef std::pair<EDisciplines,DisciplineProperties> TDiscInfoPair;
 public:
 	// public types
 	typedef TDiscInfo::const_iterator Iterator;
@@ -131,7 +131,7 @@ public:
 	 * \retval true Item was successfully added to container
 	 * \retval false Item already exists in container
 	 */
-	bool Add(EDisciplines disc, const EventProperties& prop)
+	bool Add(EDisciplines disc, const DisciplineProperties& prop)
 	{
 		std::pair<TDiscInfo::iterator, bool> retval;
 		retval = m_container.insert(TDiscInfoPair(disc, prop));
@@ -164,7 +164,7 @@ public:
 	 */
 	inline Iterator Find(EDisciplines item) { return m_container.find(item); }
 	
-	EventProperties* FindValue(EDisciplines item) 
+	DisciplineProperties* FindValue(EDisciplines item) 
 	{
 		TDiscInfo::iterator iter = m_container.find(item);
 		if(iter == m_container.end())
@@ -265,6 +265,37 @@ public:
 	inline wxInt32 GetActualConditions() { return m_actualCondition;}
 		
 	inline wxInt32 GetBaseAttackSkill() {return m_baseAttackSkill;}
+	
+	
+	// fight methods
+	
+	/*!
+	 * \brief Reset attact skill to default
+	 * 
+	 * This is used at beginnig of fight turn, before all events and skill are applied on character
+	 * 
+	 */
+	inline void ResetActualAttackSkill() { m_actualAttackSkill = m_baseAttackSkill; }
+	
+	
+	/*!
+	 * \brief Apply skills during non-fight scene
+	 */
+	void ApplySkills();
+	
+	/*!
+	 * \brief Apply all skill modificators during figth
+	 *
+	 * Effect of skill can be canceled by enemy skill or item.
+	 *
+	 * \param enemyCharacter
+	 */
+	void ApplySkills(Character &enemyCharacter);
+	
+	/*!
+	 * \brief Get result attack skill affter application all events and skills
+	 * \return 
+	 */
 	inline wxInt32 GetActualAttackSkill() {return m_actualAttackSkill;}
 	
 	/*!
@@ -287,7 +318,7 @@ public:
 	inline CharacterSpecialItems& GetSpecialItems() {return m_specialItems;}
 	inline CharacterBody& GetBody() { return m_body; }
 	
-	void GenerateFightCharacter(FightingCharacter& fightChar);
+	bool ApplyEvent(Event& event);
 	
 	void RecomputeState();
 	

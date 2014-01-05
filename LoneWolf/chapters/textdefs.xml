@@ -27,9 +27,10 @@ and open the template in the editor.
 			<weapon id="21" name="all_weapons" title="Všechny zbraně" placement="weapon" />
 			<weapon id="20" name="random_weapon" title="Náhodně vybraná zbraň" placement="weapon" />
 
-			<item id="30" name="meal" title="Porce jídla" placement="backpack" />
-           <item id="31" name="healing_potion" title="Léčivý elixír" desc="Vypiješ-li nápoj po boji, obnovíš si čtyři ze ztracených KONDIČNÍCH bodů. Množství elixíru je ale omezené, stačí jen na jedno použití." placement="backpack" cond_actual="4" />
-			<item id="32" name="healing_herb" title="Léčivá bylina" desc="Jednou porcí léčivé byliny laumspuru získáš zpět 3 KONDIČNÍ body" placement="backpack" cond_actual="3" />
+			<item id="30" name="meal" title="Porce jídla" placement="backpack" one_use="" />
+           <item id="31" name="healing_potion" title="Léčivý elixír" desc="Vypiješ-li nápoj po boji, obnovíš si čtyři ze ztracených KONDIČNÍCH bodů. Množství elixíru je ale omezené, stačí jen na jedno použití."
+								placement="backpack" cond_actual="4" one_use="" />
+			<item id="32" name="healing_herb" title="Léčivá bylina" desc="Jednou porcí léčivé byliny laumspuru získáš zpět 3 KONDIČNÍ body" placement="backpack" cond_actual="3" one_use="" />
 			<item id="99" name="random_backpack_item" title="Náhodně vybraný předmět z batohu" placement="backpack" />
 
 			<item id="100" name="backpack" title="Batoh" desc="Vak nošený na zádech na přenášení až 8 věcí" placement="body_back" />
@@ -48,14 +49,14 @@ and open the template in the editor.
             <skill id="4" name="tracking" title="Stopování" desc="Stopování je dovednost, která pomáhá rytíři Kai najít v divočině správnou cestu, vypátrat polohu jiného člověka či tvora a rozluštit tajemství šlépějí a stop." />
             <skill id="5" name="healing" title="Léčitelství" desc="Léčitelství je disciplína, která slouží k regeneraci sil, tj. k obnově bodů za KONDICI, které rytíř Kai ztratil v boji. Pokud tuto dovednost ovládáš,
 				můžeš si připočítat k bodům za KONDICI vždy po jednom bodu za každou očíslovanou pasáž knihy, kterou projdeš, aniž se zapleteš do nějaké potyčky. (Využít tohoto pravidla však můžeš jen tehdy,
-				když počet bodů v okénku KONDICE klesne pod výchozí hodnotu.) Nezapomeň, že tvoje KONDICE nemůže přerůst přes původní úroveň." />
+				když počet bodů v okénku KONDICE klesne pod výchozí hodnotu.) Nezapomeň, že tvoje KONDICE nemůže přerůst přes původní úroveň." cond_actual="1" />
             <skill id="6" name="weaponskill" title="Ovládání zbraně" desc="Mniši kláštera Kai vycvičili každého učedníka v dokonalém ovládání jednoho druhu zbraně. Pokud ses rozhodl, že jednou z tvých disciplín Kai bude dovedné zacházení se zbraní,
 				vyhledej obvyklým způsobem číslo v Tabulce náhody na poslední straně knihy. Podle čísla, které z ní získáš, zjistíš, kterou zbraň mistrně ovládáš (srovnej s přehledem níže). Když ji použiješ v boji,
-					připočti si dva body do kolonky UMĚNÍ BOJE." actual_attack="2" item_needed="random_weapon" />
+					připočti si dva body do kolonky UMĚNÍ BOJE." actual_attack="2" item_needed="random_weapon" fight_skill="" />
             <skill id="7" name="mindshield" title="Nehmotná clona" desc="Temní páni i další ďábelské stvůry, kterým velí, ovládají schopnost útočit silou vlastní mysli. Proti jejich výpadům se můžeš bránit vytvořením nehmotné duchovní clony,
-				štítu, a tak neztratíš body z konta KONDICE, i když se staneš terčem útoku touto skrytou zbraní." />
+				štítu, a tak neztratíš body z konta KONDICE, i když se staneš terčem útoku touto skrytou zbraní." fight_skill="" />
             <skill id="8" name="mindblast" title="Útok duševní silou" desc="Rytíř Kai, který ovládá tuto dovednost, může místo běžné zbraně použít proti nepříteli svou duševní sílu. Připočítá si pak dva zvláštní body k hodnotě UMĚNÍ BOJE.
-				Ale pozor, ne všem netvorům, se kterými se na své dlouhé dobrodružné cestě střetneš, duševní síla škodí. Včas se dozvíš, je-li tvůj nepřítel odolný." actual_attack="2" canceled_by_skill="mindshield" />
+				Ale pozor, ne všem netvorům, se kterými se na své dlouhé dobrodružné cestě střetneš, duševní síla škodí. Včas se dozvíš, je-li tvůj nepřítel odolný." actual_attack="2" canceled_by_skill="mindshield" fight_skill="" />
             <skill id="9" name="animal_kinship" title="Spřízněnost se zvířaty" desc="Je disciplína, díky níž může rytíř Kai komunikovat s některými zvířaty a úmysly jiných může uhodnout." />
             <skill id="10" name="mind_over_matter" title="Ovládání hmoty myšlenkou" desc="Dokonalé zvládnutí této disciplíny vybaví rytíře Kai schopností pohybovat malými předměty pouhou silou koncentrace, silou vůle soustředěné na určitý předmět." />
         </disciplines>

@@ -12,7 +12,7 @@ struct Discipline {
 	EDisciplines m_id;
 	wxString m_title;
 	wxString m_desc;
-	EventProperties m_property;
+	DisciplineProperties m_property;
 public:
 	Discipline() : m_id(DISCIPLINE_UNKNOWN) {}
 	Discipline(EDisciplines discType) : m_id(discType) {}

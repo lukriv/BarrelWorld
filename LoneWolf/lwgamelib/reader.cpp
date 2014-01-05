@@ -111,12 +111,14 @@ bool LoneWolfXmlReader::ParseSceneActions(wxXmlNode* sceneActionNode, GlobalReso
 	wxString requiredItemValue;
 	wxXmlNode* child = sceneActionNode->GetChildren();
 	wxXmlNode *loteryNode = NULL;
+	wxScopedPtr<Action> spAction;
+	wxScopedPtr<ActionFight> spActionFight;
 	
 	while (child)
 	{
 		if(child->GetName() == GENERAL_TAG_ACTION_STR)
 		{
-			Action action;
+			
 			
 			// read attributes
 			nameValue.Clear();
@@ -125,6 +127,8 @@ bool LoneWolfXmlReader::ParseSceneActions(wxXmlNode* sceneActionNode, GlobalReso
 				ProcessError(child);
 				return false;
 			}
+			
+			Action action;
 			
 			action.SetCondition(child->HasAttribute(GENERAL_ATTR_CONDITIONED_STR));
 			
@@ -533,7 +537,7 @@ bool LoneWolfXmlReader::ParseDefDisciplines(wxXmlNode* defNode, GlobalResourceMa
 			disc.m_title = child->GetAttribute(wxString(GENERAL_ATTR_TITLE_STR));
 			disc.m_desc = child->GetAttribute(wxString(GENERAL_ATTR_DESC_STR));
 			
-			if(!ReadEventAttr(child, resMgr, disc.m_property))
+			if(!ReadDisciplineAttr(child, resMgr, disc.m_property))
 			{
 				return false;
 			}
@@ -661,6 +665,12 @@ bool LoneWolfXmlReader::ReadItemAttr(wxXmlNode* itemNode, GlobalResourceManager&
 		item.m_properties.m_maxCond = static_cast<wxInt32>(intValue);
 	}
 
+	if(itemNode->HasAttribute(GENERAL_ATTR_ONE_USE_STR))
+	{
+		item.m_properties.m_oneUse = true;
+	} else {
+		item.m_properties.m_oneUse = false;
+	}
 	
 
 	if(!itemNode->GetAttribute(wxString(GENERAL_ATTR_PLACEMENT_STR), &placementValue))
@@ -700,7 +710,7 @@ bool LoneWolfXmlReader::ReadEventAttr(wxXmlNode* eventNode, GlobalResourceManage
 	{	
 		tempValue = eventNode->GetAttribute(wxString(GENERAL_ATTR_COND_MAX_STR));
 		tempValue.ToLong(&intValue);
-		properties.m_maxCond = intValue;
+		properties.m_baseCond = intValue;
 	}
 	
 	if(eventNode->HasAttribute(GENERAL_ATTR_ATTACK_ACT_STR))
@@ -759,3 +769,56 @@ bool LoneWolfXmlReader::ReadEventAttr(wxXmlNode* eventNode, GlobalResourceManage
 	return true;
 }
 
+bool LoneWolfXmlReader::ReadDisciplineAttr(wxXmlNode*, GlobalResourceManager& resMgr, DisciplineProperties& properties)
+{
+		wxString tempValue;
+	long int intValue;
+	
+	if(eventNode->HasAttribute(GENERAL_ATTR_COND_ACT_STR))
+	{
+		tempValue = eventNode->GetAttribute(wxString(GENERAL_ATTR_COND_ACT_STR));
+		tempValue.ToLong(&intValue);
+		properties.m_actualCond = intValue;
+	}
+	
+	if(eventNode->HasAttribute(GENERAL_ATTR_ATTACK_ACT_STR))
+	{
+		tempValue = eventNode->GetAttribute(wxString(GENERAL_ATTR_ATTACK_ACT_STR));
+		tempValue.ToLong(&intValue);
+		properties.m_actualAttack = intValue;
+	}
+	
+	if(eventNode->HasAttribute(GENERAL_ATTR_CANCELED_BY_ITEM_STR))
+	{
+		tempValue = eventNode->GetAttribute(wxString(GENERAL_ATTR_CANCELED_BY_ITEM_STR));
+		properties.m_cancelItem = resMgr.GetItemAndDiscMgr().GetItemType(tempValue);
+	}
+	
+	if(eventNode->HasAttribute(GENERAL_ATTR_CANCELED_BY_SKILL_STR))
+	{
+		tempValue = eventNode->GetAttribute(wxString(GENERAL_ATTR_CANCELED_BY_SKILL_STR));
+		properties.m_cancelSkill = resMgr.GetDisciplineMgr().GetDisciplineType(tempValue);
+	}
+	
+	if(eventNode->HasAttribute(GENERAL_ATTR_ITEM_NEEDED_STR))
+	{
+		tempValue = eventNode->GetAttribute(wxString(GENERAL_ATTR_ITEM_NEEDED_STR));
+		properties.m_neededItem = resMgr.GetItemAndDiscMgr().GetItemType(tempValue);
+	}
+	
+	if(eventNode->HasAttribute(GENERAL_ATTR_SKILL_NEEDED_STR))
+	{
+		tempValue = eventNode->GetAttribute(wxString(GENERAL_ATTR_SKILL_NEEDED_STR));
+		properties.m_neededSkill = resMgr.GetDisciplineMgr().GetDisciplineType(tempValue);
+	}
+	
+	if(eventNode->HasAttribute(GENERAL_ATTR_FIGTH_SKILL_STR))
+	{
+		properties.m_fightSkill = true;
+	} else {
+		properties.m_fightSkill = false;
+	}
+
+	
+	return true;
+}
