@@ -34,6 +34,8 @@ private:
 	static bool ParseDefSpecialItems(wxXmlNode* defNode, GlobalResourceManager& resMgr);
 	static bool ReadItemAttr(wxXmlNode*, GlobalResourceManager& resMgr);
 	
+	static bool ReadDisciplineAttr(wxXmlNode*, GlobalResourceManager& resMgr, DisciplineProperties& properties);
+	
 	/*!
 	 * \brief Read attributes cond_act, cond_max, attack_max, duration
 	 * \param eventNode Arbirary node with event attributes

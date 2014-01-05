@@ -74,18 +74,96 @@ static const FightTable plus11[10] =
 	{ -9,-3}, {-10,-2}, {-11,-2}, {-12,-2}, {-14,-1}, {-16,-1}, {-18, 0}, {-1000, 0}, {-1000, 0}, {-1000, 0}
 };
 
+static const wxInt32 TURNS_INFINITE = -1;
 
-
-
-
-class FightingCharacter {
-	wxInt32 m_actualAttackSkill;
-	wxInt32 m_actualConditions;
-public:
-	inline wxInt32 GetActualAttackSkill() { return m_actualAttackSkill; }
-	inline wxInt32 GetActualConditions() { return m_actualConditions; }
-	
-	void Attack(wxInt32 attack);
+enum EFightResult {
+	FIGHT_RESULT_NOT_STARTED	= 0,
+	FIGHT_RESULT_WIN			= 1,
+	FIGHT_RESULT_RETREAT		= 2,
+	FIGHT_RESULT_LOST			= 3	
 };
+
+class ActionFight : public ActionBase {
+	typedef std::list<Character> TEnemyList;
+	typedef std::list<Event> TEventList;
+private:
+	wxInt32 m_turnNumber;
+	wxInt32 m_winTarget;
+	wxInt32 m_loseTarget;
+	wxInt32 m_retreatTarget;
+	wxInt32 m_turnsToWin;
+	wxInt32 m_turnsToRetreat;
+	FightTable m_lastTurnHits;
+	EFightResult m_fightResult;
+	bool m_retreat;
+	TEnemyList m_enemies;
+	TEventList m_fightEvents;
+	
+	Character* m_pLoneWolf;
+	
+public:
+	ActionFight() : m_turnNumber(0)
+					, m_winTarget(TARGET_UNKNOWN)
+					, m_loseTarget(TARGET_UNKNOWN)
+					, m_retreatTarget(TARGET_UNKNOWN)
+					, m_turnsToWin(TURNS_INFINITE)
+					, m_turnsToRetreat(TURNS_INFINITE)
+					, m_fightResult(FIGHT_RESULT_NOT_STARTED)
+					, m_retreat(false)
+					, m_pLoneWolf(NULL)
+	{
+		m_lastTurnHits.m_charWound = 0;
+		m_lastTurnHits.m_enemyWound = 0;
+	}
+	
+	virtual EActionType GetType() { return ACTION_FIGHT; }
+	
+	bool AddEnemy(Character &enemy);
+	void GetEnemyList(wxVector<Character> &enemyList);
+	bool AddEvent(Event& event);
+	
+	/*!
+	 * \brief Start fight
+	 * 
+	 * Between 
+	 * 
+	 * \param loneWolf
+	 * \param callback
+	 * \return Next target
+	 */
+	wxInt32 StartFight(Character &loneWolf, LWGameEngineCallback *callback);
+	
+	/*!
+	 * \brief Set retreat flag
+	 * 
+	 * In the next turn Lone Wolf retreats from the fight
+	 * 
+	 * \retval true Retreat flag was successfully set
+	 * \retval false Retreat is not posible in this fight
+	 */
+	bool Retreat();
+	
+	Character* GetLoneWolfCharacter() { return m_pLoneWolf; }
+	Character* GetActualEnemy() 
+	{
+		if(m_enemies.empty()) return NULL;
+		return &(m_enemies.front()); 
+	}
+	
+	wxInt32 GetActualTurn() {return m_turnNumber; }
+	wxInt32 GetLastLoneWolfHits() { return m_lastTurnHits.m_charWound; }
+	wxInt32 GetLastEnemyHits() { return m_lastTurnHits.m_enemyWound; }
+	
+	wxInt32 GetTurnsToRetreat() { return m_turnsToRetreat; }
+	wxInt32 GetTurnsToWin() { return m_turnsToWin; }
+	
+	EFightResult GetFightResult() { return m_fightResult; }
+	wxInt32 GetNextTarget();
+	
+};
+
+
+
+
 
 #endif //__LONE_WOLF_FIGHT_H__

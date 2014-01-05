@@ -25,7 +25,14 @@ public:
 };
 
 
-class Action {
+class ActionBase {
+public: 
+	virtual EActionType GetType() = 0;
+	virtual bool IsConditioned() = 0;
+};
+
+
+class Action : public ActionBase {
 	EActionType m_type;
 	wxString m_desc;
 	wxVector<wxDword> m_loteryTargets;
@@ -73,7 +80,7 @@ public:
 std::ostream& operator<< (std::ostream& output, const Action& action);
 std::wostream& operator<< (std::wostream& output, const Action& action);
 
-typedef wxVector<Action> ActionVector;
+typedef wxVector<ActionBase*> ActionVector;
 
 
 
