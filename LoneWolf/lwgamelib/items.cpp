@@ -1,57 +1,67 @@
 #include "items.h"
+#include "lwxmldefs.h"
 
-const Item ItemAndWeaponManager::UNKNOWN_ITEM = Item();
+static Item UNKNOWN_ITEM = Item();
 
-bool ItemAndWeaponManager::AddBagItem(EBagItems type, const wxString& title, const wxString& desc)
-{
-	return AddItem(type, title, desc, m_bagItemsMap);
-}
-
-bool ItemAndWeaponManager::AddSpecialItem(ESpecialItems type, const wxString& title, const wxString& desc)
-{
-	return AddItem(type, title, desc, m_specialItemsMap);
-}
-
-bool ItemAndWeaponManager::AddWeapon(EWeapons type, const wxString& title, const wxString& desc)
-{
-	return AddItem(type, title, desc, m_weaponsMap);
-}
-
-const Item& ItemAndWeaponManager::GetBagItem(EWeapons type)
-{
-	return GetItem(type, m_bagItemsMap);
-}
-
-const Item& ItemAndWeaponManager::GetSpecialItem(EWeapons type)
-{
-	return GetItem(type, m_specialItemsMap);
-}
-
-const Item& ItemAndWeaponManager::GetWeapon(EWeapons type)
-{	
-	return GetItem(type, m_weaponsMap);
-}
-
-bool ItemAndWeaponManager::AddItem(wxInt32 type, const wxString& title, const wxString& desc, TItemMap& itemMap)
-{
-	Item item;
-	item.m_id = type;
-	item.m_title = title;
-	item.m_desc = desc;
-	std::pair<TItemMap::iterator, bool> insertResult;
-	insertResult = itemMap.insert(TItemMapPair(type, item));
-	
-	return insertResult.second;
-}
-
-const Item& ItemAndWeaponManager::GetItem(wxInt32 type, TItemMap& itemMap)
+Item& ItemAndWeaponManager::GetItem(EItem type)
 {
 	TItemMap::iterator iter;
-	iter = itemMap.find(type);
-	if(iter == itemMap.end())
+	iter = m_itemsMap.find(type);
+	if(iter == m_itemsMap.end())
 	{
 		return UNKNOWN_ITEM;
 	}
 	
 	return iter->second;
+}
+
+bool ItemAndWeaponManager::ItemExists(EItem type)
+{
+	return (m_itemsMap.find(type) != m_itemsMap.end());
+}
+
+bool ItemAndWeaponManager::AddItem(const wxString& keyName, const Item& item)
+{
+	std::pair<TItemConvertTable::iterator, bool> retvalConvert;
+	std::pair<TItemMap::iterator, bool> retvalMap;
+	
+	if((item.m_id == ITEM_UNKNOWN)||(item.m_placement == ITEM_PLACEMENT_UNKNOWN)||(keyName.IsEmpty()))
+	{
+		// non-defined types are restricted
+		return false;
+	}
+	
+	retvalConvert = m_itemConvertTable.insert(TItemConvertTablePair(keyName, item.m_id));
+	if(!retvalConvert.second)
+	{
+		return false;
+	}
+	
+	retvalMap = m_itemsMap.insert(TItemMapPair(item.m_id, item));
+	return retvalMap.second;
+	
+}
+
+EItem ItemAndWeaponManager::GetItemType(const wxString& keyName)
+{
+	TItemConvertTable::iterator iter = m_itemConvertTable.find(keyName);
+	if(iter == m_itemConvertTable.end())
+	{
+		return ITEM_UNKNOWN;
+	}
+	
+	return iter->second;
+}
+
+bool ItemAndWeaponManager::InitializeSpecialTypes()
+{
+	m_allWeaponsType = GetItemType(wxString(WEAPON_ALL_STR));
+	m_randomWeaponType = GetItemType(wxString(WEAPON_RANDOM_STR));
+	m_randomBagItemType = GetItemType(wxString(BAG_ITEM_RANDOM_STR));
+	m_backpackType = GetItemType(wxString(SPECIAL_ITEM_BACKPACK_STR));
+	
+	return ((m_allWeaponsType != ITEM_UNKNOWN)
+				&&(m_randomWeaponType != ITEM_UNKNOWN)
+				&&(m_randomBagItemType != ITEM_UNKNOWN)
+				&&(m_backpackType != ITEM_UNKNOWN));
 }

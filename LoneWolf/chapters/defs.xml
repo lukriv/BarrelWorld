@@ -1,0 +1,3181 @@
+
+      <actions>
+			<action name="create_character" target="1" />
+			<action name="fight" win="13" retreat="54" lost="55" turn_to_retreat="2" turn_to_win="3">
+				<fight_event attack_actual="-1" duration="2" canceled_by_item="" canceled_by_skill="" />
+				<enemy title="kraan" attack="16" condition="24" skills="" >
+					<skill name="mindblast" attack_actual="2" />
+					<skill name="mindshield" />
+				</enemy>
+			</action>
+			<action name="move" desc="Vydat se po cestě, která mizí v lese napravo" target="85" />
+			<action name="lotery">
+                <selection numbers_from="0" numbers_to="4" target="343" />
+                <selection numbers_from="5" numbers_to="9" target="276" />
+           </action>
+		</actions>
+
+
+1
+Cítíš, že otálení u doutnajících trosek kláštera není bezpečné a mohlo by být osudné, kdyby se okřídlené nestvůry vrátily a našly tě tu. Je třeba co nejrychleji vyrazit do sommerlundské metropole, do Holmgardu, a vylíčit králi tragickou událost, která postihla klášter, oznámit mu, že výkvět bojovníků Kai byl zákeřně do jednoho vyvražděn a ty, učedník Kai, jsi stejnému osudu unikl jen náhodou. Ted stojí sommerlundští bezmocní proti odvěkým nepřátelům, vždyť jen rytíři Kai mohli vést sommerlundská vojska do úspěšného boje proti Temným pánům a všem, kteří jsou v jejich službách.
+Se stěží zadržovanými slzami dáváš věčné sbohem svým mrtvým druhům a učitelům. Šeptáš třesoucím se hlasem slib pomsty za jejich úkladné zabití.  S hlavou sklopenou se obracíš zády k troskám a opatrně sestupuješ příkrou strání dolů. 
+U úpatí vrchu se stezka dělí. Obě pěšiny, které vedou dál, míří k rozlehlým lesům.
+Chceš-li se vydat po cestě, která mizí v lese napravo, otoč na 85.
+Pokud se chceš raději držet pěšiny směřující k lesu po levé straně, otoč na 275.
+Nebo, pokud chceš využít své zvláštní schopnosti a poradit se se svým Šestým smyslem, otoč na 141. 
+2
+Jak se prodíráš houstnoucím lesem dál a dál, výkřiky Giaků za tebou slábnou, až konečně neslyšíš nic. Na vteřinku ztrácíš ostražitost a ulehčené vydechuješ, ale to se nevyplácí: nevšiml sis včas nízko rostoucí sukovité větve a tečí ležíš jak dlouhý tak široký zapleten do změti větví a hustého podrostu.
+Použij známým způsobem Tabulku náhody a zvol číslo.
+Pokud ti vyšlo číslo 0 - 4, otoč na 343.
+Jestli jsi zvolil číslo 5 - 9, obrať na 276.
+3
+Kráčíš těsně za důstojníkem, procházíte klenutým vchodem a vystupujete po několika stupních nahoru do podlouhlého sálu. Ve velkém spěchu vás míjejí vojáci, vybíhají ven a na zdobených pergamenových svitách roznášejí rozkazy velitelům v ulicích města. Přistupuje k tobě muž divokého vzezření se zjizveným obličejem, oděný do roucha v královských barvách, a vyzývá tě, abys ho následoval dovnitř do Pevnosti. Pokud se ti jeho návrh zamlouvá a chceš s ním jít, obrat na 196.
+Jestli raději jeho nabídku odmítneš a vrátíš se na hustě zalidněnou ulici, obrať na 144.
+4
+Je to malá kanoe pro jednoho člověka a je ve zuboženém stavu. Dřevo zetlelo a popraskalo, člun má trhliny na mnoha místech. Rychle zalepuješ nejhorší díry hroudami jílu a vyléváš vodu. Zdá se, že se ti podařilo alespoň na chvíli loďku opravit. Svoje věci si ukládáš do člunu a vyplouváš dolů po proudu. Jako pádlo ti slouží kus dřeva z naplavenin u břehu. Usilovně pádluješ dolů po proudu. Po chvíli slyšíš z levého břehu dusot koňských kopyt. Trvá jen okamžik, než zjistíš, že koně cválají směrem k tobě.
+Skryješ-li se před neznámými jezdci na dně kanoe, obrať na 75.
+Pokud chceš naopak upoutat jejich pozornost, otoč na 175.
+Pokud ovládáš Šestý smysl a chceš této dovednosti využít, obrat na 218.
+5
+Po hodině chůze se cesta začíná stáčet k východu. Před sebou máš mělký brod, od kterého prudce tekoucí potok pokračuje znovu zúženým skalnatým korytem k jihu. Těsně před brodem tě čeká rozcestí: tvá stezka se tam kříží s širší pěšinou, jež směřuje od severu k jihu. S vědomím, že severní cestička by tě odvedla pryč od tvého cíle, od hlavního města, obracíš se na křižovatce k jihu.
+Obrať na 111.
+6
+Z dálky k tobě doléhá dusot blížících se koní. Krčíš se za stromem a cekáš, až jezdce zahlédneš. Poznáváš členy královské gardy v uniformách armády Jeho Veličenstva. Rozmysli si, co teď podnikneš.
+Chceš-li na ně zavolat, obrať na 183.
+Pokud je necháš projet kolem a chceš dál pokračovat lesem, obrat na 200.
+7
+Na okamžik, který se ti zdá věčností, jsi zmítán a vlečen davem navzdory tvé vůli s sebou, jako když prudký proud unáší bezmocný list. Zoufale se snažíš udržet se na nohou, ale jsi zesláblý a malátný po všech útrapách, které máš za sebou, a nohy máš jako z olova. Náhle se ve tvém zorném poli objevilo dlouhé a úzké schodiště stoupající vzhůru ke střeše jakési hospody. S vypětím posledních zbytků sil se prodíráš ke schodům a pak zvolna stoupáš nahoru. Odtud se ti otevírá úchvatný výhled na členité střechy, stříšky a věže Holmgardu. V pozadí se v záři slunečních paprsků lesknou kamenné zdi Pevnosti. Všechny stavby hlavního města se tisknou blizoučko k sobě, a tak je s trochou šikovnosti snadné přeskakovat ze střechy na střechu. Skutečně taky v minulosti většina obyvatel Holmgardu s oblibou využívala "vzdušných cest" (jak zkratky přes hřebeny střech mezi sebou označovali), zvlášť v období dlouhotrvajících podzimních dešťů, kdy se nevydlážděné chodníky mění v takřka neschůdná bahniska. Ale po několika tragických pádech z výšky král vydal zákaz je používat. Po zralé úvaze dospíváš k závěru, že "vzdušné cesty" představují jedinou šanci, jak se dostat ke králi.
+Podařilo se ti překonat vzduchem několik ulic a teď tě od Pevnosti dělí jediná ulice, ale právě tady končí řetězec snadno schůdných hřebenů. Při představě, že bys měl stejným způsobem pokračovat dál a skočit na protější střechu, cítíš žaludek až v krku. Ale jsi odhodlán dosáhnout Pevnosti za každou cenu a riskovat i život, abys splnil své poslání. Přemáháš strach. Hledáš místo k co nejdelšímu rozběhu. Krev ti buší ve spáncích, rozbíháš se a těsně před propastí se mohutně odrážíš a s očima toužebně upřenýma na okraj protější střechy letíš volným prostorem.
+Zvol poslepu číslo z Tabulky náhody.
+Pokud ti vyšlo číslo 0 - 2, obrať na 108.
+Pokud ti vyšlo číslo 3 - 9, obrať na 25.
+8
+Nasloucháš hlasu Šestého smyslu, který tě varuje: na jihu zuří krutá bitva. Ale rozum ti zároveň napovídá, že k cíli vede nejrychleji jižní cesta.
+Obrať na 70 a vyber si tam trasu.
+9
+Nemůžeš se ani hnout: jakási mocná síla tě ochromila, zbavila vlastní vůle a udržuje tě v nehybnosti. Aniž bys chtěl, fascinovaně upíráš oči na ústa kostry. Z hloubky pod zemí vychází podivné tlumené hučení a chvění, připomínající bzukot milionů divokých včel. Prázdnými očními důlky mrtvého krále projel matný červený záblesk a současně sílí zlověstný hukot pod zemí, až se mění v ohlušující burácení. Není pochyb: jsi ve spárech nepřítele daleko mocnějšího a silnějšího, než jakým jsou Temní páni - jsi v moci věčného zla!
+Máš-li Vordakův drahokam, obrať na 236.
+Pokud ne, pak otoč na 292.
+10
+Pot se z tebe řine proudem a nohy bolí. Nedaleko před sebou vidíš skupinu srubů.
+Pokud chceš vstoupit do některého stavení a na chvilku si oddychnout, obrať na 115.
+Dáváš-li přednost pokračování v cestě, otoč na 83.
+11
+Nenápadně jsi vklouzl úzkými dvířky do stáje a teď rychle ukrýváš léčitelův vlněný plást do slámy. Bude rozhodně lepší, když předstoupíš před krále a jeho nejbližší spolupracovníky jako rytíř řádu Kai než jako šaman. Už neztrácíš zbytečně ani vteřinu a spěšně míříš k Velkému sálu na opačné straně nádvoří.
+Obrať na 139.
+12
+Ozbrojený strážce si tě prohlíží s neskrývaným podezřením a pak z ničeho nic přiráží dveře. Z vnitřku vozu k tobě doléhá vzrušený hovor. Po chvíli se dveře znovu otevírají a tentokrát se vyklání sám zámožný kupec, majitel vozu i zboží. Nabízí ti svezení, ale chce 10 Zlatých.
+Máš-li deset Zlatých a jsi-li ochoten kupci zaplatit, obrať na 262.
+Pokud žádné zlaťáky nemáš nebo nechceš zaplatit, otoč na 247.
+13
+Pěšina brzy ústí na rozlehlou mýtinu. V jejím středu se hrdě pne nejvyšší a nejrozložitější strom, jaký jsi kdy viděl. V koruně za masivními a bohatě obrostlými větvemi skrývá obydlí, chaloupku ve výšce tak osmi až deseti metrů, která může při letmém pohledu uniknout pozornosti náhodného kolemjdoucího. Žádný žebřík nevidíš, ale kúra starého stromu je rozpukaná a nabízí dostatek opěr pro nohy.
+Pokud chceš vyšplhat na strom a porozhlédnout se po obydlí v jeho koruně, obrať na 307.
+Pokud chceš spěchat dál, otoč na 213.
+14
+Právě jsi celý zadýchaný dosáhl vrcholku zalesněného vršku, na kterém několik obrovských balvanů utvořilo nepravidelný kruh. Najednou zpozorníš, protože za balvanem po tvé levé ruce se ozývá hluboké bručení.
+Jestliže saháš po zbrani a chystáš se bojovat, otoč na 43.
+Pokud se ti zdá jistější cesta ústupu a chceš utíkat pryč, obrať na 106.
+15
+Namáhavě se prodíráš hustou temnou spletí větví a větviček a plazivých šlahounů. Nakonec s úlevou vcházíš na rozsáhlou paseku rozzářenou oslnivým světlem. Uprostřed mýtiny na kamenném kvádru leží meč, opatřený černou koženou pochvou. K rukojeti meče někdo připevnil rukou psanou cedulku, ale zpráva na ní je v jazyce tobě zcela neznámém. Jestli chceš, můžeš si meč odnést a připsat ho na Průvodní listinu. Z mýtiny vedou tři cesty.
+Rozhodneš-li se pro východ, obrať na 207.
+Jestli chceš jít na západ, otoč na 201.
+Pokud chceš jít na jih, otoč na 35.
+16
+Podařilo se ti osvobodit jednoho z koní, kteří táhnou kupecký vůz. Divoce se zmítá, protože ho splašil pach blížících se vlkodlaků a ďábelský ryk jejich pánů, Giaků.
+S připravenou zbraní pobízíš vzpínající se zvíře vstříc blížícím se bestiím. Vzdálenost mezi vámi se kvapem zmenšuje, na čtyřicet padesát metrů zřetelně rozeznáváš kopí, hrozivě namířená proti tobě. Sedíš v sedle jako přibitý a s napětím očekáváš další vývoj událostí.
+Obrať na 192.
+17
+Kraan má tesáky ostré jako břitva a neustále jsi jimi ohrožován. Zvedáš zbraň, abys obludě zasadil smrtelnou ránu, ale v tu chvíli tě Kraan sráží mohutnými křídly k zemi. Zjišťuješ, že udržet se na nohou nebude vůbec jednoduché.
+Odečti jeden bod z UMĚNÍ BOJE a bojuj s Kraanem. Kraan: UMĚNÍ
+BOJE 16, KONDICE 24 Pokud jsi nad netvorem zvítězil, rychle sestup po
+vzdálenější straně svahu dolů, aby ses vyhnul Giakům. Zvol číslo v
+Tabulce náhody.
+Pokud ti padla 0, otoč na 53.
+Pokud jsi zvolil 1 - 2, otoč na 274.
+Pokud jsi zvolil 3 - 9, otoč na 331.
+18
+Probudily tě podezřelé zvuky. Na protějším břehu jezera vidíš míhající se
+postavy Drakkarimů a smečku vlkodlaků i s jejich pány. Ke všemu jsi
+zpozoroval, že se od lesa blíží Kraan a teď přistává na střeše nevelké
+dřevěné chatky. Velí mu červeně zahalený netvor. Náhle Kraan znovu
+vzlétá a pátravě krouží nad jezerem a okolním porostem, kde se ukrýváš.
+Chceš-li zajet hlouběji do lesa, obrať na 239.
+Chceš-li využít toho, že ovládáš Kai disciplínu Maskování, otoč na 114.
+Pokud se chceš s netvorem utkat, obrať na 29.
+19
+Skrz vysoké stromy vidíš dobře na cestu, a tak sis včas všiml nepropustné
+houštiny přímo před tebou. Tvoří ji divoká změť šlahounů hustě pokrytých
+dlouhými, doruda zbarvenými trny. Slyšel jsi o takových rostlinách hodně
+vyprávět - říká se jim "trny spánku", protože v okamžiku, kdy se o ostrý trn
+poraníš, pocítíš slabost a ospalost.
+"Trnům spánku" se můžeš vyhnout, když se vrátíš na pěšinu. Otoč na 272.
+Nebo se můžeš pokusit proniknout hustým křovím a dostat se tak hlouběji
+do lesa. Obrať na 119.
+Pokud jsi zvládl umění Stopování, obrať na 69.
+20
+Zdá se, že ať tu bydlel kdokoliv, jistě odtud utíkal ve spěchu a teprve před
+malou chvílí. Na stole zůstalo zpola snědené jídlo a čaj v konvici je ještě
+vlažný. Při prohlídce truhly a malé skříně nalézáš batoh, potraviny (jsou to
+dvě porce jídla) a dýku. Chceš-li si tyto věcí vzít, poznamenej si je do
+Průvodní listiny a rychle pokračuj v cestě. Obrať na 273.
+21
+Urazil jsi asi tak dvě míle hustým stromovím, ale najednou se ti začíná
+houpat půda pod nohama a mění se v bažinu.
+Zvol známým způsobem číslo v Tabulce náhody.
+Je-li to číslo menší než 5, tvůj kůň se náhle propadl až po břicho do bahna.
+Jestliže ti padla 5 nebo vyšší číslo, podařilo se ti včas bažinu objet a obrať
+na 189.
+Pokud jsi uvízl, použij znovu Tabulku náhody.
+Jestliže jsi teď zvolil číslo 7 nebo nižší, bahno dosahuje až do tvého
+podpaží. Kůň naposledy zoufale ržá a pak celý mizí v bublajícím bahně.
+Jestli ti padlo číslo vyšší než 7, doplazil ses na pevnou zemi a můžeš otočit
+na 189.
+Pokud ne, máš teď poslední šanci! Jakékoli jiné číslo než 9 znamená, že tě
+ohavně páchnoucí bahno pohltilo a uchvátilo tak další oběť. Tvůj život i tvá
+pout tady končí.
+Ale jestli se ti podařilo poslepu ukázat na 9, obrať na 312.
+22
+Napínáš tělo ke skoku, jediným překvapivým pohybem odhazuješ velitele z
+cesty a vyrážíš po silnici na útěk. Po několika krocích se za tvými zády
+ozývá zlověstný zvuk kuše, která právě vystřelila šíp. Nepochybuješ, že
+míří na tebe. Zvol číslo v Tabulce náhody.
+Jestliže ti padla čísla 0 - 4, otoč na 181.
+Pokud jsou to. čísla 5 - 9, otoč na 145.
+IIII. Zdá se, že ozdobná zástrčka uzamyká dveře, ale v zámku je navíc klíčová
+dírka.
+23 -Ilustrace II
+Chodba se po chvíli rozšiřuje a přechází v rozlehlý sál. Na vzdálenější
+straně místnosti stoupá k ohromným dveřím kamenné schodiště. Po jeho
+obou stranách planou černé svíce a přízračně osvětlují síň. S údivem
+sleduješ, že po svících nestéká žádný vosk a že jejich plameny nehřejí. Od
+podlahy až ke stropu pokrývají kamenné stěny pozůstatky prastaré rytiny.
+Toužíš opustit co nejrychleji tato tísnivá místa, tuto děsivou hrobku. Bereš
+chvatně za kliku, lomcuješ dveřmi, ale marně. Ukazuje se, že bohatě
+zdobený zámek je uzamčen a klíčová dírka zeje prázdnotou.
+Jestli chceš zámek rozebrat, obrať na 337.
+Pokud ovládáš Kai disciplínu Ovládání hmoty myšlenkou, obrať na 151.
+Vlastníš-li Zlatý klíč, otoč na 326.
+24
+Kupec volá na kočího, aby seskočil. "Jsme napadeni!" křičí a pak jeho
+blahobytná tvář mizí z kulatého okénka vozu.
+Jestli chceš seskočit z vozu, otoč na 234.
+Pokud se rozhodneš přeběhnout přes vůz dopředu a popadnout otěže
+spřežení, obrať na 184.
+25
+Dopadl jsi na protější střechu tak prudce, až sis vyrazil dech. Ležíš teď na
+zádech a příšerně se ti točí hlava. Trvá snad minutu, než si uvědomíš, že se
+ti skok podařil. Když se ujistíš, že jsi úplně v pořádku, vyskakuješ na nohy
+a nedokážeš přitom potlačit výkřik radosti a obdivu nad vlastní dovedností
+a odvahou. Rychle nalézáš cestu přes střechu na druhou stranu a šplháš po
+dlouhém okapu na ulici pod tebou. Vidíš, že masivní železná brána
+Pevnosti je dokořán a právě z ní vyjíždí kočár tažený dvěma velkými
+koňmi. Zvířata vyděsil hlučný dav na ulici, vzpínají se, až kočár naráží do
+pravého křídla brány. V nastalém zmatku využíváš příležitosti a
+nepozorovaně pronikáš dovnitř těsně před tím, než strážce stačí bránu
+přirazit. Otoč na 139.
+26
+Obezřetně se plížíš chodbou až k místu, kde se ostře stáčí k východu. V
+dálce se mihotá zelenavé světýlko.
+Chceš-li chodbou pokračovat, otoč na 249.
+Chceš-li se vrátit a vyzkoušet trasu směřující k jihu, obrať na 100.
+27
+Už přes hodinu se držíš této stezky a při chůzi pozorně sleduješ nebe nad
+hlavou, aby tě Kraan znovu nezaskočil. Kus před tebou leží napříč přes
+cestu mohutný padlý strom. Jak přicházíš blíž, slyšíš hlasy, které vycházejí
+zpoza kmene.
+Chceš-li rovnou zaútočit, obrať na 250.
+Chceš-li vyslechnout, co hlasy říkají, otoč na 52.
+28
+Po několika desítkách metrů se pěšina, po níž až dosud krátíš, spojuje s
+jinou, mířící od severu k jihu.
+Pokud se vydáš severním směrem, otoč na 130.
+Chceš-li se obrátit k jihu, otoč na 147.
+29
+Odhodlaně vycházíš na břeh jezera a připravuješ se na střetnutí s
+nepřítelem. Jsi spatřen! Kraan a jeho pán se řítí těsně nad hladinou přímo k
+tobě. Jezdec v červeném vydal tak příšerný a pronikavý skřek, až ti tuhne
+krev v žilách. Je to Vordak, nejmocnější z Temných pánů a jejich vůdce.
+Vordak už je nad tebou a boj vypukne každým okamžikem. Pokud
+nedokážeš ke své obraně použít Nehmotnou clonu, odečti předem dva body
+z UMĚNÍ BOJE. Protivník na tebe totiž útočí jak ohromným těžkým
+palcátem, tak duševní silou. Vordak: UMĚNÍ BOJE 17, KONDICE 25
+Pokud jsi v boji zvítězil, obrať na 270.
+30
+Ve tvářích lidí čteš únavu a strach, mnozí z nich jsou vyhladovělí a u konce
+svých sil. Urazili dlouhý kus cesty od chvíle, kdy opustili své hořící město.
+Náhle slyšíš od severu známý zlověstný zvuk velkých křídel. Lidé zděšeně
+zvedají oři k obloze, silnicí se nese vlna varovného volání: "Kraanové!
+Kraanové! Zachraň se kdo můžeš!" Zástup se v panice rozbíhá na všechny
+strany.
+Těsně před tebou ujíždí vůz vezoucí malé děti. V prudkém trysku naráží
+pravým předním kolem do výmolu, náprava se láme a povoz přepadá na
+bok. Dětí křičí hrůzou.
+Pokud chceš dětem přispěchat na pomoc, otoč na 194.
+Jestli raději poběžíš do úkrytu pod stromy, obrať na 261.
+31
+Snažíš se uložit zraněného muže, jak nejlépe dovedeš.
+Ale jeho rány jsou vážné a brzy upadá znovu do bezvědomí.
+Pečlivě ho přikrýváš jeho pláštěm, pak se obracíš a mizíš v hlubinách lesa.
+Otoč na 264.
+32
+Urazil jsi asi tři míle, když se před tebou objevily nezaměnitelné siluety
+pěti velkých vlkodlaků. Na jejich hřbetech jedou Giakové. Máš dojem, že
+se pohybují stejným směrem jako ty, ujíždějí po stezce, která míří na
+otevřenou louku. Nečekaně se jeden vlkodlak s jezdcem odpojuje od svých
+druhu a vrací se zpět směrem k tobě.
+Jestli se chceš ukrýt v podrostu a nechat Giaka projít kolem, otoč na 176.
+Pokud volíš boj, obrať na 340.
+33
+Na suché podlaze jeskyně leží vrstva prachu. V pološeru pronikáš hlouběji
+a tím dál zřetelněji cítíš zatuchlý pach tlejícího masa. Po zemi se válejí
+pozůstatky jakýchsi malých živočichů, jejich kosti, zuby, seschlé cáry kůží.
+Jak tvůj pohled klouže po nevábných zbytcích, zastavuje se na něčem pro
+tato místa nezvyklém: na jakémsi cípku látky. Zvedáš ho a ukazuje se, že je
+to uzavřený plátěný váček. Skrývá v sobě tři Zlaté.
+Ukládáš si mince do měšce a přitom rychle opouštíš jeskyňku, která patrně
+slouží horské kotce jako doupě. Obezřetně scházíš z kopce dolů.
+Otoč na 248.
+III. Na Kraanově hřbetě se řítí z oblohy příšerné zjevení v červeném šatě.
+34 - Ilustrace III
+Úplně nečekaně a bez varování se na Kraanově hřbetě řítí z oblohy příšerné
+zjevení. Z jeho skřeků ti tuhne krev v žilách. Je to Vordak, červeně oděný
+mocný vůdce Temných pánů.
+Už se snesl přímo nad tvou hlavu a ty nemáš jinou volbu než boj.
+Pokud si nedokážeš vytvořit na svou ochranu Nehmotnou clonu, odečti
+ještě před soubojem 2 body z konta UMĚNÍ BOJE. Vordak útočí nejen
+těžkým černým palcátem, ale i svou duševní silou.
+Vordak: UMĚNÍ BOJE 17, KONDICE 25
+Pokud jsi zvítězil, obrať na 328.
+35
+Les před tebou se stává neprůchodným, pěšina víc a víc zarůstá trnitým
+křovím a začíná být jasné, že tudy se dál nedostaneš. Rozhlížíš se pozorně
+kolem sebe a díky tomu objevuješ v hustém porostu jinou, téměř ztracenou
+v bujně rostoucí vegetaci. Nedá se nic dělat, budeš muset změnit směr a
+nechat se vést touto cestou k východu.
+Obrať na 207.
+36
+Žebřík, který spojuje letitou strážní věž se zemí, je stejně starý a zpuchřelý.
+Stoupáš po něm vzhůru, ale několik příček pod tvou vahou praská.
+Vyhledej číslo v Tabulce náhody.
+Pokud je to číslo 4 nebo nižší, zřítil ses ze žebříku a ztrácíš 2 KONDIČNÍ
+body. Otoč na 140.
+Pokud ti padlo číslo 5 a vyšší, nespadl jsi a otoč na 323.
+37
+Zmáhá tě únava a hlad, musíš se aspoň na chvíli zastavit a něco pojíst. Po
+krátkém odpočinku a po jídle míří tvoje kroky znovu k Pevnosti. Zeď
+kolem ní je i na této straně vysoká a zcela nepřístupná. Obcházíš pomalu
+strmou zeď, až nalézáš další vchod, který střeží, stejně jako předchozí, dva
+strážci v brnění.
+Chceš-li před ně předstoupit a vylíčit jim svůj příběh, otoč na 289.
+Jestli ovládáš umění Maskování a chceš ho využít, otoč na 282.
+38
+Už přes půl hodiny se prodíráš lesem, bujným rostlinstvem a vysokým
+kapradím. Naštěstí cestu křižuje malý čistý pramínek. Klekáš si u něj, aby
+ses mohl napít a opláchnout si obličej. Voda je chladná a čistá a vlévá do
+tebe nové síly. Po malé chvilce příjemně osvěžen vstáváš, překračuješ
+pramínek a jdeš dál původním směrem.
+Netrvá dlouho a lehký vánek od severu k tobě nese dým páleného dříví.
+Pokud tě zajímá, odkud dým přichází, otoč na 128.
+Jestli chceš raději zdroj kouře obejít, obrať na 347.
+39
+Za kmenem se na par minut rozhostilo napjaté ticho, pak se z úkrytu za
+padlým stromem vynoří dva zarostlé ustrašené obličejíky. Podle očekávání
+jsou to Kakarmové. Vyprávějí ti, co je potkalo. Západně odtud zůstala v
+troskách jejich vesnice, kterou celý kmen Kakarmů spěšně opustil, když se
+začala objevovat "černá křídla", jak nazývají všudypřítomné Kraany.
+Kakarmové se rozprchli po lesích a teď se navzájem hledají. Oba
+Kakarmové tato místa už dobře znají a mohou ti poradit. Pěšina, na které
+stojíš, tady zdánlivě končí, ale když se budeš držet jejího směru, narazíš po
+pár metrech chůze na starou strážní věž, pod níž se stezka štěpí do tří
+směru. Východní cesta tě zavede až k silnici spojující Holmgard s
+přístavem na severu, s Toranem. Děkuješ Kakarmům a loučíš se s nimi.
+Obrať na 228.
+40
+Dlouho si z úkrytu zkoumavě prohlížíš sruby, abys včas objevil i tu
+nejmenší stopu po nepříteli. Zastíněn vysokým kapradiním a hustými
+stromy jdeš kolem dokola celé mýtiny. Když znovu narazíš na svou cestu,
+spěcháš pryč z Mlhavého lesa.
+Obrať na 105.
+IV.Velitel Giaků dává pěti členům své tlupy rozkaz, aby na tebe zahájili
+střelbu z luků
+41 - Ilustrace IV
+Po říčním břehu prchají tři členové pohraniční jízdní hlídky, v patách mají
+Giaky, kteří je pronásledují na vrčících vlkodlacích.
+Břeh je strmý a neposkytuje příliš bezpečný úkryt. Teď velitel Giaků
+probíhá kolem tebe. Jsi spatřen! Dává rozkaz pěti členům své tlupy, aby
+spustili střelbu z luků. Prší na tebe déšť černých šípů.
+Chceš-li se vrhnout do proudu a plavat po řece dolů, obrať na 174.
+Jestli se chceš raději skrýt mezi stromy na druhém břehu řeky, obrať na
+116.
+42
+Po hodinové chůzi jsi právě dorazil k rozcestí. Nabízí ti volbu ze čtyř
+možností.
+Chceš-li pokračovat východním směrem, otoč na 86.
+Chceš-li raději zamířit na sever, obrať na 238.
+Pokud tě láká jih, Obrať na 157.
+Dáváš-li přednost cestě k západu, obrať na 147.
+43
+Z úkrytu za balvanem vyrazil obrovský černý medvěd. Je si jist svou
+kořistí, blíží se, tlamu má rozevřenou, plnou tesáků a jeho výraz prozrazuje
+zuřivost, způsobenou bolestí.
+Medvěd krvácí ze šíje a ze zad, vidíš, že utrpěl těžká poranění. Už nemůžeš
+utéct, musíš bojovat.
+Černý medvěd: UMĚNÍ BOJE 16, KONDICE 10
+Pokud jsi medvěda přemohl, obrať na 195.
+Po třech kolech boje ses dostal do pozice příznivé pro útěk. Chceš-li se
+dalšímu boji vyhnout, obrať na 106.
+44
+Zcela nečekaně a bez jakéhokoliv varování stezka končí na okraji příkrého
+srázu. Zem pod tvýma nohama se drolí a ujíždí. Ztrácíš rovnováhu a
+střemhlav se řítíš dolů do hlubiny. Zvol číslo v Tabulce náhody.
+Pokud ti vyjde číslo 0 - 4, otoč na 277.
+Pokud ti tužka padne na číslo 5 - 9, obrať na 338.
+45
+Muži rozhodně nejsou těmi, za které se vydávají. Tunika, která halí velitele,
+je sice pravá, ale na límci a kolem něho úplně zkrvavená, protože její pravý
+majitel se stal obětí zákeřné vraždy a pak byl oloupen. Navíc nemají běžné
+armádní zbraně. Ty jejich jsou draze a bohatě zdobené. Takové zbraně
+vyrábějí jen mistři zbrojaři v Durenoru.
+Velitel má na zádech jakýsi vak a přes něj pověšený samostříl. Jakýkoli
+pokus o útěk by byl vyloženou sebevraždou. Musíš bojovat, protože v
+okamžiku, kdy bys odhodil zbraně, by tě bez váhání zabili. Otoč na 180.
+46
+Urazil jsi další dvě míle, když tu les před tebou řídne a pomalu se otevírá
+pohled na jezero s malou dřevěnou boudou na břehu. Muž zahalený do
+pláštěnky ti jde vstříc a nabízí ti, že tě za dva zlaté převeze i s koněm přes
+jezero.
+Pokud chceš nabídku přijmout, obrať na 246.
+Jestli nabídku odmítneš a pokusíš se jezero objet sám, otoč na 90.
+Ovládáš-li Kai disciplínu Šestý smysl, otoč na 296.
+47
+Celý zpocený a udýchaný se škrábeš k vrcholku kopce. Náhle padá na
+strmý svah velký okřídlený stín. Díváš se nahoru a vidíš Kraana kroužícího
+nízko nad kopcem. Na jeho zádech sedí dva Giakové. Zůstaneš na místě a
+budeš s Giaky bojovat tam, kde terén poskytuje určitou výhodu?
+Pokud ano, pak otoč na 136.
+Nebo zatneš zuby a doplazíš se k vrcholku kopce? V tom případě obrať na
+322.
+48
+Šestý smysl tě varuje: napovídá, že ti, které máš před sebou, nejsou přátelé.
+Obklopuje je viditelný opar zla. Slouží Temným pánům.
+Musíš odtud rychle zmizet, dřív než tě objeví.
+Obrať na 243.
+49
+Nakláníš se, aby sis mohl přečíst nápis, ale přesto stačíš alespoň koutkem
+oka za závěsem zpozorovat pohyb jakéhosi stínu.
+Vyber číslo z Tabulky náhody.
+Pokud ti tužka padla na čísla 0 - 4, otoč na 339.
+Jestli jsi zvolil čísla 5 - 9, Obrať na 60.
+50
+Z dálky sem doléhají zvuky bitvy.
+Jestli chceš pokračovat v cestě směrem, odkud tyto zvuky přicházejí, otoč
+na 97.
+Pokud se raději chceš boji vyhnout, musíš změnit směr a otočit na 243.
+51 - Ilustrace V
+Vyšplhal jsi na říční břeh zpevněný kládami a prohlížíš si dřevěné valy
+opevnění, které se v dálce ztrácejí. Dvě míle odtud zuří bitva a i tady už
+jsou roubené zdi na mnoha místech probořeny po útocích Temných pánů.
+Většina opevnění je vylidněna, vojáci odtud odešli, aby nahradili muže
+padlé v bitvě.
+Před sebou máš bránu, kterou můžeš projít. Pokud ji chceš využít, otoč na
+288.
+Jestli chceš místo toho přelézt zeď na nějakém vhodném místě, obrať na
+221.
+52
+Aniž bys neznámé tvory vyrušil, podařilo se ti přiblížit se až do těsné
+blízkosti stromu, který je zakrývá. Nikoho nevidíš, ale teď už poznáváš, že
+hlasy nepatří lidem. Připomínají spíš jakési kvičení a mlaskání.
+Pokud ovládáš Kai disciplínu Spřízněnost se zvířaty, obrať na 225.
+Pokud ne, nezbývá ti než přelézt strom, ať už tam číhá cokoli. Obrať na
+250.
+V. V místech kde útočí Temní páni, jsou roubené valy pobořeny.
+53
+Celou pravou nohu máš v jednom ohni. Při pádu se ti zkroutila pod tělo,
+které ji drtí vlastní vahou. Ať děláš, co děláš, nemůžeš nohu vyprostit.
+Střemhlav ujíždíš po srázu hloub a hloub, marně se snažíš něčeho zachytit.
+Přistáváš tak prudce u úpatí kopce, až ztrácíš vědomí.
+Probouzí tě rezavá bolest v hrudníku. Otevíráš oči a vytřeštěně zíráš na
+kopí, které tam vězí. Giak! S krutou zlomyslností ti protíná kopím levou
+ruku. Instinktivně saháš po zbrani, ale o tu jsi přišel při pádu. Zcela vydán
+na milost a nemilost krvelačnému Giakovi se loučíš se světem a poslední
+věc, kterou vnímáš, je zubaté ostří netvorova kopí, jež se nezadržitelně blíží
+k tvému hrdlu. Tady končí tvůj život.
+54
+Nebesa zůstávají hluchá k tvým prosbám i modlitbám. Těsně kolem hlavy
+ti prolétá svištící kopí a vniká hluboko do koňské šíje. S bolestným
+zaržáním padá kůň k zemi a oba v jednom klubku se zmítáte na cestě.
+Omráčen pádem a drcen vahou mrtvého koňského těla přestáváš vnímat
+svět. Odcházíš do temnot s obrazem míhajících se Giakových oštěpů.
+Nepodařilo se ti splnit tvé poslání.
+55
+V okamžiku, kdy Giak skočil, vyrážíš kupředu i ty a zbraň máš připravenou
+k úderu. V poslední chvíli strháváš nestvůru ze zad mladého kouzelníka.
+Znovu se vrháš proti Giakovi a souboj na život a na smrt začíná. Díky
+nečekanosti tvého útoku si můžeš připsat 4 body k UMĚNÍ BOJE pro dobu
+celého zápasu. Ale nezapomeň je znovu odečíst, až bude po boji.
+Giak: UMĚNÍ BOJE 9, KONDICE 9
+Pokud jsi vyšel z boje jako vítěz, obrať na 325.
+56
+Slyšíš tlukot ohromných křídel. Nad stromy krouží Kraan, hlavní spojenec
+Temných pánů. Bez otálení se krčíš do ohromného trsu kapradí, abys unikl
+Kraanově nežádoucí pozornosti.
+Nyní otoč na 222.
+57
+Celou chatu tvoří jen jedna místnost, jednoduše a prostě vybavená: dřevěný
+stůl a u něj dvě lavice, v koutě prostorné lůžko svázané z několika otepí
+slámy, pár lahviček s neznámými různobarevnými tekutinami a uprostřed
+místnosti na podlaze tkaný koberec.
+Pokud chceš prozkoumat zblízka obsah tajemných lahviček, obrať na 164.
+Chceš-li odhrnout koberec, abys zjistil, neskrývá-li něco, otoč na 109.
+Jestli chceš raději vyjít ven a podívat se do stáje, obrať na 308.
+58
+Přinutil ses k běhu a teď vyrovnaným tempem míříš dolů z hřebenu. Čas od
+času pozoruješ západní obzor, kde se rozrůstají vojska Temných pánů. Zdá
+se ti, jako by někdo vylil na hory obří kalamář a inkoust se teď rozlévá po
+okolí.
+Klušeš už asi dvacet minut, když tu vidíš po své pravici skupinu vlkodlaků,
+která se formuje do šiku na mírném svahu a zřejmě ho hodlá přejít.
+Pokud se ti zdá, že nejrozumnější bude, když se přitiskneš k balvanům
+lemujícím silnici a v úkrytu vyčkáš, až vlkodlaci zmizí, otoč na 286.
+Jestli ses rozhodl běžet dál, ale se zbraní nachystanou pro případný útok,
+obrať na 160.
+59
+Pomalu si zvykáš na přítmí, které uvnitř panuje. Před sebou vidíš několik
+schodů, nahrubo vytesaných do skály. To, co jsi považoval za vchod do
+jeskyně, je ve skutečnosti ústí jakéhosi tunelu.
+Pozorně sestupuješ dolů po kluzkých schodech. Na posledním stupni si
+všímáš malé stříbrné skříňky.
+Chceš-li ji otevřít, otoč na 124.
+Pokud se ti zdá bezpečnější vrátit se zpět na denní světlo a pokračovat v
+cestě, otoč na 106.
+Chceš-li se pustit dál tunelem, abys prozkoumal, co skrývá, otoč na 211.
+60
+Těsně před tím, než tě navždy obestřela věčná temnota, vnímáš záblesk
+dlouhé zahnuté ocelové dýky, kterou ti vzápětí mudrcův syn, vrah a lupič,
+protíná hrdlo. A zde končí tvé poslání.
+61
+Konečně zbývá k dřevěnému opevnění, které chrání okrajové části města,
+jen pár kroků. Jak se ženeš ke strážní vížce, slyšíš vzrušené výkřiky vojáků,
+kterými tě povzbuzují. Děkuješ bohům, že tě posádka poznala, protože
+určitě nevypadáš příliš důvěryhodně. Plaší máš samou díru, ruce rozedrané
+a obličej plný šrámů a krvavých skvrn, takže bys byl k nepoznání i pro
+nejlepšího přítele. Od hlavy až k patě jsi pokryt hřbitovním prachem.
+Přebrodíš mělký potok a vrávoráš k bráně. Hrůzné setkání na hřbitově
+zatíná až teď plně působit Odevzdaně padáš do natažených paží dvou
+vojáků, kteří ti seběhli z valů na pomoc. Vyčerpán tělesně i duševně ztrácíš
+vědomí.
+Obrať na 268.
+62
+"Vojáci" leží mrtví u tvých nohou. Byli to bandité a lupiči, kteří pustošili
+široké okolí, přepadali a okrádali uprchlíky z Toranu a drancovali opuštěné
+domy a statky v celé oblasti.
+Při prohledávání mrtvých těl jsi objevil 28 Zlatých a dva batohy, v nichž
+jsou celkem tři porce jídla. Lupiči byli vyzbrojení kuší a třemi meči. Kuše
+se během boje poškodila, ale meče jsou v pořádku a jeden z nich si můžeš
+vybrat, chceš-li. Ještě jednou přehlížíš výbavu, je-li v pořádku, z opatrnosti
+chvíli pozoruješ západní obzor a pak se už bez otálení dáváš znovu do
+klusu směrem k vnějším hradbám hlavního města.
+Obrať na 288.
+63 - Ilustrace VI
+Divoce a nebezpečně vyhlížející stařec na tebe bez ustání rozezleně křičí.
+Obviňuje tě z rozpoutání války a proklíná všechny rytíře řádu Kai jako
+spojence Temných pánů. Není ochoten naslouchat žádnému vysvětlování a
+jediný argument, který na něho může zapůsobit, je boj.
+Šílenec: UMĚNÍ BOJE 11, KONDICE 10
+Pokud jsi zvítězil, otoč na 269.
+VI. Šílený stařec na tebe křičí.
+64
+Z těžkého snu tě probouzí vřeštění Kraana kroužícího přímo nad vozem. Je
+časné jitro, obloha září čistou modří. Ani ne čtvrt míle na cestě před
+povozem vidíš skupinku vlkodlaků, kteří se chystají na vůz zaútočit. Nyní
+je třeba jednat rychle.
+Jestli chceš bez meškání popadnout všechny své věci a zmizet mezi stromy,
+obrať na 188.
+Pokud se raději rozhodneš odříznout jednoho z koní, kteří táhnou vůz,
+prolomit útok vlkodlaků a dostat se na bezpečnou cestu za nimi, otoč na 16.
+65
+Všechny smysly ti radí, abys bez otálení opustil toto místo, kde jsi vystaven
+krajnímu nebezpečí.
+Obrať na l04.
+66
+Polekaně se obracíš a vidíš, jak se k tobě žene statný seržant, v patách za
+ním dva vojáci, a všichni mají meče připravené k úderu.
+Stavíš se do obranné pozice a saháš nenápadně po zbrani, protože všichni
+tři působí dojmem zabijáků, kteří napřed útočí a teprve potom se ptají,
+mají-li ještě na koho. Z ničeho nic se ale velitel zaráží a vzápětí volá zpět i
+své muže. Poznal tvůj plášť! Vojáci odhazují zbraně a omlouvají se za svůj
+omyl. Seržant tě vede do Velkého sálu a přitom posílá jednoho z mužů pro
+kapitána.
+Vítá tě vysoký válečník vznešeného vzezření a pozorně naslouchá tvému
+vyprávění. Líčíš mu všechna nebezpečí a nástrahy, kterým jsi musel během
+cesty čelit, a když je vyprávění u konce, lesknou se v očích tohoto jistě
+otrlého muže slzy. Hlas se mu chvěje, když tě vyzývá, abys ho následoval.
+Procházíte rozlehlými sály a chodbami do centrální části Paláce. Na
+každém kroku jsi udivován velkolepostí a nádherou. Konečně stojíš před
+velkými vyřezávanými dveřmi, které střeží dva vojáci ve stříbrné zbroji.
+Poslední vteřiny tě dělí od setkaní s králem.
+Otoč na 350.
+67
+Díky tomu, že ovládáš Kai disciplínu Stopování jsi odhalil v okolí jižní
+stezky otisky ohromných tlap. Stopy patří obrovskému černému medvědu,
+tvoru, jehož zuřivost je známá široko daleko. Dáváš tedy přednost východní
+stezce, která snad bude bezpečnější.
+Otoč na 140.
+68
+Po chvíli cesty se ocitáš na rozcestí, kde stezku, po níž jsi přišel, křižuje
+jiná, která běží od východu na západ.
+Jestli se chceš obrátit k západu, otoč na 130.
+Jestli chceš zamířit na východ, obrať na 15.
+69
+Jsi kousíček od osady, kde žijí přátelé. Obejdi "trny spánku" a otoč na 272.
+70
+Po chvíli cesty stojíš u malého můstku. Cesta pokračuje podél proudu dál k
+východu. Mnohem užší pěšina prosvítá v hustém lese a směřuje k jihu.
+Jestli chceš pokračovat východním směrem, obrať na 28.
+Pokud půjdeš na jih, otoč na 157.
+Jestli ovládáš Kai disciplínu šestý smysl, můžeš ji použít. Otoč na 8.
+71
+Jsi otřesen, ale bez zranění. Propadl ses asi do pětimetrové hloubky skrz
+strop podzemní hrobky. Zdi hrobky ční kolmo vzhůru a vyšplhat po nich je
+úplně nemožné. Jižním směrem vede z hrobky vyzděná klenutá chodba.
+Vchod do ní je částečně zatarasen sarkofágem jakéhosi dávno mrtvého
+šlechtice, jemuž tato místa zřejmě slouží k poslednímu odpočinku.
+Pokud chceš víko sarkofágu nadzdvihnout a podívat se, jestli uvnitř není
+něco cenného, otoč na 242.
+Chceš-li opustit hrobku chodbou, obrať na 104.
+Pokud jsi schopen použít Kai disciplínu Šestý smysl, pak obrať na 65.
+72
+Stojíš tváří v tvář šklebícímu se Giakovi a jeho rozevřeným čelistem
+plným ostrých tesáků. S Giakem i s vlkodlakem musíš bojovat jako s
+jedním nepřítelem.
+Giak s vlkodlakem: UMĚNÍ BOJE 15, KONDICE 24
+Pokud zvítězíš, otoč na 265.
+73
+Halíš se do svého zeleného pláště a splýváš s listím a s balvany. Pozorně
+sleduješ stezku nahoře a se zděšením zjišťuješ, že to vůbec nejsou královi
+muži. Po cestě se pohybují Drakkarimové, nejkrutější houf Temných panů.
+Převlékli se do uniforem královské armády, aby se mohli nenápadně
+pohybovat po sommerlundském území. V duchu blahořečíš tvrdému
+výcviku v klášteře Kai, kterému, jako už mnohokrát, opět vděčíš za
+záchranu života, a tiše se vykrádáš z koryta potoka a noříš se do stínu lesa.
+Otoč na 243.
+74
+Kraan se i s jezdci snáší na pěšinu jen pár kroků od místa, kde se skrýváš.
+Jen se Kraan dotkl země, už Giakové kloužou dolů z jeho šupinatého hřbetu
+a rozbíhají se směrem k tobě s kopími zdviženými k ráně. Jsi prozrazen.
+Chceš-li se s nimi utkat, otoč na 138.
+Pokud se rozhodneš bez meškání prchnout do hlubin lesa, otoč na 281.
+75
+Obezřetně vykukuješ nahoru na břeh a vidíš, jak podél řeky ujíždějí na koni
+tři muži v zeleném. Poznáváš v nich členy zvláštní jednotky královské
+armády, jejímž úkolem je střežit západní hranici země. Jeden z vojáků visí
+bezvládně v sedle a podle všeho je raněn. V těsném závěsu za prchajícími
+muži se řítí smečka asi dvaceti vlkodlaků s Giaky na hřbetech, kteří
+neúnavně a bez ustání po vojácích střílejí, takže se na ně snáší sprška
+černých šípů. Jeden z vojáků padá ze sedla a kutálí se dolů po říčním břehu.
+Hluboko v pravé noze mu vězí Giakův šíp.
+Pokud chceš strážci hranic přispěchat na pomoc, otoč na 260.
+Jestli chceš raději zůstat skryt a nechat se dál unášet proudem, Obrať na
+163.
+76
+Drahokam je velmi horký a pálí tě do ruky. Ztrácíš dva KONDIČNÍ body.
+Rychle ho bereš cípem pláště a pak ho ukládáš do kapsy košile. Drahokam
+takové velikosti určitě musí mít nesmírnou cenu. Samým štěstím se
+usmíváš, pobízíš koně a znovu uháníš jižním směrem.
+Obrať na 118.
+77
+Horští Giakové nedokáží pronásledovat svou kořist lesem, a tak je brzy
+setřásáš, ačkoliv jejich kletby a nadávky ještě dlouho doznívají v dálce za
+tebou, než konečně zcela utichají.
+Když ses ujistil, že Giakové upustili od další štvanice, zastavuješ se na pár
+chvil, abys popadl znovu dech a dal do pořádku své vybavení. Se
+vzpomínkou na doutnající trosky kláštera sbíráš svá skromná zavazadla a
+vydáváš se na další nejistou cestu.
+Obrať na 19.
+78
+Kupecký vůz projíždí kolem velkou rychlostí. Neváháš ani vteřinu a skáčeš
+na něj. Povedlo se, držíš se pevně. Opatrně se vztyčuješ a vidíš, že stojíš na
+spodní příčce žebříku, po němž se stoupá k zadním dveřím vozu. Z ničeho
+nic se rozlétá horní polovina dveří a ty hledíš do tváře rozlíceného
+ozbrojence, který nejspíš provází kupce na jeho cestách a stará se o
+bezpečnost nákladu i svého pána.
+Pokud myslíš, že by bylo dobré prozradit svou totožnost a své poslání, otoč
+na 132.
+Jestli se rozhodneš nabídnout posádce vozu Zlaté, když tě bezpečně
+zavezou až do hlavního města, otoč na 12.
+Chceš-li změřit své síly se strážcem kupeckého vozu, použij zbraň a otoč na
+220.
+79
+Přicházíš k malé lávce přes rychle tekoucí potok. Za můstkem se pěšina
+stáčí k jihu. Přecházíš potok a pouštíš se jižním směrem. Obrať na 204.
+80
+Pozadu klopýtáš k východu a obě ruce si přitom tiskneš k zasaženému a
+popálenému hrudníku. Celý obchod zaplnila oblaka dýmu, štípe tě do očí,
+zalykáš se jím a spasit se můžeš jedině útěkem, dřív, než budeš polapen
+mudrcem nebo jeho zabijáckým synem.
+Potácíš se ven na hlavní třídu a tady se rychle ztrácíš v hlučném davu.
+Obrať na 7.
+81
+Po necelé hodině konečně zamířili Kraanové se svými pány k západu.
+Vystrašení uprchlíci se pomalu trousí z lesa ven. Ty však ještě vyčkáváš v
+úkrytu, protože slyšíš nedaleko odtud cválat koně. Když přijíždějí na
+dohled, poznáváš jezdce podle oblečení - bílé uniformy prozrazují členy
+Královské gardy.
+Chceš-li se prozradit a zavolat na ně, otoč na 183.
+Jestli bys raději pokračoval podél okraje lesa jižním směrem, otoč na 200.
+82
+Obrovský Gourgaz leží mrtvý u tvých nohou. Jeho pekelní spojenci na tebe
+vztekle syčí a pak se vrhají zpět z mostu dolů. Princovi vojáci tvoří z
+vlastních štítů ochrannou zeď kolem tebe a svého umírajícího vůdce. Černé
+nepřátelské šípy ti sviští nad hlavou. Princ, kterému prchá život z těla k
+tobě zvedá zrak, svírá ti ruku a říká: „Rytíři Kai, v sázce je svoboda celého
+Sommerlundu a je nezbytně nutné, abys donesl mému otci poselství, s nímž
+ses vydal na svou nebezpečnou cestu. Nepřítel je příliš silný, jeho převaha
+je značná a sami ho nemůžeme zastavit. Král musí najít posilu v Durenoru,
+jinak je vše ztraceno. Vezmi si mého koně a bez meškání spěchej do
+hlavního města. Snad bude přízeň bohů stát při tobě." S hlubokým
+zármutkem se loučíš s princem, pobízíš jeho bílého koně a lesní stezkou se
+necháváš vést k jihu. Bitva ještě stále zuří, neboť princovi muži podnikli
+nový útok na most.
+Obrať na 235.
+83
+Máš za sebou asi jednu míli, když náhle zpod nízkého můstku vyrážejí
+proti tobě tři muži. Nezbývá ti než uposlechnout jejich výzvy a zastavit.
+Chtějí, abys odhodil zbraň i zavazadla.
+Kradmo si je prohlížíš. Jsou celí od krve a dlouho neholeni. Jejich vůdce je
+oblečen do tuniky, jakou nosí vojáci toranské posádky.
+Chceš-li udělat, co říkají, obrať na 205.
+Pokud se chceš připravit na souboj, otoč na 180.
+Jestliže bys rád zjistil, kdo skutečně jsou a jaké mají úmysly, obrať na 232.
+Pokud dokážeš použít Kai disciplínu Šestý smysl,můžeš obrátit na 45.
+84
+V okamžiku, kdy v zádech cítíš závan vzduchu, hbitě kloužeš z koně a
+kutálíš se pryč –a s plesknutím přistáváš v příkopu plném bahna, který se
+táhne podél silnice.
+Rychle vyskakuješ na nohy (naštěstí bez zranění) a střemhlav vyrážíš k
+nedalekým stromům, pod jejichž korunami chceš nalézt úkryt a záchranu.
+Ale to už nad tebou Kraan znovu krouží a chystá se k dalšímu útoku.
+Otoč na 188.
+85
+Cesta je široká a vede bujnou vegetací. Stromy jsou vysoké a leží na nich
+nezvyklé ticho. Jdeš tak asi míli, když právě nad sebou zaslechneš šum
+velkých křídel.
+Se zlým tušením zvedáš hlavu a skutečně: vidíš zlověstný obrys
+Kraanova těla. Zdá se, že v příštím okamžiku zaútočí.
+Pokud ses rozhodl tasit zbraň a připravit se k boji, otoč na 229.
+Chceš-li boj vzdát a raději utíkat k jihu, hlouběji do lesa, obraň na 99.
+86
+Brzy přicházíš k dalšímu rozcestí.
+Pokud chceš jít na východ, otoč na 6.
+Chceš-li zamířit na sever, obrať na 35.
+Jestliže dáváš přednost cestě k jihu, otoč na 167.
+Nebo jestli se chceš obrátit na západ, otoč na 42.
+87
+Všechny své síly a soustředění zaměřuješ na zámek. Pokoušíš se vyvolat
+představu jeho vnitřního uspořádání. Konečně se před tvým duševním
+zrakem vynořuje mechanismus zámku. Zařízení je hodně staré, zrezivělé,
+ale stále ještě neztratilo svou funkci. Dlouho odolává. Už ztrácíš sílu ke
+koncentraci, ale jemné cvaknutí prozrazuje, že úsilí nebylo marné. Se
+zástrčkou už není tolik práce. Pomalu se vysunuje ze zámku, až padá na
+podlahu. Žulové dveře se zvolna pootevírají na skrytých pantech a
+vpouštějí do hrobky sinavé světlo ze hřbitova. Východ je obrostlý trním a
+jak se snažíš prodrat ven, máš obličej a ruce celé rozdrásané a zkrvavené.
+Konečně jsi venku, když tu tě zaráží podivný zvuk, který se zdvihá za
+tvými zády. Otáčíš se... V našedlém světle se na tebe šklebí hlava mrtvoly,
+které chybí tělo! Ve slepé panice pádíš přízračným pohřebištěm k jižní
+bráně.
+Otoč na 61.
+88
+Obezřetně se plížíš kolem skály, abys lépe viděl na vojáka, který leží na
+druhé straně. U jeho boku leží oštěp a štít s jakousi kresbou. Díváš se
+pozorně: bílý pegas - to je znak sommerlundského prince. Voják
+bezpochyby patří k princovým mužům, ale není při vědomí. Má ošklivě
+potrhanou uniformu a skrz cáry vidíš hlubokou ránu v levé paži. Když k
+němu poklekáš, muž s námahou pootevírá oči. I ve svém zuboženém stavu
+poznává tvůj plášť rytíře Kai. "Uzdrav mě, pane," prosí. "Jsem strašně
+zesláblý a už vůbec necítím ruku."
+Pokud ovládáš Kai disciplínu Léčitelství a chceš ji nyní využít, otoč na 216.
+Pokud léčit neumíš nebo nechceš, otoč na 31.
+89
+V oblacích prachu a utrženého kamení se plnou rychlostí kutálíš strmým
+srázem dolů. Kraan nepřestává kroužit nad vrchem, jako kdyby čekal na
+Giaky, aby jim mohl ukázat, kde tě mají hledat. Zvol číslo v Tabulce
+náhody.
+Pokud ti padlo číslo 0 - 1, otoč na 53.
+Jestli ti padlo 2 - 4, obrať na 274.
+A jestli je to číslo 5 - 9, otoč na 316.
+90
+Noc se snáší na krajinu a brzy se ocitáš v úplné tmě. Pokračovat v cestě je
+riskantní, mohl bys zabloudit. Přivazuješ koně ke stromu, dobře se halíš do
+pláště a upadáš do těžkého spánku. Obrať na 18.
+91
+Obchůdek je tmavý a zatuchlý. Police a regály takřka praskají pod náporem
+knih a lahviček všech velikostí a barev. Když za sebou zavíráš dveře,
+mrňavý černý ratlík se pouští do kvílivého štěkání, kterým přivolává
+holohlavého muže. Dosud ho kryla jakási plenta, teď vychází a srdečně tě
+vítá. Zdvořile se vyptává jaká máš přání a nabízí ti, aby sis vybral z jeho
+zboží.
+Pokud si chceš lépe prohlédnout, co ti nabízí, otoč na 152.
+Jestli raději nabídku odmítneš a znovu se vrátíš na ulici, otoč na 7.
+Pokud ovládáš Kai disciplínu Šestý smysl a chceš ji právě teď využít, obrať
+na 198.
+92
+Dobíháš do úkrytu v posledním okamžiku, protože místo, kde jsi ještě před
+okamžikem stál, zasypává krupobití černých šípů. Přitahuješ si plašť těsněji
+k tělu, abys snáz splynul s hustým kapradiním. Bez otálení vyrážíš lesem
+pryč, abys unikl zákeřným pronásledovatelům. Tuto kouzelnou, panensky
+nedotčenou krajinu zamořili Giakové, a proto musíš bez meškání zmizet.
+Aniž by sis třeba jen na okamžik odpočinul, běžíš už přes hodinu a tu
+narážíš na lesní pěšinu vedoucí k jihu. Vydáváš se po ní, ale víš, že stále
+ještě nemáš vyhráno, a proto pozorně sleduješ, neobjeví-li se nějaké
+známky přítomnosti nepřítele. Otoč na 13.
+93
+Otáčíš se a uskakuješ ke schodům. V příštím okamžiku se za tvými zády
+řítí ze stropu s ohlušujícím rachotem obrovský kvádr. Uzavírá místnost,
+kterou jsi právě opustil. Jak vybíháš na denní světlo, koutkem oka vnímáš
+shrbenou postavu starého druida, zdvíhajícího do výšky svou hůl. Vteřinku
+nato ti u nohou exploduje oslnivý blesk. Tebe ale nic nezastaví, pádíš dál z
+kopce dolů proklínaje svou váhavost, ale vděčný učitelům z kláštera Kai za
+výcvik v ovládání Šestého smyslu. Obrať na 106.
+94
+Mudrc sleduje souboj. Jakmile vidí, že jeho syn je mrtev, spěšně se otáčí a
+mizí z krámku zadním východem. V zabijákově měšci nalézáš dvanáct
+Zlatých a další čtyři zlaťáky v dřevěné pokladně pod pultem. Pouštíš se do
+pečlivého zkoumání roztoků v lahvích a lahvičkách a s překvapením
+zjišťuješ, že to všechno jsou jen laciné atrapy. Ve skutečnosti je krámek
+plný napodobenin. Uvažuješ o tom, ale cítíš tu jakousi záhadu. Vracíš se
+zpátky na rušnou ulici.
+Otoč na 7.
+95
+Netrvá to dlouho a narážíš na úzkou lesní cestu, ubíhající od severu k jihu.
+Pokud chceš vyrazit směrem k severu, otoč na 240.
+Chceš-li místo toho zamířit na jih, obrať na 5.
+96
+Téměř bez dechu tiskneš zbraň a očekáváš úder. Napětí se stává
+nesnesitelným - Giakové se pohybují tak blízko, že ti chřípí plní odporný
+zápach jejich nemytých těl. Slyšíš nesrozumitelné kletby a nadávky v
+podivné, cize znějící hrdelní řeči. A náhle Giakové opouštějí plošinu před
+jeskyňkou a dávají se do dalšího šplhání, aby dosáhli vrcholu kopce. Když
+už máš jistotu, že jsou skutečně pryč, povzdechneš úlevou a z očí ti stékají
+slzy.
+Jestli se chceš nyní vydat na průzkum nitra jeskyně, obrať na 33.
+Pokud máš dojem, že by se Giakové mohli vrátit a že tedy bude jistější,
+když opustíš jeskyni i kopec, otoč na 248.
+97 - Ilustrace VII
+Před tebou, v okolí kamenného mostu a na něm, zuří prudká bitva. Třesk
+oceli, výkřiky a sténání mužů i zběsilé skřeky útočících bestií se nesou až k
+tobě do lesa. V samém ohnisku bitvy se míhá princ Pelathar, králův syn.
+Právě se ze všech sil potýká s mohutným černým Gourgazem, který v
+šupinaté tlapě třímá sekyru. Pojednou princ raněn padá k zemi - z boku mu
+trčí černý šíp.
+Chceš-li bránit raněného prince, otoč na 255.
+Chceš-li běžet do lesa, obrať na 306.
+98
+Všechno nasvědčuje tomu, že strážní vyprávění uvěřili. Úklonami ti
+projevují úctu jako jednomu z rytířů řádu Kai a jeden ozbrojenec tahá za
+skrytý konec zvonku. Masivní dveře se začínají otevírat dokořán. Muži tě
+doprovázejí dovnitř, za zády slyšíš, jak dveře zase zapadly.
+Obrať na 139.
+99
+Vrháš se do nízkého, i když hustého porostu. Ve vzduchu nad tebou se
+rozječela příšera. Stačí jen letmý pohled nahoru a vidíš, že Kraan se právě
+obrací k novému výpadu. Vymršťuješ se na nohy a uháníš hlouběji do lesa.
+Otoč na 222.
+VII. Třesk oceli a výkřiky mužů i bestií se nesou lesem.
+100
+Sychravě studená chodba zničeno nic prudce odbočuje k východu. V dálce
+před tebou spoře osvětluje tunel nazelenalý plamínek. Kradeš se k němu a
+ocitáš se na místě, kde se chodba rozšiřuje v prostornou halu. Neobvyklé
+světlo, jak se zdá, se line z objemné mísy, spočívající na vrcholku
+granitového trůnu. Před trůnem se tyčí na podstavci socha zvláštního
+tvaru, připomíná okřídlené písmeno "S".
+Máš-li chuť posadit se na trůn, otoč na 161.
+Chceš-li si podrobněji prohlédnout sochu, otoč na 133.
+Jestli tě ze všeho nejvíc zajímá, jak se dostat ven z tohoto tajuplného sálu,
+obrať na 257.
+101
+Zvuky bitvy postupně utichají, ale ty nemáš klid. Burcuje tě hlas svědomí a
+obviňuje tě ze zbabělosti, z toho, že jsi opustil mladého muže ve smrtelném
+nebezpečí. Pokoušíš se umlčet dotěrné výčitky a přesvědčuješ sám sebe, že
+tvůj úkol je mnohem důležitější a že v sázce není jen život mladého
+kouzelníka, ale že budoucnost všech obyvatel země závisí na tom, zda
+dosáhneš hlavního města živ, zdráv a včas. Pohled na skupinku bojovných
+Giaků tě rázem přivádí na jiné myšlenky. Chceš se okamžitě schovat, ale
+pozdě: Giakové tě zahlédli, musíš utíkat, jak nejrychleji dovedeš.
+Obrať na 281.
+102
+Máš za sebou kamenné úbočí kopce, které tě dělilo od prastarého hřbitova.
+Hřbitova předků. Celé to šedavé a odpuzující místo halí oblaka mlhy, jejíž
+cáry a chuchvalce se těžce převalují mezi náhrobky a znemožňují tak
+slunci, aby proniklo až k zemi. Mrazivý chlad ti vane v ústrety.
+S těžko překonatelnými pocity hluboké hrůzy vstupuješ na děsivé
+pohřebiště.
+Obrať na 284.
+103
+Zarostlá pěšina tě přivedla k rozcestí, kde se od ní odděluje jiná stezka,
+vedoucí k východu.
+Chceš-li se dát po této cestě, otoč na 13.
+Pokud chceš raději dál pokračovat po pěšině, po které jsi přišel, tedy k
+severovýchodu, otoč na 287.
+104
+Stěny jsou vlhké a kluzké. Tunel je naplněn nedýchatelným zatuchlým
+vzduchem. Pavučiny se ti lepí na obličej i na ruce při každém kroku.
+Křečovitě svíráš čelisti, aby se ti nerozdrkotaly zuby, ale kráčíš kupředu,
+ačkoliv máš nepříjemný dojem, že chodba je temnější a temnější.
+Právě jsi dorazil k rozcestí, kde se tunel potkává s chodbou, která vede od
+severu k jihu.
+Jestliže se chceš dát na sever, obrať na 26.
+Pokud chceš jít k jihu, otoč na 100.
+105
+Kus před tebou sedí na větvi starého rozložitého dubu smolně černý havran.
+Pokud ovládáš Kai disciplínu Spřízněnost se zvířaty, můžeš na ptáka
+zavolat otočením na 298.
+Pokud ne, otoč na 335.
+106
+Konečně přicházíš ke břehu prudce tekoucí ledové říčky. Voda se valí přes
+balvany potažené zelenými řasami a vytváří bíle zpěněné kaskády. Za
+zákrutem mizí k východu.
+Chceš-li jít dolů po proudu, otoč na 263.
+Pokud chceš raději prozkoumat horní tok říčky, obrať na 334.
+107
+Přebíháš napříč místností a prudkým úderem rozrážíš lebky na kusy. Jejich
+dutiny nejsou prázdné, převaluje se v nich jakási šedá hmota a s bubláním
+mění tvar. Zdá se, že z lesklého povrchu této rosolovité substance vyráží
+cosi jako křídla podobná netopýřím, a také jakási chapadla či sosáky.
+Pociťuješ zděšení a hnus a jedinou tvou touhou je dostat se pryč odtud.
+Vyrážíš k východu právě včas - těsně za tebou se s rachotem spouští padací
+mříž a neprůchodně odděluje děsivou místnost od chodby, která vede na
+svobodu. Otoč na 23.
+108
+Obloukem letíš ke střeše na protější straně ulice. Všechno vnímáš
+neobyčejně ostře a zpomaleně, máš pocit, že se zastavil čas. V hloubce pod
+tebou se na ulici hemží davy chodců, okolní střechy poskytují útočiště
+nesčetným uvřískaným vrabcům, kteří svými všudypřítomnými hnízdy
+ucpávají okapy. Jejich poplašené volání sílí ve chvíli, kdy hřmotně dopadáš
+na střechu čtyřpatrového domu. Je to to poslední, co za svého života slyšíš.
+Letité tašky a trámy neodolaly prudkému nárazu, tříští se a praskají a ty se
+řítíš z výšky čtyř poschodí hostince "U zelené trepky". Dopadáš se
+zlámaným vazem. Tak končí tvá pouť i tvůj život.
+109
+Jediné, co koberec skrývá, je špína a prach!
+Jestli máš zájem o obsah lahviček, můžeš si je teď podrobněji prohlédnout
+otočením na 164.
+Nebo můžeš místnost opustit a porozhlédnout se ve stáji. V tom případě
+obrať na 308.
+110
+Bleskurychle míříš a vší silou vrháš kámen proti Giakově hlavě. K tvému
+zděšení se netvor uhýbá a kámen mu jen neškodně klouže po zádech. Jestli
+máš mladého kouzelníka zachránit, musíš jednat okamžitě. Otoč na 55.
+111
+Jen pár minut poté, co jsi opustil rozcestí, se před tebou otevírá pohled na
+malý srub se stájí, ke kterému máš ještě kus cesty. Už z dálky vypadá srub
+opuštěně a tím víc se k němu blížíš, tím je jasnější, že po obyvatelích
+stavení není v okolí ani vidu ani slechu.
+Jestli chceš vstoupit, otoč na 57.
+Pokud si chceš prohlédnout stáj, otoč na 308.
+112
+Znenadání se obrovský balvan, za nímž jsi ukryt, začíná valit na stranu a ty
+stojíš tváří v tvář dvěma vrčícím Giakům, kteří dychtí po tvé krvi. Vchod
+do jeskyně je uzoučký. Máš tedy v boji proti nim určitou šanci.
+Giak 1: UMĚNÍ BOJE 13, KONDICE 10
+Giak 2: UMĚNÍ BOJE 12, KONDICE 10
+Pokud vyjdeš z boje jako vítěz, můžeš se vydat na prohlídku hloub do
+jeskyně. Otoč na 33.
+Nebo můžeš z jeskyně zmizet a sešplhat z kopce dolů otočením na 248.
+113
+Kráčíš už přes půl hodiny, když tvůj pohled upoutají jakési byliny s jasně
+červenými květy, které rostou nedaleko mechem obrostlého břehu. S
+radostí v nich poznáváš laumspur, krásnou a vzácnou rostlinu, všude
+vysoce ceněnou pro její léčivé účinky. V kleče ho trháš, dokud ho nemáš
+plnou hrst, a potom ho pečlivě ukládáš do batohu. Tato bylina ti může
+vracet síly ztracené během další cesty. Jednou porcí laumspuru získáš zpět
+3 KONDIČNÍ body a v batohu máš dvě porce léčivé byliny. Zavazuješ
+batoh a pokračuješ v cestě.
+Chceš-li jít severovýchodně, obrať na 347.
+Pokud chceš zamířit přímo k východu, otoč na 295.
+114
+Přiměl jsi koně k tomu, aby si lehl na zem, a zamaskoval jsi jeho i sebe
+větvemi, na které jsi nahrnul spadané listí. Z úkrytu nasloucháš
+zlověstnému šumění Kraanových křídel. Krvelačný tvor chvíli pátravě
+krouží nad vámi, ale nakonec se vrací na druhou stranu jezera.
+Tečí je ta pravá chvíle zmizet, pro případ, že by se snad Kraan vrátil s
+posilami. Obrať na 239.
+115
+Stěží jsi doklopýtal k prvnímu stavení a zcela vyčerpán padáš do dveří.
+Cítíš vůni vařeného pokrmu. V místnosti visí nad skomírajícími řeřavými
+uhlíky malý kotlík, opodál je prostřeno na velkém dubovém stole. Ať zde
+žije kdokoliv, je jasné, že musel svůj příbytek dnes řasně ráno nakvap
+opustit. Džbán na vodu je plný a na stole v ošatce leží voňavý bochník
+čerstvého chleba.
+Pokud chceš v rychlosti pojíst, otoč na 150.
+Jestli se chceš raději porozhlédnout po domě, otoč na 177.
+Pokud se ti zdá nejmoudřejší hned se sebrat a utíkat dál, obrať na 83.
+116
+Škrábeš se ven z bahnité vody a chtě nechtě se vystavuješ ostré palbě
+černých šípů. Sotva ses rukou dotkl pevné země, vyrážíš pod ochrannou
+klenbu nejbližších stromů. Čekáš tady, až Giakové opustí protější břeh, a
+potom se pěšky vydáváš na další pout k hlavnímu městu. Obrať na 321.
+117
+Muž je těžce poraněn a zřejmě svým zraněním podlehne. Pokud ovládáš
+Kai disciplínu Léčitelství, můžeš jeho utrpení zmírnit, ale šrámy jsou tak
+hluboké, že na jejich vyléčení tvé dovednosti nestačí. Muž skutečně brzy
+upadá do bezvědomí. Ukládáš ho co nejpohodlněji a nejšetrněji v úkrytu za
+vzrostlým lesním dubem a pak ho s těžkým srdcem opouštíš. Vydáváš se
+bohatě zalesněnou krajinou na severovýchod. Obrať na 330.
+118
+Pobízíš koně k trysku a uháníš s větrem o závod dlouhou pěšinou přímo
+dolů. V dálce před sebou stále zřetelněji rozeznáváš na obzoru obrysy
+Holmgardu, jeho obranné valy a vysoké věže, třpytící se v záři ranních
+paprsku. Stezka, kterou se necháváš vést, se připojuje k hlavní silnici,
+spojující sever s jihem, tzn. nejdůležitější severní přístav Toran s hlavním
+městem Holmgardem. Aniž bys zmírnil tempo, zamířil jsi přirozeně k
+Holmgardu, když tu vidíš, že na čistém jitřním nebi krouží Kraan.
+Otoč na 224.
+119
+Trní drásá tvůj plášť na cáry, ruce i nohy máš celé zkrvavené, jak se
+pomalu prodíráš křovím. Po čtvrthodině úporné námahy ses konečně
+vyprostil z obětí posledních dotěrných šlahounů a vypotácel ses na volné
+prostranství mezi stromy. Odečti ze svého KONDIČNÍHO konta 2 body za
+rány, které jsi utržil v křoviskách.
+Chceš jít dál, ale zmocňuje se tě malátnost a závratě, oční víčka těžknou a
+těžknou. Náhle se ocitáš přímo nad prudkým zalesněným srázem.
+Chceš-li sešplhat dolů tak opatrně, jak jen to bude možné, otoč na 226.
+Pokud máš pocit, že na takový nebezpečný, dokonce riskantní sestup
+strmým srázem jsi v tuto chvíli příliš unavený, můžeš jít dál po hřebenu.
+Otoč na 38.
+120
+Za svými zády slyšíš vřavu boje: krví rozdráždění Giakové divoce pobíjejí
+tažné kupecké koně. Odvážil ses rychle ohlédnout přes rameno zpět a vidíš,
+jak se Kraan těžce odlepuje od země a pomalu znovu vzlétá. Nevíš: má v
+úmyslu na tebe zaútočit, nebo ho zaujalo něco jiného? Jedeš dál, ale známý
+černý stín, je jasnou odpovědí na danou otázku. Terčem Kraanova útoku a
+jeho další obětí máš být ty. Kraan mezitím už nabírá plnou rychlost a řítí se
+k tobě.
+Pokud chceš chladnokrevně setrvat v sedle a sklouznout z něho teprve těsně
+před Kraanovým úderem, otoč na 84.
+Pokud chceš ujíždět, jak nejrychleji umíš, pod ochranu nejbližších stromů,
+obrať na 171.
+Jestli si myslíš, že nejlepší bude přitisknout hlavu ke koňově šíji,
+pobídnout zvíře k bezhlavému trysku a prosit nebesa o slitování, obrať na
+54.
+VIII. Na jeho natažené paži sedí černý havran, kterého jsi viděl už dřív.
+121 - Ilustrace VIII
+Po několika minutách chůze stojí před tebou uprostřed cesty červeně oděný
+muž. Je k tobě obrácen zády, takže mu nevidíš do tváře, navíc má přes
+hlavu přetaženou kapuci. Na natažené ruce mu sedí leskle černý havran,
+kterého jsi viděl už dřív.
+Chceš-li na muže zavolat, obrať na 342.
+Pokud se chceš k cizinci opatrně přiblížit, abys mohl zjistit, co je zač, obrať
+na 309.
+Jestli ses rozhodl raději rovnou tasit zbraň a zaútočit, obrať na 283.
+122
+Kůň porozuměl tvým slovům a uklidňuje se. Přistupuješ k tomu
+nádhernému zvířeti a chlácholivě hladíš jeho hlavu. Cítíš, že je ještě
+vyděšený a zmatený. Jemně ho pobízíš a vyvádíš na cestu, po které se
+znovu vydáváš k jihu.
+Obrať na 206.
+123
+Jakmile nestvůra padla mrtvá k zemi, její bezvládné tělo se začalo
+rozkládat. Mění se v odpuzující zelenavý roztok. Pozoruješ s úžasem, jak
+všechna vegetace, kterou kouřící tekutina zasáhne, se křečovitě kroutí a
+hyne. Kousek od ztrácejícího se těla leží v trávě na zemi velký, nejspíš
+cenný drahokam. Ale nejsi tu se zdechlinou sám. Po cestě se sem blíží
+mnohočlenná tlupa bojovných Giaků.
+Chceš-li zvednout drahokam, otoč na 304.
+Pokud raději volíš bleskový útěk, otoč na 2.
+124
+Uvnitř skříňky nalézáš 15 Zlatých a stříbrný klíč. Chceš-li si klíč ponechat,
+nezapomeň ho zapsat do Průvodní listiny.
+V průzkumu tunelu můžeš pokračovat, když otočíš na 211.
+Nebo můžeš kopec opustit, když otočíš na 106.
+125
+Pěšina ústí na rozlehlou mýtinu. Hned tě upoutaly podivné stopy tlap s
+dlouhými drápy. Jistě tu přistál Kraan. Pečlivě stopy zkoumáš a z jejich
+množství a z velikostí udupané plochy usuzuješ, že v průběhu
+posledních dvanáctí hodin tu muselo přistát alespoň pět Kraanů.
+Na vzdálenější straně paseky je vidět dvě stezky, kterými se můžeš vydat
+na další pouť.
+Pokud zvolíš jižní pěšinu, otoč na 27.
+Chceš-li jít směrem na západ, obrať na 214.
+Jestli ovládáš Kai disciplínu Stopování, otoč na 301.
+126
+Noříš se hloub a hloub do lesa. Vzdáváš tiché díky princovi za tak skvělého
+koně, který ani jednou neklopýtl, ačkoli zemi pod jeho kopyty kryje změť
+trní a kořenů. Vlkodlaky brzy necháváte daleko vzadu, a tak si oba, ty i
+kůň, můžete na chvíli oddechnout.
+Světlo se kvapem ztrácí, na krajinu padá noc.
+Chceš-li se dál držet směru, kterým teď jedeš, otoč na 46.
+Chceš-li se obrátit doleva (a tak znovu nabrat směr, kterým tě vedla
+stezka, kterou jsi nechal daleko vzadu), obrať na 143.
+127
+Už asi hodinu tě Drakkarimové kamsi vedou lesní cestou, postrkováním a
+výhružkami tě nutí k rychlejšímu pochodu. Náhle se celá vaše skupinka
+zastavuje, protože za zatáčkou se vynořila obrovská obluda pokrytá
+zelenými šupinami. V poutech Drakkarimů jsi teď úplně bezmocný a
+strachy bez sebe čekáš, co krvelačně vyhlížející tvor udělá. Blíží se, už tě
+ovanul smrdutý pach z jeho tlamy, už slyšíš temné vrčení, z něhož ti tuhne
+v žilách krev. Teď netvor vydal ohlušující skřek, vrhá se k tobě a popadá
+tvou hlavu do silných tlap, opatřených plovacími blanami. Ostré křupnutí
+tvé lámající se páteře už neslyšíš. Tady končí tvá pouť.
+128
+Opatrně se prodíráš hustým listovím, když tu tě přibíjí na místo otřesná
+scéna, která se odehrává v těsné blízkosti, na malé mýtince před tebou. Tři
+Giakové tam připoutali k dřevěnému kůlu jakéhosi muže, k jeho nohám
+navršili hranici a teďí se chystají dříví a roští podpálit. Podle tuniky, kterou
+má zajatec na sobě, poznáváš, že patří k hraniční jízdní policii, která
+nedaleko Durncragského pohoří střeží západní hranici království. Giakové
+muže krutě a nelítostně zbili, takže chvílemi ztrácí vědomí.
+Pokud ovládáš Kai disciplínu Lov, obrať na 297.
+Pokud Kai disciplínu Lov neovládáš, musíš na Giaky zaútočit teď hned,
+abys zajatci zachránil život. Obrať na 336.
+129
+Dostali jste se až na dosah vstupní brány do Holmgardu, teď naplněni úctou
+stojíte před výškou a mohutností městských hradeb. Stometrové zdi už celé
+věky odolávají dvojímu vytrvalému nepříteli - času a Temným pánům.
+Spolu s důstojníkem projíždíš devadesát metrů dlouhým tunelem vnější
+strážnice, až se konečně ocitáte před vchodem do hlavní brány. Zástupy
+vojáků i civilistů proudí tudy ven i dovnitř. Chceš-li se dál nechat vést
+důstojníkem, otoč na 3.
+Máš-li dojem, že se do Pevnosti dostaneš bezpečněji, budeš-li se spoléhat
+na vlastní síly, otoč na 144.
+130
+Brzy tě stezka zavedla na malou lesní mýtinu. Uprostřed leží mohutný
+kmen, do něhož je vydlabaná příjemná lavička, lákající k odpočinku. Jsi už
+pěkně vyhládlý a musíš okamžitě pojíst. Sněz tedy jednu porci potravy.
+Když ses nasytil, můžeš se rozhodnout, kterou cestou se vydáš dál. Pokud
+půjdeš k jihu, otoč na 28.
+Jestli dáváš přednost menší stezce, která se ubírá lesem k východu, obrať
+na 201.
+IX. Mladý kouzelník z toranského Společenství mágů a kouzelníků.
+131 - Ilustrace IX
+Překonal jsi další čtvrt míle, když náhle k tobě dolehly výkřiky a další
+tajemné zvuky připomínající hřmění. Hluk přichází z místa, kde se stromy
+rozestupují v rozlehlou mýtinu. Kryt zelení se plížíš blíž a ocitáš se na
+místě, kde kdysi stával lesní chrám, který dnes už leží v rozvalinách.
+Skupina po zuby ozbrojených Giaků o síle pětadvaceti až třiceti mužů útočí
+na zbytky chrámu ze všech stran. Okolo leží spousta pobitých nebo
+umírajících Giaků, ale ostatní vytrvale pokračují v dobývání chrámu. Z
+ničeho nic prolétá předními řadami Giaků modře zářící blesk, jenž rozsévá
+smrt a paniku mezi netvory. Ale ani strach z neznámé zbraně je neodrazuje
+od nových a nových pokusů a výpadů proti obráncům, skrývajícím se v
+mramorových troskách chrámu, jejichž totožnost je pro tebe stále ještě
+tajemstvím. Giak, vyšší a statnější než ostatní a chráněný od hlavy k patám
+černou drátěnou zbrojí, popohání bez oddechu svou tlupu vpřed kletbami,
+nadávkami a ranami cepu, z něhož trčí na všechny strany dlouhé hřeby. S
+připravenou zbraní a využívaje obratně ochrany, kterou poskytuje husté
+listoví, se pomalu přesouváš k okraji paseky, abys dřív, než podnikneš
+nějaký další krok, zahlédl neochabující a tvrdošíjné obránce chrámu. Když
+konečně vidíš, kdo vzdoruje přesile Giaků, žasneš: je to jeden jediný muž
+asi tak tvého věku! Rozeznáváš nebesky modrý plášť posetý hvězdami,
+jaký nosí členové Společenství mágů z Toranu. Mladý muž jistě patří k
+učedníkům spolku. Pět Giaků právě vyráží vpřed s kopími zdviženými k
+ráně. Jestli mladý čaroděj spěšně neustoupí hlouběji do nitra chrámu, bude
+bezpochyby ztracen, Giakové ho zasáhnout. Mladík však jako kdyby si
+nebezpečí neuvědomoval, stojí stále na místě a ty vidíš, že jen rozvážně
+zvedá levou ruku. Vzápětí konečky jeho prstů vysílají mezi divoce řvoucí
+Giaky modrý klikatý blesk. Těsně přitisknut k zemi sleduješ ze svého
+úkrytu, jak další Giak nepozorovaně probíhá mezi ruinami chrámu, šplhá
+na zbytky mohutného sloupu, mezi zuby svírá zakřivenou dýku a není
+pochyb, že se chce vrhnout na nic netušícího mladého muže, který stojí pod
+ním.
+Pokud chceš mladého kouzelníka výkřikem varovat před nebezpečím,
+obrať na 241.
+Pokud chceš vyběhnout vpřed a zaútočit na zákeřného Giaka, obrať na 55.
+Chceš-li zvednout pořádný úlomek mramoru z chrámové zdi a rozrazit jím
+Giakovi hlavu, obrať na 302.
+Pokud bys nejraději opustil bitevní pole a vběhl zpět do lesa, otoč na 101.
+132
+Ozbrojený průvodce kupeckého vozu si tě chvíli měří s neskrývanou
+nedůvěrou a pak ti před nosem přiráží dveře. Z nitra vozu k tobě doléhá
+vzrušený hovor. Po několika minutách dohadování se dveře znovu otevírají
+a z nich na tebe hledí blahobytný kupec. Okamžitě poznává tvůj šat rytířů
+řádu Kai a spěšně se omlouvá za chování svého sloužícího.
+Jeho jednání je ale pochopitelné, vysvětluje kupec, protože od chvíle, kdy
+opustili Toran, se už několikrát stali terčem útoku: napadl je Kraan,
+zbojníci i lupiči. To vše kupec vypráví, zatímco ti uvolňuje alespoň
+nejnutnější kousek místa uvnitř vozu. Není tam totiž k hnutí, téměř všechen
+prostor zabírají role hedvábí a vaky s kořením. S díky přijímáš pokrm,
+který ti kupec nabízí, a po přepychovém obědě tě konečně přemáhá únava z
+dlouhé a nebezpečné cesty a ty upadáš do těžkého bezesného spánku. Otoč
+na 64.
+133
+Pohnul ses směrem k soše, když tu její kamenný obličej začíná praskat a
+vzápětí před tebou exploduje celá socha. Z kamenného pláště se tak
+osvobodil okřídlený had a okamžitě na tebe útočí. Musíš s netvorem
+bojovat.
+Okřídlený had: UMĚNÍ BOJE 16, KONDICE 18
+(Tento netvor není citlivý na Útok duševní energií.)
+Pokud se ti podaří v boji zvítězit, otoč na 266.
+134
+Díky tomu, že můžeš využít svých výjimečných schopností, odhaluješ
+stopy Giaků na celém obvodu mýtiny. Stopy jsou čerstvé a dá se říci, že
+bezcitní oblíbenci Temných pánů se pohybovali v těchto místech ani ne
+před dvěma hodinami.
+Jestli chceš bez ohledu na to, co jsi právě zjistil, prozkoumat dřevěná
+stavení na palouku, otoč na 305.
+Chceš-li paseku raději obejít, obrať na 40.
+135
+Naklonil ses přes strmý a podemletý břeh řeky, abys viděl dolů, kde se v
+místech, kde řeka tvoří tišiny a voda neproudí, drží změť naplaveného
+dříví. Na jílovité mělčině uvízl velký kmen a kousek od něho dokonce malá
+loďka.
+Jestli chceš k plavbě dolů po proudu řeky použít kládu, otoč na 223.
+Chceš-li se raději plavit loďkou, obrať na 4.
+136
+Giakové se blíží a krčí se v terénu, jakoby se chystali k útoku. Dobře vidíš
+zubaté hroty jejich kopí a slyšíš nesrozumitelnou řeč, která se pracně
+dobývá odněkud z hloubi jejich hrdel. Větší z tvorů vyrazil: "Orgadak taag!
+Nogjat aga ok!" A pak na tebe útočí. Musíš se postupně utkat s oběma
+Giaky. Přičti si pro tento zápas 1 bod k UMĚNÍ BOJE, protože můžeš
+využít výhodu, kterou poskytuje zvýšený terén.
+Giak 1: UMĚNÍ BOJE 13, KONDICE 10
+Giak 2: UMĚNÍ BOJE 12, KONDICE 10
+Pokud vyhraješ, obrať na 313.
+137
+Jakmile poslední odpudivá zrůda padá bez života k zemi, zelenavé světlo se
+pomalu začíná vytrácet. V jeho zbytcích stačíš postřehnout, že každá
+rozbitá lebka obsahuje drahokam. Překotně sbíráš drahé kameny, abys to
+stihl dřív, než místnost pohltí naprostá temnota. Pamatuj, že je třeba zapsat
+je do Průvodní listiny. Bez dalšího otálení opouštíš Zplozence záhrobí a
+pokračuješ dál ve své cestě.
+Otoč na 23.
+138
+Se zbraní v pohotovosti očekáváš, kdy se objeví nepřítel. Jsou to dva horští
+Giakové a ty se musíš utkat postupně s oběma.
+Giak 1: UMĚNÍ BOJE 13, KONDICE 10
+Giak 2: UMĚNÍ BOJE 12, KONDICE 10
+Pokud nad nimi zvítězíš, obrať na 291.
+139
+Vnitřní nádvoří kypí činorodým ruchem. Jízdní poslové čekají po boku
+svých neklidných koní na rozkazy, které vydává spojené velení, zasedající
+ve Velkém sále. Neobyčejně rychle předávají pokyny, vzkazy a rozkazy
+obráncům na vnějších hradbách. Posel stíhá posla, ti, kteří se vracejí, sotva
+popadají dech a pot z nich jen leje. Stačíš udělat sotva pár kroků napříč
+nádvořím, když tu zaduní kus od tebe hlas: "Zadržte toho muže!"
+Obrať na 66.
+140
+Stojíš na mýtině, kde je z několika poražených stromů vybudována strážní
+věž, dnes již poznamenaná zubem času a náležitě vratká. Pod ní se křižují
+stezky a rozbíhají se na tři různé strany.
+Pokud si zvolíš jižní směr, obrať na 14.
+Jestli se chceš dát na východ, otoč na 252.
+Chceš-li jít jihozápadní pěšinou, obrať na 215.
+Pokud ses rozhodl vyšplhat na strážní vížku, otoč na 36.
+141
+Šestý smysl ti napovídá, že někteří z netvorů, kteří dobyli klášter, se dali do
+zkoumání obou dvou pěšin, aby objevili každého, kdo snad přežil jejich
+nájezd a vraždění. Místo abys riskoval nepříjemné setkání, můžeš zvolit
+cestu panensky nedotčeným lesním porostem.
+Chceš-li zvolit jižní směr, obrať na 56.
+Pokud si chceš proklestit cestu hustým listovím a vydat se k
+severovýchodu, obrať na 333.
+142
+Před sebou vidíš vysoké, šedavě bílé zdi a do daleka zářící věže
+Holmgardu, vidíš městské vlajky, chvějící se na cimbuří v čerstvém ranním
+vánku. Řeka Eledil, pramenící v kopcích Durncragského pohoří, si vyhloubila
+koryto až k Holmské zátoce, kde se vlévá do moře. Holmgard leží u
+jejího ústí. Radost z výhledu na krásnou a milovanou krajinu ti kalí hrozivá
+černá armáda, která se nezadržitelně valí od kopců k hlavnímu městu. Po
+pravé straně se táhne široká pohodlná silnice, která vede až k Holmgardu.
+Během bys mohl dorazit k zevním valům městského opevnění asi tak za
+hodinu, ale to by ses pohyboval skoro celou dobu v otevřené krajině a byl
+bys snadným dílem pro Kraany. Přímo před sebou máš široký bahnitý tok,
+který líně směřuje k řece Eledil. Jako úkrytu můžeš využít podemletých
+břehů a doplavat k hlavnímu městu. Ještě je tu jedna možnost, jak se dostat
+k cíli. Vlevo před tebou leží pradávný hřbitov, Hřbitov předků. Rozpadající
+se hrobky a vetché pomníky ze zapomenutých časů by mohly utajit tvůj
+postup vpřed, ale velmi dobře víš, že území hřbitova je tabu. Bezesným
+spánkem tam spí nespočet tajuplných příšer, čekajících jen na neopatrného
+odvážlivce, který přestoupí zákaz, aby ho uchvátily a zahubily.
+Jestli se chceš pokusit o štěstí na silnici, otoč na 58.
+Máš-li dojem, že větší naději na úspěch ti dává vodní cesta, obrať na 135.
+Jestliže máš dost odvahy riskovat neznámá nebezpečí na Hřbitově předků,
+pak obrať na 102.
+143
+Brzy ses vynořil z lesa a ocitl ses na hlavní silnici. Ujišťuješ se, že je to
+opravdu nejdůležitější spoj mezi Toranem na severu a Holmgardem na jihu
+země. Pobízíš koně a odhaduješ, že hlavního města bys mohl dosáhnout
+ráno. Otoč na 149.
+144
+Probíjíš se návalem těl na hlavní ulici a snažíš se dostat ke vzdálené
+Pevnosti. Obyvatelé města zmateně pobíhají sem a tam v záchvatu panické
+hrůzy, protože nad jejich hlavami se ozývá zlověstné krákorání kroužícího
+Kraana.
+V tlačenici ti někdo ukradl jeden předmět z batohu. Jestliže už batoh
+nemáš, ztrácíš zbraň. Nezapomeň jeden předmět nebo zbraň vyškrtnout ze
+své Průvodní listiny.
+Kárka tažená splašeným koněm tě odhazuje na nejbližší dveře. Jsi na
+několik vteřin omráčen, a tak ztrácíš 2 KONDIČNÍ body. Jak se škrábeš na
+nohy, rozlétnou se dveře dokořán, objevuje se v nich omšelý stařík a bez
+zaváhání se na tebe vrhá sekáčkem na maso. Vypadá naprosto nepříčetně a
+ty musíš bleskurychle zvolit mezi bojem a útěkem.
+Pokud chceš bojovat, otoč na 63.
+Volíš-li útěk, obrať na 217.
+145
+Máš pocit, jakoby tě převálcoval vůz nebo kočár. Poslední dojmy, které jsi
+schopen si uvědomovat během pádu k zemi, je nesnesitelná bolest v zádech
+a slaná chuť písčité cesty. Hned nato pozbýváš vědomí a obklopuje tě
+milosrdná temnota, ve které není bolesti. Otoč na 165.
+146
+Už asi míli cváláš bez vzrušujících zážitků a nebezpečí, když jsi náhle
+sražen ze sedla šípem, který tě zároveň lehce škrábne na čele. Ztrácíš 3
+KONDIČNÍ body. Vyšvihl ses znovu na nohy a rozhlížíš se, odkud útok
+přišel. Obklíčila tě silná jednotka Drakkarimú, z lesů kolem dokola se
+vynořuje jeden zloduch za druhým. Byl jsi přepaden ze zálohy a máš
+jedinou naději: uprchnout co nejrychleji pod ochranu lesa. Obrať na 154.
+147
+Po několika minutách chůze narážíš na hliněnou chatrč, neuměle skrytou
+stranou od pěšiny. Jsi vyhládlý a potřebuješ se okamžitě nasytit. Pokud
+nemáš co jíst, ztrácíš 3 KONDIČNÍ body. Po jídle se pečlivě rozhlížíš a
+vidíš, že cesta, po níž jsi sem došel, se stáčí k jihu.
+Chceš-li se dát po stezce jižním směrem, otoč na 42.
+Pokud se chceš dál držet původního směru, otoč na 28.
+148
+Vyrážíš dveře a vnikáš do statku. Kraan se vznáší vysoko nahoře, ve
+spárech svírá oběť a vítězoslavně krákorá. Když znovu nalézáš ztracenou
+rovnováhu, rozhlížíš se kolem sebe po místnosti. Jsi tu docela sám. Naproti
+ohništi někdo opřel o stěnu válečné kladivo.
+Chceš-li, můžeš si zbraň odnést sebou.
+Jestli se chceš dál schovávat na statku, otoč na 81.
+Pokud dáváš přednost bezpečí lesa, můžeš v něm zmizet otočením na 320.
+Chceš-li si zevrubněji prohlédnout místnost, obrať na 199.
+149
+Jak jedeš po silnici, pozoruješ, že světla kvapem ubývá. Brzy bude úplná
+tma, v níž nebude možné včas rozeznat případné nebezpečí, číhající podél
+cesty. Zbytečně neváháš a hledáš vhodné místo k odpočinku. Takové ti
+nabízí lesní výběžek, ve kterém se můžeš prospat a do rána nabrat nových
+sil.
+Ujišťuješ se, že jsi přede všemi dobře ukryt, nedočkavě se zachumláváš do
+teplého zeleného pláště a upadáš do těžkého spánku beze snů. Obrať na
+256.
+150
+Jídlo je sice trošičku převařené, ale tobě chutná báječně. Bohužel ho není
+dost na celou jednu porci, která by tě nasytila beze zbytku. Chladnou vodou
+s chutí zaháníš žízeň. Jídlem a odpočinkem ses zdržel v domě necelou
+půlhodinku, ale o to více teď chvátáš. Dáváš si do pořádku svou cestovní
+výbavu a opouštíš stavení. Obrať na 83.
+151
+Pokud se dokážeš dostatečně soustředit na klíčovou dírku, můžeš uvést
+mechanismus zámku do pohybu a zámek tak odemknout. Pak můžeš silou
+své vůle přimět zástrčku, aby se vysunula a vypadla na podlahu. Dveře
+budou volné.
+Přeješ-li si využít toho, že ovládáš Kai disciplínu Ovládání hmoty
+myšlenkou a tak odemknout zámek a vysunout zástrčku, obrať na 87.
+152 - Ilustrace X
+Bylinkář ti nabízí sadu zvláštních lektvarů. Některé zázračně posilují ducha
+i tělo, jiné způsobují neviditelnost, další poskytují schopnost změnit sám
+sebe v obláček páry. Muž trhnutím otevírá nejnižší zásuvku pultu a
+slavnostním gestem odtud vyndává kouzelný proutek. Vysvětluje, že prut je
+neobyčejně účinná zbraň proti všem ďábelským netvorům, kteří se začínají
+roztahovat po Sommerlundu, a že zároveň dokáže svého majitele učinit
+nezranitelným. Mudrc a bylinkář v jedné osobě tě vyzývá, aby sis přečetl
+magický nápis, který je vyryt do černé dřevěné hůlky.
+Chceš-li se natáhnout přes pult, abys lépe viděl na zvláštní nápis, obrať na
+49.
+Pokud tě více zajímají roztoky a jejich kouzelná moc, otoč na 231.
+X. Bylinkář ti nabízí ze zvláštních lektvarů .
+153
+Před tebou se tyčí zářivé věže Holmgardu a vysoké, šedavě bílé zdi jeho
+hradeb. Městské prapory na baštách zlehka povlávají v čistém a mírném
+ranním větříku. Městem protéká řeka Eledil, která pramení mezi horami
+Durncragského pohoří a po mnohakilometrové cestě na západ se těsně pod
+Holmgardem vlévá do moře, do Holmské zátoky. To, co tento idylický
+pohled kalí, je nesmírně početná černá armáda, která se zpod
+Durncragských vrcholků nezadržitelně valí přímo na město.
+Po pravé straně se vine široká cesta napřít svažující se plání až k
+Holmgardu. Tryskem bys mohl vzdálenost, která tě dělí od vnějšího
+opevnění města, urazit za méně než hodinu. Cesta po silnici by byla rychlá,
+ale má jednu velkou nevýhodu: téměř celou trasu bys musel jet otevřenou
+krajinou, v níž jsi zcela bezbranný proti útokům ze vzduchu.
+Přímo před tebou se k Eledilu lenivě šine jakýsi nevýznamný bahnitý
+potok. Kdyby ses vzdal koně, můžeš nepozorovaně proplavat pod
+vysokými a podemletými břehy až k hradbám.
+A konečně je tu ještě jedna možnosti, jak se dostat k Holmgardu. Po levé
+ruce máš prastarý hřbitov, o kterém se hovoří jako o Hřbitově předků. Mohl
+bys využít hrobek a pomníků, pamětníků zašlých časů, k utajenému
+postupu vpřed. Ale dobře víš, že území hřbitova je tabu. Bezesným
+spánkem tam odpočívá spousta nepojmenovatelných příšer. Čekají na toho,
+kdo z neopatrnosti nebo nevědomosti vstoupí na hřbitovní půdu, aby s ním
+mohly nepěkně naložit.
+Jestli chceš pokoušet štěstí tím, že se vydáš k Holmgardu po silnici, obrať
+na 202.
+Pokud máš dojem, že bezpečnější by byla cesta vodními toky, obrať na
+135.
+Jsi-li tak odvážný, že chceš riskovat setkání s neznámými nestvůrami na
+Hřbitově předků, ačkoliv víš, že mohou ohrozit tvůj život, otoč na 329.
+154
+Následkem zranění trpíš závratí, potácíš se od stromu ke stromu jako
+slepec. Z ničeho nic ti mizí pevná půda pod nohama a ty se propadáš
+hlavou napřed do záludně nastražené lovecké jámy. Ze dna díry zvedáš
+hlavu, abys zjistil, jak jsi hluboko, a krve by se v tobě nedořezal: vidíš čtyři
+Drakkarimi s napjatými luky, kterými míří přímo na tebe. Ohyzdné tváře se
+jim stahují zlým vítězoslavným úšklebkem.
+Svět pro tebe přestává existovat ve chvíli, kdy se čtyři hroty jejich černých
+šípů noří do tvé hrudi. Tvé poslání je ztraceno a život zmařen!
+155
+Když jsi přišel blíž, skupinka lidí přestala hovořit. Z jejich výrazu je
+zřejmé, že rozpoznali tvůj zelený plást rytíře řádu Kai. Jeden z mužů
+pomalu napřáhl v přátelském i uctivém gestu ruku k pozdravu a říká: "Můj
+pane, donesla se k nám strašná zvěst o zničení kláštera Kai a o povraždění
+všech rytířů tohoto slavného řádu. Nebesa budiž pochválena, že tomu tak
+není! Báli jsme se, že je vše ztraceno!" Nenacházíš v sobě sílu přiznat, že
+klášter skutečně leží v rozvalinách, protože před tebou stojí uprchlíci z
+Toranu, kteří přišli o celé své jmění a jejich životy jsou také ohroženy.
+Zbývá jim jediná naděje, že se rytíři Kai ujmou velení armády a zvítězí nad
+všemi temnými silami. Od utečenců se dozvídáš, že hlavní severní přístav
+se stal terčem dvojího útoku, ze vzduchu i z moře, a že síly Temných pánů
+početně mnohokrát převyšovaly královskou posádku, která střežila bezpečí
+Toranu a statečně bránila město do posledního muže. Ujišťuješ uprchlíky,
+že Sommerlund ve válce nepodlehne, a přeješ jim na další cestě hodně
+štěstí.
+Obrať na 70.
+156
+Do bahna všude kolem dopadají černé šípy. Spousta dalších Giaků se
+vyrojila na srázném řitním břehu a zuřivě na tebe střílí.
+Chceš-li se vrhnout bez otálení do vody a plavat po proudu, otoč na 294.
+Chceš-li přeplavat pod ochranný val stromů na protějším břehu, obrať
+na 245.
+157
+Les vpředu zatíná řídnout, až konečně se mezi stromy objevuje cesta. Po ní
+se směrem k jihu ubírají davy lidí. Mnozí z nich vlekou celý svůj majetek
+na malých rozvrzaných kárkách.
+Chceš-li se přidat k uprchlíkům a snad se tak dozvědět něco o tom, co se
+odehrálo na severu, obrať na 30.
+Jestli chceš raději pokračovat v cestě k jihu sám, obrať na 167.
+158
+Klít se zasunuje do zámku, pootáčí se a zámek povoluje. Opatrně strkáš do
+dveří a ocitáš se tváří v tvář podivnému starci. Pravou rukou svírá hůl, z níž
+náhle vystřeluje zářící blesk a zasahuje tě do prsou. Ztrácíš 6
+KONDIČNÍCH bodů. Sténaje bolestí odhazuješ nebezpečného starce
+stranou, vrháš se ke krkolomně sráznému schodišti a vybíháš po něm
+nahoru, tam, kde tušíš denní světlo. Bereš schody po dvou, a když jsi už v
+půli schodiště, vysílá starý muž za tebou další blesk. Vyhledej poslepu číslo
+v Tabulce náhody.
+Pokud ses trefil do některého z čísel 0 - 5, blesk tě míjí a tříští se o stěnu
+nad schodištěm.
+Jestliže jsi tužku zapíchl do čísel 6 - 9, jsi zasažen do zad a ztrácíš další 4
+KONDIČNÍ body.
+Pokud jsi přežil, potácíš se na denním světle a proklínáš svou smůlu. Jen
+neblahou náhodou jsi narazil na skrytý chrám sekty ďábelských druidů.
+Můžeš mluvit o velkém štěstí, žes vyvázl holým životem. Spěcháš, aby ses
+dostal na pěšinu, která mizí za kopcem.
+Obrať na 106.
+159
+Tvoje snaha se nesetkala s žádoucím ohlasem. Kupec se nemá k tomu, aby
+tě vpustil do vozu. Místo toho nečekaně luskne prsty a jeho ozbrojený
+ochránce sahá po turecké šavli.
+Bud s ním změříš síly otočením na 191.
+Nebo musíš seskočit z rychle ujíždějícího vozu. Pak obrať na 234.
+160
+Zvol poslepu některé číslo číslo z Tabulky náhody. Pokud je to 0 - 4, jsi
+spatřen. Otoč na 286. Pokud je to 5 - 9, nepřátelé tě nezpozorovali a pochodují
+pryč po vzdálenější straně hřebene. Obrať na 10.
+161
+Jak usedáš, kamenný had na podstavci se pomalu dává do pohybu. V tu
+chvíli tě oblévá studený pot a třesoucí se rukou křečovitě tiskneš zbraň,
+abys byl připraven k obraně, kdyby had zaútočil. Strnule a fascinovaně
+sleduješ červený vidlicovitý jazyk, který se objevuje v hadově tlamě a zase
+mizí, až konečně zvíře strká hlavu do zeleně zářící mísy nad tebou. Za
+okamžik z ní vytahuje zlatý klíč a hází ti ho do klína. Deska na východní
+stěně se s cvaknutím pootáčí a odkrývá tajný východ z těchto míst, kde si
+nemůžeš být jist zdravím ani životem.
+Popadl jsi klíč a mizíš tak rychle, jak jen to jde. Obrať na 209.
+162
+Jsi už jen pár kroků od mužů a voláš na ně. Otáčejí se obličeji k tobě a ty
+cítíš, jak ti naskakuje husí kůže a jak se ti leknutím málem zastavuje srdce.
+Není to nikdo jiný než přestrojení Drakkarimové! Okamžitě útočí. Srážejí
+tě k zemi, ruce ti svazují silným provazem a pak tě ženou před sebou dál po
+stezce. Zmocňují se i tvého batohu a zbraně, ale zlatých mincí v měšci si
+nevšimli a nezajímá je ani plaší, který máš přes sebe. Hrozivě se
+pochechtávají a předhánějí se v líčení útrap a muk, která tě očekávají v
+jejich ležení.
+Pokud jsi schopen využít Kai disciplínu Ovládání hmoty myšlenkou, obrať
+na 258.
+Pokud tuto dovednost neovládáš, obrať na 127.
+163
+Po půlhodině plavby cítíš, že proud, který tě unáší, sílí. Soustředěně hledíš
+na hladinu před sebe a uprostřed širokého říčního zákrutu, ke kterému se
+blížíš, rozpoznáváš mohutný vír. Okamžitě pochopíš, že jestli se necháš
+ještě chvilku unášet proudem dolů, vír tě vtáhne a utopí. Bez dalšího otálení
+nasazuješ silná tempa napříč proudem a včas se dostáváš k pravému břehu.
+V další cestě už pokračuješ pěšky. Vybavení máš kompletní a v pořádku,
+nic jsi neztratil.
+Obrať na 321.
+164
+Pozorně odšpuntováváš jednu lahvičku za druhou a čichem se pokoušíš
+rozpoznat jejich obsah. Máš dojem, že v každé je nejspíš nějaký druh vína.
+Jak se jimi tak probíráš, upoutává tvou pozornost jedna lahvička, poněkud
+menší než ostatní a zasunutá až vzadu. Už když jsi jen zpola vyšrouboval
+skleněnou zátku, která vězí v hrdle, cítíš vůni, která nade vší pochybnost
+prozrazuje Alether, nápoj síly. Ostatně tvou domněnku potvrzuje i oranžová
+barva kapaliny. Kouzelný nápoj si můžeš odnést sebou. Pokud ho vypiješ
+před zápasem, zvýší se tvé UMĚNÍ BOJE o 2 body (ale jen pro dobu boje).
+Zapiš si Alether do Průvodní listiny, ale jakmile ho jednou použiješ,
+nezapomeň ho zase škrtnout.
+Tečí bude nejlepší, když se pustíš do další pečlivé prohlídky stáje.
+Otoč na 308.
+165
+Probouzíš se spalován horečkou. Před očima se ti ještě chvíli vznášejí
+neskutečné představy a vidiny, až se nadobro vytrácejí a ty cítíš, že bdíš,
+ačkoliv nemáš tušení, kde jsi a co se s tebou děje. Bolest v zádech se ozývá
+s takovou silou, až se ti do úst derou výkřiky a prosby o pomoc. Hned nato
+cítíš na čele vlhký chladivý obklad a na zlomek vteřiny zahlédneš ustaraný
+obličej mladé dívky. Jakýsi stařec jí šeptá cosi do ucha a vzápětí se ztrácí z
+tvého zorného pole. Rád bys pootočil alespoň hlavou, ale nejde to. Děvče
+pokleká u lože a chlácholí tě laskavými a uklidňujícími slovy. Přesto
+podléháš vyčerpání, tvůj pohled se zatemňuje, světlo se vytrácí a znovu tě
+obestírají mrákoty. O tom, že blouzníš, nevíš už nic.
+Obrať na 212.
+166
+Dostal ses do vlivu tajemných nečistých mocností. Tvá křehká mysl
+obyčejného smrtelníka podstupuje těžkou zkoušku a je třeba sebrat všechny
+síly k její obraně. Začal boj a v sázce je tvůj zdravý rozum. Skutečný svět
+přestává existovat, místo něho tebou zmítají fantastické i kruté představy,
+vidiny, které tě lákají i děsí zároveň. Když se zjevení rozplynula, potácíš se
+k tunelu a tvé KONDIČNÍ skóre je o 4 body nižší.
+Obrať na 104.
+167
+Urazil jsi skoro celou míli, když sis všiml páru nohou, který prozrazuje, že
+za velkým balvanem někdo leží a nejspíš se tam skrývá.
+Pokud se chceš zblízka přesvědčit, komu nohy patří, obrať na 88.
+Jestli se chceš raději vyhnout setkání s jejich neznámým majitelem a dále
+pokračovat lesem, obrať na 264.
+Pokud ovládáš Kai disciplínu Šestý smysl a chceš ji využít, otoč na 178.
+168
+Vyškrábal ses nahoru na bohatě naložený kupecký povoz a usadil ses mezi
+cestovními kufry a vaky. Noc se už snáší na krajinu a silnice se noří do
+tmy. Od západu se zdvíhá mrazivý vítr, a tak se dobře halíš do teplého
+dlouhého pláště, který tě spolehlivě ochrání před chladem. Odspodu k tobě
+doléhají hlasy a tak silná vůně kořeněného jídla, že máš ústa plná slin.
+Uvědomuješ si, že jsi příšerně hladový. Musíš se okamžitě najíst, a proto si
+připravuješ jednu porci jídla. Konečně podléháš únavě z vyčerpávající
+cesty a upadáš do těžkého bezesného spánku.
+Obrať na 64.
+169
+Jak procházíš podél lebek, všechny jakoby se otáčely a sledovaly každé
+tvoje hnutí. Právě když jsi v půli cesty napříč místností, slyšíš za sebou
+ostré praskání pukajících kostí. Hned nato vidíš, jak se z lebek líhnou
+ohyzdní tvorové a na vzduchu vypínají velká pomačkaná křídla.
+Sliznaté okřídlené nestvůry útočí. Musíš s nimi bojovat jako s jedním
+nepřítelem.
+Zplozenci záhrobí: UMĚNÍ BOJE 16, KONDICE 16
+Po skončení prvního kola můžeš další boj vzdát a uprchnout otočením na
+23.
+Pokud nad netvory zvítězíš, obrať na 137.
+170 - Ilustrace XI
+Tunel se topí ve tmě a vzduch je tu daleko chladnější než venku. Ostražitě
+postupuješ vpřed, jednou rukou šátráš po stěně a tak si pomáháš udržet
+směr. Ploužíš se úplnou tmou asi tři minuty a najednou cítíš odporný
+hnilobný zápach, který ze všeho nejvíc připomíná pach rozkládajícího se
+masa. Máš-li v batohu louči a troudník, můžeš si posvítit, abys viděl na
+cestu před sebou.
+Zcela nečekaně se ze stropu tunelu vrhlo na tvá záda něco neobyčejně
+těžkého, až klesáš na kolena. Je to dravý hrabonor a potyčce s ním se
+nemůžeš vyhnout, protože se pokouší uškrtit tě dlouhými slizkými
+chapadly, která mu v celém klubku vyrůstají nad ústním otvorem.
+Hrabonor: UMĚNÍ BOJE 17, KONDICE 7
+Pokud si neneseš v batohu louči, odečti pro tento boj 3 body z UMĚNÍ
+BOJE. Hrabonora nelze napadnout duševní silou, proti níž je odolný, a ani
+se s ním nemůžeš dorozumět, přestože třeba ovládáš Kai disciplínu
+Spřízněnost se zvířaty. Porazíš-li hrabonora, otoč na 319.
+171
+Dostal ses až na samý okraj lesa, když tu se kůň vzpíná v bolestné křeči.
+Hluboko do jeho zadních nohou zaťal Kraan své ostré drápy a tebe se
+pokouší křídly shodit ze sedla. Na zádech okřídleného netvora se šklebí
+Giak a kňučí rozkoší, protože už vidí, jak svoje kopí vráží do tvého těla.
+Duchapřítomně seskakuješ z koně a prcháš ke stromům. Ubohé věrné zvíře
+necháváš napospas dravému Kraanovi. Obrať na 303.
+172
+Začala se snášet noc a brzo tě pohltila hluboká tma. Není ani pomyšlení na
+to, abys pokračoval dál: bylo by to nerozumné, protože bys určitě sešel ze
+správné cesty. Chvíli hledáš vhodný úkryt, pak přivazuješ koně ke stromu,
+sám si pevněji přitahuješ k tělu teplý zelený plášť a sotva se tvá hlava
+dotkne země, už spíš tvrdým spánkem.
+Z hlubokého snu jsi probuzen vzdálenými zvuky pochodujících
+ozbrojených skupin. Přes modrou plochu jezera vidíš černé šiky
+Drakkarimd a smečku vlkodlaků. Nad stromy několikrát zakroužil Kraan a
+k přistání si vybírá střechu malé dřevěné chajdy u břehu jezera. Kraan se
+přesně řídí pokyny červeně oděného netvora na svých zádech, který ho
+znovu pobízí k letu. Těsně nad hladinou se teď blíží k místu tvého nočního
+odpočinku.
+Chceš-li zajet hlouběji do lesa, aby ses vyhnul setkání s Kraanem a jeho
+pánem, obrať na 239.
+Pokud chceš s pomocí Kai disciplíny Maskování lépe ukrýt sebe i svého
+koně, obrať na 114.
+Jestli se cítíš dost silný na to, aby ses pustil s netvorem do boje, obrať na
+29.
+XI. Je to hrabonor a pokouší se tě uškrtit.
+173
+Obezřetně se rozhlížíš na všechny strany, aby ses nedal zaskočit případným
+nebezpečím, a pomalu se blížíš ke dveřím. Když ses k nim konečně dostal,
+chystáš se vyzkoušet, půjdou-li otevřít. Zvedáš ruku ke klice, když tu tě
+vyděsí ohlušující rachot a třesk. Instinktivně se krčíš, chytáš si hlavu
+rukama, a teprve když se znovu rozhostilo ticho, rozhlížíš se kolem sebe.
+Ze stropu za tebou se zřítil těžký kamenný kvádr a zablokoval chodbu,
+kterou ses do sálu dostal. Nemůžeš se tedy vrátit a doufáš už jen v to, že se
+ti podaří otevřít dveře, před nimiž stojíš.
+Máš-li stříbrný klíč, máš vyhráno a dveře můžeš odemknout otočením na
+158.
+Pokud stříbrný klíč nemáš, obrať na 259.
+174
+Po necelé hodině plavby po řece proud sílí a ty cítíš, že tě unáší k místu,
+kde se říční tok stáčí a kde vzniká zlověstný vír. Nepochybuješ, že pokud tě
+točící se voda vtáhne, jen stěží unikneš hrozné smrti utopením. Bez váhání
+se vrháš do bahnité řeky, ale jak usilovně plaveš a vzdoruješ silnému
+proudu, ztratíš batoh i zbraně. Zdráv, ale bez vybavení a neozbrojen
+vylézáš mokrý na zalesněný břeh.
+Obrať na 190.
+175
+Rukama dáváš znamení blížící se skupině jezdců. Ted
+už v nich poznáváš příslušníky hraniční jízdní hlídky královské armády,
+tvrdé a houževnaté chlapy, kteří střeží nejohroženější, západní
+sommerlundskou hranici. Ale radostná úleva, jež tě zaplavila při pohledu
+na královské vojáky, se vzápětí mění v hrůzu, když se za nimi objevuje
+letící smečka vlkodlaků, osedlaná ďábelskými Giaky. Černé šípy
+zasypávají jízdní hlídku. Uštvaní koně vojáků viditelně ztrácejí síly,
+zdivočelí vlkodlaci se naopak víc a víc přibližují.
+Chceš-li se ukrýt na místě, kde stojíš, obrať na 41.
+Pokud se chceš rychle dostat na druhý břeh, otoč na 116.
+Jestli ovládáš Kai disciplínu Maskování a chceš ji nyní využít, obrať na
+182.
+176
+Uskakuješ mezi husté vzrostlé keře, jež lemují cestu, a doufáš, že tě ani
+vlkodlak ani jeho velitel neodhalí. Podařilo se! Bestie probíhá kolem tebe a
+tvého koně úplně bez povšimnutí a míří dolů po pěšině, po níž jsi ještě před
+okamžikem jel.
+Pokud chceš na zbývající vlkodlaky a jejich jezdce zaútočit, obrať na 253.
+Jestli chceš raději proniknout hloub do lesa, otoč na 126.
+177
+V malém stavení nahlížíš do všech skříněk, ale v žádné nenalézáš nic
+hodnotného. Když jsi s prohlídkou hotov, říkáš si, že tady už nebudeš dál
+ztrácet čas, a hned taky vyrážíš na další cestu.
+Obrať na 83.
+178
+Díky své schopnosti odhalovat pravý stav věcí Šestým smyslem
+rozpoznáváš boty a kalhoty vojáka královské armády. Kromě toho také víš,
+že muž je raněn a nezbytně potřebuje pomoc
+Pokud chceš pro vojáka něco udělat, otoč na 88.
+Jestli ho tu chceš nechat bez pomoci a jet dál, obrať na 264.
+179
+Objevila tě strážní hlídka a kuše vojáků tečí míří přímo na tebe.
+Chceš-li zvednutím rukou dát najevo svoje mírumilovné úmysly, obrať na
+318.
+Pokud se chceš pokusit o útěk, otoč na 51.
+180
+Sotva ses rukou dotkl zbraně, muži to zpozorovali; teď stojí všichni tři ve
+střehu a číhají na každý tvůj pohyb. Pokud jsi pevně rozhodnut, že se s nimi
+utkáš, pusť se do toho, ale bojuj s nimi postupně.
+Velitel: UMĚNÍ BOJE 15, KONDICE 22
+Voják 1: UMĚNÍ BOJE 13, KONDICE 20
+Voják 2: UMĚNÍ BOJE 12, KONDICE 20
+Jestli se ti podařilo zabít všechny tři, obrať na 62.
+Chceš-li raději boj vzdát, otoč na 22.
+181
+Instinkt ti napovídá, aby ses vrhnul k zemi a tak se uhnul šípu ze
+samostřílu. Lupič mířil víc než dobře: při pádu cítíš, že levý rukáv u košile
+se trhá a šíp tě zlehka škrábne. Děkuješ bohům, že nad tebou tentokrát
+drželi ochrannou ruku, vyskakuješ čile na nohy a prcháš dál ze všech sil.
+Bandité už žádné jiné šípy nemají, chvíli za tebou běží, ale brzy
+pronásledování vzdávají. Stačí pár minut rychlého běhu a necháváš je
+daleko za sebou. Přišel jsi sice o zbraně i o vybavení, ale zachránil sis
+život! Zastavil ses jen na dobu nutnou k prohlédnutí a zběžnému ošetření
+zraněné paže a hned zase kráčíš dál po silnici, která vede až k vnějším
+valům městských hradeb.
+Obrať na 288.
+182
+Tři členové jízdní hraniční hlídky ujíždějí po říčním břehu těsně sledováni
+Giaky, které vezou na hřbetech jejich vrčící oři - vlkodlaci. Ale jsi tak
+dokonale skryt a maskován, že Giakové nemají ani tušení o tvé přítomnosti.
+Smečka ďábelských netvorů pokračuje v pronásledování své kořisti, aniž
+by některý z nich cokoli zpozoroval. Obrať na 174.
+183
+Důstojník poručil svým mužům, aby zastavili, a ptá se tě, kdo jsi a co si
+přeješ. Představuješ se a stručně vyprávíš historii zničení kláštera Kai. Tvé
+líčení muže hluboce zasáhlo a rozrušilo. Důstojník ti nabízí koně a žádá tě,
+abys ho doprovodil k princi Pelatharovi, královu synovi.
+Pokud chceš přijmout jeho nabídku, obrať na 97.
+Chceš-li ji naopak odmítnout, otoč na 200.
+184
+Kupecký vůz se zcela vymyká kontrole a nikým neřízen divoce kodrcá
+nerovným terénem mimo silnici. S obtížemi se ti konečně podařilo splašené
+koně ovládnout a vyvádíš je zpět na cestu. Pak vůz zastavuješ. Spěšná
+prohlídka nitra vozu ti nabízí 40 Zlatých, meč a jídla tolik, že by vystačilo
+na čtyři porce. Jestli si chceš něco vzít, poznamenej to do své Průvodní
+listiny. Nakonec se poddáváš únavě a hladu. Musíš pojíst jednu porci
+potravy. Nasycen upadáš do hlubokého bezesného spánku, který obnoví tvé
+síly.
+Obrať na 64.
+185
+Rozhlížíš se a pohledem pátráš mezi stromy po skrytém lukostřelci.
+Nemusíš čekat dlouho, v příštím okamžiku se kroutíš bolestí, která vychází
+z prsou. Tři šípy našly svůj cíl a porazily tě na záda. Dva teď vězí hluboko
+v tvé hrudi, třetí ti proťal stehno. Ležíš bezmocně na zádech a v bolestných
+křečích vnímáš poslední obrazy, které ti život nabízí, baldachýn hustých
+smrkových větví nad hlavou a let neobvykle velké zelené vážky, usedající
+na přezku tvého opasku... Zde končí tvůj život i tvoje pouť.
+186
+Kakarmové zmizeli v téměř neproniknutelném porostu a za okamžik jsi
+zase sám. Jdeš dál, po necelých dvou hodinách chůze k tobě začíná doléhat
+zvuk proudící vody, který neustále sílí.
+Otoč na 106.
+187
+Po chvilce ticha vykukují z úkrytu za padlým stromem dva srstnaté
+ustrašené obličejíky. Dva páry očí upřeně zírají na tvou zbraň a obě
+stvořeníčka vyrážejí výkřik zděšení. Než můžeš cokoli vysvětlit nebo
+udělat, seskakují zvířátka dlouhým skokem z kmene a beze stopy se ztrácejí
+v lese.
+Pokud je chceš následovat, obrať na 186.
+Chceš-li je nechat být, otoč na 228.
+188
+Na tebe právě tak jako na všechno kolem dopadá zlověstný Kraanův stín.
+Okřídlený tvor náhle hrozivě skřehotá a útočí s takovou silou, že tě sráží
+obličejem do prachu na zemi.
+Zvol poslepu číslo v Tabulce náhody.
+Pokud ti padlo číslo 0 - 6, Kraan ti serval ze zad batoh. Ty sám jsi vyvázl
+bez zranění, ale přišel jsi o vak i o veškerou výbavu, kterou jsi v něm měl
+uloženou.
+Pokud ti padlo číslo 7 - 9, batoh zůstal nedotčený, ale ty jsi utrpěl zranění.
+Máš těžké šrámy na obou pažích. Ztrácíš 3 KONDIČNÍ body a mizíš v
+nejbližším lese.
+Teď obrať na 303.
+189
+V duchu děkuješ vlastní prozíravosti i svým učitelům z kláštera Kai za
+výcvik, díky němuž dokážeš tak dobře vzdorovat nejrůznějším nástrahám.
+Močál by mohl být stejně smrtelně nebezpečnou zkouškou jako kterýkoli
+Drakkarim nebo Kraan. Děláš si starosti s tím, že jsi zbytečně ztratil
+spoustu času a bez otálení se vydáváš lesem dál k jihu. Kousek před tebou
+se vine pěšinka a míří právě na jih.
+Obrať na 118.
+190
+Držíš se stále při břehu řeky a překonáváš tak další tři míle, až narážíš na
+sešlou a rozpadající se říční bárku. Vypadá to, že někomu sloužila jako
+útulek, protože otvorem v palubě lze zahlédnout postel a pár kousků
+kuchyňského náčiní.
+Pokud chceš plavidlo prozkoumat, otoč na 20.
+Chceš-li raději pokračovat v cestě podél řeky, obrať na 273.
+191
+Ozbrojený strážce vozu tasí obrovskou zahnutou šavli a žene se po tvé
+hlavě.
+Strážce vozu: UMĚNÍ BOJE 11, KONDICE 21
+Pokud zvítězíš, obrať na 24.
+Jestli chceš souboj v některém kole vzdát, můžeš to udělat tak, že z
+pádícího vozu seskočíš. Obrať na 234.
+192
+V rozevřené tlamě vrčícího vlkodlaka se blýskají ostré tesáky a vzduch se
+.plní hrdelními výkřiky Giaků. Dva z nich se ženou přímo na tebe. Před
+jistou smrtí tě zachraňuje tvůj kůň, který se v posledním okamžiku vzpíná
+proti přibíhajícím stvůrám a obě je sráží kopyty k zemi. Zeširoka se
+rozpřaháš a jedinou prudkou ranou roztínáš oběma Giakům lebky.
+Jsi z nebezpečí venku. Cváláš dolů silnicí a po zbytku vlkodlačí tlupy i s
+Giaky jakoby se slehla země. Ale temný stín je ti v patách. Není to nikdo
+jiný než Kraan. Už nečeká na nic a zahajuje útok, jehož terčem jsi ty.
+Jestli chceš prudce změnit směr, nechat silnici za zády a uchýlit se pod
+ochranu stromů, otoč na 171.
+Jestli chceš bez ohledu na kroužícího Kraana uhánět dál, přímo dolů po
+silnici, obrať na 120.
+193
+Krvežíznivá bestie i její pán leží mrtvi. Giak má za pasem zastrčený jakýsi
+svitek papíru. Jestli máš o listinu zájem, můžeš si ji vzít a přidat k ostatním
+věcem, které tě na cestě provázejí. Nezapomeň ji zapsat do Průvodní
+listiny. A už vidíš další vlkodlaky, kteří míří po pěšině přímo k tobě.
+Pokud s nimi chceš bojovat, otoč na 253.
+Jestli chceš raději rychle zmizet v lese, otoč na 126.
+194
+Bleskurychle utíkáš k vozu. Lidé se v panice rozbíhají všemi směry a
+klopýtají jeden o druhého. Je vidět, že se nechali Kraany zaskočit a že
+nebyli na jejich nenadálý útok připraveni. Útočníci zatínají pařáty do těl
+svých ubohých obětí, které vynášejí nahoru k potemnělému nebi. Ohromný
+Kraan visí ve vzduchu přímo nad dětským povozem a z jeho hřbetu se do
+sedel splašených tahounů spouštějí jeden po druhém tři Giakové. Buď se s
+nimi dáš do boje na život a na smrt, nebo z vozu utečeš a pokusíš se včas
+dostat do statku, který jsi právě zahlédl kousek od silnice.
+Chceš-li s Giaky bojovat, otoč na 208.
+Pokud chceš utíkat do statku, obrať na 148.
+195
+Jak stíráš ze zbraně medvědovu krev, padá ti zrak na ústí jakési skalní
+dutiny nebo dokonce jeskyně, kterou zčásti zakrývá balvan, za nímž jsi
+narazil na medvěda.
+Jestli tě láká jeskyně k podrobnější prohlídce, obrať na 59.
+Pokud chceš nechat jeskyni jeskyní a pokračovat v cestě, obrať na 106.
+196
+Následuješ neznámého muže a necháváš se vést do malé knihovny mimo
+hlavní sál. Muž jemně tlačí na jeden z mnoha svazků seřazených na
+dlouhých policích, které lemují zdi kolem dokola od podlahy až ke stropu.
+Slyšíš krátké kovové cvaknutí a jeden díl knihovny se pomalu zasouvá
+dozadu a odhaluje skrytý průchod.
+Pokud chceš muže následovat do tajemného průchodu, otoč na 332.
+Jestli do temné chodby vstoupit nechceš, můžeš se zase vrátit na ulici.
+Obrať na 144.
+197
+Mrtvý Drakkar leží na dně převoznické pramice. Má krátký meč a 6
+Zlatých. Vše, oř máš zájem, si můžeš vzít. Bezvládné tělo házíš do vody.
+Pár okamžiků se vznáší na hladině, ale pak navždy klesá do ledových
+hlubin.
+Znovu bereš bidlo pevně do rukou a plavíš se dál na druhou stranu jezera.
+Na břehu prám opouštíš. Obrať na 172.
+198
+Cítíš, že za závěsem se skrývá někdo další. Celým krámkem se vznáší opar
+zla a nebezpečí. Buď ve střehu - cosi tu není v pořádku.
+Chceš-li se vrátit zpátky na ulici, otoč na 7.
+Pokud si chceš lépe prohlédnout zboží, které bylinkář nabízí, obrať na 152.
+199
+Většina polic i zásuvek je prázdná. Ať tu žil kdokoliv, odnesl takřka
+všechen svůj majetek sebou. Až při prohlídce sklepa máš štěstí. Podařilo se
+ti tady posbírat tolik ovoce, že ti vystačí na jednu porci potravy. Chceš-li
+můžeš si ji hned poznamenat do Průvodní listiny. Obrať na 81.
+200 - Ilustrace XII
+Na krajinu se nezadržitelně snáší noc. Stíny stromů se prodlužují a
+tmavnou. Když už se poohlížíš po místě vhodném k zastavení a odpočinku,
+zahlédneš skrze stromy zástup lidí. Všichni směřují po široké silnici k jihu.
+Nikým nezpozorován překonáváš vzdálenost, která tě dělí od cesty, a z
+úkrytu mezi stromy zkoumavě sleduješ vlnící se dav. Tvou pozornost
+upoutá rozložitý kupecký povoz, jedoucí středem prašné cesty. Vpředu jsou
+zapraženy tři páry mohutných tahounů a vůz bez námahy předjíždí nejen
+pěšáky, ale jede daleko rychleji než všechny ostatní povozy. S pomocí
+kupeckého vozu bys urazil zbytek cesty velmi rychle.
+Máš-li v úmyslu naskočit na rozjetý vůz, otoč na 78.
+Chceš-li využít Kai disciplínu Maskování, aby ses mohl nenápadně usadit
+mezi cestovními zavazadly připevněnými na střeše vozu, obrať na 168.
+201
+Kostrbatá stezička tě vede kupředu už skoro hodinu. Právě přicházíš na
+rozcestí, kde se tvoje pěšina dělí do tří směrů.
+Můžeš se dát po jedné z nových cestiček a zamířit k jihu. Obrať na 238.
+Ale jestli chceš raději jít na východ, otoč na 215.
+Nebo můžeš jít západním směrem. Otoč na 130.
+XII. Uprostřed prašné silnice vidíš velký kupecký povoz.
+202
+Bez přestání poháníš koně vpřed a tryskem pádíš dolů po silnici. Je dlouhá
+a rovná a na jejím konci čeká hlavní město. Nešetříš ani koně ani sebe, ale
+přes ustavičné pobízení začíná kůň po několika minutách zpomalovat,
+pokulhávat, až nakonec odmítá pokračovat v cestě. Seskakuješ ze sedla a
+zkoumáš pravou přední nohu zvířete, na kterou nedošlapuje. Proklínáš svou
+smůlu, protože kůň ztratil podkovu a kopyto už má nepěkně pochroumané.
+Budeš muset jít dál pěšky a koně nechat jeho osudu.
+Obrať na 58.
+203
+Znenadání ti projíždí hrudníkem spalující bolest. V hustém dešti rudých
+jisker před tebou explodovalo cosi neznámého, jakási tajemná substance.
+Ztrácíš 10 KONDIČNÍCH bodů. Skrz štiplavý kouř, který se jen neochotně
+rozptyluje, matně rozeznáváš postavu mudrce a je ti jasné, že se znovu
+chystá k hodu. Nepochybně na tebe chce vrhnout další výbušninu.
+Pokud ti zbylo 10 nebo více KONDIČNÍCH bodů, obrať teď na 80.
+Máš-li v tomto okamžiku méně než 10 KONDIČNÍCH
+bodů, otoč na 344.
+204
+Po hodinové chůzi je tu další rozcestí. Zastavuješ se a přemýšlíš, kudy dál.
+Stezka pokračuje směrem k jihu, od západu se k ní připojuje další,
+uvědomuješ si ale, že kdybys odbočil na západ, pěšina by tě pravděpodobně
+zavedla zpět do bažiny, a tak jdeš dál jižním směrem.
+Obrať na 111.
+205
+Velitel sbírá ze země tvou odhozenou výzbroj a postrkuje tě po silnici
+kupředu. Zlý úšklebek se přitom mihl obličeji druhých dvou mužů a v tu
+chvíli si uvědomuješ, že ti tři rozhodně nejsou vojáci. Teď je třeba reagovat
+rychle, překvapivě, tak, aby se bandité nestačili vzpamatovat. Skutečně se ti
+podařil prudký výpad a nyní utíkáš ze všech sil ke vzdálenému Holmgardu.
+Po několika skocích slyšíš za sebou svištivý zvuk vystřeleného šípu.
+Zvol číslo v Tabulce náhody.
+Pokud ti padlo číslo 0 - 4, otoč na 181.
+Padlo-li ti číslo 5 - 9, obrať na 145.
+206
+Pěšina, po které kráčíš, se brzy spojuje se silnicí. Velký ukazatel tu říká, že
+severním směrem leží přístav Toran, na opačnou stranu, k jihu, silnice míří
+do Holmgardu. Přirozeně odbočuješ na jih do hlavního města. Obrať na
+224.
+207
+Stezka tě brzy přivádí k široké silnici, která křižuje řeku a překonává ji po
+kamenném mostě, na kterém je zdaleka viditelný směrovník. Šipka
+obrácená na sever míří k Toranu, opačným směrem leží Holmgard. Silnici
+už zalidnily davy utečenců, všichni putují stejným směrem, všichni hledají
+útočiště v Holmgardu. Někteří táhnou na malých ručních kárkách celé své
+jmění. Připojuješ se k zástupu uprchlíků a putuješ s nimi bok po boku do
+hlavního města.
+Obrať na 30.
+208
+Zběsilí netvorové útočí a vrhají proti tobě svá kopí. Bojuj s nimi tak,
+jakoby před tebou stál jeden nepřítel.
+Giakové: UMĚNÍ BOJE 15, KONDICE 13
+Pokud zvítězíš, můžeš se před dalšími případnými útoky skrýt v bezpečí
+malého statku otočením na 148
+Nebo se můžeš vrátit do lesa. Obrať na 320.
+209
+Před sebou máš chodbu stoupající vzhůru. Jdeš po ní a jsi zvědav, co tě
+čeká na konci, který stále není v dohledu. Na vrcholu stoupání nalézáš nový
+kameny zpevněný otvor, který je vchodem do dalšího tunelu. Děláš dva tři
+váhavé kroky novým průchodem a hned nato už není cesty zpátky - vchod
+se okamžitě uzavřel.
+Obrať na 23.
+210
+Hned u vchodu ti zastupuje cestu muž, který střeží vstup do sídla
+společenství. Chce znát tvé úmysly. Klidným, přitom ale naléhavým
+hlasem mu vysvětluješ, že neseš králi zprávu, jež nesnese odkladu a na níž
+závisí osud celého Sommerlundu. Bez dalších otázek tě uvádí do sálů
+Velkého mistra. Vítá tě urozený a vznešený stařec v tmavě purpurovém
+šatě. S napětím naslouchá historii zániku kláštera Kai i líčení nelehké pouti,
+kterou jsi vykonal napříč Sommerlundem. Bere tě za paži a vede do
+knihovny, jež těsně sousedí se sálem. Zavírá dveře. Přistupuje k regálu
+plnému knih a zvolna tlačí na jeden svazek. Část knihovny se sune na
+stranu a otevírá průhled do neznámé temnoty. Muž kývá na znamení, že ho
+máš následovat do tajné chodby.
+Pokud chceš za mužem do temného tunelu vstoupit, obrať na 332.
+Nejsi-li zcela přesvědčen o tom, že tomuto muži je možno důvěřovat, otoč
+na 37. Tak opustíš sídlo společenství.
+211
+Procházíš ponurou ztemnělou chodbou, která po nějakém čase ústí do
+rozlehlého čtvercového sálu s dubovými dveřmi ve vzdálenější stěně.
+Chceš-li projít celým sálem až ke dveřím, otoč na 173.
+Pokud ovládáš Kai disciplínu Šestý smysl, obrať na 244.
+Nebo se z podzemí můžeš vrátit zase nahoru tím, že obrátíš na 106.
+212 - Ilustrace XIII
+Když se znovu probouzíš, zbývá ti už jen nejasná vzpomínka na bolest.
+Cítíš se zcela zdráv. Všechny KONDIČNÍ body, které jsi dosud ztratil, si
+dopis zpět až do původní výše. S mísou plnou bylin v rukou před tebou
+stojí vysoký muž, zahalený do bílého šatu. Listy a květy léčivých rostlin
+hází do kotlíku s vroucí vodou a pak se obrátí, aby tě pozdravil. "Byl jsi
+blízko smrti, natahovala už po tobě ruce, rytíři Kai, ale tentokrát tě ještě
+neodvedla ke svým zástupům. Tvé tělo se uzdravilo, ale cítím, že na duši
+máš hluboké šrámy. Co je to, co tě tolik trápí?" Poznáváš v laskavém starci
+jednoho z moudrých králových léčitelů, protože symbol holubice, zlatě
+vyšitý na jeho rukávech, je znakem tohoto ctěného a uznávaného povolání.
+XIII. S mísou plnou bylin stojí před tebou vysoký muž, oblečený v bílém šatě.
+Vyprávíš letitému učenci o událostech v klášteře Kai a o nebezpečné cestě
+ke králi, na kterou ses po zničení kláštera vydal. Lékař ti ohleduplně
+pomáhá z lůžka a kyne ti, abys šel za ním. Teprve teď ses rozhlédl po
+místnosti a zjišťuješ, že je neobyčejně krásně zařízená a vyzdobená.
+Z pokoje jdete dlouhou chodbou, jejíž stěny pokrývají od stropu po podlahu
+skvostné čalouny a tapiserie. Pomalu si začínáš uvědomovat, kde jsi. Toto
+je holmgardská Pevnost a ty se za několik okamžiků setkáš s králem.
+Obrať na 350.
+213
+Už více než dvě hodiny se nazdařbůh plahočíš lesem. Plíživý strach, že jsi
+ztratil směr a zabloudil, se pomalu mění v jistotu. Nehledě na občasné
+skřeky Kraanů, které sem doléhají z velké dálky, není v téhle části lesa
+široko daleko ani živáčka, ba nenarazil jsi ještě na žádné stopy nepřátel.
+Překonáváš skalnatý vršík a tu se ve spletitém porostu před tebou objevilo
+něco neobvyklého.
+Obrať na 331.
+214
+Stezka je užší a užší, až se nakonec zcela ztrácí v záplavě bujné vegetace.
+Pokračovat tudy dál je vyloučené, a tak se musíš vrátit na mýtinu.
+Obrať na 125 a odtamtud se vydej jižní stezkou dál.
+215
+Vycházíš z šera lesa na malou světlou paseku. Uprostřed leží kosterní
+pozůstatky nějakého velkého tvora. Rozhlížíš se kolem dokola a na
+vzdálenějším okraji mýtiny vidíš pěšinu, mizející v lese jižním směrem.
+Pokud tě zajímá neznámá kostra a chceš si ji podrobněji prohlédnout, obrať
+na 346.
+Chceš-li raději bez dlouhého otálení pokračovat ve svém nesnadném
+putování, otoč na 14.
+216
+Jednu ruku vkládáš na mužovo čelo, do druhé bereš jeho zraněnou paži.
+Cítíš, jak teplý tok léčivých sil opouští tvé tělo, přelévá se do mužova
+organismu a navrací mu zdraví.
+Po malé chvíli muž natolik zesílil, že může plynule vyprávět, kdo je a co se
+přihodilo. Jmenuje se Trimis a slouží v armádě prince Pelathara. Princ a
+jeho šiky svádějí právě těžkou bitvu jižně odtud, u alemského mostu, který
+napadla početná a silná tlupa Temných pand a jejich spřeženců. On sám,
+Trimis, se stal obětí Kraana, který na něj během divoké řeže zaútočil ze
+vzduchu. Vynesl ho nahoru a pak ho svrhl mezi stromy.
+Dřív, než znovu vykročíš za svým cílem, upravuješ mužovo provizorní
+lůžko, jak nejlépe dovedeš.
+Obrať na 264.
+217
+Kvapem prcháš před šíleným starcem a pouštíš se temnou alejí kolem
+malých, přikrčených domků, jež se tisknou těsně k sobě. Na samém konci
+cesty nalézáš zeleně natřená dvířka s nápisem, který oznamuje:
+KOLANIS, mudrc a bylinkář
+Chceš-li vstoupit dvířky do domku, obrať na 91.
+Pokud se tu chceš zdržet jen tak dlouho, až si budeš zcela jist, že šílenec
+zmizel, a pak se vrátit na hlavní třídu, obrať na 7.
+218
+Smysly tě upozorňují, že to, co se k tobě blíží, nejsou jen koně. Rozeznáváš
+skřeky Giaků, jsou velmi ostré a vysoké, z čehož usuzuješ, že pronásledují
+nějakou kořist. Podle množství výkřiků, kleteb a nadávek odhaduješ, že
+Giaků je víc než tucet a s nimi pravděpodobně i stejný počet vlkodlaků:
+Máš dojem, že upozorňovat na sebe za této situace by nebylo právě
+moudré.
+Obrať na 75.
+219
+Všechno, co z tebe nyní zůstalo, je uvězněno pod obrovským žulovým
+kvádrem jeden a půl metru pod schody, na nichž jsi před okamžikem stál.
+Tady se uzavírá tvůj život i tvá pouť.
+220
+Kupcův osobní strážce tasí z pochvy obrovskou zakřivenou šavli a bez
+rozmýšlení se žene přímo po tvé hlavě.
+Strážce vozu: UMĚNÍ BOJE 11, KONDICE 20
+Pokud zvítězíš, otoč na 24.
+Jestli chceš s potyčkou skončit kdykoli v jejím průběhu, máš možnost
+seskočit z vozu otočením na 234.
+221
+Obezřetně se blížíš k úpatí roubené zdi. Prohlížíš si ji a vidíš, že kmeny
+stromů, jimiž je tvořena, jsou opracovány jen nahrubo: při šplhání můžeš
+využít spousty výstupků a puklin. Sotva ses vyhoupl na vrchol zdi, stojíš
+tváří v tvář kuši s napjatou tětivou. Voják, jenž na tebe míří, ti kyne, aby
+ses posunul k žebříku a slezl po něm dolů na zem. Vypadá nesmlouvavě, a
+tak nemáš chuť se s ním dohadovat. Pomalu sestupuješ dolů po žebříku.
+Obrať na 318.
+222
+V místě, kam jsi právě dorazil, se vine úzce prošlapaná lesní pěšina.
+Jestli se chceš vydat na jih, obrať na 140.
+Pokud se chceš vydat k východu, otoč na 252.
+Chceš-li využít toho, že ovládáš Kai disciplínu Stopování, obrať na 67.
+223
+Po chvíli úporné snahy a velkého vypětí se ti podařilo vyprostit těžký kmen
+z bahnitého objetí, kterým ho svíral říční břeh a popínavé rostliny. Všechnu
+svou cestovní výbavu balíš do ranečku a přivazuješ ke zbytkům větví, které
+kdysi tvořily mohutnou korunu stromu. Brodíš se vodou a opíráš se do
+kmene, abys ho vytlačil z pobřežní tišiny do středu řeky. Brzy cítíš, že tvé
+plavidlo bere pomalý proud, a necháváš se jím unášet dolů řekou.
+Po dvaceti minutách klidné plavby slyšíš dusot koňských kopyt,
+přicházející z levého břehu.
+Chceš-li se schovat za kmen, obrať na 75.
+Pokud si chceš na kmen stoupnout a v pravou chvíli upoutat pozornost
+přijíždějících jezdců, obrať na 175.
+224
+Klušeš už několik mil utěšenou krajinou, aniž bys zpozoroval nějakou
+známku přítomnosti nepřátel nebo utečenců z přepadených míst. Míříš k
+nepříliš vzdálenému pahorku a doufáš, že odtamtud už zahlédneš hlavní
+město.
+Stěží potlačuješ rozčilení a překonáváš posledních pár metrů, které tě dělí
+od výhledu do širého kraje. A skutečně - pohled, který se před tebou
+otevírá, působí jako balzám na tvé unavené tělo a rozbolavělou duši. Ale
+štěstí není dokonalé, protože vidíš, že cesta ke králi nebude jednoduchá.
+Obrať na 153.
+225
+V jazyce, kterým se tvorové dorozumívají, poznáváš řeč Kakarmů,
+inteligentních lesních tvorů, kteří obývají sommerlundské lesy a pečují o
+ně. Není důvod, aby ses jich obával, protože se vždy chovají mírně a někdy
+až bázlivě. Abys na ně mohl zavolat jejich zvláštní rodnou řečí, použij svou
+schopnost Spřízněnost se zvířaty.
+Pokud máš dojem, že nejlepší bude, když je oslovíš takto: "Nemějte strach,
+jsem přítel!", obrať na 187.
+Jestli raději zvolíš tato slova: "Jsem rytíř řádu Kai. Nechci vám ublížit.
+Potřebuji vaši radu a pomoc!", pak otoč na 39.
+226
+Zpočátku nemáš žádné problémy a sestup se ti zdá celkem snadný. Brzy ti
+ale začínají slábnout nohy a vypovídají ti poslušnost ani na oči se nemůžeš
+spolehnout, přestáváš vidět ostře a okolí se ti ztrácí v mlze. "Trny spánku"
+ukazují, co dovedou. Netrvá dlouho a zmáhají tě hluboké mrákoty. Vyber
+poslepu číslo z Tabulky náhody.
+Pokud ti padne číslo 0 - 4, obrať na 277.
+Jestli zvolíš číslo 5 - 9, obrať na 338.
+227
+Vězíš až po pás ve slizké bažinaté vodě. Ve vzduchu nad bažinou se vznáší
+nespočet krvežíznivých komárů, jejichž roje útočí nenasytně na tvůj obličej,
+krk i ruce a dokonce ti ucpávají i nos. Cosi se ovíjí okolo tvých nohou! Je
+to nebezpečná bažinná zmije a musíš ji zneškodnit dřív, než o život připraví
+ona tebe.
+Bažinná zmije: UMĚNÍ BOJE 16, KONDICE 6
+Pokud jsi v tomto zápase přišel o nějaké KONDIČNÍ body, obrať na 271.
+Jestli se ti podařilo hada zabít a neztratit přitom ani jeden KONDIČNÍ bod,
+obrať na 348.
+228
+Ještě nějakou dobu tě pěšina vede východním směrem, ale poznenáhlu mizí
+v hustém porostu, až zaniká docela.
+Jestliže chceš dál pokračovat k východu a sekyrou si při tom klestit cestu
+vegetací, otoč na 140.
+Chceš-li raději uhnout k jihu, kde, jak se zdá, nejsou křoviny tak rozbujelé,
+otoč na 215.
+229
+Kraan nad tebou poletuje sem a tam, jak mocně máchá svými obrovskými
+černými křídly, víří oblaka žlutého prachu, jenž ti padá do oři, vniká ti do
+nosu i do úst, nutí tě ke kašli a dusí tě. Teď bestie útočí.
+Musíš s Kraanem bojovat na život a na smrt. Kvůli zvířenému prachu jsi
+oslabený - odečti si 1 KONDIČNÍ bod.
+Kraan: UMĚNÍ BOJE 16, KONDICE 25
+Pokud jsi zvítězil, máš nyní možnost volby.
+Můžeš zblízka prozkoumat mrtvé tělo otočením na 267.
+Nebo můžeš bez zdržování pokračovat v cestě do hlavního města tím, že
+otočíš na 125.
+230
+Velmi daleko před sebou rozeznáváš siluetu vojáka na vlečné pramici, na
+jakémsi provizorním přívozu. Z protějšího břehu k tobě doléhá hluboké,
+hrozivé vrčení vlkodlaků, kteří se vracejí zpátky. Pro jednou odhazuješ
+všechnu opatrnost a ženeš se s větrem o závod po břehu řeky až ke
+vzdálenému přívozu.
+Obrať na 179.
+231
+Právě se chceš zeptat na cenu roztoků a nápojů, když tu náhle neznámý
+mladík, který se skrýval za bambusovou plentou, závěs strhl a jediným
+skokem se na tebe vrhá. V ruce svírá dlouhou zahnutou dýku. Stojí nad
+tebou a ty musíš hájit holý život.
+Zabiják UMĚNÍ BOJE 13, KONDICE 20
+Pokud se ti podaří zabít útočníka během čtyř kol boje, otoč na 94.
+Jestliže ještě po čtvrtém kole boje není rozhodnuto, obrať na 203.
+Po dvou kolech boje můžeš další zápas vzdát a uprchnout předními dveřmi.
+Pokud ti takové řešení vyhovuje, obrať na 7.
+232
+Obhrouble vyhlížející velitel k tobě přistupuje a posměšně říká: "Naše přání
+je prosté, milý pane. Peníze nebo život!"
+Pokud chceš s lupiči bojovat, obrať na 180.
+Chceš-li utéct, obrať na 22.
+233
+Koně nalézáš až po hodinovém hledání. Chvíli trvá, než se zvíře uklidní.
+Promlouváš k němu a přitom se rozhlížíš kolem sebe. Dostal ses pěkný kus
+severně od srubu, ale neděláš si velké starosti s tím, jak najdeš cestu zpět;
+důvěřuješ svému orientačnímu smyslu. Pobízíš koně a uháníte zpět ke
+stavení. Teď už ani nezastavuješ, míjíš srub v plné rychlosti a vydáváš se
+znovu k jihu.
+Obrať na 206.
+234
+Pořádně se odrážíš a dlouhým skokem opouštíš ujíždějící vůz. Zdá se ti, že
+máš vyhráno, ale hned nato dopadáš tak nešťastně, že si lámeš kotník.
+Zranění je velmi bolestivé a je ti jasné, že bez pomoci jsi ztracen. Po chvíli
+upadáš do bezvědomí. Z mrákot už do konce života neprocitneš... Snad je
+to tak lepší. Možná by tě zajímalo, že tvá hlava se teď houpá u Kraanova
+sedla. Tady končí tvůj život i tvoje cesta ke králi.
+235
+Princův kůň je skutečně nádherné a výjimečné zvíře, nejlepší, s jakým ses
+dosud setkal. Pohybuje se rychle a s jistotou i v nejtěžším terénu. Cválá po
+hrbolaté stezce plné zákrutů, jako by to byla ta nejupravenější silnice. Ani
+ty ani kůň neodpočíváte, dokud zvuky bitvy za vašimi zády zcela
+neutichají. Máš strašný hlad a tak pojíš jednu porci jídla v sedle. Po
+několika mílích stezka z ničeho nic končí na křižovatce. Býval tu ukazatel,
+ale teď je stržen a leží na zemi.
+Chceš-li se dát cestou vlevo, obrať na 32.
+Pokud chceš odbočit vpravo, obrať na 146.
+Chceš-li teď využít toho, že ovládáš Kai disciplínu Stopování, otoč na 254.
+236
+Nad dávno němými pootevřenými ústy královy lebky se vznáší drahokam a
+sálá prudkým červeným svět lem, tak jasným, že si musíš rukou zastínit
+oči, abys neoslepl. Náhle uvnitř sarkofágu cosi explodovalo a hned nato
+ústa kostry vydechují spalující karmínový plamen, jenž zcela ničí
+drahokam. Výbuch měl takovou sílu, že tě odmrštil až ke vzdálené stěně.
+Nárazem na ni pozbýváš vědomí.
+Jak dlouho zastíraly mrákoty tvé vědomí, nevíš. Probíráš se a s úžasem se
+rozhlížíš kolem dokola: jsi v místnosti zcela prázdné, kde není ani stopy po
+nevysvětlitelném dramatu, které se zde odehrálo. Zmizel sarkofág a s ním i
+kostra mrtvého krále. Ztrácíš 6 KONDIČNÍCH bodů a také původní
+hodnota UMĚNÍ BOJE se pro celý zbytek tvého života snižuje o 1 bod.
+Opatrně se stavíš na nohy a vratkou a nejistou chůzí se vracíš do tunelu.
+Obrať na 104.
+237
+Znalosti Kai disciplín ti už několikrát pomohly překonat nejrůznější
+nástrahy a nebezpečí, a tak ani teď neváháš a uplatňuješ schopnosti, které
+jsi získal během pobytu v klášteře Kai. Rychle hrabeš úkryt v kypré zemi
+zalesněného úbočí. Přikrýváš se vlastním pláštěm a nahoru na spěšně
+vyhloubené útočiště kupíš ještě změť větví a větviček. Zvol poslepu číslo v
+Tabulce náhody.
+Pokud ti padne číslo 0 - 4, máš štěstí a unikáš pozornosti nepřátel. Obrať
+na 265.
+Pokud ti padne číslo 5 - 9, štěstí nestojí na tvé straně. Obrať na 72.
+238
+Stezka se kroutí mezi několika nízkými zalesněnými vrchy a posléze vede
+kolem ohořelých zbytku dřevěného srubu. Od chvíle, kdy byl srub
+podpálen, jistě neuplynula dlouhá doba, neboť uhlíky dosud žhnou a ze
+spáleniště stoupají obláčky šedavého dýmu.
+Necítíš se tu dobře, máš dojem, že nebezpečí tu stále číhá.
+Můžeš odtud zmizet po pěšině mířící k jihu otočením na 42.
+Nebo se můžeš vypravit na sever otočením na 68.
+239
+Jak se prodíráš lesem, slyšíš známý zvuk Kraanových křídel. Kraan, aniž si
+tě všiml, prolétá nad špičkami stromů a mizí k severu. Jdeš dál asi tak
+hodinu, až přicházíš na okraj mýtiny. Stojíš pod stromy a rozhlížíš se. Na
+protější straně paseky vidíš pěšinu, která mizí dál mezi porostem k jihu.
+Pokud chceš přejít paseku, aby ses dostal k pěšině a mohl ji použít k další
+cestě, obrať na 34.
+Pokud se nechceš vzdát ochranné clony stromů, obejdi paseku po obvodu.
+Obrať na 118.
+240
+Pěšina přechází po hřebenech lesnatých vršků a pozvolna mění směr. Stáří
+se k východu. Obrať na 79.
+241
+Mladý kouzelník zaslechl varovný výkřik a otáčí se právě včas, aby mohl
+vystřelit proti Giakovi blesk spalující energie. Hlava netvora se tříští v
+plamenech a škubající se tělo se sváží jako bezvládná hrouda k patě pilíře.
+To vše se odehrává ve zlomku vteřiny a v téže chvíli jsi spatřen giackým
+velitelem. Ostře vyráží: "Ogot... Ogot!" na strachy se krčící zbytky své
+tlupy. Giakové se bezhlavě dávají na překotný úprk ze zchátralého chrámu
+a hledají útočiště v nedalekém lese.
+Mladík v kouzelnickém šatě si otírá zpocené čelo a kráčí k tobě s vděčností
+v očích a s rukou napřaženou k přátelskému pozdravu.
+Obrať na 349.
+242
+Víko sarkofágu se těžce sváží k podlaze, na níž dopadá s tupým křupnutím.
+Hledíš na pozůstatky dávno mrtvého krále, který tu po staletí leží
+obklopený svými poklady. Bohatě zdobená a vykládaná koruna stále
+spočívá na již bezmasé lebce. Kostra doširoka otevírá čelisti a z nich se line
+až hmatatelná temnota, čišící tajemnou cizotou bezednosti. Z nitra země
+sem nyní doléhá vzdálené dunění a rachocení.
+Dovedeš-li se chránit Nehmotnou clonou, obrať na 166.
+Pokud ne, otoč na 9.
+243
+Spěšně se prodíráš lesem a při jednom klopýtnutí se řítíš dolů z prudkého
+srázu. Přistáváš zkroucený a potlučený na nenápadné stezce pod kopcem.
+Dopadl jsi vedle mrtvého těla, které leží přímo na pěšině. Jsou to
+pozůstatky Giaka, jednoho z nevraživých a zaslepených služebníků
+Temných pánů. Giakové se dostali do moci Temných pánů již před mnoha
+staletími. Kdysi dávno vystavěli jejich předkové na příkaz Temných pánů
+pekelné město Helgedad, hlavní sídlo Temných pánů, které leží za horami
+Durncragského pohoří v pusté, nehostinné sopečné krajině. Výstavba města
+trvala dlouho a stala se mučivou noční můrou pro všechny zotročené
+Giaky. Jen nejsilnější a nejodolnější z nich přežili vedro a otravné ovzduší
+Helgedadu. Tvor, který tu před tebou leží, je jedním z potomků těch
+dávných otroků Temných pánů. Zabila ho rána mečem, jež mu roztříštila
+lebku. Po jeho boku leží palcát. Jestli chceš, můžeš si jeho zbraň odnést.
+Pokračuj po zarostlé stezce, otoč na 97.
+244
+Smysly tě varují, že tu nejsi sám. Hrozí ti velké a navíc bezprostřední
+nebezpečí. Opusť podzemí a vrať se na povrch země, jak nejrychleji
+dokážeš.
+Obrať na 93.
+245
+Šípy vytrvale bičují vodu nad tebou, ale jejich déšť je úplně neškodný,
+neboť plaveš dostatečně hluboko pod hladinou k protějšímu břehu.
+Rychle se brodíš mělčinou při břehu a vrháš se pod ochranu stromů. Teď už
+jsi mimo dosah Giaků, kteří znovu popohánějí své vlkodlaky a pokračují v
+hledání nepřátel.
+Obrať na 190.
+246 - Ilustrace XIV
+Převozníkova pramice už doplula do středu jezera. Muž znenadání přestává
+veslovat a stoupá si v loďce. Hrozivě se směje a strhává si přitom z hlavy
+kapuci, která mu do této chvíle zakrývala i obličej. Hned vidíš, kolik
+uhodilo. Padl jsi do léčky krvežíznivého Drakkara a musíš s ním bojovat.
+Drakkan UMĚNÍ BOJE 15, KONDICE 23
+Pokud nepřítele porazíš, obrať na 197.
+247
+Kupec vypadá velmi rozzlobeně. Přivolává po zuby ozbrojeného osobního
+strážce. Teď musíš být pohotový a rychle něco vymyslet.
+Můžeš kupci třeba nabídnout něco cenného, co máš v batohu.
+Jestli máš dojem, že svou situaci vyřešíš nejlépe tímto způsobem, otoč na
+159.
+Nebo se můžeš připravit na zápas s ozbrojeným strážcem kupcova povozu.
+Otoč na 220.
+XIV. Směje se hrozivě a přitom si stahuje kapuci. Je to Drakkar a musíš s
+nim bojovat.
+248
+Dosáhl jsi úpatí kopce a chvátáš do lesa. Několik dalších minut kráčíš
+nazdařbůh mezi stromy, dokud se před tebou neobjeví lesní cesta, vinoucí
+se v hustém porostu.
+Pokud se chceš touto stezkou nechat vést na sever, obrať na 44.
+Chceš-li naopak zamířit po pěšině k jihu, obrať na 300.
+249
+Sestupuješ po několika kamenných stupních, na jejichž konci vcházíš do
+prostorného sálu. Rozhlížíš se kolem dokola a nevěříš vlastním očím.
+Napříč celou místností se táhne děsivá a odpudivá ulička, kterou po pravé i
+levé straně tvoří lidské lebky, rozestavěné na kamenných podstavách. Obě
+řady lebek zeleně světélkují. Za lebkami na opačné straně sálu zeje temný
+vchod do jakési chodby. Lze se k němu dostat jen tak, že projdeš mezi
+lebkami.
+Pokud chceš přejít celou místnost, aby ses dostal na druhou stranu, obrať na
+169.
+Chceš-li zaútočit na lebky, otoč na 107.
+250
+Vyšvihl ses na kmen a teď bez rozmýšlení skáčeš na druhou stranu.
+Dopadáš před dvě malá srstnatá stvořeníčka. Hned si uvědomuješ, že tu
+před tebou nestojí nikdo jiný než Kakarmové, inteligentní druh lesních
+živočichů, kteří obývají a chrání sommerlundské lesy. Chceš se omluvit za
+svůj poněkud dramatický- vstup, ale než to stačíš udělat, poděšení
+tvorečkové peláší pryč, hloub do lesa.
+Chceš-li se pustit za nimi, obrať na 186.
+Chceš-li raději bez zdržování pokračovat přímo za svým cílem, obrať na
+228.
+251
+Máš štěstí, zdá se, že nepřátelé tě minuli bez povšimnutí, neobjevili tě.
+Pomalu se šinou kupředu a po chvíli mizí za hřebenem kopce. Dáváš se
+znovu do běhu.
+Obrať na 10.
+252
+Uprostřed malé mýtiny postává hlouček lidí, kteří se spolu vzrušeně
+domlouvají a široce gestikulují. Vidíš tam dvě děti, tři muže a ženu.
+Všechno, co jim náleží, mají svázané do ranců, které nesou přehozeny přes
+ramena a zavěšeny na zádech. Prohlížíš si podrobněji jejich oblečení,
+protože doufáš, že ti o těchto lidech prozradí více. Jejich oděv nezapře
+dobrého krejčího ani kvalitní materiál: je dobře ušitý a vypadá draze. Ale v
+tuto chvíli jsou ti na pasece špinaví a potrhaní, jakoby už delší čas snášeli
+útrapy nepohodlného cestování.
+Chceš-li vystoupit ze svého úkrytu a zeptat se jich, kdo jsou a kam míří,
+obrať na 155.
+Pokud je raději chceš minout tak, aby o tobě nevěděli, a pokračovat vlastní
+cestou, obrať na 70.
+253
+Vlkodlaci tě brzy dostihli a teď na tebe útočí všichni najednou. Musíš s
+nimi bojovat postupně, chceš-li mít alespoň nějakou šanci na vítězství.
+Vlkodlak 1: UMĚNÍ BOJE 13, KONDICE 24
+Vlkodlak 2: UMĚNÍ BOJE 14, KONDICE 23
+Vlkodlak 3: UMĚNÍ BOJE 14, KONDICE 22
+Vlkodlak 4: UMĚNÍ BOJE 15, KONDICE 21
+Pokud se ti podaří porazit všechny vlkodlaky, obrať na 278.
+254
+Díky tomu, že jednou z Kai disciplín, které bezpečně ovládáš, je Stopování,
+umíš dokonale číst i z nepřehledných stop, a tak jsi přišel na to, že z pěšiny
+vpravo se některé stopy oddělily a zamířily tam, kam vede stezka vlevo.
+Otisky jsou obrovské a bezpochyby nepatří nikomu jinému než velkým
+vlkům. Takové bestie si ochočují jedině Temní páni a využívají je k
+výzvědné činnosti. Vlkodlaci zůstávají divokými a zákeřnými tvory a často
+se objevují společně s Giaky, kteří jezdí na jejich hřbetech jako na koních.
+Levá pěšina vede k Holmgardu, pravá směřuje k Dumcragským horám.
+Který směr a kterou trasu si zvolíš, záleží jen na tobě.
+Chceš-li zamířit vlevo, otoč na 32.
+Pokud se chceš vydat vpravo, obrať na 146.
+255
+Tvor, kterému teď musíš čelit, je Gourgaz, jeden ze skupiny
+studenokrevných plazivých živočichů, kteří obývají zrádné Maakenmirské
+bažiny. Jejich nejoblíbenější pochoutkou je lidské maso. U nohou ti leží
+princův meč. Chceš-li můžeš se pro něj bleskurychle shýbnout a zbraň
+použít v boji, který nastane v nejbližším okamžiku. Gourgaz už útočí -
+musíš s ním bojovat na život a na smrt,
+Gourgaz: UMĚNÍ BOJE 20, KONDICE 30
+Tento tvor odolává Útoku duševní silou. Pokud zvítězíš, obrať na 82.
+256
+Ze spánku tě vyrušilo krákorání Kraanů vysoko nad tebou na svěžím
+ranním nebi. Protíráš si oči a pozoruješ skrz baldachýn větví a větviček
+oblohu. Poletují tam tři odporné nestvůry, ale naštěstí ne dlouho. Po malé
+chvilce trojice Kraanů míří k východu. Zcela jistě tě nezpozorovali, to by se
+chovali jinak, ale přesto by bylo lepší zmizet odtud teď hned, pro případ, že
+by se vrátili. Pobízíš koně a vydáváte se po lesní stezce k jihu.
+Obrať na 224.
+257
+Ve východní zdi jsi našel kamenná dvířka, ale ať děláš, co děláš, nemůžeš
+přijít na způsob, jak je otevřít.
+Chceš-li prozkoumat sochu, obrať na 133.
+Pokud se chceš posadit na trůn, obrať na 161.
+258
+Teď se ti hodí, že dobře umíš Ovládám hmoty myšlenkou. Pouhou silou
+vůle rozvazuješ lano, které se ti bolestivě zařezává do rukou, a pak jen
+cekáš na svou příležitost. Ta přichází: prcháš svým věznitelům tak rychle,
+jak jen dokážeš, a míříš k místům, kde se ti lesní porost zdá nejhustší.
+Černé šípy sviští nebezpečně blízko kolem tebe, ale dříve, než tě některý z
+nich stačí zasáhnout, jsi mezi stromy a znovu v bezpečí. Přišel jsi o batoh i
+o zbraň, ale jsi živ a všechny údy máš v pořádku. Rychle se prodíráš lesem
+dál, pryč od nepřátel. Obrať na 50.
+259
+Vzduch v místnosti se citelně ochlazuje. Také sirný zápach, kterého sis
+všiml před chvílí, je pořád intenzivnější. Z velké dálky k tobě doléhá
+monotónní zpěv, jakoby se v jiné části jeskyně shromáždil pěvecký sbor.
+Zmocňuje se tě úzkostná tíseň. Fascinovaně hledíš na škvíru, která se tiše
+rozevírá v kamenné zdi. Pomalu se z ní vynořuje jakási černá hůl, snad
+berla. Dřív než stačíš cokoli podniknout, vyšlehne z konce berly svazek
+modrých paprsků a jako blesk ti vjíždí do prsou. Klesáš bezvládně k zemi.
+Život ti nezadržitelně prchá z těla. Poslední, co ještě vnímáš na tomto světě,
+je černě oděný stařec, který se s obnaženou dýkou pomalu přibližuje k
+tvému hrdlu. Na tomto místě se uzavírá tvá pout i tvůj život.
+260
+Během plavby ke břehu vidíš, jak se v pobřežní tišině houpe na hladině
+vodou zohavené tělo jednoho ze členů hraniční jízdní hlídky. Plaveš k
+němu, ale zblízka je patrné, že muž si pádem z výšky srazil vaz a je jistě už
+delší čas po smrti.
+Při prohlížení mrtvého vojáka jsi na okamžik zapomněl na všechnu
+opatrnost; vzápětí na to doplácíš. Z vyvýšeného břehu se na tebe vrhají dva
+Giakové, ať chceš nebo ne, musíš s nimi bojovat. Nejsi ozbrojen a k zápasu
+s Giaky ti zbývají jen dvě holé ruce. Odečti 4 body z UMĚNÍ BOJE. S
+Giaky nebojuj najednou, ale napřed s jedním a potom s druhým.
+Giak 1: UMĚNÍ BOJE 11, KONDICE 18
+Giak 2: UMĚNÍ BOJE 12, KONDICE 17
+Pokud zvítězíš, obrať na 156.
+261
+Zalit potem a takřka bez dechu opatrně rozhrnuješ husté rostliny, které ti
+brání ve výhledu. Přímo před očima máš Kraana, který nad kočárem
+opisuje zlověstné kruhy. Z jeho hřbetu se náhle do sedel splašených koní
+spouštějí tři Giakové. Teď se trojice krvelačných tvorů se svými kopími
+přibližuje k bezbranným dětem.
+Chceš-li se vrhnout zpět k vozu, abys mohl bránit děti, obrať na 208.
+Pokud chceš běžet dál do lesa, obrať na 264.
+262
+Kupec si bere tvé zlato. Zdviženou rukou dává jakési znamení. V tom
+okamžiku se na tebe vrhá kupcův ozbrojený strážce, útočí velkou zahnutou
+šavlí.
+Pokud s ním chceš bojovat, obrať na 191.
+Jestli se chceš souboji vyhnout, máš možnost seskočit z rychle jedoucího
+vozu tím, že otočíš na 234.
+263
+Necháváš se stále vést vodním tokem, nebol směřuje k východu. Neustále
+se obezřetně rozhlížíš kolem sebe a pozorně nasloucháš všem zvukům.
+Náhle vidíš kus před sebou cosi, co tě okamžitě zarazí, jako velká černá
+přehrada leží v šumící a kypící vodě mrtvý Kraan. Opatrně kráčíš blíž kryt
+zeleným listovím, až rozeznáváš tři šípy, které trčí v Kraanově hrudi.
+Uvězněn nesmírnou vahou mohutného mrtvého těla leží pod Kraanem jeho
+velitel a jezdec. Je to Giak, nenávistný a podlý služebník Temných pánů.
+Uplynulo již mnoho století od dob, kdy předkové dnešních Giaků stavěli
+pro své pány a vládce pekelné město Helgedad, které leží uprostřed
+sopečných pustin za horami Durncragského pohoří. Obtížnou a vleklou
+výstavbu města přežili jen nejodolnější jedinci, pro všechny Giaky se stala
+děsivou noční můrou. Horké a otravné ovzduší panuje v Helgedadu dodnes.
+Mrtvý Giak je potomkem pradávných otroků Temných pánů. Nejspíš se
+utopil. V jeho měšci jsou 3 Zlaté. Jestli o ně stojíš, můžeš si je vzít.
+Jestli chceš jít po proudu stále dál, obrať na 70.
+Pokud chceš nechat řeku řekou a projít mezi zalesněnými pahorky k jihu,
+obrať na 157.
+264
+Nedošel jsi daleko, když k tvému sluchu dolehly zvuky bitvy. Přicházejí od
+západu.
+Chceš-li se vydat směrem, odkud zvuky přicházejí, obrať na 97.
+Pokud chceš raději pokračovat v cestě na jih, obrať na 6.
+265
+Bez otálení vyrážíš prudkým během směrem k lesu, abys byl pod stromy
+dřív, než se objeví další vlkodlaci nebo Kraanové. Povedlo se!
+Vykračuješ si už víc než hodinu a ocitáš se na nejvyšším bodě jednoho
+skalnatého kopce. Otevírá se odtud pohled, na který čekáš už několik dní.
+Není ale úplně bez kazu. Vidíš, že tě čeká ještě nelehký boj, z něhož
+nebude úniku.
+Obrať na 142.
+266
+Zatímco se netvor na černé kamenné podlaze zmítá a dusí v poslední
+předsmrtné agónii, otevírá se ve východní stěně průchod a odhaluje
+chodbu, která se za ním skrývá. Rychle se vrháš do tajemných dveří, které
+se vzápětí zavírají.
+Obrať na 209.
+267 - Ilustrace XV
+Pečlivě si přikrýváš nos cípem pláště a s napětím se blížíš k mrtvému
+netvorovi. Ze smrduté černé krve vychází tak ostrý a pronikavý zápach, že
+máš žaludek jako na vodě. Přesto se nevzdáváš plánu důkladně si mrtvolu
+prohlédnout. Bezvládná obluda má k hrudi řemenem připoutanou sedlovou
+kabelu. Otevíráš zavazadlo a nalézáš poselství, psané na zvířecí kůži. Na
+dně vaku leží dýka. Jestli chceš, můžeš si ponechat i batoh, i dýku.
+Teď už urychleně opouštíš mrtvé tělo a pokračuješ po cestě jižním směrem.
+Obrať na 125.
+268
+Tvá mdloba netrvala dlouho, silou vůle se probíráš k vědomí. Pociťuješ
+obavy a nejistotu, ale také vděk, žes zůstal naživu. S těmito pocity se
+odevzdaně opíráš o plece králových mužů a klopýtáš s jejich pomocí k
+vnějším městským hradbám. Obrať na 288.
+XV. Otevřel jsi zavazadlo a nalézáš v něm poselství.
+269
+U tvých nohou leží mrtvý šílenec. Chvíli nato vbíhají do dveří dva vojáci a
+gratulují ti. Vyprávějí, že mrtvý muž je uprchlý blázen, kterého hledali už
+dva dny.
+Jeden z vojáků ti podává 10 Zlatých, to je odměna za dopadení
+nebezpečného šílence, a nabízí ti, že tě zavedou do Pevnosti.
+Chceš-li jejich nabídku přijmout, obrať na 314.
+Pokud více důvěřuješ vlastním smyslům a své schopnosti orientovat se v
+prostoru, obrať na 7.
+270
+Slyšíš zlostný křik okřídleného nepřítele, který křižuje oblohu nad jezerem.
+Musíš odtud zmizet dřív, než Kraan přiláká další své druhy. Zlehka pobízíš
+hřebce a prodíráte se hloub a hloub do lesa.
+Otoč na 21.
+271
+Celého tvého těla se rychle zmocňuje nepřekonatelná slabost. Hadí jed už
+pronikl do krevního oběhu. Všechny svaly bez ohledu na tvou vůli
+ochabují, napětí v nich povoluje. Netrvá dlouho a nohy ti vypovídají
+službu, klesají pod vahou těla. Cítíš, jak se ti odporná slizovitá voda
+močálu zavírá nad hlavou. Tady končí tvůj život.
+272
+Každou chvíli upíráš oči k obloze a přitom rychle kráčíš vpřed se všemi
+smysly pozorně napjatými. Uvědomuješ si, že pěšina, po níž spěcháš, tě
+brzy zavede do Mlhavého lesa, malé osady, kterou uprostřed lesa před více
+než padesáti lety vybudovala rodina uhlířů. Dodnes zde v dřevěných
+srubech žijí její potomci a přežívá i uhlířské řemeslo, děděné tradičně z otce
+na syna. Po dvaceti minutách ostré chůze opravdu stojíš na okraji paseky a
+poznáváš malý kruh, tvořený sroubenými staveními. Nikde ale není ani
+stopy po neodmyslitelné dýmové cloně, která dala Mlhavému lesu jeho
+výstižné jméno. A mezi sruby je nepřirozený klid. Pokud jednou z Kai
+disciplín, které ovládáš, je Stopování, můžeš obrátit na 134.
+Jestliže tuto dovednost neovládáš, jdeš velmi opatrně a s připravenou zbraní
+blíž ke srubům.
+Obrať na 305.
+273
+Teď už jsou vnější hradby města na dohled. Opevnění budí úctu a není
+přerušeno ani v místě, kde do města vtéká řeka. Napříč celým tokem se
+táhne plovoucí barikáda, kterou tvoří řetěz pramic, těsně k sobě
+připoutaných silnými lany. Ze svého místa vidíš i vojáky, pobíhající podél
+dřevěných zdí opevnění. Doléhají sem i nezřetelné zvuky bitvy, která zuří
+někde na západě.
+Chceš-li se přiblížit k lodím, obrať na 179.
+Pokud chceš využít úkrytu stromů, obrať na 51.
+274
+Máš hrozně nakvap, aby ses vyhnul nepříteli, a ve spěchu nesleduješ cestu
+tak pozorně, jak by bylo třeba. Noha ti uvízla ve změti kořenů a ty se tečí
+válíš v prachu a spadaném listí. Rychle vyskakuješ řítíš se dál
+všudypřítomnými houštinami na úpatí kopce. Běžíš do lesa. Uháníš už asi
+deset minut, když zjišťuješ, že jsi, patrně při pádu, ztratil zbraň (-ně). Je to
+nepříjemné, ale utěšuješ se tím, že jsi nepřišel o život a máš dokonce i
+batoh. Stíráš si z obličeje špínu a prodíráš se skrze stromy dál.
+Obrať na 331.
+Chceš-li se přiblížit k lodím, obrať na 179.
+Pokud chceš využít úkrytu stromů, obrať na 51.
+275
+Už dvacet minut tě vede lesem tato uzoučká klikatící se stezička, když tu se
+ve výšce nad stromy ozývá plácání velkých křídel. Díváš se vzhůru a tam
+vzduchem plachtí obrovský Kraan. Přilétá od severu a zakrývá oblohu
+rozložitými křídly. Na stromy padá temný stín.
+Na Kraanových zádech sedí dva tvorové vyzbrojení dlouhými oštěpy. Jsou
+to horští Giakové - malé ošklivé nestvůrky, plné zášti a nenávisti. Před
+mnoha staletími přinutili Temní páni jejich předky, aby pro ně vybudovali
+pekelné sídlo Helgedad, které leží v sopečných pustinách za horami
+Durncragského pohoří. Výstavba Helgedadu trvala dlouho a byla pro Giaky
+mučivou zkouškou odolnosti. Jen nejsilnější jedinci přežili horké a jedovaté
+ovzduší Helgedadu a těžkou dřinu. Střemhlav se vrháš pod mohutné
+stromové kapradiny, protože Kraan právě přelétá přímo nad tebou. S bušícím
+srdcem se modlíš, aby tě tvá duchapřítomná reakce zachránila a aby tě
+nepřátelé neobjevili. Zvol poslepu číslo v Tabulce náhody.
+Pokud ti padne číslo 0 - 4, obrať na 345.
+Pokud ti padne číslo 5 - 9, obrať na 74.
+276
+Popadl jsi topůrko sekery a pokoušíš se proklestit si průchod spletí stromů a
+pokroucených větví k řidšímu lesu, který vidíš kus před sebou. Na plášti
+máš už teď četné trhliny, ale horší je, že na pravé noze máš těsně nad
+kolenem bolestivou podlitinu, která se připomíná při každém kroku. Ztrácíš
+1 KONDIČNÍ bod.
+Obrať na 213.
+277
+Probral ses k vědomí a s údivem se rozhlížíš kolem dokola. Chvíli ti trvá,
+než se orientuješ. Ležíš u úpatí kopce pod strmým srázem zapleten do
+chuchvalců dlouhých travin. Postrádáš svůj batoh i zbraň a navíc tě
+nepříjemně bolí hlava. Nemáš tušení, jak dlouho tu tvé tělo bezvládně
+spočívalo, ale uvědomuješ si, že tečí už nesmíš ztratit ani minutu a bez
+dalších průtahů se musíš vydat na cestu.
+Znovu se stavíš na nohy a tečí vidíš opodál svůj batoh, ale zbraň je na dva
+kusy a nedá se použít. Nezapomeň ji vyškrtnout ze své Průvodní listiny.
+(Pokud vlastníš víc než jednu zbraň, můžeš si vybrat, kterou škrtneš.
+Ostatní ti zůstávají.) Rychle zvedáš batoh ze země, letmo kontroluješ jeho
+obsah a spěcháš odtud ke stromům před tebou.
+Obrať na 113.
+278
+Ve spěchu opouštíš cestičku a cváláš pryč po stezce směřující přímo k
+hlavnímu městu, k Holmgardu. Když jsi dojel do míst, kde se vlkodlaci
+zastavili, vidíš přes louku hlavní cestu, která spojuje severní přístav Toran s
+Holmgardem. Mohl bys dojet do hlavního města ještě před svítáním.
+Obrať na 149.
+279
+Rychle šplháš po drolícím se kamení, které ti s hlukem ujíždí pod nohama,
+až k otvoru do jeskyně. Jakmile jsi uvnitř, okamžitě se snažíš zamaskovat
+ústí skalní dutiny ohromným balvanem.
+Už za pár minut se na skalnatém výběžku objevují Giakové, svýma
+ďábelsky žlutýma očima se pokoušejí odhalit v kopci každou sebemenší
+skulinu a štěrbinu.
+Jsou tak blízko, že přestáváš věřit, že by tě nevyslídili.
+Zvol číslo v Tabulce náhody.
+Pokud ti padne číslo 0 - 6, obrať na 112.
+Jestli zvolíš čísla 7 - 9, obrať na 96.
+280
+Začínáš opatrně šplhat po strmé skalní stěně, ale za malou chvilku slyšíš
+zlověstný šum křídel, který se blíží od západní strany. Kraani! Podle síly
+zvuku, který vydávají, usuzuješ, že se jich sem žene nejméně deset, možná
+i víc. Proklínáš svou smůlu, protože nehostinný skalní sráz neposkytuje
+žádnou možnost úkrytu před slídivými pohledy z nebes. Pokud se staneš
+terčem útoku během obtížného stoupání, bude takřka vyloučeno, aby ses
+současně bránil i udržel na příkré kamenné stěně.
+Pokud si myslíš, že nejlepší by bylo uchopit pevně zbraň a zůstat stát zcela
+tiše a bez pohnutí v naději, že unikneš pozornosti nepřátel, otoč na 327.
+Jestli chceš raději co nejrychleji sešplhat dolů ze stěny a ukrýt se v
+nedaleké chodbě, otoč na 170.
+281
+Uháníš lesem, ale Giakové jsou ti v patách. Jejich hrozné hrdelní kvákání
+slyšíš už těsně za sebou. Brzy stromy kolem řídnou a před tebou se zvedá
+kamenné úbočí jakéhosi kopce.
+Pokud se chceš vzdát úkrytu, který ti poskytují stromy, a vyšplhat na vršek,
+obrať na 311.
+Máš-li v úmyslu změnit směr tak, abys mohl dál běžet lesem, otoč na 77.
+282
+Rozhlížíš se přes hlavy davu a do oka ti padne jeden z obchůdků naproti
+hlavní bráně. Ve skutečnosti je to ordinace a apatyka městského felčara. Při
+pohledu na ni dostaneš odvážný nápad. Napínáš všechny síly a prodíráš se
+napříč proudem těl, která se jako lavina valí celou ulicí. Pomalu se probíjíš
+k protější straně ulice, tam se pak, nikým nezpozorován, rychle protáhneš
+dveřmi do domku. Uvnitř nenalézáš žádné známky lidské přítomnosti.
+Jenom v kleci na okně sedí pestře zbarvený papoušek a pokukuje po tobě.
+Po chviličce rozmýšlení popadáš sadu malých lahviček, pak přes sebe
+přehazuješ lékařův bílý plaší a znovu se vydáváš do městských ulic. V
+přestrojení si zjednáváš snadný přístup zpět k hlavní bráně. "Naléhavý případ,"
+vysvětluješ strážným, kteří tě zastavili u brány. "Jde o ženu
+královského kuchaře... dítě je na cestě!" Stráž na moment váhá, ale ty s
+nasazením veškeré výmluvnosti vojáky ujišťuješ, že lékařský zásah je
+naprosto nezbytný. Po chvíli dohadů získáváš povolení vstoupit. Jedno
+křídlo velkých dveří se tiše pootevírá a několikerý ruce tě dost neurvale
+postrkují vzniklou mezerou na nádvoří.
+Otoč na 11.
+283
+Zbývá ti čtyři pět kroků k zahalené postavě, když tu havran na cizincově
+paži varovně zaskřehotá a jeho pán se okamžitě obrací. Zůstáváš přimrazen
+stát na místě. Odporný přízrak zakuklený v plášti není nikdo jiný než
+Vordak, velitel Temných pánů a jeden z nejmocnějších nepřátel. Musíš s
+ním bojovat. Protože tvůj nečekaný útok Vordaka zaskočil, můžeš si připsat
+2 body k UMĚNÍ BOJE, ale jen pro první kolo souboje.
+Pokud nedokážeš rozestřít kolem sebe Nehmotnou clonu, duševní štít,
+odečti 2 body z UMĚNÍ BOJE ve druhém a ve všech dalších kolech,
+protože netvor na tebe útočí silou duševní energie právě tak jako velkým
+černým palcátem.
+Vordak: UMĚNÍ BOJE 17, KONDICE 25
+Pokud zvítězíš, obrať na 123.
+284 - Ilustrace XVI
+Cesta mezi hřbitovními náhrobky nebude snadná, země je tu rozpukaná a
+pokrytá dotěrnými šlahouny s ostrými dlouhými trny. Nepříjemné ostny se
+sápou po tvém plášti a zatínají se ti do nohou. Vzduch visí těžce a nehybně
+nad ponurou scenerií, z otevřených krypt unikají páchnoucí plyny. Do uší
+se ti bez ustání vtírá všudypřítomný šepot a mumlání, jehož zdroj a původ
+si netroufáš určit.
+Kousek před sebou vidíš dva staré sloupy a chceš se protáhnout mezerou
+mezi nimi. Krok za krokem postupuješ vpřed, hřbitovní rostliny rozhrnuješ
+rukou chráněnou cípem pláště, ale z ničeho nic ti mizí pod nohama pevná
+zem a ty se propadáš ve změti hlíny a kamenu kamsi dolil.
+Otoč na 71.
+285
+Masivní mramorový úlomek dopadá s temným zaduněním na Giakovo
+temeno. Ohyzdný tvor klesá s rozraženou lebkou na kolena a pomalu se
+sváží k zemi, mezi trosky chrámu. Povzbuzený svým činem běžíš na pomoc
+mladému kouzelníkovi.
+Obrať na 325.
+286
+Poslové smrti - a to ti nejdychtivější, vlkodlaci - tě obklopili a teď na tebe
+útočí ze všech stran. Bráníš se, bojuješ chrabře a bez oddechu, ale je to
+málo platné, protože početní převaha útočníků je značná. Životní míza ti
+prchá z těla, půda okolo je zbarvena tvou krví, přichází věčná temnota.
+Poslední pohled upíráš na vzdálené věže Holmgardu, které pozlacují
+sluneční paprsky.
+Zde jsi prohrál závod s časem a nebezpečím.
+287
+Stezka za chvilku celá mizí ve spleti pichlavých ostružinových šlahounů a
+mezi hustými jedlemi. Pokud se chceš vrátit zpátky na rozcestí a odtud se
+vydat východním směrem, obrať na 13.
+Jestli se chceš dál držet zvoleného směru i za cenu, že budeš postupovat
+nezkrotnou vegetací jen zvolna, obrať na 330.
+XVI. Cesta napříč hřbitovem není snadná, země je tu rozpukaná a porostlá
+trnitými šlahouny.
+288
+Jakmile jsi jen pár posledních kroků od opevnění, otevírají se rozložitá
+dubová vrata a ty bez meškání a bez zaváhání vbíháš dovnitř. Mladý
+seržant, potřísněný krví a jevící známky několikadenní únavy z boje, volá
+na vyššího důstojníka, který se spěšně obřad a ihned rozpoznává tvůj oděv.
+"Můj pane," zdraví tě otázkou, "kde jsou ostatní rytíři a učenci řádu Kai?
+Zoufale potřebujeme jejich rady. Nepřítel je mocný a krutý. Temní páni na
+nás tlačí stále silněji. Máme velké ztráty."
+Líčíš chrabrému důstojníkovi, jaký strašný osud potkal tvé druhy z kláštera
+Kai i klášter samotný. Teď je třeba, abys bez dalšího zdržování dovršil
+svou misi a vyhledal krále a jeho poradní sbor. Bez jediného slova a bez
+zbytečného rozmýšlení kývá velitel na jednoho ze svých vojáků, aby
+přivedl dva koně. V příštím okamžiku jste už oba v sedle, pobízíte zvířata a
+cváláte odtud směrem k vysokým holmgardským městským zdem.
+Obrať na 129.
+289
+Stráž u brány drží dva vojáci. Oba vypadají unaveně a podrážděně.
+Neklidně svírají halapartny se znaky sommerlundského krále a každého
+dotěru, který se podle jejich mínění ochomýtá zbytečně blízko kolem
+brány, nesmlouvavě odkazují svými zbraněmi do patřičných mezí. Na
+scéně se objevuje rozzuřená žena a z neznámých důvodů útočí hlava
+nehlava na jednoho ze strážců, až ho několika ranami sevřených pěstí
+povalí na jeho druha. Všichni tři se válejí na zemi v jednom chumlu
+zmítajících se rukou a nohou. To je šance pro tebe: vrháš se k bráně a věšíš
+se celou vahou na ohromnou kliku, ta povoluje a vstup je volný. Aniž by
+některý ze strážců něco zpozoroval, proklouzl jsi dveřmi a teď je za sebou
+rychle zavíráš. Riskantní čin se zdařil. Obrať na 139.
+290
+Uvnitř protáhlé truhlice leží bojová hůl, omotaná kůží. Jestli se ti zbraň
+hodí, můžeš si ji odnést. Zavíráš truhlu a sestupuješ po žebříku dolů na
+mýtinu.
+Úzkostlivě dbáš, abys nešlápl na trouchnivé příčle.
+Obrať na 140.
+291
+Dva Giakové leží zkrouceni a bez známek života u tvých nohou. Zběžná
+prohlídka mrtvých těl vydává 6 Zlatých, dvě kopí a dýku.
+Můžeš si ponechat zlato a vzít si na další cestu buď dýku, nebo kopí.
+Nezapomeň, že všechno, co si odtud odnášíš, musíš zapsat do Průvodní
+listiny. Během boje s Giaky Kraan zmizel a cesta je teď volná. Dáváš si do
+pořádku batoh a pokračuješ v cestě.
+Obrať na 272.
+292
+Poslední prožitek, který si uvědomuješ v tomto pozemském životě, je pocit
+nezadržitelného pádu do prázdnoty a tmy. Na zemi po tobě nezbude žádná
+stopa, protože se propadáš do říše věčných stínů. Budeš poslušným
+otrokem odvěkého zla! Tady končí tvé dobrodružství.
+293
+Benedon ti kyne rukama na pozdrav a opouští trosky. Ani ty dál neotálíš a
+vyrážíš za plněním cíle, který sis předsevzal nad doutnajícími ruinami
+kláštera. Prodíráš se hustým stromovím. Nejsi ještě daleko od dějiště
+nelítostné bitvy, když tu v porostu po své levici zahlédneš několik párů
+žlutě svítících oček, která tě upřeně sledují. Dřív, než stačíš cokoli
+podniknout, prosviští těsně nad tebou černý šíp. Na nic nečekáš a s
+nasazením všech sil, které ještě tvému unavenému organismu zbývají,
+odtud prcháš. Ze zálohy totiž útočí Giakové.
+Obrať na 281.
+294
+Zůstáváš pod vodou tak dlouho, jak jen to jde, a když se konečně musíš
+vynořit a nadechnout, vidíš, že Giakové zůstali daleko za tebou. Ztratil jsi
+zbraň (-ně) i batoh, ale nejdůležitější je, že sám jsi naživu a zdráv.
+Brodíš se bahnitou vodou ke břehu a bez zastávky pokračuješ v putování,
+tentokrát pod ochranou stromů na pravém břehu řeky.
+Zvol poslepu číslo v Tabulce náhody.
+Pokud ti padne číslo 0 - 2, obrať na 230.
+Pokud ti padne číslo 3 - 6, obrať na 190.
+Pokud ti padne číslo 7 - 9, obrať na 321.
+295
+Už asi patnáct minut probíhá tvá cesta klidně a nerušené, ale najednou tě v
+těsné blízkosti míjí černý šíp a vniká hluboko do kmene stromu pár kroků
+před tebou. Instinktivně se krčíš a chystáš si zbraň.
+Chceš-li zůstat na místě, kde právě stojíš, a pokusit se o odhalení skrytého
+lukostřelce, obrať na 185.
+Jestli chceš raději utéct do hustého porostu a tam se ukrýt, obrať na 92.
+296
+Tvůj instinkt ti napovídá, že něco není v pořádku. Všude okolo zuří boj,
+ozbrojené šiky Temných pánů jsou nedaleko - proč tedy tento muž jen tak
+postává v lese? Teď už také vidíš neklamný opar zla, jenž halí postavu před
+tebou. Bez dalšího rozmýšlení nabídku odmítáš.
+Obrať na 90.
+297
+Využíváš dovedností, jimiž tě vybavili tvoji učitelé z kláštera Kai, když tě
+cvičili v loveckém umění, a nikým nezpozorován se bez hlesu a šramotu
+plížíš listovím. Dřív než uplyne minuta, stojíš jen několik kroků od kůlu, k
+němuž Giakové připoutali zajatého člena jízdní pohraniční stráže. Dřevo už
+vzplálo a velká oblaka hustého dýmu zahalují ubohou oběť. Pevně svíráš
+topůrko sekery a vrháš se vpřed skryt kouřovou clonou. Jedinou ranou
+přetínáš provazy, jimiž jsou spoutány zajatcovy ruce, a s osvobozeným
+mužem prcháš zpět do bezpečí lesa. Jak si klestíte cestu mezi stromy a
+houštinami, doléhá k vám vřeštění Giaků, kteří už zjistili, že jim vězeň
+záhadně zmizel v oblacích dýmu. Obrať na 117.
+298
+Leskle černá ptákova hlava se beze spěchu otáčí a havran tě proklíná! V
+příštím okamžiku už důstojně vzlétá nad stromy a brzy se ztrácí z tvého
+zorného pole. šokován tím, co jsi slyšel, nabýváš nyní jistoty, že opeřenec
+je ve službách Temných pánů a teď už je snad na cestě k nim, aby je zpravil
+o tom, kde tě hledat.
+Chceš-li jít dál touto cestou, otoč na 121.
+Jestli chceš nechat cestu cestou a místo toho se pustit skrz les, obrať na 38.
+299
+Brzy si uvědomuješ, že zacházíš hloub a hloub do zalesněné bažiny.
+Pokračovat dál stejným směrem by bylo jistě pomalé a navíc i riskantní.
+Chceš-li se přesto dál držet svého směru, obrať na 227.
+Pokud chceš změnit směr a zamířit raději k pevnější půdě, obrať na 95.
+300
+Kráčíš déle než hodinu a po celou dobu sleduješ ostražitě oblohu nad
+sebou, abys včas objevil nebezpečí, které by mohlo přijít ze vzduchu.
+Dvakrát jsi zahlédl typické a nezaměnitelné stíny, které už zdaleka ohlašují
+blížící se Kraany. V obou případech tě bystré smysly a pohotová reakce
+zachránily před přepadením. Ale teď padáš hlady a musíš se pořádně najíst.
+Sněz jednu porci potravy.
+Když ses posilnil, můžeš pokračovat otočením na 13.
+301
+Schopnost naslouchat Šestému smyslu ti prozradila, že na západní cestě číhá
+smrt.
+Volíš tedy jižní pěšinu. Obrať na 27.
+302
+Zvol číslo v Tabulce náhody.
+Pokud ti padne číslo 0 - 2, obrať na 110.
+Pokud ti padne číslo 3 - 9, obrať na 285.
+303
+Les, kterým jdeš, je řídký, navíc v nepříjemně kopcovitém terénu. Není to
+právě ideální útočiště před vzdušnými nepřáteli. Přebíháš od stromu ke
+stromu, aby ses vyhnul nebezpečí, že tě zpozoruje Kraan, když nedaleko za
+sebou slyšíš sípavý dech a hrdelní vrčení vlkodlaků.
+Pokud ovládáš Kai disciplínu Maskování, obrať na 237.
+Pokud ne, obrať na 72.
+304
+Drahokam sálá neuvěřitelným žárem, který ti popálil ruku. Ztrácíš 2
+KONDIČNÍ body. Spěšně ho sbíráš cípem svého pláště, ušitého ze silné
+látky, a ukládáš do batohu. Napadá tě, že drahokam takové velikosti má
+určitě cenu stovek Zlatých. Ale zatím se Giakové dostali nebezpečně blízko
+a jejich šípy ti sviští kolem hlavy, obracíš se tedy a rychle ustupuješ do
+bezpečí nedalekého lesa.
+Obrať na 2.
+305
+Skrz pootevřené dveře prvního stavení vidíš uhlířovo tělo, které leží
+obličejem dolil na nerovné a chladné kamenné podlaze. Na první pohled je
+jasné, že muž byl zavražděn: ze zad mu trčí dlouhé kopí. Všechen nábytek i
+ostatní věci, jimiž místnost bývala vybavena, se válejí kolem, rozbity a
+rozdupány - nic nezůstalo vcelku.
+Takovou zálibu v ničení věcí nalézají jen Giakové, a proto nepochybuješ,
+že spoušť kolem je jejich nenávistné dílo. Letmé nahlédnutí do ostatních
+srubů nabízí stále stejný pohled, všude mrtví lidé a zničené věci. V
+posledním dřevěném domě nalézáš kopí s giackými znaky, a tak se tvé
+podezření mění v jistotu. Jestli si chceš kopí vzít sebou, můžeš. Na další
+cestu vyrážíš s ještě větším odhodláním, než předtím. Své poslání musíš
+splnit stůj co stůj, aby temné síly neušly zaslouženému trestu.
+Obrať na 105.
+XVII. Vidíš starého poustevníka, schouleného v rohu srubu.
+306
+Zvuky bitvy za tvými zády postupně slábnou. Najednou tě k zemi sráží
+jakási neznámá síla. Vzápětí zjišťuješ, že se ze stromu na tebe vrhli tři
+Drakkarimové. Bojuješ ze všech sil, ale bezvýsledně. Přesila je příliš velká
+a nepřátelé jsou silní a obratní. Poslední zvuky, které na tomto světě slyšíš,
+jsou krvežíznivé skřeky Drakkarimů, které vydávají, když zvedají oštěpy k
+ráně. Zde se uzavírá tvůj život a končí cesta za králem.
+307 - Ilustrace XVII
+Rychle a téměř bez námahy šplháš nahoru. Hlavou se ti při tom mihla
+vzpomínka na spousty stromů, které jsi zdolal jako dítě v okolí Toranu,
+když sis chtěl pochutnat na ovoci nebo se pokochat pohledem na
+překrásnou sommerlundskou krajinu. Vstup do domu zajišťuje sklápěcí
+poklop ve spodní části srubu. Tlačíš na něj, poklop se poslušně otevírá a ty
+nakukuješ dovnitř. V rohu chatky sedí schoulený a třesoucí se starý
+poustevník. Jakmile v tobě podle oblečení poznává rytíře Kai, rozlévá se
+mu po obličeji výraz neskonalé úlevy. Stařec se dává do řeči, sděluje ti, že
+v téhle oblasti se to Giaky jen hemží a že napočítal alespoň čtyřicet Kraanů,
+kteří během posledních tří hodin přeletěli nad jeho obydlím. Bez výjimky
+mířili k východu.
+Poustevník drobnými stařeckými krůčky přechází ke spížce a vrací se s
+talířem čerstvého ovoce. Vděčně mu děkuješ a ukládáš si ovoce do batohu.
+Je ho dost právě na jednu porci jídla. Poustevník ještě přináší bytelné
+válečné kladivo a pokládá ho na stolek u dveří. "Tobě se může hodit lépe
+než mně, můj pane," říká. "Prosím, přijmi tuto spolehlivou zbraň, jestli
+chceš." Kladivo si můžeš vzít jen v případě, že je vyměníš za jinou zbraň.
+Nemůžeš dopustit, aby tu poustevník stál proti případnému útočníkovi s
+holýma rukama. Znovu za všechno starci děkuješ, pozorně sestupuješ ze
+stromu dolů a vydáváš se na další cestu.
+Obrať na 213.
+308
+Dveře do stáje nejsou zavřené. Zastavil ses na prahu a tiše nasloucháš. V
+temnotě uvnitř dýchá jeden kůň. Zvíře najednou podezíravě větří, a protože
+mu smysly napovídají, že nablízku stojí neznámý člověk, zmocňuje se ho
+panika a jako smyslů zbavené vyráží vpřed. Když tě míjí v úzkém prostoru
+stájových dveří, nestačíš včas uskočit a kůň tě sráží k zemi. Ztrácíš 1
+KONDIČNÍ bod.
+Pokud ovládáš Kai disciplínu Spřízněnost se zvířaty a chceš ji využít, obrať
+na 122.
+Jestli chceš splašeného koně dohonit, obrať na 233.
+309
+Ještě jsi neudělal ani deset kroků, když tu havran, sedící na cizincově ruce,
+varovně zakrákal. Zahalený muž se otáčí tváří k tobě a vyráží přitom
+pronikavý skřek, z něhož ti tuhne krev v žilách a žaludek se ti svírá hrůzou
+a zděšením. Před tebou stojí Vordak, velitel Temných pánů a jeden z
+nejmocnějších nepřátel. V příštích okamžicích sem přibíhá ještě houf
+Giaků, kteří na tebe bez váhání útočí. Bojuješ udatně, ale přesila, jíž se
+snažíš čelit, je příliš velká.
+Poslední věc, kterou na tomto světě vnímáš, je ledový stisk Vordakových
+bezmasých prstu kostlivce, které ti svírají hrdlo tak dlouho, dokud se zcela
+nepropadneš do věčné temnoty. Tady končí tvůj život i cesta ke králi.
+310
+Na zdi protější budovy jsi zahlédl malou vybledlou tabulku.
+Vzpomínáš si, že schůzky královské rady se konají v Pevnosti, k níž vede
+zcela jistě západní cesta.
+Obrať na 37.
+311
+Půda na strmém úbočí kopce podkluzuje a kameny se pod tvýma nohama
+drolí. Riskuješ vteřinku zdržení a ohlížíš se přes rameno. Z lesa pod
+kopcem právě vybíhají dva Giakové a vrhají se ke stěně, aby mohli šplhat
+za tebou. Stoupáš vzhůru ze všech sil, a když jsi asi tak v půli cesty, nalézáš
+kousek stranou po své pravici jeskyni, jejíž vchod je skoro úplně zasypaný
+sesunutou půdou.
+Chceš-li v jeskyni hledat úkryt, obrať na 279.
+Pokud se chceš raději jeskyni vyhnout a šplhat dál k vrcholku, obrať na 47.
+Pokud jednou z Kai disciplín, které ovládáš, je umění Maskování, otoč na
+324.
+312
+Proklínáš svou smůlu. Všechno vypadá, jako kdyby se Temní páni a
+příroda spikli proti tobě. Ale žádné překážky nemohou být dost velké, aby
+otřásly tvým odhodláním dostat se se svým poselstvím až ke králi. Z šatů i
+z obličeje si stíráš přilnavé bahno, pak se obracíš a vydáváš se na další
+cestu lesem. Otoč na 299.
+313
+Stíráš ze zbraně smrdutou giackou krev a pak rychle slézáš z kopce, abys
+byl dole dřív, než Kraan objeví své mrtvé pány. Sestup je obtížný, půda a
+kameny ti ujíždějí pod nohama, mnohokrát bezmocně kloužeš i několik
+metrů, než se ti podaří zachytit se nějaké opory.
+Odečti si 1 KONDIČNÍ bod, protože máš nohy plné odřenin a šrámů.
+Obrať na 248.
+314
+Trvá skoro hodinu, než dospěješ k Pevnosti. Cestou tam potkáváš obyvatele
+Holmgardu a ve všech obličejích čteš strach a zděšení, v ulicích vládne
+zmatek. Tvůj průvodce přistupuje k ozbrojeným strážcům u hlavní brány a
+sděluje jim, jak důležité poslání plníš a jak naléhavou zprávu neseš králi.
+Vyhledej číslo v Tabulce náhody.
+Pokud ti padne číslo 0 - 6, obrať na 341.
+Pokud ti padne číslo 7 - 9, obrať na 98.
+315
+V uzlu smotaném z ženských šatů se skrývá malý sametový váček,
+obsahující 6 Zlatých, a kus voňavého mýdla. Jestli chceš, můžeš si mince i
+mýdlo vzít, než se vydáš na další cestu za králem.
+Obrať na 213.
+316
+Nedíváš se vpravo vlevo a uháníš pryč, aby ses nestřetl s nepřítelem.
+Zapomínáš na opatrnost, a to se ti brzy vymstí: noha se ti zaklínila mezi
+kořeny stromů a ty se teď válíš jak široký tak dlouhý ve spadaném listí
+smíšeném s prachem. Rychle vyskakuješ, zvedáš zbraň a řítíš se dál
+porostem od úpatí vršku k hustému lesu. Kraan už sice nad tebou nekrouží,
+ale na vrcholku kopce za sebou rozeznáváš siluety dvou Giaků. Chceš si
+setřít špínu z obličeje a dotkneš se přitom cela, až zasyčíš bolestí: cítíš na
+čele velkou podlitinu. Bez dalšího otálení zabíháš hlouběji do bezpečí,
+které ti poskytuje les.
+Obrať na 331.
+317
+Instinktivně seskakuješ dolů ze schodiště a dopadáš na kamennou podlahu.
+Duchapřítomnost ti znovu zachránila život, protože v příštím okamžiku se
+ze stropu řítí ohromný žulový blok a dopadá přesně do míst, kde jsi ještě
+před vteřinou stál.
+Celý roztřesený, ale naštěstí nerozdrcený se stavíš na nohy. Ke svému
+úžasu vidíš ve stropě malý obdélník zachmuřeného nebe, částečně
+schovaný za spletencem trnitých šlahounů. Pracně šplháš ven z krypty a
+hned míříš k jižní bráně pohřebiště, abys byl co nejrychleji pryč odtud. V
+dálce už jsou vidět do špiček otesané klády, z nichž obyvatelé Holmgardu
+zbudovali obranné valy kolem celého města.
+Otoč na 61.
+318
+Ženou se k tobě dva vojáci v čele s velitelem a všichni míří kušemi přímo
+na tvou hlavu. Teprve když doběhnou blíž, poznávají podle obleku tvůj
+původ a příslušnost k rytířům řádu Kai a v tu chvíli se jim rozlévá po
+tvářích výraz hluboké úlevy.
+"Můj pane," zdraví tě seržant, "kde jsou další rytíři a učenci Kai? Čekáme
+netrpělivě na vaši pomoc, protože Temní páni nás nemilosrdně drtí a ztráty,
+které jsme dosud utrpěli, jsou značné." Stručně líčíš statečnému vojákovi
+osud svých soukmenovců a zasvěcuješ ho i do účelu své cesty: musíš co
+nejrychleji osobně mluvit s králem. Spěcháte se seržantem zpět k lodím,
+kde se tě ujímá jiný důstojník, který bez meškání vybírá pro oba dobré
+koně, a společně jedete k vysokým horám a hlavní bráně Holmgardu.
+Obrať na 129.
+319
+Slizký tvor vydává táhlý a příšerný smrtelný chropot a bezvládně se hroutí.
+Dodatečně se tě zmocňuje panika, rychle se škrábeš na nohy, z čelistí mrtvé
+obludy vytahuješ opasek, o němž se domníváš, že je tvůj, a pak už bez
+ohlédnutí prcháš k slabému světélku, které vidíš v dálce před sebou. Když
+konečně vybíháš na denní světlo, s ohromným ulehčením padáš na zem,
+pokrytou spadaným listím, a těžce popadáš dech, který se jen pomalu
+uklidňuje. Po nějaké chvíli si sedáš a přitom zjišťuješ, že svůj pásek máš
+pořád na správném místě - přece jen jsi ho neztratil. Díváš se, cos to vlastně
+vyprostil z tlamy hrabonora. Je to nějaký kožený popruh s nevelkým
+měšcem a nožem v pochvě. Otevíráš váček a nalézáš v něm 20 zlatých
+mincí. Na další cestu si odtud můžeš vzít všechno, co pobereš, i nůž i
+zlaťáky. Už se cítíš poněkud lépe, ještě si musíš dát do pořádku všechno
+cestovní vybavení a můžeš jít dál.
+Obrať na 157.
+320
+Jak běžíš napříč otevřeným polem k lesu, vrhá se Kraan střemhlav dolů a
+zatíná ti do paže svůj nebezpečný pařát. Dřív než stačíš útok opětovat,
+Kraan už zase vzlétá a vydává přitom skřeky, plné nenávisti. Dobíháš do
+lesa, ale se ztrátou 2 KONDIČNÍCH bodů. Otoč na 264.
+321
+Už skoro hodinu jdeš podél klikatícího se břehu řeky. Právě máš před
+sebou další říční zákrut, když k tobě dolehnou zvuky vzdálené bitvy. Abys
+získal lepší přehled o krajině, vybíráš si jeden strmý vršek a opatrně šplháš
+k jeho vrcholku.
+Obrať na 273.
+322
+Stoupání do strmého kopce je vyčerpávajícím bojem s vlastní touhou
+padnout a na nic nemyslet. Trvá celou věčnost.
+Pohled, který se ti shora otevírá, není povzbudivý. Za tebou ještě doutnají
+zbytky kláštera, zčásti schované mezi větvemi stromů. Na severní straně
+stoupá přímo k obloze mohutný sloup smolně černého dýmu. Občas
+prošlehnou kouřem jasné plameny, to když nenasytnému ohni padne za
+oběť další tučné sousto. Svírá se ti srdce žalem a touhou po pomstě, protože
+plameny obracejí vniveč tvé rodiště, milovaný přístav Toran. Z myšlenek
+na zničený domov tě vrací do přítomnosti skřek Kraana, jenž krouží přímo
+nad tebou a chystá se zaútočit. Dělí tě od něho asi dvacet metrů. Kraan
+dychtí po tvé krvi.
+Jsi-li připraven s Kraanem bojovat, jakmile se vrhne dolů, obrať na 17.
+Chceš-li se vyhnout boji a co nejrychleji sešplhat z prudkého kopce dolů,
+obrať na 89.
+323
+Z vrcholku věže se ti otevírá pohled na všechny strany. Daleko na severu
+stoupá k nebi smolně černý sloup hustého dýmu. Občas prošlehnou
+kouřem oranžové prsty plamenů. Při téhle podívané jakoby ti srdce
+vypovědělo další službu a zastavilo se - ten zlověstný černý mrak nemůže
+znamenat nic jiného, než že hoří Toran, důležitý sommerlundský přístav. Z
+jihozápadní strany k tobě v poryvech větru doléhají zvuky bitvy. Zřejmě se
+nebojuje daleko, odhaduješ, že bitva zuří nejdále pět mil odtud. Na podlaze
+ve strážní věži leží podlouhlá bedna.
+Chceš-li ji otevřít, otoč na 290.
+Pokud chceš raději věž opustit a slézt po žebříku dolů, obrať na 140.
+Dávej ale pozor, abys nešlápl na některou nespolehlivou příčku.
+324
+Přetahuješ si přes hlavu kapuci a vrháš se mezi balvany u ústí jeskyně.
+Téměř nedýcháš a jsi stočený do malého nenápadného klubíčka, jako bys
+ani neměl v těle kosti. Celý se přikrýváš zeleným pláštěm. Trvá to jen pár
+okamžiků a Giakové už jsou tady. Vyšplhali na kamennou plošinku před
+jeskyní a teď svýma zelenavě žlutýma očima pozorně zkoumají celý vršek,
+každou skulinku či výstupek. Za několik okamžiků se pouštějí do dalšího
+zdolávání kopce, klejí a nadávají přitom ve svém podivném jazyce. V
+duchu děkuješ z celého srdce svým mistrům a učitelům z kláštera Kai, kteří
+tě vycvičili v ovládání Kai disciplíny Maskování. Teď ti tvá dovednost
+zcela určitě zachránila život.
+Pokud chceš prozkoumat jeskyni, obrať na 33.
+Chceš-li raději bez otálení sešplhat z kopce dolů pro případ, že by se
+Giakové vrátili, otoč na 248.
+325
+Opouštíš úkryt mezi stromy a vycházíš na volné prostranství. Giacký velitel
+neváhá a hned, jak tě vidí, dává své strachem roztřesené tlupě povel k
+ústupu.
+Křičí: "Ogot! Ogot!" Všichni mizí v lese. Černě oděný Giak neprchá
+bezhlavě jako ostatní. Zvedá proti tobě ruku sevřenou v pěst a hrdelním
+hlasem nesrozumitelně vyhrožuje: "Raneg rogag ik - orgadaka okak rogag
+gaj!" Teprve pak následuje své druhy.
+Přejíždíš pohledem místo urputného boje a počítáš mrtvé Giaky. Leží jich
+tu mezi mramorovými zbytky chrámu více než patnáct. Mladý kouzelník si
+stírá z čela pot a kráčí ti vstříc s rukou napřaženou k přátelskému pozdravu.
+Otoč na 349.
+326
+Velmi pozorně zasunuješ klíč do zámku a pootáčíš jím ve směru
+hodinových ručiček. Po několika vteřinách se ozývá tlumené cvaknutí -
+neklamné znamení, že klíč pracuje. Teď vytahuješ zástrčku a vzápětí se
+těžké žulové dveře ztěžka pohnou na skrytých pantech. Do hrobky vniká
+našedlé polosvětlo ze hřbitova. Dávno nepoužívaný východ je celý zarostlý
+křovím s velkými trny, které se bolestivě zadírají do tvých rukou i tváří,
+když se snažíš dostat ven z hrobky. Konečně jsi na svobodě a nedá ti to,
+aby ses neohlédl. Masivní dveře už znovu pomalu uzavírají hrobku a náhle
+jakoby se z hlubiny pod tebou ozvalo příšerné nelidské zasmání.
+Zachvacuje tě slepá panika a ty se dáváš na bezhlavý útěk napřít
+pohřebištěm k jižní bráně.
+Obrať na 61.
+327
+Už za pár minut přilétá celé hejno Kraanů a krouží nad vrcholem kopce
+nahoře nad tebou. Letmo je počítáš a zjišťuješ, že Kraanů, těch příšerných
+tvorů, je tu nejméně šestnáct a každý z nich nese na hřbetě alespoň dva
+Giaky, kteří jsou ozbrojeni dlouhými kopími a hlavy mají chráněné
+těžkými bronzovými helmami s množstvím dlouhých, trnovitých výběžků.
+Až k tobě doléhá jejich vzrušené bručení. Už tě spatřili!
+Chceš rychle seskočit, aby ses dostal k chodbě, jejíž ústí vidíš sedm osm
+metrů pod sebou, ale máš smůlu. Jedna noha se ti zaplétá do hustých
+trnitých šlahounů tak pevně, že ji nemůžeš vyprostit, ztrácíš rovnováhu a
+padáš bezmocně hlavou dolů. Zůstáváš tak viset - beze zbraně a bez
+možnosti jakkoliv se bránit. Naštěstí pro tebe je konec rychlý. Jakmile
+první Giak vrhá své kopí proti tvé hrudi, smrt na sebe nenechává dlouho
+čekat. Zde se uzavírá tvůj život i tvá cesta.
+328
+Jakmile je tvor mrtev, jeho tělo se pomalu mění v odpornou zelenavou
+tekutinu. Sleduješ, jak se všechna tráva a ostatní rostliny okamžitě kroutí a
+vzápětí hynou, jakmile se jich kouřící a čpící hmota dotkne. Nedaleko
+rozkládajícího se těla leží v trávě veliký, nepochybně cenný drahokam.
+Pokud chceš drahokam zvednout, obrať na 76.
+Chceš-li toto místo co nejrychleji opustit, obrať na 118.
+329
+Pustil ses dolů z kopce a dostal ses ke hřbitovu. Okamžitě tě pohlcuje
+podivná mlha a cáry mraků, které se převalují nízko nad pohřebištěm a
+brání slunečním paprskům, aby pronikly až k zemi. Udržují tak celý hřbitov
+v ustavičném pološeru. Cítíš, jak ti všemi kostmi proniká plíživý chlad.
+Kůň se začíná vzpínat, plaší se a ať děláš, co děláš, nemůžeš ho přimět, aby
+pokračoval vpřed. Nechce udělat už ani krok k tomu hroznému místu.
+Nezbývá ti nic jiného, než slézt z koně, nechat zvíře tady a jít dál pěšky.
+Obrať na 284.
+330
+Zmožen námahou zastavuješ, aby sis na pár minut odpočinul. Usedáš na
+kmen padlého stromu. Jak tak nabíráš nových sil, rozhlížíš se kolem sebe a
+zpozoruješ pod kládou velký ranec.
+Pokud chceš balík prozkoumat, abys zjistil, co je uvnitř, obrať na 315.
+Chceš-li nechat ranec ležet, kde je, a raději rychle pokračovat v cestě, otoč
+na 213.
+331
+Ve změti hustě prorostlých kořenů a trnitých šlahounů zeje ústí jakési
+chodby, jejíž pokračování se ztrácí v nitru kopce před tebou. Otvor je
+vysoký přibližně dva metry a něco přes tři metry široký. Zblízka cítíš, jak z
+hloubi inkoustově černé temnoty slabounce vane chladný vzduch.
+Přemýšlíš o tom, co to znamená. Kdyby chodba ústila na protilehlé straně
+kopce, mohlo by ti to ušetřit spoustu hodin vyčerpávajícího šplhání.
+Jenomže v chodbě by mohla říhat i neznámá nebezpečí.
+Pokud chceš vstoupit do chodby, obrať na 170.
+Jestli chceš raději šplhat nahoru na kopec, obrať na 280.
+332
+Chodba, kterou tě muž vede, je plná zákrutů a topí se ve tmě. Po deseti
+minutách chůze přicházíte ke schodům, strmě stoupajícím k malým
+dřevěným dvířkům. Na posledním stupni schodiště muž mačká tajné
+tlačítko a dveře se otvírají. Vstupujete do rozlehlé ložnice se stěnami
+vytapetovanými krásným plyšem a s ohromnou mramorovou vanou, jež
+zabírá celý jeden roh místnosti. Muž ti nabízí, aby ses zde osvěžil a
+odpočinul si, zatímco on bude domlouvat slyšení u krále. Rychle se koupeš
+a převlékáš se do jakéhosi bílého šatu, který jsi našel rozložený na velké
+desce mramorového stolu. Sotva ses převlékl a upravil, už je tu zpátky tvůj
+průvodce a vede tě další dlouhou chodbou se stěnami plnými nádherných
+tapiserií. Konečně stojíš před mohutnými dveřmi, jež střeží dva vojáci ve
+stříbrném brnění.
+Za několik okamžiků se setkáš s králem.
+Obrať na 350.
+333
+Už skoro půl hodiny se prodíráš hustým porostem, když tu z výšky nad
+stromy k tobě doléhá plácání velkých křídel. Díváš se vzhůru a tam
+vzduchem plachtí obrovský Kraan. Přilétá od severu a zakrývá oblohu
+rozložitými křídly.
+Na Kraanových zádech sedí dva šedaví tvorové, ozbrojení dlouhými
+kopími. Jsou to horští Giakové - malé ošklivé nestvůrky, plné záště a
+nenávisti. Před mnoha staletími přinutili Temní páni jejich předky, aby pro
+ně vybudovali pekelné sídlo Helgedad, které leží v sopečných pustinách za
+horami Durncragského pohoří. Výstavba Helgedadu trvala dlouho a byla
+pro Giaky mučivou zkouškou odolnosti. Jen nejsilnější jedinci přežili horké
+a jedovaté ovzduší Helgedadu a těžkou dřinu.
+Skrýváš se mezi stromy, takřka nedýcháš a stojíš úplně bez pohnutí,
+protože Kraan právě přelétá přímo nad rvou hlavou a pak naštěstí pokračuje
+dál k jihu. Když máš jistotu, že je skutečně pryč, znovu se pouštíš do
+potyčky s vegetací a pokračuješ ve své cestě. Obrať na 131.
+334 - Ilustrace XVIII
+Vodní tok si razí cestu mezi vysokými skalisky. Jdeš těsně podél vody a
+náhle vidíš nahoře na cestě čtyři vojáky v čele s velitelem. Jsou oblečeni do
+uniforem královské armády.
+Chceš-li se k neznámým mužům přiblížit, obrať na 162.
+Chceš-li využít toho, že ovládáš Kai disciplinu Maskování, a v úkrytu
+počkat, až muži zmizí, otoč na 73.
+Pokud ovládáš Kai disciplínu Šestý smysl a chceš ji využít, obrať na 48.
+335
+Když jsi přišel blíž, smolně černý pták se vznesl vysoko k obloze a brzy ti
+zmizel z dohledu. Prohlížíš si velmi pečlivě strom, na němž pták seděl, ale
+nic neobvyklého na něm nenalézáš. Abys zbytečně dál neztrácel
+drahocenný čas, vydáváš se na další pouť. Obrať na 121.
+336
+Jako velká voda ses vřítil na mýtinu. Giakové jsou celí zkoprnělí
+překvapením a toho musíš využít. Bez vteřinky zaváhání a bez rozmýšlení
+útočíš na jednoho z nich, na toho, který stojí k tobě nejblíže. Je mrtvý ještě
+dřív, než jeho tělo dopadne na zem. Zbylí Giakové tasí své zahnuté meče a
+útočí na tebe. Bojuj s nimi postupně.
+Giak 1: UMĚNÍ BOJE 14, KONDICE 11
+Giak 2: UMĚNÍ BOJE 13, KONDICE 11
+Pokud se ti podaří zvítězit, osvobodíš vojáka pohraniční jízdní hlídky a
+otoč na 117.
+XVIII. Nahoře na cestě vidíš čtyři muže v čele s velitelem v uniformě
+královské armády.
+337
+Zabýváš se ozdobným zámkem a náhle se za tvými zády ozývá ohlušující
+rachot a praskání.
+Zvol číslo v Tabulce náhody.
+Pokud ti padne číslo 0 - 4, obrať na 219.
+Pokud ti padne číslo 5 - 9, obrať na 317.
+338
+Když se znovu probíráš k vědomí, zjišťuješ, že ležíš při úpatí prudkého
+srázu, celý zapletený do chuchvalce jakýchsi dlouhých travin. Batoh a
+zbraň jsi ztratil a ke všemu tě hrozně bolí hlava. Nemáš tušení, jak dlouho
+jsi tu ležel v mrákotách, ale uvědomuješ si, že čas nezadržitelně běží a že
+musíš bez dalšího otálení vyrazit na cestu. S námahou se škrábeš na nohy a,
+aby ses zorientoval, rozhlížíš se kolem dokola. Máš štěstí - batoh i zbraň
+vidíš kousek výš na srázu. Zřejmě se ti při pádu uvolnily a uvízly mezi
+vegetací na kopci. Rychle sbíráš své věci, dáváš si výbavu znovu do
+pořádku a vyrážíš k lesu, který je kousek odtud.
+Obrať na 113.
+339
+Rychle uskakuješ stranou, a tak dlouhá dýka dopadá na skleněnou desku
+pultu, která se tříští na sto kusů. Snědý mladík na tebe útočí a je třeba s ním
+bojovat.
+Zabiják: UMĚNÍ BOJE 13, KONDICE 20
+Pokud svého protivníka zneškodníš během prvních čtyř kol zápasu, otoč na
+94.
+Jestli není rozhodnuto po prvních čtyřech kolech zápasu, otoč na 203.
+V kterémkoli stadiu boje můžeš zápas vzdát tím, že vyklouzneš předními
+dveřmi ven. Otoč na 7.
+340
+Odhodlaně cváláš vstříc blížícímu se vlkodlaku a jeho pánu. Zbraň máš
+napřaženou k úderu. Giak tě spatří a hned tasí dlouhou zahnutou šavli.
+Musíš bojovat s vlkodlakem i s Giakem najednou, jakoby to byl jeden
+nepřítel.
+Giak + vlkodlak: UMĚNÍ BOJE 14, KONDICE 24
+Pokud zvítězíš, obrať na 193.
+XIX. Strážní tvému vyprávění nevěří a odmítají tě vpustit dovnitř.
+341 - Ilustrace XIX
+Strážci neuvěřili tvému vyprávění a zcela rozhodně tě odmítají pustit
+dovnitř. Mezitím tvůj průvodce zmizel někde v davu a ty tu stojíš sám a
+bezradný uprostřed města, plného zmatku a neklidu. Poslední vývoj
+událostí tebou poněkud otřásl. Sklíčeně a bez cíle se necháváš unášet kus
+cesty davem a najednou zjišťuješ, že ses ocitl před palácem holmgardského
+společenství učenců. Stojí u mostu, který spojuje oba břehy Eledilu kousek
+od místa, kde se řeka vlévá do Holmgardského zálivu.
+Pokud chceš vstoupit do paláce společenství, obrať na 210.
+Chceš-li se poohlédnout po nějaké další cestě, která by tě dovedla k
+Pevnosti, otoč na 37.
+Pokud chceš využít toho, že ovládáš Kai disciplínu Stopování, obrať na
+310.
+342
+Ozvěna tvého hlasu doznívá mezi stromy a cizinec se pomalu otáčí
+obličejem k tobě. Srdce se ti hrůzou zastavilo a krev ti ztuhla v žilách,
+protože ten, kdo tu stojí, není lidskou bytostí. Je to Vordak, krutý a mocný
+velitel Temných panů. Netvor vydává tak příšerný skřek, že ti zaléhá v
+uších, a pak zvedá vysoko nad hlavu těžký černý palcát, aby se na tebe
+mohl vrhnout. Hrůza tě na okamžik ochromuje, protože cítíš, že Vordak
+útočí nejen palcátem, ale i svou duševní energií. Pokud se nedokážeš
+zaštítit Nehmotnou clonou, odečti 2 body z UMĚNÍ BOJE. Musíš s
+netvorem bojovat. Je odolný vůči Útoku duševní silou.
+Vordak: UMĚNÍ BOJE 18, KONDICE 26
+Pokud se ti podaří zvítězit, obrať na 123.
+343
+Jsi uvězněn masou vzájemně prorostlých větví a kořenů. Po chvíli vypětí se
+ti konečně podařilo vyprostit z pevného sevření pravou ruku, popadnout
+sekeru a tec! si pomalu klestíš cestu skrz bujnou vegetaci dopředu, kde
+doufáš, že bude les řidší a prostupnější. Plást máš na mnoha místech
+rozedraný, v levé ruce máš tržnou ránu a nad loktem bolestivou pohmožděninu.
+Ztrácíš 2 KONDIČNÍ body.
+Obrať na 213.
+344
+Cítíš se velmi slabý a zmocňuje se tě závrat. Nohy ti už skoro vypovídají
+službu a podlamují se pod tvou vahou. Pokoušíš se dopotácet se ke dveřím,
+ale zabiják je rychlejší - skáče na tebe a sráží tě k podlaze.
+Obrať na 60.
+345
+Rychle si přetahuješ kapuci svého zeleného pláště, jaký nosí všichni rytíři
+řádu Kai, přes hlavu a zůstáváš bez hnutí a téměř bez dechu stát, protože
+Kraan krouží přímo nad tebou. Trvá to několik minut, pak slyšíš shora
+zuřivé klení Giaků a chvíli nato začíná tlukot velkých křídel slábnout,
+protože Kraan mizí směrem na západ. Tvoje rychlá reakce ti zachránila
+život Nebýt jí, jistě by ses stal kořistí Giaků a neušel bys smrti.
+Chceš-li se nyní vrátit na cestu, obrať na 272.
+Pokud chceš dál pokračovat pod ochranným příkrovem stromů, obrať na
+19.
+346
+Hluboko mezi žebry kostry vězí kopí. Je v dobrém stavu, jestli chceš (a
+máš-li volnou ruku), můžeš si zbraň vzít sebou na další cestu. Abys opustil
+paseku, obrať na 14.
+347
+Stromy kolem dokola začínají řídnout a teď se přímo před tebou vynořila
+silueta starého dřevěného srubu, schouleného pod baldachýnem dubových
+větví. Obydlí vypadá opuštěně a odhaduješ, že těžko bude skrývat něco
+cenného. Vedle hlavních dveří se krčí nevelká truhla, těsně přimáčknutá ke
+stěně. Otevíráš ji a zjišťuješ, že je plná jakýchsi smotků z tenkých větviček,
+pevně omotaných silným provazem. Jeden konec každého provazu je
+namočen do pryskyřice. Poznáváš, že v truhle jsou uskladněné louče.
+Kousek od truhlice s loučemi leží krátký meč a troudník. Jestli myslíš, že
+by se ti krátký meč, troudník či louče mohly hodit a chceš si něco vzít,
+můžeš, ale nezapomeň si získané předměty zapsat do své Průvodní listiny.
+Po prohlídce srubu vycházíš ven, zavíráš pečlivě dveře a po zarostlé pěšině
+se vydáváš k severovýchodu.
+Obrať na 103.
+348
+Už už zvedáš nohu, abys odkopl mrtvého hada, když tu ti srdce strachem
+poskočilo, protože až teď poznáváš, že ses utkal s červenou bažinnou zmijí.
+Nikdo nezná účinnou ochranu proti jejímu prudce jedovatému uštknutí. Je
+jasné, že jít dál tímto směrem by se rovnalo sebevraždě. Raději se velmi
+opatrně vracíš po vlastních stopách, až konečně zase stojíš na pevné zemi a
+vydáváš se znovu na cestu.
+Obrať na 95.
+349
+Stojí tu před tebou mladý plavovlasý muž s melancholickým, a přitom
+hluboce zkoumavým pohledem. V jeho tváři je ještě pořád citelné napětí z
+přestálé bitvy. Dlouhá, nebesky modrá róba nese stopy nepohodlného
+života uprostřed divočiny. Bere tvou ruku do své a přitom se mírně uklání:
+"Mé upřímné díky patří tobě, rytíři Kai. Už mi nezbývalo mnoho sil a
+kdybys nepřišel a nepomohl mi, bezpochyby by se mé dny skončily na
+špicích giackých kopí." Vidíš, že muž, tvůj vrstevník, se sotva drží na
+nohou, a tak ho jemným pohybem přiměješ, aby usedl na jeden z
+povalených mramorových sloupů, zatímco pozorně nasloucháš jeho
+slovům. "Jmenuji se Benedon. Jsem členem Bratrstva křišťálové hvězdy, to
+je společenství mágů a kouzelníků z Toranu. Jsem už několik dní na cestě
+do vašeho kláštera, kam mě vyslal Mistr našeho společenství s neodkladnou
+zprávou." Při těchto slovech vytahuje Benedon zpod bohatých záhybů
+svého šatu pergamenový svitek a podává ti ho.
+"Jak vidíš, dopis jsem už otevřel a přečetl si ho. První hodiny války mě
+zastihly na hlavní sommerlundské silnici, po níž jsme cestovali ve třech, já
+a dva moji průvodci. Kraanové na nás nečekaně zaútočili, my jsme se
+rozprchli do lesa a tam jsme jeden druhého ztratili."
+Držíš v rukou dopis, který mohl změnit krutý osud kláštera, kdyby byl
+přišel včas. Obsahuje varování pro rytíře řádu Kai, zprávu, že Temní páni
+shromaždují za Durncragským pohořím ohromnou armádu. Mistr
+toranského bratrstva v dopise naléhá na rytíře a učence Kai, aby odložili
+oslavy Fehmarnova svátku a aby se připravili na boj.
+"Mám obavy, že jsme byli zrazeni," říká Benedon a hlava mu přitom klesá
+starostmi a žalem. "Jeden z mých druhů, bratr jménem Vonotar, objevil
+zakázaná tajemství černého umění. Před deseti dny zabil jednoho z našich
+představených a od té doby jakoby se po něm slehla zem. Z různých stran
+jsme se ale doslechli, že se přidal k Temným pánům." Na oplátku vyprávíš
+Benedonovi o všem, co se přihodilo v klášteře Kai a o své strastiplné pouti,
+jejímž cílem je varovat krále před nebezpečím, kterému je vystavena celá
+země. Mlčky a důstojně snímá Benedon ze své šíje zlatý řetěz a podává ti
+ho. Na řetězu je zavěšený nevelký znak Křišťálové hvězdy. "Toto je
+symbol našeho Bratrstva. My dva, já a ty, jsme v této těžké chvíli
+skutečnými bratry na život a na smrt. Předávám ti talisman, který nosí štěstí
+- snad tě bude chránit na tvé další cestě." Dojatě mladému muži děkuješ,
+řetěz si s úctou zavěšuješ kolem krku a křišťálovou hvězdu skrýváš pod
+plátnem košile na holém těle. (Nezapomeň si řetěz s hvězdou poznamenat
+do Průvodní listiny.) Benedon se chystá k odchodu a dává ti sbohem.
+"Musíme z tohoto zlořečené místa zmizet dřív, než se Giakové vrátí s
+čerstvými posilami. Je na tase, abych se vrátil ke svému Bratrstvu. Loučím
+se s tebou, bratře. Snad tě bude přízeň nebes provázet na další cestě."
+Obrať na 293.
+350 - Ilustrace XX
+Vstupuješ do Trůnního sálu, oslnivě nádherné místnosti, bohatě zdobené
+zlatem na jasně bílém podkladě. Král a jeho nejbližší rádcové se sklánějí
+nad rozměrnou mapou, která leží rozložena na mramorové desce uprostřed
+místnosti. V obličejích všech mužů se zračí obavy a napětí.
+Začal jsi se svým vyprávěním a v tu chvíli utichá celý sál a pozornost všech
+přítomných se obrací k tobě. Vyprávíš pohnutou historii posledních chvil
+kláštera Kai, líčíš smrt svých druhů a nakonec i nebezpečnou cestu za
+králem sem, do Pevnosti. Do ticha doznívají tvá poslední slova, když tu k
+tobě přistupuje král a bere tvou pravici do své.
+„Lone Wolfe, osvědčil jsi obětavost a odvahu, jaké šlechtí pravého rytíře
+řádu Kai. Tvá cesta sem byla jedno velké nebezpečí. Novina, s níž jsi
+přišel, dopadá na nás jako další tvrdá rána osudu, ale zároveň nám v této
+temné době zazářil majáček naděje - a tím je tvůj nepoddajný a odhodlaný
+duch. To, co jsi dokázal, je velikou oslavou památky tvých učitelů. I my se
+s úctou skláníme před tvým činem." Po králových slovech propuká v sále
+jásot, ze všech stran slyšíš srdečné díky, projevy upřímného obdivu vhánějí
+ruměnec do tvých mladých lící. Král zvedá ruce v utišujícím gestu a hlasy
+zvolna slábnou, až se ztiší docela.
+„Lone Wolfe, udělal jsi vše, co by Sommerlund mohl chtít od svého
+poslušného syna, a přece tvá úloha ještě nemůže skončit. Sommerlund
+nezbytně potřebuje tvé další služby. Temní páni jsou mnohem početnější
+než my a jejich dobyvačné cíle neznají hranic. Naše poslední naděje leží v
+Durenoru, kde je ukryta moc, která již jednou, před dávnými věky,
+pomohla zvítězit nad Temnými pány. Lone Wolfe, jsi posledním z rytířů
+řádu Kai - znáš a ovládáš tajná umění, ostatním smrtelníkům nedostupná.
+XX.V obličejích krále a jeho nejbližších rádců se zračí obavy a soustředění.
+Jsi ochoten vypravit se do Durenoru a vrátit se se Sommerswerdem,
+Slunečným mečem? Jen s pomocí tohoto daru nebes můžeme překonat zlo,
+jež napadlo naši zem, a zachránit ji." Pokud přijímáš výzvu k výpravě za
+Sommerswerdem, Slunečným mečem, vydej se na další dobrodružství s
+druhou knihou z cyklu Lone Wolfa:
+Oheň na vodě.

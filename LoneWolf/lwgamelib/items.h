@@ -6,15 +6,19 @@
 #include <wx/defs.h>
 #include <wx/string.h>
 #include "lwdefs.h"
+#include "eventprop.h"
+
 
 
 struct Item {
-	wxInt32 m_id;
+	EItem m_id;
 	wxString m_title;
 	wxString m_desc;
+	EItemPlacement m_placement;
+	ItemProperties m_properties;
 	
 public:
-	Item() : m_id(0) {}
+	Item() : m_id(ITEM_UNKNOWN) {}
 	
 	Item& operator=(const Item& item)
 	{
@@ -25,6 +29,8 @@ public:
 		m_id = item.m_id;
 		m_title = item.m_title;
 		m_desc = item.m_desc;
+		m_placement = item.m_placement;
+		m_properties = item.m_properties;
 		
 		return *this;
 	}
@@ -33,30 +39,38 @@ public:
 
 
 class ItemAndWeaponManager {
-	typedef std::map<wxInt32,Item> TItemMap;
-	typedef std::pair<wxInt32,Item> TItemMapPair;
-	static const Item UNKNOWN_ITEM;
+	typedef std::map<EItem,Item> TItemMap;
+	typedef std::pair<EItem,Item> TItemMapPair;
+	
+	typedef std::map<wxString,EItem> TItemConvertTable;
+	typedef std::pair<wxString,EItem> TItemConvertTablePair;
 	
 private:
-	TItemMap m_weaponsMap;
-	TItemMap m_bagItemsMap;
-	TItemMap m_specialItemsMap;
+	TItemMap m_itemsMap;
+	TItemConvertTable m_itemConvertTable;
+	
+	EItem m_allWeaponsType;
+	EItem m_randomWeaponType;
+	EItem m_randomBagItemType;
+	EItem m_backpackType;
+	
 public:
-	ItemAndWeaponManager() {}
+	ItemAndWeaponManager() : m_allWeaponsType(ITEM_UNKNOWN), m_randomWeaponType(ITEM_UNKNOWN), m_randomBagItemType(ITEM_UNKNOWN){}
 	~ItemAndWeaponManager() {}
 	
-	bool AddWeapon(EWeapons type, const wxString& title, const wxString& desc);
-	const Item& GetWeapon(EWeapons type);
+	bool InitializeSpecialTypes();
 	
-	bool AddBagItem(EBagItems type, const wxString& title, const wxString& desc);
-	const Item& GetBagItem(EWeapons type);
+	bool AddItem(const wxString& keyName, const Item& item );
+	bool ItemExists(EItem type);
+	Item& GetItem(EItem type);
 	
-	bool AddSpecialItem(ESpecialItems type, const wxString& title, const wxString& desc);
-	const Item& GetSpecialItem(EWeapons type);
+	EItem GetItemType(const wxString& keyName);
+	
+	inline EItem GetAllWeaponsType() const { return m_allWeaponsType; }
+	inline EItem GetRandomWeaponType() const { return m_randomWeaponType; }
+	inline EItem GetRandomBagItemType() const { return m_randomBagItemType; }
+	inline EItem GetBackpackType() const { return m_backpackType; }
 
-private:
-	bool AddItem(wxInt32 type, const wxString& title, const wxString& desc, TItemMap& itemMap);
-	const Item& GetItem(wxInt32 type, TItemMap& itemMap);
 };
 
 

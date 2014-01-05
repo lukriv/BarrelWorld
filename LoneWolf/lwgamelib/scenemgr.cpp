@@ -2,11 +2,13 @@
 #include <iostream>
 #include <list>
 
+#include "character.h"
+
 
 std::ostream& operator<< (std::ostream &output, const Scene& scene) 
 {
 	output << "--------------------------\n";
-	output << "Scene ID: " << scene.m_sceneId << "\n";
+	output << "Scene ID: " << scene.GetSceneId() << "\n";
 	output << "Desc: " << scene.m_desc.ToStdString() << "\n";
 	output << "Actions: \n";
 	for(ActionVector::const_iterator iter = scene.m_actions.begin(); iter != scene.m_actions.end(); iter++)
@@ -30,7 +32,7 @@ std::ostream& operator<< (std::ostream &output, const SceneManager& sceneMgr)
 std::wostream& operator<< (std::wostream &output, const Scene& scene)
 {
 	output << L"--------------------------\n";
-	output << L"Scene ID: " << scene.m_sceneId << "\n";
+	output << L"Scene ID: " << scene.GetSceneId() << "\n";
 	output << L"Desc: " << scene.m_desc.ToStdWstring() << "\n";
 	
 	return output;
@@ -45,8 +47,9 @@ std::wostream& operator<< (std::wostream &output, const SceneManager& sceneMgr)
 	}
 	return output;
 }
-
-
+//////////////////////////////////////////////
+/////////////// Scene ////////////////////////
+//////////////////////////////////////////////
 Scene& Scene::operator=(const Scene& scene)
 {
 	if(&scene == this) return *this;
@@ -56,10 +59,123 @@ Scene& Scene::operator=(const Scene& scene)
 	m_actions = scene.m_actions;
 }
 
+void Scene::GetPosibleActions(Character& character, wxVector<wxDword>& outPosibleActions)
+{
+	bool defaultCondActions = true;
+	outPosibleActions.clear();
+	for(wxDword i = 0; i < m_actions.size(); i++)
+	{
+		if(m_actions[i].IsConditioned())
+		{
+			if((m_actions[i].GetRequiredSkill() != DISCIPLINE_UNKNOWN)
+				&&(m_actions[i].GetRequiredItem() == ITEM_UNKNOWN)
+				&& character.GetDisciplines().Contains(m_actions[i].GetRequiredSkill()))
+			{
+				defaultCondActions = false;
+				break;
+			}
+			
+			if((m_actions[i].GetRequiredSkill() == DISCIPLINE_UNKNOWN)
+				&&(m_actions[i].GetRequiredItem() != ITEM_UNKNOWN)
+				&& character.ContainsItem(m_actions[i].GetRequiredItem()))
+			{
+				defaultCondActions = false;
+				break;
+			}
+
+			if((m_actions[i].GetRequiredSkill() != DISCIPLINE_UNKNOWN)
+				&&(m_actions[i].GetRequiredItem() != ITEM_UNKNOWN)
+				&& character.GetDisciplines().Contains(m_actions[i].GetRequiredSkill())
+				&& character.ContainsItem(m_actions[i].GetRequiredItem()))
+			{
+				defaultCondActions = false;
+				break;
+			}
+		}
+	}
+	
+	for(wxDword i = 0; i < m_actions.size(); i++)
+	{
+		if(!m_actions[i].IsConditioned())
+		{
+			outPosibleActions.push_back(i);
+		} else {
+			if((m_actions[i].GetRequiredSkill() != DISCIPLINE_UNKNOWN)
+				||(m_actions[i].GetRequiredItem() != ITEM_UNKNOWN))
+			{
+				if((m_actions[i].GetRequiredSkill() == DISCIPLINE_UNKNOWN)&& character.ContainsItem(m_actions[i].GetRequiredItem()))
+				{
+					outPosibleActions.push_back(i);
+				}
+				
+				if((m_actions[i].GetRequiredItem() == ITEM_UNKNOWN)&& character.GetDisciplines().Contains(m_actions[i].GetRequiredSkill()))
+				{
+					outPosibleActions.push_back(i);
+				}
+				
+				if(character.ContainsItem(m_actions[i].GetRequiredItem())&&character.GetDisciplines().Contains(m_actions[i].GetRequiredSkill()))
+				{
+					outPosibleActions.push_back(i);
+				}
+				
+			} else {
+				// it is default action
+				if(defaultCondActions)
+				{
+					outPosibleActions.push_back(i);
+				}
+			}
+		}
+	}
+	
+}
+
+void Scene::AddItem(EItem item)
+{
+	m_sceneItems.push_back(item);
+}
+
+void Scene::GetItemList(Scene::TItemList& sceneItemList)
+{
+	Scene::TItemList tempList(m_sceneItems);
+	sceneItemList.swap(tempList);
+}
+
+
+
+void Scene::RemoveItem(EItem item)
+{
+	for(Scene::TItemList::iterator iter = m_sceneItems.begin(); iter != m_sceneItems.end(); iter++)
+	{
+		if(*iter == item)
+		{
+			(*iter) = m_sceneItems.back();
+			m_sceneItems.pop_back();
+			return;
+		}
+	}
+}
+
+bool Scene::ContainsItem(EItem item)
+{
+	Scene::TItemList::iterator iter;
+	for(iter = m_sceneItems.begin(); iter != m_sceneItems.end(); iter++)
+	{
+		if(*iter == item) return true;
+	}
+	
+	return false;
+}
+
+//////////////////////////////////////////////
+/////////////// SceneManager //////////////////
+//////////////////////////////////////////////
+
+
 bool SceneManager::AddScene(const Scene& scene)
 {
 	std::pair<TSceneMap::iterator,bool> retval;
-	retval = m_sceneMap.insert( TSceneMapPair(scene.m_sceneId, scene));
+	retval = m_sceneMap.insert( TSceneMapPair(scene.GetSceneId(), scene));
 	return retval.second;
 }
 

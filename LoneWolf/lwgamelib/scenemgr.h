@@ -6,19 +6,81 @@
 #include <wx/defs.h>
 #include <wx/string.h>
 #include "actions.h"
+#include "eventprop.h"
 
+class Character;
 
 class Scene {
 public:
+	typedef wxVector<EItem> TItemList;
+private:
 	wxInt32 m_sceneId;
+	TItemList m_sceneItems;
+	wxInt32 m_goldCount;
+public:
 	wxString m_desc;
 	ActionVector m_actions;
-
+	EventVector m_events;
 public:
 	Scene() : m_sceneId(-1) {}
 	~Scene() {}
 	
 	Scene& operator=(const Scene& scene);
+	
+	inline void SetSceneId(wxInt32 id) { m_sceneId = id; }
+	inline wxInt32 GetSceneId() const { return m_sceneId; }
+	
+	/*!
+	 * \brief Get Indexes to posible actions with given character
+	 * \param character
+	 * \param outPosibleActions
+	 */
+	void GetPosibleActions(Character& character, wxVector<wxDword> &outPosibleActions);
+	
+	
+	/*!
+	 * \brief Add item to scene
+	 * \param item Item to add
+	 */ 
+	void AddItem(EItem item);
+	
+	/*!
+	 * \brief Remove item from the scene
+	 * \param item
+	 */
+	void RemoveItem(EItem item);
+	
+	/*!
+	 * \brief Get copy of item list of this scene
+	 * \param sceneItemList
+	 */
+	void GetItemList(TItemList &sceneItemList);
+	
+	bool ContainsItem(EItem item);
+	
+	bool AddGold(wxInt32 goldCount) 
+	{ 
+		if((m_goldCount+goldCount) < 0)
+		{
+			return false; 
+		} else {
+			m_goldCount += goldCount;
+			return true;
+		}
+	}
+	
+	bool SetGold(wxInt32 goldCount) 
+	{ 
+		if(goldCount < 0)
+		{
+			return false; 
+		} else {
+			m_goldCount = goldCount;
+			return true;
+		}
+	}
+	
+	wxInt32 GetGoldCount() { return m_goldCount;}
 	
 };
 
