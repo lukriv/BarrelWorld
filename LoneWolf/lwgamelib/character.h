@@ -2,133 +2,298 @@
 #define __LONE_WOLF_CHARACTER_H__
 
 
-class FightingCharacter {
-	wxInt32 m_actualAttackSkill;
-	wxInt32 m_actualConditions;
-public:
-	wxInt32 GetActualAttackSkill();
-	wxInt32 GetActualConditions();
-	
-	void Attack(wxInt32 attack);
-};
+#include <set>
+#include <wx/defs.h>
+#include "lwdefs.h"
+#include "lwglobres.h"
+#include "fight.h"
+#include "scenemgr.h"
 
 
-class CharacterBag {
+class Character;
+
+template <class T>
+class CharacterContainer {
 public:
-	typedef wxVector<EBagItems>::iterator BagIterator;
+	typedef typename std::multiset<T>::iterator Iterator;
 private:
-	wxVector<EBagItems> m_bag;
-	wxInt32 m_maxBagItems;
+	std::multiset<T> m_container;
+	wxDword m_maxItems;
+
 public:
-	CharacterBag() : m_maxBagItems(0) {}
+	CharacterContainer() : m_maxItems(0) {}
 	
-	bool SetMaxBagItems(wxInt32 maxBagItems);
+	/*!
+	 * \brief Set max items restriction
+	 * 
+	 * Set maximum items count. If container is full (contains non-zero values) mehtod try to resize container
+	 * 
+	 * 
+	 * \param maxItems
+	 * \retval true Setting max items was successful
+	 * \retval false Container is full, you must remove some items to do this action
+	 */
+	bool SetMaxCount(wxDword maxItems) 
+	{
+		if(maxItems >= m_container.size())
+		{
+			m_maxItems = maxItems;
+			return true;
+		}
+		
+		return false;
+	}
 
-	inline wxInt32 GetMaxBagItems() {return m_maxBagItems;}
-	bool AddBagItem(EBagItems item);
-	bool RemoveBagItem(EBagItems item);
+	inline wxDword GetMaxCount() {return m_maxItems;}
 	
-	BagIterator begin() const;
-	BagIterator end() const;
+	/*!
+	 * \brief Add item to container
+	 * \param item Added item
+	 * \retval true Item was successfully added to container
+	 * \retval false Container is full (remove some item from container or increase max items)
+	 */
+	bool Add(T item)
+	{
+		if (m_container.size() < m_maxItems)
+		{
+			m_container.insert(item);
+			return true;
+		}
+		
+		return false;
+	}
 	
-};
-
-
-class CharacterWeapons {
-public:
-	typedef wxVector<EWeapons>::iterator Iterator;
-private:
-	wxVector<EWeapons> m_weapons;
-	wxInt32 m_maxWeaponCount;
-public:
-	CharacterWeapons() : m_maxWeaponCount(0) {}
-
-	bool SetMaxDisciplines( wxInt32 maxDisc);
+	/*!
+	 * \brief Remove item from container
+	 * \param item Removed item
+	 * \retval true One item was successfully removed from container
+	 * \retval false Item was not found in container (no item was removed)
+	 */
+	bool Remove(T item)
+	{
+		Iterator iter = m_container.find(item);
+		if (iter != End())
+		{
+			m_container.erase(iter);
+			return true;
+		}
+		
+		return false;
+	}
 	
-	inline wxInt32 GetMaxWeaponsCount() {return m_maxWeaponCount;}
-	bool AddWeapon(EWeapons weapon);
-	bool RemoveWeapon(EBagItems item);
+	/*!
+	 * \brief Find first occurence of item
+	 * \param item Item to find
+	 * \retval Iterator to item
+	 * \retval Iterator to end() if item is not contained in container
+	 */
+	inline Iterator Find(T item) { return m_container.find(item); }
 	
-	Iterator begin() const;
-	Iterator end() const;
+	inline bool Contains(T item)
+	{
+		return (m_container.find(item) != m_container.end());
+	}
+	
+	inline Iterator Begin() const { return static_cast<Iterator>(m_container.begin()); }
+	inline Iterator End() const { return static_cast<Iterator>(m_container.end()); }	
+	inline bool IsEmpty() const { return m_container.empty(); }
+	inline bool IsFull() const { return m_container.size() == m_maxItems; }
+	
+	/*!
+	 * \brief Empty whole container
+	 */
+	void Clear() 
+	{
+		m_container.clear();
+	}
 	
 };
 
 
 class CharacterDisciplines {
-public:
-	typedef wxVector<EDisciplines>::iterator Iterator;
 private:
-	wxVector<EDisciplines> m_disciplines;
-	wxInt32 m_maxDiscCount;
+	// private types
+	typedef std::map<EDisciplines,EventProperties> TDiscInfo;
+	typedef std::pair<EDisciplines,EventProperties> TDiscInfoPair;
 public:
-	CharacterDisciplines() : m_maxDiscCount(0) {}
+	// public types
+	typedef TDiscInfo::const_iterator Iterator;
+
+private:
+	// private values
+	TDiscInfo m_container;
+public:
+	CharacterDisciplines() {}
 	
-	bool SetMaxDisciplines( wxInt32 maxDisc);
+	/*!
+	 * \brief Add item to container
+	 * \param item Added item
+	 * \retval true Item was successfully added to container
+	 * \retval false Item already exists in container
+	 */
+	bool Add(EDisciplines disc, const EventProperties& prop)
+	{
+		std::pair<TDiscInfo::iterator, bool> retval;
+		retval = m_container.insert(TDiscInfoPair(disc, prop));
+		return retval.second;
+	}
 	
-	inline wxInt32 GetMaxDisciplines() {return m_maxDiscCount;}
-	bool AddDiscipline(EDisciplines disc);
-	bool RemoveDiscipline(EBagItems item);
+	/*!
+	 * \brief Remove item from container
+	 * \param item Removed item
+	 * \retval true One item was successfully removed from container
+	 * \retval false Item was not found in container (no item was removed)
+	 */
+	bool Remove(EDisciplines item)
+	{
+		TDiscInfo::iterator iter = m_container.find(item);
+		if (iter != End())
+		{
+			m_container.erase(iter);
+			return true;
+		}
+		
+		return false;
+	}
 	
-	Iterator begin() const;
-	Iterator end() const;
+	/*!
+	 * \brief Find first occurence of item
+	 * \param item Item to find
+	 * \retval Iterator to item
+	 * \retval Iterator to end() if item is not contained in container
+	 */
+	inline Iterator Find(EDisciplines item) { return m_container.find(item); }
 	
+	EventProperties* FindValue(EDisciplines item) 
+	{
+		TDiscInfo::iterator iter = m_container.find(item);
+		if(iter == m_container.end())
+		{
+			return NULL;
+		}
+		return &(iter->second);
+	}
+	
+	inline bool Contains(EDisciplines item)
+	{
+		return (m_container.find(item) != m_container.end());
+	}
+	
+	inline Iterator Begin() const { return static_cast<Iterator>(m_container.begin()); }
+	inline Iterator End() const { return static_cast<Iterator>(m_container.end()); }	
+	inline bool IsEmpty() const { return m_container.empty(); }
+	
+	inline wxDword Size() const { return m_container.size(); }
+	/*!
+	 * \brief Empty whole container
+	 */
+	void Clear() 
+	{
+		m_container.clear();
+	}
 };
 
 
 class CharacterBody {
-	ESpecialItems m_head;
-	ESpecialItems m_body;
+	EItem m_head;
+	EItem m_torso;
+	EItem m_back;
 public:
-	CharacterBody() : m_head(SPECIAL_ITEM_UNKNOWN), m_body(SPECIAL_ITEM_UNKNOWN) {}
+	CharacterBody() : m_head(ITEM_UNKNOWN), m_torso(ITEM_UNKNOWN), m_back(ITEM_UNKNOWN) {}
 
-	ESpecialItems GetHeadItem();
-	ESpecialItems GetBodyItem();
+	EItem GetHeadItem() const { return m_head; }
+	EItem GetTorsoItem() const { return m_torso; }
+	EItem GetBackItem() const { return m_back; }
 	
-	void SetHeadItem(ESpecialItems item);
-	void SetBodyItem(ESpecialItems item);
-}
+	void SetHeadItem(EItem item) { m_head = item; }
+	void SetTorsoItem(EItem item) { m_torso = item; }
+	void SetBackItem(EItem item) { m_back = item; }
+};
 
 
 class Character {
+public:
+	typedef CharacterContainer<EItem> CharacterBackpack;
+	typedef CharacterContainer<EItem> CharacterWeapons;
+	typedef CharacterContainer<EItem> CharacterSpecialItems;
+private:
 	// disciplines
-	GlobalResourceManager m_resMgr;
-	
-	wxVector<ESpecialItems> m_specialItems;
+	GlobalResourceManager *m_pResMgr;
 	
 	wxInt32 m_pouch;
 	wxInt32 m_maxGoldCount;
 	
 	wxInt32 m_baseAttackSkill;
+	wxInt32 m_actualAttackSkill;
+	
 	wxInt32 m_baseCondition;
+	wxInt32 m_maxCondition;
+	wxInt32 m_actualCondition;
 
-	CharacterBag& m_bag;
-	CharacterWeapons& m_weapons;
-	CharacterDisciplines& m_disciplines;
+	CharacterBackpack m_backpack;
+	CharacterWeapons m_weapons;
+	CharacterDisciplines m_disciplines;
+	CharacterSpecialItems m_specialItems;
 	CharacterBody m_body;
 	
 public:
 	Character(): m_maxGoldCount(50) {}
 	~Character() {}
 
-	bool Initialize(GlobalResourceManager *resMgr);
+	bool Initialize(GlobalResourceManager *pResMgr);
+	bool GenerateNewCharacter();
 	
 	inline wxInt32 GetMaxGoldCount() {return m_maxGoldCount;}
+	
+	
+	/*!
+	 * \brief Add gold to pouch
+	 * \param goldCount
+	 * \return Count of gold that you cannot add to pouch because of its capacity (if returns negative values you dont hava enough money in pouch)
+	 */
 	wxInt32 AddGold(wxInt32 goldCount);
 	
-	inline wxInt32 GetBaseConditions() {return m_baseCondition;}
-	wxInt32 GetMaxConditions();
+	/*!
+	 * \brief Set gold to pouch
+	 * \param goldCount
+	 * \return Count of gold that you cannot add to pouch because of its capacity
+	 */
+	wxInt32 SetGold(wxInt32 goldCount);
 	
+	inline wxInt32 GetBaseConditions() {return m_baseCondition;}
+	inline wxInt32 GetMaxConditions() { return m_maxCondition; }
+	inline wxInt32 GetActualConditions() { return m_actualCondition;}
+		
 	inline wxInt32 GetBaseAttackSkill() {return m_baseAttackSkill;}
+	inline wxInt32 GetActualAttackSkill() {return m_actualAttackSkill;}
+	
+	/*!
+	 * \brief Try all containers if any has required item
+	 * \param item
+	 * \return true if item is present
+	 */
+	bool ContainsItem(EItem item);
+	
+	bool PickUpItem(EItem item, Scene& scene);
+	bool DropItem(EItem item, Scene& scene);
+	bool PickUpGold(Scene& scene);
+	
+	bool AddItem(EItem item);
+	bool LoseItem(EItem item);
 
-	inline CharacterBag& GetBag() {return m_bag;} 
+	inline CharacterBackpack& GetBackPack() {return m_backpack;} 
 	inline CharacterWeapons& GetWeapons() {return m_weapons;}
 	inline CharacterDisciplines& GetDisciplines() {return m_disciplines;}
-	inline CharacterBody& GetBody();
+	inline CharacterSpecialItems& GetSpecialItems() {return m_specialItems;}
+	inline CharacterBody& GetBody() { return m_body; }
 	
 	void GenerateFightCharacter(FightingCharacter& fightChar);
 	
+	void RecomputeState();
+	
 };
+
+
 
 
 #endif //__LONE_WOLF_CHARACTER_H__

@@ -1,10 +1,15 @@
 #include "reader.h"
 
 #include <iostream>
+#include <wx/sstream.h>
+#include <wx/stdstream.h>
 #include <wx/xml/xml.h>
 #include "lwxmldefs.h"
+#include <wx/scopedptr.h>
 
-bool LoneWolfXmlReader::LoadChapter(const wxChar* xmlfilepath, SceneManager& sceneMgr)
+wxString LoneWolfXmlReader::m_errorString = wxString();
+
+bool LoneWolfXmlReader::LoadChapter(const wxChar* xmlfilepath, GlobalResourceManager& resMgr, SceneManager& sceneMgr)
 {
 	wxXmlDocument xmlDoc;
 	if(!xmlDoc.Load(wxString(xmlfilepath)))
@@ -21,9 +26,8 @@ bool LoneWolfXmlReader::LoadChapter(const wxChar* xmlfilepath, SceneManager& sce
 	{
 		if(child->GetName() == GENERAL_TAG_CHAPTER_STR) 
 		{
-			if(!ParseChapter(child, sceneMgr))
+			if(!ParseChapter(child, resMgr, sceneMgr))
 			{
-				ProcessError(child);
 				return false;
 			}
 		} else {
@@ -38,7 +42,7 @@ bool LoneWolfXmlReader::LoadChapter(const wxChar* xmlfilepath, SceneManager& sce
 
 
 
-bool LoneWolfXmlReader::ParseScene(wxXmlNode* sceneNode, SceneManager& sceneMgr)
+bool LoneWolfXmlReader::ParseScene(wxXmlNode* sceneNode, GlobalResourceManager& resMgr, SceneManager& sceneMgr)
 {
 	long int readedNumber = 0;
 	wxString tempValue;
@@ -54,7 +58,7 @@ bool LoneWolfXmlReader::ParseScene(wxXmlNode* sceneNode, SceneManager& sceneMgr)
 	}
 	
 	tempValue.ToLong(&readedNumber);
-	scene.m_sceneId = readedNumber;
+	scene.SetSceneId(readedNumber);
 			
 	while(child)
 	{
@@ -66,12 +70,23 @@ bool LoneWolfXmlReader::ParseScene(wxXmlNode* sceneNode, SceneManager& sceneMgr)
 				scene.m_desc = cdata->GetContent();
 			}
 		} else if (child->GetName() == GENERAL_TAG_ACTIONS_STR) {
-			if(!ParseSceneActions(child, scene))
+			if(!ParseSceneActions(child, resMgr, scene))
 			{
 				ProcessError(child);
 				return false;
 			}
-			
+		} else if (child->GetName() == GENERAL_TAG_ITEMS_STR) {
+			if(!ParseSceneItems(child, resMgr, scene))
+			{
+				ProcessError(child);
+				return false;
+			}
+		} else if (child->GetName() == GENERAL_TAG_EVENTS_STR) {
+			if(!ParseSceneEvents(child, resMgr, scene))
+			{
+				ProcessError(child);
+				return false;
+			}
 		}
 		
 		child = child->GetNext();
@@ -79,19 +94,21 @@ bool LoneWolfXmlReader::ParseScene(wxXmlNode* sceneNode, SceneManager& sceneMgr)
 	
 	if(!sceneMgr.AddScene(scene))
 	{
-		ProcessError(child);
+		ProcessError(sceneNode);
 		return false;
 	}
 	
 	return true;
 }
 
-bool LoneWolfXmlReader::ParseSceneActions(wxXmlNode* sceneActionNode, Scene& scene)
+bool LoneWolfXmlReader::ParseSceneActions(wxXmlNode* sceneActionNode, GlobalResourceManager& resMgr, Scene& scene)
 {
 	long unsigned int loteryFrom = 0, loteryTo = 0;
 	long unsigned int target = 0;
 	wxString tempValue;
 	wxString nameValue;
+	wxString requiredSkillValue;
+	wxString requiredItemValue;
 	wxXmlNode* child = sceneActionNode->GetChildren();
 	wxXmlNode *loteryNode = NULL;
 	
@@ -107,6 +124,20 @@ bool LoneWolfXmlReader::ParseSceneActions(wxXmlNode* sceneActionNode, Scene& sce
 			{
 				ProcessError(child);
 				return false;
+			}
+			
+			action.SetCondition(child->HasAttribute(GENERAL_ATTR_CONDITIONED_STR));
+			
+			requiredSkillValue = child->GetAttribute(wxString(GENERAL_ATTR_SKILL_NEEDED_STR));
+			if(resMgr.GetDisciplineMgr().GetDisciplineType(requiredSkillValue) != DISCIPLINE_UNKNOWN)
+			{
+				action.SetRequiredSkill(resMgr.GetDisciplineMgr().GetDisciplineType(requiredSkillValue));
+			}
+			
+			requiredItemValue = child->GetAttribute(wxString(GENERAL_ATTR_ITEM_NEEDED_STR));
+			if(resMgr.GetItemAndDiscMgr().GetItemType(requiredItemValue) != ITEM_UNKNOWN)
+			{
+				action.SetRequiredItem(resMgr.GetItemAndDiscMgr().GetItemType(requiredItemValue));
 			}
 			
 			EActionType actionType = Convertor::ConvertActionNameToType(nameValue);
@@ -197,7 +228,152 @@ bool LoneWolfXmlReader::ParseSceneActions(wxXmlNode* sceneActionNode, Scene& sce
 	return true;
 }
 
-bool LoneWolfXmlReader::ParseChapter(wxXmlNode* chapterNode, SceneManager& sceneMgr)
+
+bool LoneWolfXmlReader::ParseSceneItems(wxXmlNode* sceneActionNode, GlobalResourceManager& resMgr, Scene& scene)
+{
+	wxString tempValue;
+	wxString nameValue;
+	wxXmlNode* child = sceneActionNode->GetChildren();
+	while(child)
+	{
+		if((child->GetName() == GENERAL_TAG_WEAPON_STR)||(child->GetName() == GENERAL_TAG_ITEM_STR))
+		{
+			if(!child->GetAttribute(GENERAL_ATTR_NAME_STR, &nameValue))
+			{
+				ProcessError(child);
+				return false;
+			}
+			
+			if(resMgr.GetItemAndDiscMgr().GetItemType(nameValue) != ITEM_UNKNOWN)
+			{
+				scene.AddItem(resMgr.GetItemAndDiscMgr().GetItemType(nameValue));
+			} else {
+				ProcessError(child);
+				return false;
+			}
+		}
+		child = child->GetNext();
+	}
+	
+	return true;
+}
+
+bool LoneWolfXmlReader::ParseSceneEvents(wxXmlNode* sceneEventsNode, GlobalResourceManager& resMgr, Scene& scene)
+{
+	wxString tempValue;
+	wxString nameValue;
+	wxXmlNode* child = sceneEventsNode->GetChildren();
+	wxXmlNode* eventLoteryNode = NULL;
+	EEventType eventType = EVENT_UNKNOWN;
+	wxScopedPtr<Event> spEvent;
+	wxScopedPtr<EventList> spEventList;
+	while(child)
+	{
+		if(child->GetName() == GENERAL_TAG_EVENT_STR)
+		{
+			if(!child->GetAttribute(wxString(GENERAL_ATTR_NAME_STR), &nameValue))
+			{
+				ProcessError(child);
+				return false;
+			}
+			eventType = Convertor::ConvertEventNameToType(nameValue);
+			
+			switch(eventType)
+			{
+				case EVENT_ADD_ITEM_TO_CHARACTER:
+				case EVENT_ADD_ITEM_TO_SCENE:
+				case EVENT_ADD_GOLD_TO_CHARACTER:
+				case EVENT_ADD_GOLD_TO_SCENE:
+					{
+						spEvent.reset(new (std::nothrow) Event());
+						if(spEvent.get() == NULL) 
+						{
+							ProcessError(child);
+							return false;
+						}
+						
+						spEvent->m_type = eventType;
+						
+						if(!ReadEventAttr(child, resMgr, spEvent->m_property))
+						{
+							return false;
+						}
+						
+						scene.m_events.push_back(spEvent.release());
+					}
+					break;
+				case EVENT_LOTERY:
+					{
+						long unsigned int loteryFrom = 0;
+						long unsigned int loteryTo = 0;
+						spEventList.reset(new(std::nothrow) EventList());
+						if(spEventList.get() == NULL) 
+						{
+							ProcessError(child);
+							return false;
+						}
+						spEventList->m_type = eventType;
+						eventLoteryNode = child->GetChildren();
+						
+						while(eventLoteryNode != NULL)
+						{
+							Event event;
+							if(!eventLoteryNode->GetAttribute(wxString(GENERAL_ATTR_NAME_STR), &nameValue))
+							{
+								ProcessError(child);
+								return false;
+							}
+							
+							event.m_type = Convertor::ConvertEventNameToType(nameValue);
+							if(event.m_type == EVENT_UNKNOWN)
+							{
+								ProcessError(eventLoteryNode);
+								return false;
+							}
+							
+							if(!ReadEventAttr(eventLoteryNode, resMgr, event.m_property))
+							{
+								return false;
+							}
+							
+							tempValue.Clear();
+							if(!eventLoteryNode->GetAttribute(GENERAL_ATTR_NUMBERS_FROM_STR, &tempValue))
+							{
+								ProcessError(eventLoteryNode);
+								return false;
+							}
+							tempValue.ToULong(&loteryFrom);
+							
+							tempValue.Clear();
+							if(!eventLoteryNode->GetAttribute(GENERAL_ATTR_NUMBERS_TO_STR, &tempValue))
+							{
+								ProcessError(eventLoteryNode);
+								return false;
+							}
+							tempValue.ToULong(&loteryTo);
+							
+							spEventList->SetLoteryEvents(loteryFrom, loteryTo, event);
+							
+							eventLoteryNode = eventLoteryNode->GetNext();
+						}
+						
+						scene.m_events.push_back(spEventList.release());
+					}
+					break;
+				case EVENT_UNKNOWN:
+				default:
+					ProcessError(child);
+					return false;
+			}
+			
+		}
+		child = child->GetNext();
+	}
+	
+	return true;
+}
+
+bool LoneWolfXmlReader::ParseChapter(wxXmlNode* chapterNode, GlobalResourceManager& resMgr, SceneManager& sceneMgr)
 {
 	wxString nameValue;
 	wxString descValue;
@@ -221,7 +397,7 @@ bool LoneWolfXmlReader::ParseChapter(wxXmlNode* chapterNode, SceneManager& scene
 	{
 		if(child->GetName() == GENERAL_TAG_SCENE_STR)
 		{
-			if(!ParseScene(child, sceneMgr))
+			if(!ParseScene(child, resMgr, sceneMgr))
 			{
 				ProcessError(child);
 				return false;
@@ -239,14 +415,18 @@ bool LoneWolfXmlReader::ParseChapter(wxXmlNode* chapterNode, SceneManager& scene
 
 void LoneWolfXmlReader::ProcessError(wxXmlNode* errNode)
 {
+	m_errorString.Clear();
+	wxStringOutputStream outStream(&m_errorString);
+	wxStdOutputStream output(outStream);
+
 	wxXmlAttribute *attributes = errNode->GetAttributes();
-	std::cout << "***** ERROR *****" << std::endl;
-	std::cout << "Error on line: " << errNode->GetLineNumber() << std::endl;
-	std::cout << "Name of node: " << errNode->GetName().c_str() << std::endl;
-	std::cout << "Node attributes: " << std::endl;
+	output << "***** ERROR *****\n";
+	output << "Error on line: " << errNode->GetLineNumber() << "\n";
+	output << "Name of node: " << errNode->GetName() << "\n";
+	output << "Node attributes: \n";
 	while (attributes)
 	{
-		std::cout << "  " << attributes->GetName().c_str() << ":\"" << attributes->GetValue().c_str() << "\"" << std::endl;
+		output << "  " << attributes->GetName() << ":\"" << attributes->GetValue() << "\"\n";
 		attributes = attributes->GetNext();
 	}
 	
@@ -273,7 +453,6 @@ bool LoneWolfXmlReader::LoadTextDefinitions(const wxChar* xmlfilepath, GlobalRes
 		{
 			if(!ParseDefinitions(child, resMgr))
 			{
-				ProcessError(child);
 				return false;
 			}
 				
@@ -296,31 +475,16 @@ bool LoneWolfXmlReader::ParseDefinitions(wxXmlNode* defNode, GlobalResourceManag
 		{
 			if(!ParseDefActions(child, resMgr))
 			{
-				ProcessError(child);
 				return false;
 			}
 		} else if(child->GetName() == GENERAL_TAG_DISCIPLINES_STR) {
 			if(!ParseDefDisciplines(child, resMgr))
 			{
-				ProcessError(child);
 				return false;
 			}
-		} else if(child->GetName() == GENERAL_TAG_WEAPONS_STR) {
-			if(!ParseDefWeapons(child, resMgr))
+		} else if(child->GetName() == GENERAL_TAG_ITEMS_STR) {
+			if(!ParseDefItems(child, resMgr))
 			{
-				ProcessError(child);
-				return false;
-			}
-		} else if(child->GetName() == GENERAL_TAG_BAG_ITEMS_STR) {
-			if(!ParseDefBagItems(child, resMgr))
-			{
-				ProcessError(child);
-				return false;
-			}
-		} else if(child->GetName() == GENERAL_TAG_SPECIAL_ITEMS_STR) {
-			if(!ParseDefSpecialItems(child, resMgr))
-			{
-				ProcessError(child);
 				return false;
 			}
 		} else {
@@ -333,112 +497,54 @@ bool LoneWolfXmlReader::ParseDefinitions(wxXmlNode* defNode, GlobalResourceManag
 	
 	return true;
 }
-
-bool LoneWolfXmlReader::ParseDefWeapons(wxXmlNode* defNode, GlobalResourceManager& resMgr)
-{
-	wxString nameValue;
-	wxString descValue;
-	wxString titleValue;
-	wxXmlNode *child = defNode->GetChildren();
-	while(child)
-	{
-		if(child->GetName() == GENERAL_TAG_WEAPON_STR)
-		{
-			nameValue.Clear();
-			if(!child->GetAttribute(wxString(GENERAL_ATTR_NAME_STR), &nameValue))
-			{
-				ProcessError(child);
-				return false;
-			}
-			titleValue = child->GetAttribute(wxString(GENERAL_ATTR_TITLE_STR));
-			descValue = child->GetAttribute(wxString(GENERAL_ATTR_DESC_STR));
-			
-			// create new action definition
-			if(Convertor::ConvertWeaponNameToType(nameValue) != WEAPON_UNKNOWN)
-			{
-				if(!resMgr.GetItemAndDiscMgr().AddWeapon(Convertor::ConvertWeaponNameToType(nameValue), titleValue, descValue))
-				{
-					ProcessError(child);
-					return false;
-				}
-			}
-		} else {
-			ProcessError(child);
-			return false;
-		}
-		
-		child = child->GetNext();
-	}
-	
-	return true;
-}
-
-
-bool LoneWolfXmlReader::ParseDefSpecialItems(wxXmlNode* defNode, GlobalResourceManager& resMgr)
-{
-	wxString nameValue;
-	wxString descValue;
-	wxString titleValue;
-	wxXmlNode *child = defNode->GetChildren();
-	while(child)
-	{
-		if(child->GetName() == GENERAL_TAG_SPECIAL_ITEM_STR)
-		{
-			nameValue.Clear();
-			if(!child->GetAttribute(wxString(GENERAL_ATTR_NAME_STR), &nameValue))
-			{
-				ProcessError(child);
-				return false;
-			}
-			titleValue = child->GetAttribute(wxString(GENERAL_ATTR_TITLE_STR));
-			descValue = child->GetAttribute(wxString(GENERAL_ATTR_DESC_STR));
-			
-			// create new action definition
-			if(Convertor::ConvertSpecialItemNameToType(nameValue) != SPECIAL_ITEM_UNKNOWN)
-			{
-				if(!resMgr.GetItemAndDiscMgr().AddSpecialItem(Convertor::ConvertSpecialItemNameToType(nameValue), titleValue, descValue))
-				{
-					ProcessError(child);
-					return false;
-				}
-			}
-		} else {
-			ProcessError(child);
-			return false;
-		}
-		
-		child = child->GetNext();
-	}
-	
-	return true;
-}
-
 
 bool LoneWolfXmlReader::ParseDefDisciplines(wxXmlNode* defNode, GlobalResourceManager& resMgr)
 {
+	wxString idValue;
 	wxString nameValue;
 	wxString descValue;
 	wxString titleValue;
+	wxString addinfoValue;
+	long int discId = 0;
 	wxXmlNode *child = defNode->GetChildren();
 	while(child)
 	{
 		if(child->GetName() == GENERAL_TAG_SKILL_STR)
 		{		
-			// read attributes
+			Discipline disc;
+			// read id
+			idValue.Clear();
+			if(!child->GetAttribute(wxString(GENERAL_ATTR_ID_STR), &idValue))
+			{
+				ProcessError(child);
+				return false;
+			}
+			idValue.ToLong(&discId);
+			disc.m_id = discId;
+			
+			// read name
 			nameValue.Clear();
 			if(!child->GetAttribute(wxString(GENERAL_ATTR_NAME_STR), &nameValue))
 			{
 				ProcessError(child);
 				return false;
 			}
-			titleValue = child->GetAttribute(wxString(GENERAL_ATTR_TITLE_STR));
-			descValue = child->GetAttribute(wxString(GENERAL_ATTR_DESC_STR));
 			
-			// create new action definition
-			if(Convertor::ConvertDisciplineNameToType(nameValue) != DISCIPLINE_UNKNOWN)
+			disc.m_title = child->GetAttribute(wxString(GENERAL_ATTR_TITLE_STR));
+			disc.m_desc = child->GetAttribute(wxString(GENERAL_ATTR_DESC_STR));
+			
+			if(!ReadEventAttr(child, resMgr, disc.m_property))
 			{
-				resMgr.GetDisciplineMgr().AddDisciplineDesc(Convertor::ConvertDisciplineNameToType(nameValue), titleValue, descValue);
+				return false;
 			}
+						
+			// create new action definition
+			if(!resMgr.GetDisciplineMgr().AddDiscipline(nameValue, disc))
+			{
+				ProcessError(child);
+				return false;
+			}
+			
 
 		} else {
 			ProcessError(child);
@@ -451,33 +557,21 @@ bool LoneWolfXmlReader::ParseDefDisciplines(wxXmlNode* defNode, GlobalResourceMa
 	return true;
 }
 
-bool LoneWolfXmlReader::ParseDefBagItems(wxXmlNode* defNode, GlobalResourceManager& resMgr)
+bool LoneWolfXmlReader::ParseDefItems(wxXmlNode* defNode, GlobalResourceManager& resMgr)
 {
-	wxString nameValue;
-	wxString descValue;
-	wxString titleValue;
 	wxXmlNode *child = defNode->GetChildren();
 	while(child)
 	{
-		if(child->GetName() == GENERAL_TAG_BAG_ITEM_STR)
+		if(child->GetName() == GENERAL_TAG_ITEM_STR)
 		{
-			nameValue.Clear();
-			if(!child->GetAttribute(wxString(GENERAL_ATTR_NAME_STR), &nameValue))
+			if(!ReadItemAttr(child, resMgr))
 			{
-				ProcessError(child);
 				return false;
 			}
-			titleValue = child->GetAttribute(wxString(GENERAL_ATTR_TITLE_STR));
-			descValue = child->GetAttribute(wxString(GENERAL_ATTR_DESC_STR));
-			
-			// create new action definition
-			if(Convertor::ConvertBagItemNameToType(nameValue) != BAG_ITEM_UNKNOWN)
+		} else if(child->GetName() == GENERAL_TAG_WEAPON_STR) {
+			if(!ReadItemAttr(child, resMgr))
 			{
-				if(!resMgr.GetItemAndDiscMgr().AddBagItem(Convertor::ConvertBagItemNameToType(nameValue), titleValue, descValue))
-				{
-					ProcessError(child);
-					return false;
-				}
+				return false;
 			}
 		} else {
 			ProcessError(child);
@@ -525,3 +619,143 @@ bool LoneWolfXmlReader::ParseDefActions(wxXmlNode* defNode, GlobalResourceManage
 	
 	return true;
 }
+
+bool LoneWolfXmlReader::ReadItemAttr(wxXmlNode* itemNode, GlobalResourceManager& resMgr)
+{
+	Item item;
+	wxString idValue;
+	wxString nameValue;
+	wxString placementValue;
+	wxString tempValue;
+	long int intValue = 0;
+		
+	if(!itemNode->GetAttribute(wxString(GENERAL_ATTR_ID_STR), &idValue))
+	{
+		ProcessError(itemNode);
+		return false;
+	}
+	idValue.ToLong(&intValue);
+	item.m_id = intValue;
+
+	if(!itemNode->GetAttribute(wxString(GENERAL_ATTR_NAME_STR), &nameValue))
+	{
+		ProcessError(itemNode);
+		return false;
+	}
+
+	item.m_title = itemNode->GetAttribute(wxString(GENERAL_ATTR_TITLE_STR));
+	item.m_desc = itemNode->GetAttribute(wxString(GENERAL_ATTR_DESC_STR));
+
+
+	if(itemNode->HasAttribute(GENERAL_ATTR_COND_ACT_STR))
+	{
+		tempValue = itemNode->GetAttribute(GENERAL_ATTR_COND_ACT_STR);
+		tempValue.ToLong(&intValue);
+		item.m_properties.m_actualCond = static_cast<wxInt32>(intValue);
+	}
+
+	if(itemNode->HasAttribute(GENERAL_ATTR_COND_MAX_STR))
+	{
+		tempValue = itemNode->GetAttribute(GENERAL_ATTR_COND_MAX_STR);
+		tempValue.ToLong(&intValue);
+		item.m_properties.m_maxCond = static_cast<wxInt32>(intValue);
+	}
+
+	
+
+	if(!itemNode->GetAttribute(wxString(GENERAL_ATTR_PLACEMENT_STR), &placementValue))
+	{
+		ProcessError(itemNode);
+		return false;
+	}
+	
+	item.m_placement = Convertor::ConvertPlacementNameToType(placementValue);
+	
+		
+	// create new item definition
+	if(!resMgr.GetItemAndDiscMgr().AddItem(nameValue, item))
+	{
+		ProcessError(itemNode);
+		return false;
+	}
+	
+
+	return true;
+}
+
+
+bool LoneWolfXmlReader::ReadEventAttr(wxXmlNode* eventNode, GlobalResourceManager& resMgr, EventProperties& properties)
+{
+	wxString tempValue;
+	long int intValue;
+	
+	if(eventNode->HasAttribute(GENERAL_ATTR_COND_ACT_STR))
+	{
+		tempValue = eventNode->GetAttribute(wxString(GENERAL_ATTR_COND_ACT_STR));
+		tempValue.ToLong(&intValue);
+		properties.m_actualCond = intValue;
+	}
+	
+	if(eventNode->HasAttribute(GENERAL_ATTR_COND_MAX_STR))
+	{	
+		tempValue = eventNode->GetAttribute(wxString(GENERAL_ATTR_COND_MAX_STR));
+		tempValue.ToLong(&intValue);
+		properties.m_maxCond = intValue;
+	}
+	
+	if(eventNode->HasAttribute(GENERAL_ATTR_ATTACK_ACT_STR))
+	{
+		tempValue = eventNode->GetAttribute(wxString(GENERAL_ATTR_ATTACK_ACT_STR));
+		tempValue.ToLong(&intValue);
+		properties.m_actualAttack = intValue;
+	}
+	
+	if(eventNode->HasAttribute(GENERAL_ATTR_ATTACK_BASE_STR))
+	{
+		tempValue = eventNode->GetAttribute(wxString(GENERAL_ATTR_ATTACK_BASE_STR));
+		tempValue.ToLong(&intValue);
+		properties.m_baseAttack = intValue;
+	}
+	
+	if(eventNode->HasAttribute(GENERAL_ATTR_DURATION_STR))
+	{
+		tempValue = eventNode->GetAttribute(wxString(GENERAL_ATTR_DURATION_STR));
+		tempValue.ToLong(&intValue);
+		properties.m_duration = intValue;
+	}
+	
+	if(eventNode->HasAttribute(GENERAL_ATTR_GOLD_COUNT_STR))
+	{
+		tempValue = eventNode->GetAttribute(wxString(GENERAL_ATTR_GOLD_COUNT_STR));
+		tempValue.ToLong(&intValue);
+		properties.m_goldCount = intValue;
+	}
+	
+	if(eventNode->HasAttribute(GENERAL_ATTR_CANCELED_BY_ITEM_STR))
+	{
+		tempValue = eventNode->GetAttribute(wxString(GENERAL_ATTR_CANCELED_BY_ITEM_STR));
+		properties.m_cancelItem = resMgr.GetItemAndDiscMgr().GetItemType(tempValue);
+	}
+	
+	if(eventNode->HasAttribute(GENERAL_ATTR_CANCELED_BY_SKILL_STR))
+	{
+		tempValue = eventNode->GetAttribute(wxString(GENERAL_ATTR_CANCELED_BY_SKILL_STR));
+		properties.m_cancelSkill = resMgr.GetDisciplineMgr().GetDisciplineType(tempValue);
+	}
+	
+	if(eventNode->HasAttribute(GENERAL_ATTR_ITEM_NEEDED_STR))
+	{
+		tempValue = eventNode->GetAttribute(wxString(GENERAL_ATTR_ITEM_NEEDED_STR));
+		properties.m_neededItem = resMgr.GetItemAndDiscMgr().GetItemType(tempValue);
+	}
+	
+	if(eventNode->HasAttribute(GENERAL_ATTR_SKILL_NEEDED_STR))
+	{
+		tempValue = eventNode->GetAttribute(wxString(GENERAL_ATTR_SKILL_NEEDED_STR));
+		properties.m_neededSkill = resMgr.GetDisciplineMgr().GetDisciplineType(tempValue);
+	}
+
+	
+	return true;
+}
+

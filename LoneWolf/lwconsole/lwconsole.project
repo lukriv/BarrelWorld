@@ -9,6 +9,7 @@
   <Dependencies/>
   <VirtualDirectory Name="src">
     <File Name="main.cpp"/>
+    <File Name="textConversion.h"/>
   </VirtualDirectory>
   <Settings Type="Executable">
     <GlobalSettings>

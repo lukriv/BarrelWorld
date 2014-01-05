@@ -5,7 +5,7 @@
 #include <map>
 #include <wx/defs.h>
 #include <wx/vector.h>
-#include "lwdefs.h"
+#include "disciplines.h"
 
 
 
@@ -30,10 +30,15 @@ class Action {
 	wxString m_desc;
 	wxVector<wxDword> m_loteryTargets;
 	
+	EDisciplines m_requiredSkill;
+	EItem m_requiredItem;
+	
+	bool m_conditioned;
+	
 	friend std::ostream& operator<< (std::ostream& output, const Action& action);
 	friend std::wostream& operator<< (std::wostream& output, const Action& action);
 public:
-	Action() : m_type(ACTION_UNKNOWN) {}
+	Action() : m_type(ACTION_UNKNOWN), m_requiredSkill(DISCIPLINE_UNKNOWN), m_requiredItem(ITEM_UNKNOWN), m_conditioned(false) {}
 	Action(EActionType type) : m_type(type) {}
 	
 	void SetType(EActionType type) { m_type = type; }
@@ -41,6 +46,22 @@ public:
 	void SetMoveTarget(wxDword target);
 	void SetLoteryTarget(wxDword id, wxDword target);
 	void SetLoteryTarget(wxDword fromId, wxDword toId, wxDword target);
+	
+	void SetCondition(bool conditioned) { m_conditioned = conditioned; }
+	bool IsConditioned() { return m_conditioned; }
+	void SetRequiredSkill( EDisciplines skill) 
+	{ 
+		m_requiredSkill = skill; 
+		m_conditioned = true;
+	}
+	EDisciplines GetRequiredSkill() { return m_requiredSkill; }
+	
+	void SetRequiredItem( EItem item )
+	{
+		m_requiredItem = item;
+		m_conditioned = true;
+	}
+	EItem GetRequiredItem() { return m_requiredItem;}
 	
 	EActionType GetType() { return m_type; }
 	const wxString& GetDesc() { return m_desc; }

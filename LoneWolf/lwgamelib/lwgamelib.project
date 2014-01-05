@@ -15,6 +15,10 @@
     <File Name="lwengine.cpp"/>
     <File Name="reader.cpp"/>
     <File Name="scenemgr.cpp"/>
+    <File Name="character.cpp"/>
+    <File Name="lwglobres.cpp"/>
+    <File Name="fight.cpp"/>
+    <File Name="eventprop.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="actions.h"/>
@@ -28,6 +32,7 @@
     <File Name="scenemgr.h"/>
     <File Name="eventprop.h"/>
     <File Name="lwglobres.h"/>
+    <File Name="fight.h"/>
   </VirtualDirectory>
   <Settings Type="Static Library">
     <GlobalSettings>
