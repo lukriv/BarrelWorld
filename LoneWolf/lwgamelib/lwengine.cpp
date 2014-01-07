@@ -82,7 +82,7 @@ bool LWGameEngine::RunAction(wxDword actionIndex)
 	}
 	
 	// action is enabled -> do action
-	switch(m_pActualScene->m_actions[actionIndex].GetType())
+	switch(m_pActualScene->m_actions[actionIndex]->GetType())
 	{
 		case ACTION_CREATE_CHAR:
 			if(!CreateNewCharacter())
@@ -92,18 +92,24 @@ bool LWGameEngine::RunAction(wxDword actionIndex)
 			m_pActualScene = m_sceneMgr.GetScene(m_pActualScene->m_actions[actionIndex].GetMoveTarget());
 			break;
 		case ACTION_MOVE:
+		{
+			wxDword nextTarget = m_pActualScene->m_actions[actionIndex].GetMoveTarget();
+			m_pActualScene = m_sceneMgr.GetScene(nextTarget);
+			if(m_pActualScene == NULL)
 			{
-				wxDword nextTarget = m_pActualScene->m_actions[actionIndex].GetMoveTarget();
-				m_pActualScene = m_sceneMgr.GetScene(nextTarget);
-				if(m_pActualScene == NULL)
-				{
-					m_errorStr.Printf(wxT("Scene %u cannot be found"), nextTarget);
-					return false;
-				}
-				break;
+				m_errorStr.Printf(wxT("Scene %u cannot be found"), nextTarget);
+				return false;
 			}
+			break;
+		}
 		case ACTION_LOTERY:
 			break;
+		case ACTION_FIGHT:
+		{
+			ActionFight* pActionFight = static_cast<ActionFight*>(m_pActualScene->m_actions[actionIndex]);
+			wxDword nextTarget = pActionFight->StartFight(m_mainCharacter, m_pUserInteractionCallback);
+			break;
+		}
 		default:
 			m_errorStr.assign(wxT("No actions found"));
 			return false;
@@ -190,36 +196,68 @@ bool LWGameEngine::AddNewCharacterDiscipline(EDisciplines disc)
 	return true;
 }
 
-bool LWGameEngine::RunEvents()
+bool LWGameEngine::RunSceneEvents()
 {
 	for(EventVector::iterator iter = m_pActualScene->m_events.begin(); iter != m_pActualScene->m_events.end(); iter++)
 	{
-		switch((*iter)->GetEventType())
+		if(!RunEvent(*iter))
 		{
-			case EVENT_ADD_ITEM_TO_CHARACTER:
-				if(!m_mainCharacter.AddItem((*iter)->GetProperties()->m_neededItem))
-				{
-					m_errorStr.assign(wxT("Add item to character failed (during events)"));
-					return false;
-				}
-				break;
-			case EVENT_ADD_ITEM_TO_SCENE:
-				m_pActualScene->AddItem((*iter)->GetProperties()->m_neededItem);
-				break;
-			case EVENT_ADD_GOLD_TO_CHARACTER:
-			case EVENT_ADD_GOLD_TO_SCENE:
-				if(!m_pActualScene->AddGold((*iter)->GetProperties()->m_goldCount))
-				{
-					m_errorStr.assign(wxT("Add gold to scene failed (during events)"));
-					return false;
-				}
-				break;
-			case EVENT_LOTERY:
-				break;
-			case EVENT_UNKNOWN:
-			default:
-				return false;
+			return false;
 		}
+	}
+	return true;
+}
+
+bool LWGameEngine::RunEvent(EventBase* pEvent)
+{
+	if(pEvent == NULL)
+	{
+		m_errorStr.assign(wxT("RunEvent() parameter cannot be NULL\n"));
+		return false;	
+	}
+	
+	switch(pEvent->GetEventType())
+	{
+		case EVENT_ADD_ITEM_TO_CHARACTER:
+			if(!m_mainCharacter.AddItem(pEvent->GetProperties()->m_neededItem))
+			{
+				m_errorStr.assign(wxT("Add item to character failed (during events)"));
+				return false;
+			}
+			break;
+		case EVENT_ADD_ITEM_TO_SCENE:
+			m_pActualScene->AddItem(pEvent->GetProperties()->m_neededItem);
+			break;
+		case EVENT_ADD_GOLD_TO_CHARACTER:
+		case EVENT_ADD_GOLD_TO_SCENE:
+			if(!m_pActualScene->AddGold(pEvent->GetProperties()->m_goldCount))
+			{
+				m_errorStr.assign(wxT("Add gold to scene failed (during events)"));
+				return false;
+			}
+			break;
+		case EVENT_LOTERY:
+			if(!RunEvent(pEvent->GetRandomEvent(RandomSpin())))
+			{
+				return false;
+			}
+			break;
+		case EVENT_LIST:
+		{
+			EventList *pEventList = static_cast<EventList*>(pEvent);
+			EventVector::iterator iter;
+			for(iter = pEventList->m_eventList.begin(); iter != pEventList->m_eventList.end(); iter++)
+			{
+				if(!RunEvent(*iter))
+				{
+					return false;
+				}
+			}
+			break;
+		}
+		case EVENT_UNKNOWN:
+		default:
+			return false;
 	}
 	return true;
 }

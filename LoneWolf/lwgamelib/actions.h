@@ -35,7 +35,7 @@ public:
 class Action : public ActionBase {
 	EActionType m_type;
 	wxString m_desc;
-	wxVector<wxDword> m_loteryTargets;
+	wxVector<wxInt32> m_loteryTargets;
 	
 	EDisciplines m_requiredSkill;
 	EItem m_requiredItem;
@@ -50,9 +50,9 @@ public:
 	
 	void SetType(EActionType type) { m_type = type; }
 	void SetDesc(const wxString& desc) { m_desc = desc; }
-	void SetMoveTarget(wxDword target);
-	void SetLoteryTarget(wxDword id, wxDword target);
-	void SetLoteryTarget(wxDword fromId, wxDword toId, wxDword target);
+	void SetMoveTarget(wxInt32 target);
+	void SetLoteryTarget(wxDword id, wxInt32 target);
+	void SetLoteryTarget(wxDword fromId, wxDword toId, wxInt32 target);
 	
 	void SetCondition(bool conditioned) { m_conditioned = conditioned; }
 	bool IsConditioned() { return m_conditioned; }
@@ -72,8 +72,8 @@ public:
 	
 	EActionType GetType() { return m_type; }
 	const wxString& GetDesc() { return m_desc; }
-	wxDword GetMoveTarget();
-	wxDword GetLoteryTarget(wxDword id);
+	wxInt32 GetMoveTarget();
+	wxInt32 GetLoteryTarget(wxDword id);
 	
 };
 

@@ -23,7 +23,26 @@ public:
 	EventVector m_events;
 public:
 	Scene() : m_sceneId(-1) {}
-	~Scene() {}
+	~Scene() 
+	{
+		for(ActionVector::iterator iter = m_actions.begin(); iter != m_actions.end(); iter++)
+		{
+			if(*iter != NULL)
+			{
+				delete (*iter);
+				*iter = NULL;
+			}
+		}
+		
+		for(EventVector::iterator iter = m_events.begin(); iter != m_events.end(); iter++)
+		{
+			if(*iter != NULL)
+			{
+				delete (*iter);
+				*iter = NULL;
+			}	
+		}
+	}
 	
 	Scene& operator=(const Scene& scene);
 	

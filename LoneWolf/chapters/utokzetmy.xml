@@ -543,17 +543,38 @@ and open the template in the editor.
 			<event name="add_item_to_character" item_needed="backpack" />
 			<event name="add_item_to_character" item_needed="axe" />
 			<event name="add_item_to_character" item_needed="meal" />
-			<event name="lotery"	>
-				<event name="add_item_to_scene" item_needed="broadsword" numbers_from="0" numbers_to="0" />
-				<event name="add_item_to_scene" item_needed="sword" numbers_from="1" numbers_to="1" />
-				<event name="add_item_to_scene" item_needed="helmet" numbers_from="2" numbers_to="2" />
-				<event name="add_item_to_scene" item_needed="meal" numbers_from="3" numbers_to="3" />
-				<event name="add_item_to_scene" item_needed="chainmail_waistcoat" numbers_from="4" numbers_to="4" />
-				<event name="add_item_to_scene" item_needed="mace" numbers_from="5" numbers_to="5" />
-				<event name="add_item_to_scene" item_needed="healing_potion" numbers_from="6" numbers_to="6" />
-				<event name="add_item_to_scene" item_needed="quaterstaff" numbers_from="7" numbers_to="7" />
-				<event name="add_item_to_scene" item_needed="spear" numbers_from="8" numbers_to="8" />
-				<event name="add_gold_to_scene" gold_count="12" numbers_from="9" numbers_to="9" />
+			<event name="lotery">
+				<selection numbers_from="0" numbers_to="0" />
+					<event name="add_item_to_scene" item_needed="broadsword"  />
+				</selection>
+				<selection numbers_from="1" numbers_to="1" />
+					<event name="add_item_to_scene" item_needed="sword"  />
+				</selection>
+				<selection numbers_from="2" numbers_to="2">
+					<event name="add_item_to_scene" item_needed="helmet"  />
+				</selection>
+				<selection numbers_from="3" numbers_to="3">
+					<event name="add_item_to_scene" item_needed="meal"  />
+					<event name="add_item_to_scene" item_needed="meal"  />
+				</selection>
+				<selection numbers_from="4" numbers_to="4">
+					<event name="add_item_to_scene" item_needed="chainmail_waistcoat"  />
+				</selection>
+				<selection numbers_from="5" numbers_to="5">
+					<event name="add_item_to_scene" item_needed="mace" />
+				</selection>
+				<selection numbers_from="6" numbers_to="6">
+					<event name="add_item_to_scene" item_needed="healing_potion" />
+				</selection>
+				<selection numbers_from="7" numbers_to="7">
+					<event name="add_item_to_scene" item_needed="quaterstaff" />
+				</selection>
+				<selection numbers_from="8" numbers_to="8">
+					<event name="add_item_to_scene" item_needed="spear" />
+				</selection>
+				<selection numbers_from="9" numbers_to="9">
+					<event name="add_gold_to_scene" gold_count="12" />
+				</selection>
 			</event>
 		</events>
         <actions>
