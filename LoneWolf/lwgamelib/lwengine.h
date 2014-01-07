@@ -27,7 +27,8 @@ private:
 	bool CreateNewCharacter();
 	bool AddNewCharacterDiscipline(EDisciplines disc);
 	
-	bool RunEvents();
+	bool RunSceneEvents();
+	bool RunEvent(EventBase* event);
 public:
 	LWGameEngine() : m_pActualScene(NULL), m_pUserInteractionCallback(NULL) {}
 	~LWGameEngine() {}

@@ -260,6 +260,12 @@ public:
 	 */
 	wxInt32 SetGold(wxInt32 goldCount);
 	
+	inline wxInt32 AddActualCondition(wxInt32 condPoints) 
+	{
+		m_actualCondition += condPoints; 
+		return m_actualCondition;
+	}
+	
 	inline wxInt32 GetBaseConditions() {return m_baseCondition;}
 	inline wxInt32 GetMaxConditions() { return m_maxCondition; }
 	inline wxInt32 GetActualConditions() { return m_actualCondition;}

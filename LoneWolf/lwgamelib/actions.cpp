@@ -15,7 +15,7 @@ void Action::SetLoteryTarget(wxDword id, wxDword target)
 {
 	if ( m_loteryTargets.empty() )
 	{
-		m_loteryTargets.resize(10, 0);
+		m_loteryTargets.resize(10, TARGET_UNKNOWN);
 	}
 	
 	if(id < 10)
@@ -31,7 +31,7 @@ void Action::SetLoteryTarget(wxDword fromId, wxDword toId, wxDword target)
 	
 	if ( m_loteryTargets.empty() )
 	{
-		m_loteryTargets.resize(10, 0);
+		m_loteryTargets.resize(10, TARGET_UNKNOWN);
 	}
 	
 	for (wxDword i = fromId; i <= toId; i++)

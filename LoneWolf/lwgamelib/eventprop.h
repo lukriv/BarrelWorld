@@ -31,7 +31,7 @@ public:
 						, m_baseCond(0)
 						, m_actualAttack(0)
 						, m_baseAttack(0)
-						, m_duration(0)
+						, m_duration(DURATION_INFINITE)
 						, m_goldCount(0)
 						, m_cancelItem(ITEM_UNKNOWN)
 						, m_cancelSkill(DISCIPLINE_UNKNOWN)
@@ -63,6 +63,10 @@ public:
 	virtual EEventType GetEventType() = 0;
 	virtual EventProperties* GetProperties() = 0;
 	virtual	EventBase* GetRandomEvent(wxInt32 randomNumber) = 0;
+	virtual EventBase* GetEvent( wxDword index) = 0;
+	virtual wxDword GetSize() = 0;
+	
+	virtual ~EventBase() {}
 };
 
 /*!
@@ -83,8 +87,12 @@ public:
 	virtual EEventType GetEventType() {return m_type; }
 	virtual EventProperties* GetProperties() { return &m_property; }
 	virtual	EventBase* GetRandomEvent(wxInt32 randomNumber) { return NULL; }
+	virtual EventBase* GetEvent( wxDword index) { return NULL; }
+	virtual wxDword GetSize() { return 0; }
 };
 
+
+typedef wxVector<EventBase*> EventVector;
 
 /*!
  * \class EventList
@@ -92,13 +100,26 @@ public:
  * \date 01/05/14
  * \file eventprop.h
  * \brief Scene events
- * This events contains 10 events which and can get random of this events
+ * EVENT_LOTERY - This events contains 10 events which and can get random of this events
+ * EVENT_LIST - This is a list of events (it has arbitrary size)
+ *
  */
 struct EventList : public EventBase {
 	EEventType m_type;
-	wxVector<Event> m_eventList;
+	wxVector<EventBase*> m_eventList;
 public:
 	EventList() : m_type(EVENT_UNKNOWN) {}
+	~EventList() 
+	{
+		for (wxVector<EventBase*>::iterator iter = m_eventList.begin(); iter != m_eventList.end(); iter++)
+		{
+			if((*iter) != 0)
+			{
+				delete (*iter);
+				*iter = NULL;
+			}
+		}
+	}
 	virtual EEventType GetEventType() {return m_type; }
 	virtual EventProperties* GetProperties() { return NULL; }
 	virtual	EventBase* GetRandomEvent(wxInt32 randomNumber) 
@@ -111,8 +132,15 @@ public:
 	}
 	
 	void SetLoteryEvents(wxDword fromId, wxDword toId, const Event& event );
+	virtual EventBase* GetEvent( wxDword index) 
+	{
+		if(index < m_eventList.size())
+		{
+			return &(m_eventList[index]);
+		}
+		return NULL; 
+	}
+	virtual wxDword GetSize() { return m_eventList.size(); }
 };
-
-typedef wxVector<EventBase*> EventVector;
 
 #endif //__LONE_WOLF_EVENT_PROPERTIES_H__
