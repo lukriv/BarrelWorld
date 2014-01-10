@@ -58,7 +58,7 @@ public:
 	ItemAndWeaponManager() : m_allWeaponsType(ITEM_UNKNOWN), m_randomWeaponType(ITEM_UNKNOWN), m_randomBagItemType(ITEM_UNKNOWN){}
 	~ItemAndWeaponManager() {}
 	
-	bool InitializeSpecialTypes();
+	bool IsInitialized();
 	
 	bool AddItem(const wxString& keyName, const Item& item );
 	bool ItemExists(EItem type);

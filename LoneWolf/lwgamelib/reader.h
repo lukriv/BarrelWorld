@@ -7,6 +7,7 @@
 #include <wx/xml/xml.h>
 #include "scenemgr.h"
 #include "lwglobres.h"
+#include "fight.h"
 
 class LoneWolfXmlReader {
 private:
@@ -24,6 +25,10 @@ private:
 	static bool ParseSceneItems(wxXmlNode* sceneActionNode, GlobalResourceManager &resMgr, Scene &scene);
 	static bool ParseSceneEvents(wxXmlNode* sceneEventsNode, GlobalResourceManager &resMgr, Scene& scene);
 	
+	static bool ParseSceneEvent(wxXmlNode* eventNode, GlobalResourceManager &resMgr, EventBase *&pEvent);
+	
+	static bool ReadActionAttr(wxXmlNode* actionNode, GlobalResourceManager &resMgr, Action& action);
+	static bool ReadActionAttr(wxXmlNode* actionNode, GlobalResourceManager &resMgr, ActionFight& action);
 	
 	
 	static bool ParseDefinitions(wxXmlNode* defNode, GlobalResourceManager& resMgr);

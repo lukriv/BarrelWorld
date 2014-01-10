@@ -29,6 +29,10 @@ class ActionBase {
 public: 
 	virtual EActionType GetType() = 0;
 	virtual bool IsConditioned() = 0;
+	virtual EDisciplines GetRequiredSkill() = 0;
+	virtual EItem GetRequiredItem() = 0;
+	
+	virtual ~ActionBase() {}
 };
 
 
@@ -47,6 +51,7 @@ class Action : public ActionBase {
 public:
 	Action() : m_type(ACTION_UNKNOWN), m_requiredSkill(DISCIPLINE_UNKNOWN), m_requiredItem(ITEM_UNKNOWN), m_conditioned(false) {}
 	Action(EActionType type) : m_type(type) {}
+	~Action() {}
 	
 	void SetType(EActionType type) { m_type = type; }
 	void SetDesc(const wxString& desc) { m_desc = desc; }

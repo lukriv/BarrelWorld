@@ -6,7 +6,6 @@
 #include <wx/defs.h>
 #include "lwdefs.h"
 #include "lwglobres.h"
-#include "fight.h"
 #include "scenemgr.h"
 
 
@@ -220,6 +219,8 @@ private:
 	// disciplines
 	GlobalResourceManager *m_pResMgr;
 	
+	wxString m_charName;
+	
 	wxInt32 m_pouch;
 	wxInt32 m_maxGoldCount;
 	
@@ -237,14 +238,24 @@ private:
 	CharacterBody m_body;
 	
 public:
-	Character(): m_maxGoldCount(50) {}
+	Character(): m_pResMgr(NULL)
+				, m_pouch(0)
+				, m_maxGoldCount(0)
+				, m_baseAttackSkill(0)
+				, m_actualAttackSkill(0)
+				, m_baseCondition(0)
+				, m_maxCondition(0)
+				, m_actualCondition(0) {}
 	~Character() {}
 
 	bool Initialize(GlobalResourceManager *pResMgr);
 	bool GenerateNewCharacter();
+	bool AddNewCharacterDiscipline(EDisciplines disc, DisciplineProperties *pDiscProp = NULL);
 	
 	inline wxInt32 GetMaxGoldCount() {return m_maxGoldCount;}
 	
+	inline void SetCharacterName(const wxString& name) { m_charName = name; }
+	inline const wxString& GetCharacterName() const { return m_charName; }
 	
 	/*!
 	 * \brief Add gold to pouch
@@ -262,8 +273,21 @@ public:
 	
 	inline wxInt32 AddActualCondition(wxInt32 condPoints) 
 	{
-		m_actualCondition += condPoints; 
+		m_actualCondition = ((m_actualCondition + condPoints) > m_maxCondition)? m_maxCondition : (m_actualCondition + condPoints); 
 		return m_actualCondition;
+	}
+	
+	inline void SetBaseConditions(wxInt32 baseCond) 
+	{
+		m_actualCondition = baseCond;
+		m_baseCondition = baseCond;
+		m_maxCondition = baseCond;
+	}
+	
+	inline void SetBaseAttackSkill(wxInt32 baseAttack)
+	{
+		m_actualAttackSkill = baseAttack;
+		m_baseAttackSkill = baseAttack;
 	}
 	
 	inline wxInt32 GetBaseConditions() {return m_baseCondition;}
@@ -311,12 +335,19 @@ public:
 	 */
 	bool ContainsItem(EItem item);
 	
+	/*!
+	 * \brief Get list of items which can be used freely
+	 * \param itemList
+	 */
+	void GetFreeUseItemList(wxVector<EItem> &itemList);
+	
 	bool PickUpItem(EItem item, Scene& scene);
 	bool DropItem(EItem item, Scene& scene);
 	bool PickUpGold(Scene& scene);
 	
 	bool AddItem(EItem item);
 	bool LoseItem(EItem item);
+	bool UseItem(EItem item);
 
 	inline CharacterBackpack& GetBackPack() {return m_backpack;} 
 	inline CharacterWeapons& GetWeapons() {return m_weapons;}

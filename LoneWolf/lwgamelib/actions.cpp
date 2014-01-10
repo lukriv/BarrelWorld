@@ -1,17 +1,17 @@
 #include "actions.h"
 
 
-wxDword Action::GetLoteryTarget(wxDword id)
+wxInt32 Action::GetLoteryTarget(wxDword id)
 {
 	if(m_loteryTargets.empty())
 	{
-		return 0;
+		return TARGET_UNKNOWN;
 	}
 	
 	return m_loteryTargets[id];
 }
 
-void Action::SetLoteryTarget(wxDword id, wxDword target)
+void Action::SetLoteryTarget(wxDword id, wxInt32 target)
 {
 	if ( m_loteryTargets.empty() )
 	{
@@ -24,7 +24,7 @@ void Action::SetLoteryTarget(wxDword id, wxDword target)
 	}
 }
 
-void Action::SetLoteryTarget(wxDword fromId, wxDword toId, wxDword target)
+void Action::SetLoteryTarget(wxDword fromId, wxDword toId, wxInt32 target)
 {
 	if(toId < fromId) return;
 	if(toId > 9) return;
@@ -40,7 +40,7 @@ void Action::SetLoteryTarget(wxDword fromId, wxDword toId, wxDword target)
 	}
 }
 
-wxDword Action::GetMoveTarget()
+wxInt32 Action::GetMoveTarget()
 {
 	if(!m_loteryTargets.empty())
 	{
@@ -50,7 +50,7 @@ wxDword Action::GetMoveTarget()
 	return 0;
 }
 
-void Action::SetMoveTarget(wxDword target)
+void Action::SetMoveTarget(wxInt32 target)
 {
 	if ( m_loteryTargets.empty() )
 	{

@@ -38,6 +38,30 @@ bool ItemAndWeaponManager::AddItem(const wxString& keyName, const Item& item)
 	}
 	
 	retvalMap = m_itemsMap.insert(TItemMapPair(item.m_id, item));
+	if(!retvalMap.second)
+	{
+		return false;
+	}
+	if(keyName.Cmp(WEAPON_ALL_STR) == 0)
+	{
+		m_allWeaponsType = item.m_id;
+	}
+
+	if(keyName.Cmp(WEAPON_RANDOM_STR) == 0)
+	{
+		m_randomWeaponType = item.m_id;
+	}
+	
+	if(keyName.Cmp(BAG_ITEM_RANDOM_STR) == 0)
+	{
+		m_randomBagItemType = item.m_id;
+	}
+	
+	if(keyName.Cmp(SPECIAL_ITEM_BACKPACK_STR) == 0)
+	{
+		m_backpackType = item.m_id;
+	}
+	
 	return retvalMap.second;
 	
 }
@@ -53,13 +77,8 @@ EItem ItemAndWeaponManager::GetItemType(const wxString& keyName)
 	return iter->second;
 }
 
-bool ItemAndWeaponManager::InitializeSpecialTypes()
+bool ItemAndWeaponManager::IsInitialized()
 {
-	m_allWeaponsType = GetItemType(wxString(WEAPON_ALL_STR));
-	m_randomWeaponType = GetItemType(wxString(WEAPON_RANDOM_STR));
-	m_randomBagItemType = GetItemType(wxString(BAG_ITEM_RANDOM_STR));
-	m_backpackType = GetItemType(wxString(SPECIAL_ITEM_BACKPACK_STR));
-	
 	return ((m_allWeaponsType != ITEM_UNKNOWN)
 				&&(m_randomWeaponType != ITEM_UNKNOWN)
 				&&(m_randomBagItemType != ITEM_UNKNOWN)

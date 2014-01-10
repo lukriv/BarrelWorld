@@ -7,10 +7,13 @@
 #include "lwglobres.h"
 #include "character.h"
 
+class ActionFight;
+
 class LWGameEngineCallback {
 public:
 	virtual void SelectDisciplines(wxDword discToSelect, std::set<EDisciplines> &chosenDisc) = 0;
 	virtual void FightTurn(ActionFight &fight) = 0;
+	virtual void FightFinish(ActionFight &fight) = 0;
 		
 };
 

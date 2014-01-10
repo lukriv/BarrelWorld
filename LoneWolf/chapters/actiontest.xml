@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<root>
+  <chapter id="1" title="Lone Wolf: Útok ze tmy" >
+    <scene id="0">
+        <desc>
+			<![CDATA[<p>Standard move action</p>]]>
+		</desc>
+		<actions><action name="create_character" target="1" /></actions>
+    </scene>
+    <scene id="1">
+        <desc>
+			<![CDATA[<p>Conditioned</p>]]>
+		</desc>
+        <actions>
+            <action name="move" desc="Defaultní akce" target="2" />
+            <action name="move" desc="Máš šestý smysl" skill_needed="sixth_sense" target="3" />
+			<action name="move" desc="Nemáš šestý smysl" conditioned="" target="4" />
+        </actions>
+		 <items>
+				<weapon name="sword" />
+		 </items>
+    </scene>
+    <scene id="2">
+        <desc>
+		   <![CDATA[<p>Defaultní cesta</p>]]>
+		</desc>
+        <actions>
+			<action name="move" desc="Defaultní akce" target="5" />
+        </actions>
+    </scene>
+    <scene id="3">
+        <desc>
+		   <![CDATA[<p>Šestý smysl</p>]]>
+		</desc>
+        <actions>
+			<action name="move" desc="Defaultní akce" target="5" />
+        </actions>
+    </scene>
+	<scene id="4">
+        <desc>
+		   <![CDATA[<p>Nemáš šestý smysl</p>]]>
+		</desc>
+        <actions>
+			<action name="move" desc="Defaultní akce" target="5" />
+		</actions>
+    </scene>
+    <scene id="5">
+        <desc>
+		   <![CDATA[<p>Loterie</p>]]>
+		</desc>
+        <actions>
+            <action name="lotery">
+                <selection numbers_from="0" numbers_to="4" target="6" />
+                <selection numbers_from="5" numbers_to="9" target="7" />
+            </action>
+		</actions>
+    </scene>
+	<scene id="6">
+        <desc>
+		   <![CDATA[<p>Padlo 0-4.</p>]]>
+		</desc>
+        <actions>
+			<action name="move" desc="Defaultní akce" target="8" />
+		</actions>
+    </scene>
+	<scene id="7">
+        <desc>
+		   <![CDATA[<p>Padlo 5-9.</p>]]>
+		</desc>
+        <actions>
+			<action name="move" desc="Defaultní akce" target="8" />
+		</actions>
+    </scene>
+	<scene id="8">
+        <desc>
+		   <![CDATA[<p>Podmínění na věc</p>]]>
+		</desc>
+        <actions>
+            <action name="move" desc="Máš meč" item_needed="sword" target="9" />
+			<action name="move" desc="Nemáš meč" conditioned="" target="10" />
+		</actions>
+    </scene>
+	<scene id="9">
+        <desc>
+		   <![CDATA[<p>Jdeš s mečem</p>]]>
+		</desc>
+        <actions>
+			<action name="move" desc="Defaultní akce" target="8" />
+		</actions>
+    </scene>
+	<scene id="10">
+        <desc>
+		   <![CDATA[<p>Jdeš bez meče</p>]]>
+		</desc>
+        <actions>
+			<action name="move" desc="Defaultní akce" target="8" />
+		</actions>
+    </scene>
+	<scene id="11">
+        <desc>
+		   <![CDATA[<p>Konec</p>]]>
+		</desc>
+        <actions>
+            <action name="lotery">
+                <selection numbers_from="0" numbers_to="4" target="6" />
+                <selection numbers_from="5" numbers_to="9" target="7" />
+            </action>
+		</actions>
+    </scene>
+
+  </chapter> 
+</root>

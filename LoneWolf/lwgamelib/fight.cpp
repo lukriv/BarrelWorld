@@ -1,5 +1,5 @@
 #include "fight.h"
-
+#include "lwengine.h"
 
 //----------------------------------------------------------------
 //----------------------FightingCharacter-------------------------
@@ -10,11 +10,13 @@
 bool ActionFight::AddEnemy(Character& enemy)
 {
 	m_enemies.push_back(enemy);
+	return true;
 }
 
 bool ActionFight::AddEvent(Event& event)
 {
 	m_fightEvents.push_back(event);
+	return true;
 }
 
 void ActionFight::GetEnemyList(wxVector<Character>& enemyList)
@@ -42,7 +44,7 @@ wxInt32 ActionFight::GetNextTarget()
 
 bool ActionFight::Retreat()
 {
-	if((m_retreatTarget > TARGET_UNKNOWN)&&(m_turnsToRetreat == 0))
+	if((m_retreatTarget > TARGET_UNKNOWN)&&(m_turnsToRetreat <= m_turnNumber))
 	{
 		m_retreat = true;
 		return true;
@@ -54,11 +56,15 @@ bool ActionFight::Retreat()
 wxInt32 ActionFight::StartFight(Character& loneWolf, LWGameEngineCallback* callback)
 {
 	wxInt32 resultAttackSkill = 0;
-	FightTable *actualFightTable = NULL;
-	while((loneWolf.GetActualConditions() > 0 )&&(!m_enemies.empty()))
+	const FightTable *actualFightTable = NULL;
+	m_pLoneWolf = &loneWolf;
+	while((loneWolf.GetActualConditions() > 0 )&&(!m_enemies.empty())&&(!m_retreat)&&(m_turnsToWin >= m_turnNumber))
 	{
 		Character *pEnemy = &(m_enemies.front());
-		while((loneWolf.GetActualConditions() > 0)&&(pEnemy->GetActualConditions() > 0))
+		while((loneWolf.GetActualConditions() > 0)
+			&&(pEnemy->GetActualConditions() > 0)
+			&&(!m_retreat)
+			&&(m_turnsToWin >= m_turnNumber))
 		{
 			// reset attack skill
 			loneWolf.ResetActualAttackSkill();
@@ -130,10 +136,34 @@ wxInt32 ActionFight::StartFight(Character& loneWolf, LWGameEngineCallback* callb
 			
 			// add condition differences
 			loneWolf.AddActualCondition(m_lastTurnHits.m_charWound);
-			pEnemy->AddActualCondition(m_lastTurnHits.m_enemyWound);
+			if(!m_retreat)
+			{
+				pEnemy->AddActualCondition(m_lastTurnHits.m_enemyWound);
+			} else {
+				m_lastTurnHits.m_enemyWound = 0;
+			}
 			
 			// increase turn number
 			m_turnNumber++;
 		}
+		
+		if(pEnemy->GetActualConditions() <= 0)
+		{
+			pEnemy = NULL;
+			m_enemies.pop_front(); // remove dead enemy
+		}
 	}
+	
+	if(m_enemies.empty())
+	{
+		m_fightResult = FIGHT_RESULT_WIN;
+	} else if(m_retreat) {
+		m_fightResult = FIGHT_RESULT_RETREAT;
+	} else if(m_turnNumber > m_turnsToWin) {
+		m_fightResult = FIGHT_RESULT_LOST;
+	}
+	
+	callback->FightFinish(*this);
+	
+	return GetNextTarget();
 }
