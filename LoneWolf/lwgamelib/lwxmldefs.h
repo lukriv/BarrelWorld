@@ -28,8 +28,9 @@ static const wxChar* GENERAL_ATTR_TITLE_STR				= wxT("title");
 static const wxChar* GENERAL_ATTR_ADD_INFO_STR			= wxT("addinfo");
 static const wxChar* GENERAL_ATTR_ID_STR				= wxT("id");
 static const wxChar* GENERAL_ATTR_TARGET_STR			= wxT("target");
-static const wxChar* GENERAL_ATTR_FIGTH_SKILL_STR		= wxT("fight_skill"); // skill can be used during fight
+static const wxChar* GENERAL_ATTR_NON_FIGTH_SKILL_STR	= wxT("non_fight_skill"); // skill cannot be used during fight
 static const wxChar* GENERAL_ATTR_ONE_USE_STR			= wxT("one_use"); // one use item - item can be used only once
+static const wxChar* GENERAL_ATTR_FREE_USE_STR			= wxT("free_use"); // item can be used freely on user request
 static const wxChar* GENERAL_ATTR_SKILL_NEEDED_STR		= wxT("skill_needed");
 static const wxChar* GENERAL_ATTR_ITEM_NEEDED_STR		= wxT("item_needed");
 static const wxChar* GENERAL_ATTR_CONDITIONED_STR		= wxT("conditioned");
@@ -49,7 +50,8 @@ static const wxChar* GENERAL_ATTR_RETREAT_STR			= wxT("retreat"); // action figh
 static const wxChar* GENERAL_ATTR_LOST_STR				= wxT("lost"); // action fight attr - lost target
 static const wxChar* GENERAL_ATTR_TURN_TO_RETREAT_STR	= wxT("turn_to_retreat"); // action fight attr - turns until retreat will be posible
 static const wxChar* GENERAL_ATTR_TURN_TO_WIN_STR		= wxT("turn_to_win"); // action fight attr - turns until you can win the fight (otherwise you lose the fight)
-
+static const wxChar* GENERAL_ATTR_ATTACK_STR			= wxT("attack"); // enemy base attack value
+static const wxChar* GENERAL_ATTR_CONDITION_STR			= wxT("condition"); // enemy condition value
 
 //////////////////////////////////////
 /////      Attribute values      /////
@@ -102,6 +104,7 @@ static const wxChar* EVENT_ADD_ITEM_TO_CHARACTER_STR = wxT("add_item_to_characte
 static const wxChar* EVENT_ADD_ITEM_TO_SCENE_STR  	 = wxT("add_item_to_scene"); // add item to scene
 static const wxChar* EVENT_ADD_GOLD_TO_CHARACTER_STR = wxT("add_gold_to_character"); // add gold to character
 static const wxChar* EVENT_ADD_GOLD_TO_SCENE_STR  	 = wxT("add_gold_to_scene"); // add gold to scene
+static const wxChar* EVENT_DEAD_STR  				 = wxT("dead"); // character dies imediately
 static const wxChar* EVENT_LOTERY_STR			  	 = wxT("lotery"); // add gold to scene
 
 

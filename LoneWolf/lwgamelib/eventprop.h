@@ -10,7 +10,8 @@
 struct ItemProperties {
 	wxInt32 m_actualCond;
 	wxInt32 m_maxCond;
-	bool m_oneUse; // item is only for one use
+	bool m_oneUse; // item is only for one use - this could be spent by event or manual use
+	bool m_freeUse; // item can be used freely on user request
 public:
 	ItemProperties() : m_actualCond(0), m_maxCond(0) {}
 };
@@ -48,7 +49,7 @@ struct DisciplineProperties {
 	EDisciplines m_neededSkill; // event is valid if this skill is available
 	bool m_fightSkill; // discipline is/is not available in fight
 public:
-	EventProperties () : m_actualCond(0)
+	DisciplineProperties () : m_actualCond(0)
 						, m_actualAttack(0)
 						, m_cancelItem(ITEM_UNKNOWN)
 						, m_cancelSkill(DISCIPLINE_UNKNOWN)
@@ -107,6 +108,7 @@ typedef wxVector<EventBase*> EventVector;
 struct EventList : public EventBase {
 	EEventType m_type;
 	wxVector<EventBase*> m_eventList;
+	wxVector<EventBase*> m_randomList;
 public:
 	EventList() : m_type(EVENT_UNKNOWN) {}
 	~EventList() 
@@ -124,19 +126,19 @@ public:
 	virtual EventProperties* GetProperties() { return NULL; }
 	virtual	EventBase* GetRandomEvent(wxInt32 randomNumber) 
 	{
-		if((randomNumber >= 0)&&(static_cast<wxDword>(randomNumber) < m_eventList.size()))
+		if((randomNumber >= 0)&&(static_cast<wxDword>(randomNumber) < m_randomList.size()))
 		{
-			return &(m_eventList[randomNumber]);
+			return m_randomList[randomNumber];
 		}
 		return NULL;
 	}
 	
-	void SetLoteryEvents(wxDword fromId, wxDword toId, const Event& event );
+	bool SetLoteryEvents(wxDword fromId, wxDword toId, EventBase* event);
 	virtual EventBase* GetEvent( wxDword index) 
 	{
 		if(index < m_eventList.size())
 		{
-			return &(m_eventList[index]);
+			return m_eventList[index];
 		}
 		return NULL; 
 	}

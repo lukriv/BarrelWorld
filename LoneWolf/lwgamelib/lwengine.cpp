@@ -52,6 +52,8 @@ bool LWGameEngine::Initialize(LWGameEngineCallback* pCallback)
 		return false;
 	}
 	
+	m_mainCharacter.SetCharacterName(wxString(wxT("LoneWolf")));
+	
 	m_pActualScene = m_sceneMgr.GetScene(0);
 	
 	if(m_pActualScene == NULL)
@@ -76,7 +78,9 @@ bool LWGameEngine::RunAction(wxDword actionIndex)
 		if(actionIndex == *iter) break;
 	}
 	
-	if(iter == posibleActions.end()||actionIndex > m_pActualScene->m_actions.size())
+	if(iter == posibleActions.end()
+		||actionIndex > m_pActualScene->m_actions.size()
+		||(m_mainCharacter.GetActualConditions() <= 0)) // character is dead
 	{
 		return true;
 	}
@@ -85,15 +89,19 @@ bool LWGameEngine::RunAction(wxDword actionIndex)
 	switch(m_pActualScene->m_actions[actionIndex]->GetType())
 	{
 		case ACTION_CREATE_CHAR:
+		{
+			Action *pAction = static_cast<Action*>(m_pActualScene->m_actions[actionIndex]);
 			if(!CreateNewCharacter())
 			{
 				return false;
 			}
-			m_pActualScene = m_sceneMgr.GetScene(m_pActualScene->m_actions[actionIndex].GetMoveTarget());
+			m_pActualScene = m_sceneMgr.GetScene(pAction->GetMoveTarget());
 			break;
+		}
 		case ACTION_MOVE:
 		{
-			wxDword nextTarget = m_pActualScene->m_actions[actionIndex].GetMoveTarget();
+			Action *pAction = static_cast<Action*>(m_pActualScene->m_actions[actionIndex]);
+			wxInt32 nextTarget = pAction->GetMoveTarget();
 			m_pActualScene = m_sceneMgr.GetScene(nextTarget);
 			if(m_pActualScene == NULL)
 			{
@@ -103,11 +111,30 @@ bool LWGameEngine::RunAction(wxDword actionIndex)
 			break;
 		}
 		case ACTION_LOTERY:
+		{
+			Action *pAction = static_cast<Action*>(m_pActualScene->m_actions[actionIndex]);
+			wxInt32 nextTarget = pAction->GetLoteryTarget(RandomSpin()); 
+			m_pActualScene = m_sceneMgr.GetScene(nextTarget);
+			if(m_pActualScene == NULL)
+			{
+				m_errorStr.Printf(wxT("Scene %u cannot be found"), nextTarget);
+				return false;
+			}
 			break;
+		}
 		case ACTION_FIGHT:
 		{
 			ActionFight* pActionFight = static_cast<ActionFight*>(m_pActualScene->m_actions[actionIndex]);
-			wxDword nextTarget = pActionFight->StartFight(m_mainCharacter, m_pUserInteractionCallback);
+			wxInt32 nextTarget = pActionFight->StartFight(m_mainCharacter, m_pUserInteractionCallback);
+			if(nextTarget != TARGET_UNKNOWN)
+			{
+				m_pActualScene = m_sceneMgr.GetScene(nextTarget);
+				if(m_pActualScene == NULL)
+				{
+					m_errorStr.Printf(wxT("Scene %u cannot be found"), nextTarget);
+					return false;
+				}
+			}
 			break;
 		}
 		default:
@@ -115,6 +142,15 @@ bool LWGameEngine::RunAction(wxDword actionIndex)
 			return false;
 		break;
 	}
+	
+	if(m_mainCharacter.GetActualConditions() > 0)
+	{
+		if(!RunSceneEvents())
+		{
+			return false;
+		}		
+	}
+
 	
 	return true;
 }
@@ -132,64 +168,10 @@ bool LWGameEngine::CreateNewCharacter()
 	
 	for (std::set<EDisciplines>::iterator iter = chosenDisc.begin(); iter != chosenDisc.end(); iter++)
 	{
-		if(!AddNewCharacterDiscipline(*iter))
+		if(!m_mainCharacter.AddNewCharacterDiscipline(*iter))
 		{
+			m_errorStr.assign(wxT("Add new character disciplines failed"));
 			return false;
-		}
-	}
-	
-	return true;
-}
-bool LWGameEngine::AddNewCharacterDiscipline(EDisciplines disc)
-{
-	EventProperties *discProp = NULL;
-	if(!m_resMgr.GetDisciplineMgr().DisciplineExists(disc)) 
-	{
-		m_errorStr.assign(wxT("Discipline does not exists"));
-		return false;
-	}
-	
-	if(!m_mainCharacter.GetDisciplines().Add(disc, m_resMgr.GetDisciplineMgr().GetDiscipline(disc).m_property))
-	{
-		m_errorStr.assign(wxT("Add discipline to character failed"));
-		return false;
-	}
-	discProp = m_mainCharacter.GetDisciplines().FindValue(disc);
-	// if some discipline has random weapon type as required item choose one weapon for it
-	if((discProp != NULL)&&(discProp->m_neededItem == m_resMgr.GetItemAndDiscMgr().GetRandomWeaponType()))
-	{
-		switch(RandomSpin())
-		{
-			case 0:
-				discProp->m_neededItem = m_resMgr.GetItemAndDiscMgr().GetItemType(wxString(WEAPON_DAGGER_STR));
-				break;
-			case 1:
-				discProp->m_neededItem = m_resMgr.GetItemAndDiscMgr().GetItemType(wxString(WEAPON_SPEAR_STR));
-				break;
-			case 2:
-				discProp->m_neededItem = m_resMgr.GetItemAndDiscMgr().GetItemType(wxString(WEAPON_MACE_STR));;
-				break;
-			case 3: 
-				discProp->m_neededItem = m_resMgr.GetItemAndDiscMgr().GetItemType(wxString(WEAPON_SHORT_SWORD_STR));;
-				break;
-			case 4:
-				discProp->m_neededItem = m_resMgr.GetItemAndDiscMgr().GetItemType(wxString(WEAPON_WARHAMMER_STR));
-				break;
-			case 5:
-			case 7:
-				discProp->m_neededItem = m_resMgr.GetItemAndDiscMgr().GetItemType(wxString(WEAPON_SWORD_STR));
-				break;
-			case 6:
-				discProp->m_neededItem = m_resMgr.GetItemAndDiscMgr().GetItemType(wxString(WEAPON_AXE_STR));
-				break;
-			case 8:
-				discProp->m_neededItem = m_resMgr.GetItemAndDiscMgr().GetItemType(wxString(WEAPON_QUATERSTAFF_STR));
-				break;
-			case 9:
-				discProp->m_neededItem = m_resMgr.GetItemAndDiscMgr().GetItemType(wxString(WEAPON_BROADSWORD_STR));
-				break;
-			default:
-				return false;
 		}
 	}
 	
@@ -253,6 +235,12 @@ bool LWGameEngine::RunEvent(EventBase* pEvent)
 					return false;
 				}
 			}
+			break;
+		}
+		case EVENT_DEAD:
+		{
+			// kill main character
+			m_mainCharacter.AddActualCondition(-m_mainCharacter.GetActualConditions());
 			break;
 		}
 		case EVENT_UNKNOWN:

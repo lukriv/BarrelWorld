@@ -1,8 +1,11 @@
 #ifndef __LONE_WOLF_FIGHT_H__
 #define __LONE_WOLF_FIGHT_H__
 
-
+#include <list>
 #include <wx/defs.h>
+#include "character.h"
+
+class LWGameEngineCallback;
 
 struct FightTable {
 	wxInt32 m_enemyWound;
@@ -115,8 +118,24 @@ public:
 		m_lastTurnHits.m_charWound = 0;
 		m_lastTurnHits.m_enemyWound = 0;
 	}
+	~ActionFight() {
+		m_enemies.clear();
+		m_fightEvents.clear();
+	}
 	
 	virtual EActionType GetType() { return ACTION_FIGHT; }
+	virtual bool IsConditioned() { return false; }
+	virtual EDisciplines GetRequiredSkill() { return DISCIPLINE_UNKNOWN; }
+	virtual EItem GetRequiredItem() { return ITEM_UNKNOWN; }
+
+	inline void SetWinTarget(wxInt32 winTarget) { m_winTarget = winTarget; }
+	inline void SetLoseTarget(wxInt32 loseTarget) { m_loseTarget = loseTarget; }
+	inline void SetRetreatTarget(wxInt32 retreatTarget) { m_retreatTarget = retreatTarget; }
+	
+	inline wxInt32 GetWinTarget() { return m_winTarget; }
+	inline wxInt32 GetLoseTarget() { return m_loseTarget; }
+	inline wxInt32 GetRetreatTarget() { return m_retreatTarget; }
+	
 	
 	bool AddEnemy(Character &enemy);
 	void GetEnemyList(wxVector<Character> &enemyList);
@@ -154,6 +173,8 @@ public:
 	wxInt32 GetLastLoneWolfHits() { return m_lastTurnHits.m_charWound; }
 	wxInt32 GetLastEnemyHits() { return m_lastTurnHits.m_enemyWound; }
 	
+	void SetTurnsToRetreat(wxInt32 turnsToRetreat) { m_turnsToRetreat = turnsToRetreat; }
+	void SetTurnsToWin(wxInt32 turnsToWin) {  m_turnsToWin = turnsToWin; }
 	wxInt32 GetTurnsToRetreat() { return m_turnsToRetreat; }
 	wxInt32 GetTurnsToWin() { return m_turnsToWin; }
 	

@@ -70,7 +70,7 @@ and open the template in the editor.
 			lesům.</p>]]>
 		</desc>
         <actions>
-			 <action name="fight" win="13" retreat="54" lost="55" turn_to_retreat="2" turn_to_win="3">
+			 <action name="fight" win="13" retreat="3" lost="2" turn_to_win="4">
 				<fight_event attack_actual="-1" duration="2" />
 				<enemy title="kraan" attack="16" condition="24" >
 					<skill name="mindblast" attack_actual="2" canceled_by_skill="mindshield" />
@@ -78,11 +78,11 @@ and open the template in the editor.
 				</enemy>
 			 </action>
             <action name="move" desc="Vydat se po cestě, která mizí v lese napravo" target="85" />
-            <action name="move" desc="Držet se pěšiny směřující k lesu po levé straně" target="275" />
+            <action name="move" desc="Držet se pěšiny směřující k lesu po levé straně" target="275" conditioned="" />
             <action name="move" desc="Využít své zvláštní schopnosti a poradit se se svým Šestým smyslem" skill_needed="sixth_sense" target="141" />
         </actions>
 		 <items>
-				<weapon name="sword" />
+				<weapon name="healing_potion" />
 		 </items>
     </scene>
     <scene id="2">
@@ -508,7 +508,7 @@ and open the template in the editor.
 			 <action name="lotery">
                 <selection numbers_from="0" numbers_to="0" target="53" />
                 <selection numbers_from="1" numbers_to="2" target="274" />
-				  <selection numbers_from="3" numbers_to="9" target="331" />
+				<selection numbers_from="3" numbers_to="9" target="331" />
             </action>
         </actions>
     </scene>
@@ -544,10 +544,10 @@ and open the template in the editor.
 			<event name="add_item_to_character" item_needed="axe" />
 			<event name="add_item_to_character" item_needed="meal" />
 			<event name="lotery">
-				<selection numbers_from="0" numbers_to="0" />
+				<selection numbers_from="0" numbers_to="0">
 					<event name="add_item_to_scene" item_needed="broadsword"  />
 				</selection>
-				<selection numbers_from="1" numbers_to="1" />
+				<selection numbers_from="1" numbers_to="1">
 					<event name="add_item_to_scene" item_needed="sword"  />
 				</selection>
 				<selection numbers_from="2" numbers_to="2">

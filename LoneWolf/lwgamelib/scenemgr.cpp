@@ -3,6 +3,7 @@
 #include <list>
 
 #include "character.h"
+#include "fight.h"
 
 
 std::ostream& operator<< (std::ostream &output, const Scene& scene) 
@@ -50,43 +51,34 @@ std::wostream& operator<< (std::wostream &output, const SceneManager& sceneMgr)
 //////////////////////////////////////////////
 /////////////// Scene ////////////////////////
 //////////////////////////////////////////////
-Scene& Scene::operator=(const Scene& scene)
-{
-	if(&scene == this) return *this;
-	
-	m_sceneId = scene.m_sceneId;
-	m_desc = scene.m_desc;
-	m_actions = scene.m_actions;
-}
-
 void Scene::GetPosibleActions(Character& character, wxVector<wxDword>& outPosibleActions)
 {
 	bool defaultCondActions = true;
 	outPosibleActions.clear();
 	for(wxDword i = 0; i < m_actions.size(); i++)
 	{
-		if(m_actions[i].IsConditioned())
+		if(m_actions[i]->IsConditioned())
 		{
-			if((m_actions[i].GetRequiredSkill() != DISCIPLINE_UNKNOWN)
-				&&(m_actions[i].GetRequiredItem() == ITEM_UNKNOWN)
-				&& character.GetDisciplines().Contains(m_actions[i].GetRequiredSkill()))
+			if((m_actions[i]->GetRequiredSkill() != DISCIPLINE_UNKNOWN)
+				&&(m_actions[i]->GetRequiredItem() == ITEM_UNKNOWN)
+				&& character.GetDisciplines().Contains(m_actions[i]->GetRequiredSkill()))
 			{
 				defaultCondActions = false;
 				break;
 			}
 			
-			if((m_actions[i].GetRequiredSkill() == DISCIPLINE_UNKNOWN)
-				&&(m_actions[i].GetRequiredItem() != ITEM_UNKNOWN)
-				&& character.ContainsItem(m_actions[i].GetRequiredItem()))
+			if((m_actions[i]->GetRequiredSkill() == DISCIPLINE_UNKNOWN)
+				&&(m_actions[i]->GetRequiredItem() != ITEM_UNKNOWN)
+				&& character.ContainsItem(m_actions[i]->GetRequiredItem()))
 			{
 				defaultCondActions = false;
 				break;
 			}
 
-			if((m_actions[i].GetRequiredSkill() != DISCIPLINE_UNKNOWN)
-				&&(m_actions[i].GetRequiredItem() != ITEM_UNKNOWN)
-				&& character.GetDisciplines().Contains(m_actions[i].GetRequiredSkill())
-				&& character.ContainsItem(m_actions[i].GetRequiredItem()))
+			if((m_actions[i]->GetRequiredSkill() != DISCIPLINE_UNKNOWN)
+				&&(m_actions[i]->GetRequiredItem() != ITEM_UNKNOWN)
+				&& character.GetDisciplines().Contains(m_actions[i]->GetRequiredSkill())
+				&& character.ContainsItem(m_actions[i]->GetRequiredItem()))
 			{
 				defaultCondActions = false;
 				break;
@@ -96,24 +88,27 @@ void Scene::GetPosibleActions(Character& character, wxVector<wxDword>& outPosibl
 	
 	for(wxDword i = 0; i < m_actions.size(); i++)
 	{
-		if(!m_actions[i].IsConditioned())
+		if(!m_actions[i]->IsConditioned())
 		{
 			outPosibleActions.push_back(i);
 		} else {
-			if((m_actions[i].GetRequiredSkill() != DISCIPLINE_UNKNOWN)
-				||(m_actions[i].GetRequiredItem() != ITEM_UNKNOWN))
+			if((m_actions[i]->GetRequiredSkill() != DISCIPLINE_UNKNOWN)
+				||(m_actions[i]->GetRequiredItem() != ITEM_UNKNOWN))
 			{
-				if((m_actions[i].GetRequiredSkill() == DISCIPLINE_UNKNOWN)&& character.ContainsItem(m_actions[i].GetRequiredItem()))
+				if((m_actions[i]->GetRequiredSkill() == DISCIPLINE_UNKNOWN)
+					&& character.ContainsItem(m_actions[i]->GetRequiredItem()))
 				{
 					outPosibleActions.push_back(i);
 				}
 				
-				if((m_actions[i].GetRequiredItem() == ITEM_UNKNOWN)&& character.GetDisciplines().Contains(m_actions[i].GetRequiredSkill()))
+				if((m_actions[i]->GetRequiredItem() == ITEM_UNKNOWN)
+					&& character.GetDisciplines().Contains(m_actions[i]->GetRequiredSkill()))
 				{
 					outPosibleActions.push_back(i);
 				}
 				
-				if(character.ContainsItem(m_actions[i].GetRequiredItem())&&character.GetDisciplines().Contains(m_actions[i].GetRequiredSkill()))
+				if(character.ContainsItem(m_actions[i]->GetRequiredItem())
+					&&character.GetDisciplines().Contains(m_actions[i]->GetRequiredSkill()))
 				{
 					outPosibleActions.push_back(i);
 				}
@@ -172,10 +167,11 @@ bool Scene::ContainsItem(EItem item)
 //////////////////////////////////////////////
 
 
-bool SceneManager::AddScene(const Scene& scene)
+bool SceneManager::AddScene(Scene* pScene)
 {
+	if(pScene == NULL) return false;
 	std::pair<TSceneMap::iterator,bool> retval;
-	retval = m_sceneMap.insert( TSceneMapPair(scene.GetSceneId(), scene));
+	retval = m_sceneMap.insert( TSceneMapPair(pScene->GetSceneId(), pScene));
 	return retval.second;
 }
 
@@ -188,7 +184,7 @@ Scene* SceneManager::GetScene(wxDword sceneId)
 		return NULL;
 	} 
 
-	return &(iter->second);
+	return iter->second;
 }
 
 void SceneManager::RemoveScene(wxDword sceneId)
@@ -235,22 +231,27 @@ bool SceneManager::SceneMapTest()
 		if(testVector[sceneIter->first] != 2)
 		{
 			testVector[sceneIter->first] = 2;
-			for(actionIter = sceneIter->second.m_actions.begin(); actionIter != sceneIter->second.m_actions.end(); actionIter++)
+			for(actionIter = sceneIter->second->m_actions.begin(); actionIter != sceneIter->second->m_actions.end(); actionIter++)
 			{
-				switch(actionIter->GetType())
+				switch((*actionIter)->GetType())
 				{
 				case ACTION_MOVE:
 				case ACTION_CREATE_CHAR:
-					sceneNodeQueue.push_back(actionIter->GetMoveTarget());
+				{
+					Action *pAction = static_cast<Action*>(*actionIter);
+					sceneNodeQueue.push_back(pAction->GetMoveTarget());
 					break;
+				}
 				case ACTION_LOTERY:
+				{
+					Action *pAction = static_cast<Action*>(*actionIter);
 					for(wxDword i = 0; i < 9; i++)
 					{
 						wxDword max_count = i;
 						bool addNode = true;
 						for (sceneNodeIter = sceneNodeQueue.rbegin(); sceneNodeIter != sceneNodeQueue.rend(); sceneNodeIter++)
 						{
-							if(*sceneNodeIter == actionIter->GetLoteryTarget(i))
+							if(*sceneNodeIter == pAction->GetLoteryTarget(i))
 							{
 								addNode = false;
 								break;
@@ -264,10 +265,31 @@ bool SceneManager::SceneMapTest()
 						}
 						if(addNode)
 						{
-							sceneNodeQueue.push_back(actionIter->GetLoteryTarget(i));
+							sceneNodeQueue.push_back(pAction->GetLoteryTarget(i));
 						}
 					}
 					break;
+				}
+				case ACTION_FIGHT:
+				{
+					ActionFight *pFightAction = static_cast<ActionFight*>(*actionIter);
+					if(pFightAction->GetWinTarget() != TARGET_UNKNOWN)
+					{
+						sceneNodeQueue.push_back(pFightAction->GetWinTarget());	
+					}
+					
+					if(pFightAction->GetLoseTarget() != TARGET_UNKNOWN)
+					{
+						sceneNodeQueue.push_back(pFightAction->GetLoseTarget());	
+					}
+					
+					if(pFightAction->GetRetreatTarget() != TARGET_UNKNOWN)
+					{
+						sceneNodeQueue.push_back(pFightAction->GetRetreatTarget());	
+					}
+					
+					break;
+				}
 				default:
 					return false;
 				}

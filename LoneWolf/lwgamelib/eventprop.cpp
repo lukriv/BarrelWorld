@@ -1,18 +1,29 @@
 #include "eventprop.h"
 
 
-void EventList::SetLoteryEvents(wxDword fromId, wxDword toId, const Event& event )
+bool EventList::SetLoteryEvents(wxDword fromId, wxDword toId, EventBase* pEvent)
 {
-	if(toId < fromId) return;
-	if(toId > 9) return;
+	if(toId < fromId) return false;
+	if(toId > 9) return false;
 	
-	if ( m_eventList.empty() )
+	if(pEvent == NULL)
 	{
-		m_eventList.resize(10);
+		return false;
 	}
 	
+	if( m_randomList.empty() )
+	{
+		m_randomList.resize(10,0);
+	}
+	
+	// set event for destruction
+	m_eventList.push_back(pEvent);
+	
+	// set event for random calling (no deleting is provided on m_randomList vector
 	for (wxDword i = fromId; i <= toId; i++)
 	{
-		m_eventList[i] = event;
+		m_randomList[i] = pEvent;
 	}
+	
+	return true;
 }

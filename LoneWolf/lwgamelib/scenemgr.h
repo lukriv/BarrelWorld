@@ -44,8 +44,6 @@ public:
 		}
 	}
 	
-	Scene& operator=(const Scene& scene);
-	
 	inline void SetSceneId(wxInt32 id) { m_sceneId = id; }
 	inline wxInt32 GetSceneId() const { return m_sceneId; }
 	
@@ -108,8 +106,8 @@ public:
 
 class SceneManager {
 private:
-	typedef std::map<wxDword, Scene> TSceneMap;
-	typedef std::pair<wxDword, Scene> TSceneMapPair;
+	typedef std::map<wxDword, Scene*> TSceneMap;
+	typedef std::pair<wxDword, Scene*> TSceneMapPair;
 private:
 	wxInt32 m_id;
 	wxString m_title;
@@ -120,7 +118,16 @@ private:
 	
 public:
 	SceneManager() : m_id(0) {}
-	~SceneManager() {}
+	~SceneManager() 
+	{
+		for(TSceneMap::iterator iter = m_sceneMap.begin(); iter != m_sceneMap.end(); iter++)
+		{
+			if(iter->second != NULL)
+			{
+				delete iter->second;
+			}
+		}
+	}
 	
 	void SetTitle(const wxString& title) { m_title = title;}
 	inline wxString& GetTitle() { return m_title;}
@@ -128,7 +135,7 @@ public:
 	void SetId(wxInt32 id) { m_id = id;}
 	inline wxInt32 GetId() { return m_id;}
 	
-	bool AddScene(const Scene& pScene);
+	bool AddScene(Scene* pScene);
 	void RemoveScene(wxDword sceneId);
 	Scene* GetScene(wxDword sceneId);
 	

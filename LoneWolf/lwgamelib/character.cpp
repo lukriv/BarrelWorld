@@ -1,5 +1,6 @@
 #include "character.h"
 #include <iostream>
+#include "lwxmldefs.h"
 
 
 
@@ -43,10 +44,6 @@ wxInt32 Character::SetGold(wxInt32 goldCount)
 	}
 }
 
-void Character::GenerateFightCharacter(FightingCharacter& fightChar)
-{
-}
-
 bool Character::Initialize(GlobalResourceManager* pResMgr)
 {
 	if(pResMgr == NULL)
@@ -54,7 +51,7 @@ bool Character::Initialize(GlobalResourceManager* pResMgr)
 		return false;
 	}
 	
-	m_backpack.SetMaxCount(5);
+	m_backpack.SetMaxCount(0);
 	m_maxGoldCount = 50;
 	m_pResMgr = pResMgr;
 	
@@ -63,8 +60,18 @@ bool Character::Initialize(GlobalResourceManager* pResMgr)
 
 bool Character::GenerateNewCharacter()
 {
-	m_baseAttackSkill = RandomSpin() + 10;
-	m_actualCondition = m_baseCondition = RandomSpin() + 20;
+	m_backpack.Clear();
+	m_weapons.Clear();
+	m_specialItems.Clear();
+	m_disciplines.Clear();
+	
+	m_pouch = 0;
+	m_maxGoldCount = 50;
+	m_actualAttackSkill = m_baseAttackSkill = RandomSpin() + 10;
+	m_maxCondition = m_actualCondition = m_baseCondition = RandomSpin() + 20;
+	m_body.SetBackItem(ITEM_UNKNOWN);
+	m_body.SetHeadItem(ITEM_UNKNOWN);
+	m_body.SetTorsoItem(ITEM_UNKNOWN);
 	RecomputeState();
 	
 	return true;
@@ -74,6 +81,7 @@ void Character::RecomputeState()
 {
 	// update conditions
 	wxInt32 oldMax = m_maxCondition;
+	wxInt32 maxDiff = 0;
 	m_maxCondition = m_baseCondition;
 	
 	if(m_body.GetHeadItem() != ITEM_UNKNOWN)
@@ -86,10 +94,13 @@ void Character::RecomputeState()
 		m_maxCondition += m_pResMgr->GetItemAndDiscMgr().GetItem(m_body.GetTorsoItem()).m_properties.m_maxCond;
 	}
 	
-	if((m_maxCondition < m_actualCondition)||(oldMax == m_actualCondition))
+	m_actualCondition += (m_maxCondition - oldMax);
+	if(m_actualCondition <= 0)
 	{
-		m_actualCondition = m_maxCondition;
+		// if character die due to droping some item set the condition to 1
+		m_actualCondition = 1;
 	}
+	
 	
 	if((m_body.GetBackItem() == m_pResMgr->GetItemAndDiscMgr().GetBackpackType())&&(m_backpack.GetMaxCount() == 0))
 	{
@@ -105,6 +116,7 @@ void Character::RecomputeState()
 
 bool Character::ContainsItem(EItem item)
 {
+	if(item == ITEM_UNKNOWN) return false;
 	if(m_backpack.Contains(item)) return true;
 	if(m_specialItems.Contains(item)) return true;
 	if(m_body.GetHeadItem() == item) return true;
@@ -377,19 +389,110 @@ void Character::ApplySkills()
 			continue;
 		}
 		
-		if((iter->second.m_cancelSkill != DISCIPLINE_UNKNOWN)&&(enemyCharacter.m_disciplines.Contains(iter->second.m_cancelSkill)))
-		{
-			// enemy cancel your skill
-			continue;
-		}
-		
-		if(((iter->second.m_cancelItem != ITEM_UNKNOWN))&&(enemyCharacter.ContainsItem(iter->second.m_cancelItem)))
-		{
-			// enemy cancel your skill by item
-			continue;
-		}
-		
 		m_actualAttackSkill += iter->second.m_actualAttack;
 		m_actualCondition += iter->second.m_actualCond;
 	}
+}
+
+bool Character::AddNewCharacterDiscipline(EDisciplines disc, DisciplineProperties *pDiscProp)
+{
+	if(!m_pResMgr->GetDisciplineMgr().DisciplineExists(disc)) 
+	{
+		return false;
+	}
+	
+	if(pDiscProp == NULL)
+	{
+		pDiscProp = &(m_pResMgr->GetDisciplineMgr().GetDiscipline(disc).m_property);
+	}
+	
+	if(!m_disciplines.Add(disc, *pDiscProp))
+	{
+		return false;
+	}
+	
+	// get local discipline value
+	pDiscProp = m_disciplines.FindValue(disc);
+	// if some discipline has random weapon type as required item choose one weapon for it
+	if((pDiscProp != NULL)&&(pDiscProp->m_neededItem == m_pResMgr->GetItemAndDiscMgr().GetRandomWeaponType()))
+	{
+		switch(RandomSpin())
+		{
+			case 0:
+				pDiscProp->m_neededItem = m_pResMgr->GetItemAndDiscMgr().GetItemType(wxString(WEAPON_DAGGER_STR));
+				break;
+			case 1:
+				pDiscProp->m_neededItem = m_pResMgr->GetItemAndDiscMgr().GetItemType(wxString(WEAPON_SPEAR_STR));
+				break;
+			case 2:
+				pDiscProp->m_neededItem = m_pResMgr->GetItemAndDiscMgr().GetItemType(wxString(WEAPON_MACE_STR));;
+				break;
+			case 3: 
+				pDiscProp->m_neededItem = m_pResMgr->GetItemAndDiscMgr().GetItemType(wxString(WEAPON_SHORT_SWORD_STR));;
+				break;
+			case 4:
+				pDiscProp->m_neededItem = m_pResMgr->GetItemAndDiscMgr().GetItemType(wxString(WEAPON_WARHAMMER_STR));
+				break;
+			case 5:
+			case 7:
+				pDiscProp->m_neededItem = m_pResMgr->GetItemAndDiscMgr().GetItemType(wxString(WEAPON_SWORD_STR));
+				break;
+			case 6:
+				pDiscProp->m_neededItem = m_pResMgr->GetItemAndDiscMgr().GetItemType(wxString(WEAPON_AXE_STR));
+				break;
+			case 8:
+				pDiscProp->m_neededItem = m_pResMgr->GetItemAndDiscMgr().GetItemType(wxString(WEAPON_QUATERSTAFF_STR));
+				break;
+			case 9:
+				pDiscProp->m_neededItem = m_pResMgr->GetItemAndDiscMgr().GetItemType(wxString(WEAPON_BROADSWORD_STR));
+				break;
+			default:
+				return false;
+		}
+	}
+	
+	return true;
+}
+
+void Character::GetFreeUseItemList(wxVector<EItem>& itemList)
+{	
+	itemList.clear();
+	for(CharacterBackpack::Iterator iter = m_backpack.Begin(); iter != m_backpack.End(); iter++)
+	{
+		if(m_pResMgr->GetItemAndDiscMgr().GetItem(*iter).m_properties.m_freeUse)
+		{
+			itemList.push_back(*iter);
+		}
+	}
+	
+	for(CharacterSpecialItems::Iterator iter = m_specialItems.Begin(); iter != m_specialItems.End();iter++)
+	{
+		if(m_pResMgr->GetItemAndDiscMgr().GetItem(*iter).m_properties.m_freeUse)
+		{
+			itemList.push_back(*iter);
+		}
+	}
+}
+
+bool Character::UseItem(EItem item)
+{
+	if(!ContainsItem(item))
+	{
+		return false;
+	}
+	
+	if(!m_pResMgr->GetItemAndDiscMgr().GetItem(item).m_properties.m_freeUse)
+	{
+		return false;
+	}
+	
+	//use item
+	AddActualCondition(m_pResMgr->GetItemAndDiscMgr().GetItem(item).m_properties.m_actualCond);
+	
+	if(m_pResMgr->GetItemAndDiscMgr().GetItem(item).m_properties.m_oneUse)
+	{
+		LoseItem(item);
+	}
+	
+	return true;
 }
