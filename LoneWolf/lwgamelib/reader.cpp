@@ -262,16 +262,28 @@ bool LoneWolfXmlReader::ReadActionAttr(wxXmlNode* actionNode, GlobalResourceMana
 	wxString requiredItemValue;
 	action.SetCondition(actionNode->HasAttribute(GENERAL_ATTR_CONDITIONED_STR));
 	
-	requiredSkillValue = actionNode->GetAttribute(wxString(GENERAL_ATTR_SKILL_NEEDED_STR));
-	if(resMgr.GetDisciplineMgr().GetDisciplineType(requiredSkillValue) != DISCIPLINE_UNKNOWN)
+	if(actionNode->HasAttribute(GENERAL_ATTR_SKILL_NEEDED_STR))
 	{
-		action.SetRequiredSkill(resMgr.GetDisciplineMgr().GetDisciplineType(requiredSkillValue));
+		requiredSkillValue = actionNode->GetAttribute(wxString(GENERAL_ATTR_SKILL_NEEDED_STR));
+		if(resMgr.GetDisciplineMgr().GetDisciplineType(requiredSkillValue) != DISCIPLINE_UNKNOWN)
+		{
+			action.SetRequiredSkill(resMgr.GetDisciplineMgr().GetDisciplineType(requiredSkillValue));
+		} else {
+			ProcessError(actionNode);
+			return false;
+		}
 	}
-			
-	requiredItemValue = actionNode->GetAttribute(wxString(GENERAL_ATTR_ITEM_NEEDED_STR));
-	if(resMgr.GetItemAndDiscMgr().GetItemType(requiredItemValue) != ITEM_UNKNOWN)
-	{
-		action.SetRequiredItem(resMgr.GetItemAndDiscMgr().GetItemType(requiredItemValue));
+
+	if(actionNode->HasAttribute(GENERAL_ATTR_ITEM_NEEDED_STR))
+	{	
+		requiredItemValue = actionNode->GetAttribute(wxString(GENERAL_ATTR_ITEM_NEEDED_STR));
+		if(resMgr.GetItemAndDiscMgr().GetItemType(requiredItemValue) != ITEM_UNKNOWN)
+		{
+			action.SetRequiredItem(resMgr.GetItemAndDiscMgr().GetItemType(requiredItemValue));
+		} else {
+			ProcessError(actionNode);
+			return false;
+		}
 	}
 	
 	return true;
@@ -1171,24 +1183,44 @@ bool LoneWolfXmlReader::ReadEventAttr(wxXmlNode* eventNode, GlobalResourceManage
 	{
 		tempValue = eventNode->GetAttribute(wxString(GENERAL_ATTR_CANCELED_BY_ITEM_STR));
 		properties.m_cancelItem = resMgr.GetItemAndDiscMgr().GetItemType(tempValue);
+		if(properties.m_cancelItem == ITEM_UNKNOWN)
+		{
+			ProcessError(eventNode);
+			return false;
+		}
 	}
 	
 	if(eventNode->HasAttribute(GENERAL_ATTR_CANCELED_BY_SKILL_STR))
 	{
 		tempValue = eventNode->GetAttribute(wxString(GENERAL_ATTR_CANCELED_BY_SKILL_STR));
 		properties.m_cancelSkill = resMgr.GetDisciplineMgr().GetDisciplineType(tempValue);
+		if(properties.m_cancelSkill == DISCIPLINE_UNKNOWN)
+		{
+			ProcessError(eventNode);
+			return false;
+		}
 	}
 	
 	if(eventNode->HasAttribute(GENERAL_ATTR_ITEM_NEEDED_STR))
 	{
 		tempValue = eventNode->GetAttribute(wxString(GENERAL_ATTR_ITEM_NEEDED_STR));
 		properties.m_neededItem = resMgr.GetItemAndDiscMgr().GetItemType(tempValue);
+		if(properties.m_neededItem == ITEM_UNKNOWN)
+		{
+			ProcessError(eventNode);
+			return false;
+		}
 	}
 	
 	if(eventNode->HasAttribute(GENERAL_ATTR_SKILL_NEEDED_STR))
 	{
 		tempValue = eventNode->GetAttribute(wxString(GENERAL_ATTR_SKILL_NEEDED_STR));
 		properties.m_neededSkill = resMgr.GetDisciplineMgr().GetDisciplineType(tempValue);
+		if(properties.m_neededSkill == DISCIPLINE_UNKNOWN)
+		{
+			ProcessError(eventNode);
+			return false;
+		}
 	}
 
 	
@@ -1218,24 +1250,44 @@ bool LoneWolfXmlReader::ReadDisciplineAttr(wxXmlNode* discNode, GlobalResourceMa
 	{
 		tempValue = discNode->GetAttribute(wxString(GENERAL_ATTR_CANCELED_BY_ITEM_STR));
 		properties.m_cancelItem = resMgr.GetItemAndDiscMgr().GetItemType(tempValue);
+		if(properties.m_cancelItem == ITEM_UNKNOWN)
+		{
+			ProcessError(discNode);
+			return false;
+		}
 	}
 	
 	if(discNode->HasAttribute(wxString(GENERAL_ATTR_CANCELED_BY_SKILL_STR)))
 	{
 		tempValue = discNode->GetAttribute(wxString(GENERAL_ATTR_CANCELED_BY_SKILL_STR));
 		properties.m_cancelSkill = resMgr.GetDisciplineMgr().GetDisciplineType(tempValue);
+		if(properties.m_cancelSkill == DISCIPLINE_UNKNOWN)
+		{
+			ProcessError(discNode);
+			return false;
+		}
 	}
 	
 	if(discNode->HasAttribute(wxString(GENERAL_ATTR_ITEM_NEEDED_STR)))
 	{
 		tempValue = discNode->GetAttribute(wxString(GENERAL_ATTR_ITEM_NEEDED_STR));
 		properties.m_neededItem = resMgr.GetItemAndDiscMgr().GetItemType(tempValue);
+		if(properties.m_neededItem == ITEM_UNKNOWN)
+		{
+			ProcessError(discNode);
+			return false;
+		}
 	}
 	
 	if(discNode->HasAttribute(wxString(GENERAL_ATTR_SKILL_NEEDED_STR)))
 	{
 		tempValue = discNode->GetAttribute(wxString(GENERAL_ATTR_SKILL_NEEDED_STR));
 		properties.m_neededSkill = resMgr.GetDisciplineMgr().GetDisciplineType(tempValue);
+		if(properties.m_neededSkill == DISCIPLINE_UNKNOWN)
+		{
+			ProcessError(discNode);
+			return false;
+		}
 	}
 	
 	if(discNode->HasAttribute(wxString(GENERAL_ATTR_NON_FIGTH_SKILL_STR)))

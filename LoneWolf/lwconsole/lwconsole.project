@@ -16,14 +16,21 @@
   <Dependencies Name="Debug">
     <Project Name="lwgamelib"/>
   </Dependencies>
+  <VirtualDirectory Name="include">
+    <File Name="callbackimpl.h"/>
+    <File Name="gres.h"/>
+    <File Name="textConversion.h"/>
+  </VirtualDirectory>
   <Settings Type="Executable">
     <GlobalSettings>
       <Compiler Options="" C_Options="" Assembler="">
         <IncludePath Value="c:/Library/wxWidgets-3.0.0/include"/>
+        <IncludePath Value="e:/Library/wxWidgets-3.0.0/include"/>
         <Preprocessor Value="_UNICODE"/>
       </Compiler>
       <Linker Options="">
         <LibraryPath Value="c:/Library/wxWidgets-3.0.0/lib/gcc_dll"/>
+        <LibraryPath Value="e:/Library/wxWidgets-3.0.0/lib/gcc_dll"/>
         <Library Value="lwgamelib"/>
       </Linker>
       <ResourceCompiler Options=""/>
@@ -31,6 +38,7 @@
     <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="-g;-O0;-Wall" C_Options="-g;-O0;-Wall" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags="">
         <IncludePath Value="c:/Library/wxWidgets-3.0.0/lib/gcc_dll/mswud"/>
+        <IncludePath Value="e:/Library/wxWidgets-3.0.0/lib/gcc_dll/mswud"/>
       </Compiler>
       <Linker Options="" Required="yes">
         <LibraryPath Value="../lwgamelib/Debug"/>
@@ -113,9 +121,4 @@
       </Completion>
     </Configuration>
   </Settings>
-  <VirtualDirectory Name="include">
-    <File Name="callbackimpl.h"/>
-    <File Name="gres.h"/>
-    <File Name="textConversion.h"/>
-  </VirtualDirectory>
 </CodeLite_Project>
