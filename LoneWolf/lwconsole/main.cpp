@@ -7,150 +7,15 @@
 #include "../lwgamelib/reader.h"
 #include "../lwgamelib/lwengine.h"
 #include "textConversion.h"
+#include "gres.h"
+#include "callbackimpl.h"
 
-#include <windows.h>
+//#include <windows.h>
 
 
 using namespace std;
 
-LWGameEngine g_gameEngine;
 
-class ConsoleGameCallback : public LWGameEngineCallback {
-	void WriteDisciplineList(const std::set<EDisciplines> &chosenDisc)
-	{
-		wxString title, desc;
-		cout << "Discipliny k vyberu: " << endl;
-		for (DisciplinesManager::Iterator iter = g_gameEngine.GetResMgr().GetDisciplineMgr().begin()
-								; iter != g_gameEngine.GetResMgr().GetDisciplineMgr().end()
-								; iter++)
-		{
-			if(chosenDisc.find((*iter).m_id) == chosenDisc.end())
-			{
-				// if discipline is not chosen yet write this discipline
-				title = (*iter).m_title;
-				desc = (*iter).m_desc;
-				ConvertToNonDiacriticsCsText(title);
-				ConvertToNonDiacriticsCsText(desc);
-				cout << "  " << static_cast<wxInt32>((*iter).m_id) << ") " << title.c_str() << " [" << desc.c_str() << "]" << endl;
-			}
-		}
-	}
-public:
-	virtual void SelectDisciplines(wxDword discToSelect, std::set<EDisciplines> &chosenDisc)
-	{
-		
-		wxInt32 input = 0;
-		
-		while (chosenDisc.size() < discToSelect)
-		{
-			WriteDisciplineList(chosenDisc);
-			while((input == 0)
-					||(!g_gameEngine.GetResMgr().GetDisciplineMgr().DisciplineExists(static_cast<EDisciplines>(input)))
-					||(chosenDisc.find(static_cast<EDisciplines>(input)) != chosenDisc.end()))
-			{
-				cout << "Zadej cislo discipliny z vyberu (zbyva vybrat " << (discToSelect - chosenDisc.size()) << " disciplin): " << endl;
-				cin >> input;
-				cout << endl;
-			}
-			
-			chosenDisc.insert(static_cast<EDisciplines>(input));
-		}
-		
-	}
-	
-	virtual void FightTurn(ActionFight &fight)
-	{
-		std::string input;
-		wxString wxInput;
-		Character *pChar = NULL;
-		if(fight.GetActualTurn() > 0)
-		{
-			cout << "LW(" << fight.GetLastLoneWolfHits() << "), enemy(" << fight.GetLastEnemyHits() << ")" << endl;
-		}	
-		cout << " ------ Boj kolo " << fight.GetActualTurn();
-		if(fight.GetTurnsToWin() == TURNS_INFINITE)
-		{
-			cout << ", kol do konce boje(INF)";
-		} else {
-			wxInt32 toWin = fight.GetTurnsToWin() - fight.GetActualTurn();
-			toWin = (toWin < 0)? 0 : toWin;
-			cout << ", kol do konce boje(" << toWin << ")";
-		}
-		
-		if(fight.GetTurnsToRetreat() == TURNS_INFINITE)
-		{
-			cout << ", kol do ustupu(INF) ";
-		} else {
-			wxInt32 toWin = fight.GetTurnsToRetreat() - fight.GetActualTurn();
-			toWin = (toWin < 0)? 0 : toWin;
-			cout << ", kol do ustupu(" << toWin << ") ";
-		}
-		
-		cout << "------" << endl;
-		pChar = fight.GetActualEnemy();
-		if(pChar != NULL)
-		{
-			cout << "Nepritel (" << pChar->GetCharacterName() << "): "
-					<< " utok( " << pChar->GetActualAttackSkill() << "), "
-					<< " kondice( " << pChar->GetActualConditions() << ") " << endl;
-		}
-		
-		pChar = fight.GetLoneWolfCharacter();
-		if(pChar != NULL)
-		{
-			cout << "LoneWolf: " 
-					<< " utok( " << pChar->GetActualAttackSkill() << "), "
-					<< " kondice( " << pChar->GetActualConditions() << ") " << endl;
-		}
-		cout << "Libovolne pismeno nebo retreat pro ustup > ";
-		cin >> input;
-		wxInput = input;
-		if(wxInput.Cmp(wxT("retreat")) == 0)
-		{
-			if(fight.Retreat())
-			{
-				cout << "Ustup!" << endl;
-			} else {
-				cout << "Ustup neni mozny" << endl;
-			}
-		}
-		
-	}
-	
-	virtual void FightFinish(ActionFight &fight)
-	{
-		cout << "LW(" << fight.GetLastLoneWolfHits() << "), enemy(" << fight.GetLastEnemyHits() << ")" << endl;
-		cout << " ------ Konec boje ------ " << endl;
-		if((fight.GetLoneWolfCharacter() != NULL)&&(fight.GetLoneWolfCharacter()->GetActualConditions() > 0))
-		{
-			switch(fight.GetFightResult())
-			{
-				case FIGHT_RESULT_WIN:
-					cout << "Vitezstvi! Porazil jsi vsechny nepratele!" << endl;
-					break;
-				case FIGHT_RESULT_LOST:
-					cout << "Boj byl ztracen. Nestihl jsi porazit nepratele vcas." << endl;
-					break;
-				case FIGHT_RESULT_RETREAT:
-					cout << "Zvolil jsi ustup pred nepritelem." << endl;
-					break;
-				default:
-					cout << "Chyba ve vysledku boje" << endl;
-					break;
-			}
-		} else {
-			cout << "Zemrel jsi. Tvuj protivnik byl nad Tve sili." << endl;
-		}
-		
-		if(fight.GetLoneWolfCharacter() != NULL)
-		{
-			cout << "LoneWolf: " 
-					<< " utok( " << fight.GetLoneWolfCharacter()->GetActualAttackSkill() << "), "
-					<< " kondice( " << fight.GetLoneWolfCharacter()->GetActualConditions() << ") " << endl;
-		}
-		cout << " --------------------------- " << endl;
-	}
-};
 
 void WriteScene(Scene& scene)
 {
@@ -158,6 +23,7 @@ void WriteScene(Scene& scene)
 	wxString act;
 	wxVector<wxDword> posibleActions;
 	Scene::TItemList listOfItems;
+	Scene::TArticleVector listOfGoods;
 	
 	scene.GetPosibleActions(g_gameEngine.GetMainCharacter(), posibleActions);
 	scene.GetItemList(listOfItems);
@@ -168,7 +34,7 @@ void WriteScene(Scene& scene)
 	ConvertToBasicFormatedText(desc);
 	cout << "\n *** " << endl;
 	cout << desc.c_str() << endl;
-	if(!listOfItems.empty())
+	if(!listOfItems.empty()||(scene.GetGoldCount() > 0))
 	{
 		cout << "Predmety: ";
 		for(Scene::TItemList::iterator iter = listOfItems.begin(); iter != listOfItems.end(); iter++)
@@ -176,6 +42,39 @@ void WriteScene(Scene& scene)
 			desc = g_gameEngine.GetResMgr().GetItemAndDiscMgr().GetItem(*iter).m_title;
 			ConvertToNonDiacriticsCsText(desc);
 			cout << desc.c_str() << "(" << *iter << ")" << ", ";
+		}
+		
+		if(scene.GetGoldCount() > 0)
+		{
+			cout << scene.GetGoldCount() << " Zlatych, ";
+		}
+		
+		cout << endl;
+	}
+	
+	scene.GetItemToBuyList(listOfGoods);
+	if(!listOfGoods.empty())
+	{
+		cout << "Prodej: " << endl;
+		for(Scene::TArticleVector::iterator iter = listOfGoods.begin(); iter != listOfGoods.end(); iter++)
+		{
+			desc = g_gameEngine.GetResMgr().GetItemAndDiscMgr().GetItem(iter->m_item).m_title;
+			ConvertToNonDiacriticsCsText(desc);
+			cout << desc.c_str() << "(" << iter->m_item << ")" << " - " << iter->m_goldCount << " Zlatych " << endl;
+		}
+		cout << endl;
+	}
+	
+	listOfGoods.clear();
+	scene.GetItemToSellList(listOfGoods);
+	if(!listOfGoods.empty())
+	{
+		cout << "Nakup: " << endl;
+		for(Scene::TArticleVector::iterator iter = listOfGoods.begin(); iter != listOfGoods.end(); iter++)
+		{
+			desc = g_gameEngine.GetResMgr().GetItemAndDiscMgr().GetItem(iter->m_item).m_title;
+			ConvertToNonDiacriticsCsText(desc);
+			cout << desc.c_str() << "(" << iter->m_item << ")" << " - " << iter->m_goldCount << " Zlatych " << endl;
 		}
 		cout << endl;
 	}
@@ -226,23 +125,23 @@ void WriteScene(Scene& scene)
 	}
 }
 
-void WriteCharacterState()
+void WriteCharacterState(Character& character)
 {
 	wxString title;
 	
 	cout << " *** Stav postavy *** " << endl;
-	cout << " Discipliny a umeni(" << g_gameEngine.GetMainCharacter().GetDisciplines().Size() << "): ";
-	for (CharacterDisciplines::Iterator iter = g_gameEngine.GetMainCharacter().GetDisciplines().Begin()
-			; iter != g_gameEngine.GetMainCharacter().GetDisciplines().End()
+	cout << " Discipliny a umeni (" << character.GetDisciplines().Size() << "): ";
+	for (CharacterDisciplines::Iterator iter = character.GetDisciplines().Begin()
+			; iter != character.GetDisciplines().End()
 			; iter++)
 	{
 		title = g_gameEngine.GetResMgr().GetDisciplineMgr().GetDiscipline(iter->first).m_title;
 		ConvertToNonDiacriticsCsText(title);
-		if( g_gameEngine.GetMainCharacter().GetDisciplines().FindValue(iter->first) != NULL)
+		if( character.GetDisciplines().FindValue(iter->first) != NULL)
 		{
-			if( g_gameEngine.GetMainCharacter().GetDisciplines().FindValue(iter->first)->m_neededItem != ITEM_UNKNOWN)
+			if( character.GetDisciplines().FindValue(iter->first)->m_neededItem != ITEM_UNKNOWN)
 			{
-				wxString weapon = g_gameEngine.GetResMgr().GetItemAndDiscMgr().GetItem(g_gameEngine.GetMainCharacter().GetDisciplines().FindValue(iter->first)->m_neededItem).m_title;
+				wxString weapon = g_gameEngine.GetResMgr().GetItemAndDiscMgr().GetItem(character.GetDisciplines().FindValue(iter->first)->m_neededItem).m_title;
 				ConvertToNonDiacriticsCsText(weapon);
 				cout << title.c_str() << " (" << weapon.c_str() << "), ";
 			} else {
@@ -255,15 +154,14 @@ void WriteCharacterState()
 	}
 	cout << endl;
 	
-	cout << " Kondice: " << g_gameEngine.GetMainCharacter().GetActualConditions() << "/" 
-						<< g_gameEngine.GetMainCharacter().GetMaxConditions() 
-						<< " (" << g_gameEngine.GetMainCharacter().GetBaseConditions() << ")" << endl;
-	cout << " Umeni boje: " << " (" << g_gameEngine.GetMainCharacter().GetBaseAttackSkill() << ")" << endl;
+	cout << " Kondice (zakladni kondice " << character.GetBaseConditions() << "): " 
+		<< character.GetActualConditions() << "/" << character.GetMaxConditions() << endl;
+	cout << " Zakladni umeni boje: " << character.GetBaseAttackSkill() << endl;
 	
-	cout << " Batoh (max. " <<  g_gameEngine.GetMainCharacter().GetBackPack().GetMaxCount() << "): " << endl;
+	cout << " Batoh (max. " <<  character.GetBackPack().GetMaxCount() << "): " << endl;
 	cout << "   ";
-	for (Character::CharacterBackpack::Iterator iter = g_gameEngine.GetMainCharacter().GetBackPack().Begin()
-			; iter != g_gameEngine.GetMainCharacter().GetBackPack().End()
+	for (Character::CharacterBackpack::Iterator iter = character.GetBackPack().Begin()
+			; iter != character.GetBackPack().End()
 			; iter++)
 	{
 		title = g_gameEngine.GetResMgr().GetItemAndDiscMgr().GetItem(*iter).m_title;
@@ -273,8 +171,8 @@ void WriteCharacterState()
 	cout << endl;
 	
 	cout << " Zbrane: ";
-	for (Character::CharacterWeapons::Iterator iter = g_gameEngine.GetMainCharacter().GetWeapons().Begin()
-			; iter != g_gameEngine.GetMainCharacter().GetWeapons().End()
+	for (Character::CharacterWeapons::Iterator iter = character.GetWeapons().Begin()
+			; iter != character.GetWeapons().End()
 			; iter++)
 	{
 		title = g_gameEngine.GetResMgr().GetItemAndDiscMgr().GetItem(*iter).m_title;
@@ -283,16 +181,29 @@ void WriteCharacterState()
 	}
 	cout << endl;
 	
-	title = g_gameEngine.GetResMgr().GetItemAndDiscMgr().GetItem(g_gameEngine.GetMainCharacter().GetBody().GetHeadItem()).m_title;
+	title = g_gameEngine.GetResMgr().GetItemAndDiscMgr().GetItem(character.GetBody().GetHeadItem()).m_title;
 	ConvertToNonDiacriticsCsText(title);
-	cout << " Hlava: " << title.c_str() << "(" << g_gameEngine.GetResMgr().GetItemAndDiscMgr().GetItem(g_gameEngine.GetMainCharacter().GetBody().GetHeadItem()).m_id << ")" << endl;
-	title = g_gameEngine.GetResMgr().GetItemAndDiscMgr().GetItem(g_gameEngine.GetMainCharacter().GetBody().GetTorsoItem()).m_title;
+	cout << " Hlava: ";
+	if(character.GetBody().GetHeadItem() != ITEM_UNKNOWN)
+	{
+		cout << title.c_str() << "(" << g_gameEngine.GetResMgr().GetItemAndDiscMgr().GetItem(character.GetBody().GetHeadItem()).m_id << ")" << endl;	
+	} else {
+		cout << " -- " << endl;
+	}
+	
+	title = g_gameEngine.GetResMgr().GetItemAndDiscMgr().GetItem(character.GetBody().GetTorsoItem()).m_title;
 	ConvertToNonDiacriticsCsText(title);
-	cout << " Torso: " << title.c_str() << "(" << g_gameEngine.GetResMgr().GetItemAndDiscMgr().GetItem(g_gameEngine.GetMainCharacter().GetBody().GetTorsoItem()).m_id << ")" << endl;
+	cout << " Torso: " ;
+	if(character.GetBody().GetTorsoItem() != ITEM_UNKNOWN)
+	{
+		cout << title.c_str() << "(" << g_gameEngine.GetResMgr().GetItemAndDiscMgr().GetItem(character.GetBody().GetTorsoItem()).m_id << ")" << endl;
+	} else {
+		cout << " -- " << endl;
+	}
 	
 	cout << " Specialni predmety: ";
-	for (Character::CharacterSpecialItems::Iterator iter = g_gameEngine.GetMainCharacter().GetSpecialItems().Begin()
-			; iter != g_gameEngine.GetMainCharacter().GetSpecialItems().End()
+	for (Character::CharacterSpecialItems::Iterator iter = character.GetSpecialItems().Begin()
+			; iter != character.GetSpecialItems().End()
 			; iter++)
 	{
 		title = g_gameEngine.GetResMgr().GetItemAndDiscMgr().GetItem(*iter).m_title;
@@ -300,6 +211,7 @@ void WriteCharacterState()
 		cout << title.c_str() << "(" << g_gameEngine.GetResMgr().GetItemAndDiscMgr().GetItem(*iter).m_id << ")" << ", ";
 	}
 	cout << endl;
+	cout << " Mesec (max. " << character.GetMaxGoldCount() << " Zlatych): " << character.GetGoldCount() << " Zlatych" << endl;
 	cout << " **********" << endl;
 	
 						
@@ -310,6 +222,16 @@ bool PickUpItem(wxString &command, Scene& scene, Character& character)
 	long int itemValue = 0;
 	EItem item = ITEM_UNKNOWN;
 	wxString title;
+	if(command.Cmp(wxT("gold")) == 0)
+	{
+		// pick up all gold you can
+		if(scene.GetGoldCount() > 0)
+		{
+			cout << "Sebral jsi " << character.PickUpGold(scene) << " Zlatych" << endl;
+		}
+		
+		return true;
+	}
 	command.ToLong(&itemValue);
 	
 	item = static_cast<EItem>(itemValue);
@@ -410,6 +332,76 @@ bool UseItem(wxString &command, Character& character)
 	return true;
 }
 
+bool BuyItem(wxString &command, Scene& scene, Character& character )
+{
+	long int itemValue = 0;
+	EItem item = ITEM_UNKNOWN;
+	wxString title;
+	command.ToLong(&itemValue);
+	
+	item = static_cast<EItem>(itemValue);
+	
+	if(!g_gameEngine.GetResMgr().GetItemAndDiscMgr().ItemExists(item))
+	{
+		cout << "Predmet pod cislem (" << item << ") neexistuje" << endl;
+		return false;	
+	}
+	
+	title = g_gameEngine.GetResMgr().GetItemAndDiscMgr().GetItem(item).m_title;
+	ConvertToNonDiacriticsCsText(title);
+	
+	if((item != 0)&&(scene.ContainsItemToBuy(item)))
+	{
+		if(!character.BuyItem(item, scene))
+		{
+			cout << "Predmet (" << title.c_str() << ") nelze zakoupit (nemas dostatek penez nebo ho uz neuneses)" << endl;
+			return false;
+		} else {
+			cout << "Zakoupil jsi predmet (" << title.c_str() << ")" << endl;
+		}
+	} else {
+		cout << "Predmet (" << title.c_str() << ") neni ve scene na prodej" << endl;
+		return false;	
+	}
+	
+	return true;
+}
+
+bool SellItem(wxString &command, Scene& scene, Character& character )
+{
+	long int itemValue = 0;
+	EItem item = ITEM_UNKNOWN;
+	wxString title;
+	command.ToLong(&itemValue);
+	
+	item = static_cast<EItem>(itemValue);
+	
+	if(!g_gameEngine.GetResMgr().GetItemAndDiscMgr().ItemExists(item))
+	{
+		cout << "Predmet pod cislem (" << item << ") neexistuje" << endl;
+		return false;	
+	}
+	
+	title = g_gameEngine.GetResMgr().GetItemAndDiscMgr().GetItem(item).m_title;
+	ConvertToNonDiacriticsCsText(title);
+	
+	if((item != 0)&&(scene.ContainsItemToSell(item)))
+	{
+		if(!character.SellItem(item, scene))
+		{
+			cout << "Predmet (" << title.c_str() << ") nelze prodat (predmet nemas v inventari)" << endl;
+			return false;
+		} else {
+			cout << "Prodal jsi predmet (" << title.c_str() << ")" << endl;
+		}
+	} else {
+		cout << "Predmet (" << title.c_str() << ") ve scene nelze prodat" << endl;
+		return false;	
+	}
+	
+	return true;
+}
+
 int main(int argc, char **argv)
 {
 	bool exit = false;
@@ -435,6 +427,12 @@ int main(int argc, char **argv)
 		return -1;
 	}
 	
+	if(!g_gameEngine.NewGame())
+	{
+		cout << g_gameEngine.GetLastErrorString().c_str() << endl;
+		return -1;
+	}
+	
 	// main loop
 	while(!exit)
 	{
@@ -446,7 +444,7 @@ int main(int argc, char **argv)
 			return 0;
 		}
 		
-		cout << "Zadej cislo akce nebo prikaz (exit, char, scene, pickup, drop, use): " << endl;
+		cout << "Zadej cislo akce nebo prikaz (exit, char, scene, pickup, drop, use, buy, sell): " << endl;
 		while (true)
 		{
 			cout << "> ";
@@ -462,7 +460,7 @@ int main(int argc, char **argv)
 			
 			if(act.Cmp(wxT("char")) == 0)
 			{
-				WriteCharacterState();
+				WriteCharacterState(g_gameEngine.GetMainCharacter());
 				continue;
 			}
 			
@@ -474,7 +472,7 @@ int main(int argc, char **argv)
 			
 			if(act.Cmp(wxT("pickup")) == 0)
 			{
-				cout << "Zadej cislo predmetu ze sceny pro zvednuti: ";
+				cout << "Zadej cislo predmetu ze sceny pro zvednuti nebo 'gold' pro zvednuti zlata: ";
 				cout.flush();
 				cin >> input;
 				act = input;
@@ -506,7 +504,33 @@ int main(int argc, char **argv)
 				act = input;
 				if(UseItem(act, g_gameEngine.GetMainCharacter()))
 				{
-					WriteCharacterState();
+					WriteCharacterState(g_gameEngine.GetMainCharacter());
+				}
+				continue;
+			}
+			
+			if(act.Cmp(wxT("buy")) == 0)
+			{
+				cout << "Zadej cislo kupovaneho predmetu: ";
+				cout.flush();
+				cin >> input;
+				act = input;
+				if(BuyItem(act, *g_gameEngine.GetActualScene(), g_gameEngine.GetMainCharacter()))
+				{
+					WriteScene(*g_gameEngine.GetActualScene());
+				}
+				continue;
+			}	
+			
+			if(act.Cmp(wxT("sell")) == 0)
+			{
+				cout << "Zadej cislo prodavaneho predmetu z inventare: ";
+				cout.flush();
+				cin >> input;
+				act = input;
+				if(SellItem(act, *g_gameEngine.GetActualScene(), g_gameEngine.GetMainCharacter()))
+				{
+					WriteScene(*g_gameEngine.GetActualScene());
 				}
 				continue;
 			}

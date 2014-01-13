@@ -6,6 +6,7 @@
 #include "actions.h"
 #include "disciplines.h"
 #include "items.h"
+#include "chaptermgr.h"
 
 /*!
  * \class GlobalResourceManager
@@ -19,12 +20,14 @@ class GlobalResourceManager {
 	ActionManager m_actionMgr;
 	DisciplinesManager m_disciplineMgr;
 	ItemAndWeaponManager m_itemAndWeaponMgr;
+	ChapterMgr m_chapterMgr;
 public:
 	GlobalResourceManager() {}
 
 	inline ActionManager& GetActionMgr() {return m_actionMgr;}
 	inline DisciplinesManager& GetDisciplineMgr() {return m_disciplineMgr;}
 	inline ItemAndWeaponManager& GetItemAndDiscMgr() {return m_itemAndWeaponMgr;}
+	inline ChapterMgr& GetChapterMgr() { return m_chapterMgr;}
 };
 
 

@@ -4,62 +4,143 @@ To change this template, choose Tools | Templates
 and open the template in the editor.
 -->
 
+<definitions>
+	<chapters>
+		<chapter id="1" file="chapter01.xml">
+			<title lang="cs">Lone Wolf: Útok ze tmy</title>
+		</chapter>
+	</chapters>
+	<actions>
+		<action_create_character>
+			<desc lang="cs">Vytvoř postavu</desc>
+		</action_create_character>
+		<action_lotery> 
+			<desc lang="cs">Náhodný výběr</desc>
+		</action_lotery>
+		<action_move>
+			<desc lang="cs">Pokračuj dál</desc>
+		</action_move>
+		<action_fight> 
+			<desc lang="cs">Boj</desc>
+		</action_fight>
+    </actions>
+    <items>
+		<!-- Weapon items -->
+		<item id="1" name="dagger" placement="weapon">
+			<title lang="cs">Dýka</title>
+		</item>
+       <item id="2" name="spear" placement="weapon">
+			<title lang="cs">Kopí</title>
+		</item>
+		<item id="3" name="mace" placement="weapon">
+			<title lang="cs">Palcát</title>
+		</item>
+       <item id="4" name="short_sword" placement="weapon">
+			<title lang="cs">Krátký meč</title> 
+		</item>
+       <item id="5" name="warhammer" placement="weapon">
+			<title lang="cs">Válečné kladivo</title>
+		</item>
+       <item id="6" name="sword" placement="weapon">
+			<title lang="cs">Meč</title> 
+		</item>
+       <item id="7" name="axe" placement="weapon">
+			<title lang="cs">Sekyra</title>
+	   </item>
+       <item id="8" name="quaterstaff" placement="weapon">
+			<title lang="cs">Bojová hůl</title>
+	   </item>
+       <item id="9" name="broadsword" placement="weapon">
+			<title lang="cs">Meč s šírokou čepelí</title>
+	   </item>
+		
+		<!-- Virtual weapons items - this is for game rules -->
+		<item id="20" name="random_weapon" placement="weapon">
+			<title lang="cs">Náhodně vybraná zbraň</title>
+		</item>
+		<item id="21" name="all_weapons" placement="weapon">
+			<title lang="cs">Všechny zbraně</title>
+		</item>
+		
+		<!-- Backpack items -->
+		<item id="30" name="meal" placement="backpack" one_use="">
+			<title lang="cs">Porce jídla</title>
+		</item>
+       <item id="31" name="healing_potion" placement="backpack" cond_actual="4" one_use="" free_use="">
+			<title lang="cs">Léčivý elixír</title>
+			<desc lang="cs">Vypiješ-li nápoj po boji, obnovíš si čtyři ze ztracených KONDIČNÍCH bodů. Množství elixíru je ale omezené, stačí jen na jedno použití.</desc>
+		</item>
+		<item id="32" name="healing_herb" placement="backpack" cond_actual="3" one_use="" free_use="">
+			<title lang="cs">Léčivá bylina</title>
+			<desc lang="cs">Jednou porcí léčivé byliny laumspuru získáš zpět 3 KONDIČNÍ body</desc>
+		</item>
+		<item id="99" name="random_backpack_item" placement="backpack">
+			<title lang="cs">Náhodně vybraný předmět z batohu</title>
+		</item>
+		
+		<!-- Special items -->
+		<item id="100" name="backpack" placement="body_back">
+			<title lang="cs">Batoh</title>
+			<desc lang="cs">Vak nošený na zádech na přenášení až 8 věcí</desc>
+		</item>
+       <item id="101" name="helmet" placement="body_head" cond_max="2">
+			<title lang="cs">Přilba</title>
+			<desc lang="cs">Přidá další dva body k součtu v KONDICI</desc>
+		</item>
+       <item id="102" name="chainmail_waistcoat" placement="body_torso" cond_max="4">
+			<title lang="cs">Drátěná vesta</title>
+			<desc lang="cs">Posílí součet KONDIČNÍCH bodů o čtyři.</desc>
+		</item>
+		<item id="103" name="vordak_gem" placement="special">
+			<title lang="cs">Vordakům drahokam</title>
+			<desc lang="cs">Drahokam nesmírné ceny od temného pána.</desc>
+		</item>
+		<item id="104" name="golden_key" placement="special">
+			<title lang="cs">Zlatý klíč</title>
+			<desc lang="cs">Zlatý klíč z tajné místnosti</desc>
+		</item>
+    </items>
+	 <disciplines>
+       <skill id="1" name="camouflage" non_fight_skill="">
+			<title lang="cs">Maskování</title>
+			<desc lang="cs">Maskování umožňuje rytířům Kai splynout s okolím. Ve volné přírodě mohou beze stopy zmizet mezi stromy a skalami a přiblížit se nepozorovaně až těsně k nepříteli. Ve městě se rytíři řádu Kai stávají díky Maskování zcela nenápadnými, podobají se místnímu obyvatelstvu a mluví bez cizího přízvuku. Snadno najdou útočiště nebo bezpečnou skrýš.</desc>
+		</skill>
+       <skill id="2" name="hunting" non_fight_skill="">
+			<title lang="cs">Lov</title>
+			<desc lang="cs">Umění lovu dává rytíři Kai jistotu, že v divočině nebude nikdy hladovět. Pokud se rytíř řádu Kai neocitne v nehostinné pustině nebo na poušti, bude vždy schopen obstarat si potravu. Tato dovednost se může hodit všude, protože umožňuje rytíři Kai rychlé a obratné přesuny z místa na místo.</desc>
+		</skill>
+       <skill id="3" name="sixth_sense" non_fight_skill="">
+			<title lang="cs">Šestý smysl</title>
+			<desc lang="cs">Díky schopnosti Šestý smysl se může rytíř řádu Kai vyhnout bezprostřednímu nebezpečí. Pomůže mu odhalit pravé záměry neznámé osoby nebo odkrýt účel neobvyklého předmětu, se kterým se během dobrodružné výpravy setká.</desc>
+		</skill>
+       <skill id="4" name="tracking" non_fight_skill="">
+ 			<title lang="cs">Stopování</title>
+			<desc lang="cs">Stopování je dovednost, která pomáhá rytíři Kai najít v divočině správnou cestu, vypátrat polohu jiného člověka či tvora a rozluštit tajemství šlépějí a stop.</desc>
+		</skill>
+		<skill id="5" name="healing" cond_actual="1" non_fight_skill="">
+			<title lang="cs">Léčitelství</title>
+			<desc lang="cs">Léčitelství je disciplína, která slouží k regeneraci sil, tj. k obnově bodů za KONDICI, které rytíř Kai ztratil v boji. Pokud tuto dovednost ovládáš, můžeš si připočítat k bodům za KONDICI vždy po jednom bodu za každou očíslovanou pasáž knihy, kterou projdeš, aniž se zapleteš do nějaké potyčky. (Využít tohoto pravidla však můžeš jen tehdy, když počet bodů v okénku KONDICE klesne pod výchozí hodnotu.) Nezapomeň, že tvoje KONDICE nemůže přerůst přes původní úroveň.</desc>
+		</skill>
+       <skill id="6" name="weaponskill" attack_actual="2" item_needed="random_weapon">
+			<title lang="cs">Ovládání zbraně</title>
+			<desc lang="cs">Mniši kláštera Kai vycvičili každého učedníka v dokonalém ovládání jednoho druhu zbraně. Pokud ses rozhodl, že jednou z tvých disciplín Kai bude dovedné zacházení se zbraní, vyhledej obvyklým způsobem číslo v Tabulce náhody na poslední straně knihy. Podle čísla, které z ní získáš, zjistíš, kterou zbraň mistrně ovládáš (srovnej s přehledem níže). Když ji použiješ v boji, připočti si dva body do kolonky UMĚNÍ BOJE.</desc>
+		</skill>
+       <skill id="7" name="mindshield">
+			<title lang="cs">Nehmotná clona</title>
+			<desc lang="cs">Temní páni i další ďábelské stvůry, kterým velí, ovládají schopnost útočit silou vlastní mysli. Proti jejich výpadům se můžeš bránit vytvořením nehmotné duchovní clony, štítu, a tak neztratíš body z konta KONDICE, i když se staneš terčem útoku touto skrytou zbraní.</desc>
+		</skill>
+       <skill id="8" name="mindblast" attack_actual="2" canceled_by_skill="mindshield">
+			<title lang="cs">Útok duševní silou</title>
+			<desc lang="cs">Rytíř Kai, který ovládá tuto dovednost, může místo běžné zbraně použít proti nepříteli svou duševní sílu. Připočítá si pak dva zvláštní body k hodnotě UMĚNÍ BOJE. Ale pozor, ne všem netvorům, se kterými se na své dlouhé dobrodružné cestě střetneš, duševní síla škodí. Včas se dozvíš, je-li tvůj nepřítel odolný.</desc>
+		</skill>
+		<skill id="9" name="animal_kinship" non_fight_skill="">
+			<title lang="cs">Spřízněnost se zvířaty</title>
+			<desc lang="cs">Je disciplína, díky níž může rytíř Kai komunikovat s některými zvířaty a úmysly jiných může uhodnout.</desc>
+		</skill>
+       <skill id="10" name="mind_over_matter" non_fight_skill="">
+			<title lang="cs">Ovládání hmoty myšlenkou</title>
+			<desc lang="cs">Dokonalé zvládnutí této disciplíny vybaví rytíře Kai schopností pohybovat malými předměty pouhou silou koncentrace, silou vůle soustředěné na určitý předmět.</desc>
+		</skill>
+	</disciplines>
+</definitions>
 
-<root>
-  <definitions>
-        <actions>
-            <action name="create_character" desc="Vytvoř postavu" />
-            <action name="lotery" desc="Náhodný výběr" />
-            <action name="move" />
-			<action name="fight" desc="Boj" />
-        </actions>
-        <items>
-           <weapon id="1" name="dagger" title="Dýka" placement="weapon" />
-           <weapon id="2" name="spear" title="Kopí" placement="weapon" />
-           <weapon id="3" name="mace" title="Palcát" placement="weapon" />
-           <weapon id="4" name="short_sword" title="Krátký meč" placement="weapon" />
-           <weapon id="5" name="warhammer" title="Válečné kladivo" placement="weapon" />
-           <weapon id="6" name="sword" title="Meč" placement="weapon" />
-           <weapon id="7" name="axe" title="Sekyra" placement="weapon" />
-           <weapon id="8" name="quaterstaff" title="Bojová hůl" placement="weapon" />
-           <weapon id="9" name="broadsword" title="Meč s šírokou čepelí" placement="weapon" />
-			
-			<weapon id="21" name="all_weapons" title="Všechny zbraně" placement="weapon" />
-			<weapon id="20" name="random_weapon" title="Náhodně vybraná zbraň" placement="weapon" />
-
-			<item id="30" name="meal" title="Porce jídla" placement="backpack" one_use="" />
-           <item id="31" name="healing_potion" title="Léčivý elixír" desc="Vypiješ-li nápoj po boji, obnovíš si čtyři ze ztracených KONDIČNÍCH bodů. Množství elixíru je ale omezené, stačí jen na jedno použití."
-								placement="backpack" cond_actual="4" one_use="" free_use="" />
-			<item id="32" name="healing_herb" title="Léčivá bylina" desc="Jednou porcí léčivé byliny laumspuru získáš zpět 3 KONDIČNÍ body" placement="backpack" cond_actual="3" one_use="" free_use="" />
-			<item id="99" name="random_backpack_item" title="Náhodně vybraný předmět z batohu" placement="backpack" />
-
-			<item id="100" name="backpack" title="Batoh" desc="Vak nošený na zádech na přenášení až 8 věcí" placement="body_back" />
-           <item id="101" name="helmet" title="Přilba" desc="Přidá další dva body k součtu v KONDICI" placement="body_head" cond_max="2" />
-           <item id="102" name="chainmail_waistcoat" title="Drátěná vesta" desc="Posílí součet KONDIČNÍCH bodů o čtyři." placement="body_torso" cond_max="4" />
-			<item id="103" name="vordak_gem" title="Vordakům drahokam" desc="Drahokam nesmírné ceny od temného pána." placement="special" />
-			<item id="104" name="golden_key" title="Zlatý klíč" desc="Zlatý klíč z tajné místnosti" placement="special" />
-        </items>
-		 <disciplines>
-            <skill id="1" name="camouflage" title="Maskování" desc="Maskování umožňuje rytířům Kai splynout s okolím. Ve volné přírodě mohou beze stopy zmizet mezi stromy a skalami a přiblížit se nepozorovaně až těsně k nepříteli.
-				Ve městě se rytíři řádu Kai stávají díky Maskování zcela nenápadnými, podobají se místnímu obyvatelstvu a mluví bez cizího přízvuku. Snadno najdou útočiště nebo bezpečnou skrýš." non_fight_skill="" />
-            <skill id="2" name="hunting" title="Lov" desc="Umění lovu dává rytíři Kai jistotu, že v divočině nebude nikdy hladovět. Pokud se rytíř řádu Kai neocitne v nehostinné pustině nebo na poušti, bude vždy schopen obstarat si potravu.
-				Tato dovednost se může hodit všude, protože umožňuje rytíři Kai rychlé a obratné přesuny z místa na místo." non_fight_skill="" />
-            <skill id="3" name="sixth_sense" title="Šestý smysl" desc="Díky schopnosti Šestý smysl se může rytíř řádu Kai vyhnout bezprostřednímu nebezpečí. Pomůže mu odhalit pravé záměry neznámé osoby nebo odkrýt účel neobvyklého předmětu,
-				se kterým se během dobrodružné výpravy setká." non_fight_skill=""/>
-            <skill id="4" name="tracking" title="Stopování" desc="Stopování je dovednost, která pomáhá rytíři Kai najít v divočině správnou cestu, vypátrat polohu jiného člověka či tvora a rozluštit tajemství šlépějí a stop." non_fight_skill="" />
-            <skill id="5" name="healing" title="Léčitelství" desc="Léčitelství je disciplína, která slouží k regeneraci sil, tj. k obnově bodů za KONDICI, které rytíř Kai ztratil v boji. Pokud tuto dovednost ovládáš,
-				můžeš si připočítat k bodům za KONDICI vždy po jednom bodu za každou očíslovanou pasáž knihy, kterou projdeš, aniž se zapleteš do nějaké potyčky. (Využít tohoto pravidla však můžeš jen tehdy,
-				když počet bodů v okénku KONDICE klesne pod výchozí hodnotu.) Nezapomeň, že tvoje KONDICE nemůže přerůst přes původní úroveň." cond_actual="1" non_fight_skill="" />
-            <skill id="6" name="weaponskill" title="Ovládání zbraně" desc="Mniši kláštera Kai vycvičili každého učedníka v dokonalém ovládání jednoho druhu zbraně. Pokud ses rozhodl, že jednou z tvých disciplín Kai bude dovedné zacházení se zbraní,
-				vyhledej obvyklým způsobem číslo v Tabulce náhody na poslední straně knihy. Podle čísla, které z ní získáš, zjistíš, kterou zbraň mistrně ovládáš (srovnej s přehledem níže). Když ji použiješ v boji,
-					připočti si dva body do kolonky UMĚNÍ BOJE." attack_actual="2" item_needed="random_weapon" />
-            <skill id="7" name="mindshield" title="Nehmotná clona" desc="Temní páni i další ďábelské stvůry, kterým velí, ovládají schopnost útočit silou vlastní mysli. Proti jejich výpadům se můžeš bránit vytvořením nehmotné duchovní clony,
-				štítu, a tak neztratíš body z konta KONDICE, i když se staneš terčem útoku touto skrytou zbraní." />
-            <skill id="8" name="mindblast" title="Útok duševní silou" desc="Rytíř Kai, který ovládá tuto dovednost, může místo běžné zbraně použít proti nepříteli svou duševní sílu. Připočítá si pak dva zvláštní body k hodnotě UMĚNÍ BOJE.
-				Ale pozor, ne všem netvorům, se kterými se na své dlouhé dobrodružné cestě střetneš, duševní síla škodí. Včas se dozvíš, je-li tvůj nepřítel odolný." attack_actual="2" canceled_by_skill="mindshield" />
-            <skill id="9" name="animal_kinship" title="Spřízněnost se zvířaty" desc="Je disciplína, díky níž může rytíř Kai komunikovat s některými zvířaty a úmysly jiných může uhodnout." non_fight_skill="" />
-            <skill id="10" name="mind_over_matter" title="Ovládání hmoty myšlenkou" desc="Dokonalé zvládnutí této disciplíny vybaví rytíře Kai schopností pohybovat malými předměty pouhou silou koncentrace, silou vůle soustředěné na určitý předmět."
-						non_fight_skill="" />
-        </disciplines>
-  </definitions>
-</root>

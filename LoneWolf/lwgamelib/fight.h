@@ -150,7 +150,7 @@ public:
 	 * \param callback
 	 * \return Next target
 	 */
-	wxInt32 StartFight(Character &loneWolf, LWGameEngineCallback *callback);
+	wxInt32 StartFight(Character &loneWolf, LWGameEngineCallback *callback, GlobalResourceManager &resMgr);
 	
 	/*!
 	 * \brief Set retreat flag

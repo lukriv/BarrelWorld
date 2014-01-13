@@ -253,6 +253,7 @@ public:
 	bool AddNewCharacterDiscipline(EDisciplines disc, DisciplineProperties *pDiscProp = NULL);
 	
 	inline wxInt32 GetMaxGoldCount() {return m_maxGoldCount;}
+	inline wxInt32 GetGoldCount() { return m_pouch; }
 	
 	inline void SetCharacterName(const wxString& name) { m_charName = name; }
 	inline const wxString& GetCharacterName() const { return m_charName; }
@@ -341,9 +342,16 @@ public:
 	 */
 	void GetFreeUseItemList(wxVector<EItem> &itemList);
 	
+	bool BuyItem(EItem item, Scene& scene);
+	bool SellItem(EItem item, Scene& scene);
 	bool PickUpItem(EItem item, Scene& scene);
 	bool DropItem(EItem item, Scene& scene);
-	bool PickUpGold(Scene& scene);
+	/*!
+	 * \brief Pick up all gold from the scene which character can
+	 * \param scene
+	 * \return Amount of picked up gold
+	 */
+	wxInt32 PickUpGold(Scene& scene);
 	
 	bool AddItem(EItem item);
 	bool LoseItem(EItem item);

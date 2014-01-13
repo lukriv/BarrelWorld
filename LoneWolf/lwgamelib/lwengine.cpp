@@ -4,10 +4,11 @@
 #include "reader.h"
 #include "lwxmldefs.h"
 
+static const wxChar* XML_FILE_PATH = wxT("../../chapters/");
 
 bool LWGameEngine::Initialize(LWGameEngineCallback* pCallback)
 {
-	
+	wxString filename;
 	if (pCallback == NULL)
 	{
 		m_errorStr.assign(wxT("Callback function cannot be NULL"));
@@ -18,27 +19,17 @@ bool LWGameEngine::Initialize(LWGameEngineCallback* pCallback)
 	// initialize random generator
 	srand(time(NULL));
 	
-	if(!LoneWolfXmlReader::LoadTextDefinitions(wxT("../../chapters/textdefs.xml"), m_resMgr))
+	
+	filename = XML_FILE_PATH;
+	filename.Append(wxT("textdefs.xml"));
+	if(!LoneWolfXmlReader::LoadTextDefinitions(filename, m_resMgr))
 	{
-		m_errorStr.assign(wxT("Chyba pri cteni souboru ../../chapters/textdefs.xml\n"));
+		m_errorStr.Printf(wxT("Chyba pri cteni souboru %s\n"), filename.c_str());
 		m_errorStr.Append(LoneWolfXmlReader::GetLastErrorString());
 		return false;
 	}
 	
-	if(!LoneWolfXmlReader::LoadChapter(wxT("../../chapters/utokzetmy.xml"), m_resMgr, m_sceneMgr))
-	{
-		m_errorStr.assign(wxT("Chyba pri cteni souboru ../../chapters/utokzetmy.xml\n"));
-		m_errorStr.Append(LoneWolfXmlReader::GetLastErrorString());
-		return false;		
-	}
-	
 
-	
-	//if(scnMgr.SceneMapTest())
-	//{
-	//	m_errorStr.assign(wxT("Scene map test failed"));
-	//	return false;
-	//}
 	
 	if(!m_mainCharacter.Initialize(&m_resMgr))
 	{
@@ -46,6 +37,36 @@ bool LWGameEngine::Initialize(LWGameEngineCallback* pCallback)
 		return false;
 	}
 
+
+	
+	return true;
+	
+}
+
+bool LWGameEngine::NewGame()
+{
+	wxString filename = XML_FILE_PATH;
+	Chapter *pChapter = m_resMgr.GetChapterMgr().GetChapter(INITIAL_CHAPTER);
+	if(pChapter == NULL)
+	{
+		m_errorStr.assign(wxT("Chapter not found\n"));
+		return false;
+	}
+	
+	filename.Append(pChapter->m_file);
+	if(!LoneWolfXmlReader::LoadChapter(filename, m_resMgr, m_sceneMgr))
+	{
+		m_errorStr.Printf(wxT("Chyba pri cteni souboru %s\n"), filename.c_str());
+		m_errorStr.Append(LoneWolfXmlReader::GetLastErrorString());
+		return false;		
+	}
+	
+	//if(scnMgr.SceneMapTest())
+	//{
+	//	m_errorStr.assign(wxT("Scene map test failed"));
+	//	return false;
+	//}
+	
 	if(!m_mainCharacter.GenerateNewCharacter())
 	{
 		m_errorStr.assign(wxT("Create new character failed"));
@@ -63,7 +84,6 @@ bool LWGameEngine::Initialize(LWGameEngineCallback* pCallback)
 	}
 	
 	return true;
-	
 }
 
 bool LWGameEngine::RunAction(wxDword actionIndex)
@@ -108,6 +128,8 @@ bool LWGameEngine::RunAction(wxDword actionIndex)
 				m_errorStr.Printf(wxT("Scene %u cannot be found"), nextTarget);
 				return false;
 			}
+			// apply non-fight skill
+			m_mainCharacter.ApplySkills(); 
 			break;
 		}
 		case ACTION_LOTERY:
@@ -125,7 +147,7 @@ bool LWGameEngine::RunAction(wxDword actionIndex)
 		case ACTION_FIGHT:
 		{
 			ActionFight* pActionFight = static_cast<ActionFight*>(m_pActualScene->m_actions[actionIndex]);
-			wxInt32 nextTarget = pActionFight->StartFight(m_mainCharacter, m_pUserInteractionCallback);
+			wxInt32 nextTarget = pActionFight->StartFight(m_mainCharacter, m_pUserInteractionCallback, m_resMgr);
 			if(nextTarget != TARGET_UNKNOWN)
 			{
 				m_pActualScene = m_sceneMgr.GetScene(nextTarget);
@@ -243,9 +265,21 @@ bool LWGameEngine::RunEvent(EventBase* pEvent)
 			m_mainCharacter.AddActualCondition(-m_mainCharacter.GetActualConditions());
 			break;
 		}
+		case EVENT_CHARACTER:
+		{
+			Event *pCharacterEvent = static_cast<Event*>(pEvent);
+			if(!m_mainCharacter.ApplyEvent(*pCharacterEvent))
+			{
+				m_errorStr.assign(wxT("Character event cannot be applied\n"));
+				return false;				
+			}
+			break;
+		}
 		case EVENT_UNKNOWN:
 		default:
+			m_errorStr.assign(wxT("Cannot run unknown event!\n"));
 			return false;
 	}
 	return true;
 }
+

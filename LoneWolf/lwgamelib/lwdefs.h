@@ -65,6 +65,7 @@ enum EEventType {
 	EVENT_ADD_GOLD_TO_SCENE			= 4,
 	EVENT_FIGHT						= 5, //fight event
 	EVENT_DEAD						= 6, // instant dead
+	EVENT_CHARACTER					= 7, // generic character modification
 	
 	// event types for event lists type
 	EVENT_LOTERY					= 20,

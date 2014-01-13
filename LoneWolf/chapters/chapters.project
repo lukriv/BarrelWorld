@@ -8,10 +8,10 @@
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="xmlchapters">
-    <File Name="utokzetmy.xml"/>
     <File Name="textdefs.xml"/>
     <File Name="defs.xml"/>
     <File Name="actiontest.xml"/>
+    <File Name="chapter01.xml"/>
   </VirtualDirectory>
   <Settings Type="Executable">
     <GlobalSettings>

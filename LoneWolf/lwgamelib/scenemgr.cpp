@@ -162,6 +162,97 @@ bool Scene::ContainsItem(EItem item)
 	return false;
 }
 
+void Scene::AddItemToBuy(EItem item, wxInt32 price)
+{
+	ShopArticle article;
+	article.m_item = item;
+	article.m_goldCount = price;
+	m_goodsToBuy.push_back(article);
+}
+
+bool Scene::AddItemToSell(EItem item, wxInt32 price)
+{
+	std::pair<TArticleMap::iterator, bool> retval;
+	if(price <= 0) return false;
+	retval = m_goodsToSell.insert(TArticleMapPair(item, price));
+	return retval.second;
+}
+
+bool Scene::ContainsItemToBuy(EItem item)
+{
+	for(TArticleVector::iterator iter = m_goodsToBuy.begin(); iter != m_goodsToBuy.end(); iter++)
+	{
+		if(iter->m_item == item)
+		{
+			return true;
+		}
+	}
+	
+	return false;
+}
+
+bool Scene::ContainsItemToSell(EItem item)
+{
+	return (m_goodsToSell.find(item) != m_goodsToSell.end());
+}
+
+void Scene::GetItemToBuyList(Scene::TArticleVector& sceneItemList)
+{
+	sceneItemList = m_goodsToBuy;
+}
+
+void Scene::GetItemToSellList(Scene::TArticleVector& sceneItemList)
+{
+	ShopArticle article;
+	sceneItemList.clear();
+	for(TArticleMap::iterator iter = m_goodsToSell.begin(); iter != m_goodsToSell.end(); iter++)
+	{
+		article.m_item = iter->first;
+		article.m_goldCount = iter->second;
+		sceneItemList.push_back(article);
+	}
+}
+
+wxInt32 Scene::RemoveItemToBuy(EItem item)
+{
+	wxInt32 price = 0;
+	for(TArticleVector::iterator iter = m_goodsToBuy.begin(); iter != m_goodsToBuy.end(); iter++)
+	{
+		if(iter->m_item == item)
+		{
+			price = iter->m_goldCount;
+			m_goodsToBuy.erase(iter);
+			break;
+		}
+	}
+	
+	return price;
+}
+
+wxInt32 Scene::GetItemToBuyPrice(EItem item)
+{
+	for(TArticleVector::iterator iter = m_goodsToBuy.begin(); iter != m_goodsToBuy.end(); iter++)
+	{
+		if(iter->m_item == item)
+		{
+			return iter->m_goldCount;
+		}
+	}
+	
+	return 0;
+}
+
+wxInt32 Scene::GetItemToSellPrice(EItem item)
+{
+	TArticleMap::iterator iter = m_goodsToSell.find(item);
+	if(iter == m_goodsToSell.end())
+	{
+		return 0;
+	}
+	
+	return iter->second;
+}
+
 //////////////////////////////////////////////
 /////////////// SceneManager //////////////////
 //////////////////////////////////////////////
