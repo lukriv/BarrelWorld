@@ -37,6 +37,7 @@ public:
 	~LWGameEngine() {}
 	
 	bool Initialize(LWGameEngineCallback *pCallback);
+	bool NewGame();
 	
 	inline Scene* GetActualScene() { return m_pActualScene;}
 	inline GlobalResourceManager& GetResMgr() { return m_resMgr; }

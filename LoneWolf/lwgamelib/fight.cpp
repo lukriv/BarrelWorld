@@ -44,7 +44,7 @@ wxInt32 ActionFight::GetNextTarget()
 
 bool ActionFight::Retreat()
 {
-	if((m_retreatTarget > TARGET_UNKNOWN)&&(m_turnsToRetreat <= m_turnNumber))
+	if((m_retreatTarget > TARGET_UNKNOWN)&&(m_turnsToRetreat != TURNS_INFINITE)&&(m_turnsToRetreat <= m_turnNumber))
 	{
 		m_retreat = true;
 		return true;
@@ -53,18 +53,24 @@ bool ActionFight::Retreat()
 	return false;
 }
 
-wxInt32 ActionFight::StartFight(Character& loneWolf, LWGameEngineCallback* callback)
+wxInt32 ActionFight::StartFight(Character& loneWolf, LWGameEngineCallback* callback, GlobalResourceManager& resMgr)
 {
 	wxInt32 resultAttackSkill = 0;
 	const FightTable *actualFightTable = NULL;
 	m_pLoneWolf = &loneWolf;
-	while((loneWolf.GetActualConditions() > 0 )&&(!m_enemies.empty())&&(!m_retreat)&&(m_turnsToWin >= m_turnNumber))
+	Event barehands;
+	barehands.m_property.m_actualAttack = -4;
+	barehands.m_property.m_cancelItem = resMgr.GetItemAndDiscMgr().GetRandomWeaponType();
+	while((loneWolf.GetActualConditions() > 0 )
+			&&(!m_enemies.empty())
+			&&(!m_retreat)
+			&&((m_turnsToWin >= m_turnNumber)||(m_turnsToWin == TURNS_INFINITE)))
 	{
 		Character *pEnemy = &(m_enemies.front());
 		while((loneWolf.GetActualConditions() > 0)
 			&&(pEnemy->GetActualConditions() > 0)
 			&&(!m_retreat)
-			&&(m_turnsToWin >= m_turnNumber))
+			&&((m_turnsToWin >= m_turnNumber)||(m_turnsToWin == TURNS_INFINITE)))
 		{
 			// reset attack skill
 			loneWolf.ResetActualAttackSkill();
@@ -94,6 +100,12 @@ wxInt32 ActionFight::StartFight(Character& loneWolf, LWGameEngineCallback* callb
 				// go to next event
 				iter++;
 			}
+			//apply barehands event
+			if(!loneWolf.ApplyEvent(barehands))
+			{
+				return TARGET_UNKNOWN;
+			}
+			
 			// apply skills to lonewolf
 			loneWolf.ApplySkills(*pEnemy);
 			// apply skills to enemy

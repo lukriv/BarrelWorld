@@ -57,10 +57,10 @@ static const ConvertTable ItemPlacementConvert[] =
 
 static const ConvertTable ActionConvert[] = 
 {
-	{ ACTION_CREATE_CHAR, 	ACTION_CREATE_CHAR_STR},
-	{ ACTION_MOVE, 			ACTION_MOVE_STR},
-	{ ACTION_LOTERY, 		ACTION_LOTERY_STR},
-	{ ACTION_FIGHT, 		ACTION_FIGHT_STR}
+	{ ACTION_CREATE_CHAR, 	GENERAL_TAG_ACTION_CREATE_STR},
+	{ ACTION_MOVE, 			GENERAL_TAG_ACTION_MOVE_STR},
+	{ ACTION_LOTERY, 		GENERAL_TAG_ACTION_LOTERY_STR},
+	{ ACTION_FIGHT, 		GENERAL_TAG_ACTION_FIGHT_STR}
 };
 
 static const ConvertTable EventConvert[] = 
@@ -71,6 +71,7 @@ static const ConvertTable EventConvert[] =
 	{ EVENT_ADD_GOLD_TO_SCENE,		EVENT_ADD_GOLD_TO_SCENE_STR},
 	{ EVENT_LOTERY,					EVENT_LOTERY_STR},
 	{ EVENT_DEAD,					EVENT_DEAD_STR},
+	{ EVENT_CHARACTER,				EVENT_CHARACTER_STR},
 };
 
 /////////////////////////////////////////////////////////

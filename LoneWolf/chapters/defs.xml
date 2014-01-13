@@ -1,20 +1,52 @@
 
+
+
+    <scene id="1">
+        <desc lang="cs">
+			<![CDATA[<p>Cítíš, že otálení u doutnajících trosek kláštera není bezpečné a mohlo by
+			být osudné, kdyby se okřídlené nestvůry vrátily a našly tě tu. Je třeba co
+			nejrychleji vyrazit do sommerlundské metropole, do Holmgardu, a vylíčit
+			králi tragickou událost, která postihla klášter, oznámit mu, že výkvět
+			bojovníků Kai byl zákeřně do jednoho vyvražděn a ty, učedník Kai, jsi
+			stejnému osudu unikl jen náhodou. Ted stojí sommerlundští bezmocní proti
+			odvěkým nepřátelům, vždyť jen rytíři Kai mohli vést sommerlundská
+			vojska do úspěšného boje proti Temným pánům a všem, kteří jsou v jejich
+			službách.</p>
+			<p>Se stěží zadržovanými slzami dáváš věčné sbohem svým mrtvým druhům a
+			učitelům. Šeptáš třesoucím se hlasem slib pomsty za jejich úkladné zabití.
+			S hlavou sklopenou se obracíš zády k troskám a opatrně sestupuješ příkrou
+			strání dolů.</p>
+			<p>U úpatí vrchu se stezka dělí. Obě pěšiny, které vedou dál, míří k rozlehlým
+			lesům.</p>]]>
+		</desc>
       <actions>
-			<action name="create_character" target="1" />
-			<action name="fight" win="13" retreat="54" lost="55" turn_to_retreat="2" turn_to_win="3">
-				<fight_event attack_actual="-1" duration="2" canceled_by_item="" canceled_by_skill="" />
-				<enemy title="kraan" attack="16" condition="24" skills="" >
-					<skill name="mindblast" attack_actual="2" />
-					<skill name="mindshield" />
+			<action_create_character target="1" />
+			<action_fight win="13" retreat="54" lost="55" turn_to_retreat="2" turn_to_win="3">
+				<fight_event attack_actual="-1" cond_actual="-1" duration="2" canceled_by_item="lonewolfItem" canceled_by_skill="lonewolfSkill" />
+				<enemy attack="16" condition="24" >
+					<title lang="cs">enemy_name</title>
+					<skill name="skillname" attack_actual="5" canceled_by_skill="enemy_skill_name" canceled_by_item="enemy_item" />
 				</enemy>
-			</action>
-			<action name="move" desc="Vydat se po cestě, která mizí v lese napravo" target="85" />
-			<action name="lotery">
+			</action_fight>
+			<action_lotery>
                 <selection numbers_from="0" numbers_to="4" target="343" />
                 <selection numbers_from="5" numbers_to="9" target="276" />
-           </action>
+           </action_lotery>
+		    <action_move target="85" skill_needed="lonewolfSkill" item_needed="lonewolfItem" />
+				<desc lang="cs">description</desc>
+			</action_move>
+			<action_move target="85" conditioned=""> <!-- is enambled only when other skill or item conditioned actions are disabled -->
+				<desc lang="cs">description</desc>
+			</action_move>
 		</actions>
-
+		 <items>
+				<item name="healing_potion" />
+		 </items>
+		 <merchandise>
+			<buy item="itemname" gold_count="goldcount" />
+			<sell item="itemname" gold_count="goldcount" />
+		 </merchandise>
+    </scene>
 
 1
 Cítíš, že otálení u doutnajících trosek kláštera není bezpečné a mohlo by být osudné, kdyby se okřídlené nestvůry vrátily a našly tě tu. Je třeba co nejrychleji vyrazit do sommerlundské metropole, do Holmgardu, a vylíčit králi tragickou událost, která postihla klášter, oznámit mu, že výkvět bojovníků Kai byl zákeřně do jednoho vyvražděn a ty, učedník Kai, jsi stejnému osudu unikl jen náhodou. Ted stojí sommerlundští bezmocní proti odvěkým nepřátelům, vždyť jen rytíři Kai mohli vést sommerlundská vojska do úspěšného boje proti Temným pánům a všem, kteří jsou v jejich službách.

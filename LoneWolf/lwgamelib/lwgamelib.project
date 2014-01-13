@@ -33,6 +33,7 @@
     <File Name="eventprop.h"/>
     <File Name="lwglobres.h"/>
     <File Name="fight.h"/>
+    <File Name="chaptermgr.h"/>
   </VirtualDirectory>
   <Settings Type="Static Library">
     <GlobalSettings>

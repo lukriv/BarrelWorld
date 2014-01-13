@@ -5,26 +5,33 @@
 static const wxChar* GENERAL_TAG_ROOT_STR			= wxT("root");
 static const wxChar* GENERAL_TAG_DEFINITIONS_STR	= wxT("definitions");
 static const wxChar* GENERAL_TAG_ACTIONS_STR		= wxT("actions");
-static const wxChar* GENERAL_TAG_ACTION_STR			= wxT("action");
+static const wxChar* GENERAL_TAG_ACTION_CREATE_STR	= wxT("action_create_character");
+static const wxChar* GENERAL_TAG_ACTION_LOTERY_STR	= wxT("action_lotery");
+static const wxChar* GENERAL_TAG_ACTION_MOVE_STR	= wxT("action_move");
+static const wxChar* GENERAL_TAG_ACTION_FIGHT_STR	= wxT("action_fight");
 static const wxChar* GENERAL_TAG_DISCIPLINES_STR	= wxT("disciplines");
 static const wxChar* GENERAL_TAG_SKILL_STR			= wxT("skill");
 static const wxChar* GENERAL_TAG_ITEMS_STR			= wxT("items");
-static const wxChar* GENERAL_TAG_WEAPON_STR			= wxT("weapon");
 static const wxChar* GENERAL_TAG_ITEM_STR			= wxT("item");
+static const wxChar* GENERAL_TAG_CHAPTERS_STR		= wxT("chapters");
 static const wxChar* GENERAL_TAG_CHAPTER_STR		= wxT("chapter");
 static const wxChar* GENERAL_TAG_SCENE_STR			= wxT("scene");
+static const wxChar* GENERAL_TAG_TITLE_STR			= wxT("title");
 static const wxChar* GENERAL_TAG_DESC_STR			= wxT("desc");
 static const wxChar* GENERAL_TAG_SELECTION_STR		= wxT("selection");
 static const wxChar* GENERAL_TAG_EVENTS_STR			= wxT("events");
 static const wxChar* GENERAL_TAG_EVENT_STR			= wxT("event");
+static const wxChar* GENERAL_TAG_MERCHANDISE_STR	= wxT("merchandise");
+static const wxChar* GENERAL_TAG_BUY_STR			= wxT("buy");
+static const wxChar* GENERAL_TAG_SELL_STR			= wxT("sell");
 static const wxChar* GENERAL_TAG_ENEMY_STR			= wxT("enemy");
 static const wxChar* GENERAL_TAG_FIGHT_EVENT_STR	= wxT("fight_event");
 
 
 //attribute names
 static const wxChar* GENERAL_ATTR_NAME_STR				= wxT("name");
-static const wxChar* GENERAL_ATTR_DESC_STR				= wxT("desc");
-static const wxChar* GENERAL_ATTR_TITLE_STR				= wxT("title");
+static const wxChar* GENERAL_ATTR_LANGUAGE_STR			= wxT("lang");
+static const wxChar* GENERAL_ATTR_FILENAME_STR			= wxT("file");
 static const wxChar* GENERAL_ATTR_ADD_INFO_STR			= wxT("addinfo");
 static const wxChar* GENERAL_ATTR_ID_STR				= wxT("id");
 static const wxChar* GENERAL_ATTR_TARGET_STR			= wxT("target");
@@ -37,6 +44,7 @@ static const wxChar* GENERAL_ATTR_CONDITIONED_STR		= wxT("conditioned");
 static const wxChar* GENERAL_ATTR_NUMBERS_FROM_STR		= wxT("numbers_from");
 static const wxChar* GENERAL_ATTR_NUMBERS_TO_STR		= wxT("numbers_to");
 static const wxChar* GENERAL_ATTR_PLACEMENT_STR			= wxT("placement");
+static const wxChar* GENERAL_ATTR_ITEM_STR				= wxT("item"); // buy or sell attribute
 static const wxChar* GENERAL_ATTR_COND_ACT_STR			= wxT("cond_actual"); 	// events
 static const wxChar* GENERAL_ATTR_COND_MAX_STR			= wxT("cond_max"); 		// events
 static const wxChar* GENERAL_ATTR_ATTACK_ACT_STR		= wxT("attack_actual"); // events
@@ -81,7 +89,7 @@ static const wxChar* WEAPON_QUATERSTAFF_STR		= wxT("quaterstaff");
 static const wxChar* WEAPON_BROADSWORD_STR		= wxT("broadsword");
 
 static const wxChar* WEAPON_RANDOM_STR			= wxT("random_weapon");
-static const wxChar* WEAPON_ALL_STR			= wxT("all_weapons");
+static const wxChar* WEAPON_ALL_STR				= wxT("all_weapons");
 
 //bag items
 //static const wxChar* BAG_ITEM_MEAL_STR				= wxT("meal");		
@@ -106,6 +114,7 @@ static const wxChar* EVENT_ADD_GOLD_TO_CHARACTER_STR = wxT("add_gold_to_characte
 static const wxChar* EVENT_ADD_GOLD_TO_SCENE_STR  	 = wxT("add_gold_to_scene"); // add gold to scene
 static const wxChar* EVENT_DEAD_STR  				 = wxT("dead"); // character dies imediately
 static const wxChar* EVENT_LOTERY_STR			  	 = wxT("lotery"); // add gold to scene
+static const wxChar* EVENT_CHARACTER_STR			 = wxT("character"); // generic event applied to character directly
 
 
 //items placement
@@ -116,12 +125,5 @@ static const wxChar* ITEM_PLACEMENT_BODY_TORSO_STR	= wxT("body_torso");
 static const wxChar* ITEM_PLACEMENT_BODY_BACK_STR	= wxT("body_back");
 static const wxChar* ITEM_PLACEMENT_POUCH_STR   	= wxT("pouch");
 static const wxChar* ITEM_PLACEMENT_SPECIAL_STR 	= wxT("special");
-
-//actions
-static const wxChar* ACTION_CREATE_CHAR_STR		= wxT("create_character");
-static const wxChar* ACTION_MOVE_STR			= wxT("move");
-static const wxChar* ACTION_LOTERY_STR			= wxT("lotery");
-static const wxChar* ACTION_FIGHT_STR			= wxT("fight");
-
 
 #endif //__LONE_WOLF_XML_TAGS_AND_ATTRIBUTES_H__

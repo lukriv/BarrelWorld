@@ -10,19 +10,32 @@
 
 class Character;
 
+struct ShopArticle {
+	EItem m_item;
+	wxInt32 m_goldCount;
+public:
+	ShopArticle() : m_item(ITEM_UNKNOWN), m_goldCount(0) {} 
+};
+
 class Scene {
 public:
 	typedef wxVector<EItem> TItemList;
+	typedef wxVector<ShopArticle> TArticleVector;
+private:
+	typedef std::map<EItem, wxInt32> TArticleMap;
+	typedef std::pair<EItem, wxInt32> TArticleMapPair;
 private:
 	wxInt32 m_sceneId;
 	TItemList m_sceneItems;
 	wxInt32 m_goldCount;
+	TArticleVector m_goodsToBuy;
+	TArticleMap m_goodsToSell;
 public:
 	wxString m_desc;
 	ActionVector m_actions;
 	EventVector m_events;
 public:
-	Scene() : m_sceneId(-1) {}
+	Scene() : m_sceneId(TARGET_UNKNOWN), m_goldCount(0) {}
 	~Scene() 
 	{
 		for(ActionVector::iterator iter = m_actions.begin(); iter != m_actions.end(); iter++)
@@ -75,6 +88,51 @@ public:
 	
 	bool ContainsItem(EItem item);
 	
+	/*!
+	 * \brief Add item to scene
+	 * \param item Item to add
+	 */ 
+	void AddItemToBuy(EItem item, wxInt32 price);
+	
+	/*!
+	 * \brief Remove item from the scene
+	 * \param item
+	 * \return Price of removed item
+	 */
+	wxInt32 RemoveItemToBuy(EItem item);
+	
+	wxInt32 GetItemToBuyPrice(EItem item);
+	
+	/*!
+	 * \brief Get copy of item list of this scene
+	 * \param sceneItemList
+	 */
+	void GetItemToBuyList(TArticleVector &sceneItemList);
+	
+	bool ContainsItemToBuy(EItem item);
+	
+	/*!
+	 * \brief Add item to scene
+	 * \param item Item to add
+	 * \return true If adding was successful, false otherwise
+	 */ 
+	bool AddItemToSell(EItem item, wxInt32 price);
+	
+	/*!
+	 * \brief Remove item from the scene
+	 * \param item
+	 * \return Price of sell item or zero if item cannot be sell in scene
+	 */
+	wxInt32 GetItemToSellPrice(EItem item);
+	
+	/*!
+	 * \brief Get copy of item list of this scene
+	 * \param sceneItemList
+	 */
+	void GetItemToSellList(TArticleVector &sceneItemList);
+	
+	bool ContainsItemToSell(EItem item);
+	
 	bool AddGold(wxInt32 goldCount) 
 	{ 
 		if((m_goldCount+goldCount) < 0)
@@ -110,7 +168,6 @@ private:
 	typedef std::pair<wxDword, Scene*> TSceneMapPair;
 private:
 	wxInt32 m_id;
-	wxString m_title;
 	TSceneMap m_sceneMap;
 	
 	friend std::ostream& operator<< (std::ostream &stream, const SceneManager& scene);
@@ -128,9 +185,6 @@ public:
 			}
 		}
 	}
-	
-	void SetTitle(const wxString& title) { m_title = title;}
-	inline wxString& GetTitle() { return m_title;}
 	
 	void SetId(wxInt32 id) { m_id = id;}
 	inline wxInt32 GetId() { return m_id;}

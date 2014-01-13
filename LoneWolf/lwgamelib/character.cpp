@@ -67,6 +67,9 @@ bool Character::GenerateNewCharacter()
 	
 	m_pouch = 0;
 	m_maxGoldCount = 50;
+	m_weapons.SetMaxCount(2);
+	m_specialItems.SetMaxCount(15);
+	m_backpack.SetMaxCount(0);
 	m_actualAttackSkill = m_baseAttackSkill = RandomSpin() + 10;
 	m_maxCondition = m_actualCondition = m_baseCondition = RandomSpin() + 20;
 	m_body.SetBackItem(ITEM_UNKNOWN);
@@ -117,6 +120,14 @@ void Character::RecomputeState()
 bool Character::ContainsItem(EItem item)
 {
 	if(item == ITEM_UNKNOWN) return false;
+	if(item == m_pResMgr->GetItemAndDiscMgr().GetRandomBagItemType())
+	{
+		if(!m_backpack.IsEmpty()) return true;
+	}
+	if(item == m_pResMgr->GetItemAndDiscMgr().GetRandomWeaponType())
+	{
+		if(!m_weapons.IsEmpty()) return true;
+	}
 	if(m_backpack.Contains(item)) return true;
 	if(m_specialItems.Contains(item)) return true;
 	if(m_body.GetHeadItem() == item) return true;
@@ -214,14 +225,97 @@ bool Character::PickUpItem(EItem item, Scene& scene)
 	return true;
 }
 
-bool Character::PickUpGold(Scene& scene)
+bool Character::BuyItem(EItem item, Scene& scene)
+{
+	if(!scene.ContainsItemToBuy(item)) return false;
+	if(scene.GetItemToBuyPrice(item) > m_pouch) return false; // character do not have enough money
+	switch(m_pResMgr->GetItemAndDiscMgr().GetItem(item).m_placement)
+	{
+		case ITEM_PLACEMENT_BACKPACK:
+			if(m_backpack.IsFull()) return false;
+			if(!m_backpack.Add(item)) return false;
+			break;			
+		case ITEM_PLACEMENT_WEAPON:
+			if(m_weapons.IsFull()) return false;
+			if(!m_weapons.Add(item)) return false;
+			break;
+		case ITEM_PLACEMENT_BODY_HEAD:
+			if(m_body.GetHeadItem() != ITEM_UNKNOWN) return false;
+			m_body.SetHeadItem(item);
+			break;
+		case ITEM_PLACEMENT_BODY_TORSO:
+			if(m_body.GetTorsoItem() != ITEM_UNKNOWN) return false;
+			m_body.SetTorsoItem(item);
+			break;
+		case ITEM_PLACEMENT_BODY_BACK:
+			if(m_body.GetBackItem() != ITEM_UNKNOWN) return false;
+			m_body.SetBackItem(item);
+			break;
+		case ITEM_PLACEMENT_SPECIAL:
+			if(m_specialItems.IsFull()) return false;
+			if(!m_specialItems.Add(item)) return false;
+			break;
+		case ITEM_PLACEMENT_POUCH:
+		default:
+			return false;
+	}
+	m_pouch -= scene.RemoveItemToBuy(item);
+	RecomputeState();
+	return true;
+}
+
+bool Character::SellItem(EItem item, Scene& scene)
+{
+	if(!scene.ContainsItemToSell(item)) return false;
+	switch(m_pResMgr->GetItemAndDiscMgr().GetItem(item).m_placement)
+	{
+		case ITEM_PLACEMENT_BACKPACK:
+			if(!m_backpack.Contains(item)) return false;
+			if(!m_backpack.Remove(item)) return false;
+			break;			
+		case ITEM_PLACEMENT_WEAPON:
+			if(!m_weapons.Contains(item)) return false;
+			if(!m_weapons.Remove(item)) return false;
+			break;
+		case ITEM_PLACEMENT_BODY_HEAD:
+			if(m_body.GetHeadItem() != item) return false;
+			m_body.SetHeadItem(ITEM_UNKNOWN);
+			break;
+		case ITEM_PLACEMENT_BODY_TORSO:
+			if(m_body.GetTorsoItem() != item) return false;
+			m_body.SetTorsoItem(ITEM_UNKNOWN);
+			break;
+		case ITEM_PLACEMENT_BODY_BACK:
+			if(m_body.GetBackItem() != item) return false;
+			if(item == m_pResMgr->GetItemAndDiscMgr().GetBackpackType())
+			{
+				if(!m_backpack.IsEmpty()) return false;
+			}
+			m_body.SetBackItem(ITEM_UNKNOWN);
+			break;
+		case ITEM_PLACEMENT_SPECIAL:
+			if(!m_specialItems.Contains(item)) return false;
+			if(!m_specialItems.Remove(item)) return false;
+			break;
+		case ITEM_PLACEMENT_POUCH:
+		default:
+			return false;
+	}
+	scene.AddGold(AddGold(scene.GetItemToSellPrice(item))); // if pouch is full drop the rest of money on the scene
+	RecomputeState();
+	return true;
+}
+
+wxInt32 Character::PickUpGold(Scene& scene)
 {
 	if(scene.GetGoldCount() >= 0)
 	{
+		wxInt32 retval = scene.GetGoldCount();
 		wxInt32 rest = AddGold(scene.GetGoldCount());
-		return scene.SetGold(rest);
+		scene.SetGold(rest);
+		return retval - rest; 
 	}
-	return false;
+	return 0;
 }
 
 bool Character::LoseItem(EItem item)
@@ -308,7 +402,8 @@ bool Character::ApplyEvent(Event& event)
 		return true;
 	}
 	
-	if(((event.m_property.m_neededItem != ITEM_UNKNOWN))&&(!ContainsItem(event.m_property.m_neededItem)))
+	if(((event.m_property.m_neededItem != ITEM_UNKNOWN))
+		&&(!ContainsItem(event.m_property.m_neededItem)))
 	{
 		// you dont have needed item
 		return true;
@@ -331,7 +426,7 @@ bool Character::ApplyEvent(Event& event)
 	}
 	
 	m_actualAttackSkill += event.m_property.m_actualAttack;	
-	m_actualCondition += event.m_property.m_actualCond;
+	m_actualCondition = ((m_actualCondition + event.m_property.m_actualCond) > m_maxCondition) ? m_maxCondition : (m_actualCondition + event.m_property.m_actualCond);
 	m_baseAttackSkill += event.m_property.m_baseAttack;
 	m_baseCondition += event.m_property.m_baseCond;
 	AddGold(event.m_property.m_goldCount);
@@ -369,7 +464,8 @@ void Character::ApplySkills(Character& enemyCharacter)
 		}
 		
 		m_actualAttackSkill += iter->second.m_actualAttack;
-		m_actualCondition += iter->second.m_actualCond;
+		m_actualCondition = ((m_actualCondition + iter->second.m_actualCond) > m_maxCondition) ?
+							m_maxCondition : (m_actualCondition + iter->second.m_actualCond);
 	}
 }
 
@@ -390,7 +486,8 @@ void Character::ApplySkills()
 		}
 		
 		m_actualAttackSkill += iter->second.m_actualAttack;
-		m_actualCondition += iter->second.m_actualCond;
+		m_actualCondition = ((m_actualCondition + iter->second.m_actualCond) > m_maxCondition) ?
+							m_maxCondition : (m_actualCondition + iter->second.m_actualCond);
 	}
 }
 
@@ -496,3 +593,5 @@ bool Character::UseItem(EItem item)
 	
 	return true;
 }
+
+
