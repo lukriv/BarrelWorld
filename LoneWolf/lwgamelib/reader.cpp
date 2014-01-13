@@ -108,7 +108,7 @@ bool LoneWolfXmlReader::ParseScene(wxXmlNode* sceneNode, GlobalResourceManager& 
 	
 	if(!sceneMgr.AddScene(spScene.release()))
 	{
-		ProcessError(sceneNode);
+		ProcessError(sceneNode, wxT("Scene add failed!"));
 		return false;
 	}
 	
@@ -587,6 +587,7 @@ bool LoneWolfXmlReader::ParseSceneEvent(wxXmlNode* eventNode, GlobalResourceMana
 			case EVENT_ADD_GOLD_TO_SCENE:
 			case EVENT_DEAD:
 			case EVENT_CHARACTER:
+			case EVENT_REMOVE_ITEM_FROM_CHARACTER:
 			{
 				spEvent.reset(new (std::nothrow) Event());
 				if(spEvent.get() == NULL) 
@@ -722,7 +723,6 @@ bool LoneWolfXmlReader::ParseChapter(wxXmlNode* chapterNode, GlobalResourceManag
 		{
 			if(!ParseScene(child, resMgr, sceneMgr))
 			{
-				ProcessError(child);
 				return false;
 			}			
 		} else {
@@ -736,7 +736,7 @@ bool LoneWolfXmlReader::ParseChapter(wxXmlNode* chapterNode, GlobalResourceManag
 	return true;
 }
 
-void LoneWolfXmlReader::ProcessError(wxXmlNode* errNode)
+void LoneWolfXmlReader::ProcessError(wxXmlNode* errNode, const wxChar* addText)
 {
 	m_errorString.Clear();
 	wxStringOutputStream outStream(&m_errorString);
@@ -751,6 +751,11 @@ void LoneWolfXmlReader::ProcessError(wxXmlNode* errNode)
 	{
 		output << "  " << attributes->GetName() << ":\"" << attributes->GetValue() << "\"\n";
 		attributes = attributes->GetNext();
+	}
+	
+	if(addText)
+	{
+		output << addText << "\n";
 	}
 	
 }

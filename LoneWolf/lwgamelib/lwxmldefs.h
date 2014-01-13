@@ -108,14 +108,14 @@ static const wxChar* BAG_ITEM_RANDOM_STR		= wxT("random_backpack_item");
 static const wxChar* SPECIAL_ITEM_BACKPACK_STR	= wxT("backpack");
 
 // event types
-static const wxChar* EVENT_ADD_ITEM_TO_CHARACTER_STR = wxT("add_item_to_character"); // add item to character
-static const wxChar* EVENT_ADD_ITEM_TO_SCENE_STR  	 = wxT("add_item_to_scene"); // add item to scene
-static const wxChar* EVENT_ADD_GOLD_TO_CHARACTER_STR = wxT("add_gold_to_character"); // add gold to character
-static const wxChar* EVENT_ADD_GOLD_TO_SCENE_STR  	 = wxT("add_gold_to_scene"); // add gold to scene
-static const wxChar* EVENT_DEAD_STR  				 = wxT("dead"); // character dies imediately
-static const wxChar* EVENT_LOTERY_STR			  	 = wxT("lotery"); // add gold to scene
-static const wxChar* EVENT_CHARACTER_STR			 = wxT("character"); // generic event applied to character directly
-
+static const wxChar* EVENT_ADD_ITEM_TO_CHARACTER_STR 		= wxT("add_item_to_character"); // add item to character
+static const wxChar* EVENT_ADD_ITEM_TO_SCENE_STR  	 		= wxT("add_item_to_scene"); // add item to scene
+static const wxChar* EVENT_ADD_GOLD_TO_CHARACTER_STR 		= wxT("add_gold_to_character"); // add gold to character
+static const wxChar* EVENT_ADD_GOLD_TO_SCENE_STR  	 		= wxT("add_gold_to_scene"); // add gold to scene
+static const wxChar* EVENT_DEAD_STR  				 		= wxT("dead"); // character dies imediately
+static const wxChar* EVENT_LOTERY_STR			  	 		= wxT("lotery"); // add gold to scene
+static const wxChar* EVENT_CHARACTER_STR			 		= wxT("character"); // generic event applied to character directly
+static const wxChar* EVENT_REMOVE_ITEM_FROM_CHARACTER_STR	= wxT("remove_item_from_character"); // remove item from character
 
 //items placement
 static const wxChar* ITEM_PLACEMENT_BACKPACK_STR    = wxT("backpack");

@@ -2,4 +2,5 @@
 
 #include <stdlib.h>
 
- wxInt32 RandomSpin() { return (rand() % 10); }
+ wxInt32 RandomSpin(wxInt32 max) { return (rand() % max); }
+ 

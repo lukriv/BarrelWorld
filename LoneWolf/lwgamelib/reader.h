@@ -64,7 +64,7 @@ private:
 	 */
 	static bool ReadText(wxXmlNode* textNode, wxString& text, wxString& language);
 	
-	static void ProcessError(wxXmlNode* errNode);
+	static void ProcessError(wxXmlNode* errNode,const wxChar* addText = NULL);
 };
 
 

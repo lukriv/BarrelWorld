@@ -19,7 +19,26 @@
 			<p>U úpatí vrchu se stezka dělí. Obě pěšiny, které vedou dál, míří k rozlehlým
 			lesům.</p>]]>
 		</desc>
-      <actions>
+		<events>
+			<event name="dead" />
+			<event name="add_item_to_character" item_needed="meal" />
+			<event name="remove_item_from_character" item_needed="random_weapon" />
+			<event name="add_item_to_scene" item_needed="broadsword"  />
+			<event name="add_gold_to_scene" gold_count="12" />
+			<event name="add_gold_to_character" gold_count="12" />
+			<event name="add_gold_to_character" gold_count="-12" /> <!-- Remove gold from character -->
+			<event name="lotery">
+				<selection numbers_from="0" numbers_to="4">
+					<event name="add_item_to_scene" item_needed="broadsword"  />
+					<event name="add_item_to_scene" item_needed="meal"  />
+				</selection>
+				<selection numbers_from="5" numbers_to="9">
+					<event name="add_gold_to_scene" gold_count="12" />
+				</selection>
+			</event>
+			<event name="character" cond_actual="-2" />
+		</events>
+		<actions>
 			<action_create_character target="1" />
 			<action_fight win="13" retreat="54" lost="55" turn_to_retreat="2" turn_to_win="3">
 				<fight_event attack_actual="-1" cond_actual="-1" duration="2" canceled_by_item="lonewolfItem" canceled_by_skill="lonewolfSkill" />
@@ -39,13 +58,13 @@
 				<desc lang="cs">description</desc>
 			</action_move>
 		</actions>
-		 <items>
-				<item name="healing_potion" />
-		 </items>
-		 <merchandise>
+		<items>
+			<item name="healing_potion" />
+		</items>
+		<merchandise>
 			<buy item="itemname" gold_count="goldcount" />
 			<sell item="itemname" gold_count="goldcount" />
-		 </merchandise>
+		</merchandise>
     </scene>
 
 1

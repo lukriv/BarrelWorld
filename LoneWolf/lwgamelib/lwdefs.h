@@ -58,18 +58,19 @@ static const wxInt32 DURATION_INFINITE = -1;
 
 enum EEventType {
 	// event types for single event type
-	EVENT_UNKNOWN 					= 0,
-	EVENT_ADD_ITEM_TO_CHARACTER 	= 1,
-	EVENT_ADD_ITEM_TO_SCENE			= 2,
-	EVENT_ADD_GOLD_TO_CHARACTER		= 3,
-	EVENT_ADD_GOLD_TO_SCENE			= 4,
-	EVENT_FIGHT						= 5, //fight event
-	EVENT_DEAD						= 6, // instant dead
-	EVENT_CHARACTER					= 7, // generic character modification
-	
+	EVENT_UNKNOWN 						= 0,
+	EVENT_ADD_ITEM_TO_CHARACTER 		= 1,
+	EVENT_ADD_ITEM_TO_SCENE				= 2,
+	EVENT_ADD_GOLD_TO_CHARACTER			= 3,
+	EVENT_ADD_GOLD_TO_SCENE				= 4,
+	EVENT_FIGHT							= 5, //fight event
+	EVENT_DEAD							= 6, // instant dead
+	EVENT_CHARACTER						= 7, // generic character modification
+	EVENT_REMOVE_ITEM_FROM_CHARACTER	= 8, // remove item from character (included random bag or weapon)
+		
 	// event types for event lists type
-	EVENT_LOTERY					= 20,
-	EVENT_LIST						= 21
+	EVENT_LOTERY						= 20,
+	EVENT_LIST							= 21
 };
 
 enum EActionType {

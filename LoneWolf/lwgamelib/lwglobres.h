@@ -32,7 +32,7 @@ public:
 
 
 // global random method
-wxInt32 RandomSpin();
+wxInt32 RandomSpin(wxInt32 max=10);
 
 
 #endif //__LONE_WOLF_GLOBAL_RESOURCES_H__
