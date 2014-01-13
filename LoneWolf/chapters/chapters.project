@@ -12,6 +12,7 @@
     <File Name="defs.xml"/>
     <File Name="actiontest.xml"/>
     <File Name="chapter01.xml"/>
+    <File Name="testing.xml"/>
   </VirtualDirectory>
   <Settings Type="Executable">
     <GlobalSettings>

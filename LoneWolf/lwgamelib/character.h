@@ -97,6 +97,7 @@ public:
 	inline Iterator End() const { return static_cast<Iterator>(m_container.end()); }	
 	inline bool IsEmpty() const { return m_container.empty(); }
 	inline bool IsFull() const { return m_container.size() == m_maxItems; }
+	inline wxDword Size() const { return m_container.size(); }
 	
 	/*!
 	 * \brief Empty whole container

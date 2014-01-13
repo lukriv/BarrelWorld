@@ -323,10 +323,40 @@ bool Character::LoseItem(EItem item)
 	switch(m_pResMgr->GetItemAndDiscMgr().GetItem(item).m_placement)
 	{
 		case ITEM_PLACEMENT_BACKPACK:
+			if((item == m_pResMgr->GetItemAndDiscMgr().GetRandomBagItemType())&&(!m_backpack.IsEmpty()))
+			{
+				//select one of character weapon
+				wxInt32 randNum = RandomSpin(m_backpack.Size());
+				wxInt32 i = 0;
+				for(CharacterBackpack::Iterator iter = m_backpack.Begin(); iter != m_backpack.End(); iter++)
+				{
+					if(i == randNum)
+					{
+						item = *iter;
+						break;
+					}
+					i++;
+				}
+			}
 			if(!m_backpack.Contains(item)) return false;
 			if(!m_backpack.Remove(item)) return false;
 			break;			
 		case ITEM_PLACEMENT_WEAPON:
+			if((item == m_pResMgr->GetItemAndDiscMgr().GetRandomWeaponType())&&(!m_weapons.IsEmpty()))
+			{
+				//select one of character weapon
+				wxInt32 randNum = RandomSpin(m_weapons.Size());
+				wxInt32 i = 0;
+				for(CharacterWeapons::Iterator iter = m_weapons.Begin(); iter != m_weapons.End(); iter++)
+				{
+					if(i == randNum)
+					{
+						item = *iter;
+						break;
+					}
+					i++;
+				}
+			}
 			if(!m_weapons.Contains(item)) return false;
 			if(!m_weapons.Remove(item)) return false;
 			break;

@@ -233,6 +233,8 @@ bool LWGameEngine::RunEvent(EventBase* pEvent)
 			m_pActualScene->AddItem(pEvent->GetProperties()->m_neededItem);
 			break;
 		case EVENT_ADD_GOLD_TO_CHARACTER:
+			m_mainCharacter.AddGold(pEvent->GetProperties()->m_goldCount);
+			break;
 		case EVENT_ADD_GOLD_TO_SCENE:
 			if(!m_pActualScene->AddGold(pEvent->GetProperties()->m_goldCount))
 			{
@@ -272,6 +274,15 @@ bool LWGameEngine::RunEvent(EventBase* pEvent)
 			{
 				m_errorStr.assign(wxT("Character event cannot be applied\n"));
 				return false;				
+			}
+			break;
+		}
+		case EVENT_REMOVE_ITEM_FROM_CHARACTER:
+		{
+			if(m_mainCharacter.ContainsItem(pEvent->GetProperties()->m_neededItem))
+			{
+				//
+				m_mainCharacter.LoseItem(pEvent->GetProperties()->m_neededItem);
 			}
 			break;
 		}
