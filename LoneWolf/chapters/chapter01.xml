@@ -511,7 +511,7 @@ and open the template in the editor.
 			hlasy nepatří lidem. Připomínají spíš jakési kvičení a mlaskání.</p>]]>
 		</desc>
         <actions>
-			<action_move target="225" skill_needed="animal_kindship">
+			<action_move target="225" skill_needed="animal_kinship">
 				<desc lang="cs">Použít Kai disciplínu Spřízněnost se zvířaty.</desc>
 			</action_move>
 			<action_move target="250"><desc lang="cs">Přelézt strom, ať už tam číhá cokoliv.</desc></action_move>
@@ -1255,7 +1255,7 @@ and open the template in the editor.
 			</event>
 		</events>
         <actions>
-			 <action_move target="1">
+			 <action_move target="52">
 				<desc lang="cs">Konec prohledávání trosek</desc>
 			 </action_move>
         </actions>
