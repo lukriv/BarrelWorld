@@ -223,17 +223,25 @@ bool LWGameEngine::RunEvent(EventBase* pEvent)
 	switch(pEvent->GetEventType())
 	{
 		case EVENT_ADD_ITEM_TO_CHARACTER:
-			if(!m_mainCharacter.AddItem(pEvent->GetProperties()->m_neededItem))
+			if((!m_mainCharacter.ContainsItem(pEvent->GetProperties()->m_cancelItem))
+				&&(!m_mainCharacter.GetDisciplines().Contains(pEvent->GetProperties()->m_cancelSkill)))
 			{
-				m_errorStr.assign(wxT("Add item to character failed (during events)"));
-				return false;
+				if(!m_mainCharacter.AddItem(pEvent->GetProperties()->m_neededItem))
+				{
+					m_errorStr.assign(wxT("Add item to character failed (during events)"));
+					return false;
+				}
 			}
 			break;
 		case EVENT_ADD_ITEM_TO_SCENE:
 			m_pActualScene->AddItem(pEvent->GetProperties()->m_neededItem);
 			break;
 		case EVENT_ADD_GOLD_TO_CHARACTER:
-			m_mainCharacter.AddGold(pEvent->GetProperties()->m_goldCount);
+			if((!m_mainCharacter.ContainsItem(pEvent->GetProperties()->m_cancelItem))
+				&&(!m_mainCharacter.GetDisciplines().Contains(pEvent->GetProperties()->m_cancelSkill)))
+			{
+				m_mainCharacter.AddGold(pEvent->GetProperties()->m_goldCount);
+			}
 			break;
 		case EVENT_ADD_GOLD_TO_SCENE:
 			if(!m_pActualScene->AddGold(pEvent->GetProperties()->m_goldCount))
@@ -279,7 +287,9 @@ bool LWGameEngine::RunEvent(EventBase* pEvent)
 		}
 		case EVENT_REMOVE_ITEM_FROM_CHARACTER:
 		{
-			if(m_mainCharacter.ContainsItem(pEvent->GetProperties()->m_neededItem))
+			if(m_mainCharacter.ContainsItem(pEvent->GetProperties()->m_neededItem)
+				&&(!m_mainCharacter.ContainsItem(pEvent->GetProperties()->m_cancelItem))
+				&&(!m_mainCharacter.GetDisciplines().Contains(pEvent->GetProperties()->m_cancelSkill)))
 			{
 				//
 				m_mainCharacter.LoseItem(pEvent->GetProperties()->m_neededItem);

@@ -107,10 +107,10 @@ and open the template in the editor.
 			<title lang="en">Backpack</title>
 			<desc lang="en">Backpack space is limited, you may only keep a maximum of eight articles.</desc>
 		</item>
-       <item id="101" name="Helmet" placement="body_head" cond_max="2">
+       <item id="101" name="helmet" placement="body_head" cond_max="2">
 			<title lang="cs">Přilba</title>
 			<desc lang="cs">Přidá další dva body k součtu v KONDICI.</desc>
-			<title lang="en">Backpack</title>
+			<title lang="en">Helmet</title>
 			<desc lang="en">This adds 2 ENDURANCE points to your total.</desc>
 		</item>
        <item id="102" name="chainmail_waistcoat" placement="body_torso" cond_max="4">
