@@ -108,7 +108,7 @@ bool ConsoleGameEngine::Play(ConsoleWindowWrapper &console)
 					break;
 			}
 		}
-		
+
 		moveX = 0;
 		moveY = 0;
 		

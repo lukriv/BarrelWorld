@@ -980,10 +980,10 @@ and open the template in the editor.
 		</desc>
         <actions>
 			 <action_move target="187">
-				<desc lang="cs">Oslovit je takto:'Nemějte strach, jsem přítel!'</desc>
+				<desc lang="cs">Oslovit je takto:"Nemějte strach, jsem přítel!"</desc>
 			 </action_move>
 			<action_move target="39">
-				<desc lang="cs">Raději zvolit tato slova: 'Jsem rytíř řádu Kai. Nechci vám ublížit. Potřebuji vaši radu a pomoc!'</desc>
+				<desc lang="cs">Raději zvolit tato slova: "Jsem rytíř řádu Kai. Nechci vám ublížit. Potřebuji vaši radu a pomoc!"</desc>
 			 </action_move>
         </actions>
     </scene>
@@ -1040,7 +1040,7 @@ and open the template in the editor.
 			vystřelit proti Giakovi blesk spalující energie. Hlava netvora se tříští v
 			plamenech a škubající se tělo se sváží jako bezvládná hrouda k patě pilíře.
 			To vše se odehrává ve zlomku vteřiny a v téže chvíli jsi spatřen giackým
-			velitelem. Ostře vyráží: 'Ogot... Ogot!' na strachy se krčící zbytky své
+			velitelem. Ostře vyráží: "Ogot... Ogot!" na strachy se krčící zbytky své
 			tlupy. Giakové se bezhlavě dávají na překotný úprk ze zchátralého chrámu
 			a hledají útočiště v nedalekém lese.</p>
 			<p>Mladík v kouzelnickém šatě si otírá zpocené čelo a kráčí k tobě s vděčností
@@ -1409,44 +1409,44 @@ and open the template in the editor.
 			hluboce zkoumavým pohledem. V jeho tváři je ještě pořád citelné napětí z
 			přestálé bitvy. Dlouhá, nebesky modrá róba nese stopy nepohodlného
 			života uprostřed divočiny. Bere tvou ruku do své a přitom se mírně uklání:
-			'Mé upřímné díky patří tobě, rytíři Kai. Už mi nezbývalo mnoho sil a
+			"Mé upřímné díky patří tobě, rytíři Kai. Už mi nezbývalo mnoho sil a
 			kdybys nepřišel a nepomohl mi, bezpochyby by se mé dny skončily na
-			špicích giackých kopí.' Vidíš, že muž, tvůj vrstevník, se sotva drží na
+			špicích giackých kopí." Vidíš, že muž, tvůj vrstevník, se sotva drží na
 			nohou, a tak ho jemným pohybem přiměješ, aby usedl na jeden z
 			povalených mramorových sloupů, zatímco pozorně nasloucháš jeho
 			slovům.</p>
-			<p>'Jmenuji se Benedon. Jsem členem Bratrstva křišťálové hvězdy, to
+			<p>"Jmenuji se Benedon. Jsem členem Bratrstva křišťálové hvězdy, to
 			je společenství mágů a kouzelníků z Toranu. Jsem už několik dní na cestě
 			do vašeho kláštera, kam mě vyslal Mistr našeho společenství s neodkladnou
-			zprávou.' Při těchto slovech vytahuje Benedon zpod bohatých záhybů
+			zprávou." Při těchto slovech vytahuje Benedon zpod bohatých záhybů
 			svého šatu pergamenový svitek a podává ti ho.</p>
-			<p>'Jak vidíš, dopis jsem už otevřel a přečetl si ho. První hodiny války mě
+			<p>"Jak vidíš, dopis jsem už otevřel a přečetl si ho. První hodiny války mě
 			zastihly na hlavní sommerlundské silnici, po níž jsme cestovali ve třech, já
 			a dva moji průvodci. Kraanové na nás nečekaně zaútočili, my jsme se
-			rozprchli do lesa a tam jsme jeden druhého ztratili.'</p>
+			rozprchli do lesa a tam jsme jeden druhého ztratili."</p>
 			<p>Držíš v rukou dopis, který mohl změnit krutý osud kláštera, kdyby byl
 			přišel včas. Obsahuje varování pro rytíře řádu Kai, zprávu, že Temní páni
 			shromaždují za Durncragským pohořím ohromnou armádu. Mistr
 			toranského bratrstva v dopise naléhá na rytíře a učence Kai, aby odložili
 			oslavy Fehmarnova svátku a aby se připravili na boj.</p>
-			<p>'Mám obavy, že jsme byli zrazeni,' říká Benedon a hlava mu přitom klesá
-			starostmi a žalem. 'Jeden z mých druhů, bratr jménem Vonotar, objevil
+			<p>"Mám obavy, že jsme byli zrazeni," říká Benedon a hlava mu přitom klesá
+			starostmi a žalem. "Jeden z mých druhů, bratr jménem Vonotar, objevil
 			zakázaná tajemství černého umění. Před deseti dny zabil jednoho z našich
 			představených a od té doby jakoby se po něm slehla zem. Z různých stran
-			jsme se ale doslechli, že se přidal k Temným pánům.'</p>
+			jsme se ale doslechli, že se přidal k Temným pánům."</p>
 			<p>Na oplátku vyprávíš Benedonovi o všem, co se přihodilo v klášteře Kai a o své strastiplné pouti,
 			jejímž cílem je varovat krále před nebezpečím, kterému je vystavena celá
 			země.</p>
 			<p>Mlčky a důstojně snímá Benedon ze své šíje zlatý řetěz a podává ti
-			ho. Na řetězu je zavěšený nevelký znak Křišťálové hvězdy. 'Toto je
+			ho. Na řetězu je zavěšený nevelký znak Křišťálové hvězdy. "Toto je
 			symbol našeho Bratrstva. My dva, já a ty, jsme v této těžké chvíli
 			skutečnými bratry na život a na smrt. Předávám ti talisman, který nosí štěstí
-			- snad tě bude chránit na tvé další cestě.'</p>
+			- snad tě bude chránit na tvé další cestě."</p>
 			<p>Dojatě mladému muži děkuješ, řetěz si s úctou zavěšuješ kolem krku a křišťálovou hvězdu skrýváš pod
 			plátnem košile na holém těle. Benedon se chystá k odchodu a dává ti sbohem.
-			'Musíme z tohoto zlořečené místa zmizet dřív, než se Giakové vrátí s
+			"Musíme z tohoto zlořečeného místa zmizet dřív, než se Giakové vrátí s
 			čerstvými posilami. Je na tase, abych se vrátil ke svému Bratrstvu. Loučím
-			se s tebou, bratře. Snad tě bude přízeň nebes provázet na další cestě.'</p>]]>
+			se s tebou, bratře. Snad tě bude přízeň nebes provázet na další cestě."</p>]]>
 		</desc>
 		<events>
 			<event name="add_item_to_character" item_needed="chrystal_star_pedant" />
@@ -1567,7 +1567,7 @@ and open the template in the editor.
 			</event>
 		</events>
         <actions>
-			 <action_move target="277">
+			 <action_move target="1">
 				<desc lang="cs">Konec prohledávání trosek</desc>
 			 </action_move>
         </actions>

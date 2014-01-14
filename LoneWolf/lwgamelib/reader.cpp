@@ -755,7 +755,7 @@ void LoneWolfXmlReader::ProcessError(wxXmlNode* errNode, const wxChar* addText)
 	
 	if(addText)
 	{
-		output << addText << "\n";
+		output << "Error description: " << wxString(addText).c_str() << "\n";
 	}
 	
 }
@@ -1190,7 +1190,7 @@ bool LoneWolfXmlReader::ReadEventAttr(wxXmlNode* eventNode, GlobalResourceManage
 		properties.m_cancelItem = resMgr.GetItemAndDiscMgr().GetItemType(tempValue);
 		if(properties.m_cancelItem == ITEM_UNKNOWN)
 		{
-			ProcessError(eventNode);
+			ProcessError(eventNode, wxT("Unknown item name"));
 			return false;
 		}
 	}
@@ -1201,7 +1201,7 @@ bool LoneWolfXmlReader::ReadEventAttr(wxXmlNode* eventNode, GlobalResourceManage
 		properties.m_cancelSkill = resMgr.GetDisciplineMgr().GetDisciplineType(tempValue);
 		if(properties.m_cancelSkill == DISCIPLINE_UNKNOWN)
 		{
-			ProcessError(eventNode);
+			ProcessError(eventNode, wxT("Unknown skill name"));
 			return false;
 		}
 	}
@@ -1212,7 +1212,7 @@ bool LoneWolfXmlReader::ReadEventAttr(wxXmlNode* eventNode, GlobalResourceManage
 		properties.m_neededItem = resMgr.GetItemAndDiscMgr().GetItemType(tempValue);
 		if(properties.m_neededItem == ITEM_UNKNOWN)
 		{
-			ProcessError(eventNode);
+			ProcessError(eventNode, wxT("Unknown item name"));
 			return false;
 		}
 	}
@@ -1223,7 +1223,7 @@ bool LoneWolfXmlReader::ReadEventAttr(wxXmlNode* eventNode, GlobalResourceManage
 		properties.m_neededSkill = resMgr.GetDisciplineMgr().GetDisciplineType(tempValue);
 		if(properties.m_neededSkill == DISCIPLINE_UNKNOWN)
 		{
-			ProcessError(eventNode);
+			ProcessError(eventNode, wxT("Unknown skill name"));
 			return false;
 		}
 	}
