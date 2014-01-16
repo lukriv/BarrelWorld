@@ -50,7 +50,7 @@
 			<action_lotery>
                 <selection numbers_from="0" numbers_to="4" target="343" />
                 <selection numbers_from="5" numbers_to="9" target="276" />
-           </action_lotery>
+			</action_lotery>
 		    <action_move target="85" skill_needed="lonewolfSkill" item_needed="lonewolfItem" />
 				<desc lang="cs">description</desc>
 			</action_move>

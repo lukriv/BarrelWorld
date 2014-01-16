@@ -1,0 +1,58 @@
+	 <scene id="356">
+        <desc lang="cs">
+		   <![CDATA[<p>Jsi oblečen do zelené tuniky a zahalen do pláště učedníka Kai. Když
+			přehlížíš svou výbavu, uvědomuješ si, že nemáš moc věcí, které by se
+			mohly hodit v boji o přežití.</p>
+			<p>Všechen tvůj majetek tvoří sekyra a batoh, ve kterém ti zbyla jedna porce jídla.
+			U pasu se ti houpe kožený váček a v něm pár zlaťáků. Během cesty se bude zřejmě tvoje hotovost měnit, ale do
+			váčku se nevejde víc než padesát mincí.</p>
+			<p>Mezi doutnajícími troskami kláštera nalézáš mapu Sommerlundu. S dojetím a nadějí,
+			ale i s trochou obav, se díváš do mapy na vzdálený vytoužený cíl, na hlavní město Holmgard.
+			Daleko od něj východním směrem rozpoznáváš zemi věrných spojenců, Durenor. Mapu opatrně
+			skládáš a ukrýváš pod košili, tam snad bude v bezpečí.</p>
+			<p>Kromě mapy nalézáš také jeden předmět.</p>]]>
+		</desc>
+		<events>
+			<event name="add_item_to_character" item_needed="backpack" />
+			<event name="add_item_to_character" item_needed="axe" />
+			<event name="add_item_to_character" item_needed="meal" />
+			<event name="lotery">
+				<selection numbers_from="0" numbers_to="0">
+					<event name="add_item_to_scene" item_needed="broadsword"  />
+				</selection>
+				<selection numbers_from="1" numbers_to="1">
+					<event name="add_item_to_scene" item_needed="sword"  />
+				</selection>
+				<selection numbers_from="2" numbers_to="2">
+					<event name="add_item_to_scene" item_needed="helmet"  />
+				</selection>
+				<selection numbers_from="3" numbers_to="3">
+					<event name="add_item_to_scene" item_needed="meal"  />
+					<event name="add_item_to_scene" item_needed="meal"  />
+				</selection>
+				<selection numbers_from="4" numbers_to="4">
+					<event name="add_item_to_scene" item_needed="chainmail_waistcoat"  />
+				</selection>
+				<selection numbers_from="5" numbers_to="5">
+					<event name="add_item_to_scene" item_needed="mace" />
+				</selection>
+				<selection numbers_from="6" numbers_to="6">
+					<event name="add_item_to_scene" item_needed="healing_potion" />
+				</selection>
+				<selection numbers_from="7" numbers_to="7">
+					<event name="add_item_to_scene" item_needed="quaterstaff" />
+				</selection>
+				<selection numbers_from="8" numbers_to="8">
+					<event name="add_item_to_scene" item_needed="spear" />
+				</selection>
+				<selection numbers_from="9" numbers_to="9">
+					<event name="add_gold_to_scene" gold_count="12" />
+				</selection>
+			</event>
+		</events>
+        <actions>
+			 <action_move target="277">
+				<desc lang="cs">Konec prohledávání trosek</desc>
+			 </action_move>
+        </actions>
+    </scene>

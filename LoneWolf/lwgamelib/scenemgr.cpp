@@ -83,6 +83,12 @@ void Scene::GetPosibleActions(Character& character, wxVector<wxDword>& outPosibl
 				defaultCondActions = false;
 				break;
 			}
+			
+			if((m_actions[i]->GetMinimumGold() > 0)&&(m_actions[i]->GetMinimumGold() <= character.GetGoldCount()))
+			{
+				defaultCondActions = false;
+				break;
+			}
 		}
 	}
 	
@@ -93,24 +99,34 @@ void Scene::GetPosibleActions(Character& character, wxVector<wxDword>& outPosibl
 			outPosibleActions.push_back(i);
 		} else {
 			if((m_actions[i]->GetRequiredSkill() != DISCIPLINE_UNKNOWN)
-				||(m_actions[i]->GetRequiredItem() != ITEM_UNKNOWN))
+				||(m_actions[i]->GetRequiredItem() != ITEM_UNKNOWN)
+				||(m_actions[i]->GetMinimumGold() > 0))
 			{
 				if((m_actions[i]->GetRequiredSkill() == DISCIPLINE_UNKNOWN)
 					&& character.ContainsItem(m_actions[i]->GetRequiredItem()))
 				{
 					outPosibleActions.push_back(i);
+					continue;
 				}
 				
 				if((m_actions[i]->GetRequiredItem() == ITEM_UNKNOWN)
 					&& character.GetDisciplines().Contains(m_actions[i]->GetRequiredSkill()))
 				{
 					outPosibleActions.push_back(i);
+					continue;
 				}
 				
 				if(character.ContainsItem(m_actions[i]->GetRequiredItem())
 					&&character.GetDisciplines().Contains(m_actions[i]->GetRequiredSkill()))
 				{
 					outPosibleActions.push_back(i);
+					continue;
+				}
+				
+				if((m_actions[i]->GetMinimumGold() > 0)&&(m_actions[i]->GetMinimumGold() <= character.GetGoldCount()))
+				{
+					outPosibleActions.push_back(i);
+					continue;
 				}
 				
 			} else {

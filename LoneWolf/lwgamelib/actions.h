@@ -31,6 +31,7 @@ public:
 	virtual bool IsConditioned() = 0;
 	virtual EDisciplines GetRequiredSkill() = 0;
 	virtual EItem GetRequiredItem() = 0;
+	virtual wxInt32 GetMinimumGold() = 0;
 	
 	virtual ~ActionBase() {}
 };
@@ -43,14 +44,23 @@ class Action : public ActionBase {
 	
 	EDisciplines m_requiredSkill;
 	EItem m_requiredItem;
+	wxInt32 m_minimumGold;
 	
 	bool m_conditioned;
 	
 	friend std::ostream& operator<< (std::ostream& output, const Action& action);
 	friend std::wostream& operator<< (std::wostream& output, const Action& action);
 public:
-	Action() : m_type(ACTION_UNKNOWN), m_requiredSkill(DISCIPLINE_UNKNOWN), m_requiredItem(ITEM_UNKNOWN), m_conditioned(false) {}
-	Action(EActionType type) : m_type(type) {}
+	Action() : m_type(ACTION_UNKNOWN),
+				m_requiredSkill(DISCIPLINE_UNKNOWN),
+				m_requiredItem(ITEM_UNKNOWN),
+				m_minimumGold(0),
+				m_conditioned(false) {}
+	Action(EActionType type) : m_type(type),
+				m_requiredSkill(DISCIPLINE_UNKNOWN),
+				m_requiredItem(ITEM_UNKNOWN),
+				m_minimumGold(0),
+				m_conditioned(false) {}
 	~Action() {}
 	
 	void SetType(EActionType type) { m_type = type; }
@@ -61,6 +71,18 @@ public:
 	
 	void SetCondition(bool conditioned) { m_conditioned = conditioned; }
 	bool IsConditioned() { return m_conditioned; }
+	void SetMinimumGold(wxInt32 minGold) 
+	{
+		if(minGold > 0)
+		{
+			m_conditioned = true;
+			m_minimumGold = minGold;
+		} else {
+			m_minimumGold = 0;
+			m_conditioned = false;
+		}
+	}
+	wxInt32 GetMinimumGold() { return m_minimumGold; }
 	void SetRequiredSkill( EDisciplines skill) 
 	{ 
 		m_requiredSkill = skill; 
