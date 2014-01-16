@@ -175,16 +175,7 @@ private:
 	
 public:
 	SceneManager() : m_id(0) {}
-	~SceneManager() 
-	{
-		for(TSceneMap::iterator iter = m_sceneMap.begin(); iter != m_sceneMap.end(); iter++)
-		{
-			if(iter->second != NULL)
-			{
-				delete iter->second;
-			}
-		}
-	}
+	~SceneManager();
 	
 	void SetId(wxInt32 id) { m_id = id;}
 	inline wxInt32 GetId() { return m_id;}
@@ -204,6 +195,14 @@ public:
 		\retval false Test fail.
 	*/
 	bool SceneMapTest();
+	
+	/*!
+	 * \brief Clear all scener
+	 * 
+	 * Useable for changing chapters.
+	 * 
+	 */
+	void Clear(); 
 	
 };
 

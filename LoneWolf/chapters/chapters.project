@@ -13,6 +13,7 @@
     <File Name="actiontest.xml"/>
     <File Name="chapter01.xml"/>
     <File Name="testing.xml"/>
+    <File Name="chapter02.xml"/>
   </VirtualDirectory>
   <Settings Type="Executable">
     <GlobalSettings>

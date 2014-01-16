@@ -3168,6 +3168,44 @@ and open the template in the editor.
 			 </action_move>
         </actions>
     </scene>
+	<scene id="350">
+        <desc lang="cs">
+		   <![CDATA[<p>Vstupuješ do Trůnního sálu, oslnivě nádherné místnosti, bohatě zdobené
+			zlatem na jasně bílém podkladě. Král a jeho nejbližší rádcové se sklánějí
+			nad rozměrnou mapou, která leží rozložena na mramorové desce uprostřed
+			místnosti. V obličejích všech mužů se zračí obavy a napětí.</p>
+			<p>Začal jsi se svým vyprávěním a v tu chvíli utichá celý sál a pozornost všech
+			přítomných se obrací k tobě. Vyprávíš pohnutou historii posledních chvil
+			kláštera Kai, líčíš smrt svých druhů a nakonec i nebezpečnou cestu za
+			králem sem, do Pevnosti. Do ticha doznívají tvá poslední slova, když tu k
+			tobě přistupuje král a bere tvou pravici do své.</p>
+			<p>„Lone Wolfe, osvědčil jsi obětavost a odvahu, jaké šlechtí pravého rytíře
+			řádu Kai. Tvá cesta sem byla jedno velké nebezpečí. Novina, s níž jsi
+			přišel, dopadá na nás jako další tvrdá rána osudu, ale zároveň nám v této
+			temné době zazářil majáček naděje - a tím je tvůj nepoddajný a odhodlaný
+			duch. To, co jsi dokázal, je velikou oslavou památky tvých učitelů. I my se
+			s úctou skláníme před tvým činem." Po králových slovech propuká v sále
+			jásot, ze všech stran slyšíš srdečné díky, projevy upřímného obdivu vhánějí
+			ruměnec do tvých mladých lící. Král zvedá ruce v utišujícím gestu a hlasy
+			zvolna slábnou, až se ztiší docela.</p>
+			<p>„Lone Wolfe, udělal jsi vše, co by Sommerlund mohl chtít od svého
+			poslušného syna, a přece tvá úloha ještě nemůže skončit. Sommerlund
+			nezbytně potřebuje tvé další služby. Temní páni jsou mnohem početnější
+			než my a jejich dobyvačné cíle neznají hranic. Naše poslední naděje leží v
+			Durenoru, kde je ukryta moc, která již jednou, před dávnými věky,
+			pomohla zvítězit nad Temnými pány. Lone Wolfe, jsi posledním z rytířů
+			řádu Kai - znáš a ovládáš tajná umění, ostatním smrtelníkům nedostupná.</p>
+			<p>Jsi ochoten vypravit se do Durenoru a vrátit se se Sommerswerdem,
+			Slunečným mečem? Jen s pomocí tohoto daru nebes můžeme překonat zlo,
+			jež napadlo naši zem, a zachránit ji." Pokud přijímáš výzvu k výpravě za
+			Sommerswerdem, Slunečným mečem, vydej se na další dobrodružství.</p>]]>
+		</desc>
+        <actions>
+			 <action_next_chapter target="2">
+				<desc lang="cs">Vydat se na výpravu za Sommerswerdem.</desc>
+			 </action_next_chapter>
+        </actions>
+    </scene>
 	<scene id="351">
         <desc lang="cs">
 		   <![CDATA[<p>Tvůj kůň se náhle propadl až po břicho do bahna.</p>]]>

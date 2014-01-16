@@ -230,9 +230,15 @@ void WriteCharacterState(Character& character)
 		ConvertToNonDiacriticsCsText(title);
 		if( character.GetDisciplines().FindValue(iter->first) != NULL)
 		{
-			if( character.GetDisciplines().FindValue(iter->first)->m_neededItem != ITEM_UNKNOWN)
+			if(!character.GetDisciplines().FindValue(iter->first)->m_weaponClass.empty())
 			{
-				wxString weapon = g_gameEngine.GetResMgr().GetItemAndDiscMgr().GetItem(character.GetDisciplines().FindValue(iter->first)->m_neededItem).m_title;
+				wxString weapon = g_gameEngine.GetResMgr().GetItemAndDiscMgr().GetItem(
+									g_gameEngine.GetResMgr().GetItemAndDiscMgr().GetItemType(
+										wxString(Convertor::GetWeaponClassName(
+											character.GetDisciplines().FindValue(iter->first)->m_weaponClass[0])
+											)
+										)
+									).m_title;
 				ConvertToNonDiacriticsCsText(weapon);
 				cout << title.c_str() << " (" << weapon.c_str() << "), " << endl;
 			} else {

@@ -78,7 +78,10 @@ enum EActionType {
 	ACTION_CREATE_CHAR	= 1,
 	ACTION_MOVE			= 2,
 	ACTION_LOTERY		= 3,
-	ACTION_FIGHT		= 4
+	ACTION_FIGHT		= 4,
+	ACTION_NEXT_CHAPTER = 5,
+	ACTION_PROMOTE_CHAR	= 6,
+	ACTION_CHOOSE_ITEM	= 7
 };
 
 enum EItemPlacement {
@@ -90,6 +93,22 @@ enum EItemPlacement {
 	ITEM_PLACEMENT_BODY_BACK	= 5,
 	ITEM_PLACEMENT_POUCH		= 6,
 	ITEM_PLACEMENT_SPECIAL		= 7
+};
+
+
+enum EWeaponClass {
+	WEAPON_CLASS_NONE			= 0,
+	WEAPON_CLASS_DAGGER			= 1,
+	WEAPON_CLASS_SPEAR			= 2,
+	WEAPON_CLASS_MACE			= 3,
+	WEAPON_CLASS_SHORT_SWORD	= 4,
+	WEAPON_CLASS_WARHAMMER		= 5,
+	WEAPON_CLASS_SWORD			= 6,
+	WEAPON_CLASS_AXE			= 7,
+	WEAPON_CLASS_QUATERSTAFF	= 8,
+	WEAPON_CLASS_BROADSWORD		= 9,
+	WEAPON_CLASS_BOW			= 10,
+//	WEAPON_CLASS_SHIELD			= 11
 };
 
 
@@ -115,6 +134,9 @@ public:
 	
 	static const wxChar* GetEventName(EEventType type);
 	static EEventType ConvertEventNameToType(const wxString &eventName);
+	
+	static const wxChar* GetWeaponClassName(EWeaponClass type);
+	static EWeaponClass ConvertWeaponClassToType(const wxString &eventName);
 	
 };
 

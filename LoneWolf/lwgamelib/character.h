@@ -325,6 +325,11 @@ public:
 	void ApplySkills(Character &enemyCharacter);
 	
 	/*!
+	 * \brief Apply items which affects attack skill
+	 */
+	void ApplyFightItems();
+	
+	/*!
 	 * \brief Get result attack skill affter application all events and skills
 	 * \return 
 	 */
@@ -336,6 +341,13 @@ public:
 	 * \return true if item is present
 	 */
 	bool ContainsItem(EItem item);
+	
+	/*!
+	 * \brief Check if character has weapon with given weapon type
+	 * \param weapon
+	 * \return 
+	 */
+	bool ContainsWeaponClass(EWeaponClass weapon);
 	
 	/*!
 	 * \brief Get list of items which can be used freely

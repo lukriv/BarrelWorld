@@ -3,23 +3,20 @@
 
 wxInt32 Action::GetLoteryTarget(wxDword id)
 {
-	if(m_loteryTargets.empty())
-	{
+	if(m_loteryTargets.empty()) {
 		return TARGET_UNKNOWN;
 	}
-	
+
 	return m_loteryTargets[id];
 }
 
 void Action::SetLoteryTarget(wxDword id, wxInt32 target)
 {
-	if ( m_loteryTargets.empty() )
-	{
+	if ( m_loteryTargets.empty() ) {
 		m_loteryTargets.resize(10, TARGET_UNKNOWN);
 	}
-	
-	if(id < 10)
-	{
+
+	if(id < 10) {
 		m_loteryTargets[id] = target;
 	}
 }
@@ -28,35 +25,31 @@ void Action::SetLoteryTarget(wxDword fromId, wxDword toId, wxInt32 target)
 {
 	if(toId < fromId) return;
 	if(toId > 9) return;
-	
-	if ( m_loteryTargets.empty() )
-	{
+
+	if ( m_loteryTargets.empty() ) {
 		m_loteryTargets.resize(10, TARGET_UNKNOWN);
 	}
-	
-	for (wxDword i = fromId; i <= toId; i++)
-	{
+
+	for (wxDword i = fromId; i <= toId; i++) {
 		m_loteryTargets[i] = target;
 	}
 }
 
 wxInt32 Action::GetMoveTarget()
 {
-	if(!m_loteryTargets.empty())
-	{
+	if(!m_loteryTargets.empty()) {
 		return m_loteryTargets[0];
 	}
-	
+
 	return 0;
 }
 
 void Action::SetMoveTarget(wxInt32 target)
 {
-	if ( m_loteryTargets.empty() )
-	{
+	if ( m_loteryTargets.empty() ) {
 		m_loteryTargets.resize(1);
 	}
-	
+
 	m_loteryTargets[0] = target;
 }
 
@@ -64,8 +57,7 @@ bool ActionManager::GetDefaultActionDesc(EActionType type, wxString& desc)
 {
 	TActionTranslateMap::iterator iter;
 	iter = m_translateMap.find(type);
-	if(iter != m_translateMap.end())
-	{
+	if(iter != m_translateMap.end()) {
 		desc = iter->second;
 		return true;
 	} else {
@@ -77,21 +69,19 @@ bool ActionManager::SetDefaultActionDesc(EActionType type, const wxString& desc)
 {
 	TActionTranslateMap::iterator iter;
 	iter = m_translateMap.find(type);
-	if(iter == m_translateMap.end())
-	{
+	if(iter == m_translateMap.end()) {
 		m_translateMap.insert(TActionTranslateMapPair(type, desc));
 	} else {
 		iter->second = desc;
 	}
-	
-	return true;	
+
+	return true;
 }
 
 
 std::ostream& operator<< (std::ostream& output, const Action& action)
 {
-	switch(action.m_type)
-	{
+	switch(action.m_type) {
 	case ACTION_CREATE_CHAR:
 		output << "Type: Create character; Target: " << action.m_loteryTargets[0] << "\n";
 		break;
@@ -101,8 +91,7 @@ std::ostream& operator<< (std::ostream& output, const Action& action)
 		break;
 	case ACTION_LOTERY:
 		output << "Type: Lotery; Targets: ";
-		for (int i = 0; i < 10; ++i)
-		{
+		for (int i = 0; i < 10; ++i) {
 			output << action.m_loteryTargets[i] << ", ";
 		}
 		output << "\n";
@@ -110,15 +99,14 @@ std::ostream& operator<< (std::ostream& output, const Action& action)
 	default:
 		break;
 	}
-	
+
 	return output;
 }
 
 
 std::wostream& operator<< (std::wostream& output, const Action& action)
 {
-		switch(action.m_type)
-	{
+	switch(action.m_type) {
 	case ACTION_CREATE_CHAR:
 		output << L"Type: Create character; Target: " << action.m_loteryTargets[0] << L"\n";
 		break;
@@ -128,8 +116,7 @@ std::wostream& operator<< (std::wostream& output, const Action& action)
 		break;
 	case ACTION_LOTERY:
 		output << L"Type: Lotery; Targets: ";
-		for (int i = 0; i < 10; ++i)
-		{
+		for (int i = 0; i < 10; ++i) {
 			output << action.m_loteryTargets[i] << L", ";
 		}
 		output << L"\n";
@@ -137,6 +124,25 @@ std::wostream& operator<< (std::wostream& output, const Action& action)
 	default:
 		break;
 	}
-	
+
 	return output;
+}
+wxInt32 ActionChoose::GetMinimumGold()
+{
+}
+
+EItem ActionChoose::GetRequiredItem()
+{
+}
+
+EDisciplines ActionChoose::GetRequiredSkill()
+{
+}
+
+EActionType ActionChoose::GetType()
+{
+}
+
+bool ActionChoose::IsConditioned()
+{
 }

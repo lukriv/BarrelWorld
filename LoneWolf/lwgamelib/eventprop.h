@@ -8,12 +8,13 @@
 
 
 struct ItemProperties {
+	wxInt32 m_actualAttack; //mainly for weapons or other fight accessories
 	wxInt32 m_actualCond;
 	wxInt32 m_maxCond;
 	bool m_oneUse; // item is only for one use - this could be spent by event or manual use
 	bool m_freeUse; // item can be used freely on user request
 public:
-	ItemProperties() : m_actualCond(0), m_maxCond(0) {}
+	ItemProperties() : m_actualAttack(0), m_actualCond(0), m_maxCond(0) {}
 };
 
 struct EventProperties {
@@ -45,7 +46,7 @@ struct DisciplineProperties {
 	wxInt32 m_actualAttack;
 	EItem m_cancelItem; // event is invalid if this item is available (cancel item has more priority than needed item)
 	EDisciplines m_cancelSkill; // event is invalid if this skill is available (cancel skill has more prioriry than needed skill)
-	EItem m_neededItem; // event is valid if this item is available
+	wxVector<EWeaponClass> m_weaponClass; // event is valid if this item is available
 	EDisciplines m_neededSkill; // event is valid if this skill is available
 	bool m_fightSkill; // discipline is/is not available in fight
 public:
@@ -53,7 +54,6 @@ public:
 						, m_actualAttack(0)
 						, m_cancelItem(ITEM_UNKNOWN)
 						, m_cancelSkill(DISCIPLINE_UNKNOWN)
-						, m_neededItem(ITEM_UNKNOWN)
 						, m_neededSkill(DISCIPLINE_UNKNOWN)
 						, m_fightSkill(false) {}
 };
