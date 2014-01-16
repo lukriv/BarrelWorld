@@ -95,6 +95,22 @@ and open the template in the editor.
 			<title lang="en">Healing herb</title>
 			<desc lang="en">One meal of Laumspur will restore 3 ENDURANCE points.</desc>
 		</item>
+		<item id="33" name="tinderbox" placement="backpack" >
+			<title lang="cs">Troudník</title>
+			<desc lang="cs">Slouží k zapálení louče.</desc>
+			<title lang="en">Tinderbox</title>
+			<desc lang="en">It  may light the torch.</desc>
+		</item>
+		<item id="34" name="torch" placement="backpack" >
+			<title lang="cs">Louč</title>
+			<desc lang="cs">Slouží ke svícení na temných místech.</desc>
+			<title lang="en">Torch</title>
+			<desc lang="en">It makes light in dark places.</desc>
+		</item>
+		<item id="35" name="gems" placement="backpack" >
+			<title lang="cs">Drahokamy</title>
+			<title lang="en">Gems</title>
+		</item>
 		<item id="99" name="random_backpack_item" placement="backpack">
 			<title lang="cs">Náhodně vybraný předmět z batohu</title>
 			<title lang="en">Random selected backpack item</title>
@@ -131,7 +147,11 @@ and open the template in the editor.
 			<title lang="en">Golden Key</title>
 			<desc lang="en">Golden Key from secret room.</desc>
 		</item>
-		<item id="105" name="chrystal_star_pedant" placement="special">
+		<item id="105" name="silver_key" placement="special">
+			<title lang="cs">Stříbrný klíč</title>
+			<title lang="en">Silver Key</title>
+		</item>
+		<item id="106" name="chrystal_star_pedant" placement="special">
 			<title lang="cs">Talisman Křišťálové hvězdy</title>
 			<desc lang="cs">Talisman Křišťálové hvězdy od bratrstva Křišťálové hvězdy.</desc>
 			<title lang="en">Crystal Star Pendant</title>

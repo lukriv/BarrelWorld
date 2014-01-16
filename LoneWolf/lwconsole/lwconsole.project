@@ -13,6 +13,7 @@
     <File Name="callbackimpl.cpp"/>
     <File Name="textConversion.cpp"/>
     <File Name="consolefunc.cpp"/>
+    <File Name="commands.cpp"/>
   </VirtualDirectory>
   <Dependencies Name="Debug">
     <Project Name="lwgamelib"/>
@@ -22,6 +23,7 @@
     <File Name="gres.h"/>
     <File Name="textConversion.h"/>
     <File Name="consolefunc.h"/>
+    <File Name="commands.h"/>
   </VirtualDirectory>
   <Settings Type="Executable">
     <GlobalSettings>

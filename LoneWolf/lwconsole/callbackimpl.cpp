@@ -4,12 +4,15 @@
 #include "gres.h"
 #include "../lwgamelib/fight.h"
 
+#include "consolefunc.h"
+
 using namespace std;
 
 
 void ConsoleGameCallback::WriteDisciplineList(const std::set<EDisciplines> &chosenDisc)
 {
 	wxString title, desc;
+	SetFontColor(HEADING);
 	cout << "Discipliny k vyberu: " << endl;
 	for (DisciplinesManager::Iterator iter = g_gameEngine.GetResMgr().GetDisciplineMgr().begin()
 							; iter != g_gameEngine.GetResMgr().GetDisciplineMgr().end()
@@ -22,7 +25,10 @@ void ConsoleGameCallback::WriteDisciplineList(const std::set<EDisciplines> &chos
 			desc = (*iter).m_desc;
 			ConvertToNonDiacriticsCsText(title);
 			ConvertToNonDiacriticsCsText(desc);
-			cout << "  " << static_cast<wxInt32>((*iter).m_id) << ") " << title.c_str() << " [" << desc.c_str() << "]" << endl;
+			SetFontColor(DISCIPLINES_HEADING);
+			cout << "  " << static_cast<wxInt32>((*iter).m_id) << ") " << title.c_str() << endl;
+			SetFontColor(DISCIPLINES);
+			cout << " [" << desc.c_str() << "]" << endl;
 		}
 	}
 }
@@ -40,6 +46,7 @@ void ConsoleGameCallback::SelectDisciplines(wxDword discToSelect, std::set<EDisc
 				||(!g_gameEngine.GetResMgr().GetDisciplineMgr().DisciplineExists(static_cast<EDisciplines>(discId)))
 				||(chosenDisc.find(static_cast<EDisciplines>(discId)) != chosenDisc.end()))
 		{
+			SetFontColor(COMMAND_LINE);
 			cout << "Zadej cislo discipliny z vyberu (zbyva vybrat " << (discToSelect - chosenDisc.size()) << " disciplin): " << endl;
 			cin >> input;
 			cout << endl;
@@ -59,8 +66,10 @@ void ConsoleGameCallback::FightTurn(ActionFight &fight)
 	Character *pChar = NULL;
 	if(fight.GetActualTurn() > 0)
 	{
+		SetFontColor(COMMAND_LINE); // set font
 		cout << "LW(" << fight.GetLastLoneWolfHits() << "), enemy(" << fight.GetLastEnemyHits() << ")" << endl;
 	}	
+	SetFontColor(HEADING); // set font
 	cout << " ------ Boj kolo " << fight.GetActualTurn();
 	if(fight.GetTurnsToWin() == TURNS_INFINITE)
 	{
@@ -84,18 +93,53 @@ void ConsoleGameCallback::FightTurn(ActionFight &fight)
 	pChar = fight.GetActualEnemy();
 	if(pChar != NULL)
 	{
-		cout << "Nepritel (" << pChar->GetCharacterName() << "): "
-				<< " utok( " << pChar->GetActualAttackSkill() << "), "
-				<< " kondice( " << pChar->GetActualConditions() << ") " << endl;
+		SetFontColor(CHARACTER_NAME); // set font
+		cout << "Nepritel (" << pChar->GetCharacterName() << "): ";
+		if(pChar->GetActualAttackSkill() < 15)
+		{
+			SetFontColor(HEALTH_BAD);
+		} else if(pChar->GetActualAttackSkill() < 20){
+			SetFontColor(HEALTH_GOOD);
+		} else {
+			SetFontColor(HEALTH_OK);
+		}
+		cout << " utok( " << pChar->GetActualAttackSkill() << "), ";
+		if(pChar->GetActualConditions() < 10)
+		{
+			SetFontColor(HEALTH_BAD);
+		} else if(pChar->GetActualConditions() < 20){
+			SetFontColor(HEALTH_GOOD);
+		} else {
+			SetFontColor(HEALTH_OK);
+		}
+		cout << " kondice(" << pChar->GetActualConditions() << ") " << endl;
 	}
 	
 	pChar = fight.GetLoneWolfCharacter();
 	if(pChar != NULL)
 	{
-		cout << "LoneWolf: " 
-				<< " utok( " << pChar->GetActualAttackSkill() << "), "
-				<< " kondice( " << pChar->GetActualConditions() << ") " << endl;
+		SetFontColor(CHARACTER_NAME);
+		cout << "LoneWolf: ";
+		if(pChar->GetActualAttackSkill() < 15)
+		{
+			SetFontColor(HEALTH_BAD);
+		} else if(pChar->GetActualAttackSkill() < 20){
+			SetFontColor(HEALTH_GOOD);
+		} else {
+			SetFontColor(HEALTH_OK);
+		}
+		cout << " utok( " << pChar->GetActualAttackSkill() << "), ";
+		if(pChar->GetActualConditions() < 10)
+		{
+			SetFontColor(HEALTH_BAD);
+		} else if(pChar->GetActualConditions() < 20){
+			SetFontColor(HEALTH_GOOD);
+		} else {
+			SetFontColor(HEALTH_OK);
+		}
+		cout << " kondice( " << pChar->GetActualConditions() << ") " << endl;
 	}
+	SetFontColor(COMMAND_LINE); // set font
 	cout << "Libovolne pismeno nebo retreat pro ustup > ";
 	cin >> input;
 	wxInput = input;
@@ -113,7 +157,9 @@ void ConsoleGameCallback::FightTurn(ActionFight &fight)
 
 void ConsoleGameCallback::FightFinish(ActionFight &fight)
 {
+	SetFontColor(COMMAND_LINE); // set font
 	cout << "LW(" << fight.GetLastLoneWolfHits() << "), enemy(" << fight.GetLastEnemyHits() << ")" << endl;
+	SetFontColor(HEADING); // set font
 	cout << " ------ Konec boje ------ " << endl;
 	if((fight.GetLoneWolfCharacter() != NULL)&&(fight.GetLoneWolfCharacter()->GetActualConditions() > 0))
 	{
@@ -138,9 +184,27 @@ void ConsoleGameCallback::FightFinish(ActionFight &fight)
 	
 	if(fight.GetLoneWolfCharacter() != NULL)
 	{
-		cout << "LoneWolf: " 
-				<< " utok( " << fight.GetLoneWolfCharacter()->GetActualAttackSkill() << "), "
-				<< " kondice( " << fight.GetLoneWolfCharacter()->GetActualConditions() << ") " << endl;
+		SetFontColor(CHARACTER_NAME); // set font
+		cout << "LoneWolf: ";
+		if(fight.GetLoneWolfCharacter()->GetActualAttackSkill() < 15)
+		{
+			SetFontColor(HEALTH_BAD); // set font
+		} else if(fight.GetLoneWolfCharacter()->GetActualAttackSkill() < 20){
+			SetFontColor(HEALTH_GOOD); // set font
+		} else {
+			SetFontColor(HEALTH_OK); // set font
+		}
+		cout << " utok( " << fight.GetLoneWolfCharacter()->GetActualAttackSkill() << "), ";
+		if(fight.GetLoneWolfCharacter()->GetActualConditions() < 10)
+		{
+			SetFontColor(HEALTH_BAD); // set font
+		} else if(fight.GetLoneWolfCharacter()->GetActualConditions() < 20){
+			SetFontColor(HEALTH_GOOD); // set font
+		} else {
+			SetFontColor(HEALTH_OK); // set font
+		}
+		cout << " kondice( " << fight.GetLoneWolfCharacter()->GetActualConditions() << ") " << endl;
 	}
+	SetFontColor(HEADING);
 	cout << " --------------------------- " << endl;
 }

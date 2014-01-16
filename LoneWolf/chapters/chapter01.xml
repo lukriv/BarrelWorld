@@ -245,8 +245,8 @@ and open the template in the editor.
 			vozu i zboží. Nabízí ti svezení, ale chce 10 Zlatých.</p>]]>
 		</desc>
         <actions>
-				<action_move target="262"><desc lang="cs">Máš-li deset Zlatých a jsi-li ochoten kupci zaplatit</desc></action_move>
-				<action_move target="247"><desc lang="cs">Pokud žádné zlaťáky nemáš nebo nechceš zaplatit</desc></action_move>
+				<action_move target="262" gold_count="10"><desc lang="cs">Máš deset Zlatých a jsi ochoten kupci zaplatit.</desc></action_move>
+				<action_move target="247"><desc lang="cs">Nemáš dost Zlatých nebo nechceš zaplatit.</desc></action_move>
         </actions>
     </scene>
 	<scene id="13">
@@ -304,7 +304,7 @@ and open the template in the editor.
 			přibitý a s napětím očekáváš další vývoj událostí.</p>]]>
 		</desc>
         <actions>
-				<action_move target="192"><desc lang="cs">Pokračovat</desc></action_move>
+			<action_move target="192"><desc lang="cs">Pokračovat</desc></action_move>
         </actions>
     </scene>
 	<scene id="17">
@@ -479,6 +479,125 @@ and open the template in the editor.
 			<action_move target="147"><desc lang="cs">Obrátit se k jihu</desc></action_move>
         </actions>
     </scene>
+	<scene id="29">
+        <desc lang="cs">
+		   <![CDATA[<p>Odhodlaně vycházíš na břeh jezera a připravuješ se na střetnutí s
+			nepřítelem. Jsi spatřen! Kraan a jeho pán se řítí těsně nad hladinou přímo k
+			tobě. Jezdec v červeném vydal tak příšerný a pronikavý skřek, až ti tuhne
+			krev v žilách. Je to Vordak, nejmocnější z Temných pánů a jejich vůdce.
+			Vordak už je nad tebou a boj vypukne každým okamžikem.</p>
+			<p>Protivník na tebe totiž útočí jak ohromným těžkým palcátem, tak duševní silou.</p>]]>
+		</desc>
+        <actions>
+			<action_fight win="270">
+				<enemy attack="17" condition="25" >
+					<title lang="cs">Vordak</title>
+					<skill name="mindblast" attack_actual="2" canceled_by_skill="mindshield" />
+				</enemy>
+			</action_fight>
+        </actions>
+    </scene>
+	<scene id="30">
+        <desc lang="cs">
+		   <![CDATA[<p>Ve tvářích lidí čteš únavu a strach, mnozí z nich jsou vyhladovělí a u konce
+			svých sil. Urazili dlouhý kus cesty od chvíle, kdy opustili své hořící město.
+			Náhle slyšíš od severu známý zlověstný zvuk velkých křídel. Lidé zděšeně
+			zvedají oři k obloze, silnicí se nese vlna varovného volání: "Kraanové!
+			Kraanové! Zachraň se kdo můžeš!" Zástup se v panice rozbíhá na všechny
+			strany.</p>
+			<p>Těsně před tebou ujíždí vůz vezoucí malé děti. V prudkém trysku naráží
+			pravým předním kolem do výmolu, náprava se láme a povoz přepadá na
+			bok. Dětí křičí hrůzou.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="194">
+				<desc lang="cs">Přispěchat dětem na pomoc.</desc>
+			</action_move>
+			<action_move target="261">
+				<desc lang="cs">Běžet raději do úkrytu pod stromy.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="31">
+        <desc lang="cs">
+		   <![CDATA[<p>Snažíš se uložit zraněného muže, jak nejlépe dovedeš.
+			Ale jeho rány jsou vážné a brzy upadá znovu do bezvědomí.
+			Pečlivě ho přikrýváš jeho pláštěm, pak se obracíš a mizíš v hlubinách lesa.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="264">
+				<desc lang="cs">Pokračovat do hlubil lesa.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="32">
+        <desc lang="cs">
+		   <![CDATA[<p>Urazil jsi asi tři míle, když se před tebou objevily nezaměnitelné siluety
+			pěti velkých vlkodlaků. Na jejich hřbetech jedou Giakové. Máš dojem, že
+			se pohybují stejným směrem jako ty, ujíždějí po stezce, která míří na
+			otevřenou louku. Nečekaně se jeden vlkodlak s jezdcem odpojuje od svých
+			druhu a vrací se zpět směrem k tobě.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="176">
+				<desc lang="cs">Ukrýt se v podrostu a nechat Giaka projít kolem.</desc>
+			</action_move>
+			<action_move target="340">
+				<desc lang="cs">Zaútočit na Giaka.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="33">
+        <desc lang="cs">
+		   <![CDATA[<p>Na suché podlaze jeskyně leží vrstva prachu. V pološeru pronikáš hlouběji
+			a tím dál zřetelněji cítíš zatuchlý pach tlejícího masa. Po zemi se válejí
+			pozůstatky jakýchsi malých živočichů, jejich kosti, zuby, seschlé cáry kůží.
+			Jak tvůj pohled klouže po nevábných zbytcích, zastavuje se na něčem pro
+			tato místa nezvyklém: na jakémsi cípku látky. Zvedáš ho a ukazuje se, že je
+			to uzavřený plátěný váček. Skrývá v sobě tři Zlaté.</p>
+			<p>Ukládáš si mince do měšce a přitom rychle opouštíš jeskyňku, která patrně
+			slouží horské kočce jako doupě. Obezřetně scházíš z kopce dolů.</p>]]>
+		</desc>
+		<events>
+			<event name="add_gold_to_scene" gold_count="3" />
+		</events>
+        <actions>
+			<action_move target="248">
+				<desc lang="cs">Pokračovat dál.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="34">
+        <desc lang="cs">
+		   <![CDATA[<p>Úplně nečekaně a bez varování se na Kraanově hřbetě řítí z oblohy příšerné
+			zjevení. Z jeho skřeků ti tuhne krev v žilách. Je to Vordak, červeně oděný
+			mocný vůdce Temných pánů.</p>
+			<p>Už se snesl přímo nad tvou hlavu a ty nemáš jinou volbu než boj. Vordak útočí nejen
+			těžkým černým palcátem, ale i svou duševní silou.</p>]]>
+		</desc>
+        <actions>
+			<action_fight win="270">
+				<enemy attack="17" condition="25" >
+					<title lang="cs">Vordak</title>
+					<skill name="mindblast" attack_actual="2" canceled_by_skill="mindshield" />
+				</enemy>
+			</action_fight>
+        </actions>
+    </scene>
+	<scene id="35">
+        <desc lang="cs">
+		   <![CDATA[<p>Les před tebou se stává neprůchodným, pěšina víc a víc zarůstá trnitým
+			křovím a začíná být jasné, že tudy se dál nedostaneš. Rozhlížíš se pozorně
+			kolem sebe a díky tomu objevuješ v hustém porostu jinou, téměř ztracenou
+			v bujně rostoucí vegetaci. Nedá se nic dělat, budeš muset změnit směr a
+			nechat se vést touto cestou k východu.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="207">
+				<desc lang="cs">Pokračovat dál.</desc>
+			</action_move>
+        </actions>
+    </scene>
    <scene id="36">
         <desc lang="cs">
 			<![CDATA[<p>Žebřík, který spojuje letitou strážní věž se zemí, je stejně starý a zpuchřelý.
@@ -490,6 +609,26 @@ and open the template in the editor.
                 <selection numbers_from="5" numbers_to="9" target="323" />
            </action_lotery>
 		</actions>
+    </scene>
+	<scene id="37">
+        <desc lang="cs">
+		   <![CDATA[<p>Zmáhá tě únava a hlad, musíš se aspoň na chvíli zastavit a něco pojíst. Po
+			krátkém odpočinku a po jídle míří tvoje kroky znovu k Pevnosti. Zeď
+			kolem ní je i na této straně vysoká a zcela nepřístupná. Obcházíš pomalu
+			strmou zeď, až nalézáš další vchod, který střeží, stejně jako předchozí, dva
+			strážci v brnění.</p>]]>
+		</desc>
+		<events>
+			<event name="character" cond_actual="-3" canceled_by_item="meal" canceled_by_skill="hunting" />
+		</events>
+        <actions>
+			<action_move target="289">
+				<desc lang="cs">Přestoupit před strážce a vylíčit jim svůj příběh.</desc>
+			</action_move>
+			<action_move target="282" skill_needed="camouflage">
+				<desc lang="cs">Využít Kai umění Maskování.</desc>
+			</action_move>
+        </actions>
     </scene>
 	<scene id="38">
         <desc lang="cs">
@@ -505,6 +644,24 @@ and open the template in the editor.
 			<action_move target="347"><desc lang="cs">Zdroj kouře raději obejít.</desc></action_move>
         </actions>
     </scene>
+	<scene id="39">
+        <desc lang="cs">
+		   <![CDATA[<p>Za kmenem se na par minut rozhostilo napjaté ticho, pak se z úkrytu za
+			padlým stromem vynoří dva zarostlé ustrašené obličejíky. Podle očekávání
+			jsou to Kakarmové. Vyprávějí ti, co je potkalo. Západně odtud zůstala v
+			troskách jejich vesnice, kterou celý kmen Kakarmů spěšně opustil, když se
+			začala objevovat "černá křídla", jak nazývají všudypřítomné Kraany.</p>
+			<p>Kakarmové se rozprchli po lesích a teď se navzájem hledají. Oba
+			Kakarmové tato místa už dobře znají a mohou ti poradit. Pěšina, na které
+			stojíš, tady zdánlivě končí, ale když se budeš držet jejího směru, narazíš po
+			pár metrech chůze na starou strážní věž, pod níž se stezka štěpí do tří
+			směru. Východní cesta tě zavede až k silnici spojující Holmgard s
+			přístavem na severu, s Toranem. Děkuješ Kakarmům a loučíš se s nimi.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="228"><desc lang="cs">Pokračovat dále jižním směrem.</desc></action_move>
+        </actions>
+    </scene>
 	<scene id="40">
         <desc lang="cs">
 		   <![CDATA[<p>Dlouho si z úkrytu zkoumavě prohlížíš sruby, abys včas objevil i tu
@@ -514,6 +671,107 @@ and open the template in the editor.
 		</desc>
         <actions>
 			<action_move target="105"><desc lang="cs">Pospíchat pryč z Mlhavého lesa.</desc></action_move>
+        </actions>
+    </scene>
+	<scene id="41">
+        <desc lang="cs">
+		   <![CDATA[<p>Po říčním břehu prchají tři členové pohraniční jízdní hlídky, v patách mají
+			Giaky, kteří je pronásledují na vrčících vlkodlacích.
+			Břeh je strmý a neposkytuje příliš bezpečný úkryt. Teď velitel Giaků
+			probíhá kolem tebe. Jsi spatřen! Dává rozkaz pěti členům své tlupy, aby
+			spustili střelbu z luků. Prší na tebe déšť černých šípů.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="174">
+				<desc lang="cs">Vrhnout se do proudu a plavat po řece dolů.</desc>
+			</action_move>
+			<action_move target="116">
+				<desc lang="cs">Raději se skrýt mezi stromy na druhém břehu řeky.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="42">
+        <desc lang="cs">
+		   <![CDATA[<p>Po hodinové chůzi jsi právě dorazil k rozcestí. Nabízí ti volbu ze čtyř možností.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="86">
+				<desc lang="cs">Pokračovat východním směrem.</desc>
+			</action_move>
+			<action_move target="238">
+				<desc lang="cs">Raději zamířit na sever.</desc>
+			</action_move>
+			<action_move target="157">
+				<desc lang="cs">Dát se jižním směrem.</desc>
+			</action_move>
+			<action_move target="147">
+				<desc lang="cs">Dát přednost cestě k západu.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="43">
+        <desc lang="cs">
+		   <![CDATA[<p>Z úkrytu za balvanem vyrazil obrovský černý medvěd. Je si jist svou
+			kořistí, blíží se, tlamu má rozevřenou, plnou tesáků a jeho výraz prozrazuje
+			zuřivost, způsobenou bolestí.</p>
+			<p>Medvěd krvácí ze šíje a ze zad, vidíš, že utrpěl těžká poranění. Už nemůžeš
+			utéct, musíš bojovat.</p>]]>
+		</desc>
+        <actions>
+			<action_fight win="195" retreat="106" turn_to_retreat="3" >
+				<enemy attack="16" condition="10" >
+					<title lang="cs">Černý medvěd</title>
+				</enemy>
+			</action_fight>
+        </actions>
+    </scene>
+	<scene id="44">
+        <desc lang="cs">
+		   <![CDATA[<p>Zcela nečekaně a bez jakéhokoliv varování stezka končí na okraji příkrého
+			srázu. Zem pod tvýma nohama se drolí a ujíždí. Ztrácíš rovnováhu a
+			střemhlav se řítíš dolů do hlubiny.</p>]]>
+		</desc>
+        <actions>
+			<action_lotery>
+				<selection numbers_from="0" numbers_to="4" target="277" />
+				<selection numbers_from="5" numbers_to="9" target="338" />
+			</action_lotery>
+        </actions>
+    </scene>
+	<scene id="45">
+        <desc lang="cs">
+		   <![CDATA[<p>Muži rozhodně nejsou těmi, za které se vydávají. Tunika, která halí velitele,
+			je sice pravá, ale na límci a kolem něho úplně zkrvavená, protože její pravý
+			majitel se stal obětí zákeřné vraždy a pak byl oloupen. Navíc nemají běžné
+			armádní zbraně. Ty jejich jsou draze a bohatě zdobené. Takové zbraně
+			vyrábějí jen mistři zbrojaři v Durenoru.</p>
+			<p>Velitel má na zádech jakýsi vak a přes něj pověšený samostříl. Jakýkoli
+			pokus o útěk by byl vyloženou sebevraždou. Musíš bojovat, protože v
+			okamžiku, kdy bys odhodil zbraně, by tě bez váhání zabili.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="180">
+				<desc lang="cs">Bojovat s muži.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="46">
+        <desc lang="cs">
+		   <![CDATA[<p>Urazil jsi další dvě míle, když tu les před tebou řídne a pomalu se otevírá
+			pohled na jezero s malou dřevěnou boudou na břehu. Muž zahalený do
+			pláštěnky ti jde vstříc a nabízí ti, že tě za dva zlaté převeze i s koněm přes
+			jezero.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="246">
+				<desc lang="cs">Přijmout nabídku.</desc>
+			</action_move>
+			<action_move target="90">
+				<desc lang="cs">Odmítnout nabídku a pokusit se jezero objet sám.</desc>
+			</action_move>
+			<action_move target="296" skill_needed="sixth_sense">
+				<desc lang="cs">Použít Kai disciplínu Šestý smysl.</desc>
+			</action_move>
         </actions>
     </scene>
 	<scene id="47">
@@ -529,6 +787,60 @@ and open the template in the editor.
 			</action_move>
 			<action_move target="322">
 				<desc lang="cs">Zatnout zuby a doplazit se k vrcholku kopce.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="48">
+        <desc lang="cs">
+		   <![CDATA[<p><i>Šestý smysl</i> tě varuje: napovídá, že ti, které máš před sebou, nejsou přátelé.
+			Obklopuje je viditelný opar zla. Slouží Temným pánům.</p>
+			<p>Musíš odtud rychle zmizet, dřív než tě objeví.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="243">
+				<desc lang="cs">Zmizet odtud.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="49">
+        <desc lang="cs">
+		   <![CDATA[<p>Nakláníš se, aby sis mohl přečíst nápis, ale přesto stačíš alespoň koutkem oka za závěsem zpozorovat pohyb jakéhosi stínu.</p>]]>
+		</desc>
+        <actions>
+			<action_lotery>
+                <selection numbers_from="0" numbers_to="4" target="339" />
+                <selection numbers_from="5" numbers_to="9" target="60" />
+			</action_lotery>
+        </actions>
+    </scene>
+	<scene id="50">
+        <desc lang="cs">
+		   <![CDATA[<p>Z dálky sem doléhají zvuky bitvy.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="97">
+				<desc lang="cs">Pokračovat v cestě směrem, odkuz zvuky přicházejí.</desc>
+			</action_move>
+			<action_move target="243">
+				<desc lang="cs">Vyhnout se raději boji a změnit směr.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="51">
+        <desc lang="cs">
+		   <![CDATA[<p>Vyšplhal jsi na říční břeh zpevněný kládami a prohlížíš si dřevěné valy
+			opevnění, které se v dálce ztrácejí. Dvě míle odtud zuří bitva a i tady už
+			jsou roubené zdi na mnoha místech probořeny po útocích Temných pánů.
+			Většina opevnění je vylidněna, vojáci odtud odešli, aby nahradili muže
+			padlé v bitvě.</p>
+			<p>Před sebou máš bránu, kterou můžeš projít.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="288">
+				<desc lang="cs">Projít branou.</desc>
+			</action_move>
+			<action_move target="221">
+				<desc lang="cs">Přelézt raději zeď na nějakém vhodném místě.</desc>
 			</action_move>
         </actions>
     </scene>
@@ -598,18 +910,211 @@ and open the template in the editor.
 			Kraanově nežádoucí pozornosti.</p>]]>
 		</desc>
         <actions>
-				<action_move target="222"><desc lang="cs">Čekat na další sled událostí.</desc></action_move>
+			<action_move target="222">
+				<desc lang="cs">Čekat na další sled událostí.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="57">
+        <desc lang="cs">
+		   <![CDATA[<p>Celou chatu tvoří jen jedna místnost, jednoduše a prostě vybavená: dřevěný
+			stůl a u něj dvě lavice, v koutě prostorné lůžko svázané z několika otepí
+			slámy, pár lahviček s neznámými různobarevnými tekutinami a uprostřed
+			místnosti na podlaze tkaný koberec.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="164">
+				<desc lang="cs">Prozkoumat zblízka obsah tajemných lahviček.</desc>
+			</action_move>
+			<action_move target="109">
+				<desc lang="cs">Odhrnout koberec, abys zjistil, neskrývá-li něco.</desc>
+			</action_move>
+			<action_move target="308">
+				<desc lang="cs">Raději vyjít ven a podívat se do stáje.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="58">
+        <desc lang="cs">
+		   <![CDATA[<p>Přinutil ses k běhu a teď vyrovnaným tempem míříš dolů z hřebenu. Čas od
+			času pozoruješ západní obzor, kde se rozrůstají vojska Temných pánů. Zdá
+			se ti, jako by někdo vylil na hory obří kalamář a inkoust se teď rozlévá po
+			okolí.</p>
+			<p>Klušeš už asi dvacet minut, když tu vidíš po své pravici skupinu vlkodlaků,
+			která se formuje do šiku na mírném svahu a zřejmě ho hodlá přejít.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="286">
+				<desc lang="cs">Přitisknout se k balvanům lemujícím silnici a v úkrytu vyčkat, až vlkodlaci zmizí.</desc>
+			</action_move>
+			<action_move target="160">
+				<desc lang="cs">Běžet dál, ale se zbraní nachystanou pro případný útok.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="59">
+        <desc lang="cs">
+		   <![CDATA[<p>Pomalu si zvykáš na přítmí, které uvnitř panuje. Před sebou vidíš několik
+			schodů, nahrubo vytesaných do skály. To, co jsi považoval za vchod do
+			jeskyně, je ve skutečnosti ústí jakéhosi tunelu.
+			Pozorně sestupuješ dolů po kluzkých schodech. Na posledním stupni si
+			všímáš malé stříbrné skříňky.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="124">
+				<desc lang="cs">Otevřít skříňku.</desc>
+			</action_move>
+			<action_move target="106">
+				<desc lang="cs">Vrátit se zpět na denní světlo a pokračovat v cestě.</desc>
+			</action_move>
+			<action_move target="211">
+				<desc lang="cs">Pustit se dál tunelem, abys prozkoumal, co skrývá.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="60">
+        <desc lang="cs">
+		   <![CDATA[<p>Těsně před tím, než tě navždy obestřela věčná temnota, vnímáš záblesk
+			dlouhé zahnuté ocelové dýky, kterou ti vzápětí mudrcův syn, vrah a lupič,
+			protíná hrdlo. A zde končí tvé poslání.</p>]]>
+		</desc>
+		<events>
+			<event name="dead" />
+		</events>
+    </scene>
+	<scene id="61">
+        <desc lang="cs">
+		   <![CDATA[<p>Konečně zbývá k dřevěnému opevnění, které chrání okrajové části města,
+			jen pár kroků. Jak se ženeš ke strážní vížce, slyšíš vzrušené výkřiky vojáků,
+			kterými tě povzbuzují. Děkuješ bohům, že tě posádka poznala, protože
+			určitě nevypadáš příliš důvěryhodně. Plášť máš samou díru, ruce rozedrané
+			a obličej plný šrámů a krvavých skvrn, takže bys byl k nepoznání i pro nejlepšího přítele.
+			Od hlavy až k patě jsi pokryt hřbitovním prachem.</p>
+			<p>Přebrodíš mělký potok a vrávoráš k bráně. Hrůzné setkání na hřbitově
+			začíná až teď plně působit. Odevzdaně padáš do natažených paží dvou
+			vojáků, kteří ti seběhli z valů na pomoc. Vyčerpán tělesně i duševně ztrácíš
+			vědomí.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="268">
+				<desc lang="cs">Pokračovat.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="62">
+        <desc lang="cs">
+		   <![CDATA[<p>"Vojáci" leží mrtví u tvých nohou. Byli to bandité a lupiči, kteří pustošili
+			široké okolí, přepadali a okrádali uprchlíky z Toranu a drancovali opuštěné
+			domy a statky v celé oblasti.</p>
+			<p>Při prohledávání mrtvých těl jsi objevil 28 Zlatých a dva batohy, v nichž
+			jsou celkem tři porce jídla. Lupiči byli vyzbrojení kuší a třemi meči. Kuše
+			se během boje poškodila, ale meče jsou v pořádku a jeden z nich si můžeš
+			vybrat, chceš-li. Ještě jednou přehlížíš výbavu, je-li v pořádku, z opatrnosti
+			chvíli pozoruješ západní obzor a pak se už bez otálení dáváš znovu do
+			klusu směrem k vnějším hradbám hlavního města.</p>]]>
+		</desc>
+		<events>
+			<event name="add_gold_to_scene" gold_count="28" />
+		</events>
+        <actions>
+			<action_move target="288">
+				<desc lang="cs">Pokračovat k hradbám hlavního města.</desc>
+			</action_move>
+        </actions>
+		<items>
+			<item name="backpack" />
+			<item name="backpack" />
+			<item name="sword" />
+			<item name="meal" />
+			<item name="meal" />
+			<item name="meal" />
+		</items>
+    </scene>
+	<scene id="63">
+        <desc lang="cs">
+		   <![CDATA[<p>Divoce a nebezpečně vyhlížející stařec na tebe bez ustání rozezleně křičí.
+			Obviňuje tě z rozpoutání války a proklíná všechny rytíře řádu Kai jako
+			spojence Temných pánů. Není ochoten naslouchat žádnému vysvětlování a
+			jediný argument, který na něho může zapůsobit, je boj.</p>]]>
+		</desc>
+        <actions>
+			<action_fight win="269">
+				<enemy attack="11" condition="10" >
+					<title lang="cs">Šílenec</title>
+				</enemy>
+			</action_fight>
+        </actions>
+    </scene>
+	<scene id="64">
+        <desc lang="cs">
+		   <![CDATA[<p>Z těžkého snu tě probouzí vřeštění Kraana kroužícího přímo nad vozem. Je
+			časné jitro, obloha září čistou modří. Ani ne čtvrt míle na cestě před
+			povozem vidíš skupinku vlkodlaků, kteří se chystají na vůz zaútočit. Nyní
+			je třeba jednat rychle.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="188">
+				<desc lang="cs">Bez meškání popadnout všechny své věci a zmizet mezi stromy.</desc>
+			</action_move>
+			<action_move target="16">
+				<desc lang="cs">Odříznout jednoho z koní, kteří táhnou vůz, prolomit útok vlkodlaků a dostat se na bezpečnou cestu za nimi.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="65">
+        <desc lang="cs">
+		   <![CDATA[<p>Všechny smysly ti radí, abys bez otálení opustil toto místo, kde jsi vystaven krajnímu nebezpečí.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="104">
+				<desc lang="cs">Urychleně opustit místo.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="66">
+        <desc lang="cs">
+		   <![CDATA[<p>Polekaně se obracíš a vidíš, jak se k tobě žene statný seržant, v patách za
+			ním dva vojáci, a všichni mají meče připravené k úderu.</p>
+			<p>Stavíš se do obranné pozice a saháš nenápadně po zbrani, protože všichni
+			tři působí dojmem zabijáků, kteří napřed útočí a teprve potom se ptají,
+			mají-li ještě na koho. Z ničeho nic se ale velitel zaráží a vzápětí volá zpět i
+			své muže. Poznal tvůj plášť! Vojáci odhazují zbraně a omlouvají se za svůj
+			omyl. Seržant tě vede do Velkého sálu a přitom posílá jednoho z mužů pro
+			kapitána.</p>
+			<p>Vítá tě vysoký válečník vznešeného vzezření a pozorně naslouchá tvému
+			vyprávění. Líčíš mu všechna nebezpečí a nástrahy, kterým jsi musel během
+			cesty čelit, a když je vyprávění u konce, lesknou se v očích tohoto jistě
+			otrlého muže slzy. Hlas se mu chvěje, když tě vyzývá, abys ho následoval.</p>
+			<p>Procházíte rozlehlými sály a chodbami do centrální části Paláce. Na
+			každém kroku jsi udivován velkolepostí a nádherou. Konečně stojíš před
+			velkými vyřezávanými dveřmi, které střeží dva vojáci ve stříbrné zbroji.
+			Poslední vteřiny tě dělí od setkaní s králem.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="350">
+				<desc lang="cs">Setkat se z králem.</desc>
+			</action_move>
         </actions>
     </scene>
 	<scene id="67">
         <desc lang="cs">
-		   <![CDATA[<p>Díky tomu, že ovládáš Kai disciplínu Stopování jsi odhalil v okolí jižní
+		   <![CDATA[<p>Díky tomu, že ovládáš Kai disciplínu <i>Stopování</i> jsi odhalil v okolí jižní
 			stezky otisky ohromných tlap. Stopy patří obrovskému černému medvědu,
 			tvoru, jehož zuřivost je známá široko daleko. Dáváš tedy přednost východní
 			stezce, která snad bude bezpečnější.</p>]]>
 		</desc>
         <actions>
 				<action_move target="140"><desc lang="cs">Dát přednost východní stezce.</desc></action_move>
+        </actions>
+    </scene>
+	<scene id="68">
+        <desc lang="cs">
+		   <![CDATA[<p>Po chvíli cesty se ocitáš na rozcestí, kde stezku, po níž jsi přišel, křižuje
+			jiná, která běží od východu na západ.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="130"><desc lang="cs">Obrátit se k západu.</desc></action_move>
+			<action_move target="15"><desc lang="cs">Zamířit na východ.</desc></action_move>
         </actions>
     </scene>
 	<scene id="69">
@@ -637,6 +1142,56 @@ and open the template in the editor.
 			</action_move>
         </actions>
     </scene>
+	<scene id="71">
+        <desc lang="cs">
+		   <![CDATA[<p>Jsi otřesen, ale bez zranění. Propadl ses asi do pětimetrové hloubky skrz
+			strop podzemní hrobky. Zdi hrobky ční kolmo vzhůru a vyšplhat po nich je
+			úplně nemožné. Jižním směrem vede z hrobky vyzděná klenutá chodba.
+			Vchod do ní je částečně zatarasen sarkofágem jakéhosi dávno mrtvého
+			šlechtice, jemuž tato místa zřejmě slouží k poslednímu odpočinku.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="242">
+				<desc lang="cs">Nadzdvihnout víko sarkofágu a podívat se, jestli uvnitř není něco cenného.</desc>
+			</action_move>
+			<action_move target="104">
+				<desc lang="cs">Opustit hrobku chodbou.</desc>
+			</action_move>
+			<action_move target="65">
+				<desc lang="cs">Použít Kai disciplínu Šestý smysl.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="72">
+        <desc lang="cs">
+		   <![CDATA[<p>Stojíš tváří v tvář šklebícímu se Giakovi a jeho rozevřeným čelistem
+			plným ostrých tesáků. S Giakem i s vlkodlakem musíš bojovat jako s
+			jedním nepřítelem.</p>]]>
+		</desc>
+        <actions>
+			<action_fight win="265">
+				<enemy attack="15" condition="24" >
+					<title lang="cs">Giak s Vlkodlakem</title>
+				</enemy>
+			</action_fight>
+		</actions>
+    </scene>
+	<scene id="73">
+        <desc lang="cs">
+		   <![CDATA[<p>Halíš se do svého zeleného pláště a splýváš s listím a s balvany. Pozorně
+			sleduješ stezku nahoře a se zděšením zjišťuješ, že to vůbec nejsou královi
+			muži. Po cestě se pohybují Drakkarimové, nejkrutější houf Temných panů.</p>
+			<p>Převlékli se do uniforem královské armády, aby se mohli nenápadně
+			pohybovat po sommerlundském území. V duchu blahořečíš tvrdému
+			výcviku v klášteře Kai, kterému, jako už mnohokrát, opět vděčíš za
+			záchranu života, a tiše se vykrádáš z koryta potoka a noříš se do stínu lesa.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="243">
+				<desc lang="cs">Pokračovat ve stínu lesa.</desc>
+			</action_move>
+        </actions>
+    </scene>
 	<scene id="74">
         <desc lang="cs">
 		   <![CDATA[<p>Kraan se i s jezdci snáší na pěšinu jen pár kroků od místa, kde se skrýváš.
@@ -647,6 +1202,42 @@ and open the template in the editor.
 			<action_move target="138"><desc lang="cs">Utkat se s Giaky.</desc></action_move>
 			<action_move target="281"><desc lang="cs">Bez meškání prchnout do hlubin lesa.</desc></action_move>
         </actions>
+    </scene>
+	<scene id="75">
+        <desc lang="cs">
+		   <![CDATA[<p>Obezřetně vykukuješ nahoru na břeh a vidíš, jak podél řeky ujíždějí na koni
+			tři muži v zeleném. Poznáváš v nich členy zvláštní jednotky královské
+			armády, jejímž úkolem je střežit západní hranici země. Jeden z vojáků visí
+			bezvládně v sedle a podle všeho je raněn. V těsném závěsu za prchajícími
+			muži se řítí smečka asi dvaceti vlkodlaků s Giaky na hřbetech, kteří
+			neúnavně a bez ustání po vojácích střílejí, takže se na ně snáší sprška
+			černých šípů. Jeden z vojáků padá ze sedla a kutálí se dolů po říčním břehu.
+			Hluboko v pravé noze mu vězí Giakův šíp.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="260">
+				<desc lang="cs">Přispěchat strážci hranic na pomoc.</desc>
+			</action_move>
+			<action_move target="163">
+				<desc lang="cs">Raději zůstat skryt a nechat se dál unášet proudem.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="76">
+        <desc lang="cs">
+		   <![CDATA[<p>Drahokam je velmi horký a pálí tě do ruky. Ztrácíš dva KONDIČNÍ body.
+			Rychle ho bereš cípem pláště a pak ho ukládáš do kapsy košile. Drahokam
+			takové velikosti určitě musí mít nesmírnou cenu. Samým štěstím se
+			usmíváš, pobízíš koně a znovu uháníš jižním směrem.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="118">
+				<desc lang="cs">Pokračovat jižním směrem.</desc>
+			</action_move>
+        </actions>
+		<items>
+			<item name="vordak_gem" />
+		</items>
     </scene>
 	<scene id="77">
         <desc lang="cs">
@@ -660,6 +1251,129 @@ and open the template in the editor.
 		</desc>
         <actions>
 			<action_move target="19"><desc lang="cs">Vydat se na další cestu.</desc></action_move>
+		</actions>
+    </scene>
+	<scene id="78">
+        <desc lang="cs">
+		   <![CDATA[<p>Kupecký vůz projíždí kolem velkou rychlostí. Neváháš ani vteřinu a skáčeš
+			na něj. Povedlo se, držíš se pevně. Opatrně se vztyčuješ a vidíš, že stojíš na
+			spodní příčce žebříku, po němž se stoupá k zadním dveřím vozu. Z ničeho
+			nic se rozlétá horní polovina dveří a ty hledíš do tváře rozlíceného
+			ozbrojence, který nejspíš provází kupce na jeho cestách a stará se o
+			bezpečnost nákladu i svého pána.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="132">
+				<desc lang="cs">Prozradit svou totožnost a své poslání.</desc>
+			</action_move>
+			<action_move target="12">
+				<desc lang="cs">Nabídnout posádce vozu Zlaté, když tě bezpečně zavezou až do hlavního města.</desc>
+			</action_move>
+			<action_move target="220">
+				<desc lang="cs">Změřit své síly se strážcem kupeckého vozu.</desc>
+			</action_move>
+		</actions>
+    </scene>
+	<scene id="79">
+        <desc lang="cs">
+		   <![CDATA[<p>Přicházíš k malé lávce přes rychle tekoucí potok. Za můstkem se pěšina stáčí k jihu.
+			Přecházíš potok a pouštíš se jižním směrem.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="204">
+				<desc lang="cs">Jít dál jižním směrem.</desc>
+			</action_move>
+		</actions>
+    </scene>
+	<scene id="80">
+        <desc lang="cs">
+		   <![CDATA[<p>Pozadu klopýtáš k východu a obě ruce si přitom tiskneš k zasaženému a
+			popálenému hrudníku. Celý obchod zaplnila oblaka dýmu, štípe tě do očí,
+			zalykáš se jím a spasit se můžeš jedině útěkem, dřív, než budeš polapen
+			mudrcem nebo jeho zabijáckým synem.</p>
+			<p>Potácíš se ven na hlavní třídu a tady se rychle ztrácíš v hlučném davu.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="7">
+				<desc lang="cs">Pokračovat po hlavní třídě.</desc>
+			</action_move>
+		</actions>
+    </scene>
+	<scene id="81">
+        <desc lang="cs">
+		   <![CDATA[<p>Po necelé hodině konečně zamířili Kraanové se svými pány k západu.
+			Vystrašení uprchlíci se pomalu trousí z lesa ven. Ty však ještě vyčkáváš v
+			úkrytu, protože slyšíš nedaleko odtud cválat koně. Když přijíždějí na
+			dohled, poznáváš jezdce podle oblečení - bílé uniformy prozrazují členy
+			Královské gardy.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="183">
+				<desc lang="cs">Prozradit a zavolat na ně.</desc>
+			</action_move>
+			<action_move target="200">
+				<desc lang="cs">Raději pokračovat podél okraje lesa jižním směrem.</desc>
+			</action_move>
+		</actions>
+    </scene>
+	<scene id="82">
+        <desc lang="cs">
+		   <![CDATA[<p>Obrovský Gourgaz leží mrtvý u tvých nohou. Jeho pekelní spojenci na tebe
+			vztekle syčí a pak se vrhají zpět z mostu dolů. Princovi vojáci tvoří z
+			vlastních štítů ochrannou zeď kolem tebe a svého umírajícího vůdce. Černé
+			nepřátelské šípy ti sviští nad hlavou. Princ, kterému prchá život z těla k
+			tobě zvedá zrak, svírá ti ruku a říká: „Rytíři Kai, v sázce je svoboda celého
+			Sommerlundu a je nezbytně nutné, abys donesl mému otci poselství, s nímž
+			ses vydal na svou nebezpečnou cestu. Nepřítel je příliš silný, jeho převaha
+			je značná a sami ho nemůžeme zastavit. Král musí najít posilu v Durenoru,
+			jinak je vše ztraceno. Vezmi si mého koně a bez meškání spěchej do
+			hlavního města. Snad bude přízeň bohů stát při tobě." S hlubokým
+			zármutkem se loučíš s princem, pobízíš jeho bílého koně a lesní stezkou se
+			necháváš vést k jihu. Bitva ještě stále zuří, neboť princovi muži podnikli
+			nový útok na most.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="235">
+				<desc lang="cs">Spěchat stezkou k jihu.</desc>
+			</action_move>
+		</actions>
+    </scene>
+	<scene id="83">
+        <desc lang="cs">
+		   <![CDATA[<p>Máš za sebou asi jednu míli, když náhle zpod nízkého můstku vyrážejí
+			proti tobě tři muži. Nezbývá ti než uposlechnout jejich výzvy a zastavit.
+			Chtějí, abys odhodil zbraň i zavazadla.</p>
+			<p>Kradmo si je prohlížíš. Jsou celí od krve a dlouho neholeni. Jejich vůdce je
+			oblečen do tuniky, jakou nosí vojáci toranské posádky.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="205">
+				<desc lang="cs">Udělat, co říkají.</desc>
+			</action_move>
+			<action_move target="180">
+				<desc lang="cs">Připravit se na souboj.</desc>
+			</action_move>
+			<action_move target="232">
+				<desc lang="cs">Zjistit, kdo skutečně jsou a jaké mají úmysly.</desc>
+			</action_move>
+			<action_move target="45" skill_needed="sixth_sense">
+				<desc lang="cs">Použít disciplínu Kai Šestý smysl.</desc>
+			</action_move>
+		</actions>
+    </scene>
+	<scene id="84">
+        <desc lang="cs">
+		   <![CDATA[<p>V okamžiku, kdy v zádech cítíš závan vzduchu, hbitě kloužeš z koně a
+			kutálíš se pryč –a s plesknutím přistáváš v příkopu plném bahna, který se
+			táhne podél silnice.</p>
+			<p>Rychle vyskakuješ na nohy (naštěstí bez zranění) a střemhlav vyrážíš k
+			nedalekým stromům, pod jejichž korunami chceš nalézt úkryt a záchranu.
+			Ale to už nad tebou Kraan znovu krouží a chystá se k dalšímu útoku.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="188">
+				<desc lang="cs">Pokusit se uniknout Kraanovi.</desc>
+			</action_move>
 		</actions>
     </scene>
 	<scene id="85">
@@ -679,6 +1393,229 @@ and open the template in the editor.
 			</action_move>
         </actions>
     </scene>
+	<scene id="86">
+        <desc lang="cs">
+		   <![CDATA[<p>Brzy přicházíš k dalšímu rozcestí.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="6">
+				<desc lang="cs">Jít na východ.</desc>
+			</action_move>
+			<action_move target="35">
+				<desc lang="cs">Zamířit na sever.</desc>
+			</action_move>
+			<action_move target="167">
+				<desc lang="cs">Dát přednost cestě k jihu.</desc>
+			</action_move>
+			<action_move target="42">
+				<desc lang="cs">Obrátit se na západ.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="87">
+        <desc lang="cs">
+		   <![CDATA[<p>Všechny své síly a soustředění zaměřuješ na zámek. Pokoušíš se vyvolat
+			představu jeho vnitřního uspořádání. Konečně se před tvým duševním
+			zrakem vynořuje mechanismus zámku. Zařízení je hodně staré, zrezivělé,
+			ale stále ještě neztratilo svou funkci. Dlouho odolává. Už ztrácíš sílu ke
+			koncentraci, ale jemné cvaknutí prozrazuje, že úsilí nebylo marné. Se
+			zástrčkou už není tolik práce. Pomalu se vysunuje ze zámku, až padá na
+			podlahu. Žulové dveře se zvolna pootevírají na skrytých pantech a
+			vpouštějí do hrobky sinavé světlo ze hřbitova.</p>
+			<p>Východ je obrostlý trním a jak se snažíš prodrat ven, máš obličej a ruce celé rozdrásané a zkrvavené.
+			Konečně jsi venku, když tu tě zaráží podivný zvuk, který se zdvihá za
+			tvými zády. Otáčíš se... V našedlém světle se na tebe šklebí hlava mrtvoly,
+			které chybí tělo! Ve slepé panice pádíš přízračným pohřebištěm k jižní
+			bráně.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="61">
+				<desc lang="cs">Utíkat z hrobky pryč.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="88">
+        <desc lang="cs">
+		   <![CDATA[<p>Obezřetně se plížíš kolem skály, abys lépe viděl na vojáka, který leží na
+			druhé straně. U jeho boku leží oštěp a štít s jakousi kresbou. Díváš se
+			pozorně: bílý pegas - to je znak sommerlundského prince. Voják
+			bezpochyby patří k princovým mužům, ale není při vědomí. Má ošklivě
+			potrhanou uniformu a skrz cáry vidíš hlubokou ránu v levé paži. Když k
+			němu poklekáš, muž s námahou pootevírá oči. I ve svém zuboženém stavu
+			poznává tvůj plášť rytíře Kai. "Uzdrav mě, pane," prosí. "Jsem strašně
+			zesláblý a už vůbec necítím ruku."</p>]]>
+		</desc>
+        <actions>
+			<action_move target="216" skill_needed="healing">
+				<desc lang="cs">Využít Kai disciplínu Léčitelství a zkusit uzdravit vojáka.</desc>
+			</action_move>
+			<action_move target="31">
+				<desc lang="cs">Léčit neumíš nebo nechceš.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="89">
+        <desc lang="cs">
+		   <![CDATA[<p>V oblacích prachu a utrženého kamení se plnou rychlostí kutálíš strmým
+			srázem dolů. Kraan nepřestává kroužit nad vrchem, jako kdyby čekal na
+			Giaky, aby jim mohl ukázat, kde tě mají hledat.</p>]]>
+		</desc>
+        <actions>
+			<action_lotery>
+                <selection numbers_from="0" numbers_to="1" target="53" />
+                <selection numbers_from="2" numbers_to="4" target="274" />
+				<selection numbers_from="5" numbers_to="9" target="316" />
+			</action_lotery>
+        </actions>
+    </scene>
+	<scene id="90">
+        <desc lang="cs">
+		   <![CDATA[<p>Noc se snáší na krajinu a brzy se ocitáš v úplné tmě. Pokračovat v cestě je
+			riskantní, mohl bys zabloudit. Přivazuješ koně ke stromu, dobře se halíš do
+			pláště a upadáš do těžkého spánku.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="18">
+				<desc lang="cs">Spát.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="91">
+        <desc lang="cs">
+		   <![CDATA[<p>Obchůdek je tmavý a zatuchlý. Police a regály takřka praskají pod náporem
+			knih a lahviček všech velikostí a barev. Když za sebou zavíráš dveře,
+			mrňavý černý ratlík se pouští do kvílivého štěkání, kterým přivolává
+			holohlavého muže. Dosud ho kryla jakási plenta, teď vychází a srdečně tě
+			vítá. Zdvořile se vyptává jaká máš přání a nabízí ti, aby sis vybral z jeho zboží.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="152">
+				<desc lang="cs">Lépe si prohlédnout, co nabízí.</desc>
+			</action_move>
+			<action_move target="7">
+				<desc lang="cs">Odmítnout nabídku a znovu se vrátit na ulici.</desc>
+			</action_move>
+			<action_move target="198" skill_needed="sixth_sense">
+				<desc lang="cs">Použít disciplínu Kai Šestý smysl.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="92">
+        <desc lang="cs">
+		   <![CDATA[<p>Dobíháš do úkrytu v posledním okamžiku, protože místo, kde jsi ještě před
+			okamžikem stál, zasypává krupobití černých šípů. Přitahuješ si plašť těsněji
+			k tělu, abys snáz splynul s hustým kapradiním. Bez otálení vyrážíš lesem
+			pryč, abys unikl zákeřným pronásledovatelům. Tuto kouzelnou, panensky
+			nedotčenou krajinu zamořili Giakové, a proto musíš bez meškání zmizet.
+			Aniž by sis třeba jen na okamžik odpočinul, běžíš už přes hodinu a tu
+			narážíš na lesní pěšinu vedoucí k jihu. Vydáváš se po ní, ale víš, že stále
+			ještě nemáš vyhráno, a proto pozorně sleduješ, neobjeví-li se nějaké
+			známky přítomnosti nepřítele.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="13">
+				<desc lang="cs">Pokračovat obezřetně lesní pěšinou k jihu.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="93">
+        <desc lang="cs">
+		   <![CDATA[<p>Otáčíš se a uskakuješ ke schodům. V příštím okamžiku se za tvými zády
+			řítí ze stropu s ohlušujícím rachotem obrovský kvádr. Uzavírá místnost,
+			kterou jsi právě opustil. Jak vybíháš na denní světlo, koutkem oka vnímáš
+			shrbenou postavu starého druida, zdvíhajícího do výšky svou hůl. Vteřinku
+			nato ti u nohou exploduje oslnivý blesk. Tebe ale nic nezastaví, pádíš dál z
+			kopce dolů proklínaje svou váhavost, ale vděčný učitelům z kláštera Kai za
+			výcvik v ovládání <i>Šestého smyslu</i>.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="106">
+				<desc lang="cs">Utíkat dál.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="94">
+        <desc lang="cs">
+		   <![CDATA[<p>Mudrc sleduje souboj. Jakmile vidí, že jeho syn je mrtev, spěšně se otáčí a
+			mizí z krámku zadním východem. V zabijákově měšci nalézáš dvanáct
+			Zlatých a další čtyři zlaťáky v dřevěné pokladně pod pultem. Pouštíš se do
+			pečlivého zkoumání roztoků v lahvích a lahvičkách a s překvapením
+			zjišťuješ, že to všechno jsou jen laciné atrapy. Ve skutečnosti je krámek
+			plný napodobenin. Uvažuješ o tom, ale cítíš tu jakousi záhadu. Vracíš se
+			zpátky na rušnou ulici.</p>]]>
+		</desc>
+		<events>
+			<event name="add_gold_to_scene" gold_count="16" />
+		</events>
+        <actions>
+			<action_move target="7">
+				<desc lang="cs">Vrátit se na rušnou ulici.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="95">
+        <desc lang="cs">
+		   <![CDATA[<p>Netrvá to dlouho a narážíš na úzkou lesní cestu, ubíhající od severu k jihu.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="240">
+				<desc lang="cs">Vyrazit směrem k severu.</desc>
+			</action_move>
+			<action_move target="5">
+				<desc lang="cs">Zamířit na jih.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="96">
+        <desc lang="cs">
+		   <![CDATA[<p>Téměř bez dechu tiskneš zbraň a očekáváš úder. Napětí se stává
+			nesnesitelným - Giakové se pohybují tak blízko, že ti chřípí plní odporný
+			zápach jejich nemytých těl. Slyšíš nesrozumitelné kletby a nadávky v
+			podivné, cize znějící hrdelní řeči. A náhle Giakové opouštějí plošinu před
+			jeskyňkou a dávají se do dalšího šplhání, aby dosáhli vrcholu kopce. Když
+			už máš jistotu, že jsou skutečně pryč, povzdechneš úlevou a z očí ti stékají
+			slzy.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="33">
+				<desc lang="cs">Vydat se na průzkum nitra jeskyně.</desc>
+			</action_move>
+			<action_move target="248">
+				<desc lang="cs">Opustit jeskyni i kopec, protože by se Giakové mohli vrátit.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="97">
+        <desc lang="cs">
+		   <![CDATA[<p>Před tebou, v okolí kamenného mostu a na něm, zuří prudká bitva. Třesk
+			oceli, výkřiky a sténání mužů i zběsilé skřeky útočících bestií se nesou až k
+			tobě do lesa. V samém ohnisku bitvy se míhá princ Pelathar, králův syn.
+			Právě se ze všech sil potýká s mohutným černým Gourgazem, který v
+			šupinaté tlapě třímá sekyru. Pojednou princ raněn padá k zemi - z boku mu
+			trčí černý šíp.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="255">
+				<desc lang="cs">Bránit raněného prince.</desc>
+			</action_move>
+			<action_move target="306">
+				<desc lang="cs">Běžet do lesa.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="98">
+        <desc lang="cs">
+		   <![CDATA[<p>Všechno nasvědčuje tomu, že strážní vyprávění uvěřili. Úklonami ti
+			projevují úctu jako jednomu z rytířů řádu Kai a jeden ozbrojenec tahá za
+			skrytý konec zvonku. Masivní dveře se začínají otevírat dokořán. Muži tě
+			doprovázejí dovnitř, za zády slyšíš, jak dveře zase zapadly.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="139">
+				<desc lang="cs">Vstoupit do dveří.</desc>
+			</action_move>
+        </actions>
+    </scene>
 	<scene id="99">
         <desc lang="cs">
 		   <![CDATA[<p>Vrháš se do nízkého, i když hustého porostu. Ve vzduchu nad tebou se
@@ -688,6 +1625,27 @@ and open the template in the editor.
         <actions>
 			<action_move target="222">
 				<desc lang="cs">Utíkat hlouběji do lesa.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="100">
+        <desc lang="cs">
+		   <![CDATA[<p>Sychravě studená chodba zničeno nic prudce odbočuje k východu. V dálce
+			před tebou spoře osvětluje tunel nazelenalý plamínek. Kradeš se k němu a
+			ocitáš se na místě, kde se chodba rozšiřuje v prostornou halu. Neobvyklé
+			světlo, jak se zdá, se line z objemné mísy, spočívající na vrcholku
+			granitového trůnu. Před trůnem se tyčí na podstavci socha zvláštního
+			tvaru, připomíná okřídlené písmeno "S".</p>]]>
+		</desc>
+        <actions>
+			<action_move target="161">
+				<desc lang="cs">Posadit se na trůn.</desc>
+			</action_move>
+			<action_move target="133">
+				<desc lang="cs">Podrobněji si prohlédnout sochu.</desc>
+			</action_move>
+			<action_move target="257">
+				<desc lang="cs">Dostat se co nejrychleji ven z tohoto tajuplného sálu.</desc>
 			</action_move>
         </actions>
     </scene>
@@ -708,6 +1666,52 @@ and open the template in the editor.
 			</action_move>
         </actions>
     </scene>
+	<scene id="102">
+        <desc lang="cs">
+		   <![CDATA[<p>Máš za sebou kamenné úbočí kopce, které tě dělilo od prastarého hřbitova.
+			Hřbitova předků. Celé to šedavé a odpuzující místo halí oblaka mlhy, jejíž
+			cáry a chuchvalce se těžce převalují mezi náhrobky a znemožňují tak
+			slunci, aby proniklo až k zemi. Mrazivý chlad ti vane v ústrety.
+			S těžko překonatelnými pocity hluboké hrůzy vstupuješ na děsivé
+			pohřebiště.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="284">
+				<desc lang="cs">Pokračovat dál.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="103">
+        <desc lang="cs">
+		   <![CDATA[<p>Zarostlá pěšina tě přivedla k rozcestí, kde se od ní odděluje jiná stezka, vedoucí k východu.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="13">
+				<desc lang="cs">Dát se po stezce vedoucí k východu.</desc>
+			</action_move>
+			<action_move target="287">
+				<desc lang="cs">Raději dál pokračovat k severovýchodu po pěšině, po které jsi přišel.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="104">
+        <desc lang="cs">
+		   <![CDATA[<p>Stěny jsou vlhké a kluzké. Tunel je naplněn nedýchatelným zatuchlým
+			vzduchem. Pavučiny se ti lepí na obličej i na ruce při každém kroku.
+			Křečovitě svíráš čelisti, aby se ti nerozdrkotaly zuby, ale kráčíš kupředu,
+			ačkoliv máš nepříjemný dojem, že chodba je temnější a temnější.
+			Právě jsi dorazil k rozcestí, kde se tunel potkává s chodbou, která vede od
+			severu k jihu.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="26">
+				<desc lang="cs">Dát se na sever.</desc>
+			</action_move>
+			<action_move target="100">
+				<desc lang="cs">Dát se cestou k jihu.</desc>
+			</action_move>
+        </actions>
+    </scene>
 	<scene id="105">
         <desc lang="cs">
 		   <![CDATA[<p>Kus před tebou sedí na větvi starého rozložitého dubu smolně černý havran.</p>]]>
@@ -721,6 +1725,67 @@ and open the template in the editor.
 			</action_move>
         </actions>
     </scene>
+	<scene id="106">
+        <desc lang="cs">
+		   <![CDATA[<p>Konečně přicházíš ke břehu prudce tekoucí ledové říčky. Voda se valí přes
+			balvany potažené zelenými řasami a vytváří bíle zpěněné kaskády. Za
+			zákrutem mizí k východu.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="263">
+				<desc lang="cs">Jít dolů po proudu.</desc>
+			</action_move>
+			<action_move target="334">
+				<desc lang="cs">Prozkoumat horní tok říčky.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="107">
+        <desc lang="cs">
+		   <![CDATA[<p>Přebíháš napříč místností a prudkým úderem rozrážíš lebky na kusy. Jejich
+			dutiny nejsou prázdné, převaluje se v nich jakási šedá hmota a s bubláním
+			mění tvar. Zdá se, že z lesklého povrchu této rosolovité substance vyráží
+			cosi jako křídla podobná netopýřím, a také jakási chapadla či sosáky.
+			Pociťuješ zděšení a hnus a jedinou tvou touhou je dostat se pryč odtud.
+			Vyrážíš k východu právě včas - těsně za tebou se s rachotem spouští padací
+			mříž a neprůchodně odděluje děsivou místnost od chodby, která vede na
+			svobodu.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="23">
+				<desc lang="cs">Jít chodbou k východu.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="108">
+        <desc lang="cs">
+		   <![CDATA[<p>Obloukem letíš ke střeše na protější straně ulice. Všechno vnímáš
+			neobyčejně ostře a zpomaleně, máš pocit, že se zastavil čas. V hloubce pod
+			tebou se na ulici hemží davy chodců, okolní střechy poskytují útočiště
+			nesčetným uvřískaným vrabcům, kteří svými všudypřítomnými hnízdy
+			ucpávají okapy. Jejich poplašené volání sílí ve chvíli, kdy hřmotně dopadáš
+			na střechu čtyřpatrového domu. Je to to poslední, co za svého života slyšíš.
+			Letité tašky a trámy neodolaly prudkému nárazu, tříští se a praskají a ty se
+			řítíš z výšky čtyř poschodí hostince "U zelené trepky". Dopadáš se
+			zlámaným vazem. Tak končí tvá pouť i tvůj život.</p>]]>
+		</desc>
+		<events>
+			<event name="dead" />
+		</events>
+    </scene>
+	<scene id="109">
+        <desc lang="cs">
+		   <![CDATA[<p>Jediné, co koberec skrývá, je špína a prach!</p>]]>
+		</desc>
+        <actions>
+			<action_move target="164">
+				<desc lang="cs">Podrobně si prohlédnout obsah lahviček.</desc>
+			</action_move>
+			<action_move target="308">
+				<desc lang="cs">Místnost opustit a porozhlédnout se ve stáji.</desc>
+			</action_move>
+        </actions>
+    </scene>
 	<scene id="110">
         <desc lang="cs">
 		   <![CDATA[<p>Bleskurychle míříš a vší silou vrháš kámen proti Giakově hlavě. K tvému
@@ -730,6 +1795,145 @@ and open the template in the editor.
         <actions>
 			<action_move target="55">
 				<desc lang="cs">Rychle jednat.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="111">
+        <desc lang="cs">
+		   <![CDATA[<p>Jen pár minut poté, co jsi opustil rozcestí, se před tebou otevírá pohled na
+			malý srub se stájí, ke kterému máš ještě kus cesty. Už z dálky vypadá srub
+			opuštěně a tím víc se k němu blížíš, tím je jasnější, že po obyvatelích
+			stavení není v okolí ani vidu ani slechu.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="57">
+				<desc lang="cs">Vstoupit do srubu.</desc>
+			</action_move>
+			<action_move target="308">
+				<desc lang="cs">Prohlédnout si stáj.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="112">
+        <desc lang="cs">
+		   <![CDATA[<p>Znenadání se obrovský balvan, za nímž jsi ukryt, začíná valit na stranu a ty
+			stojíš tváří v tvář dvěma vrčícím Giakům, kteří dychtí po tvé krvi. Vchod
+			do jeskyně je uzoučký. Máš tedy v boji proti nim určitou šanci.</p>]]>
+		</desc>
+        <actions>
+			<action_fight win="33">
+				<enemy attack="13" condition="10" >
+					<title lang="cs">Giak 1</title>
+				</enemy>
+				<enemy attack="12" condition="10" >
+					<title lang="cs">Giak 2</title>
+				</enemy>
+			</action_fight>
+			<action_move target="248">
+				<desc lang="cs">Zmizet z jeskyně a sešplhat z kopce dolů.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="113">
+        <desc lang="cs">
+		   <![CDATA[<p>Kráčíš už přes půl hodiny, když tvůj pohled upoutají jakési byliny s jasně
+			červenými květy, které rostou nedaleko mechem obrostlého břehu. S
+			radostí v nich poznáváš laumspur, krásnou a vzácnou rostlinu, všude
+			vysoce ceněnou pro její léčivé účinky. V kleče ho trháš, dokud ho nemáš
+			plnou hrst, a potom ho pečlivě ukládáš do batohu. Tato bylina ti může
+			vracet síly ztracené během další cesty. Jednou porcí laumspuru získáš zpět
+			3 KONDIČNÍ body a v batohu máš dvě porce léčivé byliny. Zavazuješ
+			batoh a pokračuješ v cestě.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="347">
+				<desc lang="cs">Jít severovýchodně.</desc>
+			</action_move>
+			<action_move target="295">
+				<desc lang="cs">Zamířit přímo k východu.</desc>
+			</action_move>
+        </actions>
+		<items>
+			<item name="healing_herb" />
+			<item name="healing_herb" />
+		</items>
+    </scene>
+	<scene id="114">
+        <desc lang="cs">
+		   <![CDATA[<p>Přiměl jsi koně k tomu, aby si lehl na zem, a zamaskoval jsi jeho i sebe
+			větvemi, na které jsi nahrnul spadané listí. Z úkrytu nasloucháš
+			zlověstnému šumění Kraanových křídel. Krvelačný tvor chvíli pátravě
+			krouží nad vámi, ale nakonec se vrací na druhou stranu jezera.
+			Teď je ta pravá chvíle zmizet, pro případ, že by se snad Kraan vrátil s posilami.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="239">
+				<desc lang="cs">Zmizet před Kraanem.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="115">
+        <desc lang="cs">
+		   <![CDATA[<p>Stěží jsi doklopýtal k prvnímu stavení a zcela vyčerpán padáš do dveří.
+			Cítíš vůni vařeného pokrmu. V místnosti visí nad skomírajícími řeřavými
+			uhlíky malý kotlík, opodál je prostřeno na velkém dubovém stole. Ať zde
+			žije kdokoliv, je jasné, že musel svůj příbytek dnes řasně ráno nakvap
+			opustit. Džbán na vodu je plný a na stole v ošatce leží voňavý bochník
+			čerstvého chleba.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="150">
+				<desc lang="cs">V rychlosti pojíst.</desc>
+			</action_move>
+			<action_move target="177">
+				<desc lang="cs">Porozhlédnout se po domě.</desc>
+			</action_move>
+			<action_move target="83">
+				<desc lang="cs">Hned se sebrat a utíkat dál.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="116">
+        <desc lang="cs">
+		   <![CDATA[<p>Škrábeš se ven z bahnité vody a chtě nechtě se vystavuješ ostré palbě
+			černých šípů. Sotva ses rukou dotkl pevné země, vyrážíš pod ochrannou
+			klenbu nejbližších stromů. Čekáš tady, až Giakové opustí protější břeh, a
+			potom se pěšky vydáváš na další pout k hlavnímu městu.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="321">
+				<desc lang="cs">Vydat se na další pouť k hlavnímu městu.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="117">
+        <desc lang="cs">
+		   <![CDATA[<p>Muž je těžce poraněn a zřejmě svým zraněním podlehne. Pokud ovládáš
+			Kai disciplínu <i>Léčitelství</i>, můžeš jeho utrpení zmírnit, ale šrámy jsou tak
+			hluboké, že na jejich vyléčení tvé dovednosti nestačí. Muž skutečně brzy
+			upadá do bezvědomí. Ukládáš ho co nejpohodlněji a nejšetrněji v úkrytu za
+			vzrostlým lesním dubem a pak ho s těžkým srdcem opouštíš. Vydáváš se
+			bohatě zalesněnou krajinou na severovýchod.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="330">
+				<desc lang="cs">Pokračovat na severovýchod.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="118">
+        <desc lang="cs">
+		   <![CDATA[<p>Pobízíš koně k trysku a uháníš s větrem o závod dlouhou pěšinou přímo
+			dolů. V dálce před sebou stále zřetelněji rozeznáváš na obzoru obrysy
+			Holmgardu, jeho obranné valy a vysoké věže, třpytící se v záři ranních
+			paprsku. Stezka, kterou se necháváš vést, se připojuje k hlavní silnici,
+			spojující sever s jihem, tzn. nejdůležitější severní přístav Toran s hlavním
+			městem Holmgardem. Aniž bys zmírnil tempo, zamířil jsi přirozeně k
+			Holmgardu, když tu vidíš, že na čistém jitřním nebi krouží Kraan.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="224">
+				<desc lang="cs">Pokračovat dál.</desc>
 			</action_move>
         </actions>
     </scene>
@@ -754,6 +1958,97 @@ and open the template in the editor.
 			</action_move>
         </actions>
     </scene>
+	<scene id="120">
+        <desc lang="cs">
+		   <![CDATA[<p>Za svými zády slyšíš vřavu boje: krví rozdráždění Giakové divoce pobíjejí
+			tažné kupecké koně. Odvážil ses rychle ohlédnout přes rameno zpět a vidíš,
+			jak se Kraan těžce odlepuje od země a pomalu znovu vzlétá. Nevíš: má v
+			úmyslu na tebe zaútočit, nebo ho zaujalo něco jiného? Jedeš dál, ale známý
+			černý stín, je jasnou odpovědí na danou otázku. Terčem Kraanova útoku a
+			jeho další obětí máš být ty. Kraan mezitím už nabírá plnou rychlost a řítí se
+			k tobě.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="84">
+				<desc lang="cs">chladnokrevně setrvat v sedle a sklouznout z něho teprve těsně před Kraanovým úderem.</desc>
+			</action_move>
+			<action_move target="171">
+				<desc lang="cs">Ujíždět, jak nejrychleji umíš, pod ochranu nejbližších stromů.</desc>
+			</action_move>
+			<action_move target="54">
+				<desc lang="cs">Přitisknout hlavu ke koňově šíji, pobídnout zvíře k bezhlavému trysku a prosit nebesa o slitování.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="121">
+        <desc lang="cs">
+		   <![CDATA[<p>Po několika minutách chůze stojí před tebou uprostřed cesty červeně oděný
+			muž. Je k tobě obrácen zády, takže mu nevidíš do tváře, navíc má přes
+			hlavu přetaženou kapuci. Na natažené ruce mu sedí leskle černý havran,
+			kterého jsi viděl už dřív.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="342">
+				<desc lang="cs">Zavolat na muže.</desc>
+			</action_move>
+			<action_move target="309">
+				<desc lang="cs">Opatrně se k cizinci přiblížit, abys mohl zjistit, co je zač.</desc>
+			</action_move>
+			<action_move target="283">
+				<desc lang="cs">Raději rovnou tasit zbraň a zaútočit.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="122">
+        <desc lang="cs">
+		   <![CDATA[<p>Kůň porozuměl tvým slovům a uklidňuje se. Přistupuješ k tomu
+			nádhernému zvířeti a chlácholivě hladíš jeho hlavu. Cítíš, že je ještě
+			vyděšený a zmatený. Jemně ho pobízíš a vyvádíš na cestu, po které se
+			znovu vydáváš k jihu.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="206">
+				<desc lang="cs">Znovu se vydat k jihu.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="123">
+        <desc lang="cs">
+		   <![CDATA[<p>Jakmile nestvůra padla mrtvá k zemi, její bezvládné tělo se začalo
+			rozkládat. Mění se v odpuzující zelenavý roztok. Pozoruješ s úžasem, jak
+			všechna vegetace, kterou kouřící tekutina zasáhne, se křečovitě kroutí a
+			hyne. Kousek od ztrácejícího se těla leží v trávě na zemi velký, nejspíš
+			cenný drahokam. Ale nejsi tu se zdechlinou sám. Po cestě se sem blíží
+			mnohočlenná tlupa bojovných Giaků.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="304">
+				<desc lang="cs">Zvednout drahokam.</desc>
+			</action_move>
+			<action_move target="2">
+				<desc lang="cs">Zvolit raději bleskový útěk.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="124">
+        <desc lang="cs">
+		   <![CDATA[<p>Uvnitř skříňky nalézáš 15 Zlatých a stříbrný klíč.</p>]]>
+		</desc>
+		<events>
+			<event name="add_gold_to_scene" gold_count="15" />
+		</events>
+        <actions>
+			<action_move target="211">
+				<desc lang="cs">Pokračovat v průzkumu tunelu.</desc>
+			</action_move>
+			<action_move target="106">
+				<desc lang="cs">Kopec opustit.</desc>
+			</action_move>
+        </actions>
+		<items>
+			<item name="silver_key" />
+		</items>
+    </scene>
 	<scene id="125">
         <desc lang="cs">
 		   <![CDATA[<p>Pěšina ústí na rozlehlou mýtinu. Hned tě upoutaly podivné stopy tlap s
@@ -769,6 +2064,94 @@ and open the template in the editor.
 				<action_move target="301" skill_needed="sixth_sense">
 					<desc lang="cs">Využít Kai disciplínu šestý smysl.</desc>
 				</action_move>
+        </actions>
+    </scene>
+	<scene id="126">
+        <desc lang="cs">
+		   <![CDATA[<p>Noříš se hloub a hloub do lesa. Vzdáváš tiché díky princovi za tak skvělého
+			koně, který ani jednou neklopýtl, ačkoli zemi pod jeho kopyty kryje změť
+			trní a kořenů. Vlkodlaky brzy necháváte daleko vzadu, a tak si oba, ty i
+			kůň, můžete na chvíli oddechnout.</p>
+			<p>Světlo se kvapem ztrácí, na krajinu padá noc.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="46">
+				<desc lang="cs">Dál se držet směru, kterým teď jedeš.</desc>
+			</action_move>
+			<action_move target="143">
+				<desc lang="cs">Obrátit doleva (a tak znovu nabrat směr, kterým tě vedla stezka, kterou jsi nechal daleko vzadu).</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="127">
+        <desc lang="cs">
+		   <![CDATA[<p>Už asi hodinu tě Drakkarimové kamsi vedou lesní cestou, postrkováním a
+			výhružkami tě nutí k rychlejšímu pochodu. Náhle se celá vaše skupinka
+			zastavuje, protože za zatáčkou se vynořila obrovská obluda pokrytá
+			zelenými šupinami. V poutech Drakkarimů jsi teď úplně bezmocný a
+			strachy bez sebe čekáš, co krvelačně vyhlížející tvor udělá. Blíží se, už tě
+			ovanul smrdutý pach z jeho tlamy, už slyšíš temné vrčení, z něhož ti tuhne
+			v žilách krev. Teď netvor vydal ohlušující skřek, vrhá se k tobě a popadá
+			tvou hlavu do silných tlap, opatřených plovacími blanami. Ostré křupnutí
+			tvé lámající se páteře už neslyšíš. Tady končí tvá pouť.</p>]]>
+		</desc>
+		<events>
+			<event name="dead" />
+		</events>
+    </scene>
+	<scene id="128">
+        <desc lang="cs">
+		   <![CDATA[<p>Opatrně se prodíráš hustým listovím, když tu tě přibíjí na místo otřesná
+			scéna, která se odehrává v těsné blízkosti, na malé mýtince před tebou. Tři
+			Giakové tam připoutali k dřevěnému kůlu jakéhosi muže, k jeho nohám
+			navršili hranici a teďí se chystají dříví a roští podpálit. Podle tuniky, kterou
+			má zajatec na sobě, poznáváš, že patří k hraniční jízdní policii, která
+			nedaleko Durncragského pohoří střeží západní hranici království. Giakové
+			muže krutě a nelítostně zbili, takže chvílemi ztrácí vědomí.</p>]]>
+		</desc>
+        <actions>
+				<action_move target="297" skill_needed="hunting">
+					<desc lang="cs">Využít své Kai disciplíny Lov.</desc>
+				</action_move>
+				<action_move target="336" conditioned="">
+					<desc lang="cs">Zaútočit na Giaky hned teď, abys zajatci zachránil život.</desc>
+				</action_move>
+        </actions>
+    </scene>
+	<scene id="129">
+        <desc lang="cs">
+		   <![CDATA[<p>Dostali jste se až na dosah vstupní brány do Holmgardu, teď naplněni úctou
+			stojíte před výškou a mohutností městských hradeb. Stometrové zdi už celé
+			věky odolávají dvojímu vytrvalému nepříteli - času a Temným pánům.
+			Spolu s důstojníkem projíždíš devadesát metrů dlouhým tunelem vnější
+			strážnice, až se konečně ocitáte před vchodem do hlavní brány. Zástupy
+			vojáků i civilistů proudí tudy ven i dovnitř.</p>]]>
+		</desc>
+        <actions>
+				<action_move target="3">
+					<desc lang="cs">Dál se nechat vést důstojníkem.</desc>
+				</action_move>
+				<action_move target="144">
+					<desc lang="cs">Spoléhat na vlastní síly.</desc>
+				</action_move>
+        </actions>
+    </scene>
+	<scene id="130">
+        <desc lang="cs">
+		   <![CDATA[<p>Brzy tě stezka zavedla na malou lesní mýtinu. Uprostřed leží mohutný
+			kmen, do něhož je vydlabaná příjemná lavička, lákající k odpočinku. Jsi už
+			pěkně vyhládlý a musíš okamžitě pojíst. Sněz tedy jednu porci potravy.</p>]]>
+		</desc>
+		<events>
+			<event name="character" cond_actual="-3" canceled_by_skill="hunting" canceled_by_item="meal" />
+		</events>
+        <actions>
+			<action_move target="28">
+				<desc lang="cs">Jít k jihu.</desc>
+			</action_move>
+			<action_move target="201">
+				<desc lang="cs">Dát přednost menší stezce, která se ubírá lesem k východu.</desc>
+			</action_move>
         </actions>
     </scene>
 	<scene id="131">
@@ -819,6 +2202,43 @@ and open the template in the editor.
 				</action_move>
         </actions>
     </scene>
+	<scene id="132">
+        <desc lang="cs">
+		   <![CDATA[<p>Ozbrojený průvodce kupeckého vozu si tě chvíli měří s neskrývanou
+			nedůvěrou a pak ti před nosem přiráží dveře. Z nitra vozu k tobě doléhá
+			vzrušený hovor. Po několika minutách dohadování se dveře znovu otevírají
+			a z nich na tebe hledí blahobytný kupec. Okamžitě poznává tvůj šat rytířů
+			řádu Kai a spěšně se omlouvá za chování svého sloužícího.</p>
+			<p>Jeho jednání je ale pochopitelné, vysvětluje kupec, protože od chvíle, kdy
+			opustili Toran, se už několikrát stali terčem útoku: napadl je Kraan,
+			zbojníci i lupiči. To vše kupec vypráví, zatímco ti uvolňuje alespoň
+			nejnutnější kousek místa uvnitř vozu. Není tam totiž k hnutí, téměř všechen
+			prostor zabírají role hedvábí a vaky s kořením. S díky přijímáš pokrm,
+			který ti kupec nabízí, a po přepychovém obědě tě konečně přemáhá únava z
+			dlouhé a nebezpečné cesty a ty upadáš do těžkého bezesného spánku.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="64">
+				<desc lang="cs">Spát.</desc>
+			</action_move>
+		</actions>
+    </scene>
+	<scene id="133">
+        <desc lang="cs">
+		   <![CDATA[<p>Pohnul ses směrem k soše, když tu její kamenný obličej začíná praskat a
+			vzápětí před tebou exploduje celá socha. Z kamenného pláště se tak
+			osvobodil okřídlený had a okamžitě na tebe útočí. Musíš s netvorem
+			bojovat.</p>]]>
+		</desc>
+        <actions>
+			<action_fight win="266">
+				<enemy attack="16" condition="18" >
+					<title lang="cs">Okřídlený had</title>
+					<skill name="mindshield" />
+				</enemy>
+			</action_fight>
+		</actions>
+    </scene>
 	<scene id="134">
         <desc lang="cs">
 		   <![CDATA[<p>Díky tomu, že můžeš využít svých výjimečných schopností, odhaluješ
@@ -835,6 +2255,60 @@ and open the template in the editor.
 			</action_move>
         </actions>
     </scene>
+	<scene id="135">
+        <desc lang="cs">
+		   <![CDATA[<p>Naklonil ses přes strmý a podemletý břeh řeky, abys viděl dolů, kde se v
+			místech, kde řeka tvoří tišiny a voda neproudí, drží změť naplaveného
+			dříví. Na jílovité mělčině uvízl velký kmen a kousek od něho dokonce malá
+			loďka.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="223">
+				<desc lang="cs">K plavbě po proudu řeky použít kládu.</desc>
+			</action_move>
+			<action_move target="4">
+				<desc lang="cs">Raději se plavit loďkou.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="136">
+        <desc lang="cs">
+		   <![CDATA[<p>Giakové se blíží a krčí se v terénu, jakoby se chystali k útoku. Dobře vidíš
+			zubaté hroty jejich kopí a slyšíš nesrozumitelnou řeč, která se pracně
+			dobývá odněkud z hloubi jejich hrdel. Větší z tvorů vyrazil: "Orgadak taag!
+			Nogjat aga ok!" A pak na tebe útočí. Musíš se postupně utkat s oběma
+			Giaky. Přičti si pro tento zápas 1 bod k UMĚNÍ BOJE, protože můžeš
+			využít výhodu, kterou poskytuje zvýšený terén.</p>]]>
+		</desc>
+        <actions>
+			<action_fight win="313">
+				<fight_event attack_actual="1" />
+				<enemy attack="13" condition="10">
+					<title lang="cs">Giak 1</title>
+				</enemy>
+				<enemy attack="12" condition="10">
+					<title lang="cs">Giak 2</title>
+				</enemy>
+			</action_fight>
+        </actions>
+    </scene>
+	<scene id="137">
+        <desc lang="cs">
+		   <![CDATA[<p>Jakmile poslední odpudivá zrůda padá bez života k zemi, zelenavé světlo se
+			pomalu začíná vytrácet. V jeho zbytcích stačíš postřehnout, že každá
+			rozbitá lebka obsahuje drahokam. Překotně sbíráš drahé kameny, abys to
+			stihl dřív, než místnost pohltí naprostá temnota. Bez dalšího otálení opouštíš Zplozence záhrobí a
+			pokračuješ dál ve své cestě.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="223">
+				<desc lang="cs">K plavbě po proudu řeky použít kládu.</desc>
+			</action_move>
+        </actions>
+		<items>
+			<item name="gems" />
+		</items>		
+    </scene>
 	<scene id="138">
         <desc lang="cs">
 		   <![CDATA[<p>Se zbraní v pohotovosti očekáváš, kdy se objeví nepřítel. Jsou to dva horští
@@ -849,6 +2323,21 @@ and open the template in the editor.
 					<title lang="cs">Giak 2</title>
 				</enemy>
 			</action_fight>
+        </actions>
+    </scene>
+	<scene id="139">
+        <desc lang="cs">
+		   <![CDATA[<p>Vnitřní nádvoří kypí činorodým ruchem. Jízdní poslové čekají po boku
+			svých neklidných koní na rozkazy, které vydává spojené velení, zasedající
+			ve Velkém sále. Neobyčejně rychle předávají pokyny, vzkazy a rozkazy
+			obráncům na vnějších hradbách. Posel stíhá posla, ti, kteří se vracejí, sotva
+			popadají dech a pot z nich jen leje. Stačíš udělat sotva pár kroků napříč
+			nádvořím, když tu zaduní kus od tebe hlas: "Zadržte toho muže!"</p>]]>
+		</desc>
+        <actions>
+			<action_move target="66">
+				<desc lang="cs">Čekáš, co bude dál.</desc>
+			</action_move>
         </actions>
     </scene>
 	<scene id="140">
@@ -937,6 +2426,19 @@ and open the template in the editor.
 			<action_move target="106">
 				<desc lang="cs">Pokračovat dál.</desc>
 			</action_move>
+        </actions>
+    </scene>
+	<scene id="188">
+        <desc lang="cs">
+		   <![CDATA[<p>Na tebe právě tak jako na všechno kolem dopadá zlověstný Kraanův stín.
+			Okřídlený tvor náhle hrozivě skřehotá a útočí s takovou silou, že tě sráží
+			obličejem do prachu na zemi.</p>]]>
+		</desc>
+        <actions>
+			<action_lotery>
+                <selection numbers_from="0" numbers_to="6" target="359" />
+                <selection numbers_from="7" numbers_to="9" target="360" />				
+			</action_lotery>
         </actions>
     </scene>
 	<scene id="215">
@@ -1049,6 +2551,21 @@ and open the template in the editor.
         <actions>
 			<action_move target="349">
 				<desc lang="cs">Pozdravit se s mladíkem.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="248">
+        <desc lang="cs">
+		   <![CDATA[<p>Dosáhl jsi úpatí kopce a chvátáš do lesa. Několik dalších minut kráčíš
+			nazdařbůh mezi stromy, dokud se před tebou neobjeví lesní cesta, vinoucí
+			se v hustém porostu.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="44">
+				<desc lang="cs">Nechat se vést stezkou na sever.</desc>
+			</action_move>
+			<action_move target="300">
+				<desc lang="cs">Zamířit po stezce k jihu.</desc>
 			</action_move>
         </actions>
     </scene>
@@ -1326,6 +2843,29 @@ and open the template in the editor.
 			 </action_move>
         </actions>
     </scene>
+	<scene id="322">
+        <desc lang="cs">
+		   <![CDATA[<p>Stoupání do strmého kopce je vyčerpávajícím bojem s vlastní touhou
+			padnout a na nic nemyslet. Trvá celou věčnost.</p>
+			<p>Pohled, který se ti shora otevírá, není povzbudivý. Za tebou ještě doutnají
+			zbytky kláštera, zčásti schované mezi větvemi stromů. Na severní straně
+			stoupá přímo k obloze mohutný sloup smolně černého dýmu. Občas
+			prošlehnou kouřem jasné plameny, to když nenasytnému ohni padne za
+			oběť další tučné sousto. Svírá se ti srdce žalem a touhou po pomstě, protože
+			plameny obracejí vniveč tvé rodiště, milovaný přístav Toran. Z myšlenek
+			na zničený domov tě vrací do přítomnosti skřek Kraana, jenž krouží přímo
+			nad tebou a chystá se zaútočit. Dělí tě od něho asi dvacet metrů. Kraan
+			dychtí po tvé krvi.</p>]]>
+		</desc>
+        <actions>
+			 <action_move target="17">
+				<desc lang="cs">Bojovat s Kraanem jakmile se vrhne dolů.</desc>
+			 </action_move>
+			 <action_move target="89">
+				<desc lang="cs">Vyhnout se boji a co nejrychleji sešplhat z prudkého kopce dolů.</desc>
+			 </action_move>
+        </actions>
+    </scene>
 	<scene id="324">
         <desc lang="cs">
 		   <![CDATA[<p>Přetahuješ si přes hlavu kapuci a vrháš se mezi balvany u ústí jeskyně.
@@ -1385,6 +2925,24 @@ and open the template in the editor.
 			 </action_move>
         </actions>
     </scene>
+	<scene id="338">
+        <desc lang="cs">
+		   <![CDATA[<p>Když se znovu probíráš k vědomí, zjišťuješ, že ležíš při úpatí prudkého
+			srázu, celý zapletený do chuchvalce jakýchsi dlouhých travin. Batoh a
+			zbraň jsi ztratil a ke všemu tě hrozně bolí hlava. Nemáš tušení, jak dlouho
+			jsi tu ležel v mrákotách, ale uvědomuješ si, že čas nezadržitelně běží a že
+			musíš bez dalšího otálení vyrazit na cestu. S námahou se škrábeš na nohy a,
+			aby ses zorientoval, rozhlížíš se kolem dokola. Máš štěstí - batoh i zbraň
+			vidíš kousek výš na srázu. Zřejmě se ti při pádu uvolnily a uvízly mezi
+			vegetací na kopci. Rychle sbíráš své věci, dáváš si výbavu znovu do
+			pořádku a vyrážíš k lesu, který je kousek odtud.</p>]]>
+		</desc>
+        <actions>
+			 <action_move target="113">
+				<desc lang="cs">Pokračovat k lesu.</desc>
+			 </action_move>
+        </actions>
+    </scene>
 	<scene id="345">
         <desc lang="cs">
 		   <![CDATA[<p>Rychle si přetahuješ kapuci svého zeleného pláště, jaký nosí všichni rytíři
@@ -1402,6 +2960,41 @@ and open the template in the editor.
 				<desc lang="cs">Dál pokračovat pod ochranným příkrovem stromů.</desc>
 			 </action_move>
         </actions>
+    </scene>
+	<scene id="347">
+        <desc lang="en">
+		   <![CDATA[<p>The trees start to thin out, and just ahead you can make out the silhouette of an old log
+			cabin beneath an oak tree. This hut seems to have been abandoned and there is little of apparent value left behind.
+			Opening a small chest near the main door, you discover bunches of twigs that have been tied together with strong twine.
+			One end of each bundle has been coated with pitch. They are Torches. Next to the chest are a Short Sword and a Tinderbox.
+			You may take them and a Torch if you wish</p>
+			<p>Closing the door of the cabin, you head off along an overgrown path towards the northeast.</p>]]>
+		</desc>
+		<desc lang="cs">
+		   <![CDATA[<p>Stromy kolem dokola začínají řídnout a teď se přímo před tebou vynořila
+			silueta starého dřevěného srubu, schouleného pod baldachýnem dubových
+			větví. Obydlí vypadá opuštěně a odhaduješ, že těžko bude skrývat něco
+			cenného. Vedle hlavních dveří se krčí nevelká truhla, těsně přimáčknutá ke
+			stěně. Otevíráš ji a zjišťuješ, že je plná jakýchsi smotků z tenkých větviček,
+			pevně omotaných silným provazem. Jeden konec každého provazu je
+			namočen do pryskyřice. Poznáváš, že v truhle jsou uskladněné louče.
+			Kousek od truhlice s loučemi leží krátký meč a troudník. Jestli myslíš, že
+			by se ti krátký meč, troudník či louče mohly hodit a chceš si něco vzít,
+			můžeš, ale nezapomeň si získané předměty zapsat do své Průvodní listiny.</p>
+			<p>Po prohlídce srubu vycházíš ven, zavíráš pečlivě dveře a po zarostlé pěšině
+			se vydáváš k severovýchodu.</p>]]>
+		</desc>
+        <actions>
+			 <action_move target="103">
+				<desc lang="en">Head off along an overgrown path towards the northeast.</desc>
+				<desc lang="cs">Pokračovat po zarostlé pěšině na severovýchod.</desc>
+			 </action_move>
+        </actions>
+		<items>
+			<item name="tinderbox" />
+			<item name="torch" />
+			<item name="short_sword" />
+		</items>
     </scene>
 	<scene id="349">
         <desc lang="cs">
@@ -1595,6 +3188,35 @@ and open the template in the editor.
         <actions>
 			 <action_move target="140">
 				<desc lang="cs">Vzpamatovat se a pokračovat dál.</desc>
+			 </action_move>
+        </actions>
+    </scene>
+	<scene id="359">
+        <desc lang="cs">
+		   <![CDATA[<p>Kraan ti serval ze zad batoh. Ty sám jsi vyvázl
+			bez zranění, ale přišel jsi o vak i o veškerou výbavu, kterou jsi v něm měl
+			uloženou.</p>]]>
+		</desc>
+		<events>
+			<event name="remove_item_from_character" item_needed="backpack" />
+		</events>
+        <actions>
+			 <action_move target="303">
+				<desc lang="cs">Zmizet v nejbližším lese.</desc>
+			 </action_move>
+        </actions>
+    </scene>
+	<scene id="360">
+        <desc lang="cs">
+		   <![CDATA[<p>Utrpěl zranění. Máš těžké šrámy na obou pažích (Kondice -3).
+			Brzy se ale z otřesu vzpamatováváš a mizíš v nejbližším lese.</p>]]>
+		</desc>
+		<events>
+			<event name="character" cond_actual="-3" />
+		</events>
+        <actions>
+			 <action_move target="303">
+				<desc lang="cs">Zmizet v nejbližším lese.</desc>
 			 </action_move>
         </actions>
     </scene>

@@ -11,6 +11,9 @@ extern const short HEALTH_OK;
 extern const short HEALTH_GOOD;
 extern const short HEALTH_BAD;
 extern const short COMMAND_LINE;
+extern const short ACTIONS;
+extern const short DEAD;
+extern const short CHARACTER_NAME;
 
 
 

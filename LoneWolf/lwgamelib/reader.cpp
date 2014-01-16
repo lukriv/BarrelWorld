@@ -286,6 +286,14 @@ bool LoneWolfXmlReader::ReadActionAttr(wxXmlNode* actionNode, GlobalResourceMana
 		}
 	}
 	
+	if(actionNode->HasAttribute(GENERAL_ATTR_GOLD_COUNT_STR))
+	{
+		long goldCount = 0;
+		requiredItemValue = actionNode->GetAttribute(wxString(GENERAL_ATTR_GOLD_COUNT_STR));
+		requiredItemValue.ToLong(&goldCount);
+		action.SetMinimumGold(goldCount);
+	}
+	
 	return true;
 }
 

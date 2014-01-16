@@ -127,6 +127,7 @@ public:
 	virtual bool IsConditioned() { return false; }
 	virtual EDisciplines GetRequiredSkill() { return DISCIPLINE_UNKNOWN; }
 	virtual EItem GetRequiredItem() { return ITEM_UNKNOWN; }
+	virtual wxInt32 GetMinimumGold() { return 0;}
 
 	inline void SetWinTarget(wxInt32 winTarget) { m_winTarget = winTarget; }
 	inline void SetLoseTarget(wxInt32 loseTarget) { m_loseTarget = loseTarget; }
