@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<root>
+  <chapter id="1">
+    <scene id="0">
+        <desc lang="cs">
+			<![CDATA[<p>Na severu Sommerlundu panuje už po mnohá staletí mezi Bojovnými rytíři zvyk posílat
+			potomky v určitém věku do kláštera Kai. Po několik let tam získávají dovednosti a smysl pro kázeň a řád,
+			které od nepaměti šlechtí jejich vznešený rod.</p>
+			<p>Mniši z kláštera Kai mistrně ovládají řadu bojových umění a výcvik pod jejich velením
+			je tvrdý a namáhavý. Přesto je jejich svěřenci oddaně milují a váží si jich. V den, kdy mladí rytíři
+			Kai zvládnou všechny dovednosti a vědomosti řádu Kai (ostatním smrtelníkům nedostupné),
+			vracejí se do svých domovů tělesně i duševně připraveni pro boj, jenž neustále hrozí
+			ze strany Temných pánů ze západu. Před dávnými řasy, ve věku Černé luny, vedli Temní páni válku
+			proti Sommerlundu. Vleklý konflikt byl pro sommerlundské těžkou a hořkou zkouškou odříkání a vzdoru,
+			jež vyvrcholila vítězstvím Sommerlundu ve velké bitvě u Maakengorgu. Sommerlundský král Ulnar
+			se spojenci z Durenoru zaútočili na vojsko Temných pánu v Moyturském průsmyku a zatlačili je
+			do bezedných pustin Maakengorgu. Nejmocnějšího z Temných pánů, Vashnu, probodl vlastním mečem král Ulnar,
+			tím mečem, jenž je znám jako Sommerswerd. Slunečný meč. Tehdy Temní páni přísahali pomstu
+			celému Sommerlundu a zejména Ulnarovu rodu.</p>
+			<p>Jsi Osamělý Vlk, mladý rytíř Kai a před dvěma dny byla tvoje zem zatažena do války.
+			Obrovská armáda Temných pánů náhle vtrhla do Sommerlundu a úplně zpustošila klášter Kai.
+			Všichni Kai Lordi se právě účastnili Fehrmarnova svátku, když byl klášter obklíčen a zničen,
+			přičemž byli všichni zabiti. Ty, jediný Kai Lord, který masakr přežil, jsi přísahal, že pomstíš
+			jejich smrt. Věděl jsi. Že tvým prvním úkolem je varovat krále, neboť bez Kai Lordů stojících
+			v čele jeho armád, by tvoje země, Summerlund, nebyla schopna včasné mobilizace, aby dokázala útok
+			Temných pánů odrazit. Tvoje cesta ke králi byla opravdu nebezpečná. Nepřítel ovládl většinu země
+			a směřoval do hlavního města Holmgardu. Ale navzdory tomu jsi splnil svůj úkol a varoval jsi krále.
+			Ten tě pochválil za tvůj um a statečnost, ale zároveň ti sdělil, že tvé poslání ještě nekončí:
+			Kai Lordi jsou mrtví, takže v celém Magnamundu zbyla pouze jediná síla, která by mohla zachránit
+			tvou zemi před Temnými pány ‐ Sommerswerd. Po přemožení Vashny byl Sommerswerd předán
+			spojencům z Durenoru na znamení důvěry a věrnosti, která mezi oběma královstvími existuje.
+			Na oplátku dal durenorský král Alin Summerlundu nádherný zlatý prsten s výsostným znakem Durenoru.
+			Tento prsten je znám jako Hammerdalská pečeť. Tenkrát král Alin přísahal, že jestli někdy
+			Temní páni opět ohrozí Summerlund, Durenor přijde na pomoc svým spojencům.</p>
+			<p>Král ti dal Hammerdalskou pečeť. Tvým úkolem je jet do Durenoru a přivést Sommerswerd zpět.
+			Mezitím nepřítel prorazil skrze vnější opevnění do města a připravuje se na obléhání městských hradeb.
+			Až tě kapitán D‘Val dovede do královské zbrojnice, aby tě vyzbrojil na cestu, měj stále
+			na paměti králova slova: ʺČtyřicet dní, Lone Wolfe. Jsme schopni se jim bránit jenom čtyřicet dní.ʺ</p>]]>
+		</desc>
+		<actions>
+			<action_move target="355">
+				<desc lang="cs">Pokračuj</desc>
+			</action_move>
+		</actions>
+    </scene>
+  </chapter>
+</root>

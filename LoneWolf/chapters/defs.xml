@@ -57,6 +57,15 @@
 			<action_move target="85" conditioned=""> <!-- is enambled only when other skill or item conditioned actions are disabled -->
 				<desc lang="cs">description</desc>
 			</action_move>
+			<action_choose_item items_count="2" target="46">
+				<item name="healing_potion" />
+				<item name="meal" />
+				<item name="shield" />
+			</action_choose_item>
+			<action_next_chapter target="nextChapterID">
+				<desc lang="cs">Vydat se na výpravu za Sommerswerdem.</desc>
+			</action_next_chapter>
+			<action_promote_character target="5" />
 		</actions>
 		<items>
 			<item name="healing_potion" />

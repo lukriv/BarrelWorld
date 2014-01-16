@@ -37,6 +37,7 @@ public:
 	~LWGameEngine() {}
 	
 	bool Initialize(LWGameEngineCallback *pCallback);
+	bool NextChapter(wxInt32 nextChapter);
 	bool NewGame();
 	
 	inline Scene* GetActualScene() { return m_pActualScene;}

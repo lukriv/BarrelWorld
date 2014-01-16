@@ -60,7 +60,10 @@ static const ConvertTable ActionConvert[] =
 	{ ACTION_CREATE_CHAR, 	GENERAL_TAG_ACTION_CREATE_STR},
 	{ ACTION_MOVE, 			GENERAL_TAG_ACTION_MOVE_STR},
 	{ ACTION_LOTERY, 		GENERAL_TAG_ACTION_LOTERY_STR},
-	{ ACTION_FIGHT, 		GENERAL_TAG_ACTION_FIGHT_STR}
+	{ ACTION_FIGHT, 		GENERAL_TAG_ACTION_FIGHT_STR},
+	{ ACTION_NEXT_CHAPTER,	GENERAL_TAG_ACTION_CHAPTER_STR},
+	{ ACTION_PROMOTE_CHAR,	GENERAL_TAG_ACTION_PROMOTE_STR},
+	{ ACTION_CHOOSE_ITEM,   GENERAL_TAG_ACTION_CHOOSE_STR},
 };
 
 static const ConvertTable EventConvert[] = 
@@ -73,6 +76,22 @@ static const ConvertTable EventConvert[] =
 	{ EVENT_DEAD,						EVENT_DEAD_STR},
 	{ EVENT_CHARACTER,					EVENT_CHARACTER_STR},
 	{ EVENT_REMOVE_ITEM_FROM_CHARACTER,	EVENT_REMOVE_ITEM_FROM_CHARACTER_STR},
+};
+
+static const ConvertTable WeaponClassConvert[] = 
+{
+	{ WEAPON_CLASS_NONE, 		WEAPON_CLASS_NONE_STR },
+	{ WEAPON_CLASS_DAGGER, 		WEAPON_CLASS_DAGGER_STR },		
+	{ WEAPON_CLASS_SPEAR, 		WEAPON_CLASS_SPEAR_STR },		
+	{ WEAPON_CLASS_MACE, 		WEAPON_CLASS_MACE_STR },		
+	{ WEAPON_CLASS_SHORT_SWORD, WEAPON_CLASS_SHORT_SWORD_STR },
+	{ WEAPON_CLASS_WARHAMMER, 	WEAPON_CLASS_WARHAMMER_STR },	
+	{ WEAPON_CLASS_SWORD, 		WEAPON_CLASS_SWORD_STR },		
+	{ WEAPON_CLASS_AXE, 		WEAPON_CLASS_AXE_STR },		
+	{ WEAPON_CLASS_QUATERSTAFF, WEAPON_CLASS_QUATERSTAFF_STR },
+	{ WEAPON_CLASS_BROADSWORD, 	WEAPON_CLASS_BROADSWORD_STR },	
+	{ WEAPON_CLASS_BOW, 		WEAPON_CLASS_BOW_STR },		
+//	{ WEAPON_CLASS_SHIELD, 		WEAPON_CLASS_SHIELD_STR },
 };
 
 /////////////////////////////////////////////////////////
@@ -143,6 +162,17 @@ EEventType Convertor::ConvertEventNameToType(const wxString& eventName)
 const wxChar* Convertor::GetEventName(EEventType type)
 {
 	return GetName<EEventType>(type, EventConvert, STATIC_TABLE_SIZE(EventConvert));
+}
+
+////
+EWeaponClass Convertor::ConvertWeaponClassToType(const wxString& weaponClassName)
+{
+	return ConvertNameToType<EWeaponClass>(weaponClassName, WeaponClassConvert, STATIC_TABLE_SIZE(WeaponClassConvert));
+}
+
+const wxChar* Convertor::GetWeaponClassName(EWeaponClass type)
+{
+	return GetName<EWeaponClass>(type, WeaponClassConvert, STATIC_TABLE_SIZE(WeaponClassConvert));
 }
 
 

@@ -136,6 +136,28 @@ bool Character::ContainsItem(EItem item)
 	return false;
 }
 
+bool Character::ContainsWeaponClass(EWeaponClass weapon)
+{
+	if(weapon == WEAPON_CLASS_NONE) return false;
+	for(CharacterWeapons::Iterator iter = m_weapons.Begin(); iter != m_weapons.End(); iter++)
+	{
+		if(m_pResMgr->GetItemAndDiscMgr().GetItem(*iter).m_weaponClass == weapon)
+		{
+			return true;
+		}
+	}
+	
+	for(CharacterSpecialItems::Iterator iter = m_specialItems.Begin(); iter != m_specialItems.End(); iter++)
+	{
+		if(m_pResMgr->GetItemAndDiscMgr().GetItem(*iter).m_weaponClass == weapon)
+		{
+			return true;
+		}
+	}
+	
+	return false;
+}
+
 bool Character::DropItem(EItem item, Scene& scene)
 {
 	switch(m_pResMgr->GetItemAndDiscMgr().GetItem(item).m_placement)
@@ -475,7 +497,7 @@ void Character::ApplySkills(Character& enemyCharacter)
 			// skill is not useable in fight
 			continue;
 		}
-		if(((iter->second.m_neededItem != ITEM_UNKNOWN))&&(!ContainsItem(iter->second.m_neededItem)))
+		if((!iter->second.m_weaponClass.empty())&&(!ContainsWeaponClass(iter->second.m_weaponClass[0])))
 		{
 			// you dont have needed item
 			continue;
@@ -509,11 +531,6 @@ void Character::ApplySkills()
 			// skill is useable in fight only
 			continue;
 		}
-		if(((iter->second.m_neededItem != ITEM_UNKNOWN))&&(!ContainsItem(iter->second.m_neededItem)))
-		{
-			// you dont have needed item
-			continue;
-		}
 		
 		m_actualAttackSkill += iter->second.m_actualAttack;
 		m_actualCondition = ((m_actualCondition + iter->second.m_actualCond) > m_maxCondition) ?
@@ -541,37 +558,37 @@ bool Character::AddNewCharacterDiscipline(EDisciplines disc, DisciplinePropertie
 	// get local discipline value
 	pDiscProp = m_disciplines.FindValue(disc);
 	// if some discipline has random weapon type as required item choose one weapon for it
-	if((pDiscProp != NULL)&&(pDiscProp->m_neededItem == m_pResMgr->GetItemAndDiscMgr().GetRandomWeaponType()))
+	if((pDiscProp != NULL)&&(pDiscProp->m_weaponClass.size() == 1))
 	{
 		switch(RandomSpin())
 		{
 			case 0:
-				pDiscProp->m_neededItem = m_pResMgr->GetItemAndDiscMgr().GetItemType(wxString(WEAPON_DAGGER_STR));
+				pDiscProp->m_weaponClass[0] = WEAPON_CLASS_DAGGER;
 				break;
 			case 1:
-				pDiscProp->m_neededItem = m_pResMgr->GetItemAndDiscMgr().GetItemType(wxString(WEAPON_SPEAR_STR));
+				pDiscProp->m_weaponClass[0] = WEAPON_CLASS_SPEAR;
 				break;
 			case 2:
-				pDiscProp->m_neededItem = m_pResMgr->GetItemAndDiscMgr().GetItemType(wxString(WEAPON_MACE_STR));;
+				pDiscProp->m_weaponClass[0] = WEAPON_CLASS_MACE;
 				break;
 			case 3: 
-				pDiscProp->m_neededItem = m_pResMgr->GetItemAndDiscMgr().GetItemType(wxString(WEAPON_SHORT_SWORD_STR));;
+				pDiscProp->m_weaponClass[0] = WEAPON_CLASS_SHORT_SWORD;
 				break;
 			case 4:
-				pDiscProp->m_neededItem = m_pResMgr->GetItemAndDiscMgr().GetItemType(wxString(WEAPON_WARHAMMER_STR));
+				pDiscProp->m_weaponClass[0] = WEAPON_CLASS_WARHAMMER;
 				break;
 			case 5:
 			case 7:
-				pDiscProp->m_neededItem = m_pResMgr->GetItemAndDiscMgr().GetItemType(wxString(WEAPON_SWORD_STR));
+				pDiscProp->m_weaponClass[0] = WEAPON_CLASS_SWORD;
 				break;
 			case 6:
-				pDiscProp->m_neededItem = m_pResMgr->GetItemAndDiscMgr().GetItemType(wxString(WEAPON_AXE_STR));
+				pDiscProp->m_weaponClass[0] = WEAPON_CLASS_AXE;
 				break;
 			case 8:
-				pDiscProp->m_neededItem = m_pResMgr->GetItemAndDiscMgr().GetItemType(wxString(WEAPON_QUATERSTAFF_STR));
+				pDiscProp->m_weaponClass[0] = WEAPON_CLASS_QUATERSTAFF;
 				break;
 			case 9:
-				pDiscProp->m_neededItem = m_pResMgr->GetItemAndDiscMgr().GetItemType(wxString(WEAPON_BROADSWORD_STR));
+				pDiscProp->m_weaponClass[0] = WEAPON_CLASS_BROADSWORD;
 				break;
 			default:
 				return false;
@@ -622,6 +639,17 @@ bool Character::UseItem(EItem item)
 	}
 	
 	return true;
+}
+
+void Character::ApplyFightItems()
+{
+	for(CharacterSpecialItems::Iterator iter = m_specialItems.Begin(); iter != m_specialItems.End(); iter++)
+	{
+		if(m_pResMgr->GetItemAndDiscMgr().GetItem(*iter).m_properties.m_actualAttack != 0)
+		{
+			m_actualAttackSkill += m_pResMgr->GetItemAndDiscMgr().GetItem(*iter).m_properties.m_actualAttack;
+		}
+	}
 }
 
 

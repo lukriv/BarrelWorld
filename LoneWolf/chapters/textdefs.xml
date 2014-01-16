@@ -28,42 +28,46 @@ and open the template in the editor.
 			<desc lang="cs">Boj</desc>
 			<desc lang="en">Fight</desc>
 		</action_fight>
+		<action_next_chapter>
+			<desc lang="cs">Další kapitola</desc>
+			<desc lang="en">Next chapter</desc>
+		</action_next_chapter>
     </actions>
     <items>
 		<!-- Weapon items -->
-		<item id="1" name="dagger" placement="weapon">
+		<item id="1" name="dagger" placement="weapon" weapon_class="dagger">
 			<title lang="cs">Dýka</title>
 			<title lang="en">Dagger</title>
 		</item>
-       <item id="2" name="spear" placement="weapon">
+       <item id="2" name="spear" placement="weapon" weapon_class="spear">
 			<title lang="cs">Kopí</title>
 			<title lang="en">Spear</title>
 		</item>
-		<item id="3" name="mace" placement="weapon">
+		<item id="3" name="mace" placement="weapon" weapon_class="mace">
 			<title lang="cs">Palcát</title>
 			<title lang="en">Mace</title>
 		</item>
-       <item id="4" name="short_sword" placement="weapon">
+       <item id="4" name="short_sword" placement="weapon" weapon_class="short_sword">
 			<title lang="cs">Krátký meč</title> 
 			<title lang="en">Short sword</title> 
 		</item>
-       <item id="5" name="warhammer" placement="weapon">
+       <item id="5" name="warhammer" placement="weapon" weapon_class="warhammer">
 			<title lang="cs">Válečné kladivo</title>
 			<title lang="en">Warhammer</title>
 		</item>
-       <item id="6" name="sword" placement="weapon">
+       <item id="6" name="sword" placement="weapon" weapon_class="sword">
 			<title lang="cs">Meč</title>
 			<title lang="en">Sword</title>
 		</item>
-       <item id="7" name="axe" placement="weapon">
+       <item id="7" name="axe" placement="weapon" weapon_class="axe">
 			<title lang="cs">Sekyra</title>
 			<title lang="en">Axe</title>
 	   </item>
-       <item id="8" name="quaterstaff" placement="weapon">
+       <item id="8" name="quaterstaff" placement="weapon" weapon_class="quaterstaff"> 
 			<title lang="cs">Bojová hůl</title>
 			<title lang="en">Quaterstaff</title>
 	   </item>
-       <item id="9" name="broadsword" placement="weapon">
+       <item id="9" name="broadsword" placement="weapon" weapon_class="broadsword">
 			<title lang="cs">Meč s šírokou čepelí</title>
 			<title lang="en">Broadsword</title>
 	   </item>
@@ -156,6 +160,12 @@ and open the template in the editor.
 			<desc lang="cs">Talisman Křišťálové hvězdy od bratrstva Křišťálové hvězdy.</desc>
 			<title lang="en">Crystal Star Pendant</title>
 			<desc lang="en">Crystal Star Pendant from the Brotherhood of the Crystal Star.</desc>
+		</item>	
+		<item id="107" name="shield" placement="special" weapon_class="shield" attack_actual="2" >
+			<title lang="cs">Štít</title>
+			<desc lang="cs">Pokud jej použiješ v boji, zvyšuje tvé UMĚNÍ BOJE o 2 body.</desc>
+			<title lang="en">Shield</title>
+			<desc lang="en">Shield adds 2 points to your COMBAT SKILL when used in combat.</desc>
 		</item>		
 		
     </items>
@@ -190,7 +200,7 @@ and open the template in the editor.
 			<title lang="en">Healing</title>
 			<desc lang="en">This Discipline can be used to restore ENDURANCE points lost in combat. If you possess this skill you may restore 1 ENDURANCE point to your total for every numbered section of the book you pass through in which you are not involved in combat. (This is only to be used after your ENDURANCE has fallen below its original level.) Remember that your ENDURANCE cannot rise above its original level.</desc>
 		</skill>
-       <skill id="6" name="weaponskill" attack_actual="2" item_needed="random_weapon">
+       <skill id="6" name="weaponskill" attack_actual="2" weapon_class="none">
 			<title lang="cs">Ovládání zbraně</title>
 			<desc lang="cs">Mniši kláštera Kai vycvičili každého učedníka v dokonalém ovládání jednoho druhu zbraně. Pokud vlastníš zbraň, kterou mistrně ovládáš, připočti si dva body do kolonky UMĚNÍ BOJE.</desc>
 			<title lang="en">Weaponskill</title>

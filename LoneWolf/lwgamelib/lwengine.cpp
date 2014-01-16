@@ -86,6 +86,36 @@ bool LWGameEngine::NewGame()
 	return true;
 }
 
+bool LWGameEngine::NextChapter(wxInt32 nextChapter)
+{
+	wxString filename = XML_FILE_PATH;
+	m_sceneMgr.Clear(); // reset scene manager
+	Chapter *pChapter = m_resMgr.GetChapterMgr().GetChapter(nextChapter);
+	if(pChapter == NULL)
+	{
+		m_errorStr.assign(wxT("Chapter not found\n"));
+		return false;
+	}
+	
+	filename.Append(pChapter->m_file);
+	if(!LoneWolfXmlReader::LoadChapter(filename, m_resMgr, m_sceneMgr))
+	{
+		m_errorStr.Printf(wxT("Chyba pri cteni souboru %s\n"), filename.c_str());
+		m_errorStr.Append(LoneWolfXmlReader::GetLastErrorString());
+		return false;		
+	}
+	
+	m_pActualScene = m_sceneMgr.GetScene(0);
+	
+	if(m_pActualScene == NULL)
+	{
+		m_errorStr.assign(wxT("No scene with id 0 found"));
+		return false;
+	}
+	
+	return true;
+}
+
 bool LWGameEngine::RunAction(wxDword actionIndex)
 {
 	wxVector<wxDword> posibleActions;
@@ -116,6 +146,15 @@ bool LWGameEngine::RunAction(wxDword actionIndex)
 				return false;
 			}
 			m_pActualScene = m_sceneMgr.GetScene(pAction->GetMoveTarget());
+			break;
+		}
+		case ACTION_NEXT_CHAPTER:
+		{
+			Action *pAction = static_cast<Action*>(m_pActualScene->m_actions[actionIndex]);
+			if(!NextChapter(pAction->GetMoveTarget()))
+			{
+				return false;
+			}
 			break;
 		}
 		case ACTION_MOVE:

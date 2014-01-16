@@ -15,10 +15,13 @@ struct Item {
 	wxString m_title;
 	wxString m_desc;
 	EItemPlacement m_placement;
+	EWeaponClass m_weaponClass; // weapon type - like a sword or spear - none for non-weapons items
 	ItemProperties m_properties;
 	
 public:
-	Item() : m_id(ITEM_UNKNOWN) {}
+	Item() : m_id(ITEM_UNKNOWN)
+			, m_placement(ITEM_PLACEMENT_UNKNOWN)
+			, m_weaponClass(WEAPON_CLASS_NONE) {}
 	
 	Item& operator=(const Item& item)
 	{
@@ -30,8 +33,9 @@ public:
 		m_title = item.m_title;
 		m_desc = item.m_desc;
 		m_placement = item.m_placement;
+		m_weaponClass = item.m_weaponClass;
 		m_properties = item.m_properties;
-		
+				
 		return *this;
 	}
 };

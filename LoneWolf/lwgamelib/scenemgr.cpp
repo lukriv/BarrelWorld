@@ -272,7 +272,10 @@ wxInt32 Scene::GetItemToSellPrice(EItem item)
 //////////////////////////////////////////////
 /////////////// SceneManager //////////////////
 //////////////////////////////////////////////
-
+SceneManager::~SceneManager() 
+{
+	Clear();
+}
 
 bool SceneManager::AddScene(Scene* pScene)
 {
@@ -414,4 +417,19 @@ bool SceneManager::SceneMapTest()
 	
 	return true;
 	
+}
+
+
+void SceneManager::Clear() 
+{
+	for(TSceneMap::iterator iter = m_sceneMap.begin(); iter != m_sceneMap.end(); iter++)
+	{
+		if(iter->second != NULL)
+		{
+			delete iter->second;
+			iter->second = NULL;
+		}
+	}
+	
+	m_sceneMap.clear();
 }

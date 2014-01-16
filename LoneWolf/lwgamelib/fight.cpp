@@ -106,6 +106,10 @@ wxInt32 ActionFight::StartFight(Character& loneWolf, LWGameEngineCallback* callb
 				return TARGET_UNKNOWN;
 			}
 			
+			loneWolf.ApplyFightItems();
+			
+			pEnemy->ApplyFightItems();
+			
 			// apply skills to lonewolf
 			loneWolf.ApplySkills(*pEnemy);
 			// apply skills to enemy
