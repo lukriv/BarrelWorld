@@ -2377,6 +2377,124 @@ and open the template in the editor.
 			</action_move>
         </actions>
     </scene>
+	<scene id="142">
+        <desc lang="cs">
+		   <![CDATA[<p>Před sebou vidíš vysoké, šedavě bílé zdi a do daleka zářící věže
+			Holmgardu, vidíš městské vlajky, chvějící se na cimbuří v čerstvém ranním
+			vánku. Řeka Eledil, pramenící v kopcích Durncragského pohoří, si vyhloubila
+			koryto až k Holmské zátoce, kde se vlévá do moře. Holmgard leží u
+			jejího ústí. Radost z výhledu na krásnou a milovanou krajinu ti kalí hrozivá
+			černá armáda, která se nezadržitelně valí od kopců k hlavnímu městu. Po
+			pravé straně se táhne široká pohodlná silnice, která vede až k Holmgardu.</p>
+			<p>Během bys mohl dorazit k zevním valům městského opevnění asi tak za
+			hodinu, ale to by ses pohyboval skoro celou dobu v otevřené krajině a byl
+			bys snadným dílem pro Kraany. Přímo před sebou máš široký bahnitý tok,
+			který líně směřuje k řece Eledil. Jako úkrytu můžeš využít podemletých
+			břehů a doplavat k hlavnímu městu. Ještě je tu jedna možnost, jak se dostat
+			k cíli. Vlevo před tebou leží pradávný hřbitov, Hřbitov předků. Rozpadající
+			se hrobky a vetché pomníky ze zapomenutých časů by mohly utajit tvůj
+			postup vpřed, ale velmi dobře víš, že území hřbitova je tabu. Bezesným
+			spánkem tam spí nespočet tajuplných příšer, čekajících jen na neopatrného
+			odvážlivce, který přestoupí zákaz, aby ho uchvátily a zahubily.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="58">
+				<desc lang="cs">Pokusit se o štěstí na silnici.</desc>
+			</action_move>
+			<action_move target="135">
+				<desc lang="cs">Zvolit vodní cestu.</desc>
+			</action_move>
+			<action_move target="102">
+				<desc lang="cs">Riskovat neznámá nebezpečí na Hřbitově předků.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="143">
+        <desc lang="cs">
+		   <![CDATA[<p>Brzy ses vynořil z lesa a ocitl ses na hlavní silnici. Ujišťuješ se, že je to
+			opravdu nejdůležitější spoj mezi Toranem na severu a Holmgardem na jihu
+			země. Pobízíš koně a odhaduješ, že hlavního města bys mohl dosáhnout ráno.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="149">
+				<desc lang="cs">Pokračovat do hlavního města.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="144">
+        <desc lang="cs">
+		   <![CDATA[<p>Probíjíš se návalem těl na hlavní ulici a snažíš se dostat ke vzdálené
+			Pevnosti. Obyvatelé města zmateně pobíhají sem a tam v záchvatu panické
+			hrůzy, protože nad jejich hlavami se ozývá zlověstné krákorání kroužícího
+			Kraana.</p>
+			<p>V tlačenici ti někdo ukradl jeden předmět z batohu. Jestliže už batoh
+			nemáš, ztrácíš zbraň.</p>
+			<p>Kárka tažená splašeným koněm tě odhazuje na nejbližší dveře. Jsi na
+			několik vteřin omráčen, a tak ztrácíš 2 KONDIČNÍ body. Jak se škrábeš na
+			nohy, rozlétnou se dveře dokořán, objevuje se v nich omšelý stařík a bez
+			zaváhání se na tebe vrhá sekáčkem na maso. Vypadá naprosto nepříčetně a
+			ty musíš bleskurychle zvolit mezi bojem a útěkem.</p>]]>
+		</desc>
+		<events>
+			<event name="remove_item_from_character" item_needed="random_weapon" canceled_by_item="random_backpack_item" />
+			<event name="remove_item_from_character" item_needed="random_backpack_item" />
+			<event name="character" cond_actual="-2" />
+		</events>
+        <actions>
+			<action_move target="63">
+				<desc lang="cs">Bojovat se staříkem.</desc>
+			</action_move>
+			<action_move target="217">
+				<desc lang="cs">Dát se na útěk.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="145">
+        <desc lang="cs">
+		   <![CDATA[<p>Máš pocit, jakoby tě převálcoval vůz nebo kočár. Poslední dojmy, které jsi
+			schopen si uvědomovat během pádu k zemi, je nesnesitelná bolest v zádech
+			a slaná chuť písčité cesty. Hned nato pozbýváš vědomí a obklopuje tě
+			milosrdná temnota, ve které není bolesti.</p>]]>
+		</desc>
+        <actions>
+			<action_move target="165">
+				<desc lang="cs">Upadnout do bezvědomí.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="146">
+        <desc lang="cs">
+		   <![CDATA[<p>Už asi míli cváláš bez vzrušujících zážitků a nebezpečí, když jsi náhle
+			sražen ze sedla šípem, který tě zároveň lehce škrábne na čele. Ztrácíš 3
+			KONDIČNÍ body. Vyšvihl ses znovu na nohy a rozhlížíš se, odkud útok
+			přišel. Obklíčila tě silná jednotka Drakkarimú, z lesů kolem dokola se
+			vynořuje jeden zloduch za druhým. Byl jsi přepaden ze zálohy a máš
+			jedinou naději: uprchnout co nejrychleji pod ochranu lesa.</p>]]>
+		</desc>
+		<events>
+			<event name="character" cond_actual="-3" />
+		</events>
+        <actions>
+			<action_move target="154">
+				<desc lang="cs">Uprchnout do lesa.</desc>
+			</action_move>
+        </actions>
+    </scene>
+	<scene id="154">
+        <desc lang="cs">
+		   <![CDATA[<p>Následkem zranění trpíš závratí, potácíš se od stromu ke stromu jako
+			slepec. Z ničeho nic ti mizí pevná půda pod nohama a ty se propadáš
+			hlavou napřed do záludně nastražené lovecké jámy. Ze dna díry zvedáš
+			hlavu, abys zjistil, jak jsi hluboko, a krve by se v tobě nedořezal: vidíš čtyři
+			Drakkarimi s napjatými luky, kterými míří přímo na tebe. Ohyzdné tváře se
+			jim stahují zlým vítězoslavným úšklebkem.</p>
+			<p>Svět pro tebe přestává existovat ve chvíli, kdy se čtyři hroty jejich černých
+			šípů noří do tvé hrudi. Tvé poslání je ztraceno a život zmařen!</p>]]>
+		</desc>
+		<events>
+			<event name="dead" />
+		</events>
+    </scene>
 	<scene id="155">
         <desc lang="cs">
 		   <![CDATA[<p>Když jsi přišel blíž, skupinka lidí přestala hovořit. Z jejich výrazu je
