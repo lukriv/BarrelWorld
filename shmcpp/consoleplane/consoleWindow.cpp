@@ -29,6 +29,7 @@ struct ScreenBuffers {
 	{
 		m_inputBuffer = GetStdHandle(STD_INPUT_HANDLE);
 		m_outScreenBuffer[0] = GetStdHandle(STD_OUTPUT_HANDLE);
+		m_outScreenBuffer[1] = NULL;
 		m_activeBuffer = 0;
 	}
 };
@@ -93,7 +94,7 @@ void ConsoleWindowWrapper::WriteConsoleInfo()
 	
 	consoleModeStr.clear();
 	
-	cout << "Console max size:" << GetLargestConsoleWindowSize(m_pScreenBuffer->m_outScreenBuffer[0]).X << "; " << GetLargestConsoleWindowSize(m_pScreenBuffer->m_outScreenBuffer[0]).Y << endl;
+	cout << "Console max size:" << GetLargestConsoleWindowSize(m_pScreenBuffer->m_outScreenBuffer[m_pScreenBuffer->m_activeBuffer]).X << "; " << GetLargestConsoleWindowSize(m_pScreenBuffer->m_outScreenBuffer[m_pScreenBuffer->m_activeBuffer]).Y << endl;
 	
 }
 
@@ -102,7 +103,7 @@ bool ConsoleWindowWrapper::GetConsoleBufferInfo(std::string& outputString)
 	CONSOLE_SCREEN_BUFFER_INFO screenBufferInfo;
 	stringstream ostr;
 	string str;
-	if(!GetConsoleScreenBufferInfo(m_pScreenBuffer->m_outScreenBuffer[0], &screenBufferInfo))
+	if(!GetConsoleScreenBufferInfo(m_pScreenBuffer->m_outScreenBuffer[m_pScreenBuffer->m_activeBuffer], &screenBufferInfo))
 	{
 		cout << "GetConsoleScreenBufferInfo failed" << endl;
 		return false;
@@ -142,7 +143,7 @@ bool ConsoleWindowWrapper::GetConsoleInputModeInfo(std::string& outputString)
 bool ConsoleWindowWrapper::GetConsoleOutputModeInfo(std::string& outputString)
 {
 	long unsigned int consoleMode = 0;
-	if(!GetConsoleMode(m_pScreenBuffer->m_outScreenBuffer[0], &consoleMode))
+	if(!GetConsoleMode(m_pScreenBuffer->m_outScreenBuffer[m_pScreenBuffer->m_activeBuffer], &consoleMode))
 	{
 		return false;
 	}
@@ -158,7 +159,7 @@ bool ConsoleWindowWrapper::GetConsoleFontInfo(std::string& outputString)
 	CONSOLE_FONT_INFO consoleFontInfo;
 	stringstream ostr;
 	
-	if(!GetCurrentConsoleFont(m_pScreenBuffer->m_outScreenBuffer[0], true, &consoleFontInfo))
+	if(!GetCurrentConsoleFont(m_pScreenBuffer->m_outScreenBuffer[m_pScreenBuffer->m_activeBuffer], true, &consoleFontInfo))
 	{
 		cout << "GetCurrentConsoleFont failed" << endl;
 		return false;
@@ -166,7 +167,7 @@ bool ConsoleWindowWrapper::GetConsoleFontInfo(std::string& outputString)
 	
 	ostr << "fontnumber: " << consoleFontInfo.nFont << "\n";
 	ostr << "fontsize: " << consoleFontInfo.dwFontSize.X << "; " << consoleFontInfo.dwFontSize.Y << "\n";
-	ostr << "fontsize: " << GetConsoleFontSize(m_pScreenBuffer->m_outScreenBuffer[0], consoleFontInfo.nFont).X << "; " << GetConsoleFontSize(m_pScreenBuffer->m_outScreenBuffer[0], consoleFontInfo.nFont).Y << "\n";
+	ostr << "fontsize: " << GetConsoleFontSize(m_pScreenBuffer->m_outScreenBuffer[m_pScreenBuffer->m_activeBuffer], consoleFontInfo.nFont).X << "; " << GetConsoleFontSize(m_pScreenBuffer->m_outScreenBuffer[m_pScreenBuffer->m_activeBuffer], consoleFontInfo.nFont).Y << "\n";
 
 	outputString = ostr.str();
 	
@@ -189,7 +190,7 @@ bool ConsoleWindowWrapper::SetConsoleWindowSize(short unsigned int width, short 
 	winRect.Right = (SHORT) width - 1;
 	winRect.Bottom = (SHORT) height - 1;
 
-	if(!SetConsoleWindowInfo(m_pScreenBuffer->m_outScreenBuffer[0], true, &winRect))
+	if(!SetConsoleWindowInfo(m_pScreenBuffer->m_outScreenBuffer[m_pScreenBuffer->m_activeBuffer], true, &winRect))
 	{
 		cout << "SetConsoleWindowInfo failed" << endl;
 		return false;
@@ -223,7 +224,7 @@ bool ConsoleWindowWrapper::SetConsoleBufferSize(short unsigned int width, short 
 		return false;
 	}
 	
-	if(!GetConsoleScreenBufferInfo(m_pScreenBuffer->m_outScreenBuffer[0], &screenBufferInfo))
+	if(!GetConsoleScreenBufferInfo(m_pScreenBuffer->m_outScreenBuffer[m_pScreenBuffer->m_activeBuffer], &screenBufferInfo))
 	{
 		cout << "GetConsoleScreenBufferInfo failed" << endl;
 		return false;
@@ -232,14 +233,14 @@ bool ConsoleWindowWrapper::SetConsoleBufferSize(short unsigned int width, short 
 	size.X = (SHORT) width;
 	size.Y = (SHORT) height;
 	
-	if(!SetConsoleScreenBufferSize(m_pScreenBuffer->m_outScreenBuffer[0], size))
+	if(!SetConsoleScreenBufferSize(m_pScreenBuffer->m_outScreenBuffer[m_pScreenBuffer->m_activeBuffer], size))
 	{
 		cout << "SetConsoleScreenBufferSize failed" << endl;
 		return false;
 	}
 	
 	//set actual size
-	m_pScreenBuffer->m_bufferSize[0] = size;
+	m_pScreenBuffer->m_bufferSize[m_pScreenBuffer->m_activeBuffer] = size;
 	
 	return true;
 }
@@ -252,11 +253,11 @@ bool ConsoleWindowWrapper::SetFontSize(ConsoleFontSize size)
 	
 	for(DWORD i = 0; i < GetNumberOfConsoleFonts(); i++)
 	{
-		COORD fontSize = GetConsoleFontSize(m_pScreenBuffer->m_outScreenBuffer[0], i);
+		COORD fontSize = GetConsoleFontSize(m_pScreenBuffer->m_outScreenBuffer[m_pScreenBuffer->m_activeBuffer], i);
 		if ((fontSize.X == pFontSize->m_sizeX)&&(fontSize.Y == pFontSize->m_sizeY))
 		{
 			//we found correct font type and size
-			if(SetConsoleFont(m_pScreenBuffer->m_outScreenBuffer[0], i))
+			if(SetConsoleFont(m_pScreenBuffer->m_outScreenBuffer[m_pScreenBuffer->m_activeBuffer], i))
 			{
 				return true;
 			} else {
@@ -271,8 +272,8 @@ bool ConsoleWindowWrapper::SetFontSize(ConsoleFontSize size)
 
 bool ConsoleWindowWrapper::GetConsoleBufferSize(unsigned int& width, unsigned int& height)
 {
-	width = m_pScreenBuffer->m_bufferSize[0].X;
-	height = m_pScreenBuffer->m_bufferSize[0].Y;
+	width = m_pScreenBuffer->m_bufferSize[m_pScreenBuffer->m_activeBuffer].X;
+	height = m_pScreenBuffer->m_bufferSize[m_pScreenBuffer->m_activeBuffer].Y;
 	
 	return true;
 	
@@ -281,7 +282,7 @@ bool ConsoleWindowWrapper::GetConsoleBufferSize(unsigned int& width, unsigned in
 bool ConsoleWindowWrapper::GetConsoleWindowSize(unsigned int& width, unsigned int& height)
 {
 	CONSOLE_SCREEN_BUFFER_INFO screenBufferInfo;
-	if(!GetConsoleScreenBufferInfo(m_pScreenBuffer->m_outScreenBuffer[0], &screenBufferInfo))
+	if(!GetConsoleScreenBufferInfo(m_pScreenBuffer->m_outScreenBuffer[m_pScreenBuffer->m_activeBuffer], &screenBufferInfo))
 	{
 		cout << "GetConsoleScreenBufferInfo failed" << endl;
 		return false;
@@ -296,20 +297,20 @@ bool ConsoleWindowWrapper::GetConsoleWindowSize(unsigned int& width, unsigned in
 void ConsoleWindowWrapper::ClearBuffer()
 {	
 
-	for (int i = 0; i < m_pScreenBuffer->m_bufferSize[0].Y; i++)
+	for (int i = 0; i < m_pScreenBuffer->m_bufferSize[m_pScreenBuffer->m_activeBuffer].Y; i++)
 	{
 		DWORD charsWritten = 0;
 		COORD pos;
 		pos.X = 0;
 		pos.Y = i;
-		FillConsoleOutputCharacter(m_pScreenBuffer->m_outScreenBuffer[0],
+		FillConsoleOutputCharacter(m_pScreenBuffer->m_outScreenBuffer[m_pScreenBuffer->m_activeBuffer],
 							' ',
-							(DWORD) m_pScreenBuffer->m_bufferSize[0].X,
+							(DWORD) m_pScreenBuffer->m_bufferSize[m_pScreenBuffer->m_activeBuffer].X,
 							pos,
 							&charsWritten );
-		FillConsoleOutputAttribute(m_pScreenBuffer->m_outScreenBuffer[0],
+		FillConsoleOutputAttribute(m_pScreenBuffer->m_outScreenBuffer[m_pScreenBuffer->m_activeBuffer],
 							m_globalConsoleAttr,
-							(DWORD) m_pScreenBuffer->m_bufferSize[0].X,
+							(DWORD) m_pScreenBuffer->m_bufferSize[m_pScreenBuffer->m_activeBuffer].X,
 							pos,
 							&charsWritten );
 	}
@@ -388,13 +389,38 @@ bool ConsoleWindowWrapper::Initialize(short unsigned int width, short unsigned i
 		return false;
 	}
 	
+	if(doubleBuffer)
+	{
+		// create second output screen buffer
+		m_pScreenBuffer->m_outScreenBuffer[1] = CreateConsoleScreenBuffer(GENERIC_READ|GENERIC_WRITE,
+																		FILE_SHARE_READ|FILE_SHARE_WRITE,
+																		NULL,
+																		CONSOLE_TEXTMODE_BUFFER,
+																		NULL);
+		if(!SetConsoleMode(m_pScreenBuffer->m_outScreenBuffer[1], ENABLE_PROCESSED_OUTPUT))
+		{
+			cout << "SetConsoleMode(m_pScreenBuffer->m_outScreenBuffer[1], ENABLE_PROCESSED_OUTPUT) failed" << endl;
+			return false;
+		}
+		
+		m_pScreenBuffer->m_activeBuffer = 1;
+		
+		// set buffersize
+		if(!SetConsoleBufferSize(width, height))
+		{
+			cout << "SetConsoleBufferSize(width, height) failed" << endl;
+			return false;
+		}
+		
+	}
+	
 	return true;
 
 }
 
 bool ConsoleWindowWrapper::WriteChar(wchar_t c, short unsigned int x, short unsigned int y)
 {
-	if((x >= m_pScreenBuffer->m_bufferSize[0].X)||(y >= m_pScreenBuffer->m_bufferSize[0].Y))
+	if((x >= m_pScreenBuffer->m_bufferSize[m_pScreenBuffer->m_activeBuffer].X)||(y >= m_pScreenBuffer->m_bufferSize[m_pScreenBuffer->m_activeBuffer].Y))
 	{
 		return false;
 	}
@@ -405,7 +431,7 @@ bool ConsoleWindowWrapper::WriteChar(wchar_t c, short unsigned int x, short unsi
 	position.Y = (SHORT) y;
 		
 	
-	if(!FillConsoleOutputCharacterW(m_pScreenBuffer->m_outScreenBuffer[0], c, 1, position, &writtenChars))
+	if(!FillConsoleOutputCharacterW(m_pScreenBuffer->m_outScreenBuffer[m_pScreenBuffer->m_activeBuffer], c, 1, position, &writtenChars))
 	{
 		return false;
 	}
@@ -447,7 +473,7 @@ bool ConsoleWindowWrapper::WriteChar(wchar_t c, const ConsoleCoord &coord, short
 	DWORD charsWritten = 0;
 	pos.X = coord.x;
 	pos.Y = coord.y;
-	return FillConsoleOutputAttribute(m_pScreenBuffer->m_outScreenBuffer[0], consoleAttr, 1, pos, &charsWritten);
+	return FillConsoleOutputAttribute(m_pScreenBuffer->m_outScreenBuffer[m_pScreenBuffer->m_activeBuffer], consoleAttr, 1, pos, &charsWritten);
 }
 
 void ConsoleWindowWrapper::SetGlobalAttr(short unsigned int attr)
@@ -457,8 +483,8 @@ void ConsoleWindowWrapper::SetGlobalAttr(short unsigned int attr)
 
 bool ConsoleWindowWrapper::WriteRect(const CharObject* buffer, const ConsoleCoord& position, const ConsoleCoord& rectSize)
 {
-	if(((position.x + rectSize.x) >= m_pScreenBuffer->m_bufferSize[0].X)
-		||((position.y + rectSize.y) >= m_pScreenBuffer->m_bufferSize[0].Y))
+	if(((position.x + rectSize.x) >= m_pScreenBuffer->m_bufferSize[m_pScreenBuffer->m_activeBuffer].X)
+		||((position.y + rectSize.y) >= m_pScreenBuffer->m_bufferSize[m_pScreenBuffer->m_activeBuffer].Y))
 	{
 		return false;
 	}
@@ -476,7 +502,7 @@ bool ConsoleWindowWrapper::WriteRect(const CharObject* buffer, const ConsoleCoor
 	rect.Right = (SHORT) (position.x + rectSize.x);
 	rect.Bottom = (SHORT) (position.y + rectSize.y);
 	
-	if(!WriteConsoleOutputW(m_pScreenBuffer->m_outScreenBuffer[0],
+	if(!WriteConsoleOutputW(m_pScreenBuffer->m_outScreenBuffer[m_pScreenBuffer->m_activeBuffer],
 						(const CHAR_INFO*) buffer,
 						buffSize,
 						origin,
@@ -502,6 +528,23 @@ bool ConsoleWindowWrapper::EnableCursor(bool enable)
 	if(!SetConsoleCursorInfo(m_pScreenBuffer->m_outScreenBuffer[0], &cursorInfo))
 	{
 		return false;
+	}
+	
+	if(m_pScreenBuffer->m_outScreenBuffer[1] != NULL)
+	{
+		//double buffer mode
+
+		if(!GetConsoleCursorInfo(m_pScreenBuffer->m_outScreenBuffer[1], &cursorInfo))
+		{
+			return false;
+		}
+		
+		cursorInfo.bVisible = enable;
+		
+		if(!SetConsoleCursorInfo(m_pScreenBuffer->m_outScreenBuffer[1], &cursorInfo))
+		{
+			return false;
+		}
 	}
 	return true;
 }
@@ -563,7 +606,7 @@ bool ConsoleWindowWrapper::WriteString(const std::string& string, const ConsoleC
 	COORD coordWin;
 	coordWin.X = coord.x;
 	coordWin.Y = coord.y;
-	if(!WriteConsoleOutputCharacterW(m_pScreenBuffer->m_outScreenBuffer[0], (const wchar_t*)string.data(), string.length(), coordWin, &charsWritten))
+	if(!WriteConsoleOutputCharacterW(m_pScreenBuffer->m_outScreenBuffer[m_pScreenBuffer->m_activeBuffer], (const wchar_t*)string.data(), string.length(), coordWin, &charsWritten))
 	{
 		return false;
 	}
@@ -577,7 +620,7 @@ bool ConsoleWindowWrapper::WriteString(const wchar_t* str, const ConsoleCoord& c
 	COORD coordWin;
 	coordWin.X = coord.x;
 	coordWin.Y = coord.y;
-	if(!WriteConsoleOutputCharacterW(m_pScreenBuffer->m_outScreenBuffer[0], str, wcslen(str), coordWin, &charsWritten))
+	if(!WriteConsoleOutputCharacterW(m_pScreenBuffer->m_outScreenBuffer[m_pScreenBuffer->m_activeBuffer], str, wcslen(str), coordWin, &charsWritten))
 	{
 		return false;
 	}
@@ -762,6 +805,20 @@ void ConsoleWindowWrapper::ConsoleAttrFlagsToString(short unsigned int conAttr, 
 		outputString.append("FOREGROUND_INTENSITY");
 		slashWrite = true;
 	}
+}
+
+
+bool ConsoleWindowWrapper::SwapBuffers()
+{
+	if (!SetConsoleActiveScreenBuffer(m_pScreenBuffer->m_outScreenBuffer[m_pScreenBuffer->m_activeBuffer]) ) 
+    {
+        //printf("SetConsoleActiveScreenBuffer failed - (%d)\n", GetLastError()); 
+        return false;
+    }
+	
+	m_pScreenBuffer->m_activeBuffer = (m_pScreenBuffer->m_activeBuffer+1) % 2;
+	
+	return true;
 }
 
 

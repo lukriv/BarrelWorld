@@ -192,6 +192,8 @@ public:
 	bool ReadInputEvent(ConsoleEvent &event);
 	
 	void WriteConsoleInfo();
+	
+	bool SwapBuffers();
 
 protected:	
 	bool GetConsoleWindowSize(unsigned int &width, unsigned int &height);
