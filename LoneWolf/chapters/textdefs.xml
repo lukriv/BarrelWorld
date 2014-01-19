@@ -10,6 +10,10 @@ and open the template in the editor.
 			<title lang="cs">Lone Wolf: Útok ze tmy</title>
 			<title lang="en">Lone Wolf: Flight from the Dark</title>
 		</chapter>
+		<chapter id="2" file="chapter02.xml">
+			<title lang="cs">Lone Wolf: Oheň na vodě</title>
+			<title lang="en">Lone Wolf: Fire on the Water</title>
+		</chapter>
 	</chapters>
 	<actions>
 		<action_create_character>
@@ -32,6 +36,10 @@ and open the template in the editor.
 			<desc lang="cs">Další kapitola</desc>
 			<desc lang="en">Next chapter</desc>
 		</action_next_chapter>
+		<action_promote_character>
+			<desc lang="cs">Postup na další level</desc>
+			<desc lang="en">Promote character</desc>
+		</action_promote_character>
     </actions>
     <items>
 		<!-- Weapon items -->
@@ -115,6 +123,23 @@ and open the template in the editor.
 			<title lang="cs">Drahokamy</title>
 			<title lang="en">Gems</title>
 		</item>
+		<item id="36" name="perfumed_soap" placement="backpack" >
+			<title lang="cs">Vonné mýdlo</title>
+			<title lang="en">Perfumed Soap</title>
+		</item>
+		<item id="37" name="power_potion" placement="backpack" attact_actual="2" free_use="" one_use="">
+			<title lang="cs">Alether</title>
+			<desc lang="cs">Pokud ho vypiješ před zápasem, zvýší se tvé UMĚNÍ BOJE o 2 body (ale jen pro dobu boje).</desc>
+			<title lang="en">Alether</title>
+		</item>
+		<item id="38" name="scroll" placement="backpack" >
+			<title lang="cs">Listina</title>
+			<desc lang="cs">Listina nalezená u Giaka.</desc>
+			<title lang="en">Scroll</title>
+		</item>
+		
+		
+		
 		<item id="99" name="random_backpack_item" placement="backpack">
 			<title lang="cs">Náhodně vybraný předmět z batohu</title>
 			<title lang="en">Random selected backpack item</title>
@@ -161,7 +186,7 @@ and open the template in the editor.
 			<title lang="en">Crystal Star Pendant</title>
 			<desc lang="en">Crystal Star Pendant from the Brotherhood of the Crystal Star.</desc>
 		</item>	
-		<item id="107" name="shield" placement="special" weapon_class="shield" attack_actual="2" >
+		<item id="107" name="shield" placement="special" attack_actual="2" >
 			<title lang="cs">Štít</title>
 			<desc lang="cs">Pokud jej použiješ v boji, zvyšuje tvé UMĚNÍ BOJE o 2 body.</desc>
 			<title lang="en">Shield</title>

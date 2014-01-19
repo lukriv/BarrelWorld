@@ -29,6 +29,7 @@ private:
 	static bool ParseScene(wxXmlNode* sceneNode, GlobalResourceManager &resMgr, SceneManager &sceneMgr);
 	static bool ParseSceneActions(wxXmlNode* sceneActionNode, GlobalResourceManager &resMgr, Scene &scene);
 	static bool ParseSceneItems(wxXmlNode* sceneActionNode, GlobalResourceManager &resMgr, Scene &scene);
+	static bool ParseSceneSelectionItems(wxXmlNode* sceneActionNode, GlobalResourceManager &resMgr, Scene &scene);
 	static bool ParseSceneEvents(wxXmlNode* sceneEventsNode, GlobalResourceManager &resMgr, Scene& scene);
 	static bool ParseSceneMerchadise(wxXmlNode* sceneMerchandiseNode, GlobalResourceManager &resMgr, Scene& scene);
 	

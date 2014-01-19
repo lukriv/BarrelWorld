@@ -558,7 +558,7 @@ bool Character::AddNewCharacterDiscipline(EDisciplines disc, DisciplinePropertie
 	// get local discipline value
 	pDiscProp = m_disciplines.FindValue(disc);
 	// if some discipline has random weapon type as required item choose one weapon for it
-	if((pDiscProp != NULL)&&(pDiscProp->m_weaponClass.size() == 1))
+	if((pDiscProp != NULL)&&(!pDiscProp->m_weaponClass.empty()))
 	{
 		switch(RandomSpin())
 		{

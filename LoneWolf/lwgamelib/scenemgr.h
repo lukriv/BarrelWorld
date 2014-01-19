@@ -27,6 +27,8 @@ private:
 private:
 	wxInt32 m_sceneId;
 	TItemList m_sceneItems;
+	TItemList m_selectionItems; // items for selection
+	wxInt32 m_selectionCount; // items to selection
 	wxInt32 m_goldCount;
 	TArticleVector m_goodsToBuy;
 	TArticleMap m_goodsToSell;
@@ -35,7 +37,7 @@ public:
 	ActionVector m_actions;
 	EventVector m_events;
 public:
-	Scene() : m_sceneId(TARGET_UNKNOWN), m_goldCount(0) {}
+	Scene() : m_sceneId(TARGET_UNKNOWN), m_selectionCount(0), m_goldCount(0) {}
 	~Scene() 
 	{
 		for(ActionVector::iterator iter = m_actions.begin(); iter != m_actions.end(); iter++)
@@ -59,6 +61,8 @@ public:
 	
 	inline void SetSceneId(wxInt32 id) { m_sceneId = id; }
 	inline wxInt32 GetSceneId() const { return m_sceneId; }
+	inline void SetSelectionItemsCount(wxInt32 itemsCount) { m_selectionCount = itemsCount; }
+	inline wxInt32 GetSelectionItemsCount() { return m_selectionCount; }
 	
 	/*!
 	 * \brief Get Indexes to posible actions with given character
@@ -71,11 +75,18 @@ public:
 	/*!
 	 * \brief Add item to scene
 	 * \param item Item to add
+	 * \param toSelection True - item is added to selection item list, otherwise in normal item list
 	 */ 
-	void AddItem(EItem item);
+	void AddItem(EItem item, bool toSelection = false);
 	
 	/*!
 	 * \brief Remove item from the scene
+	 * 
+	 * If this item is found in normal item list it is removed from normal item list, 
+	 * otherwise the selection list is searched. If this item is founded in selection item list
+	 * the item is removed from selection item list and selection items count is decreased.
+	 * If selection items count reach 0, the selection item list is cleared.
+	 * 
 	 * \param item
 	 */
 	void RemoveItem(EItem item);
@@ -85,6 +96,18 @@ public:
 	 * \param sceneItemList
 	 */
 	void GetItemList(TItemList &sceneItemList);
+	
+	/*!
+	 * \brief Get copy of selection item list of this scene
+	 * \param sceneItemList
+	 */
+	void GetSelectionItemList(TItemList &sceneItemList);
+
+	/*!
+	 * \brief Get copy of selection and normal item list of this scene
+	 * \param sceneItemList
+	 */
+	void GetAllItemList(TItemList &sceneItemList);
 	
 	bool ContainsItem(EItem item);
 	

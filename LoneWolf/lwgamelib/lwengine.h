@@ -27,6 +27,7 @@ class LWGameEngine {
 	LWGameEngineCallback* m_pUserInteractionCallback;
 	wxString m_errorStr;
 private:
+	bool PromoteCharacter();
 	bool CreateNewCharacter();
 	bool AddNewCharacterDiscipline(EDisciplines disc);
 	

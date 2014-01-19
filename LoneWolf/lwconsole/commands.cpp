@@ -11,16 +11,25 @@ using namespace std;
 
 void WriteListSceneItems(Scene& scene, EItemListType type)
 {
+	wxString itemsTitle;
 	wxString desc;
 	Scene::TItemList listOfItems;
 	Scene::TArticleVector listOfGoods;
-	if(type == ITEM_LIST_SCENE_ITEMS)
+	if((type == ITEM_LIST_SCENE_ITEMS)||(type == ITEM_LIST_SCENE_SELECTION))
 	{
-		scene.GetItemList(listOfItems);
+		if(type == ITEM_LIST_SCENE_ITEMS)
+		{
+			itemsTitle = wxT("Predmety: ");
+			scene.GetItemList(listOfItems);
+		} else {
+			itemsTitle.Printf(wxT("Predmety k vyberu (%d): "), scene.GetSelectionItemsCount());
+			scene.GetSelectionItemList(listOfItems);
+		}
+		
 		if(!listOfItems.empty()||(scene.GetGoldCount() > 0))
 		{
 			SetFontColor(ITEMS_HEADING); // font color
-			cout << "Predmety: ";
+			cout << itemsTitle.c_str();
 			SetFontColor(ITEMS); // font color
 			for(Scene::TItemList::iterator iter = listOfItems.begin(); iter != listOfItems.end(); iter++)
 			{
@@ -39,9 +48,10 @@ void WriteListSceneItems(Scene& scene, EItemListType type)
 		return;
 	}
 	
+	
+	
 	if((type == ITEM_LIST_SCENE_BUY)||(type == ITEM_LIST_SCENE_SELL))
 	{
-		wxString itemsTitle;
 		if(type == ITEM_LIST_SCENE_BUY)
 		{
 			itemsTitle = wxT("Prodej: ");
@@ -163,6 +173,7 @@ void WriteScene(Scene& scene)
 	cout << desc.c_str() << endl;
 	
 	WriteListSceneItems(scene, ITEM_LIST_SCENE_ITEMS);
+	WriteListSceneItems(scene, ITEM_LIST_SCENE_SELECTION);
 	WriteListSceneItems(scene, ITEM_LIST_SCENE_BUY);
 	WriteListSceneItems(scene, ITEM_LIST_SCENE_SELL);
 	
@@ -177,8 +188,15 @@ void WriteScene(Scene& scene)
 			switch(scene.m_actions[*iter]->GetType())
 			{
 				case ACTION_CREATE_CHAR:
-					cout << (*iter)+1 << ") vytvorit postavu" << endl;
+				case ACTION_PROMOTE_CHAR:
+				{
+					Action* pAction = static_cast<Action*>(scene.m_actions[*iter]);
+					g_gameEngine.GetResMgr().GetActionMgr().GetDefaultActionDesc(pAction->GetType(), act);
+					ConvertToNonDiacriticsCsText(act);
+					cout << (*iter)+1 << ") " << act.c_str() << endl;
 					break;
+				}
+				case ACTION_NEXT_CHAPTER:
 				case ACTION_MOVE:
 				{
 					Action* pAction = static_cast<Action*>(scene.m_actions[*iter]);

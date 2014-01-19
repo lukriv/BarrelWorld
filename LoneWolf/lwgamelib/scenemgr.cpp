@@ -141,9 +141,14 @@ void Scene::GetPosibleActions(Character& character, wxVector<wxDword>& outPosibl
 	
 }
 
-void Scene::AddItem(EItem item)
+void Scene::AddItem(EItem item, bool toSelection)
 {
-	m_sceneItems.push_back(item);
+	if(toSelection)
+	{
+		m_selectionItems.push_back(item);
+	} else {
+		m_sceneItems.push_back(item);	
+	}
 }
 
 void Scene::GetItemList(Scene::TItemList& sceneItemList)
@@ -165,12 +170,35 @@ void Scene::RemoveItem(EItem item)
 			return;
 		}
 	}
+	
+	if(m_selectionCount > 0)
+	{
+		for(Scene::TItemList::iterator iter = m_selectionItems.begin(); iter != m_selectionItems.end(); iter++)
+		{
+			if(*iter == item)
+			{
+				m_selectionCount--;
+				(*iter) = m_selectionItems.back();
+				m_selectionItems.pop_back();
+				if(m_selectionCount == 0)
+				{
+					m_selectionItems.clear();
+				}
+				return;
+			}
+		}
+	}
 }
 
 bool Scene::ContainsItem(EItem item)
 {
 	Scene::TItemList::iterator iter;
 	for(iter = m_sceneItems.begin(); iter != m_sceneItems.end(); iter++)
+	{
+		if(*iter == item) return true;
+	}
+	
+	for(iter = m_selectionItems.begin(); iter != m_selectionItems.end(); iter++)
 	{
 		if(*iter == item) return true;
 	}
@@ -267,6 +295,27 @@ wxInt32 Scene::GetItemToSellPrice(EItem item)
 	}
 	
 	return iter->second;
+}
+
+void Scene::GetAllItemList(Scene::TItemList& sceneItemList)
+{
+	Scene::TItemList itemList(m_sceneItems);
+	for(Scene::TItemList::iterator iter = m_selectionItems.begin(); iter != m_selectionItems.end(); iter++)
+	{
+		itemList.push_back(*iter);
+	}
+	sceneItemList.swap(itemList);
+}
+
+void Scene::GetSelectionItemList(Scene::TItemList& sceneItemList)
+{
+	if(m_selectionCount > 0)
+	{
+		Scene::TItemList itemList(m_selectionItems);
+		sceneItemList.swap(itemList);
+	} else {
+		sceneItemList.clear();
+	}
 }
 
 //////////////////////////////////////////////

@@ -1,0 +1,1600 @@
+1
+Kapitán D‘Val a jeho vojáci tě doprovází k bráně Pevnosti, kde ceká malý kočár. Jakmile do něj nastoupíš, brána se rozletí a ty se řítíš přes zaplněné ulice pryč z Holmgardu. Po krátké, ale nepohodlné cestě kočár zastavuje. "Tohle je přístaviště, můj pane. Tamhle je vaše loď Zelená Berla." Při řeči kočí ukazuje přes přístaviště na obchodní loď zakotvenou poblíž přístavní hráze.
+"Jméno prvního námořního důstojníka je Ronan. Najdete ho v hostinci U dobré zábavy, kde na vás bude čekat." Pak ti kočí popřeje šťastnou cestu a rychle zmizí v hemžícím se davu.
+Když se dostaneš k hostinci, zjistíš, že čelní dveře jsou zamčeny a okenice zavřeny. Rozhoduješ se, co uděláš, když tě nějaká ruka chytne za paži a ty jsi stržen do tmy.
+Jestliže chceš vytáhnout zbraň a napadnout neznámého útočníka, otoč na 273.
+Jestliže se chceš uvolnit z jeho sevření, otoč na 160.
+2
+Jedete po úzké části pobřežní silnice, která se táhne pod vysokou převislou skalní stěnou. Cestu před vámi zatarasilo sesuté kamení, a tak musíte zastavit a uvolnit si průjezd. Pomáháš kočímu odvalit velký kámen před kočárem, když najednou uslyšíš zvuk padajícího kamení. Ze skalní stěny se řítí velký balvan, který zabije kočího dříve, než stačíš zasáhnout a zachránit ho. V momentě, kdy na něj kámen spadl, nestál od tebe dál než šest stop.
+Jestliže ovládáš Kai disciplínu Šestý smysl, otoč na 42.
+Jestliže tuto disciplínu neovládáš, otoč na 168.
+3
+Jdeš alejí za obchodem a na jejím konci vidíš koně přivázaného ke kůlu. Jestliže si ho chceš vzít a uprchnout z vesnice, otoč na 150.
+Jestliže si koně vzít nechceš, opusť cestu v aleji tím, že půjdeš na 19.
+4
+Krčma je plná lupičů, ožralů a budižkničemů z posádek obchodních lodí zakotvených u mola, zpívají a pijí, někteří z nich zkouší svou sílu v páce. Všichni jsou zabráni do zábavy, takže si nevšimnou tvého příchodu. Ve vzdáleném rohu spatříš rybáře, kteří tě oloupili. Sedí u kulatého stolu, plného prázdných džbánů. Víš, že, máš-li dorazit do Durenoru včas, musíš zachránit Hammerdalskou pečeť a své zlato.
+Chceš-li se rybářům postavit, otoč na 104.
+Jestliže si přeješ mluvit s hostinským u pultu, otoč na 342.
+Pokud si přeješ zkusit vyhrát nějaké Zlaté v páce, otoč na 276.
+5
+Dveře se rozletí a dovnitř se vřítí Helghast s vytaseným černým mečem. Vyrazíš proti němu, jakmile vejde, a způsobíš mu sečnou ránu na hrudi. Příšerně zařve a, ačkoli je těžce raněn, poskočí dopředu, aby tě napadl. Musíš s tímto stvořením bojovat až do konce.
+Zraněný Helghast: UMĚNÍ BOJE 22, KONDICE: 20
+Je to nesmrtelný tvor. Zdvojnásob všechny body KONDICE, které ztrácí díky síle Sommerswerdu. Je imunní vůči Útoku duševní silou. Jestliže zvítězíš, můžeš odejít otevřenými dveřmi. Obrať na 166.
+6
+Chlapec zjistil, že ho sleduješ. Jakmile je venku, otočí se a běží směrem na jih. Pronásleduješ ho, ale on brzy zmizí v bludišti uliček a skladišť táhnoucích se podél pobřeží.
+Otáčíš se směrem na východ a procházíš ulicí Oxyoke kolem dalšího vchodu na tržiště. O chvíli později si všimneš nápisu nad dveřmi malého obchodu:
+MEKI MAJENOR
+zbrojař a obchodník se zbraněmi
+Jestliže si přeješ vejít do obchodu, otoč na 266.
+Jestliže chceš raději pokračovat v cestě směrem na východ, otoč na 310.
+7
+Dorier vyskočí od stolu a tasí meč. Jeho bratr Ganon je okamžitě po jeho boku. Musíš bojovat proti oběma jako proti jednomu nepříteli.
+Dorier-Ganon: UMĚNÍ BOJE 28, KONDICE 30
+Protože tvůj útok byl překvapivý, přičti si pro první kolo k UMĚNÍ BOJE 2 body. Z důvodu jejich spojené síly vůle, dovednosti vyvinuté
+během jejich rytířského výcviku, jsou imunní proti Útoku duševní silou.
+Jestli vyhraješ, otoč na 33.
+8
+Tvůj spánek je opravdu hluboký - a je to spánek, ze kterého se už nikdy neprobudíš. Uštknul tě Písečný had. Jeho smrtelný jed účinkuje během několika sekund.
+Tvé poslání i tvůj život zde končí.
+9 
+Je brzy ráno patnáctého dne tvé cesty, když najednou před sebou spatříš překrásné horské město Hammerdal. Hlavní město Durenoru na rozdíl od jiných měst Lastlandu nepotřebuje žádné opevnění. Okolní vrcholy nabízejí pro lidi uvnitř mnohem jistější ochranu. Kočár uhání farmářskými pozemky, které obklopují město s jeho četnými věžemi a širokými ulicemi. Na kopci uprostřed Hammerdalu stojí Královská věž, nádherná stavba ze skla a kamení. V okamžiku, kdy kočár zastaví před branami věže, si poprvé uvědomuješ, že tvým osudem, až budeš mít Sommerswerd, je stát se součástí nejstarší legendy Lastlandu.
+Obrať na 196.
+10
+Strkáš si Lístek do kapsy (zapiš si ho do Průvodní listiny jako Zvláštní předmět) a muž tě vede k dostavníku, který čeká poblíž východní brány mořského přístavu. Kočár je prázdný a ty si sedáš k jednomu z jeho kulatých okének. Jsi rád, že sedadlo je celkem pohodlné, protože cesta do Port Baxu by měla trvat sedm dní.
+Dáš si svou výstroj pod sedadlo, pohodlně si sedneš a trochu si zdřímneš.
+I Královská věž, nádherná stavba ze skla a kamení.
+Když se probudíš, je v kočáře pět dalších pasažérů a cesta do Durenoru začala.
+Vyber si číslo z Tabulky náhody.
+Jestliže číslo, které ti padlo, je 0 - 3, otoč na 51.
+Jestliže ti padlo číslo 4 - 6, otoč na 195.
+Jestliže ti padlo číslo 7 - 9, otoč na 339.
+11
+Přikryješ se svým pláštěm a schováš se do velkého dřevěného sudu. Ale není to nic platné, za malý okamžik se rozletí padací dveře a čtyři rozzlobení vesničané vpadnou dovnitř, držíc v ruce pochodně a meče. Když tě vlečou ven ze sklepa, prosíš o milost. Tvůj život a tvá cesta zde končí.
+12
+Kapitán Kelman otevírá vitrínu a vyndává krásně vyřezané hrad kameny. Po chvilce odporu souhlasíš se sázkou o deset Zlatých a začínáte hru.
+Vyber si číslo z Tabulky náhody.
+Jestliže ovládáš Kai disciplínu Šestý smysl, můžeš si ke zvolenému číslu přičíst 2.
+Jestliže celkové skóre je 0 - 3, otoč na 58.
+Jestliže celkové skóre je 4 - 6, otoč na 167.
+Jestliže celkové skóre je 7 -11, otoč na 329.
+13
+Díky ovládání disciplíny Stopování zjistíš, že levá pěšina je nejrychlejší cestou do Port Baxu. Dáš si do pořádku výstroj a vydáváš se znovu na cestu.
+Obrať na 155.
+14
+Po začátku souboje využiješ toho, že ovládáš Kai disciplínu Útok duševní silou. Na námořníkově čele vyskočí kapičky potu a jeho oči se postupně zavírají. Ani ne za minutu se zhroutí na zem v hlubokém bezvědomí.
+Obrať na 305.
+15
+Jeho podezíravý pohled se mění na pohled plný překvapení. "Myslel jsem, že jste podvodník, Kai Lorde. Musím se přiznat, že jsem měl v úmyslu dát vám lekci, na kterou byste celý život nezapomněl. Prosím, omluvte mé pochybnosti, ale vás příběh zněl tak vážně, že jsem tomu nechtěl věřit ze strachu, že je to pravda. Jsem zaklet, abych bránil tuto hranici a nemohu tedy opustit věž, ale nabízím vám cokoli z mého vlastnictví, jestliže vám to pomůže na vaší cestě." Pokládá na velký dubový stůl následující předměty a vybízí tě, aby sis vybral:
+MEČ S ŠIROKOU ČEPELÍ
+PALCÁT
+HŮL
+LÉČIVÝ ELIXÍR (obnovuje 3 body KONDICE)
+3 PORCE JÍDLA
+BATOH
+DVANÁCT ZLATÝCH
+Při odchodu z věže ti ukazuje směr, kterým by ses měl vydat.
+"Když se dostanete k Rymeriftu, dejte se směrem na sever. Přijdete k mostu hlídanému královými muži. Když se vás zeptají na heslo,
+odpovězte jim slovy 'západ slunce'. Cesta za řekou vede do Port Baxu... šťastnou cestu, Lone Wolfe." Poděkuješ statečnému bojovníkovi a odcházíš. Svého koně tu musíš nechat, protože přes hustý les by ses s ním nedostal.
+Otoč na 244.
+16
+Popadneš pivní džbán a rozbiješ ho o okraj stolu. Střepy jsou ostré jako žiletky. Jedním z nich se řízneš do levé ruky, kde se objeví dlouhá řezná rána, ze které prýští krev. Přikryješ ji pravou rukou a soustředíš se, cítíš sílu své energie, rána se hojí. Když zraněné místo odkryješ, nejsou vidět žádné stopy po pořezání ani žádné jizvy. Námořník na tebe udiveně zírá.
+Otoč na 268.
+17
+Dostal ses do poloviny paluby, když se najednou pod tebou prudce rozletí dveře vedoucí do podpalubí. Proti tobě běží Helghast a ječí. Nepodaří se ti včas uniknout a jeho černý meč těžce poraní tvé nohy. Ztratíš 5 KONDIČNÍCH bodů a spadneš do podpalubí. Musíš bojovat s touto nestvůrou až do konce.
+Helghast UMĚNÍ BOJE 22, KONDICE 30
+Je to nesmrtelné stvoření, takže zdvojnásob všechny KONDIČNÍ BODY, které ztratí, protože působí síla Sommerswerdu. Helghast je imunní vůči Útoku duševní silou.
+Jestliže se ti podaří zvítězit, můžeš podpalubí opustit otevřenými dveřmi. Obrať na 166.
+18
+Ulice před tebou je úplně zablokovaná vozy, ze kterých se překládá zboží na obchodní loď. Jdeš podél silnice až do okamžiku, kdy zahýbá na východ do ulice Oxyoke. Po tvé levé ruce je další vchod na Ragadornský trh. Za ním si povšimneš menšího obchodu s cedulkou nad dveřmi:
+MEKI MAJENOR - zbrojař a obchodník se zbraněmi
+Jestliže chceš jít na trh, otoč na 173.
+Pokud raději prozkoumáš obchod, otoč na 266.
+Jestliže si přeješ pokračovat v cestě na východ, otoč na 310.
+19
+Ve vzdálenosti menší než 20 yardů pochoduje po mokré dlažbě pátrací hlídka. Rozeběhneš se k tmavému vchodu malého obchodu a rychle vstoupíš, aby ses jim vyhnul. Se srdcem v kalhotách doufáš, že jsi nebyl spatřen.
+Otoč na 71.
+20
+Jdeš touto krysami zamořenou ulicí, která se svažuje k přístavním hrázím a molům na řece Dorn. Z pobřeží vidíš Ragadornský most. Je to jediné spojení mezi východní a západní stranou hnusného přístavu. Protlačíš se davem lidí na mostě do ulice plné odpadků, která se jmenuje East Trade. Otoč na 186.
+21
+Podvodník leží mrtvý u tvých nohou. Když ho otočíš, vezmeš mu několik karet z rukávu jeho kabátce a hodíš je na stůl. Dav se rozejde a hostinec je opět plný ruchu a křiku. Ostatní karetní hráči si berou ze stolu své zlato a zbytek ponechávají tobě. Abys zjistil, kolik zlata zbylo na stole, vyber si číslo z Tabulky náhody (v tomto případě 0 =
+10) a vynásob ho třemi. Výsledek znamená počet Zlatých, které jsou na stole. Vezmi si je a nezapomeň je zapsat do své Průvodní listiny.
+Když se osazenstvo vypotácí ven, jdeš k pultu a voláš hostinského. Vtiskneš mu do ruky jeden zlaťák a požádáš ho o pokoj k přenocování. Obrať na 314.
+22
+Ráno tě probudí křik palubní hlídky: "Ať ty odpadky z pravoboku zmizí!" Rychle se oblékneš, vylezeš na palubu a jdeš na můstek za kapitánem.
+Vyber si číslo z Tabulky náhody.
+Jestliže číslo, které sis vybral, je 0 - 4, otoč na 119.
+Jestliže ti padne číslo 5 - 9, otoč na 341.
+23
+Sleduješ to chlupaté stvoření, jak pospíchá podél úžiny. Než se jí propleteš, trvá ti to téměř deset minut a máš sto chutí pronásledování vzdát, když cesta najednou vyúsťuje do velké pochodněmi osvětlené jeskyně. Před tebou se rozprostírá ohromující podívaná. Sídlí zde celá kolonie těchto tvorů, všichni horlivě zkoumají a třídí velkou hromadu zvláštních předmětů nakupených
+uprostřed jeskyně.
+Ovládáš-li Kai disciplínu Spřízněnost se zvířaty, otoč na 144.
+Pokud tuto dovednost neovládáš, otoč na 295.
+24
+Je to Killeanova krypta. Byl vladařem Ragadornu. On a mnoho jiných zemřeli během epidemie moru před třemi lety. Náhle si vzpomeneš na tovaryše z kláštera Kai, který se jmenoval Swift Fox. Vyprávěl ti příběhy o svých četných cestách do Ragadornu. Mor tu zahubil více než polovinu obyvatelstva. Zahubil také Swifta Foxe. Jestliže se chceš vrátit do hostince, otoč na 177.
+Jestliže si přeješ zamířit ulicí Tomb na západ, otoč na 253.
+Jestliže si přeješ zamířit na východ ulicí Watchtower, otoč na 319.
+II. Ačkoli je polámaný a zmrzačený, poznáváš kapitána Kehnana.
+25
+Když si prohlížíš zaplněný hostinec, všimneš si, že spousta místních vesničanů hraje různé hazardní hry. Poblíž hlavních dveří stojí nějaký pobuda a má na stole před sebou tři obrácené dřevěné kalíšky. Různě je prohazuje a vyzývá každého, aby ukázal na ten kalíšek, který obsahuje malou skleněnou kuličku. Jestliže dotyčný zvolí správně, vyplatí mu dvojnásobek toho, co vsadil.
+Ovládáš-li Kai disciplínu Šestý smysl nebo Ovládání hmoty myšlenkou, otoč na 116.
+Jestliže ani jednu z těchto disciplín neovládáš, otoč na 153.
+26
+Hledíš do prázdných očních důlků přicházejícího námořníka. Ačkoli je polámaný a zmrzačený, poznáváš kapitána Kelmana. Ve skutečnosti stojíš na palubě Zelené Berly, která se potopila během bouře před 28 dny a byla vylovena ze svého temného pohřebiště dnes ráno, aby se zařadila mezi vyřazené loďstvo. Zraněný kapitán k tobě natahuje zlomenou ruku a jeho sípavý hlas tě prosí, abys položil Sommerswerd: "Polož svůj meč a moje duše bude ušetřena tohoto trápení."
+Jestliže si přeješ položit Sommerswerd na palubu, otoč na 248.
+Jestliže chceš napadnout zombie kapitána, otoč na 66.
+27
+Do setmění urazíš další tři hodiny cesty. Jsi velice unavený, a tak se rozhodneš trochu si zdřímnout a pokračovat za svítání. Vzpomeneš si na příběhy, které ti vyprávěli tví učitelé z kláštera Kai o pustinách mezi Summerlundem a Durenorem, kde se v noci potulují smečky divokých psů.
+Pod vlivem této vzpomínky se rozhodneš strávit noc v bezpečí velkého listnatého stromu na okraji cesty. Odpočinek je velmi posilující. Přičti si 2 KONDIČNÍ body, pokud jsi nějaké na své dobrodružné cestě ztratil, a otoč na 312.
+28
+Zbabělí Szallové kňučí zděšením a rozbíhají se všemi směry, aby se ti vyhnuli. Brzy se z mýtiny vytratí a ty se chystáš pomoci umírajícímu muži. Je velmi slabý na to, aby mohl mluvit.
+Chceš-li opatrně odstranit kopí z jeho hrudníku, otoč na 106.
+Jestliže chceš raději prohledat jeho tlumok, nejsou-li v něm nějaké užitečné věci, otoč na 320.
+29
+Uvolníš zámek a otevřeš poklop otvoru v palubě. Náhlý příval vzduchu posílí oheň, který vyšlehne ven z podpalubí. Uhneš dozadu a držíš si popálenou tvář. Ztrácíš 2 KONDIČNÍ body. "Hoří! Hoří!" Křik zesiluje.
+V panice se posádka snaží uhasit plameny. Trvá to přes hodinu, než je oheň pod kontrolou, škody jsou značné.
+V podpalubí byly všechny zásoby jídla a pitné vody a oheň všechno zničil. Také porušil konstrukci lodi. Když prohledáváš spáleniště, přistoupí k tobě kapitán, jeho tvář je začouzená. Nese něco v balíku v podpaží. "Musíme si promluvit o samotě, můj pane," říká tiše. Aniž bys odpověděl, otočíš se a následuješ ho dolů do jeho kajuty.
+Obrať na 222.
+30
+Dopadneš na shnilé trámy a spadneš přímo do podpalubí. Neublížil sis, ale zápach shnilotiny, který cítíš, je příšerný. Vyšplháš se nahoru a vytáhneš z pochvy Sommerswerd. Čtyři příšerné zombie se vynoří ze tmy. Jejich zkroucené ruce se natahují po tvém krku. Musíš proti nim bojovat jako proti jednomu nepříteli.
+Zombie: UMĚNÍ BOJE 13, KONDICE 16
+Jsou to nesmrtelná stvoření, takže nezapomeň zdvojnásobit všechny KONDIČNÍ body, které ztrácí díky síle Sommerswerdu. Jsou imunní vůči Útoku duševní silou.
+Jestliže vyhraješ, otoč na 258.
+31
+Tvé první setkání s poručíkem je pro tebe šok. Očekával jsi, že to bude podlézavý starý muž, stejně jako jsou vyslanci z jižních zemí, kteří souží královský dvůr svými delegacemi. Muž stojící před tebou, oděný do těžké drátěné košile, není ani starý ani podlézavý. Brzy pochopíš, že poručík Rhygar je výjimečný muž. Jeho otec pochází ze Sommerlundu a matka z Durenoru. Stal se něčím jako legendou města. V posledním desetiletí vedl spojence národů k vítězství nad nájezdnými Ledovými Barbary z Kaltu. Moudrý v míru, vášnivý v boji. Nemůžeš si přát lepší společnost při svém pátrání po Sommerswerdu. Rhygar žádá, aby bylo servírováno skvostné jídlo. Je to mimochodem to nejlepší, co jsi od začátku války ochutnal. Během hostiny si vybavuješ události, které tě přivedly do Port Baxu, a přemýšlíš o všem, co na tebe ještě čeká. Po jídle Rhygar posílá pro lékaře, který se postará o tvé rány. Jeho nápoje ti přidají 6 KONDIČNÍCH bodů. Potom ti poradí, aby ses vyspal, poněvadž ráno máš odjet s poručíkem do Hammerdalu.
+Druhý den brzy ráno tě dovedou do přilehlé zahrady v zadní části konzulátu, kde na tebe Cekají na koních Rhygar a jeho tři nejlepší vojáci. Mají být tvými tělesnými ochránci na dvěstětřicetimílové cestě do Hammerdalu. Když projíždíte městem, zatínají se ulice Port
+Baxu teprve probouzet k životu. Jak míjíte mechem porostlou městskou bránu, jsi si jist, že své poslání splníš.
+Vyber si číslo z Tabulky náhody.
+Jestliže číslo, které ti padlo, je 0 - 4, otoč na 176.
+Jestliže je to 5 - 9, otoč na 254.
+32
+Za svítání tě probudí kokrhání kohouta. Vidíš ulice Ragadornu přes silný déšť, dopadající na kamennou dlažbu. Už je to šest dní, co jsi opustil Holmgard, a do Port Baxu ti zbývá ještě 200 mil. Jsi v seníku na rozlehlém stanovišti dostavníků. Právě dorazila skupina zeleně oděných mužů, kteří začínají uklízet jeden z vozil. Zaslechneš, jak jeden z nich říká, že dostavník do Port Baxu odjíždí dnes odpoledne v jednu hodinu a že cesta bude trvat sedm dní.
+Jsi hladový a musíš se najíst, jinak ztratíš 3 KONDIČNÍ BODY.
+Po jídle, jestliže si přeješ zajít za mužem z dostavníku a zakoupit si jízdenku na cestu do Port Baxu, otoč na 136.
+Pokud chceš raději spustit žebřík do ulice, otoč na 238.
+33
+Ostatní cestující zděšeně a nedůvěřivě zírají na to, co jsi právě udělal. Dříve než jim to stihneš vysvětlit, slyšíš hlasitý třesk a přední dveře se rozletí. Dovnitř vtrhne šest ozbrojených vojáku vedených hostinským. Je to městská stráž a jednooký hostinský na ně křičí, aby tě zatkli.
+Jestliže si přeješ s nimi bojovat, otoč na 296.
+Chceš-li raději uniknout zadními dveřmi, Obrať na 88.
+34
+Když zavřeš dveře kajuty, slyšíš zuřivý křik posádky, která se připravuje k odrazení útočníků. Najednou zaslechneš dutý zvuk něčeho, co dopadlo na zadní palubu, následovaný skřeky tvorů, které znáš až příliš dobře - Giaků! Ty potvory hází na palubu sítě. Dveře kajuty se rozletí a ty stojíš tváří v tvář třem ohyzdným, chlupatým stvořením. Jejich zoubkované meče jsou potřísněny krví. Nemůžeš uniknout, musíš s nimi bojovat jako s jedním nepřítelem.
+Giakové: UMĚNÍ BOJE 16, KONDICE 14
+Jestliže tento boj vyhraješ, otoč na 345.
+35
+Překročíš neopatrného vojáka a rychle vyrazíš kolem věže do lesa. Kdyby se objevily další straže, pravděpodobně by nejdříve zaútočily a teprve pak se tě na něco ptaly.
+Jdeš už déle než dvě hodiny, když dorazíš na rozcestí u zakrnělého dubu.
+Jestliže si přeješ jít cestou vlevo, otoč na 155.
+Jestliže si přeješ jít cestou vpravo, otoč na 293.
+Ovládáš-li Kai disciplínu Stopování, otoč na 13.
+36
+Jídlo je báječné a je otázkou několika minut, než se ti podaří talíř vyprázdnit. Před setkáním s ostatními se rozhodneš trochu si zdřímnout. Ale, když se chystáš ulehnout, tvé břicho zachvátí strašná bolest. Podlomí se ti nohy a ty padáš k zemi. Cítíš, jakoby tvé tělo bylo v jednom ohni. V paměti se ti pořád dokola opakuje jedno slovo - jed... jed...
+Jestliže máš u sebe nějaký Laumspur, otoč na 145.
+Ovládáš-li Kai disciplínu Léčitelství, otoč na 210.
+Jestliže nemáš ani Laumspur a ani neovládáš disciplínu Léčitelství, otoč na 275.
+III. Uvnitř dostavníku je teplo a sucho.
+37 
+Uvnitř dostavníku je teplo a sucho. Při vytřepávání vody z pláště si povšimneš dalších tří pasažérů: dvou žen a muže, který hlasitě chrápe. Jedna z žen se na tebe podívá a usměje se. "Do Ragadornu bychom měli dorazit za šest hodin," říká a pokládá koš na podlahu tak, aby sis mohl vedle ní sednout. Dozvíš se, že bydlí v Ragadornu. Trochu ti vypráví o přístavu. "Od té doby, co Killean před třemi roky zemřel, vládne Ragadornu Lachlan, jeho zlý syn. On a jeho Žoldnéři nejsou nic jiného než piráti. Sužují lidi vysokými daněmi a s tím, kdo si stěžuje, udělají krátký proces. Je to smutná skutečnost. Jestliže uposlechnete mojí rady, opustíte Ragadorn co možná nejdříve."
+Během cesty se musíš najíst, jinak ztratíš 3 KONDIČNÍ body. Pak v dálce zaslechneš zvonění. Podíváš se ven a spatříš městské hradby přístavu. Dostavník projíždí západní branou a míří k zastávce. Když seskočíš na zem, jsi přivítán děsným zápachem tohoto špinavého města. Zrezivělá cedulka přibitá na zdi říká: Vítejte v Ragadornu.
+Žena tě informuje o tom, že do dostavníku do Port Baxu můžeš nastoupit na stanici blízko východní brány města.
+Jestliže si přeješ jít směrem na sever do ulice Westgate, otoč na 122.
+Jestliže si přeješ jít směrem na jih ulití East Bank, otoč na 323.
+Jestliže chceš jít směrem na východ do ulice Axe, otoč na 257.
+38
+Popadneš kopí za násadu a vrazíš ho Helghastovi do hrudníku. Řve bolestí a vztekem a snaží se tě chytit kolem krku. Včas uhneš a vidíš, jak ta ohyzdná příšera padá na zem a zoufale se snaží vytrhnout kopí ze svého těla.
+Jestliže si přeješ popadnout kopí a zarazit jej hlouběji, Obrať na 269.
+Jestliže chceš co nejrychleji utéct, otoč na 313.
+39
+Za soumraku zastavujete u hostince na pobřežní cestě do Port Baxu. Cena pokoje na noc pro pasažéra z dostavníku je 1 Zlatý a 3 Zlaté pro všechny ostatní.
+Zrovna když se chystáš vejít, požaduje kočí tvou jízdenku.
+Máš-li Lístek na cestu do Port Baxu, otoč na 346.
+Jestliže Lístek nemáš, otoč na 156.
+40
+Shromáždění vojska a příprava durenéského loďstva trvá čtrnáct dní. Během této doby zůstaneš hostem krále v Hammerdalu. Jak dny plynou, zoufalý vzpomínáš na své obléhané krajany a modlíš se, aby do doby, než se vrátíš, měli dostatek síly ubránit se Temným pánům.
+Každý den svého nechtěného exilu věnuješ mnoho řasu cvičení a meditaci. Také tě navštíví durenéský bylinkář jménem Madin Rendalim, který je po celém Lastlandu znám svými znalostmi a ovládáním léčivého umění. Díky jemu získáš zpět všechny KONDIČNÍ body, které jsi během cesty ztratil. Dá ti také silný Nápoj z Laumspuru, který ti vrátí 5 KONDIČNÍCH bodů, když jej vypiješ po boji. (Toto si ve své Průvodní listině poznamenej do kolonky Obsah batohu.) Je ale též poslem smutných zpráv. Tělo poručíka Rhygara bylo nalezeno poblíž vchodu do Tarnalinu. Byl zabit Helghastem.
+Ovládáš-li Kai disciplínu Šestý smysl, otoč na 97.
+Jestliže tuto dovednost neovládáš, otoč na 242.
+41
+Máš štěstí, zpozorovali tvůj tísňový signál a míří k tobě. Je to malá rybářská loď z ragadornského přístavu. Rybáři vypadají drsně, ale zabalí tě do teplé pokrývky a nabídnou ti jídlo. Kapitán navrhuje, aby ses vyspal, protože bude trvat dvě nebo tři hodiny, než dorazíte do Ragadornu.
+Jestliže chceš uposlechnout jeho rady, přidej si 1 KONDIČNÍ bod a otoč na 194.
+Jestliže raději zůstaneš vzhůru a budeš dávat pozor, nespatříš-li někoho dalšího, kdo bouři přežil, otoč na 251.
+42
+Cítíš, že někdo je nahoře na útesu a že jsi měl být obětí jeho útoku. Někdo se tě pokouší zabít! Otoč na 168.
+43
+Máváš Sommerswerdem v širokém trojúhelníku a zasáhneš čtyři ze zombie jediným rozmachem, ale jejich místa ihned zaujmou další. Nikdy se ti nepodaří zabít je všechny. Jakmile začínají rvát tvůj plášť, jsi nucen skočit přes palubu do moře, aby ses vyhnul jisté smrti. Obrať na 286.
+44
+Jed se dostal do krevního oběhu. Tvé paže jsou necitlivé a začínáš se potit. Poslední věc, kterou slyšíš, je dunivý zvuk příboje a křik supů. Tvůj život i tvá cesta zde končí.
+45
+Cváláš po lesní cestě proti jezdcům v pláštích, když najednou spatříš, jak jeden z nich zvedá vysoko nad svou hlavu černou hůl. Její špička je ze železa a začíná z ní sršet jasný modrý plamen. Jsi zrovna připraven udeřit, když z oné ďábelské hole vystřelí blesk energie, který vybuchne vedle tebe. Síla výbuchu tě vymrští ze sedla a ty padáš do podrostu u cesty. Vyber si číslo z Tabulky náhody.
+Jestliže sis vybral číslo 0 - 7, otoč na 311.
+Jestliže jsi zvolil číslo 8 - 9, otoč na 159.
+46
+Snažíš se vzpomenout si na důležitost oranžových dveří, ale marně.
+Jestliže si přeješ vejít do tohoto obchodu, otoč na 214. Chceš-li raději pokračovat v cestě, otoč na 230.
+47
+Vojáci se rychle chápou svých mečů. Kráčí k tobě a jeden z nich volá: "Heslo, cizinče!"
+Jestliže znáš správné heslo, otoč na 111.
+Jestliže ne, otoč na 307.
+48
+Ukážeš na pivní džbán na stole a říkáš námořníkovi, aby se pozorně díval. Zavřeš oči a soustředíš se na džbán, dokud si jej nevtiskneš do paměti. Když se silou tvé vůle džbán vznese do vzduchu, slyšíš, jak námořník vydechne úžasem. Obrať na 268.
+49
+Tři dny a tři noci má loďstvo Durenoru roztáhnuté plachty a pluje směrem do Holmgulfu. Ačkoli plavba probíhá rychle, každá loď v konvoji je jako zakletá. Plachty se trhají, lana se záhadně uvolňují, trámy se kroutí a netěsní. Mužstvo je ve svých těsných kajutách netrpělivé a hádá se, spory běžně končí smrtí. Třetí noc plavby je lord Axim na pokraji šílenství. "V životě jsem nezažil takovou mizernou plavbu. Nebyl zpozorován žádný nepřítel, nebyl sveden žádný boj, avšak moji muži jsou bud nemocní nebo zranění, a ztratili jsme dvě z našich nejlepších lodí. Byli jsme zakleti ďáblem. Jak bych si přál, aby to skonalo, ale, i kdybychom dorazili do Holmgardu dnešní noc, obávám se, že jsme příliš slabí, než abychom obléhání prolomili."
+Během jeho řeči vidíš, jak začíná svítat. Myslíš si, že spolu se svítáním může přijít i úleva, ale klidné vody, které loďstvo obklopují, obsahují hrozbu. Obrať na 100.
+50
+Kněz se najednou nakloní dopředu a pokládá do misky další zlaťák. Dostavník muže pokračovat v cestě. "Snad mi tu laskavost budete moci někdy v budoucnosti vrátit, milý synu," říká. Připadá ti zvláštní, že kapuce jeho roucha mu stále zakrývá tvář. Brzy se ocitáte za rozvodněnou řekou a cesta pokračuje.
+Otoč na 249.
+51
+Téměř za hodinu dostavník zastavuje u Kalananské kaple. Říká se, že tato kaple je postavena nad hrobem krále Alina, prvního panovníka Durenoru, všude kolem ní rostou chomáče Laumspuru.
+Přeješ-li si utrhnout některou z těchto bylinek, otoč na 103.
+Jestliže ne, vrať se do kočáru postupem na 249.
+52
+Najednou se ze tmy nad tebou ozve řev, ze kterého ti tuhne krev v žilách. Podíváš se vzhůru a spatříš planoucí červené oči Helhgasta, který se řítí po schodech dolu přímo na tebe. Zděšeně vykřikneš a zuřivě hledáš zbraň.
+Vlastníš-li Magické kopí, otoč na 338.
+Jestliže Magické kopí nevlastníš, otoč na 234.
+53
+Zaslechneš šepot mezi posádkou. Zachytíš slova 'lodě duchů" a "zakletá plavba", šepot utichne, když kapitánův hlas žádá o slovo. Na Zelené Berle nastane ticho a kapitán Kelman promlouvá k posádce: "Pánové, jsme tři dny plavby od Port Baxu, ale se silným větrem a odvážným srdcem tam dorazíme za dva. Oheň zničil většinu našich zásob. Příděly jsou tedy omezeny na jedno jídlo denně. U sudu s pitnou vodou bude umístěna stráž. Ale my jsme silní. Vytrváme. Každý muž, který bude přistižen, že krade, dostane sto ran bičem. To je všechno." Posádka není kapitánovými slovy nadšena, ale nikdo se neodvažuje něco namítat. Později odpoledne tě kapitán i posádka zvou, abys s nimi povečeřel.
+Jestliže si přeješ povečeřet s kapitánem, otoč na 321.
+Jestliže si přeješ povečeřet s posádkou, otoč na 154.
+54
+Když probíháš dveřmi, klesneš k zemi. V hrudi máš zabodnuté kopí. Než zmizí měsíční světlo, poslední věc, kterou na tomto světě spatříš, je kruh křičících vesničanů, kteří do tebe bodají a sekají, dokud nejsi mrtev.
+Tvůj život i tvá cesta zde končí.
+55
+Velký muž oblečený do kožené zástěry pilně brousí pěkný Meč s širokou čepelí. Sedí u brusu, ze kterého odletují jiskry vysoko do vzduchu, kdykoli k němu meč přiloží. Přeje ti dobrý večer a nabízí ti tuto zbraň.
+"Je to výtečný meč, je vyroben z durenéské oceli. Může být váš za pouhých 12 Zlatých."
+Jestliže si přeješ tento Meč koupit, poznamenej si to ve své Průvodní listině.
+Opustíš-li obchod předními dveřmi, otoč na 347.
+Odejdeš-li zadními dveřmi, otoč na 3.
+56
+Hostinský ti podává klíč: "Pokoj 4, na schodech nahoře druhý nalevo. Očekávám, že odjedete hodinu po svítání."
+V pokoji není nic jiného než postel, stolice a malý stul Zamkneš dveře a, dříve než se uložíš ke spánku, je pro jistotu zapřeš stolicí. Rozhodneš se, že se ráno pokusíš najít do Durenoru nějakou jinou cestu. Otoč na 127.
+57
+Zadní stranou rukavice ti stráž vyrazí zlato z ruky. Vyber si číslo z Tabulky náhody, abys určil, o kolik zlata jsi přišel (0 = 10 Zlatých).
+"Neprodali bychom bezpečí naší země tak levně," říká strážný. "Jenom bandita nebo hlupák by se pokusil podplatit durenéského vojáka, předpokládám, že vy jste obojí."
+Bohužel jsi urazil jejich cest. Mají v úmyslu ti uštědřit trpkou lekci.
+Otoč na 282.
+58
+"Máte smůlu, Lone Wolfe. Vaše strategie je odvážná, ale myslím, že jsem vás teď dostal."
+Kapitán posune svůj zdobený základní kámen napříč deskou a ty si uvědomuješ, že jsi hru prohrál. Popřeješ mu k jeho samorskému mistrovství a dáš mu 10 Zlatých.
+"Co třeba zahrát si zítra večer znovu? Nikdy neříkejte, že nejsem férový muž," říká kapitán.
+"Snad," odpovíš opatrně. Popřeješ smějícímu se kapitánovi dobrou noc a vracíš se do své kajuty.
+Obrať na 197.
+59
+Pobídneš koně směrem k Helghastovi, který se právě chystá dobít bezbranného vojáka. Tento netvor je imunní vůči Útoku duševní silou a může být zraněn pouze magickou zbraní.
+Jestliže máš Magické kopí, otoč na 332.
+Jestliže tuto zbraň nemáš, musíš se boji vyhnout a schovat se v lese.
+Otoč na 311.
+60
+Šokovaný Halvorc vyjeveně zírá.
+Halvorc UMĚNÍ BOJE 8, KONDICE 11
+Není schopen proti tobě první dvě kola bojovat, protože tvůj útok byl velmi překvapivý. Neodečítej si žádné KONDIČNÍ body, které můžeš během těchto dvou kol ztratit. Jestliže je ve třetím kole boje stále ještě naživu, zaútočí dýkou. Pokud vyhraješ, otoč na 76.
+61
+Skrz hustý déšť rozeznáváš pouze tmavý obrys městské hlídky pochodující proti tobě. Kdyby tě zastavila a zeptala se, co děláš v Ragadornu, mohl bys skončit v Lachlanově vězení. Než abys riskoval, že budeš zatčen, vrátíš se ulicí Black Knihgt a ve chvíli, kdy hlídka projde kolem, rychle zamíříš do ulice Sage.
+Otoč na 181.
+62
+Vcházíš do velké místnosti plné knih a foliantů. Za velkým psacím stolem sedí muž oblečený do uniformy durenéského námořního důstojníka. Zvědavě na tebe kouká přes velkou knihu a říká: "Musíte mít opravdu něco důležitého na práci, že žádáte o červenou propustku v tuto pozdní hodinu. Potřebuji vidět vaše papíry a doklad o oprávnění od vašeho velícího důstojníka."
+Jestliže jsi při svém pátrání sehnal všechny potřebné dokumenty, otoč na 126.
+Jestliže nemáš dokumenty, které požaduje, nebo mu je nechceš ukázat, budeš muset riskovat a ukázat mu Hammerdalskou pečeť. Otoč na 263.
+Jestliže nemáš Hammerdalskou pečeť ani dokumenty, opusť místnost a vrať se do vstupní haly otočením na 318.
+63
+Ze spánku tě probudí tlak na hrudi. Pomalu si rozepneš plást a jsi zděšen, když vidíš, že pod ním odpočívá had.
+Jestliže se chceš pokusit chytit jedovatého hada za hlavou a hodit ho na zem, otoč na 188.
+Jestliže si přeješ vyskočit a hada odmrštit, otoč na 201.
+Ovládáš-li Kai disciplínu Spřízněnost se zvířaty, otoč na 264.
+64
+Před sebou spatříš cestovní kočár podobný těm, které jezdí po pobřežních cestách Ragadornu. Koně jsou odvázáni a zdá se, že je opuštěn. Všimneš si těl tří vojáků, která leží pod ním. Jejich uniformy jsou prosáklé krví.
+Chceš-li kočár prohledat, otoč na 134.
+Jestliže chceš kočár ignorovat a pokračovat v cestě, otoč na 208.
+Ovládáš-li Kai disciplínu Šestý smysl, otoč na 229.
+65
+Když prcháš ulicí Watchtower, zaslechneš klení stráže běžící za tebou. Dorazíš na náměstí a spatříš čtyři hlídky pochodující proti tobě. Rychle zamíříš na jih, aby ses jim vyhnul. Utíkáš dlážděnou ulicí téměř deset minut, když ve tmě před sebou uvidíš velkou stáj a dostavníkovou stanici. Noc strávíš bezpečně ukryt v seníku.
+Obrať na 32.
+66
+Jakmile vytáhneš rozpálenou čepel, vytasí zombie kapitána ze svého roztrhaného kabátu hrozivou dýku. Musíš s ním bojovat až do konce.
+Zombie kapitána: UMĚNÍ BOJE 15, KONDICE 15
+Nezapomeň zdvojnásobit všechny KONDIČNÍ body, které tvůj nepřítel ztrácí díky síle Sommerswerdu. Zombie kapitána je imunní vůči Útoku duševní silou.
+Jestliže boj vyhraješ, otoč na 218.
+67
+Rychle se dovtípíš, že ten podvodník musel uprchnout hlavním vchodem hostince. Pokud je stále ještě v přístavu, musí být na hlavním náměstí nebo někde v okolí.
+Prohledáváš budovy a uličky v blízkosti náměstí, ale není po něm ani stopy. Než abys promarnil další čas bezvýsledným pátráním, vracíš se do přístaviště, kde odvážeš malou loďku. Když vesluješ k Zelené Berle, začínáš být zneklidněn myšlenkou na to, že tě pravděpodobně nepřítel objevil již takhle brzy po začátku cesty.
+Otoč na 300.
+68
+Strážcův výraz se změní v pohrdavý úšklebek. "Jsem durenéský voják. Vaše zlato vám tu nepomůže." Bohužel jsi urazil jeho cest a on má v úmyslu ti uštědřit tvrdou lekci.
+Obrať na 306.
+IV. Jeden z cizinců vyndává ze svého roucha černou hůl, z jejíž železné špičky vyšlehne modrý plamen.
+69 
+Jeden z cizinců vyndává ze svého roucha černou hůl a drží ji vysoko nad sebou. Na jejím konci je železná špička, ze které vyšlehne modrý plamen, směrem k tobě srší proud energie. Najednou je slyšet ohlušující třesk, to Rhygar svým štítem odrazí blesk energie. "Neměj slitování," křičí poručík a útočí na onoho cizince s holí. Poručíkův meč projede jeho tělem, ale muž zůstává nezraněn. Náhle si uvědomíš, proč nekrvácí. On a jeho společníci jsou Helghasti, kapitáni Temných pánů. Jsou schopni si na sebe vzít lidskou podobu, ale nejsou zranitelní normálními zbraněmi. Helghast ze sebe vyrazí hrozivý vřískot, který tě rozechvěje. Ochromen náhlou bolestí zakopneš a spadneš do hustého podrostu na úbočí zalesněného kopce.
+Pokud neovládáš Kai disciplínu Nehmotná clona, ztrácíš 2 KONDIČNÍ body, protože Helghast zaútočil svou duševní silou. Otoč na 311.
+70
+Vydechneš bolestí, když se had zakousne svými zuby hluboko do tvé paže. Popadneš ho za ošklivou hlavu a mrštíš s ním do vysoké trávy. Ale tvá rána je hluboká a zachvácená jedem.
+Vlastníš-li Křišťálovou hvězdu, otoč na 219.
+Pokud tento medailon nemáš, otoč na 44.
+71
+Přibouchneš dveře a zasuneš západku. V obchodě je tma, ale jsi schopen rozeznat schodiště po své pravici, padací dveře uprostřed podlahy a další dveře v protější zdi. Najednou se ozve rána, když sekery roztříští výplň dveří za tebou. Hlídka tě spatřila, když jsi vstupoval do obchodu, a teď rozbíjí dveře.
+Chceš-li otevřít padací dveře a schovat se ve sklepě, otoč na 11.
+Jestliže opustíš místnost dveřmi v protější zdi, otoč na 54.
+Rozhodneš-li se vyběhnout nahoru po schodech, otoč na 235.
+72
+Hostinský si od tebe bere jeden zlaťák a pokládá na pult džbán piva s mohutnou pěnou. Pivo je silné a povzbuzující. Můžeš si přičíst 1 KONDIČNÍ bod.
+Pokud si přeješ mluvit s hostinským, otoč na 226.
+Chceš-li pokoj k přenocování, záplat hostinskému 2 Zlaté a otoč na 56.
+Jestliže se chceš zúčastnit soutěže v páce, otoč na 276.
+73
+Výstup je velmi obtížný, protože máš volnou jen jednu ruku, v druhé držíš Sommerswerd. Konečně se dostaneš k výstupkům ve věži, rychle se nohou zachytíš za okraj. Právě se chystáš skočit dovnitř a zaútočit, když tě najednou zamrazí, protože zaslechneš slabý hlas: "Měl bych se radovat z ironie tvé smrti, Lone Wolfe." Ve vzdálenějším rohu stojí čaroděj, jehož levá ruka ukazuje na tvou hlavu. "Své poslání nesplníš, Lone Wolfe. Musíš zemřít!"
+Z jeho ruky vystřelí tvým směrem oslepující záblesk oranžového plamene.
+Obrať na 336.
+74
+Položením ruky na jeho hrud se snažíš zcelit otevřenou ránu. Ztratil mnoho krve a, ačkoli se silně potí, jeho pokožka je na dotek studená. Kapitánovy oři se náhle otevřou. Vyhrkne zkomolené varování: "Piráti... Lakurští piráti... varujte červené lodě... vyžeňte..." Pak je brzy opět v bezvědomí. Zabalíš ho do deky a dáš mu pod hlavu polštář. On ale upadá do spánku, ze kterého se už neprobudí. Mezitím byla na palubě shromážděna těla mrtvých členů posádky. Kapitán Kelman k tobě přistoupí a podává ti špinavou zahnutou šavli.
+'Tohle není žádný pirátský meč, Lone Wolfe. Tato zbraň byla ukována v pecích Helgedadu. Je to čepel Temných pánů."
+To je strašná zpráva. Jestliže se Temní páni spojili s piráty v zájmu společné věci, bude plavba do Durenoru opravdu nebezpečná. Mrštíš mečem do moře a vrátíš se na Zelenou Berlu. Vyplouváte směrem na východ a pozorujete, jak se durenéská obchodní loď zmítá ve vlnách a potápí se.
+Obrať na 240.
+75
+Vejdeš do zatuchlé kanceláře, kde dva muži sedí shrbeni nad stolem, prohnutým pod vahou knih a papírů.
+"Dobrý večer, pane," říká jeden z nich, jehož knír se třese, když mluví. "Pán požaduje obchodní propustku?"
+Dříve než můžeš odpovědět, podává ti plno komplikovaných dotazníků. "Kdyby je pán podepsal, mohu mu propustku vydat okamžitě. Poplatek činí 10 Zlatých."
+Jestliže si přeješ dotazníky podepsat a zakoupit si bílou propustku, označ si to ve své Průvodní listině a otoč na 142.
+Jestliže nemáš dostatek peněz nebo si propustku nechceš koupit, opusť kancelář a vrať se do předsíně otočením na 318.
+76
+Roztrhneš mu jeho zakrvácené roucho a jsi šokován, když zjistíš, že neexistuje žádný důkaz o tom, že by tě chtěl zabít. Všechno, co najdeš, jsou 2 Zlaté a Dýka. Jestli chceš, můžeš si tyto věci vzít. Obrať na 33.
+77
+Během tvého výcviku tě mistři v kláštera Kai učili mnoha jazykům a dialektům severního Magnamundu, jeden z nich byl Szall. Ta stvoření na mýtině jsou Szallové a křičí na tebe, že zraněný muž není vůbec muž. Říkají, že je to Helghast, mocný sluha Temných pánů.
+Jestliže jim věříš, zkontroluj, co má ten muž ve svém tlumoku otočením na 320.
+Jestliže si myslíš, že ti Szallové lžou, jen aby ti zabránili plést se do jejich zlomyslné hry, odežeň je svou zbraní otočením na 28.
+78
+Ustoupíš dozadu a tak tak se vyhneš padajícímu stěžni, který prorazí palubu. Zapotácíš se a díváš se na hromadu roztříštěných trámů. Pod nimi leží bezduché tělo kapitána Kelmana.
+Když to vystrašeně pozoruješ, ozve se silná rána. Blesk udeří do již poškozeného trupu Zelené Berly. Loď se rozlomí a ty jsi vržen přes palubu do rozbouřeného moře.
+Popadaje dech drápeš se zpět nahoru, ale uhodíš se do hlavy. Ztratíš 1 KONDIČNÍ bod. Vyškrábeš se na trám, který připomíná vor. Jestliže máš na sobě drátěnou košili, musíš jí teď odhodit nebo riskuješ, že se potopíš. V šedém světle vidíš, jak rozbitá loď mizí ve vlnách rozbouřeného moře. Cítíš se vyčerpaný. Držíš se trámu ze všech sil a postupně upadáš do bezvědomí. Když se konečně probudíš, je po bouři. Jedinou stopou po Zelené Berle je víko palubního poklopu, na kterém ležíš. Podle polohy slunce usuzuješ,
+že je pozdní odpoledne. V dálce vidíš malou rybářskou loď a za ní pás pobřeží táhnoucí se podél obzoru.
+Jestliže si přeješ použít plášť, abys máváním upoutal pozornost rybářské lodi, otoč na 278.
+Jestliže chceš loď ignorovat a místo toho pádlovat směrem ke břehu, otoč na 337.
+79 
+Síla proudící tvým tělem ovládá tvé smysly tak, že přestáváš vnímat okolí. Instinktivně zvedneš meč nad hlavu, záblesk slunečního světla najednou dopadne na jeho špičku a zaplní síň oslnivým bílým světlem. V tom okamžiku poznáš opravdovou sílu Sommerswerdu.
+Tato zbraň byla ukována dlouho před tím, než Sommerlunďané a Temní páni osídlili Lastland. Jeho stvořitele by dnes člověk nazval bohy. Uvolnit sílu, kterou v sobě skrývá, dokáže jenom rytíř řádu Kai. Kdyby měl být meč použit kýmkoli jiným, jeho síla se navždy ztratí.
+Když Sommerswerd použiješ v boji, zvýší o 8 bodů tvé UMĚNÍ BOJE. (Jestliže ovládáš Kai disciplínu Ovládání zbraně - meče, tak 10.) Má schopnost pohlcovat jakékoli kouzlo, které je použito proti jeho držiteli, a zdvojnásobuje počet ztracených KONDIČNÍCH bodů nepřítele, který je nesmrtelný.
+Uvědomuješ si, že vlastníš jedinou zbraň v celém Magnamundu, která může zachránit lid Summerlundu. Světlo zatíná pomalu mizet a ty cítíš na svém rameni ruku lorda Axima. "Pojďte, Lone Wolfe, čekají nás přípravy vašeho návratu do Sommerlundu." Zastrčíš Sommerswerd do jeho skvostné pochvy a následuješ lorda Axima ven z královské síně. Proveď nutné úpravy svého UMĚNÍ BOJE a zaznamenej si moc měře v Průvodní listině do kolonky Zvláštní předměty.
+Obrať na 40.
+V. V té chvíli je ti odhalena pravá síla Sommerswerdu.
+80
+Rytíř zasune meč a vede tě do věže. Následuješ ho do velké místnosti na vrcholu kamenného schodiště, ve které útulně plápolá oheň.
+"Jestliže jste, kdo tvrdíte, že jste, musíte vlastnit Hammerdalskou pečeť. Ukažte mi ji," nařizuje. Jestliže si přeješ mu Pečeť ukázat, otoč na 15.
+Jestliže Pečeť nemáš nebo mu ji ukázat nechceš, otoč na 189.
+81
+Následující ráno tě probudí křik z můstku nad tebou: "Za námi se ve vlnách zmítá loď!" Vyšplháš se na palubu, kde potkáš kapitána. Ani ne 50 yardů od zádě sebou v rozbouřeném moři hází poškozená loď. Na palubě se k sobě krčí tři muži. Vyber si číslo z Tabulky náhody. Pokud ti padlo číslo 0 - 4, otoč na 260.
+Jestliže ti padlo číslo 5 - 9, otoč na 281.
+82
+Když víš, že ti už nehrozí nebezpečí, vyskočíš z vozu se senem a utíkáš ulicí pokud možno pod rouškou stínů. Po tvé levé ruce je obchod, nad jehož dveřmi je cedule:
+GUNIO - obchodník se zbraněmi
+V okně se svítí a dveře jsou otevřené. Jestliže si přeješ vejít dovnitř, otoč na 55.
+Chceš-li pokračovat v útěku, otoč na 347.
+83
+Na konci ulice Barnacle je křižovatka. Už je velká tma, budeš si muset najít nocleh.
+Pokud chceš zahnout doleva do ulice Cooper, otoč na 227.
+Přeješ-li si zahnout doprava do ulice Unicorn, otoč na 297.
+84
+Uprostřed hlavních dveří sedí příjemný starý muž s dlouhou bradkou. Studuje velkou knihu v kožené vazbě, která leží před ním na stole. Nevšiml si tvého příchodu.
+Pokud se ho chceš zeptat na cestu na Sommerlundský konzulát, otoč na 211.
+Chceš-li raději odejít a najít cestu sám, otoč na 191.
+85
+Viveka kopne do stolu. Její reakce jsou bleskové a ty jsi nevyužil výhody překvapení. Tasí svůj krátký meč a útočí na tebe.
+Viveka: UMĚNÍ BOJE 24, KONDICE 27
+Jestliže zvítězíš, Obrať na 124.
+86
+Na této straně přístavu je zakotveno mnoho lodí nižných velikostí a s různými vlajkami. Řeka Dorn, která rozděluje město, je vždy rušná. Už se chystáš vzdát své hledání, když objevíš rybářskou loď zlodějů. Nikdo není na palubě, ale při pečlivém prohledání kabiny nalezneš Palcát a tři Zlaté, schované uvnitř složeného lůžka. Lůžko má na sobě označení: Hostinec Severní hvězda - ulice Barnacle. Popadneš Palcát a Zlaté a vrátíš se na náměstí Stone Post. Rozhodneš-li se jít na východ ulicí Bamade, otoč na 215.
+Půjdeš-li na jih ulicí Westbank Wharf, otoč na 303.
+Pokud si vybereš cestu na sever ulicí Booty, otoč na 129.
+87
+Když tasíš zbraň a zaútočíš, uvědomíš si, že jsi udělal strašnou chybu. Rytíř je mistrem v ovládání meče a vojáci jsou z elitního oddílu osobní stráže krále Alina IV. Protože si myslí, že jsi Helghast, rychle tě obestoupí a rozsekají na kousky. Tvé poslání i tvůj život zde v Tarnalinu tragicky končí.
+88
+Ačkoli již nastala tma, měsíc v úplňku jasně osvětluje vesnici. Za hostincem vidíš malý kolářský obchod a vedle něj dva koně zapražené do povozu se senem.
+Chceš-li si vzít koně a utéci, otoč na 150.
+Chceš-li se raději schovat v kolářském obchodě, otoč na 71.
+Ovládáš-li Kai disciplínu Maskování, otoč na 179.
+89
+Jak skáčeš, všimne si tě kočí. Rychle přibrzdí a otočí se s mečem v ruce.
+Jestliže mu chceš za cestu zaplatit, otoč na 233.
+Chceš-li na něj zaútočit, otoč na 212.
+90
+Dva Szallové a tři rozzlobení vesničané běží po schodech nahoru, aby tě napadli. Musíš postupně bojovat s každým z nich.
+Vesničan 1: UMĚNÍ BOJE 10, KONDICE 16
+Szall 1: UMĚNÍ BOJE 6, KONDICE 9
+Vesničan 2: UMĚNÍ BOJE 11, KONDICE 14
+Szall 2: UMĚNÍ BOJE 5, KONDICE 8
+Vesničan 3: UMĚNÍ BOJE 11, KONDICE 17
+Z boje můžeš kdykoli utéct tak, že vyskočíš oknem otočením na 132.
+Jestliže v boji zvítězíš, otoč na 274.
+91
+Chlapec je vyhozen ven dvěma černě oblečenými strážci. Obchodník ti poděkuje a dává ti vybrat dva předměty z jeho skladu:
+HŮL
+PŘIKRÝVKA
+PORCE JÍDLA NA 2 DNY
+BATOH
+DÝKA
+30 STOP LANA
+Vyber si jakékoli dvě z výše uvedených věcí a zaznamenej si je do své Průvodní listiny. Pak obchodníkovi poděkuješ a odejdeš postranními dveřmi. Obrať na 245.
+92
+Strašná příšera naposledy zařve a zhroutí se k tvým nohám. Když uděláš krok dozadu, aby ses vyhnul nepříjemnému zápachu rozkládající se mrtvoly, spatříš tři další Helghasty postupující směrem k tobě. Zůstat zde by znamenalo sebevraždu. Zakřičíš, abys varoval Rhygara, pak prcháš do bezpečí lesa. Obrať na 183.
+93
+Odečti si tolik Zlatých ve své Průvodní listině, kolik chceš dát žebrákům. Poděkují ti, ale vzápětí se objeví spousta dalších, kteří požadují, abys jim dal také nějaké peníze. Konečně se protlačíš davem a pokračuješ ve své cestě. Obrať na 137.
+94
+Naléháš na kapitána, aby loď prohledal, ale on tvé prosby ignoruje a nařizuje posádce, aby pokračovala ve své práci. Když se obchodní loď ztrácí z dohledu, zíráš za ní a divíš se, proč byl kapitán tak neochotný něco podniknout.
+Sestoupíš do podpalubí a pořádně za sebou zamkneš dveře své kajuty. Obrať na 240.
+95
+Popoháníš svého koně skrz malé stromky, až narazíš na malou mýtinu, šest Szallů rozčileně poskakuje kolem svíjejícího se těla muže. V jeho hrudi je zabodnuto zvláštně zakřivené kopí a vedle něj leží mrtvé tělo rytíře z Bílých Hor. Příšery křičí jedna přes druhou a vypadají netečně vůči zřejmé agónii onoho muže.
+Jestliže chceš na Szally zaútočit, otoč na 28.
+Ovládáš-li Kai disciplínu Léčitelství nebo máš Léčivý elixír z Laumspuru a chceš se pokusit zachránit tomu muži život, otoč na 239.
+96
+Tvůj Šestý smysl tě varuje, že zde sídlí ďábel. Stojíš přímo před oranžovými dveřmi, když tě něco napadne.
+Obrať na 112.
+97
+Během svých tvrdých tréninkových cvičení se Sommerswerdem jsi si povšiml, že tvůj Šestý smysl je mnohem citlivější než kdykoli předtím: věděl jsi přesně, jakou špatnou zprávu Madin Rendalim přináší, dlouho předtím, než ti ji řekl. Možná zjistíš, že tato vlastnost bude po návratu do Holmgardu velkou výhodou. Otoč na 152.
+98
+Zjišťuješ, že v této části Durenorského lesa není žádná cesta, ale současně víš, kterým směrem je Port Bax. Les před tebou je tak hustý, Že tu budeš muset nechat koně, chceš-li pokračovat v cestě.
+Jestliže se chceš vydat směrem do Port Baxu, otoč na 244.
+Pokud si přeješ prozkoumat strážní věž, otoč na 115.
+99
+Druhý den ráno té probudí křik z hlídkového koše vysoko nad tebou: "Loď na pravoboku!"
+Vyšplháš se po úzkém žebříku nahoru a následuješ kapitána na záď. "Vaše oči jsou mladší než moje, podívejte se a řekněte mi, co z ní rozeznáte, můj pane," říká a podává ti zdobený dalekohled.
+Rozpoznáš červené plachty a černou vlajku Lakurských pirátů. Vyber si číslo z Tabulky náhody.
+Pokud padlo číslo 0 - 4, otoč na 326.
+Jestliže jsi zvolil číslo 5 - 9, otoč na 163.
+100 
+Z pobřeží země známé jako Kirlundské ostrovy se snesl na oceán závoj mlhy. Z tohoto oparu se vynořují zvláštní tmavé obrysy. Neustále se zvětšují a pomalu se stávají zřetelnými. Jsou to tmavé, tajemné lodě. "Připravte se na boj!" Admirálův výkřik je opakován na mnoha palubách durenéské flotily. "Všichni na palubu!"
+Když se tajemné lodě přiblíží, naskytne se ti hrůzný pohled. Jsou to vyřazené nebo potopené lodě, jejichž posádku tvoří oživlé mrtvoly utopených námořníků. Byly povolány na zem velkým kouzelníkem a připravují se na boj. Najednou se mlha rozplyne a ty vidíš, že mrtvé lodě zatarasily vjezd do Holmgulfu. Uprostřed řady je jejich vlajková loď. Pomalu pluje proti vám, z její přídě vyčnívá obrovský klín. Když jím prorazí trup lodě Durenor, zaslechneš admirálův poslední zoufalý příkaz: "Opusťte loď!" Jsi nyní uprostřed nepřátelské flotily a Durenor se rychle potápí.
+Jestliže si přeješ skočit na palubu nepřátelské vlajkové lodě, otoč na 30.
+Jestliže chceš skočit do moře a pokusit se doplavat k jiné durenéské lodi, otoč na 267.
+101
+Když vtrhneš do jeho kabiny, kapitán na tebe překvapeně pohlédne od svého stolu. "Oheň v podpalubí!" vyhrkneš sotva popadaje dech.
+V okamžiku je kapitán ve dveřích a nařizuje posádce, aby naplnila vědra vodou a posbírala přikrývky k uhašení ohně. V okamžiku, kdy se dostaneš na přední palubu, je už kouř velmi hustý.
+Najednou se loď zachvěje, když z poklopu do podpalubí vyšlehnou plameny. Trvá přes hodinu, než se podaří dostat oheň pod kontrolu, a škody jsou veliké.
+V podpalubí byly zničeny téměř veškeré zásoby potravin a pitné vody a trup lodi byl vážně poškozen. Kapitán vyleze ven z podpalubí plného kouře, jeho obličej je černý od sazí. V podpaží nese balík. "Musíme si promluvit o samotě, můj pane," říká potichu. Aniž bys odpověděl, otočíš se a následuješ ho do jeho kabiny.
+Obrať na 222.
+102
+Tarnalin je opravdu zázrak. Tento tunel, který je více než sto stop široký a stejně tak vysoký, vede do hlavního města na vzdálenější straně Hammerdalského horského pásma. Obvykle je velmi rušný, plný kočáru a lidí cestujících do a z Port Baxu. Ale když do něj vstoupíš ty, zjistíš, že tam není nic kromě převrhnutého vozíku s ovocem. Cesta, která mizí v pochodněmi osvětleném tunelu, je prázdná a tichá. Když jdeš po dlážděné cestě, zmocní se tě nepříjemný pocit, že Helghast možná dorazil do Tamalinu před tebou. Jdeš už téměř hodinu, když se tunel najednou rozdvojuje.
+Dáš-li se levým tunelem, otoč na 64.
+Půjdeš-li pravým tunelem, otoč na 164.
+Pokud ovládáš Kai disciplínu Stopování, otoč na 325.
+VI. Jejich vlajková loď pluje zvolna proti vám a z její přídi vyčnívá obrovský černý klín
+103
+Laumspur je lahodná bylina, v Lastlandu velmi vyhledávaná pro své hojivé účinky. Nasbírals ho dost na jednu porci. Když ho sníš, můžeš si přičíst 3 KONDIČNÍ body. (Nezapomeň si toto označit ve své Průvodní listině.) Rostlinky zabalíš a vracíš se zpět do dostavníku k ostatním pasažérům. Obrať na 249.
+104
+Rybáři na tebe civí s otevřenou pusou, jako kdyby právě spatřili mrtvolu, která vstala z mrtvých. Najednou jeden z nich kopne do stolu, který se převrhne, a všichni se snaží uniknout zadními dveřmi hostince. Jedním skokem se dostaneš přes stůl a ženeš se za nimi ven do tmy.
+Jestliže si přeješ dále je pronásledovat, otoč na 231.
+Jestliže se rozhodneš nechat je utéci, otoč na 177.
+105
+Naneštěstí pro tebe meč lano přesekl téměř napůl, a tak se pravděpodobně pod tvou vahou přetrhne. Zvol si číslo z Tabulky náhody, abys zjistil, jestli lano i štěstí vydrží.
+Jestliže číslo, které ti padlo, je 0 - 4, otoč na 286.
+Jestliže ti padlo číslo 5 - 9, otoč na 120.
+106
+Zkroucené kopí je vyrobeno ze železa, ale tobě připadá tak lehké, jako kdyby bylo ze dřeva. Všimneš si, že jeho rukojeť je zdobena runovým písmem a magickými emblémy. Když ho opatrně vytahuješ z mužovy hrudi, dlouze vydechne úlevou. Zrovna se chystáš prohlédnout jeho ránu, když pocítíš pálivou bolest, která zachvacuje tvou hlavu. Je to tak bolestivé, že se zhroutíš na zem. Ztratíš 2 KONDIČNÍ body.
+Jsi překvapen, když vidíš, jak muž vyskakuje na nohy, a pak vystrašen, když spatříš hroznou změnu, kterou prochází. Jeho kůže a obličej se svrašťuje a mění barvu, je stále tmavší a scvrklejší a na jeho lebce se rozpadá. Oči hoří jasným červeným světlem a z přední čelisti mu vyčnívá dlouhý tesák. Zachvátí tě hrůza, když si uvědomíš, že je to Helghast, strašný sluha Temných pánů. Útočí na tebe svojí silně vyvinutou duševní silou, za každé kolo boje s touto nestvůrou ztratíš 2 KONDIČNÍ body. Normální zbraně mu nemohou ublížit a je imunní vůči Útoku duševní silou. V boji ho můžeš zranit pouze Magickým kopím.
+Helghast: UMĚNÍ BOJE 22, KONDICE 30
+Helghastovi se nemůžeš vyhnout a musíš s ním bojovat až do konce.
+Jestliže boj vyhraješ, můžeš si ponechat kopí. Zapiš si ho ve své Průvodní listině do kolonky Zvláštní předměty jako Magické kopí.
+Pokračuj v cestě otočením na 320.
+107
+Kapitán nařizuje posádce, aby ustoupila na stranu. Když se dostanete na palubu obchodní lodi, jste šokováni pohledem, který se vám naskýtá. Palubu pokrývají mrtvá těla námořníků, mnohá z nich jsou probodnuta šípy. Zdá se, že museli svést zoufalý boj, aby ubránili svůj náklad, ale není po něm ani památky. V podpalubí objevíš kapitána. Je těžce raněn a umírá.
+Ovládáš-li Kai disciplínu Léčitelství, otoč na 74.
+Jestliže tuto dovednost neovládáš, otoč na 294.
+108
+Jedno z kol vjede do hluboce vyjeté koleje a tři z jeho paprsků se roztříští. Musíte zastavit a kolo vyměnit, abyste mohli pokračovat v cestě do Port Baxu. Rozhodneš se kočímu pomoci. Kmenem malého stromu nadzdvihneš nápravu dostavníku, aby mohl nasadit náhradní.
+Hatíš na silnou větev ze všech sil, když se koně najednou pohnou směrem dozadu a dají se na útěk. Vůz poskočí dozadu, uhodí tě do
+obličeje a ty spadneš na zem. Jsi omráčen a ztrácíš 2 KONDIČNÍ body. Kočí nemá takové štěstí. Kočár přes něj přejel. Když ti ten chudák umírá v náručí, jeho poslední slova jsou: "Žádná nehoda... viděl jsem..."
+Ovládáš-li Kai disciplínu Šestý smysl, otoč na 343.
+Pokud tuto dovednost neovládáš, otoč na 168.
+109
+Když si z oři vytřeš kalnou vodu, spatříš, že vlajková loď mrtvých je v plamenech. Z paluby vychází hustý dým a z jejího černého trupu šlehají žluté plameny. Náhle tě upoutá mávání křídel přímo nad tebou. Jsi šokován, když vidíš Kraana, který se tě snaží popadnout do svých pařátů. Jeho zahnuté drápy zachytí tvůj plást a ty se vznášíš ve vzduchu. Ale let netrvá dlouho. Vytáhneš Sommerswerd a vrazíš ho do měkkého netvorova břicha. Bolestí uvolní svůj stisk a ty padáš. Modlíš se, aby při tobě stálo štěstí a bezpečně jsi dopadl. Obrať na 120.
+110
+Stráž ti nevěří a útočí na tebe.
+Stráž z věže: UMĚNÍ BOJE 15, KONDICE 22
+Jestliže nemáš zbraň, odečti si v tomto boji ze svého UMĚNÍ BOJE 4 body.
+Boji se můžeš kdykoli vyhnout otočením na 65.
+Pokud zvítězíš, otoč na 331.
+111
+Stráže neochotně zastrčí zbraně a dovolí ti přejít most. Když projdeš kolem, zírají na tebe a něco si mezi sebou šeptají. Jakmile jsi bezpečně za mostem, dáš se do běhu, aby si to náhodou ještě nerozmyslely a nezatkly tě. Jdeš téměř hodinu po lesní pěšině, když dorazíš ke křižovatce, na které je ukazatel oznamující:
+PORT BAX - 3 MÍLE
+Usměješ se a pokračuješ v cestě. Měl bys tam být ani ne za hodinu. Obrať na 265.
+112
+Náhle si vzpomeneš, co jsi slyšel o obchodu s oranžovými dveřmi. Je to hlavní sídlo Tichého Bratrstva, Lachlanovy pověstné tajné policie. Vstoupit sem by bylo mnohem nebezpečnější než vstoupit do místnosti plné Drakkarimů!
+Rychle se otočíš a pospícháš směrem na sever. Otoč na 230.
+113
+Je to Vonotar - Zrádce, kouzelník z Bratrstva kouzelníků z Toranu, mistr černé magie. Nyní má díky Temným pánům velikou moc Ten, kdo se tě během cesty snažil zavraždit, byl jeho agent, a byl to on, kdo velel konvoji mrtvých lodí. Když zničíš Vonotara, zničíš ďábelskou sílu, která pohání mrtvé lodě a jejich posádky. Můžeš vylézt na věž a na Vonotara zaútočit otočením na 73.
+Jestliže nechceš riskovat svůj život v boji s tímto mocným kouzelníkem, uteč z lodi tak, že skočíš přes palubu a otočíš na 267.
+114
+Už jdeš po této pusté pobřežní cestě déle jak tři hodiny, když se najednou začíná stmívat. Krajina kolem je pustá a plochá, nezaznamenal jsi zde žádné známky života. Nakonec se rozhodneš, že si odpočineš pod větvemi velkého stromu stojícího blízko silnice.
+Ze svého batohu si uděláš polštář, přikryješ se pláštěm a upadneš do hlubokého spánku. Vyber si číslo z Tabulky náhody.
+Jestliže číslo, které sis vybral, je 0 - 3, otoč na 206.
+Pokud ti padlo číslo 4 - 7, otoč na 63.
+Jestliže ti padlo číslo 8 - 9, otoč na 8.
+115
+Od dveří do strážní věže bylo odklizeno listí a země v okolí je pořádně ušlapaná. Hledáš zámek nebo klíčovou dírku v železem pobitých dveřích, když se najednou otevřou. Před tebou stojí rytíř z Bílých Hor. Jeho obličej se ztrácí za širokým mečem. "Řekněte, proč tu jste! Dobře si rozmyslete, co povíte. Můj meč bude odpovědí, pokud budete lhát!"
+Chceš-li mu říci pravý důvod své cesty do Durenoru, otoč na 80.
+Pokud mu nechceš říct pravdu, otoč na 324.
+Jestliže chceš tasit zbraň a na rytíře zaútočit, otoč na 162.
+116
+Díky svým schopnostem můžeš říci, který kalíšek kuličku skrývá, protože pro tebe je průhledný jako sklo.
+Vyber si z Tabulky náhody číslo a přičti k němu 5. To je počet Zlatých, které vyhráváš, dříve než muž vytuší, že něco není v pořádku a hru ukončí.
+Zlato je ve tvém měšci a ty se vracíš k pultu, kde platíš hostinskému 1 Zlatý za přenocování.
+Obrať na 314.
+117
+Je to velký cestovní kočár podobný kočárům používaným na silnicích v Sommerlundu. Kočí míří s koňmi k zastávce a kouká na tebe přes široký okraj svého klobouku. Ptáš se ho, kam míří. "Jedeme do Ragadornu - budeme tam dnes v poledne. Sedadlo vás bude stát 3 Zlaté, ale můžete jet na střeše za jeden."
+Jestliže si přeješ cestovat uvnitř, záplat kočímu 3 Zlaté a otoč na 37.
+Jestliže bys dal přednost cestování na střeše, zaplať 1 Zlatý a otoč na 148.
+Pokud nemůžeš jízdné zaplatit, musíš nechat kočár pokračovat v cestě a jít pěšky. Otoč na 292.
+118
+Popřeješ Rhygarovi mnoho štěstí a vstoupíš do Tarnalinu. Přes sto stop vysoký a stejně tak široký tunel vede do hlavního města na vzdálenější straně Hammerdalských hor. Po celé své délce je osvětlen pochodněmi. Tato cesta bývá obvykle rušná, plná vozů, v nichž obchodníci cestují do a z Port Baxu. Avšak nyní je tunel opuštěný, až na převrhnutý vůz s ovocem tu není vůbec nic Když pronikáš hlouběji, zatínají se tě zmocňovat pochybnosti. Dorazil sem Helghast jako první?
+Jdeš už půl hodiny, když před sebou spatříš kotár a na něm zvláštní stvoření. Je asi dvě stopy vysoké a podobá se přerostlé kryse. Domníváš se, že to je nějaký druh hlodavce, když si všimneš, že má na sobě nádherný kabát z kousků kůže a v ruce drží něco, co vypadá jako kopí. Jak se přibližuješ, najednou se otočí. Jeho nos něco větří a jeho široké černé oči pokukují do tmy. Jak tě uvidí, peláší do šera malého tunelu po pravé straně.
+Chceš-li toto stvoření sledovat, otoč na 23.
+Pokud budeš raději pokračovat v cestě, otoč na 340.
+Ovládáš-li Kai disciplínu Spřízněnost ze zvířaty, otoč na 279.
+VII. Toto stvoření má na sobě nádherný kabát s kousků kůže a v ruce něco, co vypadá jako kopí.
+119
+Na rozpěněném moři plavou roztříštěné trámy, kusy prken a roztrhané plachty. To je vše, co z obchodní lodi zbylo. Ale pak si najednou všimneš těla držícího se rozbitého palubního poklopu. Rychle spustíš provazový žebřík a vytáhneš toho chudáka na palubu. "Piráti!" je všechno, co řekne, než se zhroutí. Zabalíš ho do přikrývky a vezmeš ho dolů. Utrpěl mnoho ran a není daleko od smrti.
+'Tento zločin nese znamení Lakurských pirátů," svěřuje se ti kapitán, "ale je neobvyklé střetnout se s nimi v těchto vodách. Musí hledat nějaký důležitý náklad, že se vydali tak daleko od svých tropických ostrovů." Loď pokračuje směrem do Durenoru, a ty si říkáš, zda onen důležitý náklad nejsi náhodou ty. Obrať na 240.
+120
+štěstí stojí při tobě. Bezpečně dopadneš na palubu Kalkarmu, durenéské bojové lodi. Vojáci tu prošli lítým bojem, ale nepřítele odrazili, a teď přeřezávají zaháknutá lana, která je svazují s mrtvou lodí. Z kouře vychází lord Axim, jeho obličej je zakrvácený a svůj štít má poškrábaný.
+"Díky bohu, že jste naživu, Lone Wolfe. Boj byl krutý a naše ztráty jsou vysoké, ale já jsem srdečně rád, že vás tu vidím teď před sebou stát," říká a vede tě k zábradlí lodi. "Podívejte se tamhle, jejich vlajková loď je v plamenech."
+Skrz hustý dým vidíš, jak se obrovská mrtvá loď zahalena hustým kouřem potápí. Kalkarm je konečně volný a pomalu manévruje ven ze spleti trosek. Zvedá se vítr, který se opírá do plachet a odnáší s sebou dým. Lord Axim nařizuje královskému loďstvu Durenoru, aby napjalo plachty a aby se ostatní lodě seřadily kolem Kalkarmu. Poprvé od okamžiku, kdy začal boj, můžeš vidět ostatní durenéské lodi. Je to úžasný pohled. Jak se nepřátelská vlajková loď potápí, ostatní mrtvé lodě se vracejí do svého mořského hrobu. 'Jejich
+zakletí je zlomeno. Tento boj jsme vyhráli," říká lord Axim. Za několik minut na vodě není ani jedna z mrtvých lodí.
+Obrať na 225.
+121
+Běžíš ulicí Lookout až k místu, kde řeka Dorn rozděluje východní a západní část města. Nalevo je Ragadornský most, ošklivá konstrukce z rezavého železa, který zajišťuje jediné spojení mezi oběma polovinami města. Proplétáš se mezi lidmi zaplňujícími most a v uších ti zní křik pouličních zlodějů. Když se konečně dostaneš na druhou stranu, přestanou tě lupiči pronásledovat a ty vstupuješ do odpadky zaneřáděné ulice East Trade. Obrať na 186.
+122
+Tato ulice se táhne podél městské hradby směrem na sever. Napravo zahlédneš obchod s velkými oranžovými dveřmi. Na rozdíl od všech ostatních nad ním nevisí žádný nápis. Najednou si vzpomeneš na příběhy Kai Lorda, který se vrátil asi před rokem z návštěvy Ragadornu. V jednom z nich se zmínil o těchto oranžových dveřích.
+Vyber si číslo z Tabulky náhody.
+Jestliže číslo, které sis zvolil, je 0 - 4, otoč na 46.
+Jestliže je to číslo 5 - 9, otoč na 112.
+Jestliže ovládáš Kai disciplínu Šestý smysl, otoč na 96.
+123
+Tvým tělem proudí zvláštní síla. Instinktivně zvedneš meč nad hlavu. Na jeho hranu dopadne paprsek světla, který svým jasným bílým světlem zaplaví královskou síň. Ale téměř okamžitě začíná světlo mizet. Na svém rameni ucítíš ruku lorda Axima: "Pojďte, Lone Wolfe. Čeká nás hodně příprav na váš návrat do Sommer-lundu."
+Zastrčíš Sommerswerd do jeho ozdobné pochvy a následuješ lorda Axima ven z královské síně. Obrať na 40.
+124
+Rychle prohledáš její tělo, ale nenajdeš žádný důkaz o tom, že by mohla být tvým potenciálním vrahem. Najdeš 42 Zlatých, Krátký meč a Dýku. Jestli chceš, vezmi si kteroukoli z těchto věcí a zapiš si ji do své Průvodní listiny.
+Obrať na 33.
+125
+Rychle zmizíš postranními dveřmi hostince a běžíš uličkou směrem k hlavnímu náměstí. Přes dav lidí vidíš spoustu lodí a člunů přivázaných k molu. Rváči jsou ti v patách, musíš jednat rychle. Odvážeš jednu z malých loděk a z přístavní hráze do ní skočíš. Když dopadneš, rozbiješ dřevěné sedátko. Pádluješ k Zelené Berle, která je zakotvená asi třista yardů od břehu.
+Obrať na 300.
+126
+Muž zatáhne za stuhu se zvonkem a do místnosti vtrhnou čtyři ozbrojenci.
+'Tyto dokumenty jsou falšované. Není pochyb, že jste vyzvědač - nebo snad něco horšího? To nevadí, brzy zjistíte, jak v Port Baxu zacházíme s kriminálníky. Odvezte ho."
+Dříve, než můžeš cokoli vysvětlit, odvlečou tě do městské věznice. Tvoje výstroj je zabavena, včetně všech Zvláštních předmětů a zbraní, a ty jsi v cele plné zle vypadajících ničemů. Všimneš si, že několik lotrů má na levém zápěstí vytetovaného hada: znamení Vonotara -Zrádce. Mezitím než stráže prohledaly tvé věci a zjistily tvou správnou totožnost, tě čarodějovi lidé uškrtili.
+Tvůj život a tvá cesta zde tragicky končí.
+127
+Za svítání tě probudí zvuk silného deště dopadajícího na kamennou dlažbu silnic venku ve městě.
+Už je to šest dní, co jsi opustil Holmgard a musíš se teď najíst nebo ztratíš 3 KONDIČNÍ body. Posbíráš si svoji výstroj a opustíš místnost. Když sestupuješ dolil po točitých schodech, spatříš hostinského s kbelíkem a hadrem, jak vytírá podlahu.
+Jestliže se ho chceš zeptat, jak se dostaneš do Durenoru, otoč na 217.
+Jestliže si přeješ opustit hostinec, aniž bys s ním promluvil, otoč na 143.
+128
+Když zvedneš Sommerswerd nad hlavu, hoří jeho hrany zlatým plamenem, je připraven bojovat s nepřítelem. Proti tobě stojí šest hrozivých zombie, se kterými musíš bojovat jako s jedním protivníkem.
+Skupina zombie: UMÉNÍ BOJE 13, KONDICE 19
+Jsou to nesmrtelná stvoření, proto nezapomeň zdvojnásobit všechny KONDIČNÍ body, které ztratí vlivem síly Sommerswerdu.
+Jestliže boj vyhraješ, Obrať na 237.
+129
+Mineš několik skladišť táhnoucích se podél pobřežní hráze a dostaneš se ke zdi přístavu. Tady silnice prudce zatáčí doprava do ulice Tomb. Tam vidíš pochodovat čtyřčlennou po zuby ozbrojenou hlídku městské stráže. Abys nebyl vojáky zastaven a možná i zatčen, zahneš do uličky napravo. Hlídka se najednou zastaví u ústí této uličky. Kdyby se některý z vojáků otočil, určitě by tě uviděl. Před tebou je malé okénko vedoucí do zaplněného hostince. Bez váhání jím prolezeš. Obrať na 4.
+130
+Kněz k tobě přistoupí a povídá: "Musíte si odpočinout, stejně tak jako my ostatní. Chápu váš problém, příteli. Dovolte mi, prosím, uskutečnit to, co pokorně kážu." Po těchto slovech tě vede k pultu a dává hostinskému do ruky jeden zlaťák. "Pokoj pro mého přítele," říká a usmívá se. Obrať na 314.
+131
+Ptáš se jich, co od tebe chtějí. Jako odpověď vytáhnou z kabátů dlouhé zatočené dýky. Jejich vůdce udělá krok vpřed a požaduje tvé zlato. Když zaváháš, vykřikne: "Na něj!" a všichni tři se na tebe vrhnou. Jestliže nemáš žádnou zbraň, odečti si ze svého UMĚNÍ BOJE 4 body a bojuj proti nim holýma rukama. Musíš se s nimi utkat popořadě.
+Vůdce pouličních zlodějů: UMĚNÍ BOJE 15, KONDICE 23
+1. pouliční zloděj: UMĚNÍ BOJE 13, KONDICE 21
+2. pouliční zloděj: UMĚNÍ BOJE 13, KONDICE 20
+Můžeš z boje utéct otočením na 121.
+Jestliže všechny tři zloděje zabiješ, otoč na 301.
+132
+Dopadneš na zablácenou ulici ve sprše rozbitého skla. Jsi pádem trochu ochromen, ale jinak sis neublížil. Vesničan ozbrojený klackem se ti pokouší rozbít hlavu, ale ty se odvalíš na stranu, vyskočíš na nohy a, dříve než popadne dech, prcháš klikatou ulicí. Potom na tebe zaútočí svým Kopím ohyzdný Szall na koni. Zrovna se tě chystá bodnout, když ustoupíš stranou, chytneš jeho zbraň a strhneš ho na zem.
+Jestliže chceš Szalla probodnout jeho vlastním Kopím, otoč na 317.
+Jestliže si přeješ nasednout na jeho koně, otoč na 150.
+Pokud si Kopí ponecháš, nezapomeň to zaznamenat do své Průvodní listiny.
+133
+Díváš se námořníkovi přímo do očí a soustředíš svou duševní sílu na jeho otevřenou ruku. Najednou muž padá ze své židle a drží se za ruku, která ho pálí, jakoby právě zvedl žhavý uhlík. Když mu vysvětlíš, co se stalo, udiveně si tě prohlíží. Obrať na 268.
+134
+Najednou se ze tmy ozve výkřik, ze kterého tuhne krev v žilách. Hledíš do žhnoucích očí Helghasta.
+Když se tě pokouší popadnout kolem krku, vykřikneš hrůzou a spadneš na zem. Netvor ti svými černými drápy trhá blůzu.
+Jestliže máš Magické kopí, otoč na 38.
+Pokud ho nemáš, otoč na 304.
+VIII. Hledíš do žhnoucích očí Helghasta.
+135
+Rytíř ukazuje směrem k lesu za tebou a hrubým hlasem říká: "Tam je vaše přístřeší." Dříve než stihneš odpovědět, udělá krok zpět do věže a zavře těžké dveře na závoru. Les je zde velmi hustý a podrost je tvořen spletí plevele a vřesu. Ukáže se, že projet lesem na koni není možné. Musíš ho zde zanechat a pokračovat v cestě pěšky. Obrať na 244.
+136
+"Jízdné do Port Baxu stojí 20 Zlatých," říká kočí ragadornským akcentem.
+Jestliže máš 20 Zlatých a chceš si jízdenku koupit, otoč na 10.
+Jestliže nemáš dost peněz, otoč na 238.
+137
+Dorazíš na křižovatku, kde se ulice Beggar stáčí do ulice Black Knight. Po několika yardech následuje další ulice jménem Anchor, která míří na východ. Déšť je teď mnohem silnější.
+Jestliže si přeješ zamířit ulicí Black Knight na jih, otoč na 259.
+Vydáš-li se raději ulicí Anchor na východ, otoč na 20.
+138
+Jdeš už téměř 2 hodiny, když dorazíš na vrchol kopce a vidíš před sebou Durenorský les. Silnice míří směrem na východ a mizí v lese v místě, kde stojí velká dřevěná věž. Spatříš siluetu vojáka na stráži. Jestliže si přeješ pokračovat ve své cestě směrem ke strážní věži, otoč na 232.
+Jestliže se chceš stráži vyhnout, udělej velkou okliku a vejdi do lesa o něco dále na jih otočením na 244.
+139
+Během tréninku, při kterém jsi se zdokonaloval v Kai disciplíně Lov, ses naučil rozeznávat většinu jedovatých a nejedovatých plodů, které můžeš najít v severním Magnamundu. Tyto purpurové plody jsou Larnumy, sladké výživné jídlo. Rychle se jich dosyta najíš a
+potom si dáš do batohu zásobu na 2 porce.
+Za larnumovým stromem si všimneš široké pobřežní silnice, která se rozděluje směrem na východ a na západ.
+Jestliže si přeješ zamířit na východ, otoč na 27.
+Pokud zamíříš na západ, otoč na 114.
+140
+Obě stráže pohlíží s úctou na Pečeť. Legenda o Hammerdalské pečeti je všeobecně známá všem lidem v Durenoru. Říká se, že ze všech ztracených pokladů Durenoru je Hammerdalská pečeť jediný, který si nepřejí, aby jim byl vrácen. Úzkostlivé tváře obou stráží ukazují, že si jasně uvědomily významnost tvého poslání.
+Jeden ze strážců tě doprovodí přes Rymerift a lesní cestou na křižovatku, kde je ukazatel směřující na východ:
+PORT BAX 3 MÍLE.
+"Musím vás teď opustit a vrátit se k Rymeriftu. Obávám se, že válka brzy vrhne svůj černý stín na tuto zemi a já budu muset být na hranici, šťastnou cestu, Sommlendingu, šťastnou cestu." Několik minut se za ním díváš a pak se vydáš směrem na východ. Měl bys dorazit do Port Baxu asi za hodinu.
+Obrať na 265.
+141
+Když stěžen dopadne na palubu, zasáhne tvou hlavu štěpina z trámu a ty jsi vržen do moře. Popadaje dech se snažíš dostat na hladinu, pak se zachytíš víka palubního otvoru. Jsi napili omráčen. Vyškrábeš se na tento nouzový prám a držíš se ho ze všech sil. Jestliže máš na sobě drátěnou košili, musíš jí teď odhodit nebo se utopíš.
+Jsi zcela vyčerpán. Rozbouřené moře si s tebou nelítostně pohrává a ty postupně upadáš do bezvědomí. Když se po mnoha hodinách probereš, je po bouři. Podle polohy slunce usoudíš, že je pozdní odpoledne. V dálce spatříš malou rybářskou loď a za ní, na horizontu, zemi. Jedinou stopou po Zelené Berle je víko, na kterém sedíš.
+Jestliže chceš použít svůj plášť, abys upoutal pozornost rybářské lodi, otoč na 278.
+Jestliže dáš přednost tomu, že na sebe neupozorníš a budeš pádlovat směrem ke břehu, otoč na 337.
+142
+Muž si od tebe bere peníze a podává ti bílou propustku, která je platná sedm dní. Poděkuješ mu a opustíš budovu. Venku se dáš doleva a jdeš směrem ke stráži na konci ulice. Otoč na 246.
+143
+Mířil na sever podél pobřežní hráze, když dorazíš na křižovatku, kde ulice odbočuje směrem na východ. Většina obchodů v této ulici je stále ještě zavřená kromě jediného, nad jehož dveřmi je cedulka:
+JINELDA KOOP - ALCHYMISTA
+nákup a prodej magických nápojů.
+Jestliže si přeješ vstoupit dovnitř, otoč na 289.
+Chceš-li raději pokračovat v cestě, otoč na 186.
+IX. Velký Noodnic mající na sobě pestrobarevný plášť ze slátaných kousků hedvábí tě oslovuje.
+144 
+Velký Noodnic, mající na sobě pestrobarevný plášť ze sešitých kousků hedvábí, nařizuje několika svým lidem, aby si vzali zbraně a vyvedli tě ven. Když k nim promluvíš v jejich jazyce, zavládne v jeskyni úžas. Nikdy předtím se nestřetli s lidskou bytostí, která by skutečně mluvila jejich jazykem. Pro některé z nich je to příliš a zírají na tebe s otevřenými ústy. Jejich tenké paže jim bezvládně visí podél těla. Potom tě velký Noodnic osloví a říká, že je vůdcem této kolonie. Jeho jméno je Gashgiss. Vítá tě a vybízí, abys ho následoval na vyvýšenou plošinu uprostřed síně. 'Vy být Durenéská muž, eh, eh? Odkud vy přicházela?" táže se svým zvláštním noodnickým akcentem. Odpovídáš mu, že jsi Sommelending a jsi na cestě do Hammerdalu. Nervózně se na tebe podívá a pak se zeptá: "Vy nebýt Blackscreamerz, eh?" Uvědomíš si, že to znamená Helghast. Dozvíš se, že dva z nich přijeli do Tamalinu před více než dvěma hodinami a způsobili v hlavním tunelu paniku. Gashgiss ví, kde čekají, až se objevíš.
+"Já vám ukázat cesta za nimi, eh?" říká. Pokývneš souhlasně hlavou a následuješ ho po schodech dolů do síně.
+Noodnicové vypadají, že se vzpamatovali z šoku, a chovají se k tobě, jako bys byl jedním z nich. Před odchodem ti jedna žena nabídne jídlo na cestu. Poděkuješ jí za štědrost a následuješ Gashgisse do jednoho z mnoha tunelů vedoucích ven z jeskyně. Po hodině chůze zastavuje a ukazuje na paprsek světla vycházející ze štěrbiny v dálce. "Jestliže vy jít nalevo, vy dojít bezpečně," říká.
+Poděkuješ mu za pomoc a potichu také svým učitelům z kláštera Kai za to, že tě naučili dovednosti Spřízněnost se zvířaty. Mnoho let tréninku ti zachránilo život. Protáhneš se štěrbinou v kamenné stěně a seskočíš na cestičku pod sebou. Říkáš si, jak příjemní Noodnicové byli, když tu zjistíš, že ti ukradli všechno zlato! Označ si to ve své Průvodní listině. Obrať na 349.
+145
+Cítíš se slabší a slabší. Po nekonečných útrapách nalezneš Laumpspur a přinutíš se spolknout jeho suché listy. Během okamžiku se ti udělá velmi špatně a pak upadneš do neklidného spánku. Trvá skoro hodinu, než se probudíš a stále se necítíš dobře. Odečti si 5 KONDIČNÍCH bodů. Potom pomalu nabereš sil a tvůj šok z toho, co se stalo, se změní v hněv. Popadneš svou výstroj a vypotácíš se ven. Dáváš si pozor na střetnutí s možným vrahem. Obrať na 200.
+146
+Měl jsi pravdu. Mrak tvoří velcí Zlanbeastové a mnoho Kraanů. Pod jejich černými břichy visí sítě plné Giaků. Když Zlanbeasti udeří na Zelenou Berlu, spustí na palubu za tebou síť s Giaky. Někteří se pádem zabijí, ale většina z nich přežije a okamžitě útočí. Musíš proti nim bojovat jako proti jednomu nepříteli.
+Giakové: UMĚNÍ BOJE 15, KONDICE 15
+Jestliže vyhraješ, obrať na 345.
+147
+Tvé smysly ti napoví, že cesta je slepá. Jediný způsob, jak můžeš přejít Rymerift a dostat se do Port Baxu, je přes most.
+Obrať na 47.
+148
+Zahalíš se do pláště a přetáhneš si kapuci. Kočí křičí a bičem popohání koně, takže brzy ujíždíte po tříproudé silnici do Ragadornu. Během jízdy se bavíš s kočím a dozvíš se některé užitečné věci o mořském přístavu Ragadorn.
+Od té doby, co Killean - Overlord před třemi roky zemřel, vládne v Ragadornu jeho syn Lachlan. Jeho muži nejsou ničím jiným než piráty. Vymáhají z lidí vysoké daně a zabijí každého, kdo se jim postaví na odpor. Jsi hladový. Pokud se nenajíš, ztratíš 3 KONDIČNÍ body.
+Konečně v dálce rozeznáváš městské hradby Ragadornu. Slyšíš bít zvon. Odbíjí dvanáctou. Dostavník projíždí západní bránou městské hradby a míří k zastávce.
+„Jestliže se chcete dostat do Durenoru, můžete chytit dostavník na stanici u východní brány. Raději si pospěšte, odjíždí v jednu hodinu," říká ti kočí.
+Poděkuješ mu za radu a seskočíš na dlažbu. Poprvé ucítíš hrozný zápach tohoto špinavého přístavu. Na zrezivělé cedulce přibité na zdi polorozpadlého domu je napsáno: "Vítejte v Ragadornu."
+Jestliže chceš jít na jih ulicí Westgate, otoč na 323.
+Jestliže si přeješ zamířit na sever ulicí East Bank, otoč na 122.
+Zamíříš-li na východ do ulice Axe, otoč na 257.
+149
+Vycítíš, že tento strážce je věrný durenéský voják. Kdyby ses ho pokusil podplatit, považoval by to pravděpodobně za vážnou urážku a zaútočil by na tebe. Chceš-li mu ukázat Hammerdalskou pečeť, otoč na 223.
+Pokud se rozhodneš raději mu ji neukázat nebo ji nemáš či chceš předstírat, že jsi obchodník na cestě do Port Baxu, otoč na 250.
+150
+Pobídneš koně vpřed hemžící se ulicí směrem přes most. Míříš po strmé stezce k hřebenu soutěsky. Ve světle měsíce zahlédneš obrys cedulky, ukazující na východ.
+Jedeš nepřetržitě celou noc Za rozbřesku jsi překvapen náhlou změnou okolí. Neúrodná wildlandská krajina byla vystřídána vřesovišti, slatinami a močály. Na východě se táhne dlouhý stín, kam až oko dohlédne. Je to Durenorský les, přírodní hranice království s divokým Wildlandem. Naskýtá se ti vskutku úchvatný pohled.
+Do Port Baxu ti nezbývá ani den cesty, ale po noční jízdě jsi unaven a musíš se najíst nebo ztratíš 3 body z KONDICE. Jestliže ovládáš Kai disciplínu Lov, můžeš ji využít k ulovení vodní krysy nebo bahenního ptáka. Po hodině dorazíš na rozcestí. Není zde žádná cedule.
+Jestliže si přeješ jít vlevo, otoč na 261.
+Jestliže si přeješ jít vpravo, otoč na 334.
+151
+Napodobíš hrubý ragadornský přízvuk a oklameš strážného tím, že mu řekneš, že na Tombském náměstí došlo k potyčce.
+Abys zjistil, zda ti uvěřil, zvol si číslo z Tabulky náhody.
+Pokud ti padne číslo 0 - 4, otoč na 262.
+Jestliže číslo, které jsi zvolil, je 5 - 9, otoč na 110.
+152
+Je brzy ráno, třicátého dne tvé cesty a ty jedeš do Port Baxu s lordem Aximem po boku. Přípravy na válku byly dokončeny. Lodě durenéského válečného loďstva jsou zakotveny v přístavu a netrpě-livě očekávají rozkaz k vyplutí do Sommerlundu. Na palubě každé lodi je spousta vojáků z horského království, silná armáda zkušených bojovníků dychtících postavit se Temným pánům v boji. Každý muž přísahal, že pomstí své obléhané spojence nebo zemře. Plavíš se zpět do Holmgardu na palubě bojové vlajkové lodi Durenor, jejíž velká zakřivená příď zdůrazňuje její moc a sílu. Ty a lord Axim jste na palubě přivítáni admirálem Calfenem, velitelem loďstva. Pak se flotila připraví k vyplutí.
+Za necelou hodinu leží přístav daleko za vámi. Chrámy Port Baxu se teď na horizontu jeví jako malé body. Vyber si číslo z Tabulky náhody.
+Jestliže číslo, které sis vybral, je 0 - 3, otoč na 216.
+Jestliže jsi zvolil 4 - 6, otoč na 49.
+Pokud ti padlo číslo 7 - 9, otoč na 193.
+153
+Zapomněl jsi na něj i na jeho hru s kalíšky a kuličkou.
+Místo toho sleduješ hru v karty, která se odehrává blízko schodů vedoucích do hostince. Všimneš si, že jeden z hráčů podvádí.
+Jestliže ho chceš prozradit, otoč na 241.
+Jestliže chceš ignorovat to, co jsi viděl, otoč na 130.
+154
+Posádka je ochromena a unavena, ale navzdory nedostatku místa a chudé večeři (ve skutečnosti tak chudé, že ztrácíš 2 KONDIČNÍ body) jsou muži potěšeni, že jsi jejich pozvání přijal a jednají s tebou jako s čestným hostem.
+Po večeři tě pozvou, abys s nimi hrál Portholes a vsadil trochu zlata na výhru. Jestliže si přeješ zkusit štěstí, otoč na 308.
+Jestliže chceš raději nabídku odmítnout, popřej jim dobrou noc a vrať se do své kajuty otočením na 197.
+155
+Když urazíš asi 1 míle, dojdeš k dlouhému kamennému mostu. Na první pohled vypadá řeka, přes kterou vede, rozvodněná. Hrozí nebezpečí zatopení břehu. Pak si uvědomíš, že je to řeka Rymerift, která je ve svém nejširším místě 2 míle široká a téměř v celé své délce jednu míli hluboká. Zde krajina postupně mizí a vytváří přírodní průsmyk, oddělující Durenor od zbytku Magnamundu. U vjezdu na kamenný most je cedule:
+PORT BAX - 3 MÍLE
+Vydechneš úlevou, poněvadž jsi na správné cestě a do města bys měl dorazit za hodinu. Otoč na 265.
+156
+Kotí se velmi rozzlobí a křičí: "Před vámi je dlouhá cesta, cizince!" pak ti přibouchne dveře před nosem. Nemůžeš si dovolit na noc pronajmout pokoj, takže se rozhodneš přenocovat ve stáji s koňmi. Obrať na 213.
+157
+Strážce zuří a řítí se na tebe dolu ze schodů s mečem nad hlavou. Jestliže nemáš zbraň, nezapomeň si ze svého UMĚNÍ BOJE odečíst 2 body a bojuj proti němu holýma rukama.
+Strážce věže: UMĚNÍ BOJE 15, KONDICE 22
+Boji se můžeš kdykoli vyhnout otočením na 65.
+Jestliže boj vyhraješ, otoč na 331.
+158
+Kněz se nezdá být tvým útokem překvapen. Ze svého
+roucha vytáhne černý meč.
+Kněz: UMĚNÍ BOJE 16, KONDICE 23
+Jestliže v boji zvítězíš, obrať na 220.
+159
+Konečně dorazíš k velké borovici, kde se zastavíš. Snažíš se stát, ale bolest v nohou a bocích je tak velká, že se zhroutíš a ztratíš vědomí. Je to spánek, který tě ušetří bolesti způsobené Helghastovým mečem, ale je to také spánek, ze kterého neexistuje probuzení. Tvá cesta i tvůj život zde končí.
+160
+"Promiňte mi, můj pane, nechtěl jsem vás vylekat." Muž vypadá nervózně a ruka, kterou ti podává, se očividně třese.
+S trochou opatrnosti přijmeš toto znamení přátelství a sedneš si s ním ke stolu. Místnost je prázdná kromě párku myší ohlodávajících velký odřezek sýra.
+"Kapitán Kelman mi nařídil, abych vás vzal na Zelenou Berlu, ale pouze pokud si budu jist, že jste ten Kai Lord, kterému říkají Lone Wolf. Můžete mi prokázat svou totožnost?"
+Uvědomíš si, že mu musíš ukázat jednu z Kai disciplín, které ovládáš.
+Přeješ-li si předvést Léčitelství, otoč na 16.
+Přeješ-li si předvést Útok duševní silou, otoč na 133.
+Přeješ-li si předvést Ovládání zbraní, otoč na 255.
+Přeješ-li si předvést Spřízněnost se zvířaty, otoč na 203.
+Přeješ-li si předvést Ovládání hmoty myšlenkou, otoč na 48.
+Jestliže neovládáš žádnou z výše uvedených Kai disciplín nebo si nepřeješ své dovednosti demonstrovat, otoč na 348.
+161
+Obchod vypadá prázdný. Čekáš a prohlížíš si zboží skoro pět minut, ale pořád se nikdo neobjevuje. Zrovna se chystáš odejít, když si všimneš mapy, která visí na vnitřní straně dveří. Je to plán ragadornského přístavu. Stáje a dostavníková stanice jsou jasně označeny poblíž východní brány města. To je místo, kde můžeš chytit dostavník, který tě dopraví do Port Baxu. Naučíš se nazpaměť cestu vedoucí k východní bráně a opustíš obchod. Běžíš zpátky do ulice Axe, pak zabočíš na východ do ulice Sage. Na jejím konci je Ragadornský most, jediné spojení mezi východní a západní částí města. Protlačíš se davem na mostě a běžíš po kamenné dlažbě ulice East Trade.
+Obrať na 186.
+162
+Vyrazí ze sebe bojový pokřik a zaútočí mečem na tvou hlavu.
+Rytíř z Bílých Hor UMĚNÍ BOJE 20, KONDICE 27
+Můžeš se boji kdykoli vyhnout útěkem do lesa, když otočíš na 244.
+Jestliže vyhraješ, otoč na 302.
+163
+"Máme vítr v plachtách a ostrou příčí. V severních mořích neexistuje loď, která by Zelenou Berlu dohonila," řekl kapitán. Má skutečně pravdu, protože pirátská loď brzy zmizí za horizontem. "Jsem 25 let na moři a nikdy jsem nezažil, že by se lakurští piráti odvážili vyplout takhle daleko na sever," hladí si zálibně svůj knír. "Musí jít po nějakém cenném nákladu, že vypluli tak daleko od svých tropických ostrovů."
+Když kapitán zmizí v podpalubí, máš nepříjemný pocit, že ten cenný náklad můžeš být ty.
+Obrať na 240.
+164
+Jdeš opuštěným tunelem už asi jednu míli, když spatříš na levé straně schody. Vedou k plošině táhnoucí se podél stropu tunelu. Slouží k umístění pochodní.
+Pokud chceš vyjít po schodech a prohlédnout si plošinu, otoč na 52.
+Jestliže chceš raději pokračovat ve své cestě, otoč na 256.
+Ovládáš-li Kai disciplínu Šestý smysl, otoč na 172.
+165
+Dáš zlato do měšce a podáš jí prsten. Chňapne po něm a bedlivě si ho prohlíží. Když obchod opouštíš, slyšíš, jak se pro sebe chichotá. Říkáš si, zda jsi neudělal chybu. Obrať na 186.
+166 
+Jdeš po schodech nahoru na zaplněnou palubu. Všude kolem tebe zuří krutý boj, protože durenéské loďstvo bylo napadeno strašlivými mrtvými loděmi. Najednou z věže na zádi mrtvé lodi, na které se nalézáš, vyšlehne oslňující plamen a vybuchne asi 50 yardů od durenéské válečné lodi. Díváš se s hrůzou na to, jak vojáci, jejichž šaty a vlasy jsou v plamenech, skáčou do moře.
+Jestliže chceš věž prozkoumat, obrať na 328. Jestliže chceš z této lodi uniknout, skoč přes palubu otočením na 267.
+167
+"Máte odvážnou strategii, Lone Wolfe. Ale myslím, že jsem vás teď dostal."
+Kapitán Kelman přemístí svůj základní kámen na tvojí stranu desky s triumfálním úsměvem. Ale ten se brzy změní na pohled plný šoku, když jeho tah odrazíš, "šach mat," odpovíš chladně. A kapitán zmateně zírá na hru.
+"Kai disciplíny mě nepřestanou nikdy udivovat," říká a jemně se poškrábe na hlavě. Stále pohlíží na Samorovu desku, když mu konečně popřeješ dobrou noc a vracíš se do své kajuty. Obrať na 197.
+X. Vojáci skáčou přes palubu, jejich šaty a vlasy jsou v plamenech
+168
+Ostatní cestující se pomalu, jeden po druhém, objevují a s hrůzou pohlíží na mrtvého kočího. "Musíme ho pohřbít," říká kněz.
+Souhlasně pokývneš a připravíš hrob, do kterého uložíte tělo. Když se vracíte zpět k dostavníku, uvažujete a diskutujete o tom, co by se mělo udělat. "Znám cestu do Port Baxu. Měl bych řídit dostavník," říká Halvorc.
+"Doufám, že neneseme vinu za jeho smrt," je nervózní kněz.
+"Bylo to dílo bohů.“ odpovídá Dorier. "Já to potvrzuji," přitaká Ganon. "Rytíři z Bílých Hor nikdy nelžou."
+Je pravda, že v Durenoru mluví opravdový rytíř jen pravdu, ať už pro svoje vlastní dobro nebo zlo. Zdá se, že jeho slova kněze uklidnila a všichni jste brzy opět na cestě mířící směrem k východu. Je už pozdní odpoledne, když přijedete k dostavníkové stanici v malé pobřežní vesničce známé jako Gorn Cove. Její obyvatelstvo tvoří především vyhnaná, zloději a Szallové.
+Smrt kočího se setká u venkovanů s velkými obavami, ale Dorierova slova je přesvědčí, že se jednalo o nešťastnou náhodu.
+Ve vesnici se nachází jen jeden hostinec jménem Forlorn Hope. Jeho špatný stav je stejný jako u všech ostatních chatrčí. Pokoj na noc stojí 1 Zlatý.
+Jestliže za pokoj můžeš zaplatit, otoč na 314.
+Jestliže nemůžeš, otoč na 25.
+169
+Odejdeš z této barabizny a sklíčeně se vracíš zpět k dostavníkové stanici. V dálce vidíš východní bránu města. Pod ní čeká dostavník do Durenoru. Musíš se dostat do Port Baxu - závisí na tom budoucnost Sommerlundu! Proklouzneš mezi stráží a nastoupíš do dostavníku, aniž by to kočí zpozoroval. Když se blíží čas odjezdu, přistoupí dalších pět pasažérů a posadí se kolem tebe. Stráž zavře dveře a dostavník se vydá na cestu do Port Baxu. Vyber si číslo z Tabulky náhody.
+Jestliže číslo, které ti padlo, je 0 - 3, otoč na 39.
+Pokud jsi zvolil číslo 4 - 6, otoč na 249.
+Vybral-li jsi číslo 7 - 9, otoč na 339.
+170
+Stráž se podívá na tvou bílou kartu a ušklíbne se. 'Tohle je obchodní propustka. Ta je vám tu nanic. Abyste dostal svolení ke vstupu do námořního pásma, musíte mít červenou propustku." Hodí ti kartu zpátky a vrací se na své místo u brány. Obrať na 327.
+171
+Za stromy spatříš širokou pobřežní silnici táhnoucí se směrem od východu k západu. Jestliže si přeješ zamířit na východ, otoč na 27. Půjdeš-li raději na západ, otoč na 114.
+172
+Tvůj šestý smysl tě varuje, že v šeru plošiny se skrývá něco zlého.
+Jestliže si přeješ vyjít po kamenných schodech a zjistit, co to je, otoč na 52.
+Pokud chceš kolem schodů a plošiny proběhnout, otoč na 256.
+Chceš-li běžet zpátky ke křižovatce a vydat se po cestě vlevo, otoč na 64.
+173
+Přicházíš k nádhernému tržišti, kde je k maní nejlepší zboží severního Magnamundu. I v tuto pozdní hodinu je rušné, jelikož kapitán a bohatí obchodníci se dohadují o prodeji nebo výměně svého zboží. Majitelem tržiště se zdá být mladý bojovník, který předsedá dražbě ve zdobeném křesle se čtyřmi masivními řetězy. Všichni jeho muži mají na sobě černé brnění a jejich štíty nesou emblém s černou lodí na červeném hřebenu vlny.
+Náhodou si všimneš malého kluka, jak krade jednomu obchodníkovi od opasku měšec s penězi a strká si jej do holinky.
+Jestliže si přeješ kluka chytit a přimět ho, aby měšec vrátil, otoč na 91.
+Jestliže chceš chlapce sledovat a měšec mu vzít, otoč na 6.
+Jestliže chceš to, co jsi právě viděl, ignorovat a prohlédnout si prodávané zboží, otoč na 283.
+174
+Rytíř k tobě přistoupí a říká: "Ještě jsem se nesetkal s venkovanem, který by si mohl dovolit koupit vlastního koně. Vy nejste venkovan, ale vsadil bych se, že jste zloděj."
+Švihem meče tě shodí ze sedla a ty dopadneš tvrdě na zem. Instinktivně vytáhneš svoji zbraň k obraně, když se rytíř chystá k útoku.
+Obrať na 162.
+175
+"Zdá se, že nám náš ptáček uletěl," říká kapitán a ukazuje na dlouhou loď přibližující se rychle k jiné lodi na horizontu. "Nemá žádnou vlajku a její trup má zvláštní tvar. Nikdy předtím jsem něco podobného neviděl."
+Pozoruješ, jak dlouhá loď dostihla onu záhadnou loď na obzoru. Jako zázrakem se objeví mlha a zahalí ji. O chvíli později zmizí i mlha i loď.
+Vyber si číslo z Tabulky náhody.
+Jestliže číslo, které ti padlo, je 0 - 4, otoč na 53.
+Pokud ti padlo číslo 5 - 9, otoč na 209.
+XI. Poručík Rhygar nařizuje, aby tě nechali projít, protože neseš královské poselství.
+176
+Tři dny a tři noci jsi jel na koni po silnici táhnoucí se údolím řeky Durenon. V dálce se tyčí vrcholky Hammerdalských hor, jednoho z nejvyšších horských pásem v celém Magnamundu. Hlavní město leží přímo uprostřed těchto hor.
+Je ráno čtrnáctého dne tvé cesty. Utábořili jste se poblíž vodopádu, ze kterého se řítí voda Durenonu z výšky 120 stop. Zrovna se chystáte vyrazit, když se na lesní cestě nad vámi objeví skupina šesti jezdců v kapucích, která vám zablokovala cestu.
+Poručík Rhygar nařizuje, aby tě nechali projít a dodává, že neseš královské poselství. V Durenoru se bránění královskému poslu považuje za velkou urážku, ale naneštěstí se nezdá, že by jezdci v kapucích brali na varování ohled. Zůstávají stát na místě. "Jestliže je vám to jedno, snad vás zaženou naše meče," říká Rhygar. Vytahuje zbraň a nařizuje svým mužům, aby zaútočili.
+Jestliže si přeješ následovat Rhygara, otoč na 45.
+Jestliže nechceš na jezdce zaútočit, otoč na 277.
+Jestliže ovládáš Kai disciplínu šestý smysl, otoč na 322.
+177
+Když se vrátíš do hostince, vidíš, že většina námořníků se nahrnula okolo prostředního stolu a pozoruje soutěž v páce.
+Chceš-li se soutěže zúčastnit, otoč na 276.
+Přeješ-li si mluvit s hostinským, otoč na 342.
+178
+Ačkoli se ti sbíhají sliny nad lahodnou vůní jídla, zdá se ti, že něco není v pořádku. Položíš tedy podnos na zem u dveří. Hlad tě unavil, a tak se rozhodneš, že si před setkáním s ostatními trochu zdřímneš. Když se probudíš, spatříš vedle podnosu s jídlem dvě mrtvé krysy - otrávily se. Tvůj šok se změní v hněv, když si uvědomíš, že jed byl určen pro tebe. Popadneš své věci a opustíš místnost. Prahneš po tom, abys objevil svého potenciálního vraha. Otoč na 200.
+179
+Pomocí Kai disciplíny Maskování se můžeš schovat ve voze se senem do doby, až bude bezpečné vyjít ven.
+Jestliže si přeješ schovat se ve vozíku se senem, otoč na 82.
+Pokud chceš raději vsednout na koně a opustit vesnici, otoč na 150.
+Vstoupíš-li do kolářského obchodu, otoč na 71.
+180
+Usoudíš, že posádka je bučí slepá nebo nemá zájem tě zachránit. Rybářská loď pokračuje ve svém kursu ven na moře, aniž by si tě všimla, a mizí za obzorem. Popadneš volné prkno z palubního otvoru místo vesla a začínáš pádlovat směrem ke břehu. Obrať na 337.
+181
+Tato ulice se zdá být ještě špinavější a smradlavější než ta, po které jsi právě šel. Tvou pozornost upoutá výloha na levé straně. Nachází se tam spousta užitečných věcí. Všechny mají cenovku:
+MEČ - 4 Zlaté
+DÝKA - 2 Zlaté
+KRÁTKÝ MEČ - 3 Zlaté
+VÁLEČNÉ KLADIVO - 6 Zlatých
+KOPÍ - 5 Zlatých
+PALCÁT - 4 Zlaté
+KOŽEŠINOVÁ PŘIKRÝVKA - 3 Zlaté
+BATOH -1 Zlatý
+Můžeš vejít a koupit si kteroukoli z výše uvedených věcí. Nezapomeň si je zaznamenat do své Průvodní listiny. Když s nakupováním skončíš, pokračuješ v cestě ulicí Sage směrem k Ragadornskému mostu. Tento most je jediným spojením mezi východní a západní částí přístavu. Protlačíš se davem lidí a vozů. Přicházíš do ulice známé jako East Trade, která je plná odpadků. Otoč na 186.
+182
+Musíš najít nějaké přístřeší, kde bys mohl přenocovat, jinak riskuješ zatčení městskou stráží. Tvá intuice ti radí, že nejlepší bude vrátit se do hostince a požádat hostinského o pokoj. Osvěžen pohodlným spánkem si budeš moci ráno naplánovat další cestu do Durenoru. Obrať na 177.
+183
+V blízkosti tábora je les na příkrém svahu a ty střídavě padáš a vrážíš do stromů. Vyber si číslo z Tabulky náhody.
+Jestliže ti padlo číslo 0 - 8, otoč na 311.
+Pokud jsi zvolil číslo 9, otoč na 159.
+184
+Když Drakkar umírá, piráti překvapeni tak silným nepřátelským seskupením prchají ke své potápějící se lodi. Kapitán Kelman znovu shromažduje své muže a vede je proti ustupujícímu nepříteli. Jejich útok je zuřivý.
+Zelená Berla se vzdaluje od pirátské lodi, která je obrácena dnem vzhůru.
+"Máte náš dík, Lone Wolfe." Kapitán ti potřese rukou.
+"Jsme hrdi a vděčni, že vás máme s sebou." Na palubě se ozývá provolávání slávy, kterým posádka vyjadřuje své nadšení.
+Pomáháš pečovat o raněné, zatímco všichni zdraví odcházejí na poškozenou příď. Během hodiny se vítr opře do plachet a vy opět pokračujete v cestě do Durenoru. Obrať na 240.
+185
+Když běžíš po palubě plné mrtvol, vynoří se z chodby dva Drakkarovi pomocníci a zaútočí na tebe. Musíš s nimi bojovat jako se dvěma protivníky.
+Drakkar 1: UMĚNÍ BOJE 17, KONDICE 25
+Drakkar 2: UMĚNÍ BOJE 16, KONDICE 26
+Kdykoli během boje můžeš uniknout tak, že skočíš do moře. Otoč na 286.
+Jestliže je v boji zabiješ, můžeš skočit na palubu durenéské lodi otočením na 120.
+186
+Stojíš proti velké budově, na jejíž zdi je cedule:
+RAGADORNSKÉ STÁJE A DOSTAVNÍKOVÁ STANICE.
+Zeleně oděný kočí sedí vedle tabule, která říká: Port Bax, trvání cesty 7 dní.
+Jestliže chceš přistoupit ke kočímu a požádat ho o jízdenku do Port Baxu, otoč na 136.
+Jestliže nemáš peníze, otoč na 238.
+187
+Rychle prohledáš jejich těla a nalezneš tyto věci:
+2 KOPÍ
+2 MEČE
+6 ZLATÝCH
+Jestliže se rozhodneš vzít si kteroukoli z těch věcí, nezapomeň si to označit ve své Průvodní listině. Shodíš těla do Rymeriftu a pak přeběhneš most. Jdeš asi hodinu po lesní cestě, když dorazíš na křižovatku, kde vidíš ukazatel:
+PORT BAX - 3 MÍLE.
+Srovnáš si výstroj a vydáš se na cestu směrem na východ.
+Obrať na 265.
+188
+Důvtip a obratnost tě zachránily před jedovatým uštknutím. Když had zmizí ve vysoké trávě, posbíráš si věci a vylezeš na strom, kde strávíš v bezpečí zbytek noci.
+Otoč na 312.
+189
+"Podvodník!" vykřikne a vytáhne zbraň. Dřív než stihneš na jeho útok zareagovat, tě jeho meč škrábne na paži a ty ztrácíš 2 KONDIČNÍ body. Vrhne se na tebe a oba spadnete na podlahu chodbičky. Potom padáte střemhlav dolů po schodech strážní věže.
+Snažíš se vstát, ale protivník už je na nohou a hledá svůj meč.
+Chceš-li s ním bojovat, otoč na 162.
+Pokud raději opustíš svého koně a utečeš do bezpečí lesa, otoč na 244.
+190
+Snažíš se otevřít zámek okrajem ocelového měřítka, když najednou pocítíš v hrudníku ostrou bolest. Byla na tebe nalíčena mazaná past. Jak jsi schránku otevřel, vystřelila z ní jehla napuštěná smrtelným jedem. Okamžitě umíráš. Své poslání jsi nesplnil.
+191
+Na konci ulice zatáčí cesta ostře doprava. Naproti tomuto místu se nachází bílá budova, nad jejímiž dveřmi visí cedulka:
+Přístavní strážní věž, Přístavní úřad.
+Vidíš, že cesta končí u vysoké kamenné zdi, ve které je velká červená brána hlídaná dvěma vojáky. Za ní rozeznáváš stěžně lodí kotvících v přístavu.
+Jestliže si přeješ vstoupit do strážní věže, otoč na 318.
+Chceš-li jít k bráně, otoč na 246.
+192
+Opilí námořníci řvou radostí, peníze mění majitele a uzavírají se sázky. Všimneš si, že tvůj protihráč mrkne na své přisluhovače. Ti začínají postupovat směrem k tobě. Bez jakéhokoli zaváhání se zvedneš od stolu a udeříš námořníka tak, že udělá několik kotrmelců dozadu a vrazí do svých překvapených kumpánů. Necháš je svíjet se na podlaze a odcházíš. Když dorazíš ke dveřím hostince, nějaký ohyzdný námořník na tebe vytáhne meč a brání ti v odchodu. Dříve než stihneš něco udělat, slyšíš hlasitou ránu a on padá k zemi. Za ním stojí dívka, roznášející pivo, s velkou dřevěnou palicí v ruce a směje se na tebe. Mrknutím jí poděkuješ a rychle vykročíš do tmavé ulice. Po několika minutách běhu si všimneš ve tmě před sebou stáje a dostavníkové stanice. Vylezeš po žebříku do seníku, kde bezpečně strávíš noc.
+Obrať na 32.
+193
+Nezdá se, že by plavba do Sommerlundu proběhla hladce. Na horizontu se stahují černé bouřkové mraky a moře je rozbouřeno prudkým neúprosným větrem. V noci je obloha osvětlována velkými blesky, po kterých následuje hromobití, otřásající celou lodí. Mnozí vojáci jsou obyvatelé hor, kteří nejsou zvyklí na houpáni lodě. Třetí den je více než polovina z nich tak nemocná, že není schopna ani stát. Lord Axim je zoufalý.
+"Jak bych si přál, aby tato bouře pominula, protože se obávám, že i kdyby naše loď dorazila neporušena, tak naši vojáci budou tak slabí, že se nebudou moci postavit nepříteli."
+Za svítání druhého dne, jakoby v odpověď na jeho prosbu, bouře končí. Ale klidné vody obklopující lodě v sobě skrývají nebezpečí daleko větší než ta nejzuřivější bouře.
+Obrať na 100.
+194
+Když se probudíš, jsi šokován zjištěním, že ležíš vedle dřevěného mola. Voda okolo odporně zapáchá. Hlava tě bolí tak, jakoby tě někdo zmlátil do bezvědomí. To je přesně to, co se ti přihodilo, a tvé Zlaté, Batoh, Zbraně a všechny Zvláštní předměty rybáři ukradli -včetně Hammerdalské pečeti.
+Beznadějně vydechneš, vylezeš ze smradlavé vody a vyškrábeš se na molo. Rozhlédneš se a spatříš vybledlou ceduli:
+Obáváš se, že pověsti kolující o tomto místě jsou pravdivé. Je skoro tma a začíná pršet. Musíš najít Pečeť, jestliže chceš Durenésany přimět k tomu, aby ti vydali Sommerswerd. Když se rozhlédneš kolem sebe, vidíš velké náměstí s kamenným ukazatelem uprostřed, na kterém jsou jména ulic sem vedoucích.
+Chceš-li jít na východ ulicí Barnacle, otoč na 215.
+Chceš-li jít na jih ulicí Westbank Wharf, otoč na 303.
+Chceš-li jít na sever ulicí Booty, otoč na 129.
+Chceš-li jít na západ zpátky k molu a pátrat po rybářské lodi, otoč na 86.
+195
+Cestujete už téměř dvě hodiny, když kočí zakřičí: "Před námi je most, na kterém se vybírá mýtné. Jeden Zlatý za každého."
+Když se podíváš z okna, tak prší a v dálce rozeznáváš pouze dřevěný most a srub. Kočí zastaví dostavník u srubu a ve dveřích se
+objeví ošklivé stvoření. Má kůži plnou bradavic Je to Szall, neškodná a zbabělá rasa Giaků. Jsou obyvateli Wildandu od věků Černé luny, kdy jich z Dumeragských hor přišli tisíce, aby se zbavili tyranie Vashny, nejmocnějšího z Temných pánů.
+Szall požaduje od každého pasažéra jeden Zlatý, aby nechal dostavník projet. Ostatní pasažéři dávají do misky po zlatce a podávají ti ji.
+Jestliže máš dostatek Zlatých, abys mohl zaplatit, učiň tak a pokračuj v cestě otočením na 249.
+Nemáš-li žádné peníze, otoč na 50.
+196
+Král Alin IV sedí sám ve své síni v kopuli chrámu a dívá se před jeden z mnoha zbarvených portálů na siluetu hor. Když s lordem Aximem vcházíte do síně, jste formálně ohlášeni a ty se s úctou ukláníš před Jeho Veličenstvem. Pak si lord Axim od tebe vezme Hammerdalskou pečeť a jde ke královskému trůnu.
+Baví se spolu více než hodinu, jejich tváře odrážejí vážnost situace. Nastane chvilka tiché meditace, král vstává a poprvé tě osloví:
+"Alasové, Temní páni, se probudili a Sommerlund nás opět přichází požádat o pomoc. Modlil jsem se, aby se na mé panování vzpomínalo jako na čas míru a spokojenosti, ale v hloubi srdce jsem věděl, že tomu bude jinak."
+Král vyndá z kapsy svého bílého roucha zlatý klíč a dává ho do zámku kulatého stolu. Kamenný poklop se odsune a odhalí rukojeť zlatého meče. Místností se ozývá tiché mumlání.
+"Vezměte si tento meč, Lone Wolfe. Je předpovězeno, že pouze skutečný syn Sommerlundu může uvolnit sílu, která je v něm skryta."
+Když uchopíš jeho rukojeť, pocítíš ve své paži mocné pnutí, které proniká do celého těla.
+Jestliže ovládáš Kai disciplínu Šestý smysl, Obrať na 79.
+Jestliže tuto disciplínu neovládáš, otoč na 123.
+197
+Za svítání se strhne prudká bouře. Probudí tě silné houpání. Podlaha tvé kajuty je plná vody a výkřiky posádky zanikají v silném skučení větru. Rychle se oblékneš, posbíráš své věci a jdeš na palubu. Za chvíli tě dohoní kapitán, chytí tě za ruku a nařídí ti, aby ses vrátil do své kabiny. Zrovna když se chystáš sejít dolů, nahoře v plachtoví se ozve hromová rána. Podíváš se nahoru a vidíš, jak se na tebe řítí kus
+ulomeného stěžně.
+Vyber si číslo z Tabulky náhody.
+Pokud sis zvolil číslo 1 - 4, otoč na 78.
+Pokud je to číslo 5 - 9, otoč na 141.
+Jestliže zvolíš 0, otoč na 247.
+198
+Neurazil jsi ani dvacet yardů, když se tvůj kůň najednou splaší. Shodí tě na zem, ztrácíš tím 1 KONDIČNÍ bod. Oprášíš si plášť a v duchu kleješ, když vidíš koně mizet z dohledu. Budeš muset ve své cestě pokračovat pěšky. Obrať na 138.
+199
+Hostinský si zastrčí zlaťák do kapsy a žertovným hlasem říká: "Můžete se tam dostat tak, že budete dávat jednu nohu před druhou - takhle," a pak s hlasitým smíchem odchází do kuchyně. Proklínáš jeho podvod a při odchodu ze vzteku kopneš do kbelíku se špinavou vodou. Obrať na 143.
+XII. Všichni sedí u velkého stolu a čekají na tebe.
+200
+Když dorazíš do nálevny, sedí všichni kolem velkého stolu a cekají na tebe. Jak k nim přistupuješ, uvědomíš si, že jsi našel toho, kdo tě chtěl zabít. Budeš muset zaútočit, aniž bys svého nepřítele nějak varoval, takže si své spolucestující pořádně prohledni a pak se rozhodni.
+Jestliže si přeješ napadnou Doriera, rytíře z Bílých Hor, otoč na 7.
+Chceš-li zaútočit na obchodníka Halvorce, otoč na 60.
+Jestliže si myslíš, že tě chtěla zabít Viveka, otoč na 85.
+Pokud se domníváš, že to byl kněz Parsion, otoč na 158.
+Jestliže chceš zaútočit na rytíře z Bílých Hor, Ganona, otoč na 270.
+201
+Když vstaneš, had zasyčí a zaútočí na tvou paži. Uhneš stranou, ale jsi dost rychlý, abys uhnul před jeho jedovatými zuby?
+Vyber si číslo z Tabulky náhody.
+Jestliže číslo, které ti padlo, je 0 - 4, otoč na 285.
+Jestliže ti padlo 5 - 9, otoč na 70.
+202
+Voják zasalutuje a dovolí ti projít. Jdeš směrem na otevřené náměstí osvětlené vysokými majáky táhnoucími se podél přístavní hráze. Ke své úlevě spatříš mramorové sloupy Sommerlundského konzulátu, nad kterým se třepotá tobě tak drahá vlajka. Opírá se do ní mírný noční vánek.
+Když vyjdeš po schodech, uvidí tě stráž u hlavních dveří. Zmizí v budově a pak se rychle vrací ve společnosti šedovlasého úředníka. Jejich úzkostlivý pohled se rychle změní v radostný úsměv, když spatří tvůj plášť. "Naděje za nadějí! Díky bohu, že žijete, Kai Lorde. Neúplná zpráva, která k nám ze západu dorazila, nás velmi rozrušila."
+Jsi okamžitě uveden k velvyslanci Sommerlundu, poručíku Rhygarovi.
+Obrať na 31.
+203
+"Máte hlad?" ptáš se a sleduješ dvě myši ve vzdálenějším rohu. "Snad byste si dal trochu sýra?" Díky dovednosti Spřízněnost se zvířaty myším nařídíš, aby ti sýr donesly. Když ho položí u tvých nohou a utečou, námořník se na tebe užasle podívá.
+Obrať na 268.
+204
+Bystrý zrak, který máš díky Kai disciplíně Stopování, ti umožní poznat talisman upevněný na vrcholu tyče. Je to emblém s půlměsícem a křišťálovou hvězdou kouzelnického bratrstva z Toranu v severním Sommerlundu. Tento muž byl jeho členem. Nyní je zrádcem tvé země.
+Jestliže si přeješ vylézt na věž a zrádného kouzelníka napadnout, otoč na 73.
+Nechceš-li riskovat svůj život proti tomuto mocnému nepříteli, skoč přes palubu otočením na 267.
+205
+Hostinský se na tebe zamračí a ukáže na postranní dveře. "Jestli si nemůžete dovolit pokoj, můžete přenocovat ve stáji."
+Když odcházíš, cítíš, jak tě pohledy ostatních pasažérů bodají do zad. Dveře se zabouchnou a ty se třeseš zimou venku na studeném nočním vzduchu.
+Obrať na 213.
+206
+Během noci tě probudí vytí vlků kdesi v dálce. Raději vylezeš na strom a strávíš zbytek noci v bezpečí vysoko nad zemí.
+Obrať na 312.
+207
+Nejdeš ani dvě hodiny, když cesta zmizí na okraji propasti, na jejímž dně teče hluboký Rymerift. Není možné pokračovat dál tímto směrem. Budeš se muset vrátit a jít přes most. Obrať na 47.
+208
+Právě jsi minul vůz, když za sebou zaslechneš nějaký zvuk. Otočíš se a pečlivě si prohlížíš zdi a strop, ale v šeru tunelu si ničeho zvláštního nevšimneš. Otoč na 134.
+209
+Posádka si začíná něco šeptat. Zaslechneš slova "loď duchů" a "zakletá plavba", ale mumlání ustane v okamžiku, kdy na přední palubu vystoupí kapitán, aby promluvil k posádce. Je slyšet jen skřípění stěžňů. "Pánové, jsme tři dny plavby od Port Baxu. Oheň nám zničil zásoby potravin a naše pitná voda byla zkalena. Musíme plout do Ragadornu, abychom provedli nutné opravy a doplnili zásoby. To je všechno."
+Posádka se zdá být kapitánovým oznámením potěšena a muži se dávají do práce s novou energií. Kapitán se na tebe obrátí: "Jsme asi
+osm hodin od Ragadornu, můj pane. Mám rozkaz dopravit vás bezpečně k sommlendingskému konzulovi, poručíku Rhygarovi. Ale čas není naším spojencem a já se obávám, že oprava může trvat týden. Až spustíme kotvy, budete se muset rozhodnout, jak budete pokračovat v cestě do Durenoru - po moři s námi nebo sám po pobřežní silnici."
+Když se vracíš do kajuty, honí se ti hlavou králova slova: "Čtyřicet dní, Lone Wolfe. Máme sílu čelit nepříteli pouze čtyřicet dní." Nemáš moc času, abys splnil své nebezpečné poslání.
+Obrať na 197.
+210
+Dáš si obě ruce na břicho a soustředěním se snažíš utišit bolest. Teplo tvé uzdravovací síly omračuje bolest, ale jed je velmi silný. Zápas ještě není u konce.
+Vyber si číslo z Tabulky náhody. Tvůj život nyní závisí na čísle, které zvolíš.
+Jestliže ti padlo číslo 0 - 4, otoč na 275.
+Jestliže ti padlo číslo 5 - 9, otoč na 330.
+211
+"Sommerlundský konzulát?" říká překvapeně poněkud zaražen tvým náhlým příchodem. Když se vzpamatuje, pokračuje: "No samozřejmě! Je na Alinském náměstí, blízko přístavu. Jděte doprava a na konci ulice zase doprava. Tak dorazíte k Červené bráně. Ke vstupu budete potřebovat červenou propustku, poněvadž konzulát je v námořním pásmu města. Je to zakázaný prostor."
+Ptáš se, jak můžeš červenou propustku získat.
+"Od kapitána přístavní hlídky," odpovídá. "Jste tu asi cizinec, neboť jen málo lidí nezná odpověď na tuto otázku. Strážní věž přístavu je na konci ulice zrovna v místě, kde zahnete k Červené bráně." Poděkuješ mu a opustíš spolkový dům. Obrať na 191.
+212
+Bohužel nemáš zbraň a on je mistrem v ovládání meče. Boj je beznadějný a krátký. Náhlým výpadem tě probodne a, když tě shazuje ze střechy vozu, už nic necítíš. Jsi mrtev. Tvůj život i tvé poslání zde končí.
+213
+Vylezeš na hromadu sena a dáš si přes ramena svůj teplý plást, aby ses ochránil před mrazivým větrem. Rychle usneš, aniž bys měl tušení, že se tvé oči už nikdy neotevřou. Jeden z pasažérů je agentem Temných pánů a v noci tě zavraždí. Víš, kdo to byl? Tvůj život i tvá cesta zde tragicky končí.
+214
+Jakmile jsi uvnitř, uvědomíš si, že to není obchod. Místnost je studená a prázdná až na velký stůl uprostřed. Všimneš si zlověstných velkých kovových pout připevněných ke každému rohu stolu. Jsi v hlavním sídle Tichého Bratrstva, Lachlanovy pověstně známé tajné policie. S vzrůstajícím pocitem hrůzy si vzpomeneš na příběh jiného rytíře Kai, který byl chycen a obviněn z vyzvědačství. Po třech dnech a nocích mučení unikl. Ty nemáš takové štěstí. Dveře se automaticky zamknou a brzy si Tiší Bratři, kteří tě nyní pozorují skulinami ve zdech, pro tebe přijdou. Mohlo by tě zajímat, že po dlouhém týdnu ve vězení hlavního inkvizitora neprozradíš ani jedno tajemství Kai. Je to rekord, který nebyl dosud překonán, ale ne rekord, který by ti zachránil život. Tvůj život i tvé poslání zde končí.
+215
+Zaslechneš zvuk veselé zábavy, který vychází z velké budovy na levé straně ulice asi třicet yardů od tebe. Nad dveřmi visí cedule:
+hostinec U severní hvězdy
+Chceš-li vstoupit, otoč na 4.
+Budeš-li raději pokračovat ulicí Barnacle, otoč na 83.
+216
+Po tři dny a tři noci se silné loďstvo Durenoru pohybuje rychle směrem k Holmgulfu, do plachet válečných lodí se opírá silný vítr. Ale přes rychlost plavby se odhodlání a dychtivost vojáků po boji vytratily, jakoby byla jejich vůle vysáta neviditelným upírem. Lord Axim je zoufalý.
+'Tato špatná nálada, která obchází naše paluby, je ďábelským činem Temných pánů. Vím o jejich síle změnit lidskou mysl, ale kletba, která se na nás snesla, není vidět, abychom ji mohli zničit. Jak bych si přál, aby to skončilo, protože se obávám, že až dorazíme do cíle, budeme příliš slabí na mysli a nepřítele neporazíme." Jakoby odpovědí na jeho prosbu se druhého dne za svítání kletba vytratila. Ale je nahrazena nebezpečím daleko smrtelnějším.
+Obrať na 100.
+217
+Muž se na tebe podívá a cynickým hlasem říká: "Dostavníková stanice. Dostavník odjíždí do Port Baxu dnes odpoledne. Za jeden Zlatý vám řeknu, jak se tam dostanete."
+Jestliže mu chceš zaplatit, nezapomeň si to označit ve své Průvodní listině a otoč na 199.
+Jestliže zaplatit nechceš, otoč na 143.
+218
+Vzhlédneš od mrtvého kapitána a vidíš zsinalé tváře ostatních členů posádky. Obkličují tě. Je jich nejméně dvacet a jsou ozbrojeni šavlemi a sekerami. Můžeš proti nim bojovat, když otočíš na 43. Můžeš se pokusit utéct po laně visícím vedle tebe a přehoupnout se na palubu durenéské válečné lodě. Otoč na 105.
+219
+Jed už začíná účinkovat. Tvá poraněná paže je ztuhlá a na čele ti vyráží studený pot. Rychle vyndáš talisman, který ti dal Benedon v Raumaských zříceninách. Použitím ostré hrany Křišťálové hvězdy si ránu rozřízneš ve tvaru písmene V a jed vysaješ. Všechno dobře dopadlo, jed je venku. Ztrácíš 3 KONDIČNÍ body, ale nikoli život. Rozhodneš se vyšplhat na strom a strávit zde zbytek noci.
+Otoč na 312.
+220
+Prohledáš jeho tělo a najdeš důkazy, které tě přesvědčí o tom, že on je oním vrahem. V jeho kapsách nalezneš poloprázdnou lahvičku gnadumské šťávy, smrtelného jedu, kterým bylo otráveno tvé jídlo. Potom najdeš svitek napsaný v řeči Giaků, obsahující detaily tvého očekávaného příjezdu do Port Baxu. Musel tě objevit už v Ragadornu a tam zosnovat své vražedné plány.
+Všimneš si, že zbraň, kterou u sebe má, je meč z černé oceli, ukovaný v pecích Helgedadu, ďábelského města Temných panů, ležícího za Durncragským masívem. V celém Magnamundu jen tam může být vyrobena černá ocel. Konečným důkazem jeho pravé totožnosti je vytetovaný had na levém zápěstí. To samé znamení měl přístavní zloděj, který se tě snažil zabít dokonce dříve, než jsi opustil Holmgard. V jeho měšci je 23 Zlatých, které si můžeš nechat. Nezapomeň si je označit ve své Průvodní listině.
+Otoč na 33.
+221
+Podlaha v hostinci je potřísněna krví a leží tu mrtvá těla lidí, které jsi zabil. Slyšíš, jak si nějaká chátra venku na hlavní ulici prozpěvuje. Místní obyvatelé věří, že jsi šílený vrah, a tak tě chtějí zlynčovat Jak se zpěv přibližuje, rychle unikáš zadními dveřmi.
+Obrať na 88.
+222 
+Když kapitán zavře dveře, rozváže svůj záhadný ranec a jeho obsah vysype na stůl. Vypadne z něj velký kamenný džbán a několik očouzených hadrů. Zapáchají olejem.
+'To nebyl žádný náhodný oheň," říká vážně. "Byla to sabotáž. Přední lodní prostor slouží jako sklad potravin, nicméně jsem na jeho podlaze našel tenhle džbán od oleje a nasáklé hadry. Někdo na lodi je odhodlán riskovat svůj život, aby nám zabránil dostat se do Durenoru."
+Oba zíráte na opálené hadry, jako by v sobě skrývaly odpověď na vaši otázku. Najednou je ticho přerušeno křikem z paluby: "Loď. Loď na pravoboku!" Kapitán popadne svůj meč a dalekohled, proběhne dveřmi a vyleze po žebříku na palubu.
+Jestliže si ho přeješ následovat, otoč na 175.
+Jestliže chceš raději rychle prohledat kajutu, otoč na 315.
+XIII. Kapitán Kelman rozváže svůj záhadný ranec, ze kterého vypadne velký kamenný džbán.
+223
+Stráž hledí s úctou na nádherný prsten. Legenda o Hammerdalské pečeti je mezi lidmi v Durenoru velmi známá.
+Říká se, že ze všech ztracených pokladů Durenésanů je Hammerdalská pečeť tím, který by si nepřáli vrátit. Znepokojená tvář stráže ukazuje, že si jasně uvědomuje důležitost tohoto prstenu.
+"Nebudu vám bránit ve vaší naléhavé misi, ale nemohu vám pomoci jinak, než že vám ukážu cestu do Port Baxu. Pokračujte po této lesní cestě, pak přijdete na rozcestí poblíž zakrslého dubu. Dejte se doleva - to je nejrychlejší cesta."
+Poděkuješ mu a zamíříš do lesa. Asi po jedné míli přijdeš na rozcestí a dáš se doleva. Cesta vede ke kamennému mostu přes řeku. Vody Rymeriftu jsou ve svém nejširším místě přes jednu míli hluboké a přes dvě míle Široké. Blízko mostu spatříš ukazatel:
+PORT BAX - 3 MÍLE.
+Vydechneš úlevou, za necelou hodinku bys tam měl dorazit.
+Obrať na 265.
+224
+Následující den ráno tě probudí křik racků kroužících vysoko nad lodí. Vítr je silný a opírá se do plachet. Posnídáš s kapitánem Kelmanem, který má dnes lepší náladu. Říká ti, že Zelená Berla nabrala rychlost a že by měla dorazit do Port Baxu, hlavního durenéského přístavu, během týdne. Vtom slyšíš volání z hlídkové-ho koše: "Země na levoboku!"
+Vyjdeš s kapitánem na palubu a do nosu ti vnikne svěží mořský vánek.
+'To je Mannon, nejjižnější ostrov Kirlundinského souostroví," říká kapitán a ukazuje směrem na ostré skalnaté pobřeží v dálce. "Obchodníci ho nazývají Místo ztroskotání. Mnoho lodí na těchto skalách skončilo svou cestu."
+Kapitán Kelman ti podává zdobený dalekohled, aby ses podíval. Ostrá skaliska jsou ověnčena vraky lodí, které najely na mělčinu
+nebo byly vrhnuty na břeh během bouře. Fascinovaně zíráš na rozbité lodi a představuješ si strašná dramata jejich zániku. Pak najednou zahlédneš vysoko nad skalnatými vrcholy černý stín, který vypadá jako malý dešťový mrak. Zdá se, že se pohybuje směrem k vám. Najednou si uvědomíš, co ten "mrak" opravdu je. Je to hejno velkých Zlanbeastů a možná i nějakých Kraanů. Na palubě je slyšet volání na poplach: "Připravte se k boji!"
+Chceš-li zůstat na palubě, připrav si zbraň a otoč na 146.
+Pokud se raději vrátíš do kajuty, otoč na 34.
+225
+Port Bax opustilo sedmdesát durenéských válečných lodí, ale jen padesát z nich nyní vplouvá do Holmgulfu. Boj si vyžádal životy mnoha statečných mužů včetně admirála Calfena, který zemřel na palubě vlajkové lodi Durenor, první lodi, která se potopila. Ale navzdory velkým ztrátám bylo dosaženo vítězství, které naplňuje durenéské vojáky novou silou. Všem se vrátil jejich optimismus a odhodlání a všichni touží osvobodit Holmgard z obležení. Je soumrak třicátého sedmého dne tvé cesty, když na obzoru spatříš věže Holmgardu. Město stále vzdoruje armádě Temných pánů. Ve tmě vidíš malé ohně hořící po celém hlavním městě. Sebejistý lord Axim přichází na palubu.
+"Obloha je bez měsíce a to nám dnes v noci pomůže. Do přístavu vplujeme nepozorovaně. Za svítání mí muži nepřítele rozpráší jako vítr spadlé listí." Když vplouváte v čele durenéského loďstva do přístavu, vytahuješ Sommerswerd a připravuješ se dokončit své poslání.
+Otoč na 350.
+226
+Hostinský mluví hrubým tónem rodilého Ragadorňana. Dozvíš se od něj, že tomuto přístavu vládne Lachlan, syn Killeana - Overlorda, který zemřel před třemi lety na morovou nákazu. Hostinský nemluví o Lachlanovi uctivě, nazývá jej Princem loupežníků. "On a
+jeho žoldnéři vymáhají na lidech vysoké daně a když něco namítnete, skončíte v přístavu s dýkou v zádech." Hostinský zakroutí hlavou a naleje opilým námořníkům další rundu.
+Jestliže si přeješ pronajmout pokoj k přenocování, zaplať hostinskému 2 Zlaté a otoč na 56.
+Pokud chceš zkusit štěstí a vyhrát nějaké zlaťáky v soutěži v páce, otoč na 276.
+227
+Středem ulice pochoduje čtyřčlenná ozbrojená hlídka městské stráže. Než abys riskoval zatčení, rychle zmizíš v uličce nalevo od tebe. Stráž se najednou zastaví naproti vstupu do ní. Kdyby se jeden z nich otočil, určitě by tě uviděl. Vedle tebe je malé okno, které vede do zaplněného hostince. Bez váhání se jím protáhneš.
+Otoč na 4.
+228
+Jsou to stromy Larnumy. Jejich plody jsou velmi výživné a také sladké a šťavnaté. Po jídle se cítíš mnohem silnější. Vezmeš si dostatek ovoce na 2 porce a dáš si je do batohu.
+Když se podíváš za stromy, spatříš širokou pobřežní silnici, která se rozdvojuje. Nejsou tu žádné ukazatele.
+Chceš-li jít doleva, otoč na 27.
+Dáš-li přednost cestě vpravo, otoč na 114.
+229
+Tvůj Šestý smysl tě varuje, že se ve voze skrývá nebezpečí.
+Pokud si přeješ vstoupit dovnitř, otoč na 134.
+Chceš-li kolem kočáru proběhnout a utéct do bezpečí, otoč na 208.
+Chceš-li se raději vrátit na křižovatku a jít tunelem doprava, otoč na 164.
+230
+Jdeš po cestě až k místu, kde prudce zahýbá do ulice Žebráků. Je ti jasné, jak toto jméno získala. Všude kolem postává spousta otrhaných mužů, žen i dětí držících v rukou žebrací misky. Míříš směrem ke křižovatce na konci ulice, cestou se na tebe ze všech stran snáší slova prosící o zlato.
+Chceš-li dát žebrákům trochu zlata, otoč na 93.
+Přeješ-li si je odstrčit a pokračovat v cestě, otoč na 137.
+231
+Zadní dveře vedou na malé náměstí, v jehož středu se nalézá velká hrobka. Rybáři zmizeli v tmavých uličkách; všichni kromě jednoho, který uklouzl na vlhké dlažbě a omráčil se. Leží ve strouze s obličejem ponořeným do bahna.
+Převrátíš ho a prohledáš. Objevíš 5 Zlatých, Dýku a ke své úlevě i Hammerdalskou pečeť, kterou najdeš na jeho prstě. Do své Průvodní listiny si zapiš ty předměty, které si vezmeš sebou.
+Chceš-li se vrátit do hostince, otoč na 177.
+Pokud si chceš prohlédnout hrobku, otoč na 24.
+Jestliže zamíříš na západ do ulice Tomb, otoč na 253.
+Jestliže půjdeš raději na východ ulicí Watchtower, otoč na 319.
+Ovládáš-li Kai disciplínu Stopování, otoč na 182.
+232
+Nejsi ani dvacet yardů od věže, když k tobě přistoupí stráž a ptá se, co tu pohledáváš. Všimneš si, že voják má na sobě červený plást durenéského hraničáře. To znamená, že jsi dorazil na hranici království. Musíš nalézt způsob, jak ho přesvědčit, aby tě nechal pokračovat v cestě.
+Jestliže se mu rozhodneš říct, že jsi obchodník na cestě do Port Baxu, otoč na 250.
+Chceš-li mu nabídnout úplatek, otoč na 68.
+Pokud mu chceš ukázat Hammerdalskou pečeť, (jestliže ji stále máš), otoč na 223.
+Ovládáš-li Kai disciplínu Šestý smysl, otoč na 149.
+233
+"Míříme do Ragadornu, dorazíme tam dnes kolem poledne," říká, jeho tvář je téměř celá schovaná pod širokým okrajem klobouku. "Jízda dole stojí 3 Zlaté, ale můžete cestovat na střeše pouze za jeden."
+Chceš-li cestovat uvnitř dostavníku, zaplať kočímu 3 Zlaté a otoč na 37.
+Pokud dáš přednost cestování na střeše, záplat mu jen 1 Zlatý a otoč na 148.
+Jestliže nemůžeš jízdné zaplatit, musíš dostavník opustit a jít pěšky. Otoč na 292.
+234
+Dřív než se stihneš bránit, Helghast tě srazí a oba padáte na silnici pod vámi.
+Může pro tebe být útěchou, že tvá smrt byla rychlá a bezbolestná. Máš zlomený vaz. Byl jsi ušetřen bolesti, když se ti Helghastovy černé drápy zaryly do krku. Hammerdalská pečeť je teď na cestě do Holmgardu, který padne do rukou Temných pánů. Tvůj život i tvá cesta zde končí.
+235
+Když dojdeš na odpočívadlo, uslyšíš, jak se prudce otevřou dveře a dovnitř vpadá rozzlobená chátra. Nahoře visí nad krbem Krátký meč. Jestli chceš, můžeš si tuto zbraň vzít. Rozhlédneš se kolem a vidíš, že tu je jen jedna cesta, kterou můžeš uniknout - vyskočit oknem dolů na ulici.
+Jestliže si přeješ vyskočit oknem, otoč na 132.
+Jestliže si přeješ zůstat a s chátrou bojovat, otoč na 90.
+236
+Na palubě nastane velký ruch. Námořníci berou vědra a přikrývky a zápasí s ohněm. Z palubního poklopu šlehají plameny a trvá přes hodinu, než se podaří dostat oheň pod kontrolu, škoda je velká. Celý sklad potravin a pitné vody byl zničen a střední část lodě je vážně porušena.
+Z podpalubí plného kouře vyjde kapitán a přistoupí k tobě, jeho tvář je špinavá od sazí. Nese něco v podpaží.
+"Musíme si promluvit o samotě, můj pane," říká tiše. Aniž bys odpověděl, otočíš se a následuješ ho do jeho kajuty.
+Obrať na 222.
+237
+Kolem tvých nohou leží mrtvé zombie. Strach vojáků se změnil v obrovskou nenávist. Na palubě se ozývá bojový pokřik. Vedeš útok proti mrtvé lodi, kosíš zombie jedno za druhým. Najednou ti cestu zablokuje postava v černém plášti, svírající v černé scvrklé ruce meč. Je to Helghast a musíš s ním bojovat až do konce.
+Helghast: UMĚNÍ BOJE 23, KONDICE 30
+Je to nesmrtelné stvoření, takže nezapomeň zdvojnásobit všechny KONDIČNÍ body, které ztratí díky síle Sommerswerdu. Je imunní vůči Útoku duševní silou.
+Jestliže tento boj vyhraješ, Obrať na 309.
+XIV. Atraktivní dáma točí černým kolem rozděleným na deset částí označených 0 - 9.
+238 
+Naproti dostavníkové stanici je úzká ulice vedoucí k herně. Na zdi domu je cedulka:
+VSTUP BEZE ZBRANÍ.
+Jsi nadšen příležitostí vyhrát nějaké zlato a rychle vejdeš. Všechny zbraně musíš nechat u stráže u dveří. Dostaneš je zpět, až budeš odcházet. Obdržíš stříbrný žeton mající hodnotu 1 Zlatého, může být použit pouze v této herně.
+Vstupní hala ústí do velké místnosti, kde se hraje mnoho hazardních her. Ta, která tě zaujme, se jmenuje Kolo štěstí. Na jednom konci dlouhého stolu točí atraktivní dáma černým kolem rozděleným na deset částí označených 0 - 9. Když se kolo točí, vhodí do něj malou černou kuličku, která se po jeho zastavení usadí v jednom z políček. Kolem stolu sedí několik obchodníků zuřivě uzavírajících sázky. Když si chceš Kolo štěstí zahrát, musíš se nejdříve rozhodnout, na které číslo vsadíš a kolik Zlatých chceš dát do hry. Zvol si číslo a pak si vyber číslo z Tabulky náhody. Jestliže vybereš to samé číslo, vyhráváš 8 Zlatých za každý, který jsi vsadil. Jestliže číslo, které vybereš, je o jednu vyšší nebo nižší než vsazené, vyhráváš 5 Zlatých za každý, který jsi vsadil. Můžeš vyhrát maximálně 40 Zlatých.
+Smíš hrát tak dlouho, dokud neprohraješ všechny Zlaté nebo se nerozhodneš sebrat svoji výhru (maximálně 40 Zlatých) a odejít.
+Pokud jsi všechno prohrál, otoč na 169.
+Jestliže si vezmeš výhru nebo si přeješ odstoupit ze hry s penězi, které ti zbyly, opusť hernu otočením na 186.
+239
+Snažíš se položit své ruce na mužův poraněný hrudník, ale Szallové se na tebe vrhnout a chtějí tě odvléci.
+Ovládáš-li Kai disciplínu Maskování, otoč na 77.
+Jestliže tuto disciplínu neovládáš, musíš na Szally zaútočit, abys mohl umírajícímu pomoci. Otoč na 28.
+240
+Po třech klidných dnech na moři ti připadá život na lodi spíše chmurný. Jestliže ovládáš Kai disciplínu Léčitelství, získáš zpět všechny KONDIČNÍ body, které jsi během své cesty ztratil. Pokud tuto dovednost neovládáš, získáš zpět polovinu bodů, které jsi ztratil v boji.
+Čtvrtého dne odpoledne se bavíš na palubě se zraněným námořníkem, když najednou ucítíš kouř vycházející z podpalubí.
+Chceš-li sestoupit do podpalubí, otoč na 29.
+Chceš-li vykřiknout "Hoří!", otoč na 236.
+Pokud chceš varovat kapitána, otoč na 101.
+241
+Když se na tebe muž, kterého jsi obvinil, otočí, zavládne v hostinci naprosté ticho. "Máte neopatrný jazyk, cizince," říká výhružně. "Měl by se vyříznout dřív, než nadělá nějakou další škodu."
+Vytáhne zakřivenou dýku a napadne tě. Dav kolem vytvoří kruh, který nedovolí žádnému z vás z boje uniknout. Musíš tedy s tímto mužem bojovat, dokud ho nezabiješ.
+Trickster: UMĚNÍ BOJE 17, KONDICE 25
+Jestliže vyhraješ, otoč na 21.
+242
+Většinu času v Hammerdalu ti zabere trénink se Sommerswerdem. Den za dnem se tvá obratnost zlepšuje a dozvídáš se více o jeho podivuhodných vlastnostech.
+Když použiješ tento meč v boji, zvýší hodnotu UMĚNÍ BOJE o 8 bodů (pokud ovládáš Kai disciplínu Ovládání zbraně, jakéhokoli meče, přidá ti 10 bodů). Má schopnost pohltit jakékoli kouzlo použité proti tobě a zdvojnásobuje počet všech KONDIČNÍCH bodů ztracených nesmrtelnými bytostmi (např. Helghast) během boje. Také si uvědomíš, že je to v celém Magnamundu jediná zbraň, která je schopna zničit Temné pány. Především z tohoto důvodu se tě snažili zlikvidovat dřív, než by ses dostal do Durenoru.
+Obrať na 152.
+243
+Když Giakové spatří svého mistra mrtvého, couvnou a dají se na ústup směrem na záď. Kapitán Kelman shromáždí svoji posádku a zaútočí. Vede své muže proti vrčícím stvořením, která žene na záď, kde skáčou do moře, aby se vyhnula dešti mečů. Když Kraanové
+vidí, že boj je prohraný, vzlétnou ze stěžňů a vracejí se zpět k dalekému pobřeží.
+"Máte náš dík, Kai Lorde," říká kapitán a potřese ti rukou. "Jsme hrdi a vděčni, že vás tu máme."
+Na palubě se ozývá provolávání slávy. Posádka ti tak vyjadřuje svou pochvalu.
+Pomáháš pečovat o raněné, zatímco ostatní se dávají do opravy poškozených stěžňů. Během dvou hodin je to hotovo, vítr se opře do plachet a loď pokračuje v plavbě do Durenoru.
+Obrať na 240.
+244
+Prodíráš se hustým lesem téměř tři hodiny, než narazíš na cestu směřující na sever a táhnoucí se souběžně s Rymeriftem, jehož
+neklidné vody jsou přes míli hluboké. V dálce spatříš most, který se klene na řekou. Uprostřed mostu je malá budka, u níž stojí dva vojáci. Ukazatel je otočen k mostu:
+PORT BAX.
+Jestliže si přeješ přejít most, otoč na 47.
+Pokud se chceš mostu vyhnout a pokračovat po cestě, otoč na 207.
+Ovládáš-li Kai disciplínu Stopování, obrať na 147.
+245
+Zahneš doleva do ulice Oxyoke a všimneš si cedule nad dveřmi malého obchodu na levé straně:
+MEKI MAJENOR
+zbrojař a obchodník se zbraněmi
+Jestliže si přeješ obchod prozkoumat, otoč na 266.
+Chceš-li pokračovat v cestě na východ, otoč na 310.
+246
+Jeden ze strážců udělá krok vpřed a chce vidět tvou propustku.
+Jestliže máš bílou propustku, otoč na 170.
+Jestliže máš červenou propustku, otoč na 202.
+Jestliže propustku nemáš, nebude ti dovoleno vstoupit do přístavu, otoč na 327.
+247
+Jsi fascinován padajícím stěžněm a cítíš, že nejsi schopen uniknout. Ležíš pod hromadou roztříštěných trámů, jejichž obrovská tíha tě rozmačká. Poslední věc, kterou spatříš, jsou zděšené tváře kapitána Kelmana a jeho posádky. Tvůj život a tvá cesta zde tragicky končí.
+XV. Bavíš se se svými spolucestujícími.
+248
+Když položíš meč na palubu, zombie kapitána se na tebe vrhne a povalí tě. Jeho síla je obrovská. Bodne tě dýkou do krku a poslední věc, kterou slyšíš, je strašlivý vítězoslavný smích. Tvá cesta i tvůj život zde končí.
+249 
+Odpoledne se během cesty bavíš se svými spolucestujícími.
+Naproti tobě sedí bratři jménem Ganon a Dorier. Jsou to rytíři z Bílých Hor, váleční lordi z Durenoru, kteří přísahali oddanost zemi při ochraně před nájezdy banditi! z Wildlandu. Patří jim hrad a země poblíž Port Baxu. Vedle nich sedí obchodník Halvorc Jeho nos je opuchlý a tvář má silně zjizvenou díky Lachlanovi, Overlordu z Ragadornu. Malým nedorozuměním ohledně přístavních daní přišel o svůj náklad a o většinu zlata. U dveří sedí kněz jménem Parsion. Je Sommlending jako ty, cestuje dostavníkem přes Wildland do Port Baxu. Vedle tebe sedí mladá žena jménem Viveka. Je to dobrodružná žoldnéřka, která si své zlato vydělává bojem. Prodává své služby tomu, kdo víc zaplatí. Vybrala si odměnu za svůj úspěšně splněný úkol v Ragadornu a vrací se do Port Baxu. Ty se vydáváš za prostého venkovana, protože si nepřeješ odhalit pravou totožnost. Zdá se, že cestující neví o válce, která vypukla v Sommerlundu.
+Otoč na 39.
+250
+Voják se na tebe nevěřícně dívá: "Kde je vaše zboží? Kde je váš kůň nebo vůz? Obchodníci nikdy do Port Baxu necestují pěšky. Nejste žádný obchodník – spíš bandita. Jděte zpátky tam, odkud jste přišel, hlupáku. Nemáme zájem o zboží, které prodáváte."
+Pokud chceš pokračovat v cestě, musíš přijít s jiným nápadem.
+Jestliže si přeješ odejít, udělat velkou okliku a vejít do lesa dál na jih, otoč na 244.
+Pokusíš-li se vojáka podplatit, otoč na 68.
+Jestliže se rozhodneš ukázat mu Hammerdalskou pečeť (pokud ji stále ještě máš), otoč na 223.
+251
+Je skoro tma, když loď projíždí vstupem do přístavu Ragadornu. Zatím jsi stále nezpozoroval nikoho, kdo bouři přežil, obáváš se nejhoršího. Všimneš si, že tři z rybářů se chovají velmi podezřele. Šeptají si mezi sebou a jejich oči často spočinou na tvém měšci s penězi. Když loď vplouvá do ústí řeky Dorn, tak tě obstoupí a požadují, abys jim dal všechno zlato. Zrovna se chystáš na ně zaútočit, když tě nečekaná rána zezadu srazí na palubu. Vidíš, jak jeden z rybářů zvedá nohu. Kopne tě do hlavy a tobě zmizí všechno ve tmě.
+Otoč na 194.
+252
+Snažíš se vzpomenout si na některé příběhy, které ti vyprávěl jeden z mistrů v klášteře Kai. Byl po mnoho let vyslancem v Port Baxu a znal a miloval toto město stejně jako rodilý Durenésan. Připomínáš si, jak říkal, že konzulát měl výhled na Alinské náměstí v námořním pásmu města. Nalevo od tebe je ukazatel otočený k jedné ulici:
+NÁMOŘNÍ PÁSMO - 1/2 MÍLE.
+Jsi si jistý, že je to správný směr, a tak se vydáš touto ulicí.
+Obrať na 191.
+253
+Ulice se táhne podél přístavní hráze směrem k řece Dorn, kde zahýbá na jih do ulice Booty. Když procházíš kolem skladišť lemujících pobřeží, poznáváš uprostřed náměstí před tebou kamenný ukazatel. Chceš-li pokračovat směrem na jih, otoč na 303.
+Půjdeš-li raději ulicí Barnacle a vrátíš se k hostinci, otoč na 177.
+254
+Tři dny a tři noci jedete po silnici do hlavního města, která se táhne souběžně s řekou Durenon. Údolí řeky je tvořeno širokým pásmem bohaté a obdělávané půdy, táhnoucí se směrem k Hammerdalským horám, jednomu z největších masívů v celém Magnamundu. Je ráno čtrnáctého dne tvé cesty, když se na okraji tábora objeví šest mužů v pláštích. Poručík Rhygar je první, kdo tasí meč. Autoritativním hlasem se domáhá vysvětlení jejich dotěrnosti. Jako odpověď vytáhnou své černé meče. Rhygar křičí na své vojáky, aby se připravili k boji. Muži v pláštích začínají postupovat.
+Jestliže si přeješ tasit zbraň a připravit se na boj, otoč na 69.
+Jestliže nechceš bojovat, můžeš uniknout do lesa otočením na 183. Jestliže ovládáš Kai disciplínu Šestý smysl, otoč na 344.
+255
+Vezmeš svou zbraň a začneš předvádět, jak udržet rovnováhu á zároveň být rychlý tak, jak tě to učili mistři v klášteře Kai. S obrovskou rychlostí točíš a máváš zbraní kolem hlavy. Nakonec udeříš do okraje cínového tácu a pošleš ho přes místnost tak rychle, že se zaryje do dveří od sklepa. Námořník tě užasle sleduje. Obrať na 268.
+256
+Mineš kamenné schody a pokračuješ dál po silnici. Právě jsi prošel pod plošinou, když nad sebou uslyšíš nějaký zvuk. Zastavíš se a podíváš se nahoru, ale v šeru tunelu není nic vidět. Obrať na 134.
+257
+Dlážděná silnice plná odpadků vede mezi polorozpadlými domy, chatrčemi a obchody. Spatříš několik obyvatel Ragadornu. Vypadají smutně, jejich tváře jsou vychrtlé a scvrklé. Protloukají se tmou a krčí se před deštěm, oči upírají na cestu před sebou.
+Pak dorazíš na křižovatku, kde ulice Axe zahýbá na sever a druhá cesta míří směrem na východ.
+Jestliže si přeješ pokračovat na sever a jít ulicí Black Knight, otoč na 335.
+Zamíříš-li raději na východ, jdi ulicí Sage otočením na 181.
+258
+Smrad z lodě tě dusí. Ztrácíš 1 KONDIČNÍ bod. Musíš se z tohoto odporného místa dostat ven.
+Jestliže chceš vylézt přes rozbitou palubu, otoč na 17.
+Opustíš-li tento prostor dveřmi ve stěně, otoč na 5.
+Pokud ovládáš Kai disciplínu Šestý smysl, otoč na 272.
+259
+Skrz hustý déšť rozeznáváš tmavý obrys městské hlídky pochodující směrem k tobě. Neriskuješ zdržení a třeba i zatčení a mizíš v nejbližším obchodě. Obrať na 161.
+260
+Kapitán nařizuje, aby k nim vaše loď zamířila a ty tři muže vytáhla. Jsou to rybáři ze sommerlundského přístavu Tyso. Jejich loď byla minulou noc napadena piráty a oni jsou jediní, kdo přežili. Dáte jim jídlo a teplé šaty a oni jen stěží zadržují slzy vděčnosti. Když se připravuješ na další cestu do Durenoru, nabídne ti jeden z nich
+krásný Meč jako projev poděkování. Přijmeš-li ho, nezapomeň si to zaznamenat do své Průvodní listiny. Obrať na 240.
+261
+Cesta vede mnoho mil podél vysokého, travnatého hřebenu, než zahne na sever k pobřeží. Mineš vesnici, ve které domy vytvářejí kruh kolem velkého rybníka. Když jí projíždíš, rozeběhne se proti tobě hlouček szallských dětí, které křičí a házejí na tebe kamení. Vjíždíš do hlubokého údolí za vesnicí, kde slatiny postupně přecházejí v obdělaná pole. Protější kopce jsou hustě zalesněny. Nejsi daleko od pobřeží, a tak můžeš vidět kamenné útesy vyčnívající z oceánu. Když projíždíš skrz nízké mlází, zaslechneš napravo od sebe zoufalé volání o pomoc.
+Jestliže si přeješ tomu člověku v nesnázích pomoci, otoč na 95.
+Jestliže si přeješ pokračovat v cestě, otoč na 198.
+262
+Strážce tě prudce odstrčí na stranu a vyběhne z věže směrem k náměstí. U schodiště je malá místnost a ty se rozhodneš do ní vejít a prohledat ji dříve, než se vrátí. Uvnitř najdeš:
+MEČ
+PALCÁT
+HŮL
+DOSTATEK POTRAVIN NA 1 PORCI JÍDLA
+6 ZLATÝCH
+NÁPOJ Z ORANŽOVÉ TEKUTINY
+Jestliže si přeješ nějakou věc vzít, označ si ji ve své Průvodní listině.
+Když odcházíš, srazíš se s jiným strážcem a oba se skutálíte po schodech dolů, ale dřív než se vzpamatuje, zmizíš venku ve tmě.
+Obrať na 65.
+263
+Muž zírá na Pečeť se zděšeným výrazem. Aniž by cokoli řekl, vstane ze svého křesla a kývne na tebe, abys ho následoval nahoru po
+točitých schodech, které vedou do kopulovité síně. Zde se setkáváš s kapitánem pobřežní stráže. Pozorně poslouchá, když vyprávíš o válce v Sommerlundu a o svém důležitém poslání. "Okamžitě vystavte červenou propustku," nařizuje. "Přednostně."
+Vezmeš propustku, opustíš přístavní strážní věž a pospícháš k hlídce. Otoč na 246.
+264
+Soustředíš se na hlavu hada a přeješ si, aby se odplazil. Pomalu, ale jistě tvá síla působí a had se konečně rozmotá a zmizí ve vysoké trávě. Vydechneš úlevou a rozhodneš se vyšplhat na strom, kde strávíš zbytek noci.
+Otoč na 312.
+265
+Za svítání desátého dne cesty se ti poprvé naskytne pohled na nádherné město Port Bax. Věže se blýskají v mdlém světle měsíce jako diamanty uložené na zeleném sametu. Na severu se nachází přístav a hrozivé válečné loďstvo durenéského námořnictva. Směrem na východ za mechem pokrytými městskými hradbami se rozprostírá Durenorský les. A zde, na úpatí kopce, se hrdě vypíná hrad, skvost města. Do Port Baxu vstupuješ nehlídanou bránou v zelených městských hradbách, pak se vydáš tmavými ulicemi směrem k přístavu.
+Když odbočíš na tříproudou cestu, všimneš si budovy u širokých kamenných schodů po tvé pravé ruce. Zastavíš se a přečteš si mosaznou tabuli:
+MĚSTSKÝ SPOLKOVÝ DŮM.
+Navzdory této brzké hodině jsou hlavní dveře otevřeny.
+Jestliže chceš do domu vstoupit, otoč na 84.
+Chceš-li pokračovat ve své cestě směrem k přístavu, otoč na 191. Ovládáš-li Kai disciplínu Stopování, otoč na 252.
+266
+Když vstoupíš, zazvoní zvon a malý muž v krátkém koženém kabátci ti přeje dobrý večer. Drátěným kartáčem odstraňuje rez ze zbraní. Ceny zbraní jsou uvedeny na dřevěné ceduli nad pultem:
+MEČ - 4 Zlaté
+DÝKA - 2 Zlaté
+MEČ S ŠIROKOU ČEPELÍ - 7 Zlatých
+VÁLEČNÉ KLADIVO - 6 Zlatých
+KOPÍ - 5 Zlatých
+PALCÁT - 4 Zlaté
+SEKERA - 3 Zlaté
+HŮL - 3 Zlaté
+Máš-li dost peněz, můžeš si koupit jakoukoli zbraň. Kovář od tebe koupí jakoukoli zbraň, kterou máš s sebou, za cenu o 1 Zlatý menší než je uvedeno na ceduli. Označ si v Průvodní listině všechny změny, popřej mu dobrou noc a vrať se na silnici. Na konci ulice Oxyoke po své pravé ruce nalezneš velkou stáj a dostavníkovou stanici. Už je tma a ty si musíš najít místo k přenocování. Vyšplháš se po žebříku a strávíš pohodlnou noc schován na seníku.
+Otoč na 32.
+267
+Když se vynoříš, všude kolem tebe zuří boj a hladina je poseta těly mrtvých a utopených. Uplaveš asi třicet yardů a vyšplháš se na durenéskou válečnou loď.
+Tady se odehrává krutý boj s dlouhou lodí mrtvých zaháknutou lany. Zombie přeskočili palubu a zabíjí překvapené vojáky.
+Chceš-li tasit Sommerswerd a zapojit se do boje, otoč na 128.
+Jestliže si přeješ skočit na palubu mrtvé lodě, otoč na 309.
+XVI. Když se otočíš, spatříš, jak se k tobě blíží tři přístavní rváči:
+268 
+"Jste opravdu Kai Lord," říká námořník, ale úžas na jeho tváři se brzy změní na nepříjemný úšklebek. "Nebo bych měl říci, že jste byl!" Při jeho řeči se za tvými zády rozletí dveře, otočíš se a spatříš, jak se k tobě blíží tři přístavní rváči. Každý z nich je ozbrojen zahnutou šavlí. Nezbývá ti nic jiného než proti nim bojovat jako proti jednomu nepříteli.
+Přístavní rváči: UMĚNÍ BOJE 16, KONDICE 25
+Po dvou kolech boje můžeš uniknou postranními dveřmi otočením na 125.
+Jestliže boj vyhraješ, Obrať na 333.
+269
+Strašný pohled na svíjející se stvoření tě naplňuje hnusem vůči Temným pánům a jejich oblíbencům. Když se Helghast konečně rozpadne na prach a ty máš jistotu, že je po něm, vytáhneš Magické kopí a otřeš jeho špičku o Helghastovo roucho. S úzkostí opouštíš toto místo a běžíš dolů tunelem, jak nejrychleji můžeš.
+Obrať na 349.
+270
+Ganon se zvedne a tasí meč. Za okamžik má po boku bratra. Musíš proti nim bojovat jako proti jednomu nepříteli.
+Ganon, Dorier: UMĚNÍ BOJE 28, KONDICE 30
+Protože tvůj útok byl překvapivý, přidej si 2 body k UMĚNÍ BOJE, ale pouze v prvním kole boje. Díky své výjimečné síle vůle jsou imunní vůči Útoku duševní silou.
+Jestliže v boji zvítězíš, Obrať na 33.
+271
+Vstoupíš do klenuté chodby ve věži a stoupáš po schodech, když náhle potkáš ozbrojeného válečníka. Na hlavě má ocelovou helmu s
+emblémem černé lodi na červeném hřebenu vlny. Udělá krok vpřed, tasí meč a vyštěkne: "Heslo!"
+Ovládáš-li Kai disciplínu Maskování, otoč na 151.
+Chceš-li na něj zaútočit, otoč na 157.
+Jestliže se mu raději vyhneš útěkem z věže, otoč na 65.
+272
+Někdo nebo něco se blíží z druhé strany dveří. Jestliže vylezeš přes rozbitou palubu, nebudeš mít kryté nohy a nepřítel na ně může zespodu zaútočit, ale žádná jiná cesta ven neexistuje... Cítíš, že to je nějaké zlé stvoření mající značnou sílu. Vytáhni Sommerswerd a připrav se na boj.
+Obrať na 5.
+273
+Zrovna se chystáš udeřit, když útočník zakřičí: "Já jsem
+Ronan, můj pane. Nechci vám ublížit!"
+V posledním okamžiku se ti podaří úder odvrátit a zbraň uhodí do zadní části dřevěného křesla. Krůpěje potu, které námořníkovi vyrazily na čele, potvrzují, že zřejmě mluví pravdu.
+Skloň zbraň a jdi na 160.
+274
+Rychle prohledáš těla a nalezneš Meč, 6 Zlatých a Palcát. Vezmi si, co chceš, a zapiš si to do své Průvodní listiny.
+Dříve než můžeš odejít, vpadnou do obchodu další vesničané. Teď už můžeš uniknout jen oknem v prvním patře.
+Obrať na 132.
+275
+Jsi stále slabší a slabší, až tvé tělo nakonec padá do náruče smrti.
+Vrah úspěšně završil své poslání.
+Tvé dobrodružství zde končí.
+276
+Krutě vypadající námořník vyzývá všechny příchozí, aby se zúčastnili soutěže v páce. Je přesvědčen o svém vítězství a každému, kdo ho porazí, nabízí 5 Zlatých. Když přistoupíš k jeho stolu, zašeptá ti do ucha obsluhující dívka: "Buďte opatrný, cizince, je to zlý chlap. Zlomí ruku každému, kdo prohraje, a zabije každého, kdo ho porazí."
+Když se díváš na námořníka na druhé straně stolu, uzavírají se po celém hostinci sázky.
+Jestliže ovládáš Kai disciplínu Útok duševní silou, otoč na 14.
+Jestliže tuto dovednost neovládáš, chovej se při soutěži jako při boji. První, kdo má 0 bodů KONDICE, prohrává.
+Námořník: UMĚNÍ BOJE 18, KONDICE 25
+Jestliže prohraješ, uprav si své KONDIČNÍ body na hodnotu, kterou jsi měl před soutěží, a otoč na 192.
+Jestliže soutěž vyhraješ, otoč na 305.
+277
+Když se Rhygar a jeho muži blíží k jezdcům, vytáhne jeden z nich ze svého pláště černou tyč. Z její špičky vystřelí modrý plamen, který exploduje pod Rhygarovým koněm, ten padá do hustého podrostu. Rhygarovi muži zuřivě zaútočí svými meči. Jejich ostré čepele projíždějí skrz pláště a těla nepřátel a ty vidíš, že nemají žádný účinek. Jsou to Helghasti, strašní kapitáni Temných pánů. Mají
+schopnost vzít na sebe lidskou podobu, ale nejsou zranitelní normálními zbraněmi. Ten muž s tyčí ze sebe vydá strašlivý smích, ze kterého ti tuhne krev v žilách. Útočí na vás silně vyvinutou duševní silou. Vidíš, že nepřítel má nad vámi převahu. Jestliže máš tuto léčku vůbec přežít, musíš jednat velmi rychle.
+Opustíš-li svého koně a skryješ-li se v hustém podrostu, otoč na 311. Pokud chceš pomoci Rhygarovým mužům, otoč na 59.
+278
+Zoufale máváš nad hlavou svým pláštěm, dokud nejsi zcela vyčerpán.
+Vyber si číslo z Tabulky náhody, abys zjistil, zda tvé úsilí mělo smysl.
+Jestliže číslo, které ti padlo, je 0 - 6, otoč na 41.
+Jestliže ti padlo 7 - 9, otoč na 180.
+279
+Poznáš, že to je Noodnic, inteligentní, ale zlomyslný domorodec žijící v horách Durenoru. Noodnicové obývají splet malých šachet a chodbiček protkávajících Hammerdalské hory a žijí z toho, co ukradnou obchodním karavanám, které cestují Tamalinem. Napad-ne tě, že když ho chytíš, můžeš se dozvědět, jestli se Helghast skrývá v tunelu.
+Budeš-li Noodnica sledovat, otoč na 23.
+Jestliže ho raději necháš na pokoji a budeš pokračovat v cestě, otoč na 340.
+280
+Hluboce spíš, aniž bys byl rušen. Za svítání sebereš své věci a následuješ ostatní cestující do dostavníku. Po dva dny a dvě noci jede dostavník po obchodní cestě přes plochý a holý Wildland. Zastavuje jen, aby si mohl kočí zdřímnout Ale ráno třetího dne jízdy dojde k nehodě.
+Vyber si číslo z Tabulky náhody.
+Jestliže ti padlo číslo 0 - 4, otoč na 2.
+Pokud ti padlo číslo 5 - 9, otoč na 108.
+281
+Prosíš kapitána, aby nešťastné ztroskotance vytáhl, ale ten tvou prosbu ignoruje a nařizuje posádce, aby pokračovala ve svých povinnostech. Když loď mizí z dohledu, je to pro tebe výstraha, že podobný osud může potkat i tebe. Otřesen touto myšlenkou ses-tupuješ do podpalubí a odcházíš se do své kajuty. Otoč na 240.
+282
+Oba vojáci se snaží dostat tě pryč z mostu. Když se na jednoho z nich rozpřáhneš, druhý kolem tebe proklouzne a útočí zezadu.
+Nemůžeš uniknout, musíš s nimi bojovat až do jejich smrti.
+Strážce mostu 1: UMĚNÍ BOJE 16, KONDICE 24
+Strážce mostu 2: UMĚNÍ BOJE 16, KONDICE 22
+Jestliže tento boj vyhraješ, otoč na 187.
+283
+Pohlížíš s údivem na rozmanitost zboží. Na stolech jsou vystaveny hedvábí a koření z bohatých vassagonianských bazarů, klenoty z horských dolů, nejlepší zbraně a výzbroj od kovářů z Durenoru, kožešiny od Brumalmarcu z Kaltu, látky z Cloeasie a nejrůznější druhy potravin a nápojů.
+Všimneš si, že ve středu tržiště jsou na velkých kusech pergamenu uvedeny ceny. Jeden z nich tě zaujme:
+MEČ - 4 Zlaté
+DÝKA - 2 Zlaté
+MEČ S ŠIROKOU ČEPELÍ - 6 Zlatých
+KOPÍ - 5 Zlatých
+1 PORCE POTRAVIN- 2 Zlaté
+ZLATÝ PRSTÝNEK - 8 Zlatých
+KOŽEŠINOVÁ PŘIKRÝVKA - 3 Zlaté
+BATOH -1 Zlatý
+Jestliže máš dost peněz, můžeš si koupit jakoukoli nabízenou věc. Když skončíš nákupy, opustíš trh postranním východem.
+Obrať na 245.
+284 
+Vojáci tě opatrně obestoupí a vezmou ti zbraně i batoh. Rytíř k tobě přistoupí zvedaje hledí své helmy. "Kdo jste? Co vás přivedlo do Tarnalinu?" táže se hrubým hlasem.
+Říkáš mu, že jsi rytíř Kai ze Sommerlundu a neseš naléhavé poselství králi Alinovi. Zdá se, že ho tvá slova nepřesvědčila. Až když mu ukážeš Hammerdalskou pečeť, nařídí svým mužům, aby ti vrátili všechny věci a vede tě přes hradbu z vozů. Za ní vidíš kočár čekající uprostřed zaplněného tunelu. "Rychle zpátky do Hammerdalu!" nařizuje rytíř kočímu. Kočár vyrazí tak závratnou rychlostí, že tě to mrští do sedadla dříve než se stihneš usadit. Brzy se dozvíš, že onen rytíř je lord Axim z Rýmu, velitel osobní stráže krále Alina. Byl na cestě do Port Baxu, když Helghast dorazil do Tamalinu. On a deset vojáků byli jedinými, kdo přežili smrtelný souboj s tímto zlým stvořením.
+Během své cesty přes Tarnalin se musíš najíst nebo ztratíš 3 KONDIČNÍ body. Cesta do hlavního města bude trvat pět hodin. Lord Axim ti doporučí, aby sis trochu odpočinul. Sníš o triumfálním návratu do Holmgardu a o porážce Temných pánů. Možná je to dobrá předzvěst následujících událostí.
+Obrať na 9.
+285
+Cítíš, jak se hadí zuby zachytily rukávu tvé blůzy, ale to je vše. Máš štěstí. Když had zmizí ve vysoké trávě, vyšplháš se rychle na strom a strávíš tam bezpečně zbytek noci. Obrať na 312.
+XVII. Rytíř je lord Axim z Rýmu, velitel osobní stráže krále Alina.
+286
+Skočíš do vody a plaveš pod hladinou déle jak minutu, aby ses vyhnul padajícím tělům a hořícím troskám. Když se vynoříš k nádechu, spatříš něco, co prohloubí tvou víru, že poslání splníš.
+Otoč na 109.
+287
+Soustředíš se na malý mosazný zámek. Po několika vteřinách slyšíš slabé cvaknutí, které ti říká, že vnitřní petlice se odemkla. Uvnitř je smotek nesoucí královskou pečeť Sommerlundu a obsahující příběh tvé mise do Durenoru. Když dáváš krabičku zpátky, všimneš si smrtelné pasti skrývající se ve víčku. Tvá schopnost tě zachránila před okamžitou smrtí ukrytou v otrávené jehle. Zavřeš zásuvku a než jdeš za kapitánem, zkontroluješ, zda všechno vypadá jako předtím. Obrať na 175.
+288
+Aniž by cokoli řekl, ukáže rytíř na lesy za tebou. Pak se vrací ke strážní věži. Zmizí uvnitř a zabouchne dveře.
+Les je tu velmi hustý, podrost tvoří spleť plevele a vřesu. Nebude možné jet tudy na koni. Uvědomuješ si, že ho tu budeš muset nechat a pokračovat pěšky.
+Obrať na 244.
+289
+Jsi přivítán starou ženou oblečenou od hlavy k patě do bílého. Usmívá se a nabízí ti lahodný šálek Jaly. Tvá zkušenost z Ragadornu tě nutí podezřívat tuto tmavou tekutinu, a tak slušně odmítneš. Když odsouváš šálek, všimne si žena Pečetě na tvém prstě. "Jaký nádherný prsten! Je na prodej?" ptá se, její oči září úžasem. Odhodlaně jí řekneš, že není, ale ona to nebere na vědomí. Nabízí ti
+jakýkoli ze stovek nápojů, které zaplňují prosklenou skříňku za pultem, pak dokonce 40 Zlatých.
+Jestliže její nabídku přijmeš, otoč na 165.
+Jestliže chceš z obchodu ihned odejít, otoč na 186.
+290
+Jídlo nádherně voní, ale na okraji talíře si všimneš dvou či tří kapek průhledné tekutiny. Nejdříve se domníváš, že je to jen voda, ale když se kapaliny dotkneš, zjistíš, že je lepkavá. Poznáváš šťávu z gnadumového stromu, smrtelný jed používaný vrahy, protože nemá žádnou chuť ani vůni. Šok z toho, co jsi objevil, se brzy změní ve zlost, a ty vyběhneš z místnosti, abys zjistil, kdo je tvým nepřítelem. Obrať na 200.
+291
+Les je tu mimořádně hustý, podrost je tvořen trsy plevele. Prozkoumáš okolí, ale nenalezneš v blízkosti strážní věže žádnou cestu nebo silnici. Jestliže máš dorazit do Port Baxu včas, musíš tu koně nechat a jít pěšky.
+Obrať na 244.
+292
+Jdeš v dešti přes tři hodiny, když se ocitneš tváří v tvář sedmi mužům na koních. Jsou to žoldnéři ve službách Overlorda z Ragadornu a na svých přilbách nosí jeho emblém, černou loď na červeném hřebenu vlny. Chtějí, abys jim dal všechno zlato, jinak tě zabijí. Když zjistí, že žádné nemáš, začnou tě pronásledovat, až na konec padneš pod jejich dlouhými meči. Když ležíš na cestě a umíráš, poslední věc, kterou spatříš, je silueta Ragadornu daleko na obzoru. Tvůj život a tvá cesta zde tragicky končí.
+293
+Tato cesta končí u opuštěné lesní boudy. Ačkoli je zařízena, leží uvnitř na všem vrstva prachu naznačující, že jí nikdo nepoužíval už několik měsíců. Je to slepá cesta a ty jsi zbytečně promarnil svůj drahocenný čas. Musíš se vrátit k rozcestí a bez jakéhokoli dalšího zpoždění se vydat cestou vlevo.
+Obrať na 155.
+294
+Když balíš zraněného muže do velké pokrývky, upadne do spánku, ze kterého se už nikdy neprobudí. Mezitím byla na palubě poskládána vedle sebe těla mrtvých členů posádky.
+Kapitán Kelman k tobě přistoupí a podá ti špinavý meč. 'Tohle není pirátský meč, Lone Wolfe. Tato zbraň byla ukována v pecích Helgedadu. Je to meč Temných pánů." Mrštíš tou ďábelskou zbraní do moře a vrátíš se na Zelenou Berlu. Během příprav na vyplutí severním směrem se díváš se zármutkem na potápějící se durenéskou obchodní loď.
+Otoč na 240.
+295
+To stvoření, které je mnohem větší než ostatní a je oblečeno do nádherného roucha z kousků hedvábí, vykřikne ve svém zvláštním jazyce nějaký příkaz. Všichni se ozbrojí meči a kopími, která vypadají, jako kdyby byla vyrobena z násad košťat a paprsků z rozbitého kola dostavníku. Vrhají se na tebe za zvláštního bojového pokřiku, který zní jako "Gashgiss -Nashgiss". Brzy si uvědomíš, že se jim musíš uhnout nebo tě ušlapou.
+Otočíš se a uháníš úzkou chodbou, dokud jejich rozzlobený pokřik neustane. Dorazíš k místu, kde se chodba spojuje s hlavním tunelem. Obrať na 340.
+296
+Když městská stráž zaútočí, začnou lidi utíkat ven. Je jich šest a musíš s nimi bojovat postupně.
+Seržant městské stráže: UMĚNÍ BOJE 13, KONDICE 22
+Kaprál městské stráže: UMĚNI BOJE 12, KONDICE 20
+Městská stráž 1: UMĚNÍ BOJE 11, KONDICE 19
+Městská stráž 2: UMĚNÍ BOJE 11, KONDICE 19
+Městská stráž 3: UMĚNÍ BOJE 10, KONDICE 18
+Městská stráž 4: UMĚNÍ BOJE 10, KONDICE 17
+Můžeš se boji kdykoli vyhnout vyběhnutím zadními dveřmi a otočením na 88.
+Když v boji zabiješ celou městskou stráž, otoč na 221.
+297
+V polovině této ulice je po levé straně velká stáj a dostavníková stanice. Protože je už úplná tma, rozhodneš se vejít a strávit noc bezpečně schován na seníku. Otoč na 32.
+298
+Slyšíš, jak se kroky přibližují, otočíš se zrovna včas, abys spatřil, jak tasí zbraně, aby na tebe zaútočili. Jestliže nemáš zbraň, odečti si 4 body z UMĚNÍ BOJE a bojuj proti nim holýma rukama. Útočí na tebe jeden po druhém.
+Vůdce pouličních zlodějů: UMĚNÍ BOJE 15, KONDICE 23 Pouliční zloděj 1: UMĚNÍ BOJE 13, KONDICE 21
+Pouliční zloděj 2: UMĚNÍ BOJE 13, KONDICE 20
+Můžeš se boji kdykoli vyhnout otočením na 121.
+Jestliže zabiješ všechny tři přístavní zloděje, otoč na 301.
+299
+Běžíte bez odpočinku šest hodin. Helghasti jsou na silnici a tak musíte jít přes strmé a zalesněné kopce, abyste se jim vyhnuli. Často si myslíš, že už nemůžeš dál, bolest a únava se stávají
+nesnesitelnými. Ale pokaždé, když klopýtneš, Rhygar tě popožene. Žasneš nad jeho vytrvalostí, už není mladík a je oděn do těžkého brnění sommlendinského rytíře. Za setmění jste dorazili ke vchodu do Tarnalinu, západního tunelu vedoucího skrz Hammerdalské hory. Ve věku Černé luny byly vykopány tři takové tunely. Každý z nich je přes čtyřicet mil dlouhý a vede skrz hory Hammerdalského pásma do hlavního města.
+Rhygar stojí vedle tebe a vyndává ze své torny trochu chleba. "Jezte, Lone Wolfe. Musíte nabrat sílu na cestu do Hammerdalu, protože Tamalinem půjdete již sám. Já tu zůstanu a zdržím nepřítele tak dlouho, dokud budu mít sílu bojovat. Neodporujte - jediná věc, na které záleží, je úspěšné dokončení vaší mise." Pokud má Rhygar bojovat s nepřítelem, bude potřebovat magickou zbraň, protože jeho vlastní meč nemůže těmto nestvůrám ublížit.
+Vlastníš-li Magické kopí a chceš-li ho Rhygarovi dát, aby mohl bránit vchod do tunelu, otoč na 118.
+Jestliže Magické kopí nemáš nebo ho Rhygarovi dát nechceš, otoč na 102.
+300
+Když pádluješ směrem k obchodní lodi, všimneš si, že vytahují žebřík na palubu. Vážně vypadající námořník se naklání dolů a spílá ti. Myslí si, že jsi uprchlík a chceš se dostat na palubu. Ale když zavoláš, že jsi Lone Wolf a že jsi byl přepaden v hostinci, žebřík znovu spustí. Při přelézání zábradlí k tobě přistoupí vysoký muž ve zlatem protkávané uniformě. Jeho obličej je téměř celý ukrytý pod Červenými vlasy a plnovousem.
+"Vytáhněte kotvy!" zakřičí. Posádka reaguje jakoby jí šlo o život.
+Kapitán tě uvede dolil do své kajuty a naleje dvě sklenice Wanla, silné lihoviny. Když mu vyprávíš, co se stalo, je vidět na jeho tváři zájem.
+"Je tu zlá zrada a nepřítel už má hotové plány k zmaření vaší cesty," říká potom, když jsi skončil líčení událostí. "Zdá se, že jste ztratil moment překvapení - a já jsem ztratil svého odvážného prvního důstojníka. Doufejme, že plavba do Durenoru bude rychlá a bezpečná."
+Opouštíš ho a vracíš se na palubu. Na obzoru vidíš obrysy Holmgardu. Když z dohledu zmizí poslední věž hlavního města, sestupuješ se smíšenými pocity hrdosti a obav po schodech do své kajuty. Vyber si
+číslo z Tabulky náhody.
+Jestliže ti padlo číslo 0 - 1, otoč na 224.
+Pokud ti padlo 2 - 3, otoč na 316.
+V případě, že zvolené číslo je 4 - 5, otoč na 81.
+Jestliže jsi vybral číslo 6 - 7, otoč na 22.
+Pokud jsi zvolil číslo 8 - 9, otoč na 99.
+301
+Prohledáš jejich těla a najdeš 3 Zlaté, 3 Dýky a Krátký meč. Chceš-li si z těchto věcí něco vzít, zapiš to do své Průvodní listiny.
+Obrať na 20.
+302
+Překročíš tělo a vyjdeš po schodech nahoru, kde rychle prohledáváš rytířovo obydlí.
+Najdeš:
+PALCÁT
+MEČ S ŠIROKOU ČEPELÍ
+HŮL
+LÉČIVÝ ELIXÍR (obnoví ti 3 KONDIČNÍ body)
+DOSTATEK POTRAVIN NA 3 PORCE JÍDLA
+BATOH
+12 ZLATÝCH
+Vezmi si cokoli, co potřebuješ, a rychle opusť strážní věž, aby tě nikdo nespatřil.
+Uvědomuješ si, že les je v tomto místě tak hustý, že tu budeš muset nechat koně a pokračovat pěšky.
+Obrať na 244.
+303
+Kolonáda je plná shnilých odpadků, které tak odporně páchnou, že jsi nucen přikrýt si ústa i nos pláštěm. Před sebou nalevo si všimneš světla pochodní linoucího se z otevřených dveří. Nad nimi je cedule:
+Ragadornský trh - nákup a prodej zboží
+Jestliže chceš vstoupit, Obrať na 173.
+Budeš-li raději pokračovat v cestě na jih, otoč na 18.
+304
+Mohlo by ti být útěchou, že tvá smrt byla milosrdně rychlá. Helghastovi prsty ti drásají krk a během několika vteřin se do něj hluboce zaryjí. Hammerdalská pečeť je teď na cestě do Helgedadu - města Temných pánů. Tvůj život i cesta zde tragicky končí.
+305
+Když sebereš ze stolu 5 Zlatých a odcházíš, nastane šokované ticho. Než dojdeš ke dveřím hostince, zablokuje ti cestu odporný rváč a vytáhne meč. Zrovna když přemýšlíš, co dělat, ozve se silná rána a muž klesá k zemi. Za ním, k tvému překvapení, stojí obsluhující dívka a v ruce drží velkou dřevěnou palici. Poděkuješ jí a proběhneš dveřmi do tmavé ulice. Po deseti minutách objevíš stáj a dostavníkovou stanici. V uších ti stále zní křik rozzlobených námořníků, rychle vejdeš do budovy a strávíš noc bezpečně schován v seníku.
+Otoč na 32.
+306
+Voják tě chce bodnout kopím do prsou, ale ty rychle uhneš stranou, a tak tě kopí jen jemně škrábne do ruky. Strážce je odhodlán s tebou bojovat, ale ty ho nechceš zabít. Rozhodneš se, že ho jen omráčíš. Postupuj v tomto boji jako obvykle, ale zdvojnásob všechny KONDIČNÍ body ztracené tvým nepřítelem. Když jeho skóre dosáhne nuly, znamená to, že jsi ho omráčil. Všechny KONDIČNÍ body, které jsi ztratil, se počítají jako zranění a jsou odečteny ze stavu tvé KONDICE.
+Hraniční stráž: UMĚNÍ BOJE 16, KONDICE 24
+Podaří-li se ti strážce omráčit, Obrať na 35.
+307
+Stráže vypadají rozzlobeně a zdá se, že jsou připraveny zaútočit. Budeš muset něco rychle vymyslet.
+Jestliže se rozhodneš vojáka podplatit, otoč na 57.
+Chceš-li mu ukázat Hammerdalskou pečeť (pokud ji ještě máš), otoč na 140.
+Jestliže si myslíš, že je bezpečnější vytáhnout zbraň a zaútočit, otoč na 282.
+308
+Vedle tebe si sedne námořník jménem Sprogg a vysvětluje ti pravidla hry. Nejdřív ti ukazuje dvě kostky z červeného skla ve tvaru kosočtverce. Každá kostka má deset stran, které jsou označeny 0-9. Každý hráč hází oběma kostkami a sčítá čísla dohromady (0 = nula). Jestliže kdokoli hodí 0, vykřiknou "portholes" a automaticky vyhrávají. Každý hráč vsadí na každý hod 3 zlaťáky. Ve hře jsou další dva námořníci a všichni dají své sázky do klobouku dříve, než jsou kostky vrženy. Vyber si dvě čísla z Tabulky náhody za každého z ostatních dvou hráčů a poznamenej si je. Potom si vyber dvě čísla z Tabulky náhody pro sebe. Jestliže součet tvých čísel je vyšší než součet ostatních hráčů, vyhráváš 6 Zlatých.
+Jestliže některý z ostatních hráčů převýší tvé skóre, ztrácíš 3 Zlaté. Můžeš kdykoli přestat hrát Pokud prohraješ všechny peníze, hra končí. Když se konečně rozhodneš přestat nebo jsi vše prohrál, vrátíš se do své kajuty otočením na 197.
+309
+Když postupuješ vpřed, příšery se otáčí a prchají před zlatým světlem meče. Na této mrtvé lodi cítíš něco zvláštního, je ti to povědomé, ale nejsi si jistý, co to je. Najednou za tebou vykřikne příšerný hlas tvé jméno. Zvedneš meč a otočíš se, abys zjistil, kdo to je. Pohled, který se ti naskytne, tě naplní smrtelnou hrůzou.
+Obrať na 26.
+310
+Brzy dorazíš na konec ulice Oxyoke, kde se kříží s cestou táhnoucí se od severu k jihu. Je teď taková tma, že nejsi schopen přečíst názvy ulic. Musíš najít přístřeší k přenocování. Napravo spatříš světlo nad cedulkou: Ragadornské stáje a dostavníková stanice. Pod rouškou tmy vejdeš postranním vchodem a bezpečně strávíš noc schován na seníku.
+Otoč na 32.
+311
+Přijdeš na palouk plný hustého kapradí. Mezi stromy kolem tebe se ozývá řinčení oceli a strašné skřeky Helghashů. Jsi ochromen a nemůžeš se pohnout. Najednou tě za paži popadne čísi ruka a strhne tě doprava. Je to Rhygar. Tvář má zakrvácenou a brnění poškozené a popálené.
+"Musíme před těmi démony uprchnout, Lone Wolfe. Síla a ocel nám tu jsou k ničemu." Na lesní cestě nad vámi zahlédnete siluety šesti Helghashů. Jejich smysly se soustředí na zabíjení Rhygarových mužů, nespatří tedy, jak oba dva kolem nich proklouznete pod ochranou zalesněné stráně.
+Otoč na 299.
+312
+Ačkoli se probudíš do chladného a deštivého rána, byl jsi během noci díky větvím stromu a svému plášti pěkně v teple a suchu. Když se podíváš na pobřežní silnici, zahlédneš v dálce vůz.
+Jestliže si přeješ slézt dolů a zastavit ho, otoč na 117.
+Jestliže se chceš pokusit na něj seskočit, až bude projíždět pod tebou, otoč na 89.
+XVIII. Hostinský, hubený starý muž s jedním okem, nese podnos s jídlem.
+313
+Helghastovi strašlivé smrtelné skřeky konečně ustanou a ty se na několik okamžiků zastavíš, abys popadl dech. Trhneš sebou, když zjistíš, že prsty netvora ti popálily krk. Rány pálí a jsou bolestivé. Ztrácíš 4 KONDIČNÍ body. Utrhneš si kus látky z okraje blůzy a ovážeš si je. Pak pokračuješ v cestě Tarnalinským tunelem.
+Otoč na 349.
+314
+Hostinský je hubený starý muž s jedním okem. Podává ti klíč a ukazuje na balkón naproti: "Číslo dvě, červené dveře."
+Ostatní cestující zaplatí každý po jednom Zlatém, seberou klíč a jdou přes zaplněný hostinec ke schodům.
+"Musíme vymyslet plány na zítřek," říká Dorier. Ostatní souhlasně přikyvují. "Navrhuji, abychom se za hodinu setkali tady dole a rozhodli, co uděláme." Když zavřeš dveře svého pokoje, z nějakého neznámého důvodu si připomínáš slova kapitána Kelmana, která ti řekl, když jsi opouštěl Holmgardský přístav: "Stala se zlá zrada a nepřítel má už hotové plány na zmaření vaší cesty."
+Uběhla téměř hodina, když tvé myšlenky přeruší klepání na dveře. Je to hostinský a nese podnos s jídlem. "S pozdravem od jednoho z vašich kamarádů," říká a odejde dřív, než se stihneš zeptat od kterého. Jídlo nádherně voní. Ještě jsi dnes nejedl. Musíš se najíst nebo ztratíš 3 KONDIČNÍ body.
+Chceš-li sníst jídlo, které přinesl hostinský, Obrať na 36.
+Jestliže toto jídlo sníst nechceš, Obrať na 178.
+Ovládáš-li Kai disciplínu Lov, otoč na 290.
+315
+Jedním okem se stále díváš na dveře, zda někdo nepřichází, a rychle prohledáváš zásuvky ve zdobeném stolku. Jeho obsah se nezdá být neobvyklý. Většinou nacházíš mapy a navigační přístroje. Zrovna se
+chystáš nechat tohoto neplodného hledání, když si všimneš malé páky ukryté pod deskou stolu. Zatáhneš za ní, celní deska se vysune a odhalí malou dřevěnou krabičku s mosazným zámkem.
+Chceš-li zámek otevřít, otoč na 190.
+Jestliže si přeješ dát krabičku zpátky na místo a jít za kapitánem na palubu dříve, než vytuší, že se něco děje, otoč na 175.
+Ovládáš-li Kai disciplínu Ovládáni hmoty myšlenkou, otoč na 287.
+316
+Následující ráno tě probudí křik z hlídkového koše: "Loď! Loď na pravoboku!"
+Vylezeš na palubu a posílíš se nadechnutím čerstvého mořského vzduchu. Na obzoru vidíš zalesněné pobřeží východního Sommerlundu. Zhruba v poloviční vzdálenosti mezi vámi a pobřežím spatříš obchodní loď, která se zdá být silně poničená. Je nízko nad vodou a má jen jeden nepoškozený stěžeň. Vlaje na něm vlajka Durenoru, ale je vzhůru nohama, to znamená nouzový signál.
+Vyber si číslo z Tabulky náhody.
+Jestliže ti padne číslo 0 - 4, otoč na 107.
+Padne-li ti číslo 5 - 9, otoč na 94.
+317
+Výkřik umírajícího Szalla je brzy doprovázen tvým vlastním smrtelným křikem, když se ti do zad zaryje šíp ze samostřílu. Tvé poslání i tvůj život zde končí.
+318
+Stojíš ve velké a prázdné hale. Naproti tobě jsou dvoje dveře, nad každými z nich visí mosazná cedulka.
+Chceš-li vstoupit do dveří označených "Bílé propustky", otoč na 75.
+Chceš-li vstoupit do dveří označených "Červené propustky," otoč na 62.
+Chceš-li odejít a jít ke stráži na konci ulice, otoč na 246.
+319
+Silnice náhle končí u velké kamenné strážní věže.
+Chceš-li do věže vstoupit, otoč na 271.
+Jestliže se chceš vrátit do hostince, otoč na 177.
+320
+Prohledáváš jeho tlumok a jsi zděšen, když zjistíš, že obsahuje svitek z lidské kůže, na kterém je napsán vzkaz ve zvláštním runickém písmu. Jediné slovo, které jsi schopen přečíst, je "Kai". Také nalezneš hrozivě vypadající dýku s černou čepelí a kus studeného obsidiánu.
+Věci mají na sobě znaky Temných pánů. Něco se tu děje. Zahodíš tlumok tak rychle, jako by to byl žhavý uhlík, a vracíš se, abys vyskočil na svého koně. Ke své hrůze zjistíš, že kůň zmizel - museli ho ukrást Szallové. Uvědomíš si, že budeš muset v cestě pokračovat pěšky.
+Obrať na 138.
+321
+Jídlo je chudé. Skládá se ze včerejších zbytků a to, co ti kapitán po skromné večeři řekne, potvrdí tvé podezření: "Musím se k něčemu přiznat, Kai Lorde. Oheň zničil všechny naše zásoby potravin, měli jsme v kuchyni sotva dost na tuhle večeři. Obávám se, že než dorazíme do Port Baxu, budeme muset jíst syrové ryby."
+Pokud nemáš ve svém batohu jídlo, jsi po večeři stále hladový a ztrácíš 2 KONDIČNÍ body.
+Kapitán tě vyzývá, aby sis zahrál hru jménem Samor, stolní hru tak trochu podobnou šachům, vyžadující obratnou strategii a důvtip. Aby byla hra zajímavější, navrhuje sázku.
+Přijmeš-li jeho nabídku, obrať na 12.
+Jestliže hrát nechceš, popřej kapitánovi dobrou noc a vrať se do své kajuty otočením na 197.
+322
+Jezdce v pláštích obklopuje silný opar zla. Tvůj Šestý smysl tě varuje, abys nenásledoval Rhygara a jeho muže při útoku. Zakřičíš na ně, aby přestali útočit, ale je příliš pozdě. Tvá slova nejsou přes bojový pokřik a dunění kopyt slyšet.
+Obrať na 277.
+323
+Jdeš špinavou cestou, která se začíná ostře stáčet na východ do ulice Lookout. V dálce vidíš řeku Dorn, která rozděluje východní a západní část Ragadornu.. Prší a z uličky vyjdou tři podezřelí muži, kteří tě začínají sledovat.
+Chceš-li se zastavit a promluvit na ně, otoč na 131.
+Jestliže chceš raději pokračovat v chůzi, otoč na 298.
+Chceš-li běžet směrem k řece, otoč na 121.
+324
+Co uděláš?
+Řekneš-li, že jsi zabloudil a poprosíš o nocleh, otoč na 135.
+Budeš-li předstírat, že jsi venkovan a hledáš práci, otoč na 174.
+Rozhodneš-li se zeptat na směr do Port Baxu, otoč na 288.
+325
+Cítíš, že levý tunel je tou nejrychlejší cestou do Hammerdalu. Je dlouhá asi dvě míle. Chvilku předtím, než dorazíš ke křižovatce, projdeš kolem velké louže uprostřed cesty. Všimneš si, že z ní vedou do obou tunelů stopy zhruba stejně veliké jako lidské. Jsou stále ještě mokré, a tak usoudíš, že je zde neznámí chodci zanechali asi před dvaceti minutami.
+Jestliže si přeješ vstoupit do levého tunelu, otoč na 64.
+Chceš-li pokračovat v cestě pravým tunelem, otoč na 164.
+XIX. Blíží se k tobě silueta černě oděného Drakkara.
+326 
+Kapitán nařídí posádce, aby rozvinula všechny plachty a loď předstihla, ale pirátská loď je rychlá a snaží se překřížit Zelené Berle cestu. Zdá se, že hrozí srážka. "Připravte se na náraz!" křičí kapitán, když se bok válečné lodi s červenými plachtami zaryje přímo do přídě vaší lodi. Ozve se ohromná rána praskajících trámů, když Zelená Berla prorazí do boku pirátské lodi obrovskou díru, a náraz tebou mrští na palubu. Když se piráti vyšplhají na palubu, jsi zděšen, protože spatříš v jejich středu siluetu černě oděného Drakkara. Uviděl tě a míří k tobě, nad hlavou drží velký široký meč. Musíš s ním bojovat, dokud nezemře.
+Drakkan UMĚNÍ BOJE 15, KONDICE 25
+Pokud v boji zvítězíš, Obrať na 184.
+327
+Jdeš pomalu zpátky a snažíš se vymyslet, co dělat dál. Najednou k tobě přichází malý kluk. "Mohu vás dostat do přístavu, pane," říká, "ale bude vás to něco stát." Vytáhne obálku se svazkem úředně vypadajících listin. "Za ně dostanete červenou propustku. Jsou vaše za pouhých 6 Zlatých."
+Jestliže si přeješ dokumenty koupit, zaplať klukovi 6 Zlatých.
+Pokud odmítneš, ztratí o tebe zájem a zmizí. Když ses rozhodl, vrať se ke strážní věži.
+Chceš-li vstoupit, otoč na 318.
+Dáš-li přednost návratu k Městskému spolkovému domu, kde se zeptáš, jak se dostaneš na Sommerlundský konzulát, otoč na 84.
+328
+Zombie se ti snaží zablokovat cestu, ale ty ho jedním švihem Sommerswerdu rozetneš napůl. Jsi u věže a vidíš nad sebou hrbatého muže v rudém rouchu. Má na sobě dlouhý tokmor, kouzelnický šat, na kterém je emblém hada. V pravé ruce drží černou hůl.
+Vlastníš-li Křišťálovou hvězdu, otoč na 113.
+Ovládáš-li Kai disciplínu Stopování, otoč na 204.
+Chceš-li vylézt na věž a na hrbáče zaútočit, otoč na 73.
+Chceš-li uniknout skokem přes palubu, otoč na 267.
+329
+"Blahopřeji, Lone Wolfe," říká kapitán, když si utírá pot z čela, "jste skvělý hráč."
+Sáhne do kapsy kazajky a podává ti malý měšec obsahující 10 Zlatých. Poděkuješ mu za hru a nabídneš mu šanci vyhrát peníze zpět příští večer. Usměje se, přijme rvou nabídku a popřeje ti dobrou noc.
+Vrať se do své kabiny otočením na 197.
+330
+Během několika vteřin upadneš do bezvědomí. Než se probereš, uplyne téměř hodina. Cítíš se velmi nemocen, ale přežil jsi. Odečti si 5 KONDIČNÍCH bodů. Když pomalu nabíráš síly, šok z události se změní v hněv. Popadneš své věci a jdeš pátrat po vrahovi.
+Obrať na 200.
+331
+Rychle prohledáš mrtvého strážce a objevíš Meč, Dýku a 3 Zlaté. Můžeš si vzít, co potřebuješ, nezapomeň si to zapsat do své Průvodní listiny. Najednou zaslechneš zvuk okovaných bot kráčejících po kamenných schodech. Vzhlédneš a na odpočívadle nad sebou spatříš dalšího strážce. Když vyběhneš na ulici, slyšíš, jak za tebou kleje. Otoč na 65.
+332
+Bojuješ s Helghastem.
+Helghast: UMĚNÍ BOJE 21, KONDICE 30
+Útočí na tebe duševní silou. Jestliže neovládáš Kai disciplínu Nehmotni clona, ztratíš za každé kolo boje 2 KONDIČNÍ body.
+Jestliže vyhraješ, otoč na 92.
+Kdykoli během boje můžeš utéci do lesa otočením na 183.
+333
+Námořník, který tvrdil, že je první námořní důstojník Ronan, pravděpodobně během boje unikl. Rychle prohledáváš těla rváčů, ale nic významného nenajdeš. Všimneš si ale vytetovaného hada, kterého mají všichni na levém zápěstí. Ať už je poslal kdokoli, musí mu být jasná důležitost tvé cesty.
+Opouštíš hostinec postranními dveřmi. Pod schody objevíš tělo mrtvého námořníka. Na vnitřní straně límce jeho krví potřísněného kabátu je poutko se jménem Ronan. Tohle musí být pravý Ronan. Byl zavražděn. Přikryješ tělo a vrátíš se do přístavu, kde je zhruba třista yardů od přístavní hráze zakotvena Zelená Berla.
+Chceš-li použít jednu z mnoha malých loděk nebo člunů, které jsou přivázány k molu, otoč na 300.
+Pokud si přeješ vypátrat podvodníka, který se vydával za Ronana, otoč na 67.
+334
+Po několika mílích začíná být cesta spletitá a zarostlá a nakonec úplně mizí. Jízda na koni začíná být pomalá a obtížná, protože se musíš vyhýbat močálům a propadlinám ve slatinách.
+Po několika hodinách se dostaneš na okraj Durenorského lesa. Nad kapradím vidíš velkou strážní věž, z jejího skrytého komína líně stoupá kouř.
+Chceš-li strážní věž prozkoumat, otoč na 115.
+Chceš-li najít lesní cestu a pokračovat dál, otoč na 291.
+Ovládáš-li Kai disciplínu Stopování, otoč na 98.
+335
+Všimneš si cedule visící nad vchodem malého obchodu:
+KLASPAR - astronom a mudrc
+Chceš-li do obchodu vstoupit a zeptat se, jak se dostaneš do Durenoru, otoč na 161.
+Budeš-li raději pokračovat v cestě, otoč na 61.
+336
+Během zlomku vteřiny změní šlehání plamene směr a zamíří k čepeli Sommerswerdu. Blesk energie zmizí ve zlaté čepeli jako voda ve stoce. (Vzpomínáš si, že Sommerswerd má schopnost pohltit kouzlo. To tě zachránilo před jistou smrtí.)
+Čaroděj tě proklíná a vyndává ze svého roucha klenot, který ti hodí k nohám. Vyšlehnou plameny a k tvému obličeji stoupá oblak dusivého zeleného dýmu. Cítíš jeho kyselý zápach. Jsi nucen skočit dolů na palubu, aby ses vyhnul jedovatému plynu. Všimneš si Čaroděje, jak zuřivě pádluje na malé loďce pryč od mrtvé vlajkové lodi.
+Chceš-li skočit do moře a plavat za ním, otoč na 109.
+Pokud se chceš probojovat zpátky k durenéské válečné lodi, otoč na 185.
+337
+Asi padesát yardů od pobřeží skočíš do vln a plaveš ke břehu. Když se konečně dostaneš z vody, zaryješ prsty hluboko do mokrého písku a pomalu se suneš k útočišti v písečných dunách. Jsi vyčerpaný a velmi hladový. Jediné věci, které jsi zachránil, jsou Zlaté, Batoh a Zvláštní předměty. Všechny zbraně se potopily. Proveď proto nutné úpravy v Průvodní listině. Několik set yardů před tebou jsou malé stromy obalené purpurovými plody.
+Chceš-li ovoce sníst, otoč na 228.
+Jestliže ho sníst nechceš, ztrácíš 3 KONDIČNÍ body, otoč na 171.
+Jestliže ovládáš Kai disciplínu Lov, otoč na 139.
+338
+Popadneš Kopí a namíříš ho proti blížícímu se Helghastovi. Ten ze sebe vydá zoufalý výkřik, protože ví, že se nemůže vyhnout nabodnutí na ostrou špičku. Náraz tě povalí, ztrácíš 2 KONDIČNÍ body. Helghast dopadne na zem o chvíli později s probodnutým srdcem a umírá.
+Jestliže chceš Kopí vytáhnout, otoč na 269.
+Necháš-li raději Kopí v těle a utečeš, otoč na 349.
+339
+Ani ne za půl hodiny zastaví dostavník ozbrojení jezdci na koních. Mají na sobě emblém černé lodě na červeném hřebenu vlny patřící Lachlanovi, Overlordu z Ragadornu. Požadují zlato za něco, čemu říkají "výstupní poplatek": jeden Zlatý za každého pasažéra. Spolucestující pokládají peníze na malou misku a podávají ti ji.
+Můžeš-li zaplatit, udělej to a kočár bude moci pokračovat v cestě. Otoč na 249.
+Jestliže nemáš žádné peníze, otoč na 50.
+340
+Jdeš opuštěným tunelem další pul hodinu, když se silnice rozdvojuje.
+Chceš-li pokračovat levým tunelem, otoč na 64.
+Chceš-li jít pravým tunelem, otoč na 164.
+341
+Roztříštěné trámy a roztrhané plachty, to je vše, co zbylo z nešťastné obchodní lodi. Požádáš kapitána, aby pátral po přeživších, ale on tvou žádost ignoruje a nařizuje posádce, aby pokračovala v plnění svých povinností. Když trosky postupně mizí z dohledu, máš v ústech sucho z pocitu, že podobný osud by mohl potkat i tebe. Sestoupíš do podpalubí a pořádně za sebou zamkneš dveře kajuty. Obrať na 240.
+342
+Je to chlap jako hora, úplně plešatý a s dlouhými zlatými náušnicemi v uších. Podezíravě si tě prohlíží a říká: "Pivo stojí jeden Zlatý, postel na noc dva. Co chcete?"
+Chceš-li si koupit pivo, záplat hostinskému 1 Zlatý a otoč na 72.
+Chceš-li tu zůstat na noc, zaplať 2 Zlaté a otoč na 56.
+Zeptáš-li se ho jen na něco o Ragadornu, otoč na 226.
+343
+Vycítíš, že jsi měl být obětí této fingované nehody. Jeden z cestujících se tě snaží zabít! Obrať na 168.
+344
+Tvůj Šestý smysl ti říká, že cizinci jsou Helghasti, strašní kapitáni Temných pánů. Byli vysláni z jejich města Helgedadu na vražednou misi. Mají schopnost vzít na sebe lidskou podobu a jsou imunní vůči normálním zbraním a Útoku duševní silou. Otočíš se, abys varoval Rhygara, a utíkáš do bezpečí lesa. Otoč na 183.
+345
+Když Giakové získávají vládu nad Zelenou Berlou, rozpoutá se na palubě zuřivý boj. Vysoko na stěžních sedí Kraani a svými drápy a zuby ostrými jak žiletky trhají plachty, zatímco Zlanbeasti odletěli zpátky směrem k Místu ztroskotání, aby přinesli další sítě plné zlomyslných Giaků.
+Na palubě poseté mrtvými těly se zjeví hrozivá silueta. Nestvůra se přibližuje k tobě. Cestou srazí k zemi dva Giaky a námořníky. Je to Drakkar, krutý bojovník Temných pánů. Vytáhne svůj černý široký meč a zaútočí na tebe. Musíš s ním bojovat, dokud ho nezabiješ. Drakkar UMĚNÍ BOJE 16, KONDICE 24
+Jestliže zvítězíš, otoč na 243.
+346
+Kočí kývne a vrátí ti tvůj Lístek. Hostinec je teplý, ale chudě zařízený. Musíš se tu najíst. Pokud nemáš jídlo v batohu, bude tě to stát 1 Zlatý.
+Na cestě přes Wildland nemůžeš použít Kai disciplínu Lov, protože je to krajina obývaná pouze stvořeními jménem Szallové. Jsou slabou a zbabělou rasou Giaků.
+Můžeš-li si dovolit zaplatit 1 Zlatý za pokoj, otoč na280.
+Jestliže nemáš peníze, otoč na 205.
+347
+Na konci ulice je velká stáj. Napravo vidíš nějaké pobudy, jak prohledávají obchody a domy. Najednou tě jeden z nich spatří a spustí poplach: "Tamhle je -tamhle je ten vrah!"
+Není čas na přemýšlení. Prcháš do stáje, odvážeš jednoho koně a skočíš na něj. Když vyjíždíš ven do měsíčního světla, proletí vzduchem sekera a zavadí ti o rameno. Ztrácíš 1 KONDIČNÍ bod a prcháš do tmy.
+Obrať na 150.
+348
+Když mu odpovíš, výraz v námořníkově obličeji se změní z úsměvu v úšklebek. Rychle vstane od stolu. "Možná vy ani já nejsme tím, co tvrdíme, že jsme. To nevadí. Nebudete žít tak dlouho, abyste zjistil, kdo opravdu jsem!" Slyšíš, jak se za tebou rozletí dveře. Otočíš se a vidíš tři přístavní lupiče. Postupují k tobě, každý z nich je ozbrojen zahnutou šavlí a musíš proti nim bojovat jako proti jednomu nepříteli.
+Přístavní lupiči: UMĚNÍ BOJE 16, KONDICE 25
+Po dvou kolech boje můžeš uniknout postranními dveřmi otočením na 125.
+Jestliže boj vyhraješ, otoč na 333.
+349
+Urazil jsi téměř tři míle, když spatříš v dálce skupinu vozů. Jsou seřazeny napříč silnicí tak, že tvoří barikádu. Na jejich střechách stojí vojáci v červených uniformách a za nimi je shromážděn obrovský dav lidí. Slyšíš jejich rozčilené mumlání nesoucí se tunelem. Když se přiblížíš, utichají a zírají na tebe. Deset vojáků vedených rytířem, který má na přilbě královský znak Durenoru, jde pomalu k tobě.
+Přeješ-li si na vojáky zaútočit, otoč na 87.
+Pokud zvedneš ruce a jdeš k nim, otoč na 284.
+350 
+Holmgard po tvém odjezdu hodně vytrpěl. Mnoho obchodů a domů, které si pamatuješ z cesty do přístavu, shořelo a zbyly po nich jen hromádky popela. Armáda Temných pánů obléhá hradby a vzduchem létají dělové koule, při jejichž výbuchu plameny osvětlují noční oblohu. Lidé s ohněm bojují, jak nejlépe umí, ale jsou hladoví a vyčerpaní. Nemají již mnoho síly vzdorovat. Nejdříve je vaše loďstvo považováno za nepřátelské a po celém přístavu jsou slyšet výkřiky zoufalství. Ale když první voják vstoupí do města, rozletí se zpráva o tvém návratu velmi rychle. Zoufalství se mění v nadšení. Městem se nese volání: "Lone Wolf, rytíř Kai, se vrátil!"
+Stojíš na vrcholu velké strážní věže vysoko nad hlavní bránou města, když se na horizontu objeví první záblesk svítání. Kolem městských hradeb je shromážděno tisíce a tisíce nepřátelských vojáků, krčících se v příkopech pokrývajících planinu. Uprostřed tohoto davu byl postaven velký červený stan nesoucí symbol rozbité lebky. Je to znamení Zagarny, lorda z Kaagu, Temného pána z Helgedadu. Jeho velkým snem je zničení Holmgardu. Má vášnivé přání dovést svou armádu k vítězství nad Ulnarovým dvorem a prohlásit Sommerlund za svůj.
+Ale vítězství se dnes konat nebude. Zvedneš Sommerswerd vysoko nad hlavu, na jeho špičku dopadne paprsek vycházejícího slunce a po celé jeho délce hoří oslňující bílý plamen. Síla Sommerswerdu tě elektrizuje. Tvé smysly se otřásají a tělo instinktivně reaguje. Skloníš meč a namíříš jeho čepelí na stan lorda Zagarny. Ozve se obrovský hukot, když se síla zlatého meče přemění v sršící bílý plamen. Stan exploduje a k obloze šlehají bílé plameny. Vzduchem se nese dlouhý a strašný řev. Je to lord Zagarna. Velitel nepřátelské armády již neexistuje.
+Vojáky zachvátí strach a panika, zvedají se a ve zmatku prchají od městských hradeb. Nemožné se stalo skutečností, jejich nesmrtelný velitel je mrtev. Opět se Sommerswerd vrátil, aby je zničil. Holmgardské vojsko a spojenci z Durenoru vyjíždějí z bran města,
+aby pronásledovali panikou zachváceného nepřítele, který prchá k Durncragským horám. Vítězství je vaše. Holmgard je zachráněn a zničení kláštera Kai bylo konečně pomstěno.
+Ale pro tebe, Lone Wolfe, život velkého dobrodruha teprve začíná. Ve třetím pokračování série Lone Wolfa tě čeká nová výzva:
+Kaltské jeskyně

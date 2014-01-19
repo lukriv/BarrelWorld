@@ -157,6 +157,16 @@ bool LWGameEngine::RunAction(wxDword actionIndex)
 			}
 			break;
 		}
+		case ACTION_PROMOTE_CHAR:
+		{
+			Action *pAction = static_cast<Action*>(m_pActualScene->m_actions[actionIndex]);
+			if(!PromoteCharacter())
+			{
+				return false;
+			}
+			m_pActualScene = m_sceneMgr.GetScene(pAction->GetMoveTarget());
+			break;
+		}
 		case ACTION_MOVE:
 		{
 			Action *pAction = static_cast<Action*>(m_pActualScene->m_actions[actionIndex]);
@@ -233,6 +243,34 @@ bool LWGameEngine::CreateNewCharacter()
 		{
 			m_errorStr.assign(wxT("Add new character disciplines failed"));
 			return false;
+		}
+	}
+	
+	return true;
+}
+
+bool LWGameEngine::PromoteCharacter()
+{
+	std::set<EDisciplines> chosenDisc;
+	bool okState = true;
+
+	
+	for(CharacterDisciplines::Iterator iter =  m_mainCharacter.GetDisciplines().Begin(); iter != m_mainCharacter.GetDisciplines().End(); iter++)
+	{
+		chosenDisc.insert(iter->first);
+	}
+	
+	m_pUserInteractionCallback->SelectDisciplines(m_mainCharacter.GetDisciplines().Size()+1, chosenDisc);
+	
+	for (std::set<EDisciplines>::iterator iter = chosenDisc.begin(); iter != chosenDisc.end(); iter++)
+	{
+		if(!m_mainCharacter.GetDisciplines().Contains(*iter))
+		{
+			if(!m_mainCharacter.AddNewCharacterDiscipline(*iter))
+			{
+				m_errorStr.assign(wxT("Add new character disciplines failed"));
+				return false;	
+			}
 		}
 	}
 	
