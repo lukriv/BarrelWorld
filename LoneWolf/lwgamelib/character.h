@@ -329,6 +329,9 @@ public:
 	 */
 	void ApplyFightItems();
 	
+	bool HasAnyWeapon();
+	bool HasOneHandedWeapon();
+	
 	/*!
 	 * \brief Get result attack skill affter application all events and skills
 	 * \return 

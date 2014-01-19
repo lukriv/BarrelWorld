@@ -56,6 +56,29 @@ public:
 						, m_cancelSkill(DISCIPLINE_UNKNOWN)
 						, m_neededSkill(DISCIPLINE_UNKNOWN)
 						, m_fightSkill(false) {}
+	
+	DisciplineProperties (const DisciplineProperties& discProp) : m_actualCond(discProp.m_actualCond)
+						, m_actualAttack(discProp.m_actualAttack)
+						, m_cancelItem(discProp.m_cancelItem)
+						, m_cancelSkill(discProp.m_cancelSkill)
+						, m_weaponClass(discProp.m_weaponClass)
+						, m_neededSkill(discProp.m_neededSkill)
+						, m_fightSkill(discProp.m_fightSkill) {}
+	
+	DisciplineProperties& operator=(const DisciplineProperties& discProp)
+	{
+		if(this == &discProp) return *this;
+		wxVector<EWeaponClass> tempVec(discProp.m_weaponClass);
+		m_actualCond = discProp.m_actualCond;
+		m_actualAttack = discProp.m_actualAttack;
+		m_cancelItem = discProp.m_cancelItem;
+		m_cancelSkill = discProp.m_cancelSkill;
+		m_neededSkill = discProp.m_neededSkill;
+		m_weaponClass.swap(tempVec);
+		m_fightSkill = discProp.m_fightSkill;
+		
+		return *this;
+	}
 };
 
 

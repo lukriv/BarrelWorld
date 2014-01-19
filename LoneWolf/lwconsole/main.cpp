@@ -92,6 +92,7 @@ int main(int argc, char **argv)
 			if(act.Cmp(wxT("pickup")) == 0)
 			{
 				WriteListSceneItems(*g_gameEngine.GetActualScene(), ITEM_LIST_SCENE_ITEMS);
+				WriteListSceneItems(*g_gameEngine.GetActualScene(), ITEM_LIST_SCENE_SELECTION);
 				SetFontColor(COMMAND_LINE); // set font
 				cout << "Zadej cislo predmetu ze sceny pro zvednuti nebo 'gold' pro zvednuti zlata: ";
 				cout.flush();

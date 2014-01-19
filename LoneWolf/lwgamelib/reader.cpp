@@ -91,6 +91,11 @@ bool LoneWolfXmlReader::ParseScene(wxXmlNode* sceneNode, GlobalResourceManager& 
 			{
 				return false;
 			}
+		} else if (child->GetName() == GENERAL_TAG_ITEMS_SELECTION_STR) {
+			if(!ParseSceneSelectionItems(child, resMgr, *(spScene.get())))
+			{
+				return false;
+			}
 		} else if (child->GetName() == GENERAL_TAG_EVENTS_STR) {
 			if(!ParseSceneEvents(child, resMgr, *(spScene.get())))
 			{
@@ -245,48 +250,6 @@ bool LoneWolfXmlReader::ParseSceneActions(wxXmlNode* sceneActionNode, GlobalReso
 				scene.m_actions.push_back(spActionFight.release());
 				
 				break;
-			}
-			case ACTION_CHOOSE_ITEM:
-			{
-				wxXmlNode* textNode = child->GetChildren();
-				spAction.reset(new(std::nothrow) Action());
-				spAction->SetType(actionType);
-				
-				if(!child->GetAttribute(GENERAL_ATTR_TARGET_STR, &tempValue))
-				{
-					ProcessError(child);
-					return false;
-				}
-				tempValue.ToLong(&target);
-				
-				spAction->SetMoveTarget(target);
-				
-				if(!ReadActionAttr(child, resMgr, *(spAction.get())))
-				{
-					return false;
-				}
-				
-				if(textNode)
-				{
-					if(textNode->GetName() == GENERAL_TAG_DESC_STR)
-					{
-						wxString text;
-						wxString lang;
-						if(!ReadText(textNode, text, lang))
-						{
-							return false;
-						}
-						
-						if(lang == m_language)
-						{
-							spAction->SetDesc(text);
-						}
-						
-					}
-					textNode = textNode->GetNext();
-				}
-				
-				scene.m_actions.push_back(spAction.release());
 			}
 			default:
 				ProcessError(child);
@@ -499,6 +462,46 @@ bool LoneWolfXmlReader::ParseSceneItems(wxXmlNode* sceneActionNode, GlobalResour
 			if(resMgr.GetItemAndDiscMgr().GetItemType(nameValue) != ITEM_UNKNOWN)
 			{
 				scene.AddItem(resMgr.GetItemAndDiscMgr().GetItemType(nameValue));
+			} else {
+				ProcessError(child);
+				return false;
+			}
+		}
+		child = child->GetNext();
+	}
+	
+	return true;
+}
+
+bool LoneWolfXmlReader::ParseSceneSelectionItems(wxXmlNode* sceneActionNode, GlobalResourceManager& resMgr, Scene& scene)
+{
+	wxString tempValue;
+	wxString nameValue;
+	long itemToSelect = 0;
+	wxXmlNode* child = sceneActionNode->GetChildren();
+	
+	if(!sceneActionNode->GetAttribute(GENERAL_ATTR_ITEMS_COUNT_STR, &tempValue))
+	{
+		ProcessError(sceneActionNode, wxT("items_cout attribute is missing"));
+		return false;
+	}
+	
+	tempValue.ToLong(&itemToSelect);
+	scene.SetSelectionItemsCount(itemToSelect);
+		
+	while(child)
+	{
+		if(child->GetName() == GENERAL_TAG_ITEM_STR)
+		{
+			if(!child->GetAttribute(GENERAL_ATTR_NAME_STR, &nameValue))
+			{
+				ProcessError(child);
+				return false;
+			}
+			
+			if(resMgr.GetItemAndDiscMgr().GetItemType(nameValue) != ITEM_UNKNOWN)
+			{
+				scene.AddItem(resMgr.GetItemAndDiscMgr().GetItemType(nameValue), true);
 			} else {
 				ProcessError(child);
 				return false;
@@ -1404,6 +1407,7 @@ bool LoneWolfXmlReader::ReadText(wxXmlNode* textNode, wxString& text, wxString& 
 	
 	return true;
 }
+
 
 
 
