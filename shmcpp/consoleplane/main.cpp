@@ -16,7 +16,7 @@ int main(int argc, char **argv)
 	ConsoleGameEngine engine;
 	//console.WriteConsoleInfo();
 	
-	if(!console.Initialize(WIDTH,HEIGHT,false,CONSOLE_FONT_SIZE_16x12))
+	if(!console.Initialize(WIDTH,HEIGHT,true,CONSOLE_FONT_SIZE_16x12))
 	{
 		cout << "ConsoleWindowWrapper::Initialize error" << endl;
 		return 1;

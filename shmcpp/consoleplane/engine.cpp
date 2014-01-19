@@ -65,15 +65,7 @@ bool ConsoleGameEngine::Play(ConsoleWindowWrapper &console)
 	if(!console.EnableManualProcessEvent(true))
 		return true;
 	
-	if(!WriteMargin(console, marginOrigin, playGroundSize))
-	{
-		return false;
-	}
-	
-	if(!console.WriteString( (wchar_t*)(L"Hello Game"), ConsoleCoordX(34, 0)))
-	{
-		return false;
-	}
+
 		
 	while (!ends)
 	{
@@ -163,13 +155,30 @@ bool ConsoleGameEngine::Play(ConsoleWindowWrapper &console)
 			m_avatar.pos.y = m_viewFieldMax.y;
 		}
 		
-		if((moveX != 0)||(moveY != 0))
+		//clear buffer
+		console.ClearBuffer();
+		// write whole screen from the scratch
+		if(!WriteMargin(console, marginOrigin, playGroundSize))
 		{
-			if(!console.WriteChar('X', m_avatar.pos.x, m_avatar.pos.y))
-			{
-				return false;
-			}
-		}		
+			return false;
+		}
+		
+		if(!console.WriteString( (wchar_t*)(L"Hello Game"), ConsoleCoordX(34, 0)))
+		{
+			return false;
+		}
+		
+		// write avatar position
+		if(!console.WriteChar('X', m_avatar.pos.x, m_avatar.pos.y))
+		{
+			return false;
+		}
+		
+		// write buffer to the screen
+		if(!console.SwapBuffers())
+		{
+			return false;
+		}
 		
 		Sleep(100);
 		
