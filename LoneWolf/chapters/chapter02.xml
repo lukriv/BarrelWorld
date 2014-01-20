@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<root>
+  <chapter id="2">
+    <scene id="0">
+        <desc lang="cs">
+			<![CDATA[<p>Na severu Sommerlundu panuje už po mnohá staletí mezi Bojovými rytíři zvyk posílat potomky v určeném věku
+			do kláštera Kai. Po několik let získávají dovednosti a smysl pro kázeň a řád, které od nepaměti šlechtí jejich vznešený rod.</p>
+			Mniši kláštera Kai mistrně ovládají řadu bojových umění a výcvik pod jejich vedením je tvrdý a namáhavý. Přesto je jejich svěřenci
+			oddaně milují a váží si jich. V den, kdy mladí rytíři Kai zvládnou všechny dovednosti a vědomosti řádu Kai (ostatním smrtelníkům
+			nedostupné), vracejí se do svých domovů tělesně i duševně připraveni pro boj, jenž neustále hrozí ze strany Temných pánů ze západu.</p>
+			<p>Před dávnými časy ve věku Černé luny, vedli Temní páni válku proti Summerlundu. Vleklý konflikt byl pro sommerlundské těžkou 
+			a hořkou zkouškou odříkání a vzdoru, jež vyvrcholila vítězstvím Summerlundu ve velké bitvě u Maakengorku.</p>
+			<p>Sommerlundský král Ulnar se spojenci z Durenoru zaútočili na vojsko Temných pánů v Moyturském průsmyku a zatlačili je
+			do bezedných pustin Maakengorku. Nejmocnější z Temných pánů, Vashnu probodl vlastním mečem král Ulnar, tím mečem, jenž je znám
+			jako Sommerswerd. Slunečný meč. Tehdy Temní páni přísahali pomstu celému Sommerlundu a zejména Ulnarovu rodu.</p>
+			<p>Jsi Osamnělý Vlk, mladý rytíř řádu Kai a před dvěma dny byla tvoje zem zatažena do války. Obrovská armáda Temných pánů náhle vtrhla
+			do Sommerlundu a úplně zpustošila klášter Kai. Všichni Kai Lordi se právě účastnili Fehrmarnova svátku, když byl klášter obklíčen a zničen,
+			přičemž byli všichni zabiti. Ty, jediný Kai Lord, který masakr přežil, jsi přísahal, že pomstíš jejich smrt. Věděl jsi, že tvým prvním
+			úkolem je varovat krále, neboť bez Kai Lordů stojících včele jeho armád, by tvoje země, Sommerlund, nebyla schopna včasné mobilizace, 
+			aby dokázala útok Temných pánů odrazit. Tvoje cesta ke králi byla opravdu nebezpečná. Nepřítel ovládl většinu země a směřoval do hlavního
+			města Holmgardu. Ale navzdory tomu jsi splnil svůj úkol a varoval jsi krále. Ten tě pochválil za tvůj um a statečnost, ale zároveň ti
+			sdělil, že tvé poslání ještě nekončí: Kai Lordi jsou mrtví, takže v celém Magnamundu zbyla pouze jediná síla, která by mohla zachránit
+			tvou zemi před Temnými pány - Sommerswerd. Po přemožení Vashny byl Sommerswerd předán spojencům z Durenoru na znamení důvěry a věrnosti, 
+			která mezi oběma královstvími existuje. Na oplátku dal durenorský král Alin Summerlundu nádherný zlatý prsten s výsostným znakem Durenoru.
+			Tento prsten je znám jako Hammerdalská pečeť. Tenkrát král Alin přísahal, že jestli někdy Temní páni opět ohrozí Summerlund, Durenor přijde
+			na pomoc svým spojencům.</p>
+			<p>Král ti dal Hammerdalskou pečeť. Tvým úkolem je jet do Durenoru a přivést Sommerswerd zpět. Mezitím nepřítel prorazil skrze vnější
+			opevnění do města a připravuje se na obléhání městských hradeb.</p>
+			<p>Až tě kapitán D'Val dovede do královské zbrojnice, aby tě vyzbrojil na cestu, měj stále na paměti králova slova:
+			"Čtyřicet dní, Lone Wolfe. Jsme schopni se jim bránit jenom čtyřicet dní."</p>]]>
+		</desc>
+		<actions>
+			<action_promote_character target="351" />
+		</actions>
+    </scene>
+	<scene id="1">
+        <desc lang="cs">
+			<![CDATA[<p>Kapitán D'Val a jeho vojáci tě doprovází k bráně Pevnosti, kde ceká malý kočár. Jakmile do něj nastoupíš, brána se rozletí
+			a ty se řítíš přes zaplněné ulice pryč z Holmgardu. Po krátké, ale nepohodlné cestě kočár zastavuje. "Tohle je přístaviště, můj pane.
+			Tamhle je vaše loď Zelená Berla." Při řeči kočí ukazuje přes přístaviště na obchodní loď zakotvenou poblíž přístavní hráze.</p>
+			<p>"Jméno prvního námořního důstojníka je Ronan. Najdete ho v hostinci U dobré zábavy, kde na vás bude čekat."
+			Pak ti kočí popřeje šťastnou cestu a rychle zmizí v hemžícím se davu.</p>
+			<p>Když se dostaneš k hostinci, zjistíš, že čelní dveře jsou zamčeny a okenice zavřeny. Rozhoduješ se,
+			co uděláš, když tě nějaká ruka chytne za paži a ty jsi stržen do tmy.</p>]]>
+		</desc>
+		<actions>
+			<action_move target="273">
+				<desc lang="cs">Vytáhnout zbraň a napadnout neznámého útočníka.</desc>
+			</action_move>
+			<action_move target="160">
+				<desc lang="cs">Uvolnit se z útočníkova sevření.</desc>
+			</action_move>
+		</actions>
+    </scene>
+    <scene id="351">
+        <desc lang="cs">
+			<![CDATA[<p>Strážce kapitán D'Val tě vede do královské zbrojnice, kde je ti odebrán kabát a plást učedníka Kai,
+			aby byly opraveny a vyčištěny. Zatímco čekáš na jejich vrácení, podává ti kapitán váček zlatých mina na cestu.
+			Na stůl uprostřed zbrojnice bylo vyloženo množství předmětů, ze kterých si můžeš vybrat jakékoli dva:</p>]]>
+		</desc>
+		<actions>
+			<action_move target="352">
+				<desc lang="cs">Pokračuj</desc>
+			</action_move>
+		</actions>
+		<items>
+			<item name="meal" />
+		</items>
+		<items_selection items_count="2">
+			<item name="sword" />
+			<item name="meal" />
+			<item name="chainmail_waistcoat" />
+			<item name="mace" />
+			<item name="healing_potion" />
+			<item name="quaterstaff" />
+			<item name="spear" />
+			<item name="shield" />
+			<item name="broadsword" />
+		</items_selection>
+    </scene>
+	<scene id="352">
+        <desc lang="cs">
+			<![CDATA[<p>Cesta ti dopřeje jen vzácně chvíle oddechu, spíš se bude podobat jednomu nepřetržitému velkému nebezpečí.
+			Od Temných pánů právě tak jako od jejich přisluhovačů nemůžeš očekávat žádné slitování, jsou to nepřátelé krvežízniví a krutě vynalézaví.
+			Využívej Mapu, kterou jsi našel v troskách milovaného kláštera (je vpředu v knize). Pomůže ti udržet správný směr k cíli
+			a orientovat se i v neznámém terénu. Poznamenávej si postřehy z cesty, mohou se hodit při budoucí výpravě.</p>
+			<p>Řada věcí, které najdeš cestou, h prokáže dobrou službu. Některé Zvláštní předměty oceníš i v příštím dobrodružství Lone Wolfa,
+			zato jiné nejsou k ničemu, proto rozvažuj, co si ponechat a čeho se zbavit.</p>
+			<p>Do Hammerdalu vede mnoho cest, ale jenom jedna umožňuje získat Sommerswerd a vrátit se do Sommerlundu s částečným omezením rizika.
+			Moudrá volba disciplín Kai a hodně odvahy dává každému hráči šanci dokončit jeho poslání bez ohledu na to, s jak vysokou hodnotou KONDICE nebo UMĚNÍ BOJE začínal.</p>
+			<p>Osud tvé země závisí na úspěchu této nebezpečné cesty. Hodně štěstí!</p>]]>
+		</desc>
+		<actions>
+			<action_move target="1">
+				<desc lang="cs">Pokračuj</desc>
+			</action_move>
+		</actions>
+    </scene>
+  </chapter>
+</root>

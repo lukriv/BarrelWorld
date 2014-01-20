@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeLite_Workspace Name="shmcpp" Database="">
+  <Project Name="triangle" Path="triangle/triangle.project" Active="No"/>
+  <Project Name="consoleplane" Path="consoleplane/consoleplane.project" Active="Yes"/>
+  <BuildMatrix>
+    <WorkspaceConfiguration Name="Debug" Selected="yes">
+      <Project Name="triangle" ConfigName="Debug"/>
+      <Project Name="consoleplane" ConfigName="Debug"/>
+    </WorkspaceConfiguration>
+    <WorkspaceConfiguration Name="Release" Selected="yes">
+      <Project Name="triangle" ConfigName="Release"/>
+      <Project Name="consoleplane" ConfigName="Release"/>
+    </WorkspaceConfiguration>
+  </BuildMatrix>
+</CodeLite_Workspace>

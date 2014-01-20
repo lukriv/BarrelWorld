@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<definitions>
+	<chapters>
+		<chapter id="1" file="chapter01.xml">
+			<title lang="cs">Lone Wolf: Útok ze tmy</title>
+			<title lang="en">Lone Wolf: Flight from the Dark</title>
+		</chapter>
+		<chapter id="2" file="chapter02.xml">
+			<title lang="cs">Lone Wolf: Oheň na vodě</title>
+			<title lang="en">Lone Wolf: Fire on the Water</title>
+		</chapter>
+	</chapters>
+	<actions>
+		<action_create_character>
+			<desc lang="cs">Vytvoř postavu</desc>
+			<desc lang="en">Create character</desc>
+		</action_create_character>
+		<action_lotery> 
+			<desc lang="cs">Náhodný výběr</desc>
+			<desc lang="en">Random lotery</desc>
+		</action_lotery>
+		<action_move>
+			<desc lang="cs">Pokračuj dál</desc>
+			<desc lang="en">Continue</desc>
+		</action_move>
+		<action_fight> 
+			<desc lang="cs">Boj</desc>
+			<desc lang="en">Fight</desc>
+		</action_fight>
+		<action_next_chapter>
+			<desc lang="cs">Další kapitola</desc>
+			<desc lang="en">Next chapter</desc>
+		</action_next_chapter>
+		<action_promote_character>
+			<desc lang="cs">Postup na další level</desc>
+			<desc lang="en">Promote character</desc>
+		</action_promote_character>
+    </actions>
+    <items>
+		<!-- Weapon items -->
+		<item id="1" name="dagger" placement="weapon" weapon_class="dagger">
+			<title lang="cs">Dýka</title>
+			<title lang="en">Dagger</title>
+		</item>
+       <item id="2" name="spear" placement="weapon" weapon_class="spear">
+			<title lang="cs">Kopí</title>
+			<title lang="en">Spear</title>
+		</item>
+		<item id="3" name="mace" placement="weapon" weapon_class="mace">
+			<title lang="cs">Palcát</title>
+			<title lang="en">Mace</title>
+		</item>
+       <item id="4" name="short_sword" placement="weapon" weapon_class="short_sword">
+			<title lang="cs">Krátký meč</title> 
+			<title lang="en">Short sword</title> 
+		</item>
+       <item id="5" name="warhammer" placement="weapon" weapon_class="warhammer">
+			<title lang="cs">Válečné kladivo</title>
+			<title lang="en">Warhammer</title>
+		</item>
+       <item id="6" name="sword" placement="weapon" weapon_class="sword">
+			<title lang="cs">Meč</title>
+			<title lang="en">Sword</title>
+		</item>
+       <item id="7" name="axe" placement="weapon" weapon_class="axe">
+			<title lang="cs">Sekyra</title>
+			<title lang="en">Axe</title>
+	   </item>
+       <item id="8" name="quaterstaff" placement="weapon" weapon_class="quaterstaff"> 
+			<title lang="cs">Bojová hůl</title>
+			<title lang="en">Quaterstaff</title>
+	   </item>
+       <item id="9" name="broadsword" placement="weapon" weapon_class="broadsword">
+			<title lang="cs">Meč s šírokou čepelí</title>
+			<title lang="en">Broadsword</title>
+	   </item>
+		
+		<!-- Virtual weapons items - this is for game rules -->
+		<item id="20" name="random_weapon" placement="weapon">
+			<title lang="cs">Náhodně vybraná zbraň</title>
+			<title lang="en">Random selected weapon</title>
+		</item>
+		<item id="21" name="all_weapons" placement="weapon">
+			<title lang="cs">Všechny zbraně</title>
+			<title lang="en">All weapons</title>
+		</item>
+		
+		<!-- Backpack items -->
+		<item id="30" name="meal" placement="backpack" one_use="">
+			<title lang="cs">Porce jídla</title>
+			<title lang="en">Meal</title>
+		</item>
+       <item id="31" name="healing_potion" placement="backpack" cond_actual="4" one_use="" free_use="">
+			<title lang="cs">Léčivý elixír</title>
+			<desc lang="cs">Vypiješ-li nápoj po boji, obnovíš si čtyři ze ztracených KONDIČNÍCH bodů. Množství elixíru je ale omezené, stačí jen na jedno použití.</desc>
+			<title lang="en">Healing Potion</title>
+			<desc lang="en">This can restore 4 ENDURANCE points to your total, when swallowed after combat. You only have enough for one dose.</desc>
+		</item>
+		<item id="32" name="healing_herb" placement="backpack" cond_actual="3" one_use="" free_use="">
+			<title lang="cs">Léčivá bylina</title>
+			<desc lang="cs">Jednou porcí léčivé byliny laumspuru získáš zpět 3 KONDIČNÍ body</desc>
+			<title lang="en">Healing herb</title>
+			<desc lang="en">One meal of Laumspur will restore 3 ENDURANCE points.</desc>
+		</item>
+		<item id="33" name="tinderbox" placement="backpack" >
+			<title lang="cs">Troudník</title>
+			<desc lang="cs">Slouží k zapálení louče.</desc>
+			<title lang="en">Tinderbox</title>
+			<desc lang="en">It  may light the torch.</desc>
+		</item>
+		<item id="34" name="torch" placement="backpack" >
+			<title lang="cs">Louč</title>
+			<desc lang="cs">Slouží ke svícení na temných místech.</desc>
+			<title lang="en">Torch</title>
+			<desc lang="en">It makes light in dark places.</desc>
+		</item>
+		<item id="35" name="gems" placement="backpack" >
+			<title lang="cs">Drahokamy</title>
+			<title lang="en">Gems</title>
+		</item>
+		<item id="36" name="perfumed_soap" placement="backpack" >
+			<title lang="cs">Vonné mýdlo</title>
+			<title lang="en">Perfumed Soap</title>
+		</item>
+		<item id="37" name="power_potion" placement="backpack" attact_actual="2" free_use="" one_use="">
+			<title lang="cs">Alether</title>
+			<desc lang="cs">Pokud ho vypiješ před zápasem, zvýší se tvé UMĚNÍ BOJE o 2 body (ale jen pro dobu boje).</desc>
+			<title lang="en">Alether</title>
+		</item>
+		<item id="38" name="scroll" placement="backpack" >
+			<title lang="cs">Listina</title>
+			<desc lang="cs">Listina nalezená u Giaka.</desc>
+			<title lang="en">Scroll</title>
+		</item>
+		
+		
+		
+		<item id="99" name="random_backpack_item" placement="backpack">
+			<title lang="cs">Náhodně vybraný předmět z batohu</title>
+			<title lang="en">Random selected backpack item</title>
+		</item>
+		
+		<!-- Special items -->
+		<item id="100" name="backpack" placement="body_back">
+			<title lang="cs">Batoh</title>
+			<desc lang="cs">Vak nošený na zádech na přenášení až 8 věcí</desc>
+			<title lang="en">Backpack</title>
+			<desc lang="en">Backpack space is limited, you may only keep a maximum of eight articles.</desc>
+		</item>
+       <item id="101" name="helmet" placement="body_head" cond_max="2">
+			<title lang="cs">Přilba</title>
+			<desc lang="cs">Přidá další dva body k součtu v KONDICI.</desc>
+			<title lang="en">Helmet</title>
+			<desc lang="en">This adds 2 ENDURANCE points to your total.</desc>
+		</item>
+       <item id="102" name="chainmail_waistcoat" placement="body_torso" cond_max="4">
+			<title lang="cs">Drátěná vesta</title>
+			<desc lang="cs">Posílí součet KONDIČNÍCH bodů o čtyři.</desc>
+			<title lang="en">Chainmail Waistcoat</title>
+			<desc lang="en">This adds 4 ENDURANCE points to your total.</desc>
+		</item>
+		<item id="103" name="vordak_gem" placement="special">
+			<title lang="cs">Vordakům drahokam</title>
+			<desc lang="cs">Drahokam nesmírné ceny od temného pána.</desc>
+			<title lang="en">Vordak Gem</title>
+			<desc lang="en">A Gem of the worth hunderds of Crowns.</desc>
+		</item>
+		<item id="104" name="golden_key" placement="special">
+			<title lang="cs">Zlatý klíč</title>
+			<desc lang="cs">Zlatý klíč z tajné místnosti</desc>
+			<title lang="en">Golden Key</title>
+			<desc lang="en">Golden Key from secret room.</desc>
+		</item>
+		<item id="105" name="silver_key" placement="special">
+			<title lang="cs">Stříbrný klíč</title>
+			<title lang="en">Silver Key</title>
+		</item>
+		<item id="106" name="chrystal_star_pedant" placement="special">
+			<title lang="cs">Talisman Křišťálové hvězdy</title>
+			<desc lang="cs">Talisman Křišťálové hvězdy od bratrstva Křišťálové hvězdy.</desc>
+			<title lang="en">Crystal Star Pendant</title>
+			<desc lang="en">Crystal Star Pendant from the Brotherhood of the Crystal Star.</desc>
+		</item>	
+		<item id="107" name="shield" placement="special" attack_actual="2" >
+			<title lang="cs">Štít</title>
+			<desc lang="cs">Pokud jej použiješ v boji, zvyšuje tvé UMĚNÍ BOJE o 2 body.</desc>
+			<title lang="en">Shield</title>
+			<desc lang="en">Shield adds 2 points to your COMBAT SKILL when used in combat.</desc>
+		</item>		
+		
+    </items>
+	 <disciplines>
+       <skill id="1" name="camouflage" non_fight_skill="">
+			<title lang="cs">Maskování</title>
+			<desc lang="cs">Maskování umožňuje rytířům Kai splynout s okolím. Ve volné přírodě mohou beze stopy zmizet mezi stromy a skalami a přiblížit se nepozorovaně až těsně k nepříteli. Ve městě se rytíři řádu Kai stávají díky Maskování zcela nenápadnými, podobají se místnímu obyvatelstvu a mluví bez cizího přízvuku. Snadno najdou útočiště nebo bezpečnou skrýš.</desc>
+			<title lang="en">Camouflage</title>
+			<desc lang="en">This Discipline enables a Kai Lord to blend in with his surroundings. In the countryside, he can hide undetected among trees and rocks and pass close to an enemy without being seen. In a town or city, it enables him to look and sound like a native of that area, and can help him to find shelter or a safe hiding place.</desc>
+		</skill>
+       <skill id="2" name="hunting" non_fight_skill="">
+			<title lang="cs">Lov</title>
+			<desc lang="cs">Umění lovu dává rytíři Kai jistotu, že v divočině nebude nikdy hladovět. Pokud se rytíř řádu Kai neocitne v nehostinné pustině nebo na poušti, bude vždy schopen obstarat si potravu. Tato dovednost se může hodit všude, protože umožňuje rytíři Kai rychlé a obratné přesuny z místa na místo.</desc>
+			<title lang="en">Hunting</title>
+			<desc lang="en">This skill ensures that a Kai Lord will never starve in the wild. He will always be able to hunt for food for himself except in areas of wasteland and desert. The skill also enables a Kai Lord to be able to move stealthily when stalking his prey.</desc>
+		</skill>
+       <skill id="3" name="sixth_sense" non_fight_skill="">
+			<title lang="cs">Šestý smysl</title>
+			<desc lang="cs">Díky schopnosti Šestý smysl se může rytíř řádu Kai vyhnout bezprostřednímu nebezpečí. Pomůže mu odhalit pravé záměry neznámé osoby nebo odkrýt účel neobvyklého předmětu, se kterým se během dobrodružné výpravy setká.</desc>
+			<title lang="en">Sixth Sense</title>
+			<desc lang="en">This skill may warn a Kai Lord of imminent danger. It may also reveal the true purpose of a stranger or strange object encountered in your adventure.</desc>
+		</skill>
+       <skill id="4" name="tracking" non_fight_skill="">
+ 			<title lang="cs">Stopování</title>
+			<desc lang="cs">Stopování je dovednost, která pomáhá rytíři Kai najít v divočině správnou cestu, vypátrat polohu jiného člověka či tvora a rozluštit tajemství šlépějí a stop.</desc>
+			<title lang="en">Tracking</title>
+			<desc lang="en">This skill enables a Kai Lord to make the correct choice of a path in the wild, to discover the location of a person or object in a town or city and to read the secrets of footprints or tracks.</desc>
+		</skill>
+		<skill id="5" name="healing" cond_actual="1" non_fight_skill="">
+			<title lang="cs">Léčitelství</title>
+			<desc lang="cs">Léčitelství je disciplína, která slouží k regeneraci sil, tj. k obnově bodů za KONDICI, které rytíř Kai ztratil v boji. Pokud tuto dovednost ovládáš, můžeš si připočítat k bodům za KONDICI vždy po jednom bodu za každou očíslovanou pasáž knihy, kterou projdeš, aniž se zapleteš do nějaké potyčky. (Využít tohoto pravidla však můžeš jen tehdy, když počet bodů v okénku KONDICE klesne pod výchozí hodnotu.) Nezapomeň, že tvoje KONDICE nemůže přerůst přes původní úroveň.</desc>
+			<title lang="en">Healing</title>
+			<desc lang="en">This Discipline can be used to restore ENDURANCE points lost in combat. If you possess this skill you may restore 1 ENDURANCE point to your total for every numbered section of the book you pass through in which you are not involved in combat. (This is only to be used after your ENDURANCE has fallen below its original level.) Remember that your ENDURANCE cannot rise above its original level.</desc>
+		</skill>
+       <skill id="6" name="weaponskill" attack_actual="2" weapon_class="none">
+			<title lang="cs">Ovládání zbraně</title>
+			<desc lang="cs">Mniši kláštera Kai vycvičili každého učedníka v dokonalém ovládání jednoho druhu zbraně. Pokud vlastníš zbraň, kterou mistrně ovládáš, připočti si dva body do kolonky UMĚNÍ BOJE.</desc>
+			<title lang="en">Weaponskill</title>
+			<desc lang="en">Upon entering the Kai Monastery, each initiate is taught to master one type of weapon. This is the weapon in which you have skill. When you enter combat carrying this weapon, you add 2 points to your COMBAT SKILL.</desc>
+		</skill>
+       <skill id="7" name="mindshield">
+			<title lang="cs">Nehmotná clona</title>
+			<desc lang="cs">Temní páni i další ďábelské stvůry, kterým velí, ovládají schopnost útočit silou vlastní mysli. Proti jejich výpadům se můžeš bránit vytvořením nehmotné duchovní clony, štítu, a tak neztratíš body z konta KONDICE, i když se staneš terčem útoku touto skrytou zbraní.</desc>
+			<title lang="en">Mindshield</title>
+			<desc lang="en">The Darklords and many of the evil creatures in their command have the ability to attack you using their Mindforce. The Kai Discipline of Mindshield prevents you from losing any ENDURANCE points when subjected to this form of attack.</desc>
+		</skill>
+       <skill id="8" name="mindblast" attack_actual="2" canceled_by_skill="mindshield">
+			<title lang="cs">Útok duševní silou</title>
+			<desc lang="cs">Rytíř Kai, který ovládá tuto dovednost, může místo běžné zbraně použít proti nepříteli svou duševní sílu. Připočítá si pak dva zvláštní body k hodnotě UMĚNÍ BOJE. Ale pozor, ne všem netvorům, se kterými se na své dlouhé dobrodružné cestě střetneš, duševní síla škodí. Včas se dozvíš, je-li tvůj nepřítel odolný.</desc>
+			<title lang="en">Mindblast</title>
+			<desc lang="en">This enables a Kai Lord to attack an enemy using the force of his mind. It can be used at the same time as normal combat weapons and adds two extra points to your COMBAT SKILL. Not all the creatures encountered on this adventure will be harmed by Mindblast. You will be told if a creature is immune.</desc>
+		</skill>
+		<skill id="9" name="animal_kinship" non_fight_skill="">
+			<title lang="cs">Spřízněnost se zvířaty</title>
+			<desc lang="cs">Je disciplína, díky níž může rytíř Kai komunikovat s některými zvířaty a úmysly jiných může uhodnout.</desc>
+			<title lang="en">Animal Kinship</title>
+			<desc lang="en">This skill enables a Kai Lord to communicate with some animals and to be able to guess the intentions of others.</desc>
+		</skill>
+       <skill id="10" name="mind_over_matter" non_fight_skill="">
+			<title lang="cs">Ovládání hmoty myšlenkou</title>
+			<desc lang="cs">Dokonalé zvládnutí této disciplíny vybaví rytíře Kai schopností pohybovat malými předměty pouhou silou koncentrace, silou vůle soustředěné na určitý předmět.</desc>
+			<title lang="en">Mind Over Matter</title>
+			<desc lang="en">Mastery of this Discipline enables a Kai Lord to move small objects with his powers of concentration.</desc>
+		</skill>
+	</disciplines>
+</definitions>
+
