@@ -130,6 +130,22 @@
         <File Name="PhysicsComp/gphyscmgr.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
+    <VirtualDirectory Name="actorComp">
+      <VirtualDirectory Name="include">
+        <File Name="ActorComp/gactormgr.h"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="src">
+        <File Name="ActorComp/gactormgr.cpp"/>
+      </VirtualDirectory>
+    </VirtualDirectory>
+    <VirtualDirectory Name="animatorComp">
+      <VirtualDirectory Name="include">
+        <File Name="AnimatorComp/ganimatormgr.h"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="src">
+        <File Name="AnimatorComp/ganimatormgr.cpp"/>
+      </VirtualDirectory>
+    </VirtualDirectory>
   </VirtualDirectory>
   <VirtualDirectory Name="src"/>
   <Dependencies Name="Debug"/>
