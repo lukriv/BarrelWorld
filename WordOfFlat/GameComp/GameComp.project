@@ -10,6 +10,7 @@
   <VirtualDirectory Name="include">
     <File Name="ggeomcont.h"/>
     <File Name="gobjdef.h"/>
+    <File Name="gentitymgr.h"/>
   </VirtualDirectory>
   <Settings Type="Static Library">
     <GlobalSettings>
@@ -130,14 +131,6 @@
         <File Name="PhysicsComp/gphyscmgr.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
-    <VirtualDirectory Name="actorComp">
-      <VirtualDirectory Name="include">
-        <File Name="ActorComp/gactormgr.h"/>
-      </VirtualDirectory>
-      <VirtualDirectory Name="src">
-        <File Name="ActorComp/gactormgr.cpp"/>
-      </VirtualDirectory>
-    </VirtualDirectory>
     <VirtualDirectory Name="animatorComp">
       <VirtualDirectory Name="include">
         <File Name="AnimatorComp/ganimatormgr.h"/>
@@ -146,8 +139,18 @@
         <File Name="AnimatorComp/ganimatormgr.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
+    <VirtualDirectory Name="transformComp">
+      <VirtualDirectory Name="include">
+        <File Name="TransformComp/gtransmgr.h"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="src">
+        <File Name="TransformComp/gtransmgr.cpp"/>
+      </VirtualDirectory>
+    </VirtualDirectory>
   </VirtualDirectory>
-  <VirtualDirectory Name="src"/>
+  <VirtualDirectory Name="src">
+    <File Name="gentitymgr.cpp"/>
+  </VirtualDirectory>
   <Dependencies Name="Debug"/>
   <Dependencies Name="Release"/>
 </CodeLite_Project>
