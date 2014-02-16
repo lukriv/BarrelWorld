@@ -2,7 +2,9 @@
 #define __GAME_TRANSFORM_COMPONENT_MANAGER_H__
 
 
-
+class TransformManager2D {
+	
+};
 
 
 #endif //__GAME_TRANSFORM_COMPONENT_MANAGER_H__
