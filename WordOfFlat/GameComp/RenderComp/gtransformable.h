@@ -7,7 +7,7 @@
 #include "gobjdef.h"
 
 
-class GameTransformable : public sf::Transformable {
+class GameTransformable2D : public sf::Transformable {
 public:
 	inline void SetPosition(float x, float y) {
 		setPosition(Pixelize * x, -(Pixelize * y));
@@ -45,7 +45,7 @@ public:
 	}
 };
 
-class GameTransform {
+class GameTransform2D {
 public:
 	inline static b2Vec2 Display2PhysicsPosition(const sf::Vector2f& displayCoords ) {
 		return b2Vec2(displayCoords.x/Pixelize, -(displayCoords.y/Pixelize));
