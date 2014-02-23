@@ -11,6 +11,7 @@
     <File Name="ggeomcont.h"/>
     <File Name="gobjdef.h"/>
     <File Name="gentitymgr.h"/>
+    <File Name="gentity.h"/>
   </VirtualDirectory>
   <Settings Type="Static Library">
     <GlobalSettings>
@@ -150,6 +151,7 @@
   </VirtualDirectory>
   <VirtualDirectory Name="src">
     <File Name="gentitymgr.cpp"/>
+    <File Name="gentity.cpp"/>
   </VirtualDirectory>
   <Dependencies Name="Debug"/>
   <Dependencies Name="Release"/>
