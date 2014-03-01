@@ -2,13 +2,10 @@
 #define __GAME_CLIENT_ENGINE_H__
 
 
+#include "../GameSystem/glog.h"
+#include <wx/string.h>
+#include <OGRE/OgreRoot.h>
 #include "../GameSystem/refobjectsmptr.h"
-#include "../GameResHold/gresholder.h"
-#include "../GameResHold/gscenegen.h"
-#include "../GameResHold/gentityfactory.h"
-#include "../WorldCli/gflatworldcliimpl.h"
-#include "../WorldSrv/gflatworldsrvimpl.h"
-
 
 struct GameEngineSettings {
 	wxDword m_screenWidth;
@@ -29,11 +26,8 @@ class GameClientEngine {
 private:
 	GameLoggerPtr m_pLogger;
 	GameEngineSettings m_settings;
-	GameFlatWorldClient *m_pActualFlatWorldClient; 
-	sf::RenderWindow *m_renderWindow;
-	RefObjSmPtr<GameResourceHolder> m_spResHolder;
-	IGameSceneGenerator *m_pSceneGenerator;
-	RefObjSmPtr<GameEntityFactory> m_spEntityFactory;
+	Ogre::Root *m_pRoot;
+	Ogre::RenderWindow *m_pRenderWindow;
 	bool m_isWindowCreated;
 	bool m_isSettingLoaded;
 	bool m_isInitialized;
@@ -42,8 +36,8 @@ private:
 	GameErrorCode LoadSettings(wxChar* pFileName = NULL);
 
 public:
-	GameClientEngine() : m_pActualFlatWorldClient(NULL),
-					m_renderWindow(NULL),
+	GameClientEngine() : m_pRoot(NULL),
+					m_pRenderWindow(NULL),
 					m_isWindowCreated(false),
 					m_isSettingLoaded(false),
 					m_isInitialized(false) {}
