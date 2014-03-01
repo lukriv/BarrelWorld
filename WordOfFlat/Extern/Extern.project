@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Project Name="Extern" InternalType="">
-  <VirtualDirectory Name="msvc">
-    <VirtualDirectory Name="wx">
-      <File Name="../../extern/include/msvc/wx/setup.h"/>
-    </VirtualDirectory>
-  </VirtualDirectory>
   <Plugins>
     <Plugin Name="qmake">
       <![CDATA[00010001N0005Debug000000000000]]>
     </Plugin>
   </Plugins>
+  <VirtualDirectory Name="msvc">
+    <VirtualDirectory Name="wx">
+      <File Name="../../extern/include/msvc/wx/setup.h"/>
+    </VirtualDirectory>
+  </VirtualDirectory>
   <Description/>
   <Dependencies/>
   <Settings Type="Executable">
@@ -63,13 +63,6 @@
       </Completion>
     </Configuration>
   </Settings>
-  <Dependencies Name="Debug">
-    <Project Name="GameSystem"/>
-    <Project Name="GameComm"/>
-    <Project Name="GameMsgCli"/>
-    <Project Name="GameMsgSrv"/>
-    <Project Name="ClientServerTests"/>
-  </Dependencies>
   <VirtualDirectory Name="Box2D">
     <File Name="../../extern/include/Box2D/Box2D.h"/>
     <VirtualDirectory Name="Collision">
@@ -3178,4 +3171,11 @@
       <File Name="../../extern/include/wx/xrc/xmlreshandler.h"/>
     </VirtualDirectory>
   </VirtualDirectory>
+  <Dependencies Name="Debug">
+    <Project Name="GameSystem"/>
+    <Project Name="GameComm"/>
+    <Project Name="GameMsgCli"/>
+    <Project Name="GameMsgSrv"/>
+    <Project Name="ClientServerTests"/>
+  </Dependencies>
 </CodeLite_Project>

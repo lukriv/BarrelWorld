@@ -153,6 +153,6 @@
     <File Name="gentitymgr.cpp"/>
     <File Name="gentity.cpp"/>
   </VirtualDirectory>
-  <Dependencies Name="Debug"/>
   <Dependencies Name="Release"/>
+  <Dependencies Name="Debug"/>
 </CodeLite_Project>
