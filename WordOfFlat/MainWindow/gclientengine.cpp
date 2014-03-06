@@ -1,4 +1,7 @@
 #include "gclientengine.h"
+#include <OGRE/OgreEntity.h>
+#include <OGRE/OgreMeshManager.h>
+#include <OGRE/OgreSubMesh.h>
 
 
 
@@ -71,6 +74,10 @@ GameErrorCode GameClientEngine::Initialize(GameLogger* pLogger)
 			m_pLogger, result, FWGLOG_ENDVAL);
 		return result;
 	}
+	
+	m_pSceneManager = m_pRoot->createSceneManager(Ogre::ST_GENERIC);
+	
+	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 
 	//m_pSceneGenerator = new (std::nothrow) GameTestSceneGenerator();
 	//if (m_pSceneGenerator == NULL) 
@@ -110,7 +117,14 @@ GameErrorCode GameClientEngine::LoadSettings(wxChar* pFileName)
 GameErrorCode GameClientEngine::MainLoop()
 {
 	GameErrorCode result = FWG_NO_ERROR;
-
+	
+	// create scene manager
+	Ogre::Entity *pEntity = m_pSceneManager->createEntity("cc", "TestingCube");
+	pEntity->setMaterialName("Test/ColourTest");
+	Ogre::SceneNode *pSceneNode = m_pSceneManager->getRootSceneNode()->createChildSceneNode();
+	pSceneNode->setPosition(-20,0,0);
+	pSceneNode->attachObject(pEntity);
+	
 	while(true) {}
 	return result;
 }
@@ -121,7 +135,7 @@ GameErrorCode GameClientEngine::CreateTestingWorld()
 {
 	GameErrorCode result = FWG_NO_ERROR;
 
-	Ogre::MeshPtr spMsh = Ogre::MeshManager::getSingleton().createManual("TestingCube", "TestGroup");
+	Ogre::MeshPtr spMsh = Ogre::MeshManager::getSingleton().createManual("TestingCube", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 	
 	// create submesh
 	Ogre::SubMesh* pSubMesh = spMsh->createSubMesh();
@@ -155,14 +169,14 @@ GameErrorCode GameClientEngine::CreateTestingWorld()
     Ogre::RGBA *pColour = colours;
 	
     // Use render system to convert colour value since colour packing varies
-    rs->convertColourValue(ColourValue(1.0,0.0,0.0), pColour++); //0 colour
-    rs->convertColourValue(ColourValue(1.0,1.0,0.0), pColour++); //1 colour
-    rs->convertColourValue(ColourValue(0.0,1.0,0.0), pColour++); //2 colour
-    rs->convertColourValue(ColourValue(0.0,0.0,0.0), pColour++); //3 colour
-    rs->convertColourValue(ColourValue(1.0,0.0,1.0), pColour++); //4 colour
-    rs->convertColourValue(ColourValue(1.0,1.0,1.0), pColour++); //5 colour
-    rs->convertColourValue(ColourValue(0.0,1.0,1.0), pColour++); //6 colour
-    rs->convertColourValue(ColourValue(0.0,0.0,1.0), pColour++); //7 colour
+    pRenSys->convertColourValue(Ogre::ColourValue(1.0,0.0,0.0), pColour++); //0 colour
+    pRenSys->convertColourValue(Ogre::ColourValue(1.0,1.0,0.0), pColour++); //1 colour
+    pRenSys->convertColourValue(Ogre::ColourValue(0.0,1.0,0.0), pColour++); //2 colour
+    pRenSys->convertColourValue(Ogre::ColourValue(0.0,0.0,0.0), pColour++); //3 colour
+    pRenSys->convertColourValue(Ogre::ColourValue(1.0,0.0,1.0), pColour++); //4 colour
+    pRenSys->convertColourValue(Ogre::ColourValue(1.0,1.0,1.0), pColour++); //5 colour
+    pRenSys->convertColourValue(Ogre::ColourValue(0.0,1.0,1.0), pColour++); //6 colour
+    pRenSys->convertColourValue(Ogre::ColourValue(0.0,0.0,1.0), pColour++); //7 colour
 	
 	/// Define 12 triangles (two triangles per cube face)
     /// The values in this table refer to vertices in the above table
@@ -183,7 +197,7 @@ GameErrorCode GameClientEngine::CreateTestingWorld()
     };
 	
 	/// Create vertex data structure for 8 vertices shared between submeshes
-    spMsh->sharedVertexData = new VertexData();
+    spMsh->sharedVertexData = new Ogre::VertexData();
     spMsh->sharedVertexData->vertexCount = nVertices;
 	
 	/// Create declaration (memory format) of vertex data
@@ -192,21 +206,67 @@ GameErrorCode GameClientEngine::CreateTestingWorld()
 	
 	// 1st buffer
     decl->addElement(0, offset, Ogre::VET_FLOAT3, Ogre::VES_POSITION);
-    offset += VertexElement::getTypeSize(Ogre::VET_FLOAT3);
+    offset += Ogre::VertexElement::getTypeSize(Ogre::VET_FLOAT3);
     decl->addElement(0, offset, Ogre::VET_FLOAT3, Ogre::VES_NORMAL);
-    offset += VertexElement::getTypeSize(Ogre::VET_FLOAT3);
+    offset += Ogre::VertexElement::getTypeSize(Ogre::VET_FLOAT3);
 	
 	/// Allocate vertex buffer of the requested number of vertices (vertexCount) 
     /// and bytes per vertex (offset)
-    HardwareVertexBufferSharedPtr vbuf = Ogre::HardwareBufferManager::getSingleton().createVertexBuffer(
+    Ogre::HardwareVertexBufferSharedPtr vbuf = Ogre::HardwareBufferManager::getSingleton().createVertexBuffer(
 								offset, spMsh->sharedVertexData->vertexCount, Ogre::HardwareBuffer::HBU_STATIC_WRITE_ONLY);
 	
 	/// Upload the vertex data to the card
     vbuf->writeData(0, vbuf->getSizeInBytes(), vertices, true);
  
     /// Set vertex buffer binding so buffer 0 is bound to our vertex buffer
-    Ogre::VertexBufferBinding* bind = msh->sharedVertexData->vertexBufferBinding; 
+    Ogre::VertexBufferBinding* bind = spMsh->sharedVertexData->vertexBufferBinding; 
     bind->setBinding(0, vbuf);
+	
+	// 2nd buffer
+    offset = 0;
+    decl->addElement(1, offset, Ogre::VET_COLOUR, Ogre::VES_DIFFUSE);
+    offset += Ogre::VertexElement::getTypeSize(Ogre::VET_COLOUR);
+    /// Allocate vertex buffer of the requested number of vertices (vertexCount) 
+    /// and bytes per vertex (offset)
+    vbuf = Ogre::HardwareBufferManager::getSingleton().createVertexBuffer(
+        offset, spMsh->sharedVertexData->vertexCount, Ogre::HardwareBuffer::HBU_STATIC_WRITE_ONLY);
+    /// Upload the vertex data to the card
+    vbuf->writeData(0, vbuf->getSizeInBytes(), colours, true);
+ 
+    /// Set vertex buffer binding so buffer 1 is bound to our colour buffer
+    bind->setBinding(1, vbuf);
+ 
+	
+	/// Allocate index buffer of the requested number of vertices (ibufCount) 
+    Ogre::HardwareIndexBufferSharedPtr ibuf = Ogre::HardwareBufferManager::getSingleton().
+        createIndexBuffer(
+        Ogre::HardwareIndexBuffer::IT_16BIT, 
+        ibufCount, 
+        Ogre::HardwareBuffer::HBU_STATIC_WRITE_ONLY);
+ 
+    /// Upload the index data to the card
+    ibuf->writeData(0, ibuf->getSizeInBytes(), faces, true);
+ 
+    /// Set parameters of the submesh
+    pSubMesh->useSharedVertices = true;
+    pSubMesh->indexData->indexBuffer = ibuf;
+    pSubMesh->indexData->indexCount = ibufCount;
+    pSubMesh->indexData->indexStart = 0;
+ 
+    /// Set bounding information (for culling)
+    spMsh->_setBounds(Ogre::AxisAlignedBox(-1,-1,-1,1,1,1));
+    spMsh->_setBoundingSphereRadius(Ogre::Math::Sqrt(3*1*1));
+ 
+    /// Notify -Mesh object that it has been loaded
+    spMsh->load();
+	
+	
+	//material prepare
+	Ogre::MaterialPtr spMaterial = Ogre::MaterialManager::getSingleton().create(
+				"Test/ColourTest",
+				Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+	
+	spMaterial->getTechnique(0)->getPass(0)->setVertexColourTracking(Ogre::TVC_AMBIENT);
 	
 	return result;
 	
