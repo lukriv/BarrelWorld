@@ -28,6 +28,7 @@ private:
 	GameEngineSettings m_settings;
 	Ogre::Root *m_pRoot;
 	Ogre::RenderWindow *m_pRenderWindow;
+	Ogre::SceneManager *m_pSceneManager;
 	bool m_isWindowCreated;
 	bool m_isSettingLoaded;
 	bool m_isInitialized;
@@ -38,6 +39,7 @@ private:
 public:
 	GameClientEngine() : m_pRoot(NULL),
 					m_pRenderWindow(NULL),
+					m_pSceneManager(NULL),
 					m_isWindowCreated(false),
 					m_isSettingLoaded(false),
 					m_isInitialized(false) {}

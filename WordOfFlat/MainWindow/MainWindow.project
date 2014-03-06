@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Project Name="MainWindow" InternalType="Console">
   <Plugins>
+    <Plugin Name="qmake">
+      <![CDATA[00020001N0005Debug0000000000000001N0007Release000000000000]]>
+    </Plugin>
     <Plugin Name="CMakePlugin">
       <![CDATA[[{
 		"name":	"Debug",
@@ -13,18 +16,17 @@
 		"parentProject":	""
 	}]]]>
     </Plugin>
-    <Plugin Name="qmake">
-      <![CDATA[00020001N0005Debug0000000000000001N0007Release000000000000]]>
-    </Plugin>
   </Plugins>
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="src">
     <File Name="main.cpp"/>
     <File Name="gclientengine.cpp"/>
+    <File Name="ginputcomp.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="gclientengine.h"/>
+    <File Name="ginputcomp.h"/>
   </VirtualDirectory>
   <Dependencies Name="Release"/>
   <Dependencies Name="Debug">
