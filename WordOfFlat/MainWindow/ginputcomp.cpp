@@ -56,3 +56,11 @@ GameInputComponent::~GameInputComponent()
 		m_pParent->destroyInputObject(m_pMouse);
 	}
 }
+
+GameErrorCode GameInputComponent::ProcessInputs()
+{
+	m_pKeyboard->capture();
+	m_pMouse->capture();
+	
+	return FWG_NO_ERROR;
+}

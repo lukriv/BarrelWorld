@@ -37,6 +37,8 @@ private:
 
 	GameInputComponent* m_pInputComp;
 	
+	
+	
 	bool m_isWindowCreated;
 	bool m_isSettingLoaded;
 	bool m_isInitialized;

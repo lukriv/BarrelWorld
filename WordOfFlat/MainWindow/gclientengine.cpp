@@ -144,11 +144,29 @@ GameErrorCode GameClientEngine::MainLoop()
 	Ogre::Entity *pEntity = m_pSceneManager->createEntity("cc", "TestingCube");
 	pEntity->setMaterialName("Test/ColourTest");
 	Ogre::SceneNode *pSceneNode = m_pSceneManager->getRootSceneNode()->createChildSceneNode();
-	pSceneNode->setPosition(-20,0,0);
+	pSceneNode->setPosition(0,0,0);
 	pSceneNode->attachObject(pEntity);
+	
+	// Create the camera
+	Ogre::Camera* camera = m_pSceneManager->createCamera("PlayerCam");
+ 
+	// Position it at 500 in Z direction
+	camera->setPosition(Ogre::Vector3(-4,0,0));
+	// Look back along -Z
+	camera->lookAt(Ogre::Vector3(0,0,0));
+	camera->setNearClipDistance(1);
+	
+	m_pSceneManager->setAmbientLight(Ogre::ColourValue(0.5f, 0.5f, 0.5f));
+	
+	// Create a Light and set its position
+    Ogre::Light* light = m_pSceneManager->createLight("MainLight");
+    light->setPosition(20.0f, 80.0f, 50.0f);
 	
 	while(!m_pInputComp->Exit()) 
 	{
+		m_pInputComp->ProcessInputs();
+		m_pRoot->renderOneFrame();
+		wxThread::Sleep(100);
 	}
 	return result;
 }
