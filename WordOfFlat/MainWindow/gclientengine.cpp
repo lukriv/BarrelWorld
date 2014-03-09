@@ -1,7 +1,9 @@
 #include "gclientengine.h"
+#include <OGRE/OgreRenderWindow.h>
 #include <OGRE/OgreEntity.h>
 #include <OGRE/OgreMeshManager.h>
 #include <OGRE/OgreSubMesh.h>
+
 
 
 
@@ -77,6 +79,26 @@ GameErrorCode GameClientEngine::Initialize(GameLogger* pLogger)
 	
 	m_pSceneManager = m_pRoot->createSceneManager(Ogre::ST_GENERIC);
 	
+	size_t hWnd = 0;
+	OIS::ParamList paramList;
+	m_pRenderWindow->getCustomAttribute(Ogre::String("WINDOW"), &hWnd);
+ 
+	paramList.insert(OIS::ParamList::value_type("WINDOW", Ogre::StringConverter::toString(hWnd)));
+	
+	m_pInputMgr = OIS::InputManager::createInputSystem(paramList);
+	
+	m_pInputComp = new (std::nothrow) GameInputComponent(m_pInputMgr);
+	
+	if(m_pInputComp == NULL)
+	{
+		return FWG_E_MEMORY_ALLOCATION_ERROR;
+	}
+	
+	if(FWG_FAILED( result = m_pInputComp->Initialize(m_pRenderWindow->getWidth(), m_pRenderWindow->getHeight())))
+	{
+		return result;
+	}
+	
 	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 
 	//m_pSceneGenerator = new (std::nothrow) GameTestSceneGenerator();
@@ -125,7 +147,9 @@ GameErrorCode GameClientEngine::MainLoop()
 	pSceneNode->setPosition(-20,0,0);
 	pSceneNode->attachObject(pEntity);
 	
-	while(true) {}
+	while(!m_pInputComp->Exit()) 
+	{
+	}
 	return result;
 }
 

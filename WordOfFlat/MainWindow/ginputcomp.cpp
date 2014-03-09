@@ -1,29 +1,58 @@
 #include "ginputcomp.h"
 
-GameInputComponent::GameInputComponent()
+
+bool GameInputComponent::keyPressed(const OIS::KeyEvent& arg)
 {
+	if(m_pKeyboard->isKeyDown(OIS::KC_ESCAPE))
+	{
+		m_exit = true;
+	}
+	return true;
+}
+
+bool GameInputComponent::keyReleased(const OIS::KeyEvent& arg)
+{
+	return true;
+}
+
+bool GameInputComponent::mouseMoved(const OIS::MouseEvent& arg)
+{
+	return true;
+}
+
+bool GameInputComponent::mousePressed(const OIS::MouseEvent& arg, OIS::MouseButtonID id)
+{
+	return true;
+}
+
+bool GameInputComponent::mouseReleased(const OIS::MouseEvent& arg, OIS::MouseButtonID id)
+{
+	return true;
+}
+
+GameErrorCode GameInputComponent::Initialize(wxInt32 width, wxInt32 height)
+{
+	m_pKeyboard = static_cast<OIS::Keyboard*>(m_pParent->createInputObject(OIS::OISKeyboard, true));
+	m_pMouse = static_cast<OIS::Mouse*>(m_pParent->createInputObject(OIS::OISMouse, true));
+	
+	m_pMouse->getMouseState().height = height;
+	m_pMouse->getMouseState().width = width;
+	
+	m_pKeyboard->setEventCallback(this);
+	m_pMouse->setEventCallback(this);
+	
+	return FWG_NO_ERROR;
 }
 
 GameInputComponent::~GameInputComponent()
 {
-}
-
-bool GameInputComponent::keyPressed(const KeyEvent& arg)
-{
-}
-
-bool GameInputComponent::keyReleased(const KeyEvent& arg)
-{
-}
-
-bool GameInputComponent::mouseMoved(const MouseEvent& arg)
-{
-}
-
-bool GameInputComponent::mousePressed(const MouseEvent& arg, MouseButtonID id)
-{
-}
-
-bool GameInputComponent::mouseReleased(const MouseEvent& arg, MouseButtonID id)
-{
+	if(m_pKeyboard)
+	{
+		m_pParent->destroyInputObject(m_pKeyboard);
+	}
+	
+	if(m_pMouse)
+	{
+		m_pParent->destroyInputObject(m_pMouse);
+	}
 }

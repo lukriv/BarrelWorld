@@ -1,6 +1,11 @@
 #ifndef __GAME_INPUT_COMPONENT_H__
 #define __GAME_INPUT_COMPONENT_H__
 
+#include <OIS/OISInputManager.h>
+#include <OIS/OISKeyboard.h>
+#include <OIS/OISMouse.h>
+#include "../GameSystem/gdefs.h"
+#include "../GameSystem/gerror.h"
 
 class ControlStruct
 {
@@ -17,8 +22,8 @@ public:
 private:
 	wxDword m_state; //control state vector
 	wxDword m_processed; //note thate state was processed yet - reseted by release
-	sf::Vector2i m_lastMousePosition;
-	sf::Vector2i m_lastMousePositionPressed;
+//	wxInt32 m_lastMousePosition[2];
+//	wxInt32 m_lastMousePositionPressed[2];
 	wxInt32 m_mouseWheelDelta;
 public:
 	inline void SetLeft() {
@@ -138,19 +143,19 @@ public:
 		return ((m_processed & SF_MOUSE_WHEEL_MOVE) != 0);
 	}
 
-	inline const sf::Vector2i& GetLastMousePosition() {
-		return m_lastMousePosition;
-	}
-	inline void SetLastMousePosition(const sf::Vector2i& mousePos) {
-		m_lastMousePosition = mousePos;
-	}
-
-	inline const sf::Vector2i& GetLastMousePositionPressed() {
-		return m_lastMousePositionPressed;
-	}
-	inline void SetLastMousePositionPressed(const sf::Vector2i& mousePos) {
-		m_lastMousePositionPressed = mousePos;
-	}
+//	inline const sf::Vector2i& GetLastMousePosition() {
+//		return m_lastMousePosition;
+//	}
+//	inline void SetLastMousePosition(const sf::Vector2i& mousePos) {
+//		m_lastMousePosition = mousePos;
+//	}
+//
+//	inline const sf::Vector2i& GetLastMousePositionPressed() {
+//		return m_lastMousePositionPressed;
+//	}
+//	inline void SetLastMousePositionPressed(const sf::Vector2i& mousePos) {
+//		m_lastMousePositionPressed = mousePos;
+//	}
 
 	inline const wxInt32 GetMouseWheelDelta() {
 		return m_mouseWheelDelta;
@@ -162,36 +167,36 @@ public:
 };
 
 
-class GameInputComponent : public wxEventFilter
+class GameInputComponent : public OIS::KeyListener, public OIS::MouseListener
 {
-public:
-	GameInputComponent()
-	{
-		wxEvtHandler::AddFilter(this);
-	}
-	
-	~GameInputComponent()
-	{
-		wxEvtHandler::RemoveFilter(this);
-	}
-	
-	
+	OIS::InputManager *m_pParent;
+	OIS::Keyboard *m_pKeyboard;
+	OIS::Mouse *m_pMouse;
+	bool m_exit;
 public:
 
-    virtual int FilterEvent(wxEvent& event)
-    {
-        // Update the last user activity
-        const wxEventType t = event.GetEventType();
-        if ( t == wxEVT_KEY_DOWN || t == wxEVT_MOTION ||
-                t == wxEVT_LEFT_DOWN ||
-                    t == wxEVT_RIGHT_DOWN ||
-                        t == wxEVT_MIDDLE_DOWN )
-        {
-            m_last = wxDateTime::Now();
-        }
-        // Continue processing the event normally as well.
-        return Event_Processed;
-    }
+	GameInputComponent(OIS::InputManager* pInputMgr) : m_pParent(pInputMgr),
+									m_pKeyboard(NULL),
+									m_pMouse(NULL),
+									m_exit(false) {}
+
+	virtual ~GameInputComponent();
+	
+	GameErrorCode Initialize(wxInt32 width, wxInt32 height);
+
+	virtual bool keyPressed(const OIS::KeyEvent& arg);
+	virtual bool keyReleased(const OIS::KeyEvent& arg);
+
+	virtual bool mouseMoved(const OIS::MouseEvent& arg);
+	virtual bool mousePressed(const OIS::MouseEvent& arg, OIS::MouseButtonID id);
+	virtual bool mouseReleased(const OIS::MouseEvent& arg, OIS::MouseButtonID id);
+
+public:
+
+
+	bool Exit() {
+		return m_exit;
+	}
 
 };
 
