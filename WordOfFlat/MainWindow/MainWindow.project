@@ -45,6 +45,7 @@
         <Library Value="sfml-main"/>
         <Library Value="libwxbase30u.a"/>
         <Library Value="libOgreMain.dll.a"/>
+        <Library Value="OIS.dll"/>
       </Linker>
       <ResourceCompiler Options=""/>
     </GlobalSettings>

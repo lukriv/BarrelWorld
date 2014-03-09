@@ -5,7 +5,10 @@
 #include "../GameSystem/glog.h"
 #include <wx/string.h>
 #include <OGRE/OgreRoot.h>
+#include <OIS/OISInputManager.h>
 #include "../GameSystem/refobjectsmptr.h"
+#include "ginputcomp.h"
+
 
 struct GameEngineSettings {
 	wxDword m_screenWidth;
@@ -29,6 +32,11 @@ private:
 	Ogre::Root *m_pRoot;
 	Ogre::RenderWindow *m_pRenderWindow;
 	Ogre::SceneManager *m_pSceneManager;
+	
+	OIS::InputManager*	m_pInputMgr;
+
+	GameInputComponent* m_pInputComp;
+	
 	bool m_isWindowCreated;
 	bool m_isSettingLoaded;
 	bool m_isInitialized;
