@@ -40,11 +40,13 @@
       </Compiler>
       <Linker Options="">
         <LibraryPath Value="../../extern/lib"/>
+        <LibraryPath Value="../../extern/lib/opt"/>
         <Library Value="GameSystem"/>
         <Library Value="sfml-system"/>
         <Library Value="sfml-main"/>
         <Library Value="libwxbase30u.a"/>
         <Library Value="libOgreMain.dll.a"/>
+        <Library Value="libRenderSystem_GL.dll.a"/>
         <Library Value="OIS.dll"/>
       </Linker>
       <ResourceCompiler Options=""/>
