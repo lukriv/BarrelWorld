@@ -151,7 +151,7 @@ GameErrorCode GameClientEngine::MainLoop()
 	Ogre::Camera* camera = m_pSceneManager->createCamera("PlayerCam");
  
 	// Position it at 500 in Z direction
-	camera->setPosition(Ogre::Vector3(-4,0,0));
+	camera->setPosition(Ogre::Vector3(-8,0,0));
 	// Look back along -Z
 	camera->lookAt(Ogre::Vector3(0,0,0));
 	camera->setNearClipDistance(1);
@@ -161,6 +161,11 @@ GameErrorCode GameClientEngine::MainLoop()
 	// Create a Light and set its position
     Ogre::Light* light = m_pSceneManager->createLight("MainLight");
     light->setPosition(20.0f, 80.0f, 50.0f);
+	
+	Ogre::Viewport *viewPort = m_pRenderWindow->addViewport(camera);
+	viewPort->setBackgroundColour(Ogre::ColourValue(0.0f,0.0f,0.0f));
+	
+	camera->setAspectRatio(Ogre::Real(viewPort->getActualWidth()) / Ogre::Real(viewPort->getActualHeight()));
 	
 	while(!m_pInputComp->Exit()) 
 	{
