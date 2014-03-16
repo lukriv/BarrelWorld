@@ -171,7 +171,7 @@ GameErrorCode GameClientEngine::MainLoop()
 	{
 		m_pInputComp->ProcessInputs();
 		m_pRoot->renderOneFrame();
-		wxThread::Sleep(100);
+		wxThread::Sleep(17);
 	}
 	return result;
 }
