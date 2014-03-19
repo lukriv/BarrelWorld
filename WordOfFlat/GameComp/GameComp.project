@@ -8,7 +8,6 @@
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="include">
-    <File Name="ggeomcont.h"/>
     <File Name="gobjdef.h"/>
     <File Name="gentitymgr.h"/>
     <File Name="gentity.h"/>
@@ -111,17 +110,10 @@
     </VirtualDirectory>
     <VirtualDirectory Name="renderComp">
       <VirtualDirectory Name="include">
-        <File Name="RenderComp/ggeometry.h"/>
-        <File Name="RenderComp/grendercmgr.h"/>
         <File Name="RenderComp/grendercomp.h"/>
-        <File Name="RenderComp/gsfmlgeom.h"/>
-        <File Name="RenderComp/gtransformable.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="src">
-        <File Name="RenderComp/ggeometry.cpp"/>
-        <File Name="RenderComp/grendercmgr.cpp"/>
         <File Name="RenderComp/grendercomp.cpp"/>
-        <File Name="RenderComp/gsfmlgeom.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="physComp">
@@ -142,10 +134,10 @@
     </VirtualDirectory>
     <VirtualDirectory Name="transformComp">
       <VirtualDirectory Name="include">
-        <File Name="TransformComp/gtransmgr.h"/>
+        <File Name="TransformComp/gtranscomp.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="src">
-        <File Name="TransformComp/gtransmgr.cpp"/>
+        <File Name="TransformComp/gtranscomp.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
   </VirtualDirectory>
@@ -153,6 +145,6 @@
     <File Name="gentitymgr.cpp"/>
     <File Name="gentity.cpp"/>
   </VirtualDirectory>
-  <Dependencies Name="Release"/>
   <Dependencies Name="Debug"/>
+  <Dependencies Name="Release"/>
 </CodeLite_Project>

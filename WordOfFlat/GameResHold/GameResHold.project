@@ -24,9 +24,7 @@
     <File Name="gdeftables.h"/>
     <File Name="gdefloader.h"/>
   </VirtualDirectory>
-  <VirtualDirectory Name="impl">
-    <File Name="gscenegenimpl.h"/>
-  </VirtualDirectory>
+  <VirtualDirectory Name="impl"/>
   <Settings Type="Static Library">
     <GlobalSettings>
       <Compiler Options="" C_Options="">
@@ -112,6 +110,6 @@
       </Completion>
     </Configuration>
   </Settings>
-  <Dependencies Name="Release"/>
   <Dependencies Name="Debug"/>
+  <Dependencies Name="Release"/>
 </CodeLite_Project>
