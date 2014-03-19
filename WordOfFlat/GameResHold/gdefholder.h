@@ -5,8 +5,6 @@
 class GameDefinitionHolder : public IRefObject {
 public:
 	GameErrorCode GetEntityDef(wxDword entityID, RenderCompDef &basEntityDef); 
-	GameErrorCode GetAnimDef(wxDword animID, AnimationDef &animDef);
-		
 };
 
 

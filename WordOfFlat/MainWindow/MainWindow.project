@@ -28,10 +28,6 @@
     <File Name="gclientengine.h"/>
     <File Name="ginputcomp.h"/>
   </VirtualDirectory>
-  <Dependencies Name="Release"/>
-  <Dependencies Name="Debug">
-    <Project Name="GameSystem"/>
-  </Dependencies>
   <Settings Type="Executable">
     <GlobalSettings>
       <Compiler Options="" C_Options="" Assembler="">
@@ -145,4 +141,8 @@
       </Completion>
     </Configuration>
   </Settings>
+  <Dependencies Name="Debug">
+    <Project Name="GameSystem"/>
+  </Dependencies>
+  <Dependencies Name="Release"/>
 </CodeLite_Project>
