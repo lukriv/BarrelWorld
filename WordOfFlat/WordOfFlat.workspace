@@ -14,6 +14,7 @@
   <Project Name="GameLoader" Path="GameLoader/GameLoader.project" Active="No"/>
   <Project Name="GameComp" Path="GameComp/GameComp.project" Active="No"/>
   <Project Name="Extern" Path="Extern/Extern.project" Active="No"/>
+  <Project Name="GameXmlDefinitions" Path="GameXmlDefinitions/GameXmlDefinitions.project"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="yes">
       <Project Name="GameComm" ConfigName="Debug"/>
@@ -27,6 +28,7 @@
       <Project Name="WorldSrv" ConfigName="Debug"/>
       <Project Name="GameComp" ConfigName="Debug"/>
       <Project Name="Extern" ConfigName="Debug"/>
+      <Project Name="GameXmlDefinitions" ConfigName="Debug"/>
     </WorkspaceConfiguration>
     <WorkspaceConfiguration Name="Release" Selected="yes">
       <Project Name="GameComm" ConfigName="Release"/>
@@ -40,6 +42,7 @@
       <Project Name="WorldSrv" ConfigName="Release"/>
       <Project Name="GameComp" ConfigName="Release"/>
       <Project Name="Extern" ConfigName="Debug"/>
+      <Project Name="GameXmlDefinitions" ConfigName="Debug"/>
     </WorkspaceConfiguration>
   </BuildMatrix>
 </CodeLite_Workspace>

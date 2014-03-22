@@ -2,33 +2,101 @@
 #define __GAME_DEFINITIONS_TABLE_H__
 
 #include <wx/vector.h>
-#include <box2d/common/b2Math.h>
-#include "../GameObjects/ganimation.h"
-#include "../GameObjects/gobjdef.h"
+#include <wx/atomic.h>
+#include "../GameSystem/refobject.h"
 
+typedef wxDword GameDefId;
+static const GameDefId GAME_DEF_ID_UNDEFINED = 0;
 
-
-struct RenderCompDef {
-	GameObjectID m_textureRef; //!< List of textures - can be empty (dep. on type)
-	GameObjectID m_geometryRef; //!< List of geometry objects - can be empty (dep. on type)
-	GameObjectID m_physRef; //!< List of Joints or Bodys - depend on type
-	b2Transform m_tranformation;
-	bool m_textureRepeat; //!< texture repetition
+/*!
+ * \class CompDefBase
+ * \author Lukas
+ * \date 22.3.2014
+ * \file gdeftables.h
+ * \brief Base class for components and entity definitions
+ */
+class CompDefBase {
+protected:
+	wxDword m_compDefId;
+	wxAtomicInt m_refCount;
+public:
+	CompDefBase() : m_compId(GAME_DEF_ID_UNDEFINED), m_refCount(1) {}
+	virtual ~CompDefBase() {}
 	
-	RenderCompDef() : m_textureRef(GAME_OBJECT_ID_INVALID)
-			, m_geometryRef(GAME_OBJECT_ID_INVALID)
-			, m_physRef(GAME_OBJECT_ID_INVALID)
-			, m_textureRepeat(false) {}
+	inline void SetDefId(GameDefId id) { m_compDefId = id; }
+	inline GameDefId GetDefId() { return m_compDefId; }
+
 };
 
-struct AnimationDef {
-	GameAnimation::AnimationType m_animType;
-	wxVector<GameObjectID> m_frameRefs;
-	wxVector<sf::Time> m_frameDurations;
-	bool m_repeat;
-	bool m_endless;
+
+
+/*!
+ * \class TranformCompDef
+ * \author Lukas
+ * \date 22.3.2014
+ * \file gdeftables.h
+ * \brief 
+ */
+struct TranformCompDef {
+	Ogre::Vector3 m_position;
+	Ogre::Vector3 m_scale;
+	Ogre::Quaternion m_rotation;
+};
+
+/*!
+ * \class RenderCompDef
+ * \author Lukas
+ * \date 22.3.2014
+ * \file gdeftables.h
+ * \brief Include render component definitions
+ */
+struct RenderCompDef : public CompDefBase {
+	wxString m_meshName; //!< Name of the mesh
+	wxString m_meshGroup; //!< Name of mesh group to which mesh belongs
+
+	RenderCompDef() : CompDefBase() {}
+};
+
+/*!
+ * \class AnimationDef
+ * \author Lukas
+ * \date 22.3.2014
+ * \file gdeftables.h
+ * \brief Animation definitions
+ */
+struct AnimationDef : public CompDefBase {
+	wxString m_animationName; //!< Name of animation
+	bool m_repeat; //!< Animation repeating
+
+	AnimationDef() : CompDefBase(), m_repeat(false) {}
+};
+
+/*!
+ * \class AnimatorDef
+ * \author Lukas
+ * \date 22.3.2014
+ * \file gdeftables.h
+ * \brief Class for managing animations
+ */
+struct AnimatorDef : public CompDefBase {
+	wxVector<wxString> m_animList; //!< List of animation belong
 	
-	AnimationDef() :m_animType(GameAnimation::ANIM_TYPE_STATIC), m_repeat(false), m_endless(false){}
+	AnimatorDef() {}
+};
+
+/*!
+ * \class EntityDef
+ * \author Lukas
+ * \date 22.3.2014
+ * \file gdeftables.h
+ * \brief Entity definitios
+ */
+struct EntityDef : public CompDefBase {
+	TranformCompDef m_tranformation;
+	wxString m_renderDef;
+	wxString m_animatorDef;
+	
+	EntityDef() : CompDefBase() {}
 };
 
 

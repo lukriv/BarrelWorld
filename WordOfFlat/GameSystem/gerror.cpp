@@ -98,6 +98,9 @@ void GameConvertErrCode2String(GameErrorCode errCode, wxString &errorStr)
 	case FWG_E_END_OF_SEQUENCE_INFORMATION:
 		errorStr.assign(FWG_E_END_OF_SEQUENCE_INFORMATION_STR);
 		break;
+	case FWG_E_OBJECT_ALREADY_EXISTS_ERROR:
+		errorStr.assign(FWG_E_OBJECT_ALREADY_EXISTS_ERROR_STR);
+		break;
 	default:
 		errorStr.assign(_T("Unknown Error"));
 		break;

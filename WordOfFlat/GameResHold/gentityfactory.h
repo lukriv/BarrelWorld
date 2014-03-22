@@ -4,8 +4,6 @@
 #include <wx/atomic.h>
 #include "../GameSystem/refobjectsmptr.h"
 
-#include "../GameObjects/gentityobj.h"
-#include "../GameObjects/ganimation.h"
 #include "gresholder.h"
 
 
@@ -20,9 +18,7 @@ public:
 	
 	GameErrorCode Initialize(GameResourceHolder *pResHolder, GameLogger *pLogger);
 	
-	GameErrorCode CreateBasicEntity(const RenderCompDef &entityDef, b2World &world, GameRenderComp &entity);
-	GameErrorCode CreateAnimation(const AnimationDef& entityDef, GameAnimation &animation);
-	
+	GameErrorCode CreateEntity(const RenderCompDef &entityDef, b2World &world, GameRenderComp &entity);
 	
 public:
  	virtual void addRef();
