@@ -3,8 +3,12 @@
 
 
 
+#include "gdefholder.h"
+
+
 class IGameDefLoader {
 public:
+	virtual GameErrorCode Load(GameDefinitionHolder &defHolder) = 0;
 	
 };
 

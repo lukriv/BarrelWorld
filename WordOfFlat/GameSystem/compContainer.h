@@ -14,10 +14,16 @@ class CompDefContainer {
 	typedef std::pair<idT,wxDword> TIdConvertTablePair;
 	
 	typedef std::map<wxString,wxDword> TStringConvertTable;
-	typedef std::pair<wxString,wxDword> TStringConvertTablePair;	
+	typedef std::pair<wxString,wxDword> TStringConvertTablePair;
+
+	struct Item {
+		idT m_id;
+		wxString m_strId;
+		T m_item;
+	};
 
 private:
-	wxVector<T> m_itemsList;
+	wxVector<Item> m_itemsList;
 	TIdConvertTable m_idConvertTable;
 	TStringConvertTable m_stringConvertTable; 	
 
@@ -67,7 +73,11 @@ public:
 		}
 		
 		wxDword index = m_itemsList.size();
-		m_itemsList.push_back(item);
+		m_itemsList.push_back(Item());
+		m_itemsList[index].m_id = itemId;
+		m_itemsList[index].m_strId = itemName;
+		m_itemsList[index].m_item = item;
+
 		
 		retvalIdConvert = m_idConvertTable.insert(TIdConvertTablePair(itemId, index));
 		if(!retvalIdConvert.second)
@@ -93,7 +103,7 @@ public:
 		wxDword index = 0;
 		if(iter != m_stringConvertTable.end())
 		{
-			return m_itemsList[iter->second];
+			return m_itemsList[iter->second].m_item;
 		}
 		
 		return m_nullItem;
@@ -106,7 +116,7 @@ public:
 		wxDword index = 0;
 		if(iter != m_idConvertTable.end())
 		{
-			return m_itemsList[iter->second];
+			return m_itemsList[iter->second].m_item;
 		}
 		
 		return m_nullItem;

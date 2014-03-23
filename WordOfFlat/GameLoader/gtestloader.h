@@ -3,32 +3,26 @@
 
 #include "../GameResHold/gresloader.h"
 
-class GameTestResourceLoader : public IGameResourceLoader {
- private:
+class GameTestResourceLoader : public IGameDefLoader
+{
+private:
 	bool m_isInitialized;
 	GameLoggerPtr m_spLogger;
-	 
+
+private:
+	GameErrorCode LoadMeshes(GameDefinitionHolder& defHolder);
+	GameErrorCode LoadMaterials(GameDefinitionHolder& defHolder);
+	GameErrorCode LoadAnimations(GameDefinitionHolder& defHolder);
+	GameErrorCode LoadAnimators(GameDefinitionHolder& defHolder);
+	GameErrorCode LoadEntities(GameDefinitionHolder& defHolder);
 public:
 	GameTestResourceLoader() : m_isInitialized(false) {}
 	~GameTestResourceLoader() {}
-	
-	GameErrorCode Initialize(GameLogger *pLogger = NULL);
-	
-public:
-	virtual GameErrorCode LoadTextureFromFile(const wxChar* texFileName, sf::Texture *&pTexImage);
 
-	virtual GameErrorCode LoadTexture(GameObjectID texID, sf::Texture *&pTexImage);
-	virtual GameErrorCode LoadGeometry(GameObjectID geomID, GameGeometryContainer *&pShape);
-	virtual GameErrorCode LoadPhysJoint(GameObjectID jointID, b2JointDef *&pJointDef);
-	virtual GameErrorCode LoadPhysBody(GameObjectID bodyID, b2BodyDef *&pBodyDef);
-	virtual GameErrorCode LoadPhysFixture(GameObjectID fixID, b2FixtureDef *&pFixDef);
-	
-	virtual GameErrorCode LoadTextureList(TGameTextureMap &texList);
-	virtual GameErrorCode LoadGeometryList(TGameGeometryMap &geomList);
-	virtual GameErrorCode LoadPhysJointList(TGamePhysJointMap &physJointList);
-	virtual GameErrorCode LoadPhysBodyList(TGamePhysBodyMap &physBodyList);
-	virtual GameErrorCode LoadPhysFixList(TGamePhysFixMap &physFixList);
-	
+	GameErrorCode Initialize(GameLogger *pLogger = NULL);
+public:
+	virtual GameErrorCode Load(GameDefinitionHolder& defHolder);
+
 };
 
 

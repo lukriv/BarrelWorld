@@ -9,22 +9,40 @@ typedef wxDword GameDefId;
 static const GameDefId GAME_DEF_ID_UNDEFINED = 0;
 
 /*!
- * \class CompDefBase
+ * \class DefBase
  * \author Lukas
  * \date 22.3.2014
  * \file gdeftables.h
  * \brief Base class for components and entity definitions
  */
-class CompDefBase {
+class DefBase : IRefObject
+{
 protected:
 	wxDword m_compDefId;
 	wxAtomicInt m_refCount;
 public:
-	CompDefBase() : m_compId(GAME_DEF_ID_UNDEFINED), m_refCount(1) {}
-	virtual ~CompDefBase() {}
-	
+
+	DefBase() : m_compId(GAME_DEF_ID_UNDEFINED), m_refCount(1) {}
+	virtual ~DefBase() {}
+
 	inline void SetDefId(GameDefId id) { m_compDefId = id; }
 	inline GameDefId GetDefId() { return m_compDefId; }
+	
+	virtual void addRef() 
+	{
+		wxAtomicInc(m_refCount);
+	}
+
+	virtual wxInt32 release() 
+	{
+		wxInt32 refCount = wxAtomicDec(m_refCount);
+		if(refCount == 0)
+		{
+			delete this;
+		}
+		
+		return refCount;
+	}
 
 };
 
@@ -35,27 +53,28 @@ public:
  * \author Lukas
  * \date 22.3.2014
  * \file gdeftables.h
- * \brief 
+ * \brief
  */
-struct TranformCompDef {
+struct TransformDef : public DefBase {
 	Ogre::Vector3 m_position;
 	Ogre::Vector3 m_scale;
 	Ogre::Quaternion m_rotation;
 };
 
 /*!
- * \class RenderCompDef
+ * \class NameDef
  * \author Lukas
  * \date 22.3.2014
  * \file gdeftables.h
- * \brief Include render component definitions
+ * \brief Used for named resources
  */
-struct RenderCompDef : public CompDefBase {
-	wxString m_meshName; //!< Name of the mesh
-	wxString m_meshGroup; //!< Name of mesh group to which mesh belongs
+struct NameDef : public DefBase {
+	wxString m_name; //!< Name of the mesh
+	wxString m_group; //!< Name of mesh group to which mesh belongs
 
-	RenderCompDef() : CompDefBase() {}
+	MeshDef() : DefBase() {}
 };
+
 
 /*!
  * \class AnimationDef
@@ -64,11 +83,11 @@ struct RenderCompDef : public CompDefBase {
  * \file gdeftables.h
  * \brief Animation definitions
  */
-struct AnimationDef : public CompDefBase {
+struct AnimationDef : public DefBase {
 	wxString m_animationName; //!< Name of animation
 	bool m_repeat; //!< Animation repeating
 
-	AnimationDef() : CompDefBase(), m_repeat(false) {}
+	AnimationDef() : DefBase(), m_repeat(false) {}
 };
 
 /*!
@@ -78,9 +97,9 @@ struct AnimationDef : public CompDefBase {
  * \file gdeftables.h
  * \brief Class for managing animations
  */
-struct AnimatorDef : public CompDefBase {
-	wxVector<wxString> m_animList; //!< List of animation belong
-	
+struct AnimatorDef : public DefBase {
+	wxVector<RefObjSmPtr<AnimationDef>> m_animList; //!< List of animation belong
+
 	AnimatorDef() {}
 };
 
@@ -91,12 +110,14 @@ struct AnimatorDef : public CompDefBase {
  * \file gdeftables.h
  * \brief Entity definitios
  */
-struct EntityDef : public CompDefBase {
-	TranformCompDef m_tranformation;
-	wxString m_renderDef;
-	wxString m_animatorDef;
-	
-	EntityDef() : CompDefBase() {}
+struct EntityDef : public DefBase {
+	wxString m_entityName;
+	RefObjSmPtr<TransformDef> m_transformation;
+	RefObjSmPtr<NameDef> m_mesh;
+	RefObjSmPtr<NameDef> m_material;
+	RefObjSmPtr<AnimatorDef> m_animatorDef;
+
+	EntityDef() : DefBase() {}
 };
 
 

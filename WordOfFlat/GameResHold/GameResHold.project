@@ -8,15 +8,12 @@
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="src">
-    <File Name="gresholder.cpp"/>
     <File Name="gscenegenimpl.cpp"/>
     <File Name="gentityfactory.cpp"/>
     <File Name="gentitycreator.cpp"/>
     <File Name="gdefholder.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
-    <File Name="gresloader.h"/>
-    <File Name="gresholder.h"/>
     <File Name="gscenegen.h"/>
     <File Name="gentityfactory.h"/>
     <File Name="gentitycreator.h"/>

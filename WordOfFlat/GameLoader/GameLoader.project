@@ -12,7 +12,6 @@
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="gtestloader.h"/>
-    <File Name="gtestdef.h"/>
   </VirtualDirectory>
   <Settings Type="Static Library">
     <GlobalSettings>
