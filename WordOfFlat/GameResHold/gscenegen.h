@@ -16,11 +16,7 @@ typedef wxDword TGameWorldSegmentID;
 
 class IGameSceneGenerator : public IRefObject {
 public:
-	virtual GameErrorCode GenLandscape(const TGameWorldSegmentID &wrldID, wxVector<RenderCompDef> &landscape) = 0;
-	virtual GameErrorCode GenStaticObj(const TGameWorldSegmentID &wrldID, wxVector<RenderCompDef> &staticObjs) = 0;
-	virtual GameErrorCode GenMoveableObj(const TGameWorldSegmentID &wrldID, wxVector<RenderCompDef> &moveableObjs) = 0;
-	virtual GameErrorCode GenAnimals(const TGameWorldSegmentID &wrldID, wxVector<RenderCompDef> &animals) = 0;
-	virtual GameErrorCode GenCharacters(const TGameWorldSegmentID &wrldID, wxVector<RenderCompDef> &characters) = 0;
+	virtual GameErrorCode GenerateLandscape() = 0;
 	
 };
 

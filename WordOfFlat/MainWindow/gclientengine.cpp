@@ -147,6 +147,12 @@ GameErrorCode GameClientEngine::MainLoop()
 	pSceneNode->setPosition(0,0,0);
 	pSceneNode->attachObject(pEntity);
 	
+	pEntity = m_pSceneManager->createEntity("cc1", "TestingCube");
+	pEntity->setMaterialName("Test/ColourTest");
+	pSceneNode = m_pSceneManager->getRootSceneNode()->createChildSceneNode();
+	pSceneNode->setPosition(1,1,1);
+	pSceneNode->attachObject(pEntity);
+	
 	// Create the camera
 	Ogre::Camera* camera = m_pSceneManager->createCamera("PlayerCam");
  

@@ -1,17 +1,13 @@
 #ifndef __GAME_ENTITY_H__
 #define __GAME_ENTITY_H__
 
-class GameEntity {
-	TransformComponent *m_pTransformComp; // transform component
-	RenderComponent *m_pRenderComp;
-	wxDword m_animator2dComp;
-	wxDword m_physComp;
-public:
-		GameEntity();
-		~GameEntity();
-		
-		inline void SetTransformComp ( TransformComponent* pTransform ) {m_pTransformComp = pTransform;}
-		inline void SetRenderComp ( RenderComponent* pRenderComp ) {m_pRenderComp = pRenderComp;}
+struct GameEntity : public CompBase {
+	wxString m_entityName;
+	RefObjSmPtr<TranformCompDef> m_tranformation;
+	RefObjSmPtr<RenderCompDef> m_renderDef;
+	RefObjSmPtr<AnimatorDef> m_animatorDef;
+
+	EntityDef() : CompDefBase() {}
 };
 
 #endif // __GAME_ENTITY_H__

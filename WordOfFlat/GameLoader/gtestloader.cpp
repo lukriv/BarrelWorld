@@ -7,228 +7,122 @@
 
 GameErrorCode GameTestResourceLoader::Initialize(GameLogger* pLogger)
 {
-	if (m_isInitialized)
-	{
+	if (m_isInitialized) {
 		return FWG_NO_ERROR;
 	}
-	
+
 	m_spLogger = pLogger;
-	
+
 	m_isInitialized = true;
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode GameTestResourceLoader::LoadGeometryList(TGameGeometryMap& geomList)
-{
-	TGameGeometryMapItem item;
-	item.first = 1;
-	geomList.insert(item);
-	
-	item.first = 2;
-	geomList.insert(item);
-	return FWG_NO_ERROR;
-}
 
-GameErrorCode GameTestResourceLoader::LoadGeometry(GameObjectID geomID, GameGeometryContainer*& pShape)
-{	
-	wxScopedPtr<GameGeometryContainer> apGeometry;
-	pShape = NULL;
-	
-	apGeometry.reset(new (std::nothrow) GameGeometryContainer());
-	if (apGeometry.get() == NULL) return FWG_E_MEMORY_ALLOCATION_ERROR;
-	
-	switch (geomID)
+GameErrorCode GameTestResourceLoader::Load(GameDefinitionHolder& defHolder)
+{
+	if(!m_isInitialized)
 	{
-	case 1:
-		apGeometry->m_type = GAME_GEOM_QUADS;
-		apGeometry->m_vertexes.resize(4);
-		apGeometry->m_vertexes[0] = b2Vec2(-0.5f, -0.5f);
-		apGeometry->m_vertexes[1] = b2Vec2(0.5f, -0.5f);
-		apGeometry->m_vertexes[2] = b2Vec2(0.5f, 0.5f);
-		apGeometry->m_vertexes[3] = b2Vec2(-0.5f, 0.5f);
-		
-		apGeometry->m_texCoords.resize(4);
-		apGeometry->m_texCoords[0] = b2Vec2(0, 255);
-		apGeometry->m_texCoords[1] = b2Vec2(255, 255);
-		apGeometry->m_texCoords[2] = b2Vec2(255, 0);
-		apGeometry->m_texCoords[3] = b2Vec2(0, 0);
-		break;
-	case 2:
-		apGeometry->m_type = GAME_GEOM_QUADS;
-		apGeometry->m_vertexes.resize(4);
-		apGeometry->m_vertexes[0] = b2Vec2(-10, -0.5f);
-		apGeometry->m_vertexes[1] = b2Vec2(10, -0.5f);
-		apGeometry->m_vertexes[2] = b2Vec2(10, 0.5f);
-		apGeometry->m_vertexes[3] = b2Vec2(-10, 0.5f);
-		
-		apGeometry->m_texCoords.resize(4);
-		apGeometry->m_texCoords[0] = b2Vec2(0, 255);
-		apGeometry->m_texCoords[1] = b2Vec2(5100, 255);
-		apGeometry->m_texCoords[2] = b2Vec2(5100, 0);
-		apGeometry->m_texCoords[3] = b2Vec2(0, 0);
-		break;
+		return FWG_E_OBJECT_NOT_INITIALIZED_ERROR;
 	}
 	
-	pShape = apGeometry.release();
 	
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode GameTestResourceLoader::LoadTexture(GameObjectID texID, sf::Texture*& pTexImage)
+GameErrorCode GameTestResourceLoader::LoadAnimations(GameDefinitionHolder& defHolder)
 {
-	return FWG_E_NOT_IMPLEMENTED_ERROR;
-}
-
-GameErrorCode GameTestResourceLoader::LoadTextureList(TGameTextureMap& texList)
-{
-	TGameTextureMapItem item;
-	item.first = 1;
-	item.second.m_texFileName.assign(wxT("res/img/woodbox.png"));
-	texList.insert(item);
-	
-	item.first = 2;
-	item.second.m_texFileName.assign(wxT("res/img/ground.png"));
-	texList.insert(item);
-	
-	item.first = 3;
-	item.second.m_texFileName.assign(wxT("res/img/redball.png"));
-	texList.insert(item);
-	
-	item.first = 4;
-	item.second.m_texFileName.assign(wxT("res/img/redballempty.png"));
-	texList.insert(item);
-	
-	item.first = 5;
-	item.second.m_texFileName.assign(wxT("res/img/empty.png"));
-	texList.insert(item);
-	
-	return FWG_NO_ERROR;
-	
-}
-
-GameErrorCode GameTestResourceLoader::LoadTextureFromFile(const wxChar* texFileName, sf::Texture*& pTexImage)
-{
-	 // Load a sprite to display
-	 wxScopedPtr<sf::Texture> apTexImage;
-	 wxString fileName(texFileName);
-	 apTexImage.reset(new (std::nothrow) sf::Texture());
-	 std::string fileNameStr(fileName.c_str().AsChar());
-	 if (!apTexImage->loadFromFile(fileNameStr))
-	 {
-		 FWGLOG_ERROR_FORMAT(wxT("GameTestResourceLoader::LoadTextureFromFile() : Load texture from \"%s\" failed: 0x%08x"),
-					m_spLogger, texFileName, FWG_E_MISC_ERROR, FWGLOG_ENDVAL);
-		 return FWG_E_MISC_ERROR;
-	 }
-	 
-	 pTexImage = apTexImage.release();
-	 
-	 return FWG_NO_ERROR;
-}
-
-GameErrorCode GameTestResourceLoader::LoadPhysJointList(TGamePhysJointMap& physJointList)
-{
-	FWG_UNREFERENCED_PARAMETER(physJointList);
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode GameTestResourceLoader::LoadPhysBodyList(TGamePhysBodyMap& physBodyList)
+GameErrorCode GameTestResourceLoader::LoadAnimators(GameDefinitionHolder& defHolder)
 {
-	TGamePhysBodyMapItem item;
-	item.first = 1;
-	item.second.m_fixtureRefList.push_back(1);
-	physBodyList.insert(item);
-	
-	item.second.m_fixtureRefList.clear();
-	
-	item.first = 2;
-	item.second.m_fixtureRefList.push_back(2);
-	physBodyList.insert(item);
-	
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode GameTestResourceLoader::LoadPhysFixList(TGamePhysFixMap& physFixList)
+GameErrorCode GameTestResourceLoader::LoadEntities(GameDefinitionHolder& defHolder)
 {
-	TGamePhysFixMapItem item;
-	item.first = 1;
-	item.second.m_shapeRef = 1;
-	physFixList.insert(item);
-	
-	item.first = 2;
-	item.second.m_shapeRef = 2;
-	physFixList.insert(item);
-	
-	return FWG_NO_ERROR;
-}
-
-GameErrorCode GameTestResourceLoader::LoadPhysJoint(GameObjectID jointID, b2JointDef*& pJointDef)
-{
-	FWG_UNREFERENCED_PARAMETER(jointID);
-	pJointDef = NULL;
-	return FWG_NO_ERROR;
-}
-
-GameErrorCode GameTestResourceLoader::LoadPhysBody(GameObjectID bodyID, b2BodyDef*& pBodyDef)
-{
-	wxScopedPtr<b2BodyDef> apBodyDef;
-	pBodyDef = NULL;
-	
-	apBodyDef.reset(new (std::nothrow) b2BodyDef());
-	if (apBodyDef.get() == NULL)
+	GameErrorCode result = FWG_NO_ERROR;
+	RefObjSmPtr<EntityDef> spEntityDef;
+	spEntityDef.Attach(new (std::nothrow) EntityDef);
+	if(spEntityDef.IsEmpty())
 	{
 		return FWG_E_MEMORY_ALLOCATION_ERROR;
 	}
 	
-	switch (bodyID)
+	if(defHolder.m_meshDefs.ItemExists(wxString(wxT("TestingCube"))))
 	{
-	case 1:
-		apBodyDef->type = b2_dynamicBody;
-		break;
-	case 2: 
-		apBodyDef->type = b2_staticBody;
-		break;
-	default:
+		spEntityDef->m_mesh = defHolder.m_meshDefs.GetItem(wxString(wxT("TestingCube")));
+	} else {
 		return FWG_E_OBJECT_NOT_FOUND_ERROR;
 	}
 	
-	pBodyDef = apBodyDef.release();
+	if(defHolder.m_materialDefs.ItemExists(wxString(wxT("testMaterial"))))
+	{
+		spEntityDef->m_material = defHolder.m_materialDefs.GetItem(wxString(wxT("testMaterial")));
+	} else {
+		return FWG_E_OBJECT_NOT_FOUND_ERROR;
+	}
 	
-	return FWG_NO_ERROR;
-
-}
-
-GameErrorCode GameTestResourceLoader::LoadPhysFixture(GameObjectID fixID, b2FixtureDef*& pFixDef)
-{
-	wxScopedPtr<b2FixtureDef> apFixtureDef;
-	pFixDef = NULL;
-	
-	apFixtureDef.reset(new (std::nothrow) b2FixtureDef());
-	if (apFixtureDef.get() == NULL)
+	spEntityDef->m_transformation.Attach(new (std::nothrow) TransformDef());
+	if(spEntityDef->m_transformation.IsEmpty())
 	{
 		return FWG_E_MEMORY_ALLOCATION_ERROR;
 	}
 	
-	switch (fixID)
-	{
-	case 1:
-		apFixtureDef->friction = 0.5;
-		apFixtureDef->restitution = 0.2;
-		apFixtureDef->density = 100;
-		break;
-	case 2:
-		apFixtureDef->friction = 0.7;
-		apFixtureDef->restitution = 0.2;
-		apFixtureDef->density = 0;
-		break;
-	default:
-		return FWG_E_OBJECT_NOT_FOUND_ERROR;
-	}
+	spEntityDef->m_transformation->m_position[0] = 0.0f;
+	spEntityDef->m_transformation->m_position[1] = 0.0f;
+	spEntityDef->m_transformation->m_position[2] = 0.0f;
 	
-	pFixDef = apFixtureDef.release();
+	
+	
+	spEntityDef.Attach(new (std::nothrow) EntityDef);
+	if(spEntityDef.IsEmpty())
+	{
+		return FWG_E_MEMORY_ALLOCATION_ERROR;
+	}
 	
 	return FWG_NO_ERROR;
 }
 
+GameErrorCode GameTestResourceLoader::LoadMaterials(GameDefinitionHolder& defHolder)
+{
+	RefObjSmPtr<NameDef> spMaterialDef;
+	spMaterialDef.Attach(new (std::nothrow) NameDef);
+	if(spMaterialDef.IsEmpty())
+	{
+		return FWG_E_MEMORY_ALLOCATION_ERROR;
+	}
+	
+	spMaterialDef->m_name = wxT("Test/ColourTest");
+	
+	if(FWG_FAILED(result = defHolder.m_materialDefs.AddItem( wxString(wxT("testMaterial")), 1, spMaterialDef )))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("GameTestResourceLoader::LoadMaterials() : add item failed: 0x%08x"),
+																m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	return FWG_NO_ERROR;
+}
 
-
-
+GameErrorCode GameTestResourceLoader::LoadMeshes(GameDefinitionHolder& defHolder)
+{
+	GameErrorCode result = FWG_NO_ERROR;
+	RefObjSmPtr<NameDef> spMeshDef;
+	spMeshDef.Attach(new (std::nothrow) NameDef);
+	if(spMeshDef.IsEmpty())
+	{
+		return FWG_E_MEMORY_ALLOCATION_ERROR;
+	}
+	
+	spMeshDef->m_name = wxT("TestingCube");
+	
+	if(FWG_FAILED(result = defHolder.m_meshDefs.AddItem( wxString(wxT("testCubeMesh")), 1, spMeshDef )))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("GameTestResourceLoader::LoadMeshes() : add item failed: 0x%08x"),
+																m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	return FWG_NO_ERROR;
+}
