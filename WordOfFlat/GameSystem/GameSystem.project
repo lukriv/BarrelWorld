@@ -34,6 +34,10 @@
     <VirtualDirectory Name="Network">
       <File Name="gsocket.h"/>
     </VirtualDirectory>
+    <VirtualDirectory Name="Memory">
+      <File Name="new.h"/>
+      <File Name="new.inl"/>
+    </VirtualDirectory>
   </VirtualDirectory>
   <Settings Type="Static Library">
     <GlobalSettings>
