@@ -3,6 +3,8 @@
 #include <OGRE/OgreEntity.h>
 #include <OGRE/OgreMeshManager.h>
 #include <OGRE/OgreSubMesh.h>
+#include "../GameSystem/gerror.h"
+#include "../GameSystem/new.h"
 
 
 
@@ -87,12 +89,7 @@ GameErrorCode GameClientEngine::Initialize(GameLogger* pLogger)
 	
 	m_pInputMgr = OIS::InputManager::createInputSystem(paramList);
 	
-	m_pInputComp = new (std::nothrow) GameInputComponent(m_pInputMgr);
-	
-	if(m_pInputComp == NULL)
-	{
-		return FWG_E_MEMORY_ALLOCATION_ERROR;
-	}
+	FWG_RETURN_FAIL(GameNewChecked(m_pInputComp, m_pInputMgr));
 	
 	if(FWG_FAILED( result = m_pInputComp->Initialize(m_pRenderWindow->getWidth(), m_pRenderWindow->getHeight())))
 	{
