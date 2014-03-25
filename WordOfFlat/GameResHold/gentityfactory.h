@@ -18,7 +18,7 @@ public:
 	
 	GameErrorCode Initialize(GameResourceHolder *pResHolder, GameLogger *pLogger);
 	
-	GameErrorCode CreateEntity(const RenderCompDef &entityDef, b2World &world, GameRenderComp &entity);
+	GameErrorCode CreateAllEntities(GameDefinitionHolder &defHolder );
 	
 public:
  	virtual void addRef();

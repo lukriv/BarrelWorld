@@ -6,7 +6,7 @@
 #include "gerror.h"
 
 template<typename key, typename value>
-class SimpleMap {
+class GameBasMap {
 	typedef std::map<key,value> TInternalMap;
 	typedef std::pair<key,value> TInternalMapPair;
 public:
@@ -17,15 +17,15 @@ private:
 	TInternalMap m_innerMap;
 	
 public:
-	SimpleMap() {}
-	~SimpleMap() {}
+	GameBasMap() {}
+	~GameBasMap() {}
 	
 	/*!
 	 * \brief Query on key exists
 	 * \param Key Unique key
 	 * \return True if key exists, false otherwise
 	 */
-	inline bool KeyExists(const key& Key)
+	inline bool Exists(const key& Key)
 	{
 		return (m_innerMap.find(Key) != m_innerMap.end());	
 	}
@@ -46,7 +46,7 @@ public:
 		retval = m_innerMap.insert(TInternalMapPair(Key, Value));
 		if(!retval.second)
 		{
-			if(KeyExists(Key))
+			if(Exists(Key))
 			{
 				return FWG_E_OBJECT_ALREADY_EXISTS_ERROR;
 			} else {
