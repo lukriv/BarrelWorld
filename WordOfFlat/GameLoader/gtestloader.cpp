@@ -1,8 +1,5 @@
 #include "gtestloader.h"
-#include <map>
-#include <wx/scopedptr.h>
-#include <sfml/Graphics.hpp>
-#include "../GameObjects/gsfmlgeom.h"
+#include "../GameSystem/new.h"
 
 
 GameErrorCode GameTestResourceLoader::Initialize(GameLogger* pLogger)
@@ -43,59 +40,56 @@ GameErrorCode GameTestResourceLoader::LoadEntities(GameDefinitionHolder& defHold
 {
 	GameErrorCode result = FWG_NO_ERROR;
 	RefObjSmPtr<EntityDef> spEntityDef;
-	spEntityDef.Attach(new (std::nothrow) EntityDef);
-	if(spEntityDef.IsEmpty())
-	{
-		return FWG_E_MEMORY_ALLOCATION_ERROR;
-	}
 	
-	if(defHolder.m_meshDefs.ItemExists(wxString(wxT("TestingCube"))))
+	FWG_RETURN_FAIL(GameNewChecked(spEntityDef.OutRef()));
+	
+	if(defHolder.m_meshDefs.KeyExists(wxString(wxT("TestingCube"))))
 	{
-		spEntityDef->m_mesh = defHolder.m_meshDefs.GetItem(wxString(wxT("TestingCube")));
+		spEntityDef->m_mesh = *defHolder.m_meshDefs.FindValue(wxString(wxT("TestingCube")));
 	} else {
 		return FWG_E_OBJECT_NOT_FOUND_ERROR;
 	}
 	
-	if(defHolder.m_materialDefs.ItemExists(wxString(wxT("testMaterial"))))
+	if(defHolder.m_materialDefs.KeyExists(wxString(wxT("testMaterial"))))
 	{
-		spEntityDef->m_material = defHolder.m_materialDefs.GetItem(wxString(wxT("testMaterial")));
+		spEntityDef->m_material = *defHolder.m_materialDefs.FindValue(wxString(wxT("testMaterial")));
 	} else {
 		return FWG_E_OBJECT_NOT_FOUND_ERROR;
 	}
 	
-	spEntityDef->m_transformation.Attach(new (std::nothrow) TransformDef());
-	if(spEntityDef->m_transformation.IsEmpty())
-	{
-		return FWG_E_MEMORY_ALLOCATION_ERROR;
-	}
+	FWG_RETURN_FAIL(GameNewChecked(spEntityDef->m_transformation.OutRef()));
 	
 	spEntityDef->m_transformation->m_position[0] = 0.0f;
 	spEntityDef->m_transformation->m_position[1] = 0.0f;
 	spEntityDef->m_transformation->m_position[2] = 0.0f;
-	
-	
-	
-	spEntityDef.Attach(new (std::nothrow) EntityDef);
-	if(spEntityDef.IsEmpty())
+
+	if(FWG_FAILED(result = defHolder.m_entityDefs.Insert( wxString(wxT("entity1")), spEntityDef )))
 	{
-		return FWG_E_MEMORY_ALLOCATION_ERROR;
+		FWGLOG_ERROR_FORMAT(wxT("GameTestResourceLoader::LoadEntities() : add entity failed: 0x%08x"),
+																m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
 	}
+	
+	
+	//spEntityDef.Attach(new (std::nothrow) EntityDef);
+	//if(spEntityDef.IsEmpty())
+	//{
+	//	return FWG_E_MEMORY_ALLOCATION_ERROR;
+	//}
 	
 	return FWG_NO_ERROR;
 }
 
 GameErrorCode GameTestResourceLoader::LoadMaterials(GameDefinitionHolder& defHolder)
 {
+	GameErrorCode result = FWG_NO_ERROR;
 	RefObjSmPtr<NameDef> spMaterialDef;
-	spMaterialDef.Attach(new (std::nothrow) NameDef);
-	if(spMaterialDef.IsEmpty())
-	{
-		return FWG_E_MEMORY_ALLOCATION_ERROR;
-	}
+	
+	FWG_RETURN_FAIL(GameNewChecked(spMaterialDef.OutRef()));
 	
 	spMaterialDef->m_name = wxT("Test/ColourTest");
 	
-	if(FWG_FAILED(result = defHolder.m_materialDefs.AddItem( wxString(wxT("testMaterial")), 1, spMaterialDef )))
+	if(FWG_FAILED(result = defHolder.m_materialDefs.Insert( wxString(wxT("testMaterial")), spMaterialDef )))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("GameTestResourceLoader::LoadMaterials() : add item failed: 0x%08x"),
 																m_spLogger, result, FWGLOG_ENDVAL);
@@ -109,15 +103,12 @@ GameErrorCode GameTestResourceLoader::LoadMeshes(GameDefinitionHolder& defHolder
 {
 	GameErrorCode result = FWG_NO_ERROR;
 	RefObjSmPtr<NameDef> spMeshDef;
-	spMeshDef.Attach(new (std::nothrow) NameDef);
-	if(spMeshDef.IsEmpty())
-	{
-		return FWG_E_MEMORY_ALLOCATION_ERROR;
-	}
+	
+	FWG_RETURN_FAIL(GameNewChecked(spMeshDef.OutRef()));
 	
 	spMeshDef->m_name = wxT("TestingCube");
 	
-	if(FWG_FAILED(result = defHolder.m_meshDefs.AddItem( wxString(wxT("testCubeMesh")), 1, spMeshDef )))
+	if(FWG_FAILED(result = defHolder.m_meshDefs.Insert( wxString(wxT("testCubeMesh")), spMeshDef )))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("GameTestResourceLoader::LoadMeshes() : add item failed: 0x%08x"),
 																m_spLogger, result, FWGLOG_ENDVAL);

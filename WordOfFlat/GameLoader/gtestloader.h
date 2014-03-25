@@ -1,7 +1,9 @@
 #ifndef __GAME_TEST_LOADER_H__
 #define __GAME_TEST_LOADER_H__
 
-#include "../GameResHold/gresloader.h"
+#include "../GameResHold/gdefloader.h"
+#include "../GameResHold/gdefholder.h"
+#include "../GameSystem/glog.h"
 
 class GameTestResourceLoader : public IGameDefLoader
 {

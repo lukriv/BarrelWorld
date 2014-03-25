@@ -3,16 +3,16 @@
 
 #include "../GameSystem/gdefs.h"
 #include "../GameSystem/refobject.h"
-#include "../GameSystem/compContainer.h"
+#include "../GameSystem/simpleMap.h"
 #include "gdeftables.h"
 
 
 struct GameDefinitionHolder : public IRefObject {
-	CompDefContainer<wxDword,RefObjSmPtr<NameDef>> m_meshDefs;
-	CompDefContainer<wxDword,RefObjSmPtr<NameDef>> m_materialDefs;
-	CompDefContainer<wxDword,RefObjSmPtr<AnimationDef>> m_animationDefs;
-	CompDefContainer<wxDword,RefObjSmPtr<AnimatorDef>> m_animatorDefs;
-	CompDefContainer<wxDword,RefObjSmPtr<EntityDef>> m_entityDefs;
+	SimpleMap<wxString, RefObjSmPtr<NameDef> > m_meshDefs;
+	SimpleMap<wxString, RefObjSmPtr<NameDef> > m_materialDefs;
+	SimpleMap<wxString, RefObjSmPtr<AnimationDef> > m_animationDefs;
+	SimpleMap<wxString, RefObjSmPtr<AnimatorDef> > m_animatorDefs;
+	SimpleMap<wxString, RefObjSmPtr<EntityDef> > m_entityDefs;
 };
 
 
