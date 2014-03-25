@@ -3,7 +3,10 @@
 
 #include <wx/vector.h>
 #include <wx/atomic.h>
+#include "OGRE/OgreVector3.h"
+#include "OGRE/OgreQuaternion.h"
 #include "../GameSystem/refobject.h"
+#include "../GameSystem/refobjectsmptr.h"
 
 typedef wxDword GameDefId;
 static const GameDefId GAME_DEF_ID_UNDEFINED = 0;
@@ -18,15 +21,11 @@ static const GameDefId GAME_DEF_ID_UNDEFINED = 0;
 class DefBase : IRefObject
 {
 protected:
-	wxDword m_compDefId;
 	wxAtomicInt m_refCount;
 public:
 
-	DefBase() : m_compId(GAME_DEF_ID_UNDEFINED), m_refCount(1) {}
+	DefBase() : m_refCount(1) {}
 	virtual ~DefBase() {}
-
-	inline void SetDefId(GameDefId id) { m_compDefId = id; }
-	inline GameDefId GetDefId() { return m_compDefId; }
 	
 	virtual void addRef() 
 	{
@@ -72,7 +71,7 @@ struct NameDef : public DefBase {
 	wxString m_name; //!< Name of the mesh
 	wxString m_group; //!< Name of mesh group to which mesh belongs
 
-	MeshDef() : DefBase() {}
+	NameDef() : DefBase() {}
 };
 
 
@@ -98,7 +97,7 @@ struct AnimationDef : public DefBase {
  * \brief Class for managing animations
  */
 struct AnimatorDef : public DefBase {
-	wxVector<RefObjSmPtr<AnimationDef>> m_animList; //!< List of animation belong
+	wxVector< RefObjSmPtr<AnimationDef> > m_animList; //!< List of animation belong
 
 	AnimatorDef() {}
 };
