@@ -22,7 +22,7 @@
     <VirtualDirectory Name="Containers">
       <File Name="circularQueue.h"/>
       <File Name="memalloccont.h"/>
-      <File Name="simpleMap.h"/>
+      <File Name="gmap.h"/>
     </VirtualDirectory>
     <VirtualDirectory Name="Threading">
       <File Name="gthread.h"/>

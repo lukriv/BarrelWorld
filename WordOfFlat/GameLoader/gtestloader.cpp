@@ -17,12 +17,42 @@ GameErrorCode GameTestResourceLoader::Initialize(GameLogger* pLogger)
 
 GameErrorCode GameTestResourceLoader::Load(GameDefinitionHolder& defHolder)
 {
+	GameErrorCode result = FWG_NO_ERROR;
 	if(!m_isInitialized)
 	{
 		return FWG_E_OBJECT_NOT_INITIALIZED_ERROR;
 	}
 	
+	if(FWG_FAILED(result = LoadMeshes(defHolder)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("GameTestResourceLoader::Load() : Load mesh definitions failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
 	
+	if(FWG_FAILED(result = LoadMaterials(defHolder)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("GameTestResourceLoader::Load() : Load materials definitions failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	if(FWG_FAILED(result = LoadAnimations(defHolder)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("GameTestResourceLoader::Load() : Load animation definitions failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	if(FWG_FAILED(result = LoadAnimators(defHolder)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("GameTestResourceLoader::Load() : Load animator definitions failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	if(FWG_FAILED(result = LoadEntities(defHolder)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("GameTestResourceLoader::Load() : Load entity definitions failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+		
 	return FWG_NO_ERROR;
 }
 
@@ -43,14 +73,14 @@ GameErrorCode GameTestResourceLoader::LoadEntities(GameDefinitionHolder& defHold
 	
 	FWG_RETURN_FAIL(GameNewChecked(spEntityDef.OutRef()));
 	
-	if(defHolder.m_meshDefs.KeyExists(wxString(wxT("TestingCube"))))
+	if(defHolder.m_meshDefs.Exists(wxString(wxT("TestingCube"))))
 	{
 		spEntityDef->m_mesh = *defHolder.m_meshDefs.FindValue(wxString(wxT("TestingCube")));
 	} else {
 		return FWG_E_OBJECT_NOT_FOUND_ERROR;
 	}
 	
-	if(defHolder.m_materialDefs.KeyExists(wxString(wxT("testMaterial"))))
+	if(defHolder.m_materialDefs.Exists(wxString(wxT("testMaterial"))))
 	{
 		spEntityDef->m_material = *defHolder.m_materialDefs.FindValue(wxString(wxT("testMaterial")));
 	} else {
