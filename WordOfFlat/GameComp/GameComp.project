@@ -8,9 +8,9 @@
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="include">
-    <File Name="gobjdef.h"/>
     <File Name="gentitymgr.h"/>
     <File Name="gentity.h"/>
+    <File Name="gcompmgr.h"/>
   </VirtualDirectory>
   <Settings Type="Static Library">
     <GlobalSettings>
@@ -144,6 +144,7 @@
   <VirtualDirectory Name="src">
     <File Name="gentitymgr.cpp"/>
     <File Name="gentity.cpp"/>
+    <File Name="gcompmgr.cpp"/>
   </VirtualDirectory>
   <Dependencies Name="Debug"/>
   <Dependencies Name="Release"/>

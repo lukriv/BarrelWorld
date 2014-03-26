@@ -2,6 +2,9 @@
 #define __GAME_ANIMATOR_COMPONENT_MANAGER_H__
 
 
+class AnimatorComponent {
+	
+};
 
 
 #endif //__GAME_ANIMATOR_COMPONENT_MANAGER_H__

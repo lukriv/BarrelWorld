@@ -1,13 +1,17 @@
 #ifndef __GAME_ENTITY_H__
 #define __GAME_ENTITY_H__
 
-struct GameEntity : public CompBase {
-	wxString m_entityName;
-	RefObjSmPtr<TranformCompDef> m_tranformation;
-	RefObjSmPtr<RenderCompDef> m_renderDef;
-	RefObjSmPtr<AnimatorDef> m_animatorDef;
+#include "gtranscomp.h"
+#include "grendercomp.h"
+#include "ganimatormgr.h"
 
-	EntityDef() : CompDefBase() {}
+
+struct GameEntity {
+	TransformComponent* m_pTransformComp;
+	RenderComponent* m_renderComp;
+	AnimatorComponent* m_animatorComp;
+
+	GameEntity() {}
 };
 
 #endif // __GAME_ENTITY_H__
