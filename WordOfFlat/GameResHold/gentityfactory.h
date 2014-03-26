@@ -3,6 +3,7 @@
 
 #include <wx/atomic.h>
 #include "../GameSystem/refobjectsmptr.h"
+#include "../GameComp/gcompmgr.h"
 
 #include "gresholder.h"
 
@@ -18,7 +19,7 @@ public:
 	
 	GameErrorCode Initialize(GameResourceHolder *pResHolder, GameLogger *pLogger);
 	
-	GameErrorCode CreateAllEntities(GameDefinitionHolder &defHolder );
+	GameErrorCode CreateAllEntities(GameDefinitionHolder &defHolder, GameCompManager& compMgr);
 	
 public:
  	virtual void addRef();
