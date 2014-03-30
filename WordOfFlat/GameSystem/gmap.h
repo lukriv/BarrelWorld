@@ -57,6 +57,26 @@ public:
 		return FWG_NO_ERROR;
 	}
 	
+	inline GameErrorCode Insert(const key& Key, const value& Value, Iterator &iter)
+	{
+		std::pair<typename TInternalMap::iterator, bool> retval;
+			
+		retval = m_innerMap.insert(TInternalMapPair(Key, Value));
+		if(!retval.second)
+		{
+			if(Exists(Key))
+			{
+				return FWG_E_OBJECT_ALREADY_EXISTS_ERROR;
+			} else {
+				return FWG_E_MEMORY_ALLOCATION_ERROR;
+			}
+		}
+		
+		iter = const_cast<Iterator>(retval.first);
+		
+		return FWG_NO_ERROR;
+	}
+	
 	inline void Remove(const key& Key)
 	{
 		m_innerMap.erase(Key);

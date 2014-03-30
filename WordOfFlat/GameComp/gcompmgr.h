@@ -3,13 +3,15 @@
 
 #include "gentitymgr.h"
 
-class GameCompManager
-{
+class GameCompManager {
+	GameEntityManager m_entityMgr;
 public:
 	GameCompManager();
 	~GameCompManager();
 	
-	GameEntityManager m_entityMgr;
+	
+	
+	GameEntityManager& GetEntityManager() { return m_entityMgr; }
 
 };
 

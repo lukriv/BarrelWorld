@@ -5,8 +5,15 @@
 #include "gentity.h"
 
 class GameEntityManager {
+	typedef GameBasMap<wxString, GameEntity> TEntityMap;
+private:
+	TEntityMap m_entityMap;
 public:
-	GameBasMap<wxString, GameEntity> m_entityMap;
+	
+	
+	GameEntity* CreateEntity(const wxString& entityName);
+	GameEntity* GetEntity(const wxString& entityName);
+	void RemoveEntity(const wxString& entityName);
 	
 };
 

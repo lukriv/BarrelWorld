@@ -17,9 +17,11 @@ class GameEntityFactory : IRefObject {
 public:
 	GameEntityFactory() : m_refCount(1){}
 	
-	GameErrorCode Initialize(GameResourceHolder *pResHolder, GameLogger *pLogger);
+	GameErrorCode Initialize(GameLogger *pLogger);
 	
 	GameErrorCode CreateAllEntities(GameDefinitionHolder &defHolder, GameCompManager& compMgr);
+	
+	GameErrorCode CreateEntity( EntityDef &entityDef, GameEntity &entity);
 	
 public:
  	virtual void addRef();
