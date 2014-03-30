@@ -7,12 +7,17 @@
 #include "gdeftables.h"
 
 
+typedef GameBasMap<wxString, RefObjSmPtr<NameDef> > TNameDefMap;
+typedef GameBasMap<wxString, RefObjSmPtr<AnimationDef> > TAnimationDefMap;
+typedef GameBasMap<wxString, RefObjSmPtr<AnimatorDef> > TAnimatorDefMap;
+typedef GameBasMap<wxString, RefObjSmPtr<EntityDef> > TEntityDefMap;
+
 struct GameDefinitionHolder : public IRefObject {
-	GameBasMap<wxString, RefObjSmPtr<NameDef> > m_meshDefs;
-	GameBasMap<wxString, RefObjSmPtr<NameDef> > m_materialDefs;
-	GameBasMap<wxString, RefObjSmPtr<AnimationDef> > m_animationDefs;
-	GameBasMap<wxString, RefObjSmPtr<AnimatorDef> > m_animatorDefs;
-	GameBasMap<wxString, RefObjSmPtr<EntityDef> > m_entityDefs;
+	TNameDefMap m_meshDefs;
+	TNameDefMap m_materialDefs;
+	TAnimationDefMap m_animationDefs;
+	TAnimatorDefMap m_animatorDefs;
+	TEntityDefMap m_entityDefs;
 };
 
 
