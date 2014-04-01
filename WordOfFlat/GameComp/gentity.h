@@ -1,9 +1,9 @@
 #ifndef __GAME_ENTITY_H__
 #define __GAME_ENTITY_H__
 
-#include "gtranscomp.h"
-#include "grendercomp.h"
-#include "ganimatormgr.h"
+#include "TransformComp/gtranscomp.h"
+#include "RenderComp/grendercomp.h"
+#include "AnimatorComp/ganimatormgr.h"
 
 
 class GameEntity {

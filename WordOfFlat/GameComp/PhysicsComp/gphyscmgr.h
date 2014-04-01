@@ -3,30 +3,17 @@
 
 
 #include "../GameSystem/gdefs.h"
-#include "gcompmgrimpl.h"
-#include "gobjdef.h"
+#include "../GameSystem/gerror.h"
 
 
-struct PhysCompDef {
-	GameObjectID m_geometryRef; //!< List of geometry objects - can be empty (dep. on type)
-	GameObjectID m_physRef; //!< List of Joints or Bodys - depend on type
-	b2Transform m_tranformation;
-	
-	RenderCompDef() :  m_geometryRef(GAME_OBJECT_ID_INVALID)
-			, m_physRef(GAME_OBJECT_ID_INVALID){}
-};
-
-
-class GamePhysicsComponentMgr : public GameComponentMgrBase {
+class GamePhysicsCompMgr {
 	
 // IGameComponent interface
 public:
 	
-	GameErrorCode CreatePhysicsComponent(const PhysCompDef &entityDef, GameObjectId &compId);
+	GameErrorCode CreatePhysicsComponent();
 	
-	GameErrorCode DeletePhysicsComponent(GameObjectID compId);
-	
-	GameErrorCode GetPhysicsComponent(GameObjectID compID);
+	GameErrorCode GetPhysicsComponent();
 	
 	GameErrorCode StepPhysics();
 	

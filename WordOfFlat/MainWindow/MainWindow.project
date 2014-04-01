@@ -14,6 +14,15 @@
 		"buildType":	"",
 		"arguments":	[],
 		"parentProject":	""
+	}, {
+		"name":	"Release",
+		"enabled":	false,
+		"buildDirectory":	"build",
+		"sourceDirectory":	"$(ProjectPath)",
+		"generator":	"",
+		"buildType":	"",
+		"arguments":	[],
+		"parentProject":	""
 	}]]]>
     </Plugin>
   </Plugins>
@@ -30,8 +39,16 @@
   </VirtualDirectory>
   <Dependencies Name="Debug">
     <Project Name="GameSystem"/>
+    <Project Name="GameResHold"/>
+    <Project Name="GameLoader"/>
+    <Project Name="GameComp"/>
   </Dependencies>
-  <Dependencies Name="Release"/>
+  <Dependencies Name="Release">
+    <Project Name="GameSystem"/>
+    <Project Name="GameResHold"/>
+    <Project Name="GameLoader"/>
+    <Project Name="GameComp"/>
+  </Dependencies>
   <Settings Type="Executable">
     <GlobalSettings>
       <Compiler Options="-Wno-unused-local-typedefs" C_Options="" Assembler="">
@@ -41,9 +58,10 @@
       <Linker Options="">
         <LibraryPath Value="../../extern/lib"/>
         <LibraryPath Value="../../extern/lib/opt"/>
+        <Library Value="GameLoader"/>
+        <Library Value="GameResHold"/>
+        <Library Value="GameComp"/>
         <Library Value="GameSystem"/>
-        <Library Value="sfml-system"/>
-        <Library Value="sfml-main"/>
         <Library Value="libwxbase30u.a"/>
         <Library Value="libOgreMain.dll.a"/>
         <Library Value="libRenderSystem_GL.dll.a"/>
@@ -56,9 +74,8 @@
       <Linker Options="" Required="yes">
         <LibraryPath Value="../GameSystem/Debug"/>
         <LibraryPath Value="../GameResHold/Debug"/>
-        <LibraryPath Value="../GameObjects/Debug"/>
+        <LibraryPath Value="../GameComp/Debug"/>
         <LibraryPath Value="../GameLoader/Debug"/>
-        <LibraryPath Value="../WorldCli/Debug"/>
       </Linker>
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="./Debug" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
@@ -98,9 +115,8 @@
       <Linker Options="" Required="yes">
         <LibraryPath Value="../GameSystem/Release"/>
         <LibraryPath Value="../GameResHold/Release"/>
-        <LibraryPath Value="../GameObjects/Release"/>
+        <LibraryPath Value="../GameComp/Release"/>
         <LibraryPath Value="../GameLoader/Release"/>
-        <LibraryPath Value="../WorldCli/Release"/>
       </Linker>
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="./Release" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>

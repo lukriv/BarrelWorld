@@ -3,6 +3,7 @@
 
 #include <OGRE/OgreEntity.h>
 
+class GameEntity;
 
 /*!
  * \class GameEntity
@@ -17,7 +18,7 @@ class RenderComponent : public Ogre::Any {
 public:
 	RenderComponent() : m_pParent(NULL), m_pOgreEntity(NULL) {}
 	
-	~GameRenderComp() {}
+	~RenderComponent() {}
 	
 	inline void SetEntity(Ogre::Entity *pOgreEntity) 
 	{ 
@@ -30,7 +31,7 @@ public:
 		
 		if(pOgreEntity != NULL)
 		{
-			m_pOgreEntity->getUserObjectBindings().setUserAny(this); // set parent
+			m_pOgreEntity->getUserObjectBindings().setUserAny(*this); // set parent
 		}
 	}
 	

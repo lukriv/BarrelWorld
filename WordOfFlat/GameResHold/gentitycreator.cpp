@@ -1,5 +1,4 @@
 #include "gentitycreator.h"
-#include "../GameObjects/gtransformable.h"
 
 void GameEntityCreator::addRef()
 {

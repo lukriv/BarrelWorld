@@ -2,6 +2,8 @@
 #define __GAME_TRANSFORM_COMPONENT_H__
 
 
+#include "OGRE/OgreSceneNode.h"
+
 class TransformComponent {
 	Ogre::SceneNode *m_pSceneNode;
 public:
