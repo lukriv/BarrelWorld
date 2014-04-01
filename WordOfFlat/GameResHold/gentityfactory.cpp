@@ -1,9 +1,12 @@
 #include "gentityfactory.h"
 
 #include <wx/scopedptr.h>
-#include "OGRE/OgreEntity.h"
-#include "OGRE/OgreSceneNode.h"
-#include "../GameObjects/grendercomp.h"
+#include <OGRE/OgreEntity.h>
+#include <OGRE/OgreSceneNode.h>
+#include <OGRE/OgreSceneManager.h>
+#include "../GameSystem/refobjectsmptr.h"
+#include "../GameComp/RenderComp/grendercomp.h"
+#include "../GameSystem/new.h"
 
 
 void GameEntityFactory::addRef()
@@ -23,13 +26,12 @@ wxInt32 GameEntityFactory::release()
 
 GameErrorCode GameEntityFactory::Initialize(GameLogger* pLogger)
 {
-	m_spResHolder = pResHolder;
 	m_spLogger = pLogger;
 	return FWG_NO_ERROR;
 }
 
 
-GameErrorCode GameEntityFactory::CreateAllEntities(GameDefinitionHolder& defHolder, GameCompManager& compMgr)
+GameErrorCode GameEntityFactory::CreateAllEntities(GameDefinitionHolder& defHolder, InOutSystems& inoutSys, GameCompManager& compMgr)
 {
 	TEntityDefMap::Iterator iter;
 	for (iter = defHolder.m_entityDefs.Begin(); iter != defHolder.m_entityDefs.End(); iter++)
@@ -41,18 +43,56 @@ GameErrorCode GameEntityFactory::CreateAllEntities(GameDefinitionHolder& defHold
 			return FWG_E_MEMORY_ALLOCATION_ERROR;
 		}
 		
-		FWG_RETURN_FAIL(CreateEntity(*(iter->second), *pEntity));
+		FWG_RETURN_FAIL(CreateEntity(*(iter->second), inoutSys, *pEntity));
 	}
 	
 	return FWG_NO_ERROR;
 }
 
 
-GameErrorCode GameEntityFactory::CreateEntity( EntityDef& entityDef, GameEntity& entity)
+GameErrorCode GameEntityFactory::CreateEntity( EntityDef& entityDef, InOutSystems& inoutSys, GameEntity& entity)
 {
-	Ogre::Entity *pEntity = m_pSceneManager->createEntity("cc", "TestingCube");
-	pEntity->setMaterialName("Test/ColourTest");
-	Ogre::SceneNode *pSceneNode = m_pSceneManager->getRootSceneNode()->createChildSceneNode();
-	pSceneNode->setPosition(0,0,0);
-	pSceneNode->attachObject(pEntity);
+	if(inoutSys.m_pSceneMgr != NULL)
+	{
+		if(!entityDef.m_mesh.IsEmpty() && !entityDef.m_material.IsEmpty())
+		{
+			// render entity is defined
+			Ogre::Entity *pEntity = NULL;
+			RenderComponent *pRenderComp = NULL;
+			
+			if(!entityDef.m_entityName.IsEmpty())
+			{
+				pEntity = inoutSys.m_pSceneMgr->createEntity(entityDef.m_entityName.ToStdString(), entityDef.m_mesh->m_name.ToStdString());
+			} else {
+				return FWG_E_NOT_IMPLEMENTED_ERROR;
+			}
+			
+			pEntity->setMaterialName(entityDef.m_material->m_name.ToStdString());
+			
+			FWG_RETURN_FAIL(GameNewChecked(pRenderComp));
+					
+			pRenderComp->SetEntity(pEntity);
+			pRenderComp->SetParent(&entity);
+			
+			entity.SetRenderComp(pRenderComp);
+						
+		}
+		
+		if(!entityDef.m_transformation.IsEmpty())
+		{
+			TransformComponent *pTransform = NULL;
+			Ogre::SceneNode *pSceneNode = inoutSys.m_pSceneMgr->getRootSceneNode()->createChildSceneNode();
+			pSceneNode->setPosition(entityDef.m_transformation->m_position);
+			pSceneNode->setOrientation(entityDef.m_transformation->m_rotation);
+			pSceneNode->setScale(entityDef.m_transformation->m_scale);
+			
+			FWG_RETURN_FAIL(GameNewChecked(pTransform));
+			pTransform->SetSceneNode(pSceneNode);
+			
+			entity.SetTransformComp(pTransform);
+		}
+		
+	}
+	
+	return FWG_NO_ERROR;
 }

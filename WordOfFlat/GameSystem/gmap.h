@@ -72,7 +72,7 @@ public:
 			}
 		}
 		
-		iter = const_cast<Iterator>(retval.first);
+		iter = static_cast<Iterator>(retval.first);
 		
 		return FWG_NO_ERROR;
 	}

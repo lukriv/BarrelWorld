@@ -7,8 +7,10 @@
 #include <OGRE/OgreRoot.h>
 #include <OIS/OISInputManager.h>
 #include "../GameSystem/refobjectsmptr.h"
+#include "../GameComp/gcompmgr.h"
+#include "../GameResHold/gdefholder.h"
+#include "../GameResHold/gentityfactory.h"
 #include "ginputcomp.h"
-
 
 struct GameEngineSettings {
 	wxDword m_screenWidth;
@@ -37,6 +39,9 @@ private:
 
 	GameInputComponent* m_pInputComp;
 	
+	GameCompManager m_componentManager;
+	RefObjSmPtr<GameDefinitionHolder> m_spDefHolder;
+	RefObjSmPtr<GameEntityFactory> m_spEntityFactory;
 	
 	
 	bool m_isWindowCreated;

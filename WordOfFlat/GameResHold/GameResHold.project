@@ -8,7 +8,6 @@
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="src">
-    <File Name="gscenegenimpl.cpp"/>
     <File Name="gentityfactory.cpp"/>
     <File Name="gentitycreator.cpp"/>
     <File Name="gdefholder.cpp"/>
@@ -107,6 +106,6 @@
       </Completion>
     </Configuration>
   </Settings>
-  <Dependencies Name="Debug"/>
   <Dependencies Name="Release"/>
+  <Dependencies Name="Debug"/>
 </CodeLite_Project>

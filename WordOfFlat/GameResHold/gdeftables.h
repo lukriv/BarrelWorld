@@ -58,6 +58,10 @@ struct TransformDef : public DefBase {
 	Ogre::Vector3 m_position;
 	Ogre::Vector3 m_scale;
 	Ogre::Quaternion m_rotation;
+	
+	TransformDef() : m_position(Ogre::Vector3::ZERO)
+					, m_scale(Ogre::Vector3::UNIT_SCALE)
+					, m_rotation(Ogre::Quaternion::IDENTITY) {}
 };
 
 /*!

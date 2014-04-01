@@ -3,7 +3,10 @@
 GameEntity* GameEntityManager::CreateEntity(const wxString& entityName)
 {
 	TEntityMap::Iterator iter;
-	FWG_RETURN_FAIL(m_entityMap.Insert(entityName, GameEntity(), iter));
+	if(FWG_FAILED(m_entityMap.Insert(entityName, GameEntity(), iter)))
+	{
+		return NULL;
+	}
 	return &(iter->second);
 }
 

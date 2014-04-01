@@ -5,6 +5,7 @@
 #include <OGRE/OgreSubMesh.h>
 #include "../GameSystem/gerror.h"
 #include "../GameSystem/new.h"
+#include "../GameLoader/gtestloader.h"
 
 
 
@@ -97,7 +98,18 @@ GameErrorCode GameClientEngine::Initialize(GameLogger* pLogger)
 	}
 	
 	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
-
+	
+	FWG_RETURN_FAIL(GameNewChecked(m_spEntityFactory.OutRef()));
+	
+	FWG_RETURN_FAIL(m_spEntityFactory->Initialize(m_pLogger));
+	
+	FWG_RETURN_FAIL(GameNewChecked(m_spDefHolder.OutRef()));
+	
+	GameTestResourceLoader loader;
+	
+	FWG_RETURN_FAIL(loader.Initialize(m_pLogger));
+	
+	FWG_RETURN_FAIL(loader.Load(*m_spDefHolder));
 	//m_pSceneGenerator = new (std::nothrow) GameTestSceneGenerator();
 	//if (m_pSceneGenerator == NULL) 
 	//{
@@ -136,19 +148,12 @@ GameErrorCode GameClientEngine::LoadSettings(wxChar* pFileName)
 GameErrorCode GameClientEngine::MainLoop()
 {
 	GameErrorCode result = FWG_NO_ERROR;
+	GameEntityFactory::InOutSystems entityParams;
+	
+	entityParams.m_pSceneMgr = m_pSceneManager;
 	
 	// create scene manager
-	Ogre::Entity *pEntity = m_pSceneManager->createEntity("cc", "TestingCube");
-	pEntity->setMaterialName("Test/ColourTest");
-	Ogre::SceneNode *pSceneNode = m_pSceneManager->getRootSceneNode()->createChildSceneNode();
-	pSceneNode->setPosition(0,0,0);
-	pSceneNode->attachObject(pEntity);
-	
-	pEntity = m_pSceneManager->createEntity("cc1", "TestingCube");
-	pEntity->setMaterialName("Test/ColourTest");
-	pSceneNode = m_pSceneManager->getRootSceneNode()->createChildSceneNode();
-	pSceneNode->setPosition(1,1,1);
-	pSceneNode->attachObject(pEntity);
+	FWG_RETURN_FAIL(m_spEntityFactory.In()->CreateAllEntities(*m_spDefHolder,entityParams, m_componentManager));
 	
 	// Create the camera
 	Ogre::Camera* camera = m_pSceneManager->createCamera("PlayerCam");
