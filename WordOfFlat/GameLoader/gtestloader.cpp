@@ -73,9 +73,9 @@ GameErrorCode GameTestResourceLoader::LoadEntities(GameDefinitionHolder& defHold
 	
 	FWG_RETURN_FAIL(GameNewChecked(spEntityDef.OutRef()));
 	
-	if(defHolder.m_meshDefs.Exists(wxString(wxT("TestingCube"))))
+	if(defHolder.m_meshDefs.Exists(wxString(wxT("testCubeMesh"))))
 	{
-		spEntityDef->m_mesh = *defHolder.m_meshDefs.FindValue(wxString(wxT("TestingCube")));
+		spEntityDef->m_mesh = *defHolder.m_meshDefs.FindValue(wxString(wxT("testCubeMesh")));
 	} else {
 		return FWG_E_OBJECT_NOT_FOUND_ERROR;
 	}
@@ -92,6 +92,8 @@ GameErrorCode GameTestResourceLoader::LoadEntities(GameDefinitionHolder& defHold
 	spEntityDef->m_transformation->m_position[0] = 0.0f;
 	spEntityDef->m_transformation->m_position[1] = 0.0f;
 	spEntityDef->m_transformation->m_position[2] = 0.0f;
+	
+	spEntityDef->m_entityName.assign(wxT("entity1"));
 
 	if(FWG_FAILED(result = defHolder.m_entityDefs.Insert( wxString(wxT("entity1")), spEntityDef )))
 	{
