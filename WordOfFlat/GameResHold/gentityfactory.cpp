@@ -67,6 +67,7 @@ GameErrorCode GameEntityFactory::CreateEntity( EntityDef& entityDef, InOutSystem
 				return FWG_E_NOT_IMPLEMENTED_ERROR;
 			}
 			
+			//pEntity->setMaterialName(entityDef.m_material->m_name.ToStdString());
 			pEntity->setMaterialName(entityDef.m_material->m_name.ToStdString());
 			
 			FWG_RETURN_FAIL(GameNewChecked(pRenderComp));
@@ -90,6 +91,10 @@ GameErrorCode GameEntityFactory::CreateEntity( EntityDef& entityDef, InOutSystem
 			pTransform->SetSceneNode(pSceneNode);
 			
 			entity.SetTransformComp(pTransform);
+			if(entity.GetRenderComp() != NULL)
+			{
+				pSceneNode->attachObject(entity.GetRenderComp()->GetEntity());
+			}
 		}
 		
 	}

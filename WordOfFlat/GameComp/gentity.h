@@ -13,7 +13,9 @@ private:
 	AnimatorComponent* m_animatorComp;
 
 public:
-	GameEntity() {}
+	GameEntity() : m_pTransformComp(NULL)
+				, m_renderComp(NULL)
+				, m_animatorComp(NULL) {}
 	
 	inline void SetTransformComp(TransformComponent* pTransComp) { m_pTransformComp = pTransComp; }
 	inline void SetRenderComp(RenderComponent *pRenderComp);
