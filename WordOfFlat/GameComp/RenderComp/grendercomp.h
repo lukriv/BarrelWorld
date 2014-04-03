@@ -14,28 +14,28 @@ class GameEntity;
  */
 class RenderComponent : public Ogre::Any {
 	GameEntity *m_pParent;
-	Ogre::Entity *m_pOgreEntity;
+	Ogre::MovableObject *m_pOgreObject;
 public:
-	RenderComponent() : m_pParent(NULL), m_pOgreEntity(NULL) {}
+	RenderComponent() : m_pParent(NULL), m_pOgreObject(NULL) {}
 	
 	~RenderComponent() {}
 	
-	inline void SetEntity(Ogre::Entity *pOgreEntity) 
+	inline void SetOgreObject(Ogre::MovableObject *pOgreObject) 
 	{ 
-		if(m_pOgreEntity != NULL)
+		if(m_pOgreObject != NULL)
 		{
-			m_pOgreEntity->getUserObjectBindings().setUserAny(Ogre::UserObjectBindings::getEmptyUserAny()); // erase parent
+			m_pOgreObject->getUserObjectBindings().setUserAny(Ogre::UserObjectBindings::getEmptyUserAny()); // erase parent
 		}
 		
-		m_pOgreEntity = pOgreEntity; // set new entity
+		m_pOgreObject = pOgreObject; // set new entity
 		
-		if(pOgreEntity != NULL)
+		if(pOgreObject != NULL)
 		{
-			m_pOgreEntity->getUserObjectBindings().setUserAny(*this); // set parent
+			m_pOgreObject->getUserObjectBindings().setUserAny(*this); // set parent
 		}
 	}
 	
-	inline Ogre::Entity* GetEntity() { return m_pOgreEntity; }
+	inline Ogre::MovableObject* GetOgreObject() { return m_pOgreObject; }
 	
 	inline void SetParent(GameEntity *pParent) { m_pParent = pParent; }
 	inline GameEntity* GetParent() { return m_pParent; }

@@ -72,7 +72,7 @@ GameErrorCode GameEntityFactory::CreateEntity( EntityDef& entityDef, InOutSystem
 			
 			FWG_RETURN_FAIL(GameNewChecked(pRenderComp));
 					
-			pRenderComp->SetEntity(pEntity);
+			pRenderComp->SetOgreObject(pEntity);
 			pRenderComp->SetParent(&entity);
 			
 			entity.SetRenderComp(pRenderComp);
@@ -91,10 +91,6 @@ GameErrorCode GameEntityFactory::CreateEntity( EntityDef& entityDef, InOutSystem
 			pTransform->SetSceneNode(pSceneNode);
 			
 			entity.SetTransformComp(pTransform);
-			if(entity.GetRenderComp() != NULL)
-			{
-				pSceneNode->attachObject(entity.GetRenderComp()->GetEntity());
-			}
 		}
 		
 	}
