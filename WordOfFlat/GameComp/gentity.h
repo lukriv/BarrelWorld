@@ -9,41 +9,26 @@
 class GameEntity {
 private:
 	TransformComponent* m_pTransformComp;
-	RenderComponent* m_renderComp;
-	AnimatorComponent* m_animatorComp;
+	RenderComponent* m_pRenderComp;
+	AnimatorComponent* m_pAnimatorComp;
 
 public:
 	GameEntity() : m_pTransformComp(NULL)
-				, m_renderComp(NULL)
-				, m_animatorComp(NULL) {}
+				, m_pRenderComp(NULL)
+				, m_pAnimatorComp(NULL) {}
 	
-	inline void SetTransformComp(TransformComponent* pTransComp) { m_pTransformComp = pTransComp; }
-	inline void SetRenderComp(RenderComponent *pRenderComp);
-	inline void SetAnimatorComp(AnimatorComponent *pAnimatorComp) { m_animatorComp = pAnimatorComp; }
+	void SetTransformComp(TransformComponent* pTransComp);
+	void SetRenderComp(RenderComponent *pRenderComp);
+	void SetAnimatorComp(AnimatorComponent *pAnimatorComp);
 
 	
 	inline TransformComponent* GetTransformComp() { return m_pTransformComp; }
-	inline RenderComponent* GetRenderComp() { return m_renderComp; }
-	inline AnimatorComponent* GetAnimatorComp() { return m_animatorComp; }
-
+	inline RenderComponent* GetRenderComp() { return m_pRenderComp; }
+	inline AnimatorComponent* GetAnimatorComp() { return m_pAnimatorComp; }
 
 };
 
 
-//////////////////////////
-// inline implementation
-//////////////////////////
-inline void GameEntity::SetRenderComp(RenderComponent *pRenderComp) 
-{
-	if( m_renderComp != NULL)
-	{
-		m_renderComp->SetParent(NULL); // remove old parent
-	}
-	m_renderComp = pRenderComp;
-	if(m_renderComp != NULL)
-	{
-		m_renderComp->SetParent(this); // set new parent
-	}
-}
+
 
 #endif // __GAME_ENTITY_H__
