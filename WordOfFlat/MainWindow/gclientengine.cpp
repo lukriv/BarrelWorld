@@ -155,6 +155,9 @@ GameErrorCode GameClientEngine::MainLoop()
 	// create scene manager
 	FWG_RETURN_FAIL(m_spEntityFactory.In()->CreateAllEntities(*m_spDefHolder,entityParams, m_componentManager));
 	
+	// create scene node
+	Ogre::SceneNode* pScnNode = m_pSceneManager->getRootSceneNode()->createChildSceneNode("cameraNode");
+	
 	// Create the camera
 	Ogre::Camera* camera = m_pSceneManager->createCamera("PlayerCam");
  
@@ -163,6 +166,10 @@ GameErrorCode GameClientEngine::MainLoop()
 	// Look back along -Z
 	camera->lookAt(Ogre::Vector3(0,0,0));
 	camera->setNearClipDistance(1);
+	
+	pScnNode->attachObject(camera); 
+	
+	pScnNode->setPosition(Ogre::Vector3(0,-2,0));
 	
 	m_pSceneManager->setAmbientLight(Ogre::ColourValue(0.5f, 0.5f, 0.5f));
 	
