@@ -5,6 +5,14 @@
 
 class GameEntity;
 
+enum RenderComponentType {
+	RENDER_COMP_UNDEFINED 	= 0,
+	RENDER_COMP_ENTITY		= 1,
+	RENDER_COMP_CAMERA		= 2,
+	RENDER_COMP_LIGHT		= 3
+};
+
+
 /*!
  * \class GameEntity
  * \author Lukas
@@ -13,6 +21,8 @@ class GameEntity;
  * \brief Geometric entity with state and transform
  */
 class RenderComponent : public Ogre::Any {
+protected:
+	RenderComponentType m_compType;
 	GameEntity *m_pParent;
 	Ogre::MovableObject *m_pOgreObject;
 public:
