@@ -106,6 +106,15 @@ struct AnimatorDef : public DefBase {
 	AnimatorDef() {}
 };
 
+
+struct CameraDef : public DefBase {
+	CameraDef() {}
+};
+
+struct LightDef : public DefBase {
+	LightDef() {}
+};
+
 /*!
  * \class EntityDef
  * \author Lukas
@@ -119,6 +128,8 @@ struct EntityDef : public DefBase {
 	RefObjSmPtr<NameDef> m_mesh;
 	RefObjSmPtr<NameDef> m_material;
 	RefObjSmPtr<AnimatorDef> m_animatorDef;
+	RefObjSmPtr<CameraDef> m_camera;
+	RefObjSmPtr<LightDef> m_light;
 
 	EntityDef() : DefBase() {}
 };
