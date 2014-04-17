@@ -11,6 +11,8 @@
 #include "../GameResHold/gdefholder.h"
 #include "../GameResHold/gentityfactory.h"
 #include "ginputcomp.h"
+#include "MyGUI/MyGUI_Gui.h"
+#include "MyGUI/MyGUI_OgrePlatform.h"
 
 struct GameEngineSettings {
 	wxDword m_screenWidth;
@@ -35,6 +37,9 @@ private:
 	Ogre::RenderWindow *m_pRenderWindow;
 	Ogre::SceneManager *m_pSceneManager;
 	
+	MyGUI::Gui		   *m_pGui;
+	MyGUI::OgrePlatform *m_pGuiPlatform;
+	
 	OIS::InputManager*	m_pInputMgr;
 
 	GameInputComponent* m_pInputComp;
@@ -55,12 +60,16 @@ public:
 	GameClientEngine() : m_pRoot(NULL),
 					m_pRenderWindow(NULL),
 					m_pSceneManager(NULL),
+					m_pGui(NULL),
+					m_pGuiPlatform(NULL),
+					m_pInputMgr(NULL),
+					m_pInputComp(NULL),
 					m_isWindowCreated(false),
 					m_isSettingLoaded(false),
 					m_isInitialized(false) {}
 
 	/*! \brief Destructor */
-	~GameClientEngine() {}
+	~GameClientEngine();
 
 	/*! \brief Initialize game engine
 	 * 

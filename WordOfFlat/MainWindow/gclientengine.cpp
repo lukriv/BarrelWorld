@@ -6,6 +6,7 @@
 #include "../GameSystem/gerror.h"
 #include "../GameSystem/new.h"
 #include "../GameLoader/gtestloader.h"
+#include "MyGUI/MyGUI_PointerManager.h"
 
 
 
@@ -97,8 +98,21 @@ GameErrorCode GameClientEngine::Initialize(GameLogger* pLogger)
 		return result;
 	}
 	
+	// initialize resources
+	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("res", "FileSystem", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, false);
+	
 	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 	
+	// initialize MyGUI
+	m_pGuiPlatform = new MyGUI::OgrePlatform();
+	m_pGuiPlatform->initialise(m_pRenderWindow, m_pSceneManager);
+	
+	m_pGui = new MyGUI::Gui();
+	m_pGui->initialise("Core.xml");
+	
+	MyGUI::PointerManager::getInstance().setVisible(true);
+	
+	// initialize factory and game resources
 	FWG_RETURN_FAIL(GameNewChecked(m_spEntityFactory.OutRef()));
 	
 	FWG_RETURN_FAIL(m_spEntityFactory->Initialize(m_pLogger));
@@ -327,4 +341,19 @@ GameErrorCode GameClientEngine::CreateTestingWorld()
 	
 }
 
-
+GameClientEngine::~GameClientEngine()
+{
+	if(m_pGui)
+	{
+		m_pGui->shutdown();
+		delete m_pGui;
+		m_pGui = NULL;
+	}
+	
+	if(m_pGuiPlatform)
+	{
+		m_pGuiPlatform->shutdown();
+		delete m_pGuiPlatform;
+		m_pGuiPlatform = NULL;
+	}
+}
