@@ -194,6 +194,10 @@ public:
 	virtual bool mouseReleased(const OIS::MouseEvent& arg, OIS::MouseButtonID id);
 
 public:
+	void SetExit()
+	{
+		m_exit = true;
+	}
 
 
 	bool Exit() {
@@ -201,5 +205,6 @@ public:
 	}
 
 };
+
 
 #endif // __GAME_INPUT_COMPONENT_H__
