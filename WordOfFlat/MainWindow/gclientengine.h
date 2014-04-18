@@ -13,6 +13,7 @@
 #include "ginputcomp.h"
 #include "MyGUI/MyGUI_Gui.h"
 #include "MyGUI/MyGUI_OgrePlatform.h"
+#include "MyGUI/MyGUI_Widget.h"
 
 struct GameEngineSettings {
 	wxDword m_screenWidth;
@@ -80,6 +81,8 @@ public:
 	GameErrorCode MainLoop();
 	
 	GameErrorCode CreateTestingWorld();
+	
+	void SetExit(MyGUI::Widget* _sender) { m_pInputComp->SetExit(); }
 
 };
 
