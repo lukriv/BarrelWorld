@@ -2,6 +2,8 @@
 #define __GAME_RENDER_COMPONENT_H__
 
 #include <OGRE/OgreEntity.h>
+#include <OGRE/OgreCamera.h>
+#include <OGRE/OgreLight.h>
 
 class GameEntity;
 
@@ -25,11 +27,8 @@ protected:
 	RenderComponentType m_compType;
 	GameEntity *m_pParent;
 	Ogre::MovableObject *m_pOgreObject;
-public:
-	RenderComponent() : m_pParent(NULL), m_pOgreObject(NULL) {}
-	
-	~RenderComponent() {}
-	
+
+protected:
 	inline void SetOgreObject(Ogre::MovableObject *pOgreObject) 
 	{ 
 		if(m_pOgreObject != NULL)
@@ -45,7 +44,78 @@ public:
 		}
 	}
 	
+public:
+	RenderComponent() : m_pParent(NULL), m_pOgreObject(NULL) {}
+	
+	~RenderComponent() {}
+	
+
+	
 	inline Ogre::MovableObject* GetOgreObject() { return m_pOgreObject; }
+	
+	inline Ogre::Entity* GetOgreEntity() 
+	{
+		if(m_compType == RENDER_COMP_ENTITY)
+		{
+			return static_cast<Ogre::Entity*>(m_pOgreObject);
+		} else {
+			return NULL;
+		}
+	}
+	
+	inline void SetOgreEntity(Ogre::Entity* pEntity)
+	{
+		if(pEntity != NULL)
+		{
+			m_compType = RENDER_COMP_ENTITY;
+		} else {
+			m_compType = RENDER_COMP_UNDEFINED;
+		}
+		SetOgreObject(pEntity);
+	}
+	
+	inline Ogre::Camera* GetOgreCamera() 
+	{
+		if(m_compType == RENDER_COMP_CAMERA)
+		{
+			return static_cast<Ogre::Camera*>(m_pOgreObject);
+		} else {
+			return NULL;
+		}
+	}
+	
+	inline void SetOgreCamera(Ogre::Camera* pCamera)
+	{
+		if(pCamera != NULL)
+		{
+			m_compType = RENDER_COMP_CAMERA;
+		} else {
+			m_compType = RENDER_COMP_UNDEFINED;
+		}
+		SetOgreObject(pCamera);
+	}
+	
+	inline Ogre::Light* GetOgreLight()
+	{
+		if(m_compType == RENDER_COMP_LIGHT)
+		{
+			return static_cast<Ogre::Light*>(m_pOgreObject);
+		} else {
+			return NULL;
+		}
+	}
+	
+	inline void SetOgreLight(Ogre::Light* pLight)
+	{
+		if(pLight != NULL)
+		{
+			m_compType = RENDER_COMP_LIGHT;
+		} else {
+			m_compType = RENDER_COMP_UNDEFINED;
+		}
+		SetOgreObject(pLight);
+	}
+
 	
 	inline void SetParent(GameEntity *pParent) { m_pParent = pParent; }
 	inline GameEntity* GetParent() { return m_pParent; }

@@ -53,6 +53,7 @@
     <GlobalSettings>
       <Compiler Options="-Wno-unused-local-typedefs" C_Options="" Assembler="">
         <IncludePath Value="../../extern/include"/>
+        <IncludePath Value="../../extern/include/OGRE"/>
         <Preprocessor Value="UNICODE"/>
       </Compiler>
       <Linker Options="">
@@ -62,6 +63,8 @@
         <Library Value="GameResHold"/>
         <Library Value="GameComp"/>
         <Library Value="GameSystem"/>
+        <Library Value="libMyGUI.OgrePlatform.a"/>
+        <Library Value="libMyGUIEngine.dll.a"/>
         <Library Value="libwxbase30u.a"/>
         <Library Value="libOgreMain.dll.a"/>
         <Library Value="libRenderSystem_GL.dll.a"/>

@@ -1,4 +1,5 @@
 #include "ginputcomp.h"
+#include "MyGUI/MyGUI_InputManager.h"
 
 
 bool GameInputComponent::keyPressed(const OIS::KeyEvent& arg)
@@ -17,16 +18,19 @@ bool GameInputComponent::keyReleased(const OIS::KeyEvent& arg)
 
 bool GameInputComponent::mouseMoved(const OIS::MouseEvent& arg)
 {
+	MyGUI::InputManager::getInstance().injectMouseMove(arg.state.X.abs, arg.state.Y.abs, arg.state.Z.abs);
 	return true;
 }
 
 bool GameInputComponent::mousePressed(const OIS::MouseEvent& arg, OIS::MouseButtonID id)
 {
+	MyGUI::InputManager::getInstance().injectMousePress(arg.state.X.abs, arg.state.Y.abs, MyGUI::MouseButton::Enum(id));
 	return true;
 }
 
 bool GameInputComponent::mouseReleased(const OIS::MouseEvent& arg, OIS::MouseButtonID id)
 {
+	MyGUI::InputManager::getInstance().injectMouseRelease(arg.state.X.abs, arg.state.Y.abs, MyGUI::MouseButton::Enum(id));
 	return true;
 }
 

@@ -6,8 +6,8 @@
 #include "../GameSystem/gerror.h"
 #include "../GameSystem/new.h"
 #include "../GameLoader/gtestloader.h"
-
-
+#include "MyGUI/MyGUI_PointerManager.h"
+#include "MyGUI/MyGUI_Button.h"
 
 
 static const wxChar* TESTING_TITLE = wxT("Flat World Client");
@@ -97,8 +97,19 @@ GameErrorCode GameClientEngine::Initialize(GameLogger* pLogger)
 		return result;
 	}
 	
+	// initialize resources
+	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("res", "FileSystem", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, false);
+	
 	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 	
+	// initialize MyGUI
+	m_pGuiPlatform = new MyGUI::OgrePlatform();
+	m_pGuiPlatform->initialise(m_pRenderWindow, m_pSceneManager);
+	
+	m_pGui = new MyGUI::Gui();
+	m_pGui->initialise();
+	
+	// initialize factory and game resources
 	FWG_RETURN_FAIL(GameNewChecked(m_spEntityFactory.OutRef()));
 	
 	FWG_RETURN_FAIL(m_spEntityFactory->Initialize(m_pLogger));
@@ -180,7 +191,18 @@ GameErrorCode GameClientEngine::MainLoop()
 	Ogre::Viewport *viewPort = m_pRenderWindow->addViewport(camera);
 	viewPort->setBackgroundColour(Ogre::ColourValue(0.0f,0.0f,0.0f));
 	
+	viewPort->setOverlaysEnabled(true);
+	
+	m_pGuiPlatform->getRenderManagerPtr()->setActiveViewport(0);
+	
 	camera->setAspectRatio(Ogre::Real(viewPort->getActualWidth()) / Ogre::Real(viewPort->getActualHeight()));
+	
+	MyGUI::ButtonPtr button = m_pGui->createWidget<MyGUI::Button>("Button", 10, 10, 300, 26, MyGUI::Align::Default, "Main");
+	button->setCaption("exit");
+	// set callback
+	button->eventMouseButtonClick += MyGUI::newDelegate(this, &GameClientEngine::SetExit); // CLASS_POINTER is pointer to instance of a 
+	
+	
 	
 	while(!m_pInputComp->Exit()) 
 	{
@@ -334,4 +356,19 @@ GameErrorCode GameClientEngine::CreateTestingWorld()
 	
 }
 
-
+GameClientEngine::~GameClientEngine()
+{
+	if(m_pGui)
+	{
+		m_pGui->shutdown();
+		delete m_pGui;
+		m_pGui = NULL;
+	}
+	
+	if(m_pGuiPlatform)
+	{
+		m_pGuiPlatform->shutdown();
+		delete m_pGuiPlatform;
+		m_pGuiPlatform = NULL;
+	}
+}
