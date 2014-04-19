@@ -72,7 +72,7 @@ GameErrorCode GameEntityFactory::CreateEntity( EntityDef& entityDef, InOutSystem
 			
 			FWG_RETURN_FAIL(GameNewChecked(pRenderComp));
 					
-			pRenderComp->SetOgreObject(pEntity);
+			pRenderComp->SetOgreEntity(pEntity);
 			pRenderComp->SetParent(&entity);
 			
 			entity.SetRenderComp(pRenderComp);
