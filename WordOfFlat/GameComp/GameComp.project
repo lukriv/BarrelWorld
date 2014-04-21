@@ -38,9 +38,11 @@
     <VirtualDirectory Name="renderComp">
       <VirtualDirectory Name="include">
         <File Name="RenderComp/grendercomp.h"/>
+        <File Name="RenderComp/grendercmgr.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="src">
         <File Name="RenderComp/grendercomp.cpp"/>
+        <File Name="RenderComp/grendercmgr.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="physComp">
