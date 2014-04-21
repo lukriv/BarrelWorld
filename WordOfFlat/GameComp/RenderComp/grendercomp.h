@@ -6,6 +6,7 @@
 #include <OGRE/OgreLight.h>
 
 class GameEntity;
+class RenderCompManager;
 
 enum RenderComponentType {
 	RENDER_COMP_UNDEFINED 	= 0,
@@ -24,6 +25,7 @@ enum RenderComponentType {
  */
 class RenderComponent : public Ogre::Any {
 protected:
+	RenderCompManager *m_pOwnerManager;
 	RenderComponentType m_compType;
 	GameEntity *m_pParent;
 	Ogre::MovableObject *m_pOgreObject;
@@ -45,7 +47,10 @@ protected:
 	}
 	
 public:
-	RenderComponent() : m_pParent(NULL), m_pOgreObject(NULL) {}
+	RenderComponent(RenderCompManager* pCompManager) : m_pOwnerManager(pCompManager)
+													, m_compType(RENDER_COMP_UNDEFINED)
+													, m_pParent(NULL)
+													, m_pOgreObject(NULL)  {}
 	
 	~RenderComponent() {}
 	
