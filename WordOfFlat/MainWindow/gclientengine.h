@@ -36,7 +36,6 @@ private:
 	GameEngineSettings m_settings;
 	Ogre::Root *m_pRoot;
 	Ogre::RenderWindow *m_pRenderWindow;
-	Ogre::SceneManager *m_pSceneManager;
 	
 	MyGUI::Gui		   *m_pGui;
 	MyGUI::OgrePlatform *m_pGuiPlatform;
@@ -60,7 +59,6 @@ private:
 public:
 	GameClientEngine() : m_pRoot(NULL),
 					m_pRenderWindow(NULL),
-					m_pSceneManager(NULL),
 					m_pGui(NULL),
 					m_pGuiPlatform(NULL),
 					m_pInputMgr(NULL),

@@ -1,10 +1,16 @@
 #include "gcompmgr.h"
 
-GameCompManager::GameCompManager()
+GameCompManager::GameCompManager() {}
+
+GameCompManager::~GameCompManager() {}
+
+GameErrorCode GameCompManager::Initialize(Ogre::SceneManager* pSceneManager)
 {
+	FWG_RETURN_FAIL(m_renderMgr.Initialize(*pSceneManager));
+	return FWG_NO_ERROR;
 }
 
-GameCompManager::~GameCompManager()
+void GameCompManager::Uninitialize()
 {
+	m_renderMgr.Uninitialize();
 }
-
