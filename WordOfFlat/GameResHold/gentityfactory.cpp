@@ -31,7 +31,7 @@ GameErrorCode GameEntityFactory::Initialize(GameLogger* pLogger)
 }
 
 
-GameErrorCode GameEntityFactory::CreateAllEntities(GameDefinitionHolder& defHolder, InOutSystems& inoutSys, GameCompManager& compMgr)
+GameErrorCode GameEntityFactory::CreateAllEntities(GameDefinitionHolder &defHolder, GameCompManager& compMgr)
 {
 	TEntityDefMap::Iterator iter;
 	for (iter = defHolder.m_entityDefs.Begin(); iter != defHolder.m_entityDefs.End(); iter++)
@@ -43,16 +43,16 @@ GameErrorCode GameEntityFactory::CreateAllEntities(GameDefinitionHolder& defHold
 			return FWG_E_MEMORY_ALLOCATION_ERROR;
 		}
 		
-		FWG_RETURN_FAIL(CreateEntity(*(iter->second), inoutSys, *pEntity));
+		FWG_RETURN_FAIL(CreateEntity(*(iter->second), compMgr, *pEntity));
 	}
 	
 	return FWG_NO_ERROR;
 }
 
 
-GameErrorCode GameEntityFactory::CreateEntity( EntityDef& entityDef, InOutSystems& inoutSys, GameEntity& entity)
+GameErrorCode GameEntityFactory::CreateEntity( EntityDef& entityDef, GameCompManager& compMgr, GameEntity& entity)
 {
-	if(inoutSys.m_pSceneMgr != NULL)
+	if(compMgr.GetRenderManager().GetOgreSceneManager() != NULL)
 	{
 		if(!entityDef.m_mesh.IsEmpty() && !entityDef.m_material.IsEmpty())
 		{
@@ -62,7 +62,7 @@ GameErrorCode GameEntityFactory::CreateEntity( EntityDef& entityDef, InOutSystem
 			
 			if(!entityDef.m_entityName.IsEmpty())
 			{
-				pEntity = inoutSys.m_pSceneMgr->createEntity(entityDef.m_entityName.ToStdString(), entityDef.m_mesh->m_name.ToStdString());
+				pEntity = compMgr.GetRenderManager().GetOgreSceneManager()->createEntity(entityDef.m_entityName.ToStdString(), entityDef.m_mesh->m_name.ToStdString());
 			} else {
 				return FWG_E_NOT_IMPLEMENTED_ERROR;
 			}
@@ -70,7 +70,11 @@ GameErrorCode GameEntityFactory::CreateEntity( EntityDef& entityDef, InOutSystem
 			//pEntity->setMaterialName(entityDef.m_material->m_name.ToStdString());
 			pEntity->setMaterialName(entityDef.m_material->m_name.ToStdString());
 			
-			FWG_RETURN_FAIL(GameNewChecked(pRenderComp));
+			pRenderComp = compMgr.GetRenderManager().CreateEmptyRenderComponent();
+			if(pRenderComp == NULL)
+			{
+				return FWG_E_MEMORY_ALLOCATION_ERROR;
+			}
 					
 			pRenderComp->SetOgreEntity(pEntity);
 			pRenderComp->SetParent(&entity);
@@ -82,7 +86,7 @@ GameErrorCode GameEntityFactory::CreateEntity( EntityDef& entityDef, InOutSystem
 		if(!entityDef.m_transformation.IsEmpty())
 		{
 			TransformComponent *pTransform = NULL;
-			Ogre::SceneNode *pSceneNode = inoutSys.m_pSceneMgr->getRootSceneNode()->createChildSceneNode();
+			Ogre::SceneNode *pSceneNode = compMgr.GetRenderManager().GetOgreSceneManager()->getRootSceneNode()->createChildSceneNode();
 			pSceneNode->setPosition(entityDef.m_transformation->m_position);
 			pSceneNode->setOrientation(entityDef.m_transformation->m_rotation);
 			pSceneNode->setScale(entityDef.m_transformation->m_scale);

@@ -10,13 +10,6 @@
 
 
 class GameEntityFactory : IRefObject {
-public:
-	struct InOutSystems {
-		Ogre::SceneManager *m_pSceneMgr;
-		
-		InOutSystems() : m_pSceneMgr(NULL) {}
-	};
-	
 private:
 	wxAtomicInt m_refCount;
 	GameLoggerPtr m_spLogger;
@@ -26,9 +19,9 @@ public:
 	
 	GameErrorCode Initialize(GameLogger *pLogger);
 	
-	GameErrorCode CreateAllEntities(GameDefinitionHolder &defHolder, InOutSystems& inoutSys, GameCompManager& compMgr);
+	GameErrorCode CreateAllEntities(GameDefinitionHolder &defHolder, GameCompManager& compMgr);
 	
-	GameErrorCode CreateEntity( EntityDef &entityDef, InOutSystems& inoutSys, GameEntity &entity);
+	GameErrorCode CreateEntity( EntityDef &entityDef, GameCompManager& compMgr, GameEntity &entity);
 	
 public:
  	virtual void addRef();

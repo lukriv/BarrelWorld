@@ -3,6 +3,9 @@
 
 #include <set>
 #include <OGRE/OgreSceneManager.h>
+#include <wx/thread.h>
+
+#include "../../GameSystem/gerror.h"
 
 class RenderComponent;
 
@@ -13,10 +16,15 @@ private:
 private:
 	Ogre::SceneManager* m_pSceneManager;
 	TRenderComponentSet m_renderMemory;
+	wxCriticalSection 	m_critSection;
 	
 public:
-	RenderCompManager(Ogre::SceneManager& sceneManager);
+	RenderCompManager();
 	~RenderCompManager();
+	
+	GameErrorCode Initialize(Ogre::SceneManager& sceneManager);
+	void Uninitialize();
+	
 	
 	
 	/*!
@@ -25,6 +33,9 @@ public:
 	 */
 	RenderComponent* CreateEmptyRenderComponent();
 	
+	void DestroyRenderComponent(RenderComponent* pRenderComp);
+	
+	void DestroyAllRenderComponents();
 	
 	inline Ogre::SceneManager* GetOgreSceneManager() { return m_pSceneManager; }
 

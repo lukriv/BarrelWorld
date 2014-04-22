@@ -52,7 +52,7 @@ public:
 													, m_pParent(NULL)
 													, m_pOgreObject(NULL)  {}
 	
-	~RenderComponent() {}
+	~RenderComponent();
 	
 
 	
@@ -124,6 +124,8 @@ public:
 	
 	inline void SetParent(GameEntity *pParent) { m_pParent = pParent; }
 	inline GameEntity* GetParent() { return m_pParent; }
+	
+	inline RenderComponentType GetType() { return m_compType; }
 	
 };
 

@@ -80,7 +80,14 @@ GameErrorCode GameClientEngine::Initialize(GameLogger* pLogger)
 		return result;
 	}
 	
-	m_pSceneManager = m_pRoot->createSceneManager(Ogre::ST_GENERIC);
+	Ogre::SceneManager *pSceneManager = m_pRoot->createSceneManager(Ogre::ST_GENERIC);
+	if(pSceneManager == NULL)
+	{
+		result = FWG_E_MEMORY_ALLOCATION_ERROR;
+		FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::Initialize() : Create scene manager failed: 0x%08x"),
+			m_pLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
 	
 	size_t hWnd = 0;
 	OIS::ParamList paramList;
@@ -102,9 +109,12 @@ GameErrorCode GameClientEngine::Initialize(GameLogger* pLogger)
 	
 	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 	
+	// initialize component manager
+	FWG_RETURN_FAIL( m_componentManager.Initialize(pSceneManager));
+	
 	// initialize MyGUI
 	m_pGuiPlatform = new MyGUI::OgrePlatform();
-	m_pGuiPlatform->initialise(m_pRenderWindow, m_pSceneManager);
+	m_pGuiPlatform->initialise(m_pRenderWindow, pSceneManager);
 	
 	m_pGui = new MyGUI::Gui();
 	m_pGui->initialise();
@@ -159,18 +169,15 @@ GameErrorCode GameClientEngine::LoadSettings(wxChar* pFileName)
 GameErrorCode GameClientEngine::MainLoop()
 {
 	GameErrorCode result = FWG_NO_ERROR;
-	GameEntityFactory::InOutSystems entityParams;
-	
-	entityParams.m_pSceneMgr = m_pSceneManager;
 	
 	// create scene manager
-	FWG_RETURN_FAIL(m_spEntityFactory.In()->CreateAllEntities(*m_spDefHolder,entityParams, m_componentManager));
+	FWG_RETURN_FAIL(m_spEntityFactory.In()->CreateAllEntities(*m_spDefHolder, m_componentManager));
 	
 	// create scene node
-	Ogre::SceneNode* pScnNode = m_pSceneManager->getRootSceneNode()->createChildSceneNode("cameraNode");
+	Ogre::SceneNode* pScnNode = m_componentManager.GetRenderManager().GetOgreSceneManager()->getRootSceneNode()->createChildSceneNode("cameraNode");
 	
 	// Create the camera
-	Ogre::Camera* camera = m_pSceneManager->createCamera("PlayerCam");
+	Ogre::Camera* camera = m_componentManager.GetRenderManager().GetOgreSceneManager()->createCamera("PlayerCam");
  
 	// Position it at 500 in Z direction
 	camera->setPosition(Ogre::Vector3(-8,0,0));
@@ -182,10 +189,10 @@ GameErrorCode GameClientEngine::MainLoop()
 	
 	pScnNode->setPosition(Ogre::Vector3(0,-2,0));
 	
-	m_pSceneManager->setAmbientLight(Ogre::ColourValue(0.5f, 0.5f, 0.5f));
+	m_componentManager.GetRenderManager().GetOgreSceneManager()->setAmbientLight(Ogre::ColourValue(0.5f, 0.5f, 0.5f));
 	
 	// Create a Light and set its position
-    Ogre::Light* light = m_pSceneManager->createLight("MainLight");
+    Ogre::Light* light = m_componentManager.GetRenderManager().GetOgreSceneManager()->createLight("MainLight");
     light->setPosition(20.0f, 80.0f, 50.0f);
 	
 	Ogre::Viewport *viewPort = m_pRenderWindow->addViewport(camera);
@@ -370,5 +377,29 @@ GameClientEngine::~GameClientEngine()
 		m_pGuiPlatform->shutdown();
 		delete m_pGuiPlatform;
 		m_pGuiPlatform = NULL;
+	}
+	
+	if(m_pRenderWindow != NULL)
+	{
+		m_pRenderWindow->removeAllListeners();
+		m_pRenderWindow->removeAllViewports();
+		if (m_pRoot != NULL) m_pRoot->detachRenderTarget(m_pRenderWindow);
+		m_pRenderWindow->destroy();
+	}
+	
+	Ogre::SceneManager *pSceneMgr = m_componentManager.GetRenderManager().GetOgreSceneManager();
+	
+	m_componentManager.Uninitialize();
+	
+	if(pSceneMgr != NULL)
+	{
+		m_pRoot->destroySceneManager(pSceneMgr);
+	}
+	
+	if(m_pRoot != NULL)
+	{
+		
+		m_pRoot->destroyAllRenderQueueInvocationSequences();
+		m_pRoot = NULL;
 	}
 }
