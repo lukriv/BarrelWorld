@@ -12,6 +12,9 @@ public:
 	
 	
 	GameEntity* CreateEntity(const wxString& entityName);
+	void DestroyEntity(GameEntity* entity);
+	
+	
 	GameEntity* GetEntity(const wxString& entityName);
 	void RemoveEntity(const wxString& entityName);
 	

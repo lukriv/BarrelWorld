@@ -32,19 +32,29 @@ RenderCompManager::~RenderCompManager()
 }
 
 
-RenderComponent* RenderCompManager::CreateEmptyRenderComponent()
+GameErrorCode RenderCompManager::CreateEmptyRenderComponent(RenderComponent* pRenderCompOut)
 {
 	RenderComponent* pRenderComp = NULL;
 	
-	GameNew(pRenderComp, this);
+	if(m_pSceneManager == NULL)
+	{
+		// render manager is not initialized
+		return FWG_E_OBJECT_NOT_INITIALIZED_ERROR;
+	}
+	
+	pRenderComp = new (std::nothrow) RenderComponent(this);
 	if(pRenderComp != NULL)
 	{
 		// lock critical section
 		wxCriticalSectionLocker lock(m_critSection);
 		m_renderMemory.insert(pRenderComp);
+	} else {
+		return FWG_E_MEMORY_ALLOCATION_ERROR;
 	}
 	
-	return pRenderComp;
+	pRenderCompOut = pRenderComp;
+	
+	return FWG_NO_ERROR;
 }
 
 void RenderCompManager::DestroyRenderComponent(RenderComponent* pRenderComp)
@@ -55,17 +65,21 @@ void RenderCompManager::DestroyRenderComponent(RenderComponent* pRenderComp)
 	iter = m_renderMemory.find(pRenderComp);
 	if(iter != m_renderMemory.end())
 	{
-		if(pRenderComp->GetType() != RENDER_COMP_UNDEFINED)
-		{
-			m_pSceneManager->destroyMovableObject(pRenderComp->GetOgreObject());
-		}
 		m_renderMemory.erase(iter);
+		delete pRenderComp; // delete item
 	}
 }
 
 void RenderCompManager::DestroyAllRenderComponents()
 {
 	TRenderComponentSet::iterator iter;
+	
+	// Render component manager is not initialized -> return
+	if(m_pSceneManager == NULL)
+	{
+		return;
+	}
+	
 	for (iter = m_renderMemory.begin(); iter != m_renderMemory.end(); iter++)
 	{
 		delete *iter;

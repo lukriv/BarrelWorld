@@ -45,16 +45,17 @@ protected:
 			m_pOgreObject->getUserObjectBindings().setUserAny(*this); // set parent
 		}
 	}
-	
-public:
+
+protected:
+	// Render component can be created and destroyed only by render component manager
 	RenderComponent(RenderCompManager* pCompManager) : m_pOwnerManager(pCompManager)
 													, m_compType(RENDER_COMP_UNDEFINED)
 													, m_pParent(NULL)
 													, m_pOgreObject(NULL)  {}
-	
 	~RenderComponent();
 	
-
+	friend class RenderCompManager;
+public:
 	
 	inline Ogre::MovableObject* GetOgreObject() { return m_pOgreObject; }
 	
@@ -124,6 +125,11 @@ public:
 	
 	inline void SetParent(GameEntity *pParent) { m_pParent = pParent; }
 	inline GameEntity* GetParent() { return m_pParent; }
+	
+	/*!
+	 * \brief Destroy inner ogre object
+	 */
+	void Clear();
 	
 	inline RenderComponentType GetType() { return m_compType; }
 	
