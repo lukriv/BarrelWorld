@@ -31,7 +31,7 @@ public:
 	 * \brief Create render component
 	 * \return Pointer to newly created render component (can be NULL)
 	 */
-	RenderComponent* CreateEmptyRenderComponent();
+	GameErrorCode CreateEmptyRenderComponent(RenderComponent *&pRenderComp);
 	
 	void DestroyRenderComponent(RenderComponent* pRenderComp);
 	

@@ -8,14 +8,20 @@
 
 class GameEntity {
 private:
+	wxString m_entityName;
 	TransformComponent* m_pTransformComp;
 	RenderComponent* m_pRenderComp;
 	AnimatorComponent* m_pAnimatorComp;
 
 public:
-	GameEntity() : m_pTransformComp(NULL)
+	GameEntity() : m_entityName(entityName)
+				, m_pTransformComp(NULL)
 				, m_pRenderComp(NULL)
 				, m_pAnimatorComp(NULL) {}
+				
+	void SetName(const wxString& name) { m_entityName.assign(name);}
+	
+	const wxString& GetName() const { return m_entityName; }
 	
 	void SetTransformComp(TransformComponent* pTransComp);
 	void SetRenderComp(RenderComponent *pRenderComp);

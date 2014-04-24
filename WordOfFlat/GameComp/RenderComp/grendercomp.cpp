@@ -3,6 +3,16 @@
 
 RenderComponent::~RenderComponent()
 {
-	// destroy this
-	m_pOwnerManager->DestroyRenderComponent(this);
+	Clear();
+}
+
+
+void RenderComponent::Clear()
+{
+	if(m_pOgreObject != NULL)
+	{
+		m_pOwnerManager->GetOgreSceneManager()->destroyMovableObject(m_pOgreObject);
+		m_pOgreObject = NULL;
+		m_compType = RENDER_COMP_UNDEFINED;
+	}
 }

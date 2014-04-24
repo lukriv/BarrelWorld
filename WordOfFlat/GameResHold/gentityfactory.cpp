@@ -70,7 +70,7 @@ GameErrorCode GameEntityFactory::CreateEntity( EntityDef& entityDef, GameCompMan
 			//pEntity->setMaterialName(entityDef.m_material->m_name.ToStdString());
 			pEntity->setMaterialName(entityDef.m_material->m_name.ToStdString());
 			
-			pRenderComp = compMgr.GetRenderManager().CreateEmptyRenderComponent();
+			FWG_RETURN_FAIL(compMgr.GetRenderManager().CreateEmptyRenderComponent());
 			if(pRenderComp == NULL)
 			{
 				return FWG_E_MEMORY_ALLOCATION_ERROR;
