@@ -38,6 +38,7 @@
       <File Name="new.h"/>
       <File Name="new.inl"/>
     </VirtualDirectory>
+    <File Name="refobjectimpl.h"/>
   </VirtualDirectory>
   <Settings Type="Static Library">
     <GlobalSettings>
