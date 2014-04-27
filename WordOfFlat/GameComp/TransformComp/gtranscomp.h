@@ -3,8 +3,11 @@
 
 
 #include "OGRE/OgreSceneNode.h"
+#include <GameSystem/refobject.h>
+#include <GameSystem/refobjectimpl.h>
+#include "../RenderComp/grendercomp.h"
 
-class TransformComponent {
+class TransformComponent : public RefObjectImpl<IRefObject> {
 	Ogre::SceneNode *m_pSceneNode;
 public:
 	TransformComponent() : m_pSceneNode(NULL) {}
@@ -14,6 +17,8 @@ public:
 	
 	
 	inline Ogre::SceneNode* GetSceneNode() { return m_pSceneNode; }
+	
+	void Connect(RenderComponent &renderComp);
 	
 	
 };

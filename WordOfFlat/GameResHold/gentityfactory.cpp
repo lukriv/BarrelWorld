@@ -36,13 +36,8 @@ GameErrorCode GameEntityFactory::CreateAllEntities(GameDefinitionHolder &defHold
 	TEntityDefMap::Iterator iter;
 	for (iter = defHolder.m_entityDefs.Begin(); iter != defHolder.m_entityDefs.End(); iter++)
 	{
-		
-		GameEntity* pEntity = compMgr.GetEntityManager().CreateEntity(iter->second->m_entityName);
-		if(pEntity == NULL)
-		{
-			return FWG_E_MEMORY_ALLOCATION_ERROR;
-		}
-		
+		GameEntity *pEntity = NULL;
+		FWG_RETURN_FAIL(compMgr.GetEntityManager().CreateEntity(iter->second->m_entityName, pEntity));
 		FWG_RETURN_FAIL(CreateEntity(*(iter->second), compMgr, *pEntity));
 	}
 	
@@ -58,7 +53,7 @@ GameErrorCode GameEntityFactory::CreateEntity( EntityDef& entityDef, GameCompMan
 		{
 			// render entity is defined
 			Ogre::Entity *pEntity = NULL;
-			RenderComponent *pRenderComp = NULL;
+			RefObjSmPtr<RenderComponent> spRenderComp;
 			
 			if(!entityDef.m_entityName.IsEmpty())
 			{
@@ -70,31 +65,27 @@ GameErrorCode GameEntityFactory::CreateEntity( EntityDef& entityDef, GameCompMan
 			//pEntity->setMaterialName(entityDef.m_material->m_name.ToStdString());
 			pEntity->setMaterialName(entityDef.m_material->m_name.ToStdString());
 			
-			FWG_RETURN_FAIL(compMgr.GetRenderManager().CreateEmptyRenderComponent());
-			if(pRenderComp == NULL)
-			{
-				return FWG_E_MEMORY_ALLOCATION_ERROR;
-			}
+			FWG_RETURN_FAIL(compMgr.GetRenderManager().CreateEmptyRenderComponent(spRenderComp.OutRef()));
 					
-			pRenderComp->SetOgreEntity(pEntity);
-			pRenderComp->SetParent(&entity);
+			spRenderComp->SetOgreEntity(pEntity);
+			spRenderComp->SetParent(&entity);
 			
-			entity.SetRenderComp(pRenderComp);
+			entity.SetRenderComp(spRenderComp);
 						
 		}
 		
 		if(!entityDef.m_transformation.IsEmpty())
 		{
-			TransformComponent *pTransform = NULL;
+			RefObjSmPtr<TransformComponent> spTransform = NULL;
 			Ogre::SceneNode *pSceneNode = compMgr.GetRenderManager().GetOgreSceneManager()->getRootSceneNode()->createChildSceneNode();
 			pSceneNode->setPosition(entityDef.m_transformation->m_position);
 			pSceneNode->setOrientation(entityDef.m_transformation->m_rotation);
 			pSceneNode->setScale(entityDef.m_transformation->m_scale);
 			
-			FWG_RETURN_FAIL(GameNewChecked(pTransform));
-			pTransform->SetSceneNode(pSceneNode);
+			FWG_RETURN_FAIL(GameNewChecked(spTransform.OutRef()));
+			spTransform->SetSceneNode(pSceneNode);
 			
-			entity.SetTransformComp(pTransform);
+			entity.SetTransformComp(spTransform);
 		}
 		
 	}

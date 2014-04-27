@@ -6,8 +6,8 @@
 #include "RenderComp/grendercmgr.h"
 
 class GameCompManager {
-	GameEntityManager m_entityMgr;
 	RenderCompManager m_renderMgr;
+	GameEntityManager m_entityMgr; // should be the last manager (first in destroy)
 public:
 	GameCompManager();
 	~GameCompManager();

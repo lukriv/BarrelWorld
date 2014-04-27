@@ -173,21 +173,13 @@ GameErrorCode GameClientEngine::MainLoop()
 	// create scene manager
 	FWG_RETURN_FAIL(m_spEntityFactory.In()->CreateAllEntities(*m_spDefHolder, m_componentManager));
 	
-	// create scene node
-	Ogre::SceneNode* pScnNode = m_componentManager.GetRenderManager().GetOgreSceneManager()->getRootSceneNode()->createChildSceneNode("cameraNode");
-	
-	// Create the camera
-	Ogre::Camera* camera = m_componentManager.GetRenderManager().GetOgreSceneManager()->createCamera("PlayerCam");
+	RefObjSmPtr<GameCamera> spCamera = m_componentManager.GetRenderManager().GetMainCamera();
  
 	// Position it at 500 in Z direction
-	camera->setPosition(Ogre::Vector3(-8,0,0));
+	spCamera->GetCameraNode()->setPosition(Ogre::Vector3(-8,-1,0));
 	// Look back along -Z
-	camera->lookAt(Ogre::Vector3(0,0,0));
-	camera->setNearClipDistance(1);
-	
-	pScnNode->attachObject(camera); 
-	
-	pScnNode->setPosition(Ogre::Vector3(0,-2,0));
+	spCamera->GetOgreCamera()->lookAt(Ogre::Vector3(1,0,0));
+	spCamera->GetOgreCamera()->setNearClipDistance(1);
 	
 	m_componentManager.GetRenderManager().GetOgreSceneManager()->setAmbientLight(Ogre::ColourValue(0.5f, 0.5f, 0.5f));
 	
@@ -195,14 +187,19 @@ GameErrorCode GameClientEngine::MainLoop()
     Ogre::Light* light = m_componentManager.GetRenderManager().GetOgreSceneManager()->createLight("MainLight");
     light->setPosition(20.0f, 80.0f, 50.0f);
 	
-	Ogre::Viewport *viewPort = m_pRenderWindow->addViewport(camera);
+	Ogre::Viewport *viewPort = m_pRenderWindow->addViewport(spCamera->GetOgreCamera());
 	viewPort->setBackgroundColour(Ogre::ColourValue(0.0f,0.0f,0.0f));
 	
 	viewPort->setOverlaysEnabled(true);
 	
 	m_pGuiPlatform->getRenderManagerPtr()->setActiveViewport(0);
 	
-	camera->setAspectRatio(Ogre::Real(viewPort->getActualWidth()) / Ogre::Real(viewPort->getActualHeight()));
+	spCamera->GetOgreCamera()->setAspectRatio(Ogre::Real(viewPort->getActualWidth()) / Ogre::Real(viewPort->getActualHeight()));
+	
+	Ogre::Viewport *viewPort2 = m_pRenderWindow->addViewport(spCamera->GetOgreCamera(), 1, 0.6f, 0.1f, 0.3f, 0.3f);
+	viewPort2->setBackgroundColour(Ogre::ColourValue(0.1f,0.1f,0.1f));
+	
+	viewPort2->setOverlaysEnabled(false);
 	
 	MyGUI::ButtonPtr button = m_pGui->createWidget<MyGUI::Button>("Button", 10, 10, 300, 26, MyGUI::Align::Default, "Main");
 	button->setCaption("exit");

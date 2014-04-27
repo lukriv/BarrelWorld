@@ -20,7 +20,7 @@ void GameEntity::SetRenderComp(RenderComponent *pRenderComp)
 		// set connectivity with other components
 		if(m_pTransformComp != NULL)
 		{
-			m_pTransformComp->GetSceneNode()->attachObject(m_pRenderComp->GetOgreObject());
+			m_pTransformComp->Connect(*m_pRenderComp);
 		}
 	}
 }
@@ -40,7 +40,7 @@ void GameEntity::SetTransformComp(TransformComponent* pTransComp)
 	// connect this component with other components - if it make sense
 	if(m_pRenderComp != NULL)
 	{
-		m_pTransformComp->GetSceneNode()->attachObject(m_pRenderComp->GetOgreObject());
+		m_pTransformComp->Connect(*m_pRenderComp);
 	}
 	
 }

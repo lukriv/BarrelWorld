@@ -1,13 +1,17 @@
 #include "gentitymgr.h"
 
+GameEntityManager::GameEntityManager()
+{
+}
+
+GameEntityManager::~GameEntityManager()
+{
+	DestroyAllEntities();
+}
+
 GameEntity* GameEntityManager::GetEntity(const wxString& entityName)
 {
 	return m_entityMap.FindValue(entityName);
-}
-
-void GameEntityManager::RemoveEntity(const wxString& entityName)
-{
-	m_entityMap.Remove(entityName);
 }
 
 GameErrorCode GameEntityManager::CreateEntity(const wxString& entityName, GameEntity*& pNewEntity)
@@ -23,6 +27,10 @@ GameErrorCode GameEntityManager::CreateEntity(const wxString& entityName, GameEn
 	return FWG_NO_ERROR;
 }
 
+void GameEntityManager::DestroyEntity(const wxString& entityName)
+{
+	m_entityMap.Remove(entityName);
+}
 
 void GameEntityManager::DestroyEntity(GameEntity* entity)
 {
@@ -34,3 +42,12 @@ void GameEntityManager::DestroyEntity(GameEntity* entity)
 		m_entityMap.Remove(iter);
 	}
 }
+
+
+void GameEntityManager::DestroyAllEntities()
+{
+	m_entityMap.Clear();
+}
+
+
+
