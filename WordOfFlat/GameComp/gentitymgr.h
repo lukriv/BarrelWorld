@@ -9,14 +9,16 @@ class GameEntityManager {
 private:
 	TEntityMap m_entityMap;
 public:
+	GameEntityManager();
+	~GameEntityManager();
 	
-	
-	GameEntity* CreateEntity(const wxString& entityName);
+	GameErrorCode CreateEntity(const wxString& entityName, GameEntity*& pNewEntity);
 	void DestroyEntity(GameEntity* entity);
-	
+	void DestroyEntity(const wxString& entityName);
+	void DestroyAllEntities();
 	
 	GameEntity* GetEntity(const wxString& entityName);
-	void RemoveEntity(const wxString& entityName);
+	
 	
 };
 

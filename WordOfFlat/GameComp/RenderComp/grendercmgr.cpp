@@ -3,9 +3,7 @@
 #include "grendercomp.h"
 #include "../GameSystem/new.h"
 
-RenderCompManager::RenderCompManager() :
-	m_pSceneManager(NULL)
-{}
+RenderCompManager::RenderCompManager() : m_pSceneManager(NULL){}
 
 GameErrorCode RenderCompManager::Initialize(Ogre::SceneManager& sceneManager)
 {
@@ -17,11 +15,15 @@ GameErrorCode RenderCompManager::Initialize(Ogre::SceneManager& sceneManager)
 	
 	m_pSceneManager = &sceneManager;
 	
+	// create new main camera
+	FWG_RETURN_FAIL(CreateCamera(wxString(MAIN_CAMERA_NAME), m_spMainCamera.OutRef()));
+	
 	return FWG_NO_ERROR;
 }
 
 void RenderCompManager::Uninitialize()
 {
+	m_spMainCamera.Release();
 	DestroyAllRenderComponents();
 	m_pSceneManager = NULL;
 }
@@ -32,7 +34,7 @@ RenderCompManager::~RenderCompManager()
 }
 
 
-GameErrorCode RenderCompManager::CreateEmptyRenderComponent(RenderComponent* pRenderCompOut)
+GameErrorCode RenderCompManager::CreateEmptyRenderComponent(RenderComponent *&pRenderCompOut)
 {
 	RenderComponent* pRenderComp = NULL;
 	
@@ -42,50 +44,41 @@ GameErrorCode RenderCompManager::CreateEmptyRenderComponent(RenderComponent* pRe
 		return FWG_E_OBJECT_NOT_INITIALIZED_ERROR;
 	}
 	
-	pRenderComp = new (std::nothrow) RenderComponent(this);
-	if(pRenderComp != NULL)
-	{
-		// lock critical section
-		wxCriticalSectionLocker lock(m_critSection);
-		m_renderMemory.insert(pRenderComp);
-	} else {
-		return FWG_E_MEMORY_ALLOCATION_ERROR;
-	}
+	FWG_RETURN_FAIL(GameNewChecked(pRenderComp, this));
 	
 	pRenderCompOut = pRenderComp;
 	
 	return FWG_NO_ERROR;
 }
 
-void RenderCompManager::DestroyRenderComponent(RenderComponent* pRenderComp)
-{
-	TRenderComponentSet::iterator iter;
-	wxCriticalSectionLocker lock(m_critSection);
-	
-	iter = m_renderMemory.find(pRenderComp);
-	if(iter != m_renderMemory.end())
-	{
-		m_renderMemory.erase(iter);
-		delete pRenderComp; // delete item
-	}
-}
-
 void RenderCompManager::DestroyAllRenderComponents()
 {
-	TRenderComponentSet::iterator iter;
-	
 	// Render component manager is not initialized -> return
 	if(m_pSceneManager == NULL)
 	{
 		return;
 	}
 	
-	for (iter = m_renderMemory.begin(); iter != m_renderMemory.end(); iter++)
+	m_pSceneManager->destroyAllMovableObjects();
+}
+
+GameErrorCode RenderCompManager::CreateCamera(const wxString& cameraName, GameCamera*& pGameCameraOut)
+{
+	GameErrorCode result = FWG_NO_ERROR;
+	Ogre::Camera *pCamera = m_pSceneManager->createCamera(cameraName.ToStdString());
+	Ogre::SceneNode *pSceneNode = m_pSceneManager->createSceneNode();
+	GameCamera *pGameCamera = NULL;
+	
+	pSceneNode->attachObject(pCamera);
+	
+	if(FWG_FAILED(result = GameNewChecked(pGameCamera, pCamera)))
 	{
-		delete *iter;
+		m_pSceneManager->destroyMovableObject(pCamera);
+		m_pSceneManager->destroySceneNode(pSceneNode);
+		return result;
 	}
 	
-	m_renderMemory.clear();
+	pGameCameraOut = pGameCamera;
 	
-	m_pSceneManager->destroyAllMovableObjects();
+	return result;
 }

@@ -12,5 +12,6 @@ GameErrorCode GameCompManager::Initialize(Ogre::SceneManager* pSceneManager)
 
 void GameCompManager::Uninitialize()
 {
+	m_entityMgr.DestroyAllEntities();
 	m_renderMgr.Uninitialize();
 }

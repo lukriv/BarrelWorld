@@ -5,16 +5,14 @@
 #include <OGRE/OgreCamera.h>
 #include <OGRE/OgreLight.h>
 
+#include <GameSystem/refobject.h>
+#include <GameSystem/refobjectimpl.h>
+#include <GameSystem/refobjectsmptr.h>
+#include "gcamera.h"
+#include "glight.h"
+
 class GameEntity;
 class RenderCompManager;
-
-enum RenderComponentType {
-	RENDER_COMP_UNDEFINED 	= 0,
-	RENDER_COMP_ENTITY		= 1,
-	RENDER_COMP_CAMERA		= 2,
-	RENDER_COMP_LIGHT		= 3
-};
-
 
 /*!
  * \class GameEntity
@@ -23,103 +21,47 @@ enum RenderComponentType {
  * \file gentityobj.h
  * \brief Geometric entity with state and transform
  */
-class RenderComponent : public Ogre::Any {
+class RenderComponent : public RefObjectImpl<IRefObject>, public Ogre::Any {
 protected:
 	RenderCompManager *m_pOwnerManager;
-	RenderComponentType m_compType;
 	GameEntity *m_pParent;
-	Ogre::MovableObject *m_pOgreObject;
+	
+	Ogre::Entity *m_pOgreEntity; //!< Main render object (it is optional)
+	RefObjSmPtr<GameCamera> m_pOgreCamera; //!< Camera with SceneNode following main object (optional)
+	RefObjSmPtr<GameLight>  m_pOgreLight;  //!< Light with SceneNode following main object (optional)
 
-protected:
-	inline void SetOgreObject(Ogre::MovableObject *pOgreObject) 
-	{ 
-		if(m_pOgreObject != NULL)
-		{
-			m_pOgreObject->getUserObjectBindings().setUserAny(Ogre::UserObjectBindings::getEmptyUserAny()); // erase parent
-		}
-		
-		m_pOgreObject = pOgreObject; // set new entity
-		
-		if(pOgreObject != NULL)
-		{
-			m_pOgreObject->getUserObjectBindings().setUserAny(*this); // set parent
-		}
-	}
-
-protected:
+public:
 	// Render component can be created and destroyed only by render component manager
 	RenderComponent(RenderCompManager* pCompManager) : m_pOwnerManager(pCompManager)
-													, m_compType(RENDER_COMP_UNDEFINED)
 													, m_pParent(NULL)
-													, m_pOgreObject(NULL)  {}
+													, m_pOgreEntity(NULL){}
 	~RenderComponent();
-	
-	friend class RenderCompManager;
-public:
-	
-	inline Ogre::MovableObject* GetOgreObject() { return m_pOgreObject; }
 	
 	inline Ogre::Entity* GetOgreEntity() 
 	{
-		if(m_compType == RENDER_COMP_ENTITY)
-		{
-			return static_cast<Ogre::Entity*>(m_pOgreObject);
-		} else {
-			return NULL;
-		}
+		return m_pOgreEntity;
 	}
 	
-	inline void SetOgreEntity(Ogre::Entity* pEntity)
+	void SetOgreEntity(Ogre::Entity* pEntity);
+	
+	inline GameCamera* GetOgreCamera() 
 	{
-		if(pEntity != NULL)
-		{
-			m_compType = RENDER_COMP_ENTITY;
-		} else {
-			m_compType = RENDER_COMP_UNDEFINED;
-		}
-		SetOgreObject(pEntity);
+		return m_pOgreCamera;
 	}
 	
-	inline Ogre::Camera* GetOgreCamera() 
+	void SetOgreCamera(GameCamera* pCamera)
 	{
-		if(m_compType == RENDER_COMP_CAMERA)
-		{
-			return static_cast<Ogre::Camera*>(m_pOgreObject);
-		} else {
-			return NULL;
-		}
+		m_pOgreCamera = pCamera;
 	}
 	
-	inline void SetOgreCamera(Ogre::Camera* pCamera)
+	inline GameLight* GetOgreLight()
 	{
-		if(pCamera != NULL)
-		{
-			m_compType = RENDER_COMP_CAMERA;
-		} else {
-			m_compType = RENDER_COMP_UNDEFINED;
-		}
-		SetOgreObject(pCamera);
+		return m_pOgreLight;
 	}
 	
-	inline Ogre::Light* GetOgreLight()
+	inline void SetOgreLight(GameLight* pLight)
 	{
-		if(m_compType == RENDER_COMP_LIGHT)
-		{
-			return static_cast<Ogre::Light*>(m_pOgreObject);
-		} else {
-			return NULL;
-		}
-	}
-	
-	inline void SetOgreLight(Ogre::Light* pLight)
-	{
-		if(pLight != NULL)
-		{
-			m_compType = RENDER_COMP_LIGHT;
-		} else {
-			m_compType = RENDER_COMP_UNDEFINED;
-		}
-		SetOgreObject(pLight);
+		m_pOgreLight = pLight;
 	}
 
 	
@@ -130,8 +72,6 @@ public:
 	 * \brief Destroy inner ogre object
 	 */
 	void Clear();
-	
-	inline RenderComponentType GetType() { return m_compType; }
 	
 };
 

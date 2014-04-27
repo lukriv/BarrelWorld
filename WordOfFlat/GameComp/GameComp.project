@@ -39,6 +39,8 @@
       <VirtualDirectory Name="include">
         <File Name="RenderComp/grendercomp.h"/>
         <File Name="RenderComp/grendercmgr.h"/>
+        <File Name="RenderComp/gcamera.h"/>
+        <File Name="RenderComp/glight.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="src">
         <File Name="RenderComp/grendercomp.cpp"/>
@@ -89,6 +91,7 @@
     <GlobalSettings>
       <Compiler Options="-Wall -Wno-unused-local-typedefs" C_Options="" Assembler="">
         <IncludePath Value="../../extern/include"/>
+        <IncludePath Value="../../WordOfFlat"/>
         <Preprocessor Value="UNICODE"/>
       </Compiler>
       <Linker Options="">
