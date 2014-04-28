@@ -10,7 +10,7 @@
 #include "../GameComp/gcompmgr.h"
 #include "../GameResHold/gdefholder.h"
 #include "../GameResHold/gentityfactory.h"
-#include "ginputcomp.h"
+#include "ginputsystem.h"
 #include "MyGUI/MyGUI_Gui.h"
 #include "MyGUI/MyGUI_OgrePlatform.h"
 #include "MyGUI/MyGUI_Widget.h"
@@ -42,16 +42,16 @@ private:
 	
 	OIS::InputManager*	m_pInputMgr;
 
-	GameInputComponent* m_pInputComp;
+	GameInputSystem* m_pInputSystem;
 	
 	GameCompManager m_componentManager;
 	RefObjSmPtr<GameDefinitionHolder> m_spDefHolder;
 	RefObjSmPtr<GameEntityFactory> m_spEntityFactory;
 	
-	
 	bool m_isWindowCreated;
 	bool m_isSettingLoaded;
 	bool m_isInitialized;
+	bool m_exit;
 private:
 	GameErrorCode CreateWindow();
 	GameErrorCode LoadSettings(wxChar* pFileName = NULL);
@@ -62,10 +62,11 @@ public:
 					m_pGui(NULL),
 					m_pGuiPlatform(NULL),
 					m_pInputMgr(NULL),
-					m_pInputComp(NULL),
+					m_pInputSystem(NULL),
 					m_isWindowCreated(false),
 					m_isSettingLoaded(false),
-					m_isInitialized(false) {}
+					m_isInitialized(false),
+					m_exit(false) {}
 
 	/*! \brief Destructor */
 	~GameClientEngine();
@@ -80,7 +81,8 @@ public:
 	
 	GameErrorCode CreateTestingWorld();
 	
-	void SetExit(MyGUI::Widget* _sender) { m_pInputComp->SetExit(); }
+	void SetExitInputClbk(bool exit) { m_exit = true; }
+	void SetExit(MyGUI::Widget* _sender) { m_exit = true; }
 
 };
 

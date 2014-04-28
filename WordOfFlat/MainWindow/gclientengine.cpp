@@ -97,9 +97,9 @@ GameErrorCode GameClientEngine::Initialize(GameLogger* pLogger)
 	
 	m_pInputMgr = OIS::InputManager::createInputSystem(paramList);
 	
-	FWG_RETURN_FAIL(GameNewChecked(m_pInputComp, m_pInputMgr));
+	FWG_RETURN_FAIL(GameNewChecked(m_pInputSystem, m_pInputMgr));
 	
-	if(FWG_FAILED( result = m_pInputComp->Initialize(m_pRenderWindow->getWidth(), m_pRenderWindow->getHeight())))
+	if(FWG_FAILED( result = m_pInputSystem->Initialize(m_pRenderWindow->getWidth(), m_pRenderWindow->getHeight())))
 	{
 		return result;
 	}
@@ -206,11 +206,15 @@ GameErrorCode GameClientEngine::MainLoop()
 	// set callback
 	button->eventMouseButtonClick += MyGUI::newDelegate(this, &GameClientEngine::SetExit); // CLASS_POINTER is pointer to instance of a 
 	
-	
-	
-	while(!m_pInputComp->Exit()) 
+	if(FWG_FAILED(result = m_pInputSystem->RegisterCallback(OIS::KC_ESCAPE, this, &GameClientEngine::SetExitInputClbk)))
 	{
-		m_pInputComp->ProcessInputs();
+		FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::MainLoop() : Register input callback failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	while(!m_exit) 
+	{
+		m_pInputSystem->ProcessInputs();
 		m_pRoot->renderOneFrame();
 		wxThread::Sleep(17);
 	}
