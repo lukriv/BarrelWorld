@@ -1,40 +1,44 @@
-#include "ginputcomp.h"
+#include "ginputsystem.h"
 #include "MyGUI/MyGUI_InputManager.h"
 
 
-bool GameInputComponent::keyPressed(const OIS::KeyEvent& arg)
+bool GameInputSystem::keyPressed(const OIS::KeyEvent& arg)
 {
-	if(m_pKeyboard->isKeyDown(OIS::KC_ESCAPE))
+	if(m_callbackArray[arg.key] != 0)
 	{
-		m_exit = true;
+		m_callbackArray[arg.key]->Invoke(true);
 	}
 	return true;
 }
 
-bool GameInputComponent::keyReleased(const OIS::KeyEvent& arg)
+bool GameInputSystem::keyReleased(const OIS::KeyEvent& arg)
 {
+	if(m_callbackArray[arg.key] != 0)
+	{
+		m_callbackArray[arg.key]->Invoke(false);
+	}
 	return true;
 }
 
-bool GameInputComponent::mouseMoved(const OIS::MouseEvent& arg)
+bool GameInputSystem::mouseMoved(const OIS::MouseEvent& arg)
 {
 	MyGUI::InputManager::getInstance().injectMouseMove(arg.state.X.abs, arg.state.Y.abs, arg.state.Z.abs);
 	return true;
 }
 
-bool GameInputComponent::mousePressed(const OIS::MouseEvent& arg, OIS::MouseButtonID id)
+bool GameInputSystem::mousePressed(const OIS::MouseEvent& arg, OIS::MouseButtonID id)
 {
 	MyGUI::InputManager::getInstance().injectMousePress(arg.state.X.abs, arg.state.Y.abs, MyGUI::MouseButton::Enum(id));
 	return true;
 }
 
-bool GameInputComponent::mouseReleased(const OIS::MouseEvent& arg, OIS::MouseButtonID id)
+bool GameInputSystem::mouseReleased(const OIS::MouseEvent& arg, OIS::MouseButtonID id)
 {
 	MyGUI::InputManager::getInstance().injectMouseRelease(arg.state.X.abs, arg.state.Y.abs, MyGUI::MouseButton::Enum(id));
 	return true;
 }
 
-GameErrorCode GameInputComponent::Initialize(wxInt32 width, wxInt32 height)
+GameErrorCode GameInputSystem::Initialize(wxInt32 width, wxInt32 height)
 {
 	m_pKeyboard = static_cast<OIS::Keyboard*>(m_pParent->createInputObject(OIS::OISKeyboard, true));
 	m_pMouse = static_cast<OIS::Mouse*>(m_pParent->createInputObject(OIS::OISMouse, true));
@@ -48,7 +52,7 @@ GameErrorCode GameInputComponent::Initialize(wxInt32 width, wxInt32 height)
 	return FWG_NO_ERROR;
 }
 
-GameInputComponent::~GameInputComponent()
+GameInputSystem::~GameInputSystem()
 {
 	if(m_pKeyboard)
 	{
@@ -61,7 +65,7 @@ GameInputComponent::~GameInputComponent()
 	}
 }
 
-GameErrorCode GameInputComponent::ProcessInputs()
+GameErrorCode GameInputSystem::ProcessInputs()
 {
 	m_pKeyboard->capture();
 	m_pMouse->capture();
