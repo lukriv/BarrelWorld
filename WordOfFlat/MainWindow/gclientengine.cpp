@@ -110,14 +110,13 @@ GameErrorCode GameClientEngine::Initialize(GameLogger* pLogger)
 	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 	
 	// initialize component manager
-	FWG_RETURN_FAIL( m_componentManager.Initialize(pSceneManager));
+	FWG_RETURN_FAIL( GameNewChecked(m_spComponentManager.OutRef()));
 	
-	// initialize MyGUI
-	m_pGuiPlatform = new MyGUI::OgrePlatform();
-	m_pGuiPlatform->initialise(m_pRenderWindow, pSceneManager);
+	FWG_RETURN_FAIL( m_spComponentManager->Initialize(pSceneManager));
 	
-	m_pGui = new MyGUI::Gui();
-	m_pGui->initialise();
+	// initialize GUI
+	FWG_RETURN_FAIL( GameNewChecked(m_spGameMenu.OutRef()));
+	FWG_RETURN_FAIL( m_spGameMenu->Initialize(pLogger, m_pRenderWindow, pSceneManager));
 	
 	// initialize factory and game resources
 	FWG_RETURN_FAIL(GameNewChecked(m_spEntityFactory.OutRef()));
@@ -131,21 +130,6 @@ GameErrorCode GameClientEngine::Initialize(GameLogger* pLogger)
 	FWG_RETURN_FAIL(loader.Initialize(m_pLogger));
 	
 	FWG_RETURN_FAIL(loader.Load(*m_spDefHolder));
-	//m_pSceneGenerator = new (std::nothrow) GameTestSceneGenerator();
-	//if (m_pSceneGenerator == NULL) 
-	//{
-	//	return FWG_E_MEMORY_ALLOCATION_ERROR;
-	//}
-	
-	//m_spEntityFactory.Attach(new (std::nothrow) GameEntityFactory());
-	//if (m_spEntityFactory == NULL) return FWG_E_MEMORY_ALLOCATION_ERROR;
-	
-	//if(FWG_FAILED(result = m_spEntityFactory->Initialize(m_spResHolder.In(), pLogger))) 
-	//{
-	//	FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::Initialize() : Initialize entity factory failed: 0x%08x"),
-	//		m_pLogger, result, FWGLOG_ENDVAL);
-	//	return result;
-	//}
 	
 	m_isInitialized = true;
 	return result;
@@ -171,46 +155,13 @@ GameErrorCode GameClientEngine::MainLoop()
 	GameErrorCode result = FWG_NO_ERROR;
 	
 	// create scene manager
-	FWG_RETURN_FAIL(m_spEntityFactory.In()->CreateAllEntities(*m_spDefHolder, m_componentManager));
+	FWG_RETURN_FAIL(m_spEntityFactory.In()->CreateAllEntities(*m_spDefHolder, m_spComponentManager));
 	
-	RefObjSmPtr<GameCamera> spCamera = m_componentManager.GetRenderManager().GetMainCamera();
- 
-	// Position it at 500 in Z direction
-	spCamera->GetCameraNode()->setPosition(Ogre::Vector3(-8,-1,0));
-	// Look back along -Z
-	spCamera->GetOgreCamera()->lookAt(Ogre::Vector3(1,0,0));
-	spCamera->GetOgreCamera()->setNearClipDistance(1);
-	
-	m_componentManager.GetRenderManager().GetOgreSceneManager()->setAmbientLight(Ogre::ColourValue(0.5f, 0.5f, 0.5f));
-	
-	// Create a Light and set its position
-    Ogre::Light* light = m_componentManager.GetRenderManager().GetOgreSceneManager()->createLight("MainLight");
-    light->setPosition(20.0f, 80.0f, 50.0f);
-	
-	Ogre::Viewport *viewPort = m_pRenderWindow->addViewport(spCamera->GetOgreCamera());
-	viewPort->setBackgroundColour(Ogre::ColourValue(0.0f,0.0f,0.0f));
-	
-	viewPort->setOverlaysEnabled(true);
-	
-	m_pGuiPlatform->getRenderManagerPtr()->setActiveViewport(0);
-	
-	spCamera->GetOgreCamera()->setAspectRatio(Ogre::Real(viewPort->getActualWidth()) / Ogre::Real(viewPort->getActualHeight()));
-	
-	Ogre::Viewport *viewPort2 = m_pRenderWindow->addViewport(spCamera->GetOgreCamera(), 1, 0.6f, 0.1f, 0.3f, 0.3f);
-	viewPort2->setBackgroundColour(Ogre::ColourValue(0.1f,0.1f,0.1f));
-	
-	viewPort2->setOverlaysEnabled(false);
-	
-	MyGUI::ButtonPtr button = m_pGui->createWidget<MyGUI::Button>("Button", 10, 10, 300, 26, MyGUI::Align::Default, "Main");
-	button->setCaption("exit");
-	// set callback
-	button->eventMouseButtonClick += MyGUI::newDelegate(this, &GameClientEngine::SetExit); // CLASS_POINTER is pointer to instance of a 
-	
-	if(FWG_FAILED(result = m_pInputSystem->RegisterCallback(OIS::KC_ESCAPE, this, &GameClientEngine::SetExitInputClbk)))
-	{
-		FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::MainLoop() : Register input callback failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
-		return result;
-	}
+
+	FWG_RETURN_FAIL(InitializeCameras());
+	FWG_RETURN_FAIL(InitializeInputs());
+	FWG_RETURN_FAIL(InitializeLights());
+	FWG_RETURN_FAIL(InitializeMenus());
 	
 	while(!m_exit) 
 	{
@@ -388,9 +339,10 @@ GameClientEngine::~GameClientEngine()
 		m_pRenderWindow->destroy();
 	}
 	
-	Ogre::SceneManager *pSceneMgr = m_componentManager.GetRenderManager().GetOgreSceneManager();
+	Ogre::SceneManager *pSceneMgr = m_spComponentManager->GetRenderManager().GetOgreSceneManager();
 	
-	m_componentManager.Uninitialize();
+	m_spComponentManager->Uninitialize();
+	m_spComponentManager.Release();
 	
 	if(pSceneMgr != NULL)
 	{
@@ -403,4 +355,71 @@ GameClientEngine::~GameClientEngine()
 		m_pRoot->destroyAllRenderQueueInvocationSequences();
 		m_pRoot = NULL;
 	}
+}
+
+GameErrorCode GameClientEngine::InitializeCameras()
+{
+	RefObjSmPtr<GameCamera> spCamera = m_spComponentManager->GetRenderManager().GetMainCamera();
+ 
+	// Position it at 500 in Z direction
+	spCamera->GetCameraNode()->setPosition(Ogre::Vector3(-8,-1,0));
+	// Look back along -Z
+	spCamera->GetOgreCamera()->lookAt(Ogre::Vector3(1,0,0));
+	spCamera->GetOgreCamera()->setNearClipDistance(1);
+	
+	m_spComponentManager->GetRenderManager().GetOgreSceneManager()->setAmbientLight(Ogre::ColourValue(0.5f, 0.5f, 0.5f));
+	
+	
+	// prepare viewports
+	Ogre::Viewport *viewPort = m_pRenderWindow->addViewport(spCamera->GetOgreCamera());
+	viewPort->setBackgroundColour(Ogre::ColourValue(0.0f,0.0f,0.0f));
+	
+	viewPort->setOverlaysEnabled(true);
+	
+	spCamera->GetOgreCamera()->setAspectRatio(Ogre::Real(viewPort->getActualWidth()) / Ogre::Real(viewPort->getActualHeight()));
+	
+	Ogre::Viewport *viewPort2 = m_pRenderWindow->addViewport(spCamera->GetOgreCamera(), 1, 0.6f, 0.1f, 0.3f, 0.3f);
+	viewPort2->setBackgroundColour(Ogre::ColourValue(0.1f,0.1f,0.1f));
+	
+	viewPort2->setOverlaysEnabled(false);
+	
+}
+
+GameErrorCode GameClientEngine::InitializeLights()
+{
+	GameErrorCode result = FWG_NO_ERROR;
+		
+	// Create a Light and set its position
+    Ogre::Light* light = m_spComponentManager->GetRenderManager().GetOgreSceneManager()->createLight("MainLight");
+    light->setPosition(20.0f, 80.0f, 50.0f);
+	
+	
+	return result;
+}
+
+GameErrorCode GameClientEngine::InitializeMenus()
+{
+	GameErrorCode result = FWG_NO_ERROR;
+	
+	m_pGuiPlatform->getRenderManagerPtr()->setActiveViewport(0);
+	
+	MyGUI::ButtonPtr button = m_pGui->createWidget<MyGUI::Button>("Button", 10, 10, 300, 26, MyGUI::Align::Default, "Main");
+	button->setCaption("exit");
+	// set callback
+	button->eventMouseButtonClick += MyGUI::newDelegate(this, &GameClientEngine::SetExit); // CLASS_POINTER is pointer to instance of a 
+	
+	return result;
+}
+
+GameErrorCode GameClientEngine::InitializeInputs()
+{
+	GameErrorCode result = FWG_NO_ERROR;
+	
+	if(FWG_FAILED(result = m_pInputSystem->RegisterCallback(OIS::KC_ESCAPE, this, &GameClientEngine::SetExitInputClbk)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::InitializeMenus() : Register input callback failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	return result;
 }

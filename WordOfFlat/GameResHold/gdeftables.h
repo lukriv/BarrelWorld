@@ -8,8 +8,16 @@
 #include "../GameSystem/refobject.h"
 #include "../GameSystem/refobjectsmptr.h"
 
-typedef wxDword GameDefId;
-static const GameDefId GAME_DEF_ID_UNDEFINED = 0;
+// Game entity type - on this depends input behavior of entity
+enum GameDefEntityType {
+	GAMEDEF_NONE 					= 0,
+	GAMEDEF_CHARACTER_TOPDOWN 		= 1,
+	GAMEDEF_CHARACTER_FIRST_PERSON 	= 2,
+	GAMEDEF_CHARACTER_THIRD_PERSON 	= 3,
+	GAMEDEF_CHARACTER_AI			= 4,
+	GAMEDEF_CAMERA_FREE				= 5
+};
+
 
 /*!
  * \class DefBase

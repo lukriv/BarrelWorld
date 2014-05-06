@@ -10,10 +10,9 @@
 #include "../GameComp/gcompmgr.h"
 #include "../GameResHold/gdefholder.h"
 #include "../GameResHold/gentityfactory.h"
+#include <WorldCli/gmenu.h>
 #include "ginputsystem.h"
-#include "MyGUI/MyGUI_Gui.h"
-#include "MyGUI/MyGUI_OgrePlatform.h"
-#include "MyGUI/MyGUI_Widget.h"
+
 
 struct GameEngineSettings {
 	wxDword m_screenWidth;
@@ -36,15 +35,12 @@ private:
 	GameEngineSettings m_settings;
 	Ogre::Root *m_pRoot;
 	Ogre::RenderWindow *m_pRenderWindow;
-	
-	MyGUI::Gui		   *m_pGui;
-	MyGUI::OgrePlatform *m_pGuiPlatform;
-	
 	OIS::InputManager*	m_pInputMgr;
 
 	GameInputSystem* m_pInputSystem;
 	
-	GameCompManager m_componentManager;
+	RefObjSmPtr<GameMenu> m_spGameMenu;
+	RefObjSmPtr<GameCompManager> m_spComponentManager;
 	RefObjSmPtr<GameDefinitionHolder> m_spDefHolder;
 	RefObjSmPtr<GameEntityFactory> m_spEntityFactory;
 	
@@ -55,6 +51,10 @@ private:
 private:
 	GameErrorCode CreateWindow();
 	GameErrorCode LoadSettings(wxChar* pFileName = NULL);
+	GameErrorCode InitializeCameras();
+	GameErrorCode InitializeMenus();
+	GameErrorCode InitializeLights();
+	GameErrorCode InitializeInputs();
 
 public:
 	GameClientEngine() : m_pRoot(NULL),

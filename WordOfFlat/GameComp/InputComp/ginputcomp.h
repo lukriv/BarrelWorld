@@ -1,14 +1,6 @@
 #ifndef __GAME_INPUT_COMPONENT_H__01__
 #define __GAME_INPUT_COMPONENT_H__01__
 
-enum InputActions {
-	INPUT_ACTION_NONE 	= 0,
-	INPUT_ACTION_UP		= 1,
-	INPUT_ACTION_DOWN	= 1<<1,
-	INPUT_ACTION_ATTACK	= 1<<2,
-	INPUT_ACTION_DEFEND	= 1<<3
-};
-
 class ControlStruct
 {
 public:
@@ -80,7 +72,7 @@ public:
 
 
 class InputComponent {
-	
+	ControlStruct m_ctrlStruct;
 public:
 	InputComponent() {}
 	
@@ -98,10 +90,46 @@ public:
 	
 	wxDword GetActiveActions();
 	
-	void SetMoveUp(bool move);
-	void SetMoveDown(bool move);
-	void SetMoveLeft(bool move);
+	void SetMoveUp(bool move)
+	{
+		SetState(move, ControlStruct::INPUT_ACTION_UP);
+	}
 	
+	void SetMoveDown(bool move)
+	{
+		SetState(move, ControlStruct::INPUT_ACTION_DOWN);
+	}
+	
+	void SetMoveLeft(bool move)
+	{
+		SetState(move, ControlStruct::INPUT_ACTION_LEFT);
+	}
+	
+	void SetMoveRight(bool move)
+	{
+		SetState(move, ControlStruct::INPUT_ACTION_RIGHT);
+	}
+	
+	void SetMoveForward(bool move)
+	{
+		SetState(move, ControlStruct::INPUT_ACTION_FORWARD);
+	}
+	
+	void SetMoveBackward(bool move)
+	{
+		SetState(move, ControlStruct::INPUT_ACTION_BACKWARD);
+	}
+
+protected:
+	inline void SetState(bool state, ControlStruct::StateFlags ctrlFlag)
+	{
+		if(state)
+		{
+			m_ctrlStruct.Set(ctrlFlag);
+		} else {
+			m_ctrlStruct.Release(ctrlFlag);
+		}
+	}
 };
 
 
