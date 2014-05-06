@@ -36,6 +36,7 @@
   <VirtualDirectory Name="include">
     <File Name="gclientengine.h"/>
     <File Name="ginputsystem.h"/>
+    <File Name="gmainlogic.h"/>
   </VirtualDirectory>
   <Dependencies Name="Debug">
     <Project Name="GameSystem"/>

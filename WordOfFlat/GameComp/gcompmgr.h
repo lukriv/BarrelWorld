@@ -5,7 +5,7 @@
 #include "gentitymgr.h"
 #include "RenderComp/grendercmgr.h"
 
-class GameCompManager {
+class GameCompManager : public RefObjectImpl<IRefObject> {
 	RenderCompManager m_renderMgr;
 	GameEntityManager m_entityMgr; // should be the last manager (first in destroy)
 public:

@@ -8,11 +8,19 @@
 #include "RenderComp/grendercomp.h"
 #include "AnimatorComp/ganimatormgr.h"
 
-
+enum GameEntityType {
+	ENTITY_TYPE_NONE 					= 0,
+	ENTITY_TYPE_CHARACTER_TOPDOWN 		= 1,
+	ENTITY_TYPE_CHARACTER_FIRST_PERSON 	= 2,
+	ENTITY_TYPE_CHARACTER_THIRD_PERSON 	= 3,
+	ENTITY_TYPE_CHARACTER_AI			= 4,
+	ENTITY_TYPE_CAMERA_FREE				= 5
+};
 
 class GameEntity {
 private:
 	wxString m_entityName;
+	GameEntityType m_entityType;
 	RefObjSmPtr<TransformComponent> m_pTransformComp;
 	RefObjSmPtr<RenderComponent> m_pRenderComp;
 	RefObjSmPtr<AnimatorComponent> m_pAnimatorComp;
