@@ -66,6 +66,7 @@ GameErrorCode GameClientEngine::Initialize(GameLogger* pLogger)
 	
 	m_pLogger = pLogger;
 	
+	// load ogre settings
 	if(FWG_FAILED(result = LoadSettings()))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::Initialize() : Load setting failed: 0x%08x"),
@@ -73,6 +74,7 @@ GameErrorCode GameClientEngine::Initialize(GameLogger* pLogger)
 		return result;
 	}
 	
+	// create window and sets render system
 	if(FWG_FAILED(result = CreateWindow()))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::Initialize() : Create window failed: 0x%08x"),
@@ -80,6 +82,7 @@ GameErrorCode GameClientEngine::Initialize(GameLogger* pLogger)
 		return result;
 	}
 	
+	// create scene manager for game logic
 	Ogre::SceneManager *pSceneManager = m_pRoot->createSceneManager(Ogre::ST_GENERIC);
 	if(pSceneManager == NULL)
 	{
@@ -89,6 +92,7 @@ GameErrorCode GameClientEngine::Initialize(GameLogger* pLogger)
 		return result;
 	}
 	
+	// setting up OIS and Input system 
 	size_t hWnd = 0;
 	OIS::ParamList paramList;
 	m_pRenderWindow->getCustomAttribute(Ogre::String("WINDOW"), &hWnd);
@@ -97,9 +101,9 @@ GameErrorCode GameClientEngine::Initialize(GameLogger* pLogger)
 	
 	m_pInputMgr = OIS::InputManager::createInputSystem(paramList);
 	
-	FWG_RETURN_FAIL(GameNewChecked(m_pInputSystem, m_pInputMgr));
+	FWG_RETURN_FAIL(GameNewChecked(m_spInputSystem.OutRef(), m_pInputMgr));
 	
-	if(FWG_FAILED( result = m_pInputSystem->Initialize(m_pRenderWindow->getWidth(), m_pRenderWindow->getHeight())))
+	if(FWG_FAILED( result = m_spInputSystem->Initialize(m_pRenderWindow->getWidth(), m_pRenderWindow->getHeight())))
 	{
 		return result;
 	}
@@ -109,26 +113,28 @@ GameErrorCode GameClientEngine::Initialize(GameLogger* pLogger)
 	
 	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 	
-	// initialize component manager
-	FWG_RETURN_FAIL( GameNewChecked(m_spComponentManager.OutRef()));
-	
-	FWG_RETURN_FAIL( m_spComponentManager->Initialize(pSceneManager));
+
+
 	
 	// initialize GUI
 	FWG_RETURN_FAIL( GameNewChecked(m_spGameMenu.OutRef()));
 	FWG_RETURN_FAIL( m_spGameMenu->Initialize(pLogger, m_pRenderWindow, pSceneManager));
 	
-	// initialize factory and game resources
-	FWG_RETURN_FAIL(GameNewChecked(m_spEntityFactory.OutRef()));
+	// initialize game logic (component manager)
+	FWG_RETURN_FAIL(GameNewChecked(m_spGameLogic.OutRef()));
+	if (FWG_FAILED(result = m_spGameLogic.In()->Initialize(pLogger, m_pRenderWindow, pSceneManager, m_spInputSystem.In(), m_spGameMenu.In())))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::Initialize() : Client Logic initialize failed: 0x%08x"), pLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
 	
-	FWG_RETURN_FAIL(m_spEntityFactory->Initialize(m_pLogger));
-	
+
+	// initialize game resources	
 	FWG_RETURN_FAIL(GameNewChecked(m_spDefHolder.OutRef()));
 	
 	GameTestResourceLoader loader;
 	
 	FWG_RETURN_FAIL(loader.Initialize(m_pLogger));
-	
 	FWG_RETURN_FAIL(loader.Load(*m_spDefHolder));
 	
 	m_isInitialized = true;
@@ -154,9 +160,6 @@ GameErrorCode GameClientEngine::MainLoop()
 {
 	GameErrorCode result = FWG_NO_ERROR;
 	
-	// create scene manager
-	FWG_RETURN_FAIL(m_spEntityFactory.In()->CreateAllEntities(*m_spDefHolder, m_spComponentManager));
-	
 
 	FWG_RETURN_FAIL(InitializeCameras());
 	FWG_RETURN_FAIL(InitializeInputs());
@@ -165,7 +168,7 @@ GameErrorCode GameClientEngine::MainLoop()
 	
 	while(!m_exit) 
 	{
-		m_pInputSystem->ProcessInputs();
+		m_spInputSystem->ProcessInputs();
 		m_pRoot->renderOneFrame();
 		wxThread::Sleep(17);
 	}
@@ -397,25 +400,11 @@ GameErrorCode GameClientEngine::InitializeLights()
 	return result;
 }
 
-GameErrorCode GameClientEngine::InitializeMenus()
-{
-	GameErrorCode result = FWG_NO_ERROR;
-	
-	m_pGuiPlatform->getRenderManagerPtr()->setActiveViewport(0);
-	
-	MyGUI::ButtonPtr button = m_pGui->createWidget<MyGUI::Button>("Button", 10, 10, 300, 26, MyGUI::Align::Default, "Main");
-	button->setCaption("exit");
-	// set callback
-	button->eventMouseButtonClick += MyGUI::newDelegate(this, &GameClientEngine::SetExit); // CLASS_POINTER is pointer to instance of a 
-	
-	return result;
-}
-
 GameErrorCode GameClientEngine::InitializeInputs()
 {
 	GameErrorCode result = FWG_NO_ERROR;
 	
-	if(FWG_FAILED(result = m_pInputSystem->RegisterCallback(OIS::KC_ESCAPE, this, &GameClientEngine::SetExitInputClbk)))
+	if(FWG_FAILED(result = m_spInputSystem->RegisterCallback(OIS::KC_ESCAPE, this, &GameClientEngine::SetExitInputClbk)))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::InitializeMenus() : Register input callback failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
 		return result;

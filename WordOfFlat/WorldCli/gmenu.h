@@ -5,6 +5,7 @@
 #include "MyGUI/MyGUI_OgrePlatform.h"
 #include "MyGUI/MyGUI_Widget.h"
 
+class ClientGameLogic;
 
 // should be singleton??
 class GameMenu : public RefObjectImpl<IRefObject> {
@@ -16,6 +17,8 @@ public:
 	virtual ~GameMenu();
 	
 	GameErrorCode Initialize(GameLogger *pLogger, Ogre::RenderWindow *pWindow, Ogre::SceneManager *pSceneManager);
+	
+	GameErrorCode PrepareIngameMenu(ClientGameLogic *pGameLogic);
 
 };
 
