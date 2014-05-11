@@ -37,10 +37,10 @@ private:
 	Ogre::RenderWindow *m_pRenderWindow;
 	OIS::InputManager*	m_pInputMgr;
 
-	GameInputSystem* m_pInputSystem;
+	RefObjSmPtr<GameInputSystem> m_spInputSystem;
 	
 	RefObjSmPtr<GameMenu> m_spGameMenu;
-	RefObjSmPtr<GameCompManager> m_spComponentManager;
+	RefObjSmPtr<ClientGameLogic> m_spGameLogic;
 	RefObjSmPtr<GameDefinitionHolder> m_spDefHolder;
 	RefObjSmPtr<GameEntityFactory> m_spEntityFactory;
 	
@@ -59,10 +59,7 @@ private:
 public:
 	GameClientEngine() : m_pRoot(NULL),
 					m_pRenderWindow(NULL),
-					m_pGui(NULL),
-					m_pGuiPlatform(NULL),
 					m_pInputMgr(NULL),
-					m_pInputSystem(NULL),
 					m_isWindowCreated(false),
 					m_isSettingLoaded(false),
 					m_isInitialized(false),

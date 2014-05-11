@@ -8,8 +8,7 @@
 #include <GameSystem/gerror.h>
 
 
-class GameInputSystem : public OIS::KeyListener, public OIS::MouseListener
-{
+class GameInputSystem : public OIS::KeyListener, public OIS::MouseListener, public RefObjectImpl<IRefObject> {
 private:
 	class InputCallbackBase {
 	public: 
