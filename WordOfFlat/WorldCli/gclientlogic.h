@@ -1,17 +1,27 @@
 #ifndef __GAME_CLIENT_LOGIC_H__
 #define __GAME_CLIENT_LOGIC_H__
 
-#include "gmainlogic.h" // Base class: GameMainLogicBase
-
+#include <MyGUI/MyGUI_Widget.h>
+#include <GameSystem/glog.h>
 #include <GameSystem/gthread.h>
+#include <GameSystem/refobject.h>
+#include <GameSystem/refobjectimpl.h>
+#include <GameSystem/refobjectsmptr.h>
 
-class ClientGameLogic : public RefObjectImpl<GameMainLogicBase>, protected GameThread {
+#include <GameComp/gcompmgr.h>
+#include <GameResHold/gdefholder.h>
+#include <GameResHold/gentityfactory.h>
+#include <MainWindow/ginputsystem.h>
+
+class GameMenu;
+
+class ClientGameLogic : public RefObjectImpl<IRefObject>, protected GameThread {
 	RefObjSmPtr<GameEntityFactory> m_spEntityFactory;
 	RefObjSmPtr<GameCompManager> m_spCompManager;
 	RefObjSmPtr<GameMenu> m_spGameMenus;
 	RefObjSmPtr<GameInputSystem> m_spInputSystem;
 	GameLoggerPtr m_pLogger;
-	bool m_stopped;
+	Ogre::RenderWindow *m_pRenderWindow;
 	bool m_stopRequest;
 	bool m_isInitialized;
 public:
@@ -30,11 +40,14 @@ public:
 	
 	GameErrorCode StopGame ();
 	
-	bool IsStopped() { return m_stopped; }
+	bool IsStopped();
 
 // global menu functions
 public:
-	void SetExit(MyGUI::Widget* _sender) { m_stopRequest = true; }
+	void SetExitMenu(MyGUI::Widget* _sender) { m_stopRequest = true; }
+	
+// keyboard functions
+	void SetExit(bool keyDown) { m_stopRequest = true; }
 
 protected:
 	virtual void *Entry();
@@ -43,6 +56,8 @@ protected:
 	
 protected:
 	GameErrorCode PrepareCameras();
+	GameErrorCode PrepareLights();
+	GameErrorCode PrepareGlobalInput();
 	
 
 	

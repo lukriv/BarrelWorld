@@ -2989,13 +2989,6 @@
       </Completion>
     </Configuration>
   </Settings>
-  <Dependencies Name="Debug">
-    <Project Name="GameSystem"/>
-    <Project Name="GameComm"/>
-    <Project Name="GameMsgCli"/>
-    <Project Name="GameMsgSrv"/>
-    <Project Name="ClientServerTests"/>
-  </Dependencies>
   <VirtualDirectory Name="MyGUI">
     <File Name="../../extern/include/MYGUI/MyGUI.h"/>
     <File Name="../../extern/include/MYGUI/MyGUI_ActionController.h"/>
@@ -3180,4 +3173,11 @@
     <File Name="../../extern/include/MYGUI/Plugin.h"/>
     <File Name="../../extern/include/MYGUI/StrangeButton.h"/>
   </VirtualDirectory>
+  <Dependencies Name="Debug">
+    <Project Name="GameSystem"/>
+    <Project Name="GameComm"/>
+    <Project Name="GameMsgCli"/>
+    <Project Name="GameMsgSrv"/>
+    <Project Name="ClientServerTests"/>
+  </Dependencies>
 </CodeLite_Project>

@@ -1,9 +1,13 @@
 #ifndef __GAME_MENU_H__
 #define __GAME_MENU_H__
 
-#include "MyGUI/MyGUI_Gui.h"
-#include "MyGUI/MyGUI_OgrePlatform.h"
-#include "MyGUI/MyGUI_Widget.h"
+#include <MyGUI/MyGUI_Gui.h>
+#include <MyGUI/MyGUI_OgrePlatform.h>
+#include <MyGUI/MyGUI_Widget.h>
+
+#include <GameSystem/glog.h>
+#include <GameSystem/refobjectimpl.h>
+#include <GameSystem/refobject.h>
 
 class ClientGameLogic;
 
