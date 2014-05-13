@@ -6,6 +6,8 @@
 #include <OIS/OISMouse.h>
 #include <GameSystem/gdefs.h>
 #include <GameSystem/gerror.h>
+#include <GameSystem/refobjectimpl.h>
+#include <GameSystem/refobject.h>
 
 
 class GameInputSystem : public OIS::KeyListener, public OIS::MouseListener, public RefObjectImpl<IRefObject> {

@@ -43,12 +43,14 @@
     <Project Name="GameResHold"/>
     <Project Name="GameLoader"/>
     <Project Name="GameComp"/>
+    <Project Name="WorldCli"/>
   </Dependencies>
   <Dependencies Name="Release">
     <Project Name="GameSystem"/>
     <Project Name="GameResHold"/>
     <Project Name="GameLoader"/>
     <Project Name="GameComp"/>
+    <Project Name="WorldCli"/>
   </Dependencies>
   <Settings Type="Executable">
     <GlobalSettings>
@@ -61,6 +63,7 @@
       <Linker Options="">
         <LibraryPath Value="../../extern/lib"/>
         <LibraryPath Value="../../extern/lib/opt"/>
+        <Library Value="WorldCli"/>
         <Library Value="GameLoader"/>
         <Library Value="GameResHold"/>
         <Library Value="GameComp"/>
@@ -81,6 +84,7 @@
         <LibraryPath Value="../GameResHold/Debug"/>
         <LibraryPath Value="../GameComp/Debug"/>
         <LibraryPath Value="../GameLoader/Debug"/>
+        <LibraryPath Value="../WorldCli/Debug"/>
       </Linker>
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="./Debug" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
@@ -122,6 +126,7 @@
         <LibraryPath Value="../GameResHold/Release"/>
         <LibraryPath Value="../GameComp/Release"/>
         <LibraryPath Value="../GameLoader/Release"/>
+        <LibraryPath Value="../WorldCli/Release"/>
       </Linker>
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="./Release" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>

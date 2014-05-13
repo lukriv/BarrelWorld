@@ -2,15 +2,16 @@
 #define __GAME_CLIENT_ENGINE_H__
 
 
-#include "../GameSystem/glog.h"
+#include <GameSystem/glog.h>
 #include <wx/string.h>
 #include <OGRE/OgreRoot.h>
 #include <OIS/OISInputManager.h>
-#include "../GameSystem/refobjectsmptr.h"
-#include "../GameComp/gcompmgr.h"
-#include "../GameResHold/gdefholder.h"
-#include "../GameResHold/gentityfactory.h"
+#include <GameSystem/refobjectsmptr.h>
+#include <GameComp/gcompmgr.h>
+#include <GameResHold/gdefholder.h>
+#include <GameResHold/gentityfactory.h>
 #include <WorldCli/gmenu.h>
+#include <WorldCli/gclientlogic.h>
 #include "ginputsystem.h"
 
 
@@ -19,17 +20,26 @@ struct GameEngineSettings {
 	wxDword m_screenHeight;
 	wxString m_screenTitle;
 	wxString m_worldName;
-	
-	GameEngineSettings() : 
+
+	GameEngineSettings() :
 		m_screenWidth(800),
 		m_screenHeight(600) {}
 };
 
 /*! \brief Engine for control game states and processes
- * 
+ *
  * 	It is singleton and can be created only once.
  */
-class GameClientEngine {
+class GameClientEngine
+{
+private:
+	struct GameRenderListener : public Ogre::FrameListener {
+		GameClientEngine *m_pOwner;
+	public:
+		GameRenderListener(GameClientEngine *pOwner) : m_pOwner(pOwner) {}
+		// Ogre::FrameListener event
+		virtual bool frameRenderingQueued(const Ogre::FrameEvent& evt);
+	};
 private:
 	GameLoggerPtr m_pLogger;
 	GameEngineSettings m_settings;
@@ -38,12 +48,12 @@ private:
 	OIS::InputManager*	m_pInputMgr;
 
 	RefObjSmPtr<GameInputSystem> m_spInputSystem;
-	
+
 	RefObjSmPtr<GameMenu> m_spGameMenu;
 	RefObjSmPtr<ClientGameLogic> m_spGameLogic;
 	RefObjSmPtr<GameDefinitionHolder> m_spDefHolder;
 	RefObjSmPtr<GameEntityFactory> m_spEntityFactory;
-	
+
 	bool m_isWindowCreated;
 	bool m_isSettingLoaded;
 	bool m_isInitialized;
@@ -58,28 +68,34 @@ private:
 
 public:
 	GameClientEngine() : m_pRoot(NULL),
-					m_pRenderWindow(NULL),
-					m_pInputMgr(NULL),
-					m_isWindowCreated(false),
-					m_isSettingLoaded(false),
-					m_isInitialized(false),
-					m_exit(false) {}
+		m_pRenderWindow(NULL),
+		m_pInputMgr(NULL),
+		m_isWindowCreated(false),
+		m_isSettingLoaded(false),
+		m_isInitialized(false),
+		m_exit(false) {}
 
 	/*! \brief Destructor */
 	~GameClientEngine();
 
 	/*! \brief Initialize game engine
-	 * 
+	 *
 	 * 	It loads settings, create window and initialize events.
-	 * \return 
+	 * \return
 	 */
 	GameErrorCode Initialize(GameLogger* pLogger = NULL);
 	GameErrorCode MainLoop();
-	
+
 	GameErrorCode CreateTestingWorld();
+
+	void SetExitInputClbk(bool exit) {
+		m_exit = true;
+	}
+	void SetExit(MyGUI::Widget* _sender) {
+		m_exit = true;
+	}
 	
-	void SetExitInputClbk(bool exit) { m_exit = true; }
-	void SetExit(MyGUI::Widget* _sender) { m_exit = true; }
+
 
 };
 
