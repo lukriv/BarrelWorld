@@ -151,6 +151,9 @@ GameErrorCode GameClientEngine::MainLoop()
 
 	GameRenderListener listener(this);
 
+	//register frame listener
+	m_pRoot->addFrameListener(&listener);
+
 	if(FWG_FAILED( result = m_spGameLogic->LoadGame(*m_spDefHolder)))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::MainLoop() : load game logic"), m_pLogger, result, FWGLOG_ENDVAL);
@@ -163,7 +166,11 @@ GameErrorCode GameClientEngine::MainLoop()
 		return result;		
 	}
 
+	//enter render crit section
+	m_spGameLogic.In()->GetRenderLocker().Enter();
 	m_pRoot->startRendering();
+	
+	m_pRoot->removeFrameListener(&listener);
 
 	return result;
 }
@@ -342,11 +349,16 @@ GameClientEngine::~GameClientEngine()
 
 bool GameClientEngine::GameRenderListener::frameRenderingQueued(const Ogre::FrameEvent& evt)
 {
+	// leave render section
+	m_pOwner->m_spGameLogic.In()->GetRenderLocker().Leave();
+	
+	// process inputs
 	m_pOwner->m_spInputSystem->ProcessInputs();
-	if ((m_pOwner->m_spGameLogic->IsStopped())||(m_pOwner->m_exit))
+	if (m_pOwner->m_spGameLogic->IsStopped())
 	{
 		return false;	
 	} else {
+		m_pOwner->m_spGameLogic.In()->GetRenderLocker().Enter();
 		return true;
 	}
 }

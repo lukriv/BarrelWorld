@@ -138,15 +138,23 @@ void* ClientGameLogic::Entry()
 {
 	GameErrorCode result = FWG_NO_ERROR;
 	
+	bool stopRequest = false;
 	
-	PrepareCameras();
-	PrepareLights();
-	m_spGameMenus->PrepareIngameMenu(this);
-	PrepareGlobalInput();
+	{
+		wxCriticalSectionLocker prepareLock(m_renderLocker);
 	
-	while(!m_stopRequest) 
+		PrepareCameras();
+		PrepareLights();
+		m_spGameMenus->PrepareIngameMenu(this);
+		PrepareGlobalInput();
+	}	
+	
+	
+	while(!stopRequest) 
 	{
 		wxThread::Sleep(17);
+		wxCriticalSectionLocker lock(m_renderLocker);
+		stopRequest = m_stopRequest;
 	}
 	
 	return 0;
@@ -154,7 +162,7 @@ void* ClientGameLogic::Entry()
 
 bool ClientGameLogic::IsStopped()
 {
-	
+	wxCriticalSectionLocker lock(m_renderLocker);
 	return (!IsAlive());
 }
 
@@ -210,5 +218,16 @@ GameErrorCode ClientGameLogic::PrepareLights()
 
 
 	return result;
+}
+
+void ClientGameLogic::SetExit(bool keyDown)
+{
+	wxCriticalSectionLocker lock(m_renderLocker);
+	m_stopRequest = true; 
+}
+void ClientGameLogic::SetExitMenu(MyGUI::Widget* _sender)
+{
+	wxCriticalSectionLocker lock(m_renderLocker);
+	m_stopRequest = true; 
 }
 
