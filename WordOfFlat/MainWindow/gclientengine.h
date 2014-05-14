@@ -38,7 +38,13 @@ private:
 	public:
 		GameRenderListener(GameClientEngine *pOwner) : m_pOwner(pOwner) {}
 		// Ogre::FrameListener event
+		
+		virtual bool frameStarted (	const Ogre::FrameEvent & evt );	
+
 		virtual bool frameRenderingQueued(const Ogre::FrameEvent& evt);
+		
+		virtual bool frameEnded	( const Ogre::FrameEvent & evt );
+
 	};
 private:
 	GameLoggerPtr m_pLogger;

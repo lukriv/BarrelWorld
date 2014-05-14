@@ -88,6 +88,8 @@ GameErrorCode ClientGameLogic::StartGame()
 		return FWG_E_OBJECT_NOT_INITIALIZED_ERROR;
 	}
 	
+
+	
 	// create socket worker thread
 	if (FWG_FAILED(result = this->Create())) {
 		FWGLOG_ERROR_FORMAT(wxT("ClientGameLogic::StartGame() : Create worker thread failed: 0x%08x"),
@@ -143,12 +145,38 @@ void* ClientGameLogic::Entry()
 	{
 		wxCriticalSectionLocker prepareLock(m_renderLocker);
 	
-		PrepareCameras();
-		PrepareLights();
-		m_spGameMenus->PrepareIngameMenu(this);
-		PrepareGlobalInput();
-	}	
-	
+		if(FWG_FAILED(result = PrepareCameras()))
+		{
+			FWGLOG_ERROR_FORMAT(wxT("prepare cameras failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
+			return 0;
+		} else {
+			FWGLOG_DEBUG(wxT("Cameras were prepared"), m_pLogger);
+		}
+		
+		if(FWG_FAILED(result = PrepareLights()))
+		{
+			FWGLOG_ERROR_FORMAT(wxT("prepare lights failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
+			return 0;
+		} else {
+			FWGLOG_DEBUG(wxT("Lights were prepared"), m_pLogger);
+		}
+		
+		if(FWG_FAILED(result = m_spGameMenus->PrepareIngameMenu(this)))
+		{
+			FWGLOG_ERROR_FORMAT(wxT("prepare menus failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
+			return 0;
+		} else {
+			FWGLOG_DEBUG(wxT("Menus were prepared"), m_pLogger);
+		}
+		
+		if(FWG_FAILED(result = PrepareGlobalInput()))
+		{
+			FWGLOG_ERROR_FORMAT(wxT("prepare inputs failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
+			return 0;
+		} else {
+			FWGLOG_DEBUG(wxT("Inputs were prepared"), m_pLogger);
+		}
+	}
 	
 	while(!stopRequest) 
 	{
@@ -201,7 +229,7 @@ GameErrorCode ClientGameLogic::PrepareGlobalInput()
 	GameErrorCode result = FWG_NO_ERROR;
 
 	if(FWG_FAILED(result = m_spInputSystem->RegisterCallback(OIS::KC_ESCAPE, this, &ClientGameLogic::SetExit))) {
-		FWGLOG_ERROR_FORMAT(wxT("ClientGameLogic::PrepareGlobalInput() : Register input callback failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
+		FWGLOG_ERROR_FORMAT(wxT("Register input callback failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
 		return result;
 	}
 

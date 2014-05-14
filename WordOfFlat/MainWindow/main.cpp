@@ -34,11 +34,11 @@ int main(int argc, char **argv)
 		return -1;
 	}
 	
-	FWGLOG_TRACE(wxT(" ***** Trace message ***** "), spLogger);
-	FWGLOG_DEBUG(wxT("  **** Debug message ****"), spLogger);
-	FWGLOG_INFO(wxT("   *** Info message ***"), spLogger);
-	FWGLOG_WARNING(wxT("    ** Warning message **"), spLogger);
-	FWGLOG_ERROR(wxT("     * Error message *"), spLogger);
+	//FWGLOG_TRACE(wxT(" ***** Trace message ***** "), spLogger);
+	//FWGLOG_DEBUG(wxT("  **** Debug message ****"), spLogger);
+	FWGLOG_INFO(wxT("*************** GAME STARTED *****************"), spLogger);
+	//FWGLOG_WARNING(wxT("    ** Warning message **"), spLogger);
+	//FWGLOG_ERROR(wxT("     * Error message *"), spLogger);
 	
 	//FWGLOG_TRACE_FORMAT(wxT("Format: %s"), spLogger, wxT("Trace message"), FWGLOG_ENDVAL);
 	//FWGLOG_DEBUG_FORMAT(wxT("Format: %s"), spLogger, wxT("Debug message"), FWGLOG_ENDVAL);
