@@ -22,6 +22,7 @@ class ClientGameLogic : public RefObjectImpl<IRefObject>, protected GameThread {
 	RefObjSmPtr<GameInputSystem> m_spInputSystem;
 	GameLoggerPtr m_pLogger;
 	Ogre::RenderWindow *m_pRenderWindow;
+	wxCriticalSection m_renderLocker;
 	bool m_stopRequest;
 	bool m_isInitialized;
 public:
@@ -41,13 +42,15 @@ public:
 	GameErrorCode StopGame ();
 	
 	bool IsStopped();
+	
+	wxCriticalSection& GetRenderLocker() { return m_renderLocker; }
 
 // global menu functions
 public:
-	void SetExitMenu(MyGUI::Widget* _sender) { m_stopRequest = true; }
+	void SetExitMenu(MyGUI::Widget* _sender);
 	
 // keyboard functions
-	void SetExit(bool keyDown) { m_stopRequest = true; }
+	void SetExit(bool keyDown);
 
 protected:
 	virtual void *Entry();
