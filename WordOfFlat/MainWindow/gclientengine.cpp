@@ -127,6 +127,8 @@ GameErrorCode GameClientEngine::Initialize(GameLogger* pLogger)
 	FWG_RETURN_FAIL(loader.Initialize(m_pLogger));
 	FWG_RETURN_FAIL(loader.Load(*m_spDefHolder));
 
+	FWGLOG_INFO(wxT("GameClientEngine initialized"), pLogger);
+	
 	m_isInitialized = true;
 	return result;
 }
@@ -151,6 +153,8 @@ GameErrorCode GameClientEngine::MainLoop()
 
 	GameRenderListener listener(this);
 
+	FWGLOG_DEBUG(wxT("Main loop started"), m_pLogger);
+	
 	//register frame listener
 	m_pRoot->addFrameListener(&listener);
 
@@ -158,18 +162,24 @@ GameErrorCode GameClientEngine::MainLoop()
 	{
 		FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::MainLoop() : load game logic"), m_pLogger, result, FWGLOG_ENDVAL);
 		return result;
+	} else {
+		FWGLOG_DEBUG(wxT("Game loaded"), m_pLogger);
 	}
 
 	if(FWG_FAILED( result = m_spGameLogic->StartGame()))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::MainLoop() : start game logic"), m_pLogger, result, FWGLOG_ENDVAL);
 		return result;		
+	} else {
+		FWGLOG_DEBUG(wxT("Game logic started"), m_pLogger);
 	}
 
 	//enter render crit section
 	//m_spGameLogic.In()->GetRenderLocker().Enter();
+	FWGLOG_DEBUG(wxT("Start rendering"), m_pLogger);
 	m_pRoot->startRendering();
 	
+	FWGLOG_DEBUG(wxT("Removing listener"), m_pLogger);
 	m_pRoot->removeFrameListener(&listener);
 
 	return result;
@@ -348,7 +358,7 @@ GameClientEngine::~GameClientEngine()
 bool GameClientEngine::GameRenderListener::frameStarted(const Ogre::FrameEvent& evt)
 {
 	m_pOwner->m_spGameLogic.In()->GetRenderLocker().Enter();
-	FWGLOG_TRACE(wxT("entered to render lock"), m_pOwner->m_pLogger);
+	//FWGLOG_TRACE(wxT("entered to render lock"), m_pOwner->m_pLogger);
 	return true;
 }
 
@@ -356,7 +366,7 @@ bool GameClientEngine::GameRenderListener::frameRenderingQueued(const Ogre::Fram
 {
 	// leave render section
 	m_pOwner->m_spGameLogic.In()->GetRenderLocker().Leave();
-	FWGLOG_TRACE(wxT("leaved render lock"), m_pOwner->m_pLogger);
+	//FWGLOG_TRACE(wxT("leaved render lock"), m_pOwner->m_pLogger);
 	
 	// process inputs
 	m_pOwner->m_spInputSystem->ProcessInputs();
@@ -365,7 +375,7 @@ bool GameClientEngine::GameRenderListener::frameRenderingQueued(const Ogre::Fram
 		return false;	
 	} else {
 		m_pOwner->m_spGameLogic.In()->GetRenderLocker().Enter();
-		FWGLOG_TRACE(wxT("entered to render lock"), m_pOwner->m_pLogger);
+		//FWGLOG_TRACE(wxT("entered to render lock"), m_pOwner->m_pLogger);
 		return true;
 	}
 }
@@ -373,7 +383,7 @@ bool GameClientEngine::GameRenderListener::frameRenderingQueued(const Ogre::Fram
 bool GameClientEngine::GameRenderListener::frameEnded(const Ogre::FrameEvent& evt)
 {
 	m_pOwner->m_spGameLogic.In()->GetRenderLocker().Leave();
-	FWGLOG_TRACE(wxT("leaved render lock"), m_pOwner->m_pLogger);
+	//FWGLOG_TRACE(wxT("leaved render lock"), m_pOwner->m_pLogger);
 	return true;
 }
 

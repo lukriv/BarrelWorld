@@ -51,12 +51,14 @@ GameErrorCode ClientGameLogic::Initialize(GameLogger* pLogger, Ogre::RenderWindo
 	m_spInputSystem = pInputSystem;
 	m_spGameMenus = pGameMenu;
 
+	FWGLOG_DEBUG(wxT("Seccesfuly initialized (GameLogic)"), m_pLogger);
 	m_isInitialized = true;
 	return result;
 }
 
 void ClientGameLogic::Uninitialize()
 {
+	FWGLOG_DEBUG(wxT("Seccesfuly uninitialized (GameLogic)"), m_pLogger);
 	m_spCompManager->Uninitialize();
 	m_spCompManager.Release();
 	m_spEntityFactory.Release();
@@ -88,7 +90,43 @@ GameErrorCode ClientGameLogic::StartGame()
 		return FWG_E_OBJECT_NOT_INITIALIZED_ERROR;
 	}
 	
-
+	FWGLOG_INFO(wxT("Starting game (GameLogic)"), m_pLogger);
+	
+	{
+		wxCriticalSectionLocker prepareLock(m_renderLocker);
+	
+		if(FWG_FAILED(result = PrepareCameras()))
+		{
+			FWGLOG_ERROR_FORMAT(wxT("prepare cameras failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
+			return 0;
+		} else {
+			FWGLOG_DEBUG(wxT("Cameras were prepared"), m_pLogger);
+		}
+		
+		if(FWG_FAILED(result = PrepareLights()))
+		{
+			FWGLOG_ERROR_FORMAT(wxT("prepare lights failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
+			return 0;
+		} else {
+			FWGLOG_DEBUG(wxT("Lights were prepared"), m_pLogger);
+		}
+		
+		if(FWG_FAILED(result = m_spGameMenus->PrepareIngameMenu(this)))
+		{
+			FWGLOG_ERROR_FORMAT(wxT("prepare menus failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
+			return 0;
+		} else {
+			FWGLOG_DEBUG(wxT("Menus were prepared"), m_pLogger);
+		}
+		
+		if(FWG_FAILED(result = PrepareGlobalInput()))
+		{
+			FWGLOG_ERROR_FORMAT(wxT("prepare inputs failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
+			return 0;
+		} else {
+			FWGLOG_DEBUG(wxT("Inputs were prepared"), m_pLogger);
+		}
+	}
 	
 	// create socket worker thread
 	if (FWG_FAILED(result = this->Create())) {
@@ -97,13 +135,16 @@ GameErrorCode ClientGameLogic::StartGame()
 		return result;
 	}
 	
+	FWGLOG_INFO(wxT("Thread created"), m_pLogger);
+	
 	// run socket worker thread
 	if (FWG_FAILED(result = this->Run())) {
 		FWGLOG_ERROR_FORMAT(wxT("ClientGameLogic::StartGame() : Start thread failed: 0x%08x"),
 						m_pLogger, result, FWGLOG_ENDVAL);
 		return result;
 	}
-
+	
+	FWGLOG_INFO(wxT("Thread is running"), m_pLogger);
 	
 	return result;
 }
@@ -142,45 +183,46 @@ void* ClientGameLogic::Entry()
 	
 	bool stopRequest = false;
 	
-	{
-		wxCriticalSectionLocker prepareLock(m_renderLocker);
-	
-		if(FWG_FAILED(result = PrepareCameras()))
-		{
-			FWGLOG_ERROR_FORMAT(wxT("prepare cameras failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
-			return 0;
-		} else {
-			FWGLOG_DEBUG(wxT("Cameras were prepared"), m_pLogger);
-		}
-		
-		if(FWG_FAILED(result = PrepareLights()))
-		{
-			FWGLOG_ERROR_FORMAT(wxT("prepare lights failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
-			return 0;
-		} else {
-			FWGLOG_DEBUG(wxT("Lights were prepared"), m_pLogger);
-		}
-		
-		if(FWG_FAILED(result = m_spGameMenus->PrepareIngameMenu(this)))
-		{
-			FWGLOG_ERROR_FORMAT(wxT("prepare menus failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
-			return 0;
-		} else {
-			FWGLOG_DEBUG(wxT("Menus were prepared"), m_pLogger);
-		}
-		
-		if(FWG_FAILED(result = PrepareGlobalInput()))
-		{
-			FWGLOG_ERROR_FORMAT(wxT("prepare inputs failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
-			return 0;
-		} else {
-			FWGLOG_DEBUG(wxT("Inputs were prepared"), m_pLogger);
-		}
-	}
+	//{
+	//	wxCriticalSectionLocker prepareLock(m_renderLocker);
+	//
+	//	if(FWG_FAILED(result = PrepareCameras()))
+	//	{
+	//		FWGLOG_ERROR_FORMAT(wxT("prepare cameras failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
+	//		return 0;
+	//	} else {
+	//		FWGLOG_DEBUG(wxT("Cameras were prepared"), m_pLogger);
+	//	}
+	//	
+	//	if(FWG_FAILED(result = PrepareLights()))
+	//	{
+	//		FWGLOG_ERROR_FORMAT(wxT("prepare lights failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
+	//		return 0;
+	//	} else {
+	//		FWGLOG_DEBUG(wxT("Lights were prepared"), m_pLogger);
+	//	}
+	//	
+	//	if(FWG_FAILED(result = m_spGameMenus->PrepareIngameMenu(this)))
+	//	{
+	//		FWGLOG_ERROR_FORMAT(wxT("prepare menus failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
+	//		return 0;
+	//	} else {
+	//		FWGLOG_DEBUG(wxT("Menus were prepared"), m_pLogger);
+	//	}
+	//	
+	//	if(FWG_FAILED(result = PrepareGlobalInput()))
+	//	{
+	//		FWGLOG_ERROR_FORMAT(wxT("prepare inputs failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
+	//		return 0;
+	//	} else {
+	//		FWGLOG_DEBUG(wxT("Inputs were prepared"), m_pLogger);
+	//	}
+	//}
 	
 	while(!stopRequest) 
 	{
 		wxThread::Sleep(17);
+		FWGLOG_TRACE(wxT("Still running"), m_pLogger);
 		wxCriticalSectionLocker lock(m_renderLocker);
 		stopRequest = m_stopRequest;
 	}
@@ -191,7 +233,8 @@ void* ClientGameLogic::Entry()
 bool ClientGameLogic::IsStopped()
 {
 	wxCriticalSectionLocker lock(m_renderLocker);
-	return (!IsAlive());
+	return m_stopRequest;
+	//return (!IsAlive());
 }
 
 GameErrorCode ClientGameLogic::PrepareCameras()
