@@ -12,6 +12,7 @@
 #include <GameResHold/gdefholder.h>
 #include <GameResHold/gentityfactory.h>
 #include <MainWindow/ginputsystem.h>
+#include "gmenumgr.h"
 
 class GameMenu;
 
@@ -29,7 +30,7 @@ public:
 	ClientGameLogic();
 	virtual ~ClientGameLogic();
 	
-	GameErrorCode Initialize(GameLogger *pLogger, Ogre::RenderWindow *pWindow, Ogre::SceneManager *pSceneManager, GameInputSystem *pInputSystem, GameMenu *pGameMenu);
+	GameErrorCode Initialize(GameLogger *pLogger, Ogre::RenderWindow *pWindow, Ogre::SceneManager *pSceneManager, GameInputSystem *pInputSystem, GameMenuResources *pGameMenu);
 	
 	void Uninitialize();
 	
@@ -48,6 +49,8 @@ public:
 // global menu functions
 public:
 	void SetExitMenu(MyGUI::Widget* _sender);
+	
+	void SetShowExit(MyGUI::Widget* _sender);
 	
 // keyboard functions
 	void SetExit(bool keyDown);

@@ -168,7 +168,7 @@ GameErrorCode GameClientEngine::MainLoop()
 
 	if(FWG_FAILED( result = m_spGameLogic->StartGame()))
 	{
-		FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::MainLoop() : start game logic"), m_pLogger, result, FWGLOG_ENDVAL);
+		FWGLOG_ERROR_FORMAT(wxT("Start game logic failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
 		return result;		
 	} else {
 		FWGLOG_DEBUG(wxT("Game logic started"), m_pLogger);
@@ -178,6 +178,15 @@ GameErrorCode GameClientEngine::MainLoop()
 	//m_spGameLogic.In()->GetRenderLocker().Enter();
 	FWGLOG_DEBUG(wxT("Start rendering"), m_pLogger);
 	m_pRoot->startRendering();
+	
+	if(FWG_FAILED(result = m_spGameLogic.In()->StopGame()))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Stop game logic failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
+		return result;		
+	} else {
+		FWGLOG_DEBUG(wxT("Game logic stopped"), m_pLogger);
+	}
+	
 	
 	FWGLOG_DEBUG(wxT("Removing listener"), m_pLogger);
 	m_pRoot->removeFrameListener(&listener);
