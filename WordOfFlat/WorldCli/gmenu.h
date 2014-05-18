@@ -1,9 +1,7 @@
 #ifndef __GAME_MENU_H__
 #define __GAME_MENU_H__
 
-#include <MyGUI/MyGUI_Gui.h>
-#include <MyGUI/MyGUI_OgrePlatform.h>
-#include <MyGUI/MyGUI_Widget.h>
+#include "gmenumgr.h"
 
 #include <GameSystem/glog.h>
 #include <GameSystem/refobjectimpl.h>
@@ -11,18 +9,28 @@
 
 class ClientGameLogic;
 
-// should be singleton??
-class GameMenu : public RefObjectImpl<IRefObject> {
-	GameLoggerPtr 		m_pLogger;
-	MyGUI::Gui		   	*m_pGui;
-	MyGUI::OgrePlatform *m_pGuiPlatform;
+// game menu with buttons and so on
+class GameMenu : public GameMenuBase {
+	ClientGameLogic* m_pClientLogic;
+	bool m_visible;
+	
+	// menu buttons
+	MyGUI::Button* m_pButtonExit;
+	MyGUI::Button* m_pButtonSwitch;
+	
 public:
-	GameMenu();
+	GameMenu(GameMenuResources *pMenuRes);
 	virtual ~GameMenu();
 	
-	GameErrorCode Initialize(GameLogger *pLogger, Ogre::RenderWindow *pWindow, Ogre::SceneManager *pSceneManager);
+	GameErrorCode Initialize(Ogre::RenderWindow* pWindow, Ogre::SceneManager* pSceneManager, ClientGameLogic *pCliLogic);
 	
 	GameErrorCode PrepareIngameMenu(ClientGameLogic *pGameLogic);
+	
+	void SwitchExitButton();
+	
+protected:
+	virtual GameErrorCode Create();
+	virtual GameErrorCode Destroy();
 
 };
 

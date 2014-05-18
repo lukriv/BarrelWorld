@@ -55,7 +55,7 @@ private:
 
 	RefObjSmPtr<GameInputSystem> m_spInputSystem;
 
-	RefObjSmPtr<GameMenu> m_spGameMenu;
+	RefObjSmPtr<GameMenuResources> m_spGameMenu;
 	RefObjSmPtr<ClientGameLogic> m_spGameLogic;
 	RefObjSmPtr<GameDefinitionHolder> m_spDefHolder;
 	RefObjSmPtr<GameEntityFactory> m_spEntityFactory;
