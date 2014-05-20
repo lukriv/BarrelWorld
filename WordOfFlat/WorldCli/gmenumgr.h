@@ -26,6 +26,8 @@ public:
 	
 	GameErrorCode Initialize(GameLogger *pLogger, Ogre::RenderWindow *pWindow, Ogre::SceneManager *pSceneManager);
 	
+	void Uninitialize();
+	
 	MyGUI::Gui* GetGuiManager() { return m_pGui; }
 	
 	GameErrorCode SetGuiVisible(GameMenuBase* pMenu, wxInt32 actualVieportIndex);

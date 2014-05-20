@@ -25,14 +25,16 @@ protected:
 		{
 			// remove scene node from its parent
 			Ogre::SceneNode* pSceneNode = m_pCamera->getParentSceneNode();
+			Ogre::SceneManager *pSceneManager = pSceneNode->getCreator();
 			if(pSceneNode->getParentSceneNode() != NULL)
 			{
 				pSceneNode->getParentSceneNode()->removeChild(pSceneNode);
 			}
+			
 			// delete parent scene node
-			m_pCamera->getSceneManager()->destroySceneNode(pSceneNode);
+			pSceneManager->destroySceneNode(pSceneNode);
 			// delete camera
-			m_pCamera->getSceneManager()->destroyCamera(m_pCamera);
+			pSceneManager->destroyCamera(m_pCamera);
 			m_pCamera = NULL;
 		}
 	}

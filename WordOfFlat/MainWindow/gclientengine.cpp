@@ -339,6 +339,9 @@ GameErrorCode GameClientEngine::CreateTestingWorld()
 
 GameClientEngine::~GameClientEngine()
 {
+	//m_spGameLogic.In()->Uninitialize();
+	//m_spGameMenu.In()->Uninitialize();
+	
 	m_spGameLogic.Release();
 	m_spGameMenu.Release();
 

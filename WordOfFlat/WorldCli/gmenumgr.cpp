@@ -9,19 +9,7 @@ GameMenuResources::GameMenuResources() : m_pGui(NULL), m_pGuiPlatform(NULL)
 
 GameMenuResources::~GameMenuResources()
 {
-	if(m_pGui)
-	{
-		m_pGui->shutdown();
-		delete m_pGui;
-		m_pGui = NULL;
-	}
-	
-	if(m_pGuiPlatform)
-	{
-		m_pGuiPlatform->shutdown();
-		delete m_pGuiPlatform;
-		m_pGuiPlatform = NULL;
-	}	
+	Uninitialize();
 }
 
 GameErrorCode GameMenuResources::Initialize(GameLogger* pLogger, Ogre::RenderWindow* pWindow, Ogre::SceneManager* pSceneManager)
@@ -75,8 +63,22 @@ GameErrorCode GameMenuResources::SetGuiVisible(GameMenuBase* pMenu, wxInt32 actu
 	return FWG_NO_ERROR;
 }
 
-
-
+void GameMenuResources::Uninitialize()
+{
+	if(m_pGui)
+	{
+		m_pGui->shutdown();
+		delete m_pGui;
+		m_pGui = NULL;
+	}
+	
+	if(m_pGuiPlatform)
+	{
+		m_pGuiPlatform->shutdown();
+		delete m_pGuiPlatform;
+		m_pGuiPlatform = NULL;
+	}
+}
 
 GameMenuBase::~GameMenuBase()
 {
@@ -102,4 +104,3 @@ GameErrorCode GameMenuBase::SetVisible(bool visibility, wxInt32 actualViewportIn
 	
 	return FWG_NO_ERROR;
 }
-
