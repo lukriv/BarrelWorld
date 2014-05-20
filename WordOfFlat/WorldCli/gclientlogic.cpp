@@ -61,11 +61,14 @@ GameErrorCode ClientGameLogic::Initialize(GameLogger* pLogger, Ogre::RenderWindo
 void ClientGameLogic::Uninitialize()
 {
 	FWGLOG_DEBUG(wxT("Seccesfuly uninitialized (GameLogic)"), m_pLogger);
-	m_spCompManager->Uninitialize();
-	m_spCompManager.Release();
+	m_spGameMenus.Release();
 	m_spEntityFactory.Release();
 	m_spInputSystem.Release();
-	m_spGameMenus.Release();
+	if(!m_spCompManager.IsEmpty())
+	{
+		m_spCompManager->Uninitialize();	
+	}
+	m_spCompManager.Release();
 	m_pLogger.Release();
 	m_pRenderWindow = NULL;
 	m_isInitialized = false;

@@ -24,7 +24,6 @@ GameErrorCode RenderCompManager::Initialize(Ogre::SceneManager& sceneManager)
 void RenderCompManager::Uninitialize()
 {
 	m_spMainCamera.Release();
-	DestroyAllRenderComponents();
 	m_pSceneManager = NULL;
 }
 
@@ -51,16 +50,6 @@ GameErrorCode RenderCompManager::CreateEmptyRenderComponent(RenderComponent *&pR
 	return FWG_NO_ERROR;
 }
 
-void RenderCompManager::DestroyAllRenderComponents()
-{
-	// Render component manager is not initialized -> return
-	if(m_pSceneManager == NULL)
-	{
-		return;
-	}
-	
-	m_pSceneManager->destroyAllMovableObjects();
-}
 
 GameErrorCode RenderCompManager::CreateCamera(const wxString& cameraName, GameCamera*& pGameCameraOut)
 {

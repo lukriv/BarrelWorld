@@ -51,8 +51,6 @@ public:
 	 */
 	GameErrorCode CreateEmptyRenderComponent(RenderComponent *&pRenderComp);
 	
-	void DestroyAllRenderComponents();
-	
 	inline Ogre::SceneManager* GetOgreSceneManager() { return m_pSceneManager; }
 
 };
