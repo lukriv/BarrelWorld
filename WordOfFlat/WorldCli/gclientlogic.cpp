@@ -2,7 +2,8 @@
 
 #include "gmenu.h"
 
-ClientGameLogic::ClientGameLogic() : m_pRenderWindow(NULL),
+ClientGameLogic::ClientGameLogic() : GameThread(wxTHREAD_JOINABLE),
+								m_pRenderWindow(NULL),
 								m_stopRequest(false),
 								m_isInitialized(false)
 {
@@ -153,7 +154,7 @@ GameErrorCode ClientGameLogic::StopGame()
 		return FWG_E_OBJECT_NOT_INITIALIZED_ERROR;
 	}
 	
-	return FWG_NO_ERROR;
+	return StopRequest();
 }
 
 GameErrorCode ClientGameLogic::StoreGame(GameDefinitionHolder& defHolder)
