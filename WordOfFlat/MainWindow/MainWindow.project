@@ -139,16 +139,7 @@
         <StartupCommands/>
       </Debugger>
       <PreBuild/>
-      <PostBuild>
-        <Command Enabled="yes">c:\MinGW\msys\1.0\bin\cp.exe $(OutDir)/$(ProjectName).exe ../../bin/</Command>
-        <Command Enabled="yes">c:\MinGW\msys\1.0\bin\cp.exe ../../extern/lib/wxbase294u_gcc_custom.dll ../../bin/</Command>
-        <Command Enabled="yes">c:\MinGW\msys\1.0\bin\cp.exe ../../extern/lib/wxmsw294u_core_gcc_custom.dll ../../bin/</Command>
-        <Command Enabled="yes">c:\MinGW\msys\1.0\bin\cp.exe ../../extern/lib/sfml-system-2.dll ../../bin/</Command>
-        <Command Enabled="yes">c:\MinGW\msys\1.0\bin\cp.exe ../../extern/lib/sfml-graphics-2.dll ../../bin/</Command>
-        <Command Enabled="yes">c:\MinGW\msys\1.0\bin\cp.exe ../../extern/lib/sfml-window-2.dll ../../bin/</Command>
-        <Command Enabled="yes">c:\MinGW\msys\1.0\bin\cp.exe ../../extern/lib/sfml-window-2.dll ../../bin/</Command>
-        <Command Enabled="yes">c:\MinGW\msys\1.0\bin\cp.exe ../../Resources/images/*.png ../../bin/res/img/</Command>
-      </PostBuild>
+      <PostBuild/>
       <CustomBuild Enabled="no">
         <RebuildCommand/>
         <CleanCommand/>
