@@ -16,7 +16,7 @@
   <Project Name="Extern" Path="Extern/Extern.project" Active="No"/>
   <Project Name="GameXmlDefinitions" Path="GameXmlDefinitions/GameXmlDefinitions.project"/>
   <BuildMatrix>
-    <WorkspaceConfiguration Name="Debug" Selected="yes">
+    <WorkspaceConfiguration Name="Debug" Selected="no">
       <Project Name="GameComm" ConfigName="Debug"/>
       <Project Name="GameLoader" ConfigName="Debug"/>
       <Project Name="GameMsgCli" ConfigName="Debug"/>
