@@ -1,7 +1,6 @@
 #ifndef __GAME_TRANSFORM_COMPONENT_H__
 #define __GAME_TRANSFORM_COMPONENT_H__
 
-
 #include "OGRE/OgreSceneNode.h"
 #include <GameSystem/refobject.h>
 #include <GameSystem/refobjectimpl.h>

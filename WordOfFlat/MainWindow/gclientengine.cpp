@@ -63,9 +63,11 @@ GameErrorCode GameClientEngine::Initialize(GameLogger* pLogger)
 
 	// load ogre settings
 	if(FWG_FAILED(result = LoadSettings())) {
-		FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::Initialize() : Load setting failed: 0x%08x"),
+		FWGLOG_ERROR_FORMAT(wxT("Load setting failed: 0x%08x"),
 		                    m_pLogger, result, FWGLOG_ENDVAL);
 		return result;
+	} else {
+		FWGLOG_INFO(wxT("Setting was loaded successfuly"), m_pLogger);
 	}
 
 	// create window and sets render system
@@ -73,6 +75,8 @@ GameErrorCode GameClientEngine::Initialize(GameLogger* pLogger)
 		FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::Initialize() : Create window failed: 0x%08x"),
 		                    m_pLogger, result, FWGLOG_ENDVAL);
 		return result;
+	} else {
+		FWGLOG_INFO(wxT("Window was created successfuly"), m_pLogger);
 	}
 
 	// create scene manager for game logic
@@ -82,6 +86,8 @@ GameErrorCode GameClientEngine::Initialize(GameLogger* pLogger)
 		FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::Initialize() : Create scene manager failed: 0x%08x"),
 		                    m_pLogger, result, FWGLOG_ENDVAL);
 		return result;
+	} else {
+		FWGLOG_INFO(wxT("Ogre scene manager was created successfuly"), m_pLogger);
 	}
 
 	// setting up OIS and Input system
@@ -97,6 +103,8 @@ GameErrorCode GameClientEngine::Initialize(GameLogger* pLogger)
 
 	if(FWG_FAILED( result = m_spInputSystem->Initialize(m_pRenderWindow->getWidth(), m_pRenderWindow->getHeight()))) {
 		return result;
+	} else {
+		FWGLOG_INFO(wxT("Input system was successfuly"), m_pLogger);
 	}
 
 	// initialize resources
@@ -105,17 +113,21 @@ GameErrorCode GameClientEngine::Initialize(GameLogger* pLogger)
 	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 
 
-
+	FWGLOG_INFO(wxT("Resource initialization was successful"), m_pLogger);
 
 	// initialize GUI
 	FWG_RETURN_FAIL( GameNewChecked(m_spGameMenu.OutRef()));
 	FWG_RETURN_FAIL( m_spGameMenu->Initialize(pLogger, m_pRenderWindow, pSceneManager));
+	
+	FWGLOG_INFO(wxT("MyGUI initialization was successful"), m_pLogger);
 
 	// initialize game logic (component manager)
 	FWG_RETURN_FAIL(GameNewChecked(m_spGameLogic.OutRef()));
 	if (FWG_FAILED(result = m_spGameLogic.In()->Initialize(pLogger, m_pRenderWindow, pSceneManager, m_spInputSystem.In(), m_spGameMenu.In()))) {
 		FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::Initialize() : Client Logic initialize failed: 0x%08x"), pLogger, result, FWGLOG_ENDVAL);
 		return result;
+	} else {
+		FWGLOG_INFO(wxT("GameLogic initialization was successful"), m_pLogger);
 	}
 
 

@@ -59,6 +59,7 @@
         <IncludePath Value="../../extern/include/OGRE"/>
         <IncludePath Value="../../WordOfFlat"/>
         <Preprocessor Value="UNICODE"/>
+        <Preprocessor Value="BOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN"/>
       </Compiler>
       <Linker Options="">
         <LibraryPath Value="../../extern/lib"/>
