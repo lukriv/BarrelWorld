@@ -13,9 +13,20 @@ typedef GameBasMap<wxString, RefObjSmPtr<AnimatorDef> > TAnimatorDefMap;
 typedef GameBasMap<wxString, RefObjSmPtr<EntityDef> > TEntityDefMap;
 
 class GameDefinitionHolder : public IRefObject {
+private:
 	wxAtomicInt m_refCount;
 public:
 	GameDefinitionHolder() : m_refCount(1) {}
+	
+	template <typename T>
+	GameErrorCode InsertDef(const wxString& name, RefObjSmPtr<T> &spDef, GameBasMap<wxString, RefObjSmPtr<T> > &basMap)
+	{
+		typename GameBasMap<wxString, RefObjSmPtr<T> >::Iterator iter;
+		FWG_RETURN_FAIL(basMap.Insert( name, spDef, iter ));
+		spDef->SetName(&(iter->first));
+		
+		return FWG_NO_ERROR;
+	}
 	
 	TNameDefMap m_meshDefs;
 	TNameDefMap m_materialDefs;

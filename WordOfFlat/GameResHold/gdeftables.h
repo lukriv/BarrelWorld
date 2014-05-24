@@ -11,11 +11,8 @@
 // Game entity type - on this depends input behavior of entity
 enum GameDefEntityType {
 	GAMEDEF_NONE 					= 0,
-	GAMEDEF_CHARACTER_TOPDOWN 		= 1,
-	GAMEDEF_CHARACTER_FIRST_PERSON 	= 2,
-	GAMEDEF_CHARACTER_THIRD_PERSON 	= 3,
-	GAMEDEF_CHARACTER_AI			= 4,
-	GAMEDEF_CAMERA_FREE				= 5
+	GAMEDEF_MAIN_CHARACTER	 		= 1,
+	GAMEDEF_AI_CHARACTER			= 2
 };
 
 
@@ -30,10 +27,21 @@ class DefBase : IRefObject
 {
 protected:
 	wxAtomicInt m_refCount;
+	const wxString* m_defName;
+	
 public:
-
-	DefBase() : m_refCount(1) {}
+	DefBase() : m_refCount(1), m_defName(NULL) {}
 	virtual ~DefBase() {}
+	
+	void SetName(const wxString *pName)
+	{
+		m_defName = pName;
+	}
+	
+	const wxString* GetName() const 
+	{
+		return m_defName;
+	}
 	
 	virtual void addRef() 
 	{
@@ -121,6 +129,10 @@ struct CameraDef : public DefBase {
 
 struct LightDef : public DefBase {
 	LightDef() {}
+};
+
+struct InputDef : public DefBase {
+	
 };
 
 /*!
