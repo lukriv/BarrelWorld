@@ -15,3 +15,4 @@ wxInt32 GameDefinitionHolder::release()
 	
 	return refCount;
 }
+

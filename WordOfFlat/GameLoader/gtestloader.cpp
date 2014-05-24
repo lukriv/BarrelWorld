@@ -95,7 +95,7 @@ GameErrorCode GameTestResourceLoader::LoadEntities(GameDefinitionHolder& defHold
 	
 	spEntityDef->m_entityName.assign(wxT("entity1"));
 
-	if(FWG_FAILED(result = defHolder.m_entityDefs.Insert( wxString(wxT("entity1")), spEntityDef )))
+	if(FWG_FAILED(result = defHolder.InsertDef<EntityDef>( wxString(wxT("entity1")), spEntityDef, defHolder.m_entityDefs )))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("GameTestResourceLoader::LoadEntities() : add entity failed: 0x%08x"),
 																m_spLogger, result, FWGLOG_ENDVAL);
@@ -121,7 +121,7 @@ GameErrorCode GameTestResourceLoader::LoadMaterials(GameDefinitionHolder& defHol
 	
 	spMaterialDef->m_name = wxT("Test/ColourTest");
 	
-	if(FWG_FAILED(result = defHolder.m_materialDefs.Insert( wxString(wxT("testMaterial")), spMaterialDef )))
+	if(FWG_FAILED(result = defHolder.InsertDef<NameDef>( wxString(wxT("testMaterial")), spMaterialDef, defHolder.m_materialDefs )))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("GameTestResourceLoader::LoadMaterials() : add item failed: 0x%08x"),
 																m_spLogger, result, FWGLOG_ENDVAL);
@@ -140,7 +140,7 @@ GameErrorCode GameTestResourceLoader::LoadMeshes(GameDefinitionHolder& defHolder
 	
 	spMeshDef->m_name = wxT("TestingCube");
 	
-	if(FWG_FAILED(result = defHolder.m_meshDefs.Insert( wxString(wxT("testCubeMesh")), spMeshDef )))
+	if(FWG_FAILED(result = defHolder.InsertDef<NameDef>( wxString(wxT("testCubeMesh")), spMeshDef, defHolder.m_meshDefs )))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("GameTestResourceLoader::LoadMeshes() : add item failed: 0x%08x"),
 																m_spLogger, result, FWGLOG_ENDVAL);

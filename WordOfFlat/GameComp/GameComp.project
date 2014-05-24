@@ -88,6 +88,16 @@
         <File Name="InputComp/ginputcomp.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
+    <VirtualDirectory Name="logicComp">
+      <VirtualDirectory Name="include">
+        <File Name="LogicComp/glogiccomp.h"/>
+        <File Name="LogicComp/glogiccmgr.h"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="src">
+        <File Name="LogicComp/glogiccomp.cpp"/>
+        <File Name="LogicComp/glogiccmgr.cpp"/>
+      </VirtualDirectory>
+    </VirtualDirectory>
   </VirtualDirectory>
   <VirtualDirectory Name="src">
     <File Name="gentitymgr.cpp"/>
