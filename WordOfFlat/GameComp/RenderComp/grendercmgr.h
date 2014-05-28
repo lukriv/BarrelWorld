@@ -18,12 +18,15 @@ class RenderComponent;
 class RenderCompManager
 {
 private:
+	GameLoggerPtr *m_spLogger;
 	Ogre::SceneManager* m_pSceneManager;
 	RefObjSmPtr<GameCamera> m_spMainCamera;
 	
 public:
-	RenderCompManager();
+	RenderCompManager(GameLogger *pLogger);
 	~RenderCompManager();
+	
+	inline GameLogger * GetLogger() { return m_spLogger; }
 	
 	/*!
 	 * \brief Initialize Render Component Manager

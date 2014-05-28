@@ -1,26 +1,28 @@
 #ifndef __GAME_LOGIC_COMPONENT_MANAGER_H__0c__
 #define __GAME_LOGIC_COMPONENT_MANAGER_H__0c__
 
+#include <GameSystem/gset.h>
 #include <GameSystem/refobject.h>
 #include <GameSystem/refobjectimpl.h>
 #include <GameSystem/refobjectsmptr.h>
+
 
 class LogicComponentBase;
 
 class LogicCompManager
 {
 private:
-	typedef std::set<LogicComponentBase*> TLogicCompList;
+	typedef GameBasSet<LogicComponentBase*> TLogicCompList;
 private:
+	GameLoggerPtr m_spLogger;
 	TLogicCompList m_logicCompList;
 public:
-	LogicCompManager();
+	LogicCompManager(GameLogger *pLogger);
 	virtual ~LogicCompManager();
 	
-	GameErrorCode CreateLogicComp(LogicComponentBase *&pLogicComp);
+	GameErrorCode AddLogicComp(LogicComponentBase *pLogicComp);
 	
 	void RemoveLogicComp(LogicComponentBase *pLogicComp);
-	
 	
 	GameErrorCode ProcessLogicStep();
 

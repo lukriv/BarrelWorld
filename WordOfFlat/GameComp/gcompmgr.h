@@ -6,10 +6,11 @@
 #include "RenderComp/grendercmgr.h"
 
 class GameCompManager : public RefObjectImpl<IRefObject> {
+	GameLoggerPtr m_spLogger;
 	RenderCompManager m_renderMgr;
 	GameEntityManager m_entityMgr; // should be the last manager (first in destroy)
 public:
-	GameCompManager();
+	GameCompManager(GameLogger *pLogger);
 	~GameCompManager();
 	
 	GameErrorCode Initialize(Ogre::SceneManager *pSceneManager);

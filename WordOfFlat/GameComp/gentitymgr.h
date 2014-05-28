@@ -7,10 +7,13 @@
 class GameEntityManager {
 	typedef GameBasMap<wxString, GameEntity> TEntityMap;
 private:
+	GameLoggerPtr m_spLogger;
 	TEntityMap m_entityMap;
 public:
-	GameEntityManager();
+	GameEntityManager(GameLogger *pLogger);
 	~GameEntityManager();
+	
+	inline GameLogger * GetLogger() { return m_spLogger; }
 	
 	GameErrorCode CreateEntity(const wxString& entityName, GameEntity*& pNewEntity);
 	void DestroyEntity(GameEntity* entity);
