@@ -1,6 +1,6 @@
 #include "gentitymgr.h"
 
-GameEntityManager::GameEntityManager()
+GameEntityManager::GameEntityManager(GameLogger* pLogger) : m_spLogger(pLogger)
 {
 }
 

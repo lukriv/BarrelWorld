@@ -22,14 +22,23 @@ protected:
 	
 public:
 	// Render component can be created and destroyed only by render component manager
-	LogicComponentBase(LogicCompManager* pCompManager) : m_pOwnerManager(pCompManager)
-													, m_pParent(NULL) {}
+	LogicComponentBase() : m_pOwnerManager(nullptr)
+						, m_pParent(nullptr) {}
 	virtual ~LogicComponentBase();
 
+	inline void SetOwnerManager(LogicCompManager *pOwner) { m_pOwnerManager = pOwner; }
 	
 	inline void SetParent(GameEntity *pParent) { m_pParent = pParent; }
 	inline GameEntity* GetParent() { return m_pParent; }
 	
+	GameErrorCode ProcessLogic();
+	
+	
+protected:
+	virtual GameErrorCode UserLogic() = 0;
+
+protected:
+	GameErrorCode PhysicsProcess();
 	
 };
 

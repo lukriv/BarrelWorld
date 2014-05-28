@@ -1,5 +1,5 @@
-#ifndef __COMPONENT_DEFINITIONS_CONTAINER_H__
-#define __COMPONENT_DEFINITIONS_CONTAINER_H__
+#ifndef __GAME_MAP_CONTAINER_H__
+#define __GAME_MAP_CONTAINER_H__
 
 
 #include <map>
@@ -122,4 +122,4 @@ public:
 
 };
 
-#endif // __COMPONENT_DEFINITIONS_CONTAINER_H__
+#endif // __GAME_MAP_CONTAINER_H__

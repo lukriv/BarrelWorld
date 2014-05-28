@@ -108,7 +108,7 @@
   <Dependencies Name="Debug"/>
   <Settings Type="Static Library">
     <GlobalSettings>
-      <Compiler Options="-Wall;-Wno-unused-local-typedefs" C_Options="" Assembler="">
+      <Compiler Options="-Wall;-Wno-unused-local-typedefs;-std=c++11" C_Options="" Assembler="">
         <IncludePath Value="../../extern/include"/>
         <IncludePath Value="../../WordOfFlat"/>
         <Preprocessor Value="UNICODE"/>

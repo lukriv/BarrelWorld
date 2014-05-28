@@ -16,7 +16,7 @@ template <class T> class RefObjSmPtr {
 private:
     T *m_pIF;
 public:
-    RefObjSmPtr(): m_pIF(NULL) {}
+    RefObjSmPtr(): m_pIF(nullptr) {}
     
 	~RefObjSmPtr()
 	{

@@ -3,7 +3,10 @@
 #include "grendercomp.h"
 #include "../GameSystem/new.h"
 
-RenderCompManager::RenderCompManager() : m_pSceneManager(NULL){}
+RenderCompManager::RenderCompManager(GameLogger* pLogger) : m_spLogger(pLogger)
+															, m_pSceneManager(nullptr)
+														
+{}
 
 GameErrorCode RenderCompManager::Initialize(Ogre::SceneManager& sceneManager)
 {
