@@ -1,8 +1,9 @@
 #include "gcompmgr.h"
 
 GameCompManager::GameCompManager(GameLogger *pLogger) : m_spLogger(pLogger)
-														, m_entityMgr(pLogger)
 														, m_renderMgr(pLogger)
+														, m_logicMgr(pLogger)
+														, m_entityMgr(pLogger)
 {}
 
 GameCompManager::~GameCompManager() {}

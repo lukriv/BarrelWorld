@@ -5,6 +5,7 @@
 #include <OGRE/OgreSceneManager.h>
 #include <wx/thread.h>
 
+#include <GameSystem/glog.h>
 #include <GameSystem/gdefs.h>
 #include <GameSystem/gerror.h>
 #include <GameSystem/refobjectsmptr.h>
@@ -18,7 +19,7 @@ class RenderComponent;
 class RenderCompManager
 {
 private:
-	GameLoggerPtr *m_spLogger;
+	GameLoggerPtr m_spLogger;
 	Ogre::SceneManager* m_pSceneManager;
 	RefObjSmPtr<GameCamera> m_spMainCamera;
 	

@@ -9,8 +9,7 @@ template<typename value>
 class GameBasSet {
 	typedef std::set<value> TInternalSet;
 public:
-	typedef typename std::set<value>::iterator Iterator;
-	typedef typename std::set<value>::const_iterator ConstIterator;
+	typedef typename TInternalSet::iterator Iterator;
 
 private:
 	TInternalSet m_innerSet;
@@ -82,11 +81,6 @@ public:
 	}
 	
 	inline void Remove(Iterator iter)
-	{
-		m_innerSet.erase(iter);
-	}
-	
-	inline void Remove(ConstIterator iter)
 	{
 		m_innerSet.erase(iter);
 	}

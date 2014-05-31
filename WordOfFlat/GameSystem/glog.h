@@ -95,7 +95,7 @@ private:
 	GameLogger() : m_isInitialized(false),
 	    m_refCount(1),
 		m_loggerFile(NULL){}
-	~GameLogger();
+	virtual ~GameLogger();
 	
 	GameErrorCode Initialize(const wxChar* loggerName, const wxChar* loggerFileName);
 	

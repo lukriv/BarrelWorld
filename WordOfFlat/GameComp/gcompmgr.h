@@ -4,10 +4,12 @@
 #include "OGRE/OgreSceneManager.h"
 #include "gentitymgr.h"
 #include "RenderComp/grendercmgr.h"
+#include "LogicComp/glogiccmgr.h"
 
 class GameCompManager : public RefObjectImpl<IRefObject> {
 	GameLoggerPtr m_spLogger;
 	RenderCompManager m_renderMgr;
+	LogicCompManager m_logicMgr;
 	GameEntityManager m_entityMgr; // should be the last manager (first in destroy)
 public:
 	GameCompManager(GameLogger *pLogger);

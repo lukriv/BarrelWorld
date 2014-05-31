@@ -41,7 +41,7 @@ GameErrorCode ClientGameLogic::Initialize(GameLogger* pLogger, Ogre::RenderWindo
 		return result;
 	}
 	
-	FWG_RETURN_FAIL( GameNewChecked(m_spCompManager.OutRef()));
+	FWG_RETURN_FAIL( GameNewChecked(m_spCompManager.OutRef(), pLogger));
 	
 	if(FWG_FAILED(result = m_spCompManager->Initialize(pSceneManager)))
 	{

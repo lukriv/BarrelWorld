@@ -1,4 +1,5 @@
 #include "glogiccmgr.h"
+
 #include "glogiccomp.h"
 
 LogicCompManager::LogicCompManager(GameLogger *pLogger) : m_spLogger(pLogger)
