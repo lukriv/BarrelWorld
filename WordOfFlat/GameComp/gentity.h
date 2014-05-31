@@ -7,6 +7,7 @@
 #include "TransformComp/gtranscomp.h"
 #include "RenderComp/grendercomp.h"
 #include "AnimatorComp/ganimatormgr.h"
+#include "LogicComp/glogiccomp.h"
 
 enum GameEntityType {
 	ENTITY_TYPE_NONE 					= 0,
@@ -21,9 +22,10 @@ class GameEntity {
 private:
 	wxString m_entityName;
 	GameEntityType m_entityType;
-	RefObjSmPtr<TransformComponent> m_pTransformComp;
-	RefObjSmPtr<RenderComponent> m_pRenderComp;
-	RefObjSmPtr<AnimatorComponent> m_pAnimatorComp;
+	RefObjSmPtr<TransformComponent> m_spTransformComp;
+	RefObjSmPtr<RenderComponent> m_spRenderComp;
+	RefObjSmPtr<AnimatorComponent> m_spAnimatorComp;
+	RefObjSmPtr<LogicComponentBase> m_spLogicComp;
 
 public:
 	GameEntity() {}
@@ -35,11 +37,13 @@ public:
 	void SetTransformComp(TransformComponent* pTransComp);
 	void SetRenderComp(RenderComponent *pRenderComp);
 	void SetAnimatorComp(AnimatorComponent *pAnimatorComp);
+	void SetLogicComp(LogicComponentBase *pLogicComp);
 
 	
-	inline TransformComponent* GetTransformComp() { return m_pTransformComp; }
-	inline RenderComponent* GetRenderComp() { return m_pRenderComp; }
-	inline AnimatorComponent* GetAnimatorComp() { return m_pAnimatorComp; }
+	inline TransformComponent* GetTransformComp() { return m_spTransformComp; }
+	inline RenderComponent* GetRenderComp() { return m_spRenderComp; }
+	inline AnimatorComponent* GetAnimatorComp() { return m_spAnimatorComp; }
+	inline LogicComponentBase* GetLogicComp() { return m_spLogicComp; }
 
 };
 

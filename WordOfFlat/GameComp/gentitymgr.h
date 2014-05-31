@@ -1,7 +1,8 @@
 #ifndef __GAME_ENTITY_MANAGER_H__
 #define __GAME_ENTITY_MANAGER_H__
 
-#include "../GameSystem/gmap.h"
+#include <GameSystem/gmap.h>
+#include <GameSystem/glog.h>
 #include "gentity.h"
 
 class GameEntityManager {

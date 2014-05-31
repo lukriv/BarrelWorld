@@ -42,7 +42,7 @@
   <Dependencies Name="Debug"/>
   <Settings Type="Static Library">
     <GlobalSettings>
-      <Compiler Options="-Wall -Wno-unused-local-typedefs" C_Options="-Wall -Wno-unused-local-typedefs" Assembler="">
+      <Compiler Options="-Wall -Wno-unused-local-typedefs;-std=c++11" C_Options="-Wall -Wno-unused-local-typedefs" Assembler="">
         <IncludePath Value="../../extern/include"/>
         <IncludePath Value="../../extern/include/OGRE"/>
         <IncludePath Value="../../WordOfFlat"/>

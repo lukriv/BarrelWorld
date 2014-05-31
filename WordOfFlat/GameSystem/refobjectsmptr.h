@@ -8,6 +8,7 @@ template <class T> class _NoAddRefRelease : public T
 {
 private:
     _NoAddRefRelease(); // Make compiler happy
+	virtual ~_NoAddRefRelease();
     virtual void addRef() = 0;
     virtual wxInt32 release() = 0;   
 };

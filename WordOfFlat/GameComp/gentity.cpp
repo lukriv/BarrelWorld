@@ -5,40 +5,56 @@
 //////////////////////////
 void GameEntity::SetRenderComp(RenderComponent *pRenderComp) 
 {
-	if( m_pRenderComp != NULL)
+	if(!m_spRenderComp.IsEmpty())
 	{
-		m_pRenderComp->SetParent(NULL); // remove old parent
+		m_spRenderComp->SetParent(nullptr); // remove old parent
 	}
-	m_pRenderComp = pRenderComp;
+	m_spRenderComp = pRenderComp;
 	
-	if(m_pRenderComp != NULL)
+	if(m_spRenderComp != nullptr)
 	{
-		m_pRenderComp->SetParent(this); // set new parent
+		m_spRenderComp->SetParent(this); // set new parent
 		
 		// set connectivity with other components
-		if(m_pTransformComp != NULL)
+		if(m_spTransformComp != nullptr)
 		{
-			m_pTransformComp->Connect(*m_pRenderComp);
+			m_spTransformComp->Connect(*m_spRenderComp);
 		}
 	}
 }
 
 void GameEntity::SetAnimatorComp(AnimatorComponent* pAnimatorComp)
 {
-	m_pAnimatorComp = pAnimatorComp;
+	m_spAnimatorComp = pAnimatorComp;
 }
 
 void GameEntity::SetTransformComp(TransformComponent* pTransComp)
 {
-	m_pTransformComp = pTransComp;
+	m_spTransformComp = pTransComp;
 	
-	// if transform is NULL return 
-	if(m_pTransformComp == NULL) return;
+	// if transform is nullptr return 
+	if(m_spTransformComp.IsEmpty()) return;
 	
 	// connect this component with other components - if it make sense
-	if(m_pRenderComp != NULL)
+	if(m_spRenderComp != nullptr)
 	{
-		m_pTransformComp->Connect(*m_pRenderComp);
+		m_spTransformComp->Connect(*m_spRenderComp);
+	}
+	
+}
+
+void GameEntity::SetLogicComp(LogicComponentBase* pLogicComp)
+{
+	if(!m_spLogicComp.IsEmpty())
+	{
+		m_spLogicComp->SetParent(nullptr);
+	}
+	
+	m_spLogicComp = pLogicComp;
+	
+	if(!m_spLogicComp.IsEmpty())
+	{
+		m_spLogicComp.In()->SetParent(this);
 	}
 	
 }
