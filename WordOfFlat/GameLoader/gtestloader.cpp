@@ -25,31 +25,37 @@ GameErrorCode GameTestResourceLoader::Load(GameDefinitionHolder& defHolder)
 	
 	if(FWG_FAILED(result = LoadMeshes(defHolder)))
 	{
-		FWGLOG_ERROR_FORMAT(wxT("GameTestResourceLoader::Load() : Load mesh definitions failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		FWGLOG_ERROR_FORMAT(wxT("Load mesh definitions failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
 		return result;
 	}
 	
 	if(FWG_FAILED(result = LoadMaterials(defHolder)))
 	{
-		FWGLOG_ERROR_FORMAT(wxT("GameTestResourceLoader::Load() : Load materials definitions failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		FWGLOG_ERROR_FORMAT(wxT("Load materials definitions failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	if(FWG_FAILED(result = LoadRenderObj(defHolder)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Load render definitions failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
 		return result;
 	}
 	
 	if(FWG_FAILED(result = LoadAnimations(defHolder)))
 	{
-		FWGLOG_ERROR_FORMAT(wxT("GameTestResourceLoader::Load() : Load animation definitions failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		FWGLOG_ERROR_FORMAT(wxT("Load animation definitions failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
 		return result;
 	}
 	
 	if(FWG_FAILED(result = LoadAnimators(defHolder)))
 	{
-		FWGLOG_ERROR_FORMAT(wxT("GameTestResourceLoader::Load() : Load animator definitions failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		FWGLOG_ERROR_FORMAT(wxT("Load animator definitions failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
 		return result;
 	}
 	
 	if(FWG_FAILED(result = LoadEntities(defHolder)))
 	{
-		FWGLOG_ERROR_FORMAT(wxT("GameTestResourceLoader::Load() : Load entity definitions failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		FWGLOG_ERROR_FORMAT(wxT("Load entity definitions failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
 		return result;
 	}
 		
@@ -73,16 +79,9 @@ GameErrorCode GameTestResourceLoader::LoadEntities(GameDefinitionHolder& defHold
 	
 	FWG_RETURN_FAIL(GameNewChecked(spEntityDef.OutRef()));
 	
-	if(defHolder.m_meshDefs.Exists(wxString(wxT("testCubeMesh"))))
+	if(defHolder.m_renderDefs.Exists(wxString(wxT("render1"))))
 	{
-		spEntityDef->m_mesh = *defHolder.m_meshDefs.FindValue(wxString(wxT("testCubeMesh")));
-	} else {
-		return FWG_E_OBJECT_NOT_FOUND_ERROR;
-	}
-	
-	if(defHolder.m_materialDefs.Exists(wxString(wxT("testMaterial"))))
-	{
-		spEntityDef->m_material = *defHolder.m_materialDefs.FindValue(wxString(wxT("testMaterial")));
+		spEntityDef.In()->m_renderDef = *defHolder.m_renderDefs.FindValue(wxString(wxT("render1")));
 	} else {
 		return FWG_E_OBJECT_NOT_FOUND_ERROR;
 	}
@@ -93,8 +92,6 @@ GameErrorCode GameTestResourceLoader::LoadEntities(GameDefinitionHolder& defHold
 	spEntityDef->m_transformation->m_position[1] = 0.0f;
 	spEntityDef->m_transformation->m_position[2] = 0.0f;
 	
-	spEntityDef->m_entityName.assign(wxT("entity1"));
-
 	if(FWG_FAILED(result = defHolder.InsertDef<EntityDef>( wxString(wxT("entity1")), spEntityDef, defHolder.m_entityDefs )))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("GameTestResourceLoader::LoadEntities() : add entity failed: 0x%08x"),
@@ -114,6 +111,31 @@ GameErrorCode GameTestResourceLoader::LoadEntities(GameDefinitionHolder& defHold
 
 GameErrorCode GameTestResourceLoader::LoadRenderObj(GameDefinitionHolder& defHolder)
 {
+	GameErrorCode result = FWG_NO_ERROR;
+	RefObjSmPtr<RenderDef> spRenderDef;
+	
+	FWG_RETURN_FAIL(GameNewChecked(spRenderDef.OutRef()));
+	
+	if(defHolder.m_meshDefs.Exists(wxString(wxT("testCubeMesh"))))
+	{
+		spRenderDef->m_mesh = *defHolder.m_meshDefs.FindValue(wxString(wxT("testCubeMesh")));
+	} else {
+		return FWG_E_OBJECT_NOT_FOUND_ERROR;
+	}
+	
+	if(defHolder.m_materialDefs.Exists(wxString(wxT("testMaterial"))))
+	{
+		spRenderDef->m_material = *defHolder.m_materialDefs.FindValue(wxString(wxT("testMaterial")));
+	} else {
+		return FWG_E_OBJECT_NOT_FOUND_ERROR;
+	}
+	
+	if(FWG_FAILED(result = defHolder.InsertDef<RenderDef>( wxString(wxT("render1")), spRenderDef, defHolder.m_renderDefs )))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Add entity failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
 	return FWG_NO_ERROR;
 }
 
