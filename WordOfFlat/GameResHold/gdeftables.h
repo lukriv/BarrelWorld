@@ -94,6 +94,45 @@ struct NameDef : public DefBase {
 	NameDef() : DefBase() {}
 };
 
+/*!
+ * \class CameraDef
+ * \author Lukas
+ * \date 06/01/14
+ * \file gdeftables.h
+ * \brief Camera definition
+ */
+struct CameraDef : public DefBase {
+	CameraDef() {}
+};
+
+/*!
+ * \class LightDef
+ * \author Lukas
+ * \date 06/01/14
+ * \file gdeftables.h
+ * \brief Light definition for render component
+ */
+struct LightDef : public DefBase {
+	LightDef() {}
+};
+
+/*!
+ * \class RenderDef
+ * \author Lukas
+ * \date 06/01/14
+ * \file gdeftables.h
+ * \brief Render component definition
+ */
+struct RenderDef : public DefBase {
+public:
+	RefObjSmPtr<NameDef> m_mesh;
+	RefObjSmPtr<NameDef> m_material;
+	RefObjSmPtr<CameraDef> m_camera;
+	RefObjSmPtr<LightDef> m_light;
+public:
+	RenderDef() : DefBase() {}
+};
+
 
 /*!
  * \class AnimationDef
@@ -123,15 +162,25 @@ struct AnimatorDef : public DefBase {
 };
 
 
-struct CameraDef : public DefBase {
-	CameraDef() {}
-};
 
-struct LightDef : public DefBase {
-	LightDef() {}
-};
 
 struct InputDef : public DefBase {
+public:
+	wxInt32 m_moveUp;
+	wxInt32 m_moveDown;
+	wxInt32 m_moveLeft;
+	wxInt32 m_moveRight;
+	wxInt32 m_moveForward;
+	wxInt32 m_moveBackward;
+	
+public:
+	InputDef() : m_moveUp(0)
+				, m_moveDown(0)
+				, m_moveLeft(0)
+				, m_moveRight(0)
+				, m_moveForward(0)
+				, m_moveBackward(0)
+	{}
 	
 };
 
@@ -143,13 +192,10 @@ struct InputDef : public DefBase {
  * \brief Entity definitios
  */
 struct EntityDef : public DefBase {
-	wxString m_entityName;
 	RefObjSmPtr<TransformDef> m_transformation;
-	RefObjSmPtr<NameDef> m_mesh;
-	RefObjSmPtr<NameDef> m_material;
+	RefObjSmPtr<RenderDef> m_renderDef;
 	RefObjSmPtr<AnimatorDef> m_animatorDef;
-	RefObjSmPtr<CameraDef> m_camera;
-	RefObjSmPtr<LightDef> m_light;
+	RefObjSmPtr<InputDef> m_input;
 
 	EntityDef() : DefBase() {}
 };

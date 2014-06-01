@@ -8,6 +8,7 @@
 
 
 typedef GameBasMap<wxString, RefObjSmPtr<NameDef> > TNameDefMap;
+typedef GameBasMap<wxString, RefObjSmPtr<RenderDef> > TRenderDefMap;
 typedef GameBasMap<wxString, RefObjSmPtr<AnimationDef> > TAnimationDefMap;
 typedef GameBasMap<wxString, RefObjSmPtr<AnimatorDef> > TAnimatorDefMap;
 typedef GameBasMap<wxString, RefObjSmPtr<EntityDef> > TEntityDefMap;
@@ -30,6 +31,7 @@ public:
 	
 	TNameDefMap m_meshDefs;
 	TNameDefMap m_materialDefs;
+	TRenderDefMap m_renderDefs;
 	TAnimationDefMap m_animationDefs;
 	TAnimatorDefMap	m_animatorDefs;
 	TEntityDefMap m_entityDefs;

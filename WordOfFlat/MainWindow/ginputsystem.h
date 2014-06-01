@@ -38,12 +38,12 @@ private:
 public:
 
 	GameInputSystem(OIS::InputManager* pInputMgr) : m_pParent(pInputMgr),
-									m_pKeyboard(NULL),
-									m_pMouse(NULL)
+									m_pKeyboard(nullptr),
+									m_pMouse(nullptr)
 	{
 		for (int i = 0; i < 256; i++)
 		{
-			m_callbackArray[i] = NULL;
+			m_callbackArray[i] = nullptr;
 		}
 	}
 
@@ -54,9 +54,9 @@ public:
 	template<class T>
 	GameErrorCode RegisterCallback(OIS::KeyCode keyCode, T *pClass, void (T::*MethodPtr)(bool))
 	{
-		InputCallback<T> *pClbk = NULL;
+		InputCallback<T> *pClbk = nullptr;
 		FWG_RETURN_FAIL(GameNewChecked(pClbk,pClass,MethodPtr));
-		if(m_callbackArray[keyCode] != NULL)
+		if(m_callbackArray[keyCode] != nullptr)
 		{
 			delete m_callbackArray[keyCode];
 		}

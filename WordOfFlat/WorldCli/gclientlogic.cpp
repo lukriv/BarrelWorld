@@ -24,7 +24,10 @@ GameErrorCode ClientGameLogic::Initialize(GameLogger* pLogger, Ogre::RenderWindo
 	}
 	
 	// window and scene manager must be defined
-	if((pWindow == NULL)||(pSceneManager == NULL))
+	if((pWindow == nullptr)
+		||(pSceneManager == nullptr)
+		||(pInputSystem == nullptr)
+		||(pGameMenuRes == nullptr))
 	{
 		return FWG_E_INVALID_PARAMETER_ERROR;
 	}
@@ -35,7 +38,7 @@ GameErrorCode ClientGameLogic::Initialize(GameLogger* pLogger, Ogre::RenderWindo
 
 	FWG_RETURN_FAIL(GameNewChecked(m_spEntityFactory.OutRef()));
 	
-	if(FWG_FAILED(result = m_spEntityFactory->Initialize(pLogger)))
+	if(FWG_FAILED(result = m_spEntityFactory->Initialize(pLogger, pInputSystem)))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("ClientGameLogic::Initialize() : Entity Factory initialize failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
 		return result;

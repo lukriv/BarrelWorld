@@ -357,6 +357,14 @@ GameClientEngine::~GameClientEngine()
 	m_spGameLogic.Release();
 	m_spGameMenu.Release();
 
+	// release Input system and OIS Input Manager
+	m_spInputSystem.Release();
+	if(m_pInputMgr != nullptr)
+	{
+		OIS::InputManager::destroyInputSystem(m_pInputMgr);
+		m_pInputMgr = nullptr;
+	}
+
 	if(m_pRenderWindow != NULL) {
 		m_pRenderWindow->removeAllListeners();
 		m_pRenderWindow->removeAllViewports();

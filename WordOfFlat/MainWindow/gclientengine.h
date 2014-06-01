@@ -58,7 +58,6 @@ private:
 	RefObjSmPtr<GameMenuResources> m_spGameMenu;
 	RefObjSmPtr<ClientGameLogic> m_spGameLogic;
 	RefObjSmPtr<GameDefinitionHolder> m_spDefHolder;
-	RefObjSmPtr<GameEntityFactory> m_spEntityFactory;
 
 	bool m_isWindowCreated;
 	bool m_isSettingLoaded;
