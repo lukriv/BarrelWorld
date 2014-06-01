@@ -112,6 +112,11 @@ GameErrorCode GameTestResourceLoader::LoadEntities(GameDefinitionHolder& defHold
 	return FWG_NO_ERROR;
 }
 
+GameErrorCode GameTestResourceLoader::LoadRenderObj(GameDefinitionHolder& defHolder)
+{
+	return FWG_NO_ERROR;
+}
+
 GameErrorCode GameTestResourceLoader::LoadMaterials(GameDefinitionHolder& defHolder)
 {
 	GameErrorCode result = FWG_NO_ERROR;
@@ -149,3 +154,4 @@ GameErrorCode GameTestResourceLoader::LoadMeshes(GameDefinitionHolder& defHolder
 	
 	return FWG_NO_ERROR;
 }
+

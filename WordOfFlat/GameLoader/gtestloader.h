@@ -14,6 +14,7 @@ private:
 private:
 	GameErrorCode LoadMeshes(GameDefinitionHolder& defHolder);
 	GameErrorCode LoadMaterials(GameDefinitionHolder& defHolder);
+	GameErrorCode LoadRenderObj(GameDefinitionHolder& defHolder);
 	GameErrorCode LoadAnimations(GameDefinitionHolder& defHolder);
 	GameErrorCode LoadAnimators(GameDefinitionHolder& defHolder);
 	GameErrorCode LoadEntities(GameDefinitionHolder& defHolder);

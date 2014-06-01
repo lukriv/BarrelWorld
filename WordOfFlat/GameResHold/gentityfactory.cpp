@@ -24,20 +24,27 @@ wxInt32 GameEntityFactory::release()
 	return refCount;
 }
 
-GameErrorCode GameEntityFactory::Initialize(GameLogger* pLogger)
+GameErrorCode GameEntityFactory::Initialize(GameLogger* pLogger, GameInputSystem *pInputSystem)
 {
 	m_spLogger = pLogger;
+	m_spInputSystem = pInputSystem;	
 	return FWG_NO_ERROR;
 }
 
+void GameEntityFactory::Uninitialize()
+{
+	m_spInputSystem.Release();
+	m_spLogger.Release();
+}
 
 GameErrorCode GameEntityFactory::CreateAllEntities(GameDefinitionHolder &defHolder, GameCompManager& compMgr)
 {
 	TEntityDefMap::Iterator iter;
+	
 	for (iter = defHolder.m_entityDefs.Begin(); iter != defHolder.m_entityDefs.End(); iter++)
 	{
 		GameEntity *pEntity = NULL;
-		FWG_RETURN_FAIL(compMgr.GetEntityManager().CreateEntity(iter->second->m_entityName, pEntity));
+		FWG_RETURN_FAIL(compMgr.GetEntityManager().CreateEntity(*(iter->second->GetName()), pEntity));
 		FWG_RETURN_FAIL(CreateEntity(*(iter->second), compMgr, *pEntity));
 	}
 	
@@ -47,31 +54,37 @@ GameErrorCode GameEntityFactory::CreateAllEntities(GameDefinitionHolder &defHold
 
 GameErrorCode GameEntityFactory::CreateEntity( EntityDef& entityDef, GameCompManager& compMgr, GameEntity& entity)
 {
+	if(m_spInputSystem.IsEmpty()) return FWG_E_OBJECT_NOT_INITIALIZED_ERROR;
+	
 	if(compMgr.GetRenderManager().GetOgreSceneManager() != NULL)
 	{
-		if(!entityDef.m_mesh.IsEmpty() && !entityDef.m_material.IsEmpty())
+		if(!entityDef.m_renderDef.IsEmpty())
 		{
-			// render entity is defined
-			Ogre::Entity *pEntity = NULL;
-			RefObjSmPtr<RenderComponent> spRenderComp;
-			
-			if(!entityDef.m_entityName.IsEmpty())
+			RefObjSmPtr<RenderDef> spRenderDef = entityDef.m_renderDef;
+			if(!spRenderDef->m_mesh.IsEmpty() && !spRenderDef->m_material.IsEmpty())
 			{
-				pEntity = compMgr.GetRenderManager().GetOgreSceneManager()->createEntity(entityDef.m_entityName.ToStdString(), entityDef.m_mesh->m_name.ToStdString());
-			} else {
-				return FWG_E_NOT_IMPLEMENTED_ERROR;
-			}
-			
-			//pEntity->setMaterialName(entityDef.m_material->m_name.ToStdString());
-			pEntity->setMaterialName(entityDef.m_material->m_name.ToStdString());
-			
-			FWG_RETURN_FAIL(compMgr.GetRenderManager().CreateEmptyRenderComponent(spRenderComp.OutRef()));
-					
-			spRenderComp->SetOgreEntity(pEntity);
-			spRenderComp->SetParent(&entity);
-			
-			entity.SetRenderComp(spRenderComp);
+				// render entity is defined
+				Ogre::Entity *pEntity = NULL;
+				RefObjSmPtr<RenderComponent> spRenderComp;
+				
+				if(entityDef.GetName() != nullptr)
+				{
+					pEntity = compMgr.GetRenderManager().GetOgreSceneManager()->createEntity(entityDef.GetName()->ToStdString(), spRenderDef->m_mesh->m_name.ToStdString());
+				} else {
+					return FWG_E_NOT_IMPLEMENTED_ERROR;
+				}
+				
+				//pEntity->setMaterialName(entityDef.m_material->m_name.ToStdString());
+				pEntity->setMaterialName(spRenderDef->m_material->m_name.ToStdString());
+				
+				FWG_RETURN_FAIL(compMgr.GetRenderManager().CreateEmptyRenderComponent(spRenderComp.OutRef()));
 						
+				spRenderComp->SetOgreEntity(pEntity);
+				spRenderComp->SetParent(&entity);
+				
+				entity.SetRenderComp(spRenderComp);
+							
+			}
 		}
 		
 		if(!entityDef.m_transformation.IsEmpty())
@@ -92,3 +105,4 @@ GameErrorCode GameEntityFactory::CreateEntity( EntityDef& entityDef, GameCompMan
 	
 	return FWG_NO_ERROR;
 }
+

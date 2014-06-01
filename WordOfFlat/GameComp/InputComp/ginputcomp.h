@@ -26,6 +26,21 @@ private:
 //	wxInt32 m_lastMousePositionPressed[2];
 	wxInt32 m_mouseWheelDelta;
 public:
+	ControlStruct() : m_state(0), m_clicked(0), m_mouseWheelDelta(0) {}
+	ControlStruct(const ControlStruct& control)
+	{
+		m_state = control.m_state;
+		m_clicked = control.m_clicked;
+		m_mouseWheelDelta = control.m_mouseWheelDelta;
+	}
+	
+	inline void ResetAll()
+	{
+		m_state = 0;
+		m_clicked = 0;
+		m_mouseWheelDelta = 0;
+	}
+
 	inline void Set(StateFlags flag)
 	{
 		m_clicked |= flag;
@@ -87,8 +102,6 @@ public:
 	 * \return Look vector - should be identity vector, zero vector is allowed only in first or third person look
 	 */
 	Ogre::Vector2& GetLookDirection2D();
-	
-	wxDword GetActiveActions();
 	
 	void SetMoveUp(bool move)
 	{
