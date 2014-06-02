@@ -1,6 +1,11 @@
 #ifndef __GAME_INPUT_COMPONENT_H__01__
 #define __GAME_INPUT_COMPONENT_H__01__
 
+#include "OGRE/OgreVector2.h"
+#include "GameSystem/refobject.h"
+#include "GameSystem/refobjectimpl.h"
+
+
 class ControlStruct
 {
 public:
@@ -49,7 +54,7 @@ public:
 	
 	inline void Release(StateFlags flag)
 	{
-		m_state &= ~((wxDword) flag)
+		m_state &= ~((wxDword) flag);
 	}
 
 	inline bool IsPressed(StateFlags flag) {
@@ -86,7 +91,7 @@ public:
 };
 
 
-class InputComponent {
+class InputComponent : public RefObjectImpl<IRefObject> {
 	ControlStruct m_ctrlStruct;
 public:
 	InputComponent() {}

@@ -184,6 +184,18 @@ public:
 	
 };
 
+
+struct LogicDef : public DefBase {
+	enum LogicType {
+		LOGIC_TYPE_UNDEFINED 	= 0,
+		LOGIC_TYPE_MANUAL_TEST 	= 1
+	};
+	
+	LogicType m_logicType;
+public:
+	LogicDef() : m_logicType(LOGIC_TYPE_UNDEFINED) {}
+};
+
 /*!
  * \class EntityDef
  * \author Lukas
@@ -195,7 +207,8 @@ struct EntityDef : public DefBase {
 	RefObjSmPtr<TransformDef> m_transformation;
 	RefObjSmPtr<RenderDef> m_renderDef;
 	RefObjSmPtr<AnimatorDef> m_animatorDef;
-	RefObjSmPtr<InputDef> m_input;
+	RefObjSmPtr<InputDef> m_inputDef;
+	RefObjSmPtr<LogicDef> m_logicDef;
 
 	EntityDef() : DefBase() {}
 };

@@ -8,6 +8,7 @@
 #include "RenderComp/grendercomp.h"
 #include "AnimatorComp/ganimatormgr.h"
 #include "LogicComp/glogiccomp.h"
+#include "InputComp/ginputcomp.h"
 
 enum GameEntityType {
 	ENTITY_TYPE_NONE 					= 0,
@@ -26,6 +27,7 @@ private:
 	RefObjSmPtr<RenderComponent> m_spRenderComp;
 	RefObjSmPtr<AnimatorComponent> m_spAnimatorComp;
 	RefObjSmPtr<LogicComponentBase> m_spLogicComp;
+	RefObjSmPtr<InputComponent> m_spInputComp;
 
 public:
 	GameEntity() {}
@@ -38,12 +40,14 @@ public:
 	void SetRenderComp(RenderComponent *pRenderComp);
 	void SetAnimatorComp(AnimatorComponent *pAnimatorComp);
 	void SetLogicComp(LogicComponentBase *pLogicComp);
-
+	void SetInputComp(InputComponent *pInputComp);
+	
 	
 	inline TransformComponent* GetTransformComp() { return m_spTransformComp; }
 	inline RenderComponent* GetRenderComp() { return m_spRenderComp; }
 	inline AnimatorComponent* GetAnimatorComp() { return m_spAnimatorComp; }
 	inline LogicComponentBase* GetLogicComp() { return m_spLogicComp; }
+	inline InputComponent* GetInputComp() { return m_spInputComp; }
 
 };
 

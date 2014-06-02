@@ -58,3 +58,8 @@ void GameEntity::SetLogicComp(LogicComponentBase* pLogicComp)
 	}
 	
 }
+
+void GameEntity::SetInputComp(InputComponent* pInputComp)
+{
+	m_spInputComp = pInputComp;
+}
