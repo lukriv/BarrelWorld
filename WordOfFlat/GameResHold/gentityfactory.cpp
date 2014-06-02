@@ -4,9 +4,10 @@
 #include <OGRE/OgreEntity.h>
 #include <OGRE/OgreSceneNode.h>
 #include <OGRE/OgreSceneManager.h>
-#include "../GameSystem/refobjectsmptr.h"
-#include "../GameComp/RenderComp/grendercomp.h"
-#include "../GameSystem/new.h"
+#include <GameSystem/refobjectsmptr.h>
+#include <GameComp/RenderComp/grendercomp.h>
+#include <GameComp/InputComp/ginputcomp.h>
+#include <GameSystem/new.h>
 
 
 void GameEntityFactory::addRef()
@@ -58,6 +59,7 @@ GameErrorCode GameEntityFactory::CreateEntity( EntityDef& entityDef, GameCompMan
 	
 	if(compMgr.GetRenderManager().GetOgreSceneManager() != NULL)
 	{
+		GameErrorCode result = FWG_NO_ERROR;
 		if(!entityDef.m_renderDef.IsEmpty())
 		{
 			RefObjSmPtr<RenderDef> spRenderDef = entityDef.m_renderDef;
@@ -99,6 +101,79 @@ GameErrorCode GameEntityFactory::CreateEntity( EntityDef& entityDef, GameCompMan
 			spTransform->SetSceneNode(pSceneNode);
 			
 			entity.SetTransformComp(spTransform);
+		}
+		
+		if(!entityDef.m_inputDef.IsEmpty())
+		{
+			RefObjSmPtr<InputComponent> spInputComp;
+			FWG_RETURN_FAIL(GameNewChecked(spInputComp.OutRef()));
+			if(entityDef.m_inputDef.In()->m_moveUp != 0)
+			{
+				if(FWG_FAILED(result = m_spInputSystem.In()->RegisterCallback(static_cast<OIS::KeyCode>(entityDef.m_inputDef.In()->m_moveUp)
+																		, spInputComp.In()
+																		, &InputComponent::SetMoveUp))) 
+				{
+					FWGLOG_ERROR_FORMAT(wxT("Register input callback moveUp failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+					return result;
+				}
+			}
+			
+			if(entityDef.m_inputDef.In()->m_moveDown != 0)
+			{
+				if(FWG_FAILED(result = m_spInputSystem->RegisterCallback(static_cast<OIS::KeyCode>(entityDef.m_inputDef.In()->m_moveDown)
+																		, spInputComp.In()
+																		, &InputComponent::SetMoveDown))) 
+				{
+					FWGLOG_ERROR_FORMAT(wxT("Register input callback moveDown failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+					return result;
+				}
+			}
+			
+			if(entityDef.m_inputDef.In()->m_moveLeft != 0)
+			{
+				if(FWG_FAILED(result = m_spInputSystem->RegisterCallback(static_cast<OIS::KeyCode>(entityDef.m_inputDef.In()->m_moveLeft)
+																		, spInputComp.In()
+																		, &InputComponent::SetMoveLeft))) 
+				{
+					FWGLOG_ERROR_FORMAT(wxT("Register input callback moveLeft failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+					return result;
+				}
+			}
+			
+			if(entityDef.m_inputDef.In()->m_moveRight != 0)
+			{
+				if(FWG_FAILED(result = m_spInputSystem->RegisterCallback(static_cast<OIS::KeyCode>(entityDef.m_inputDef.In()->m_moveRight)
+																		, spInputComp.In()
+																		, &InputComponent::SetMoveRight))) 
+				{
+					FWGLOG_ERROR_FORMAT(wxT("Register input callback moveRight failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+					return result;
+				}
+			}
+			
+			if(entityDef.m_inputDef.In()->m_moveForward != 0)
+			{
+				if(FWG_FAILED(result = m_spInputSystem->RegisterCallback(static_cast<OIS::KeyCode>(entityDef.m_inputDef.In()->m_moveForward)
+																		, spInputComp.In()
+																		, &InputComponent::SetMoveForward))) 
+				{
+					FWGLOG_ERROR_FORMAT(wxT("Register input callback moveForward failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+					return result;
+				}
+			}
+			
+			if(entityDef.m_inputDef.In()->m_moveBackward != 0)
+			{
+				if(FWG_FAILED(result = m_spInputSystem->RegisterCallback(static_cast<OIS::KeyCode>(entityDef.m_inputDef.In()->m_moveBackward)
+																		, spInputComp.In()
+																		, &InputComponent::SetMoveBackward))) 
+				{
+					FWGLOG_ERROR_FORMAT(wxT("Register input callback moveBackward failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+					return result;
+				}
+			}
+			
+			entity.SetInputComp(spInputComp);
 		}
 		
 	}

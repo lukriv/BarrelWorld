@@ -1,5 +1,6 @@
 #include "gtestloader.h"
-#include "../GameSystem/new.h"
+#include <GameSystem/new.h>
+#include <OIS/OISKeyboard.h>
 
 
 GameErrorCode GameTestResourceLoader::Initialize(GameLogger* pLogger)
@@ -53,6 +54,18 @@ GameErrorCode GameTestResourceLoader::Load(GameDefinitionHolder& defHolder)
 		return result;
 	}
 	
+	if(FWG_FAILED(result = LoadInput(defHolder)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Load input definitions failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	if(FWG_FAILED(result = LoadLogic(defHolder)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Load logic definitions failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
 	if(FWG_FAILED(result = LoadEntities(defHolder)))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Load entity definitions failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
@@ -86,11 +99,27 @@ GameErrorCode GameTestResourceLoader::LoadEntities(GameDefinitionHolder& defHold
 		return FWG_E_OBJECT_NOT_FOUND_ERROR;
 	}
 	
+	if(defHolder.m_logicDefs.Exists(wxString(wxT("manualLogic"))))
+	{
+		spEntityDef.In()->m_logicDef = *defHolder.m_logicDefs.FindValue(wxString(wxT("manualLogic")));
+	} else {
+		return FWG_E_OBJECT_NOT_FOUND_ERROR;
+	}
+	
+	if(defHolder.m_inputDefs.Exists(wxString(wxT("testInput"))))
+	{
+		spEntityDef.In()->m_inputDef = *defHolder.m_inputDefs.FindValue(wxString(wxT("testInput")));
+	} else {
+		return FWG_E_OBJECT_NOT_FOUND_ERROR;
+	}
+	
 	FWG_RETURN_FAIL(GameNewChecked(spEntityDef->m_transformation.OutRef()));
 	
 	spEntityDef->m_transformation->m_position[0] = 0.0f;
 	spEntityDef->m_transformation->m_position[1] = 0.0f;
 	spEntityDef->m_transformation->m_position[2] = 0.0f;
+	
+
 	
 	if(FWG_FAILED(result = defHolder.InsertDef<EntityDef>( wxString(wxT("entity1")), spEntityDef, defHolder.m_entityDefs )))
 	{
@@ -177,3 +206,39 @@ GameErrorCode GameTestResourceLoader::LoadMeshes(GameDefinitionHolder& defHolder
 	return FWG_NO_ERROR;
 }
 
+GameErrorCode GameTestResourceLoader::LoadInput(GameDefinitionHolder& defHolder)
+{
+	GameErrorCode result = FWG_NO_ERROR;
+	RefObjSmPtr<InputDef> spInputDef;
+	
+	FWG_RETURN_FAIL(GameNewChecked(spInputDef.OutRef()));
+	
+	spInputDef.In()->m_moveUp = OIS::KC_W;
+	spInputDef.In()->m_moveDown = OIS::KC_S;
+	spInputDef.In()->m_moveLeft = OIS::KC_A;
+	spInputDef.In()->m_moveRight = OIS::KC_D;
+	
+	if(FWG_FAILED(result = defHolder.InsertDef<InputDef>( wxString(wxT("testInput")), spInputDef, defHolder.m_inputDefs )))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Add item failed: 0x%08x"),	m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	return FWG_NO_ERROR;
+}
+
+GameErrorCode GameTestResourceLoader::LoadLogic(GameDefinitionHolder& defHolder)
+{
+	GameErrorCode result = FWG_NO_ERROR;
+	RefObjSmPtr<LogicDef> spLogicDef;
+	
+	FWG_RETURN_FAIL(GameNewChecked(spLogicDef.OutRef()));
+	
+	spLogicDef.In()->m_logicType = LogicDef::LOGIC_TYPE_MANUAL_TEST;
+	
+	if(FWG_FAILED(result = defHolder.InsertDef<LogicDef>( wxString(wxT("manualLogic")), spLogicDef, defHolder.m_logicDefs )))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Add item failed: 0x%08x"),	m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	return FWG_NO_ERROR;
+}

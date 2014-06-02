@@ -17,6 +17,8 @@ private:
 	GameErrorCode LoadRenderObj(GameDefinitionHolder& defHolder);
 	GameErrorCode LoadAnimations(GameDefinitionHolder& defHolder);
 	GameErrorCode LoadAnimators(GameDefinitionHolder& defHolder);
+	GameErrorCode LoadInput(GameDefinitionHolder& defHolder);
+	GameErrorCode LoadLogic(GameDefinitionHolder& defHolder);
 	GameErrorCode LoadEntities(GameDefinitionHolder& defHolder);
 public:
 	GameTestResourceLoader() : m_isInitialized(false) {}
