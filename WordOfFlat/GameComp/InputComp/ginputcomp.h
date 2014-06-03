@@ -1,9 +1,10 @@
 #ifndef __GAME_INPUT_COMPONENT_H__01__
 #define __GAME_INPUT_COMPONENT_H__01__
 
-#include "OGRE/OgreVector2.h"
-#include "GameSystem/refobject.h"
-#include "GameSystem/refobjectimpl.h"
+#include <wx/thread.h>
+#include <OGRE/OgreVector2.h>
+#include <GameSystem/refobject.h>
+#include <GameSystem/refobjectimpl.h>
 
 
 class ControlStruct
@@ -42,6 +43,12 @@ public:
 	inline void ResetAll()
 	{
 		m_state = 0;
+		m_clicked = 0;
+		m_mouseWheelDelta = 0;
+	}
+	
+	inline void ResetClicked()
+	{
 		m_clicked = 0;
 		m_mouseWheelDelta = 0;
 	}
@@ -91,10 +98,23 @@ public:
 };
 
 
-class InputComponent : public RefObjectImpl<IRefObject> {
+class InputComponent : public RefObjectImpl<IRefObject> 
+{
 	ControlStruct m_ctrlStruct;
+	wxCriticalSection m_inputLock;
 public:
-	InputComponent() {}
+	InputComponent() : m_inputLock(wxCRITSEC_DEFAULT) {}
+	
+	/*!
+	 * \brief Export actual control struct state and reset it
+	 * \param actualControls Exported actual controls state
+	 */
+	void ExportControlStruct(ControlStruct &actualControls)
+	{
+		wxCriticalSectionLocker lock(m_inputLock);
+		actualControls = m_ctrlStruct;
+		m_ctrlStruct.ResetClicked();
+	}
 	
 	/*!
 	 * \brief
@@ -141,6 +161,7 @@ public:
 protected:
 	inline void SetState(bool state, ControlStruct::StateFlags ctrlFlag)
 	{
+		wxCriticalSectionLocker lock(m_inputLock);
 		if(state)
 		{
 			m_ctrlStruct.Set(ctrlFlag);
