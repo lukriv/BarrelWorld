@@ -7,6 +7,7 @@
 #include <GameSystem/refobjectsmptr.h>
 #include <GameComp/RenderComp/grendercomp.h>
 #include <GameComp/InputComp/ginputcomp.h>
+#include <GameComp/LogicComp/glogicman.h>
 #include <GameSystem/new.h>
 
 
@@ -174,6 +175,30 @@ GameErrorCode GameEntityFactory::CreateEntity( EntityDef& entityDef, GameCompMan
 			}
 			
 			entity.SetInputComp(spInputComp);
+		}
+		
+		if(!entityDef.m_logicDef.IsEmpty())
+		{
+			RefObjSmPtr<LogicComponentBase> spLogicComp;
+			switch(entityDef.m_logicDef.In()->m_logicType)
+			{
+				case LogicDef::LOGIC_TYPE_MANUAL_TEST:
+				{
+					LogicManualTest *pLogicMan = nullptr;
+					FWG_RETURN_FAIL(GameNewChecked(pLogicMan));
+					spLogicComp.Attach(pLogicMan);
+					break;
+				}
+				default:
+					break;
+			}
+			
+			entity.SetLogicComp(spLogicComp.In());
+			if(FWG_FAILED(result = compMgr.GetLogicManager().AddLogicComp(spLogicComp.In())))
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Added logic component to logic manager failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+				return result;
+			}
 		}
 		
 	}

@@ -205,6 +205,11 @@ void* ClientGameLogic::Entry()
 		//FWGLOG_TRACE(wxT("Still running"), m_pLogger);
 		wxCriticalSectionLocker lock(m_renderLocker);
 		stopRequest = m_stopRequest;
+		if(FWG_FAILED(result = m_spCompManager.In()->GetLogicManager().ProcessLogicStep()))
+		{
+			FWGLOG_ERROR_FORMAT(wxT("Logic step failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
+			result = FWG_NO_ERROR;
+		}
 	}
 	
 	return 0;

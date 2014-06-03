@@ -18,8 +18,9 @@ public:
 	GameErrorCode Initialize(Ogre::SceneManager *pSceneManager);
 	void Uninitialize();
 	
-	RenderCompManager& GetRenderManager() { return m_renderMgr; }
-	GameEntityManager& GetEntityManager() { return m_entityMgr; }
+	inline RenderCompManager& GetRenderManager() { return m_renderMgr; }
+	inline LogicCompManager& GetLogicManager() { return m_logicMgr; }
+	inline GameEntityManager& GetEntityManager() { return m_entityMgr; }
 
 };
 

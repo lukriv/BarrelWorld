@@ -92,10 +92,12 @@
       <VirtualDirectory Name="include">
         <File Name="LogicComp/glogiccomp.h"/>
         <File Name="LogicComp/glogiccmgr.h"/>
+        <File Name="LogicComp/glogicman.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="src">
         <File Name="LogicComp/glogiccomp.cpp"/>
         <File Name="LogicComp/glogiccmgr.cpp"/>
+        <File Name="LogicComp/glogicman.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
   </VirtualDirectory>
