@@ -41,6 +41,8 @@
       <Compiler Options="-Wall;-std=c++11" C_Options="-Wall" Assembler="">
         <IncludePath Value="../../extern/include"/>
         <IncludePath Value="../../WordOfFlat"/>
+        <Preprocessor Value="UNICODE"/>
+        <Preprocessor Value="BOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN"/>
       </Compiler>
       <Linker Options="">
         <LibraryPath Value="."/>
@@ -116,7 +118,7 @@
         <CustomPostBuild/>
         <CustomPreBuild/>
       </AdditionalRules>
-      <Completion EnableCpp11="no">
+      <Completion EnableCpp11="yes">
         <ClangCmpFlagsC/>
         <ClangCmpFlags/>
         <ClangPP/>
