@@ -12,6 +12,9 @@
   <Project Name="GameComp" Path="GameComp/GameComp.project" Active="No"/>
   <Project Name="Extern" Path="Extern/Extern.project" Active="No"/>
   <Project Name="GameXmlDefinitions" Path="GameXmlDefinitions/GameXmlDefinitions.project"/>
+  <Environment>
+    <![CDATA[]]>
+  </Environment>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="yes">
       <Project Name="GameComm" ConfigName="Debug"/>
@@ -42,7 +45,4 @@
       <Project Name="GameXmlDefinitions" ConfigName="Debug"/>
     </WorkspaceConfiguration>
   </BuildMatrix>
-  <Environment>
-    <![CDATA[]]>
-  </Environment>
 </CodeLite_Workspace>

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Project Name="GameComm" InternalType="Library">
   <Plugins>
+    <Plugin Name="qmake">
+      <![CDATA[00020001N0005Debug0000000000000001N0007Release000000000000]]>
+    </Plugin>
     <Plugin Name="CMakePlugin">
       <![CDATA[[{
 		"name":	"Debug",
@@ -11,10 +14,16 @@
 		"buildType":	"",
 		"arguments":	[],
 		"parentProject":	""
+	}, {
+		"name":	"Release",
+		"enabled":	false,
+		"buildDirectory":	"build",
+		"sourceDirectory":	"$(ProjectPath)",
+		"generator":	"",
+		"buildType":	"",
+		"arguments":	[],
+		"parentProject":	""
 	}]]]>
-    </Plugin>
-    <Plugin Name="qmake">
-      <![CDATA[00020001N0005Debug0000000000000001N0007Release000000000000]]>
     </Plugin>
   </Plugins>
   <Description/>
@@ -35,6 +44,7 @@
     <GlobalSettings>
       <Compiler Options="-Wall;-std=c++11" C_Options="" Assembler="">
         <IncludePath Value="../../extern/include"/>
+        <Preprocessor Value="UNICODE"/>
       </Compiler>
       <Linker Options="">
         <LibraryPath Value="../../extern/lib"/>
@@ -106,7 +116,7 @@
         <CustomPostBuild/>
         <CustomPreBuild/>
       </AdditionalRules>
-      <Completion EnableCpp11="no">
+      <Completion EnableCpp11="yes">
         <ClangCmpFlagsC/>
         <ClangCmpFlags/>
         <ClangPP/>
