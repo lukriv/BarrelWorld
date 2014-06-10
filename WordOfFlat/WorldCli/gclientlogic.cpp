@@ -181,8 +181,9 @@ GameErrorCode ClientGameLogic::StopRequest()
 void* ClientGameLogic::Entry()
 {
 	GameErrorCode result = FWG_NO_ERROR;
-	
+	Ogre::Timer timer;
 	bool stopRequest = false;
+	unsigned long time = 0;
 	
 	{
 		wxCriticalSectionLocker prepareLock(m_renderLocker);
@@ -201,14 +202,25 @@ void* ClientGameLogic::Entry()
 	
 	while(!stopRequest) 
 	{
-		wxThread::Sleep(17);
-		//FWGLOG_TRACE(wxT("Still running"), m_pLogger);
-		wxCriticalSectionLocker lock(m_renderLocker);
-		stopRequest = m_stopRequest;
-		if(FWG_FAILED(result = m_spCompManager.In()->GetLogicManager().ProcessLogicStep()))
 		{
-			FWGLOG_ERROR_FORMAT(wxT("Logic step failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
-			result = FWG_NO_ERROR;
+			timer.reset();
+			
+			//FWGLOG_TRACE(wxT("Still running"), m_pLogger);
+			wxCriticalSectionLocker lock(m_renderLocker);
+			stopRequest = m_stopRequest;
+			if(FWG_FAILED(result = m_spCompManager.In()->GetLogicManager().ProcessLogicStep()))
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Logic step failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
+				result = FWG_NO_ERROR;
+			}
+			
+			time = timer.getMilliseconds();
+				
+		}
+		
+		if(time < 17)
+		{
+			wxThread::Sleep(17 - time);
 		}
 	}
 	
@@ -227,9 +239,9 @@ GameErrorCode ClientGameLogic::PrepareCameras()
 	RefObjSmPtr<GameCamera> spCamera = m_spCompManager->GetRenderManager().GetMainCamera();
 
 	// Position it at 500 in Z direction
-	spCamera->GetCameraNode()->setPosition(Ogre::Vector3(-8,-1,0));
+	spCamera->GetCameraNode()->setPosition(Ogre::Vector3(0, 10, -5));
 	// Look back along -Z
-	spCamera->GetOgreCamera()->lookAt(Ogre::Vector3(1,0,0));
+	spCamera->GetOgreCamera()->setDirection(Ogre::Vector3(0,-10, 5));
 	spCamera->GetOgreCamera()->setNearClipDistance(1);
 
 	m_spCompManager->GetRenderManager().GetOgreSceneManager()->setAmbientLight(Ogre::ColourValue(0.5f, 0.5f, 0.5f));

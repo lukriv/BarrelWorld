@@ -16,6 +16,8 @@ enum GameDefEntityType {
 };
 
 
+
+
 /*!
  * \class DefBase
  * \author Lukas
@@ -102,6 +104,17 @@ struct NameDef : public DefBase {
  * \brief Camera definition
  */
 struct CameraDef : public DefBase {
+public:
+	enum CameraDefType {
+		GAMEDEF_CAM_UNDEFINED 			= 0,
+		GAMEDEF_CAM_MAIN				= 1,
+		GAMEDEF_CAM_SECONDARY			= 2
+	};
+public:
+	CameraDefType m_cameraType;
+	Ogre::Vector3 m_position;
+	Ogre::Vector3 m_direction;
+	
 	CameraDef() {}
 };
 

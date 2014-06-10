@@ -40,22 +40,22 @@ GameErrorCode LogicManualTest::ProcessInput()
 		Ogre::Vector3 moveVec = Ogre::Vector3::ZERO;
 		if(actualControls.IsPressed(ControlStruct::INPUT_ACTION_UP))
 		{
-			moveVec.y += STEP_SIZE;
+			moveVec.z += STEP_SIZE;
 		}
 		
 		if(actualControls.IsPressed(ControlStruct::INPUT_ACTION_DOWN))
 		{
-			moveVec.y -= STEP_SIZE;
+			moveVec.z -= STEP_SIZE;
 		}
 		
 		if(actualControls.IsPressed(ControlStruct::INPUT_ACTION_LEFT))
 		{
-			moveVec.x -= STEP_SIZE;
+			moveVec.x += STEP_SIZE;
 		}
 		
 		if(actualControls.IsPressed(ControlStruct::INPUT_ACTION_RIGHT))
 		{
-			moveVec.x += STEP_SIZE;
+			moveVec.x -= STEP_SIZE;
 		}
 		
 		pSceneNode->translate(moveVec);
