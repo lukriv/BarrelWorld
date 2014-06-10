@@ -36,6 +36,12 @@ GameErrorCode GameTestResourceLoader::Load(GameDefinitionHolder& defHolder)
 		return result;
 	}
 	
+	if(FWG_FAILED(result = LoadCameras(defHolder)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Load cameras definitions failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
 	if(FWG_FAILED(result = LoadRenderObj(defHolder)))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Load render definitions failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
@@ -240,5 +246,21 @@ GameErrorCode GameTestResourceLoader::LoadLogic(GameDefinitionHolder& defHolder)
 		FWGLOG_ERROR_FORMAT(wxT("Add item failed: 0x%08x"),	m_spLogger, result, FWGLOG_ENDVAL);
 		return result;
 	}
+	return FWG_NO_ERROR;
+}
+
+GameErrorCode GameTestResourceLoader::LoadCameras(GameDefinitionHolder& defHolder)
+{
+	GameErrorCode result = FWG_NO_ERROR;
+	RefObjSmPtr<CameraDef> spCameraDef;
+	
+	FWG_RETURN_FAIL(GameNewChecked(spCameraDef.OutRef()));
+	
+	if(FWG_FAILED(result = defHolder.InsertDef<CameraDef>( wxString(wxT("gamePlayCam")), spCameraDef, defHolder.m_cameraDefs )))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Add item failed: 0x%08x"),	m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+		
 	return FWG_NO_ERROR;
 }

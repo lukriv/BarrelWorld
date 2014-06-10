@@ -27,6 +27,7 @@ GameErrorCode RenderCompManager::Initialize(Ogre::SceneManager& sceneManager)
 void RenderCompManager::Uninitialize()
 {
 	m_spMainCamera.Release();
+	m_cameraMap.Clear();
 	m_pSceneManager = NULL;
 }
 
@@ -70,7 +71,26 @@ GameErrorCode RenderCompManager::CreateCamera(const wxString& cameraName, GameCa
 		return result;
 	}
 	
+	if(FWG_FAILED(result = m_cameraMap.Insert(cameraName, pGameCamera)))
+	{
+		return result;
+	}
+		
 	pGameCameraOut = pGameCamera;
-	
+		
 	return result;
+}
+
+GameCamera* RenderCompManager::GetCamera(const wxString& cameraName)
+{
+	TGameCameraMap::Iterator iter;
+	
+	iter = m_cameraMap.Find(cameraName);
+	if(iter != m_cameraMap.End())
+	{
+		return iter->second.In();
+	}
+	
+	return nullptr;
+	
 }
