@@ -88,6 +88,11 @@ GameErrorCode GameEntityFactory::CreateEntity( EntityDef& entityDef, GameCompMan
 				entity.SetRenderComp(spRenderComp);
 							
 			}
+			
+			if(!spRenderDef->m_camera.IsEmpty())
+			{
+				
+			}
 		}
 		
 		if(!entityDef.m_transformation.IsEmpty())
@@ -206,3 +211,15 @@ GameErrorCode GameEntityFactory::CreateEntity( EntityDef& entityDef, GameCompMan
 	return FWG_NO_ERROR;
 }
 
+const wxChar* GameEntityFactory::ConvertCameraType2Name(CameraDef::CameraDefType cameraType) const
+{
+	switch(cameraType)
+	{
+		case CameraDef::GAMEDEF_CAM_MAIN:
+			return MAIN_CAMERA_NAME;
+		case CameraDef::GAMEDEF_CAM_SECONDARY:
+			return SECONDARY_CAMERA_NAME;
+		default:
+			return nullptr;
+	}
+}

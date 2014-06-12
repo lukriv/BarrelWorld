@@ -10,7 +10,7 @@
 #include <GameSystem/gerror.h>
 #include <GameSystem/refobjectsmptr.h>
 #include <GameSystem/gmap.h>
-#include "gcamera.h"
+#include "grendercamera.h"
 
 // constants
 static const wxChar* FWG_UNUSED(MAIN_CAMERA_NAME) = wxT("MainCamera");
