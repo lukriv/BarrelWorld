@@ -7,31 +7,21 @@ RenderComponent::~RenderComponent()
 }
 
 
-void RenderComponent::Clear()
+
+void RenderComponent::ConnectRenderable(Ogre::Renderable* pRenderable)
 {
-	if(m_pOgreEntity != NULL)
+	if(pRenderable != nullptr)
 	{
-		m_pOwnerManager->GetOgreSceneManager()->destroyMovableObject(m_pOgreEntity);
-		m_pOgreEntity = NULL;
+		pRenderable->getUserObjectBindings().setUserAny(*this);
 	}
-	
-	m_pOgreCamera.Release();
-	m_pOgreLight.Release();
+}
+
+void RenderComponent::DisconnectRenderable(Ogre::Renderable* pRenderable)
+{
+	if(pRenderable != nullptr)
+	{
+		pRenderable->getUserObjectBindings().setUserAny(Ogre::UserObjectBindings::getEmptyUserAny()); // erase parent
+	}
 }
 
 
-void RenderComponent::SetOgreEntity(Ogre::Entity* pEntity)
-{
-	if(m_pOgreEntity != NULL)
-	{
-		m_pOgreEntity->getUserObjectBindings().setUserAny(Ogre::UserObjectBindings::getEmptyUserAny()); // erase parent
-		m_pOwnerManager->GetOgreSceneManager()->destroyMovableObject(m_pOgreEntity);
-	}
-	
-	m_pOgreEntity = pEntity; // set new entity
-	
-	if(pEntity != NULL)
-	{
-		m_pOgreEntity->getUserObjectBindings().setUserAny(*this); // set parent
-	}
-}
