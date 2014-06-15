@@ -23,13 +23,6 @@ class RenderCompManager;
  * \brief Geometric entity with state and transform
  */
 class RenderComponent : public RefObjectImpl<IRefObject>, public Ogre::Any {
-public:
-	enum RenderComponentType {
-		RENDER_COMP_UNKNOWN = 0,
-		RENDER_COMP_ENTITY  = 1,
-		RENDER_COMP_CAMERA  = 2,
-		RENDER_COMP_LIGHT	= 3
-	};
 protected:
 	RenderComponentType m_renderCompType;
 	RenderCompManager *m_pOwnerManager;
@@ -41,8 +34,7 @@ protected:
 	
 public:
 	// Render component can be created and destroyed only by render component manager
-	RenderComponent(RenderCompManager* pCompManager, RenderComponentType type) : m_renderCompType(type)
-													, m_pOwnerManager(pCompManager)
+	RenderComponent(RenderCompManager* pCompManager) : m_pOwnerManager(pCompManager)
 													, m_pParent(NULL) {}
 	~RenderComponent();
 	
@@ -50,6 +42,8 @@ public:
 
 	inline void SetParent(GameEntity *pParent) { m_pParent = pParent; }
 	inline GameEntity* GetParent() { return m_pParent; }
+	
+	void AddRenderObject(RenderObject* pObject);
 	
 	/*!
 	 * \brief Destroy inner ogre object

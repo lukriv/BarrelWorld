@@ -2,7 +2,7 @@
 #define __GAME_RENDER_COMPONENT_ENTITY_H__
 
 
-#include "grendercomp.h"
+#include "grenderobj.h"
 
 
 /*!
@@ -12,32 +12,25 @@
  * \file gentityobj.h
  * \brief Geometric entity with state and transform
  */
-class RenderEntity : public RenderComponent {
+class RenderEntity : public RenderObject {
 protected:
 	
 	Ogre::Entity *m_pOgreEntity; //!< Main render object (it is optional)
 public:
 	// Render component can be created and destroyed only by render component manager
-	RenderEntity(RenderCompManager* pCompManager) : RenderComponent(pCompManager)
-													, m_pOgreEntity(NULL){}
+	RenderEntity(Ogre::Entity* pOgreEntity) : RenderObject(RenderObject::RENDER_OBJECT_TYPE_ENTITY)
+													, m_pOgreEntity(pOgreEntity){}
 	~RenderEntity();
 	
-	inline Ogre::Entity* GetOgreEntity() 
+	inline Ogre::Entity* GetOgreEntity()
 	{
 		return m_pOgreEntity;
 	}
 	
-	void SetOgreEntity(Ogre::Entity* pEntity);
-	
-	inline void SetParent(GameEntity *pParent) { m_pParent = pParent; }
-	inline GameEntity* GetParent() { return m_pParent; }
-	
 	/*!
 	 * \brief Destroy inner ogre object
 	 */
-	virtual void Clear() override;
-	
-	virtual void ConnectTransformComp(TransformComponent &transform) override;
+	virtual Ogre::MovableObject* GetMovableObject() override;
 	
 };
 

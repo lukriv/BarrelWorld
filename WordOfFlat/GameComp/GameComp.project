@@ -51,6 +51,7 @@
         <File Name="RenderComp/grenderentity.h"/>
         <File Name="RenderComp/grenderlight.h"/>
         <File Name="RenderComp/grendercamera.h"/>
+        <File Name="RenderComp/grenderobj.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="src">
         <File Name="RenderComp/grendercomp.cpp"/>
