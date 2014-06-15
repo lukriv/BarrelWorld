@@ -24,4 +24,9 @@ void RenderComponent::DisconnectRenderable(Ogre::Renderable* pRenderable)
 	}
 }
 
+void RenderComponent::AddRenderObject(Ogre::MovableObject* pObject)
+{
+	
 
+
+}
