@@ -5,6 +5,7 @@ void RenderEntity::~RenderEntity()
 {
 	if(m_pOgreEntity != nullptr)
 	{
+		Ogre::SceneManager *pSceneMgr = m_pOgreEntity->
 		m_pOwnerManager->GetOgreSceneManager()->destroyMovableObject(m_pOgreEntity);
 		m_pOgreEntity = NULL;
 	}

@@ -2,13 +2,10 @@
 #define __GAME_CAMERA_H__
 
 
-#include <OGRE/OgreCamera.h>
-#include <OGRE/OgreSceneManager.h>
-#include <GameSystem/refobject.h>
-#include <GameSystem/refobjectimpl.h>
+#include "grenderobj.h"
 
 
-class GameCamera : public RefObjectImpl<IRefObject> {
+class GameCamera : public RenderObject {
 private:
 	Ogre::Camera *m_pCamera;
 public:
@@ -16,28 +13,10 @@ public:
 	
 	inline Ogre::Camera* GetOgreCamera() { return m_pCamera; }
 	
-	inline Ogre::SceneNode* GetCameraNode() { return m_pCamera->getParentSceneNode(); }
 	
-protected:
-	~GameCamera() 
-	{
-		if(m_pCamera != NULL)
-		{
-			// remove scene node from its parent
-			Ogre::SceneNode* pSceneNode = m_pCamera->getParentSceneNode();
-			Ogre::SceneManager *pSceneManager = pSceneNode->getCreator();
-			if(pSceneNode->getParentSceneNode() != NULL)
-			{
-				pSceneNode->getParentSceneNode()->removeChild(pSceneNode);
-			}
-			
-			// delete parent scene node
-			pSceneManager->destroySceneNode(pSceneNode);
-			// delete camera
-			pSceneManager->destroyCamera(m_pCamera);
-			m_pCamera = NULL;
-		}
-	}
+	virtual Ogre::MovableObject* GetMovableObject() override;
+	
+
 	
 };
 
