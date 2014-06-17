@@ -57,6 +57,8 @@
         <File Name="RenderComp/grendercomp.cpp"/>
         <File Name="RenderComp/grendercmgr.cpp"/>
         <File Name="RenderComp/grenderentity.cpp"/>
+        <File Name="RenderComp/grenderlight.cpp"/>
+        <File Name="RenderComp/grendercamera.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="physComp">

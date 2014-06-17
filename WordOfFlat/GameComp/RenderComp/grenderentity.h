@@ -28,7 +28,7 @@ public:
 	}
 	
 	/*!
-	 * \brief Destroy inner ogre object
+	 * \brief Get Movable object
 	 */
 	virtual Ogre::MovableObject* GetMovableObject() override;
 	
