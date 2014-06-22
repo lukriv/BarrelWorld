@@ -9,14 +9,12 @@ class GameCamera : public RenderObject {
 private:
 	Ogre::Camera *m_pCamera;
 public:
-	GameCamera(Ogre::Camera *pCamera) : m_pCamera(pCamera) {}
+	GameCamera(Ogre::Camera *pCamera) : RenderObject(RenderObject::RENDER_OBJECT_TYPE_CAMERA), m_pCamera(pCamera) {}
 	
 	inline Ogre::Camera* GetOgreCamera() { return m_pCamera; }
 	
 	
 	virtual Ogre::MovableObject* GetMovableObject() override;
-	
-
 	
 };
 

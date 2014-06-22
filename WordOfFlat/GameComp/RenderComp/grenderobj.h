@@ -18,7 +18,7 @@ public:
 private:
 	RenderObjectType m_type;
 public:
-	RenderObject(RenderObjectType type) : public m_type(type) {}
+	RenderObject(RenderObjectType type) : m_type(type) {}
 	virtual ~RenderObject() {}
 	
 	inline RenderObjectType GetType() { return m_type; }

@@ -24,9 +24,19 @@ void RenderComponent::DisconnectRenderable(Ogre::Renderable* pRenderable)
 	}
 }
 
-void RenderComponent::AddRenderObject(Ogre::MovableObject* pObject)
+GameErrorCode RenderComponent::AttachRenderObject(RenderObject* pObject)
 {
 	
+}
 
+void RenderComponent::Clear()
+{
+}
 
+void RenderComponent::ConnectTransformComp(TransformComponent& transform)
+{
+}
+
+void RenderComponent::RemoveRenderObject(RenderObject* pObject)
+{
 }

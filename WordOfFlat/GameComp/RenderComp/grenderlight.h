@@ -10,7 +10,7 @@ class GameLight : public RenderObject {
 private:
 	Ogre::Light *m_pLight;
 public:
-	GameLight(Ogre::Light *pLight) : RenderObject()
+	GameLight(Ogre::Light *pLight) : RenderObject(RenderObject::RENDER_OBJECT_TYPE_LIGHT)
 								, m_pLight(pLight) {}
 	~GameLight();
 	
