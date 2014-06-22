@@ -104,6 +104,9 @@ void GameConvertErrCode2String(GameErrorCode errCode, wxString &errorStr)
 	case FWG_E_RENDER_OBJECT_ALREADY_ATTACHED_ERROR:
 		errorStr.assign(FWG_E_RENDER_OBJECT_ALREADY_ATTACHED_ERROR_STR);
 		break;
+	case FWG_E_OBJECT_NOT_EXIST_ERROR:
+		errorStr.assign(FWG_E_OBJECT_NOT_EXIST_ERROR_STR);
+		break;
 	default:
 		errorStr.assign(_T("Unknown Error"));
 		break;
