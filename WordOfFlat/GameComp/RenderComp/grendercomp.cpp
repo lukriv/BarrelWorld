@@ -19,6 +19,12 @@ GameErrorCode RenderComponent::ConnectRenderable(Ogre::Renderable* pRenderable)
 			return result;
 		}
 		pRenderable->getUserObjectBindings().setUserAny(*this);
+		
+		// connect to existing scene node component
+		if(m_pParent != nullptr)&&(m_pParent->GetTransformComp() != nullptr)
+		{
+			m_pParent->GetTransformComp()->GetSceneNode()->attachObject(pRenderable);
+		}
 	} else {
 		return FWG_E_OBJECT_NOT_EXIST_ERROR;
 	}
@@ -30,7 +36,13 @@ void RenderComponent::DisconnectRenderable(Ogre::Renderable* pRenderable)
 {
 	if(pRenderable != nullptr)
 	{
-		pRenderable->getUserObjectBindings().setUserAny(Ogre::UserObjectBindings::getEmptyUserAny()); // erase parent
+		// erase parent
+		pRenderable->getUserObjectBindings().setUserAny(Ogre::UserObjectBindings::getEmptyUserAny());
+		// remove from transform component
+		if(m_pParent != nullptr)&&(m_pParent->GetTransformComp() != nullptr)
+		{
+			m_pParent->GetTransformComp()->GetSceneNode()->detachObject(pRenderable);
+		}
 	}
 }
 
@@ -60,12 +72,27 @@ GameErrorCode RenderComponent::AttachRenderObject(RenderObject* pObject)
 
 void RenderComponent::Clear()
 {
+	TRenderObjectList::Iterator iter;
+	for(iter = m_renderObjectList.Begin(); iter != m_renderObjectList.End(); iter++)
+	{
+		DisconnectRenderable((*iter)->GetMovableObject());
+		(*iter)->release();
+	}
+	
+	m_renderObjectList.Clear();
 }
 
 void RenderComponent::ConnectTransformComp(TransformComponent& transform)
 {
+	TRenderObjectList::Iterator iter;
+	for(iter = m_renderObjectList.Begin(); iter != m_renderObjectList.End(); iter++)
+	{
+		DisconnectRenderable((*iter)->GetMovableObject());
+		(*iter)->release();
+	}
 }
 
 void RenderComponent::RemoveRenderObject(RenderObject* pObject)
 {
+	
 }
