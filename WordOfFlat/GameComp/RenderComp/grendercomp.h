@@ -28,7 +28,24 @@ protected:
 	TRenderObjectList m_renderObjectList;
 
 protected:
+	/*!
+	 * \brief Disconnect ogre renderable from all systems
+	 *
+	 * Disconnect ogre renderable from render component and form existing transform component
+	 * 
+	 * \param pRenderable
+	 */
 	void DisconnectRenderable(Ogre::Renderable *pRenderable);
+	
+	/*!
+	 * \brief Connect ogre renderable to other objects
+	 * 
+	 * It binds ogre object to this render component.
+	 * It connects ogre object to existing transform component (it there is some within game entity)
+	 * 
+	 * \param pRenderable 
+	 * \return 
+	 */
 	GameErrorCode ConnectRenderable(Ogre::Renderable *pRenderable);
 	
 public:
@@ -52,6 +69,10 @@ public:
 	 */
 	GameErrorCode AttachRenderObject(RenderObject* pObject);
 	
+	/*!
+	 * \brief Remove render object from render component
+	 * \param pObject
+	 */
 	void RemoveRenderObject(RenderObject* pObject);
 	
 	/*!
