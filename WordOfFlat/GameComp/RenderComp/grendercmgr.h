@@ -10,22 +10,22 @@
 #include <GameSystem/gerror.h>
 #include <GameSystem/refobjectsmptr.h>
 #include <GameSystem/gmap.h>
-#include "grendercamera.h"
 
 // constants
 static const wxChar* FWG_UNUSED(MAIN_CAMERA_NAME) = wxT("MainCamera");
 static const wxChar* FWG_UNUSED(SECONDARY_CAMERA_NAME) = wxT("SecondCamera");
 
 class RenderComponent;
+class RenderObject;
 
 class RenderCompManager
 {
 private:
-	typedef GameBasMap< wxString, RefObjSmPtr<GameCamera> > TGameCameraMap;
+	typedef GameBasMap< wxString, RefObjSmPtr<RenderObject> > TGameCameraMap;
 private:
 	GameLoggerPtr m_spLogger;
 	Ogre::SceneManager* m_pSceneManager;
-	RefObjSmPtr<GameCamera> m_spMainCamera;
+	RefObjSmPtr<RenderObject> m_spMainCamera;
 	TGameCameraMap m_cameraMap;
 	
 public:
@@ -50,16 +50,16 @@ public:
 	 * \param pCamera
 	 * \return Errorcode
 	 */
-	GameErrorCode CreateCamera(const wxString& cameraName, GameCamera *&pCamera);
+	GameErrorCode CreateCamera(const wxString& cameraName, RenderObject *&pCamera);
 	
 	/*!
 	 * \brief Get arbitrary camera by name
 	 * \param cameraName
 	 * \return 
 	 */
-	GameCamera* GetCamera(const wxString& cameraName);
+	RenderObject* GetCamera(const wxString& cameraName);
 	
-	GameCamera* GetMainCamera() { return m_spMainCamera; }
+	RenderObject* GetMainCamera() { return m_spMainCamera; }
 	
 	
 	

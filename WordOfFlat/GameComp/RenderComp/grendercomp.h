@@ -1,15 +1,17 @@
 #ifndef __GAME_RENDER_COMPONENT_H__
 #define __GAME_RENDER_COMPONENT_H__
 
+#include <OGRE/OgreAny.h>
 #include <GameSystem/gerror.h>
 #include <GameSystem/refobject.h>
 #include <GameSystem/refobjectimpl.h>
 #include <GameSystem/refobjectsmptr.h>
-#include <GameSystem/gmap.h>
+#include <GameSystem/gset.h>
 
 class RenderObject;
 class RenderCompManager;
-
+class GameEntity;
+class TransformComponent;
 
 /*!
  * \class GameEntity
@@ -20,7 +22,7 @@ class RenderCompManager;
  */
 class RenderComponent : public RefObjectImpl<IRefObject>, public Ogre::Any {
 private:
-	typedef GameBasSet< RenderObject* > TRenderObjectList;
+	typedef GameBasSet<RenderObject*> TRenderObjectList;
 protected:
 	RenderCompManager *m_pOwnerManager;
 	GameEntity *m_pParent;
@@ -35,7 +37,7 @@ protected:
 	 * 
 	 * \param pRenderable
 	 */
-	void DisconnectRenderable(Ogre::Renderable *pRenderable);
+	void DisconnectRenderable(Ogre::MovableObject *pRenderable);
 	
 	/*!
 	 * \brief Connect ogre renderable to other objects
@@ -46,7 +48,7 @@ protected:
 	 * \param pRenderable 
 	 * \return 
 	 */
-	GameErrorCode ConnectRenderable(Ogre::Renderable *pRenderable);
+	GameErrorCode ConnectRenderable(Ogre::MovableObject *pRenderable);
 	
 public:
 	// Render component can be created and destroyed only by render component manager

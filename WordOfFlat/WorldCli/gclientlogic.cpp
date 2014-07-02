@@ -1,6 +1,7 @@
 #include "gclientlogic.h"
 
 #include "gmenu.h"
+#include <GameComp/RenderComp/grenderobj.h>
 
 ClientGameLogic::ClientGameLogic() : GameThread(wxTHREAD_JOINABLE),
 								m_pRenderWindow(NULL),
@@ -236,26 +237,27 @@ bool ClientGameLogic::IsStopped()
 
 GameErrorCode ClientGameLogic::PrepareCameras()
 {
-	RefObjSmPtr<GameCamera> spCamera = m_spCompManager->GetRenderManager().GetMainCamera();
+	RefObjSmPtr<RenderObject> spCamera = m_spCompManager->GetRenderManager().GetMainCamera();
+	Ogre::Camera* pOgreCam = spCamera.In()->GetCamera();
 
 	// Position it at 500 in Z direction
-	spCamera->GetCameraNode()->setPosition(Ogre::Vector3(0, 10, -5));
+	pOgreCam->setPosition(Ogre::Vector3(0, 10, -5));
 	// Look back along -Z
-	spCamera->GetOgreCamera()->setDirection(Ogre::Vector3(0,-10, 5));
-	spCamera->GetOgreCamera()->setNearClipDistance(1);
+	pOgreCam->setDirection(Ogre::Vector3(0,-10, 5));
+	pOgreCam->setNearClipDistance(1);
 
 	m_spCompManager->GetRenderManager().GetOgreSceneManager()->setAmbientLight(Ogre::ColourValue(0.5f, 0.5f, 0.5f));
 
 
 	// prepare viewports
-	Ogre::Viewport *viewPort = m_pRenderWindow->addViewport(spCamera->GetOgreCamera());
+	Ogre::Viewport *viewPort = m_pRenderWindow->addViewport(pOgreCam);
 	viewPort->setBackgroundColour(Ogre::ColourValue(0.0f,0.0f,0.0f));
 
 	viewPort->setOverlaysEnabled(true);
 
-	spCamera->GetOgreCamera()->setAspectRatio(Ogre::Real(viewPort->getActualWidth()) / Ogre::Real(viewPort->getActualHeight()));
+	pOgreCam->setAspectRatio(Ogre::Real(viewPort->getActualWidth()) / Ogre::Real(viewPort->getActualHeight()));
 
-	Ogre::Viewport *viewPort2 = m_pRenderWindow->addViewport(spCamera->GetOgreCamera(), 1, 0.6f, 0.1f, 0.3f, 0.3f);
+	Ogre::Viewport *viewPort2 = m_pRenderWindow->addViewport(pOgreCam, 1, 0.6f, 0.1f, 0.3f, 0.3f);
 	viewPort2->setBackgroundColour(Ogre::ColourValue(0.1f,0.1f,0.1f));
 
 	viewPort2->setOverlaysEnabled(false);

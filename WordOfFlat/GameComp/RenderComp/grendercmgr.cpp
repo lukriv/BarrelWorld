@@ -1,7 +1,9 @@
 #include "grendercmgr.h"
 
+#include <GameSystem/new.h>
 #include "grendercomp.h"
-#include "../GameSystem/new.h"
+#include "grenderobj.h"
+
 
 RenderCompManager::RenderCompManager(GameLogger* pLogger) : m_spLogger(pLogger)
 															, m_pSceneManager(nullptr)
@@ -55,19 +57,15 @@ GameErrorCode RenderCompManager::CreateEmptyRenderComponent(RenderComponent *&pR
 }
 
 
-GameErrorCode RenderCompManager::CreateCamera(const wxString& cameraName, GameCamera*& pGameCameraOut)
+GameErrorCode RenderCompManager::CreateCamera(const wxString& cameraName, RenderObject*& pGameCameraOut)
 {
 	GameErrorCode result = FWG_NO_ERROR;
 	Ogre::Camera *pCamera = m_pSceneManager->createCamera(cameraName.ToStdString());
-	Ogre::SceneNode *pSceneNode = m_pSceneManager->createSceneNode();
-	GameCamera *pGameCamera = NULL;
-	
-	pSceneNode->attachObject(pCamera);
+	RenderObject *pGameCamera = NULL;
 	
 	if(FWG_FAILED(result = GameNewChecked(pGameCamera, pCamera)))
 	{
 		m_pSceneManager->destroyMovableObject(pCamera);
-		m_pSceneManager->destroySceneNode(pSceneNode);
 		return result;
 	}
 	
@@ -81,7 +79,7 @@ GameErrorCode RenderCompManager::CreateCamera(const wxString& cameraName, GameCa
 	return result;
 }
 
-GameCamera* RenderCompManager::GetCamera(const wxString& cameraName)
+RenderObject* RenderCompManager::GetCamera(const wxString& cameraName)
 {
 	TGameCameraMap::Iterator iter;
 	

@@ -6,6 +6,7 @@
 #include <OGRE/OgreSceneManager.h>
 #include <GameSystem/refobjectsmptr.h>
 #include <GameComp/RenderComp/grendercomp.h>
+#include <GameComp/RenderComp/grenderobj.h>
 #include <GameComp/InputComp/ginputcomp.h>
 #include <GameComp/LogicComp/glogicman.h>
 #include <GameSystem/new.h>
@@ -67,7 +68,9 @@ GameErrorCode GameEntityFactory::CreateEntity( EntityDef& entityDef, GameCompMan
 			if(!spRenderDef->m_mesh.IsEmpty() && !spRenderDef->m_material.IsEmpty())
 			{
 				// render entity is defined
-				Ogre::Entity *pEntity = NULL;
+				Ogre::Entity *pEntity = nullptr;
+				RenderObject *pRenderObject = nullptr; 
+				RefObjSmPtr<RenderObject> spRenderObject;
 				RefObjSmPtr<RenderComponent> spRenderComp;
 				
 				if(entityDef.GetName() != nullptr)
@@ -81,8 +84,10 @@ GameErrorCode GameEntityFactory::CreateEntity( EntityDef& entityDef, GameCompMan
 				pEntity->setMaterialName(spRenderDef->m_material->m_name.ToStdString());
 				
 				FWG_RETURN_FAIL(compMgr.GetRenderManager().CreateEmptyRenderComponent(spRenderComp.OutRef()));
-						
-				spRenderComp->SetOgreEntity(pEntity);
+				FWG_RETURN_FAIL(GameNewChecked(pRenderObject, pEntity));
+				spRenderObject.Attach(pRenderObject);
+				spRenderComp->AttachRenderObject(spRenderObject);
+		
 				spRenderComp->SetParent(&entity);
 				
 				entity.SetRenderComp(spRenderComp);
