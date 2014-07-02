@@ -48,17 +48,12 @@
       <VirtualDirectory Name="include">
         <File Name="RenderComp/grendercomp.h"/>
         <File Name="RenderComp/grendercmgr.h"/>
-        <File Name="RenderComp/grenderentity.h"/>
-        <File Name="RenderComp/grenderlight.h"/>
-        <File Name="RenderComp/grendercamera.h"/>
         <File Name="RenderComp/grenderobj.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="src">
         <File Name="RenderComp/grendercomp.cpp"/>
         <File Name="RenderComp/grendercmgr.cpp"/>
-        <File Name="RenderComp/grenderentity.cpp"/>
-        <File Name="RenderComp/grenderlight.cpp"/>
-        <File Name="RenderComp/grendercamera.cpp"/>
+        <File Name="RenderComp/grenderobj.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="physComp">

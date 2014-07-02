@@ -1,5 +1,9 @@
 #include "grendercomp.h"
+
 #include "grendercmgr.h"
+#include "../gentity.h"
+#include "grenderobj.h"
+#include <GameComp/TransformComp/gtranscomp.h>
 
 RenderComponent::~RenderComponent()
 {
@@ -8,22 +12,22 @@ RenderComponent::~RenderComponent()
 
 
 
-GameErrorCode RenderComponent::ConnectRenderable(Ogre::Renderable* pRenderable)
+GameErrorCode RenderComponent::ConnectRenderable(Ogre::MovableObject* pObject)
 {
-	if(pRenderable != nullptr)
+	if(pObject != nullptr)
 	{
-		if(pObject->GetMovableObject()->getUserObjectBindings().getUserAny() != Ogre::UserObjectBindings::getEmptyUserAny())
+		if(!pObject->getUserObjectBindings().getUserAny().isEmpty())
 		{
 			GameErrorCode result = FWG_E_RENDER_OBJECT_ALREADY_ATTACHED_ERROR;
 			FWGLOG_ERROR_FORMAT( wxT("Connect renderable failed: 0x%08x"), m_pOwnerManager->GetLogger(), result, FWGLOG_ENDVAL);
 			return result;
 		}
-		pRenderable->getUserObjectBindings().setUserAny(*this);
+		pObject->getUserObjectBindings().setUserAny(*this);
 		
 		// connect to existing scene node component
-		if(m_pParent != nullptr)&&(m_pParent->GetTransformComp() != nullptr)
+		if((m_pParent != nullptr)&&(m_pParent->GetTransformComp() != nullptr))
 		{
-			m_pParent->GetTransformComp()->GetSceneNode()->attachObject(pRenderable);
+			m_pParent->GetTransformComp()->GetSceneNode()->attachObject(pObject);
 		}
 	} else {
 		return FWG_E_OBJECT_NOT_EXIST_ERROR;
@@ -32,16 +36,16 @@ GameErrorCode RenderComponent::ConnectRenderable(Ogre::Renderable* pRenderable)
 	return FWG_NO_ERROR;
 }
 
-void RenderComponent::DisconnectRenderable(Ogre::Renderable* pRenderable)
+void RenderComponent::DisconnectRenderable(Ogre::MovableObject* pObject)
 {
-	if(pRenderable != nullptr)
+	if(pObject != nullptr)
 	{
 		// erase parent
-		pRenderable->getUserObjectBindings().setUserAny(Ogre::UserObjectBindings::getEmptyUserAny());
+		pObject->getUserObjectBindings().setUserAny(Ogre::UserObjectBindings::getEmptyUserAny());
 		// remove from transform component
-		if(m_pParent != nullptr)&&(m_pParent->GetTransformComp() != nullptr)
+		if((m_pParent != nullptr)&&(m_pParent->GetTransformComp() != nullptr))
 		{
-			m_pParent->GetTransformComp()->GetSceneNode()->detachObject(pRenderable);
+			m_pParent->GetTransformComp()->GetSceneNode()->detachObject(pObject);
 		}
 	}
 }
@@ -58,7 +62,7 @@ GameErrorCode RenderComponent::AttachRenderObject(RenderObject* pObject)
 	}
 	
 	// insert into set
-	if(FWG_FAILED(result = m_renderObjectList.Insert(pObject)))
+	if(FWG_FAILED(result = m_renderObjectList.Insert( pObject)))
 	{
 		FWGLOG_ERROR_FORMAT( wxT("Insert to list failed: 0x%08x"), m_pOwnerManager->GetLogger(), result, FWGLOG_ENDVAL);
 		return result;
