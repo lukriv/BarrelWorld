@@ -19,7 +19,7 @@ public:
 	
 	inline bool IsCameraType() 
 	{
-		return (m_pObject->getMovableType().compare("Camera"));
+		return (m_pObject->getMovableType().compare("Camera") == 0);
 	}
 	
 	inline Ogre::Camera* GetCamera() 
