@@ -12,7 +12,7 @@ RenderComponent::~RenderComponent()
 
 
 
-GameErrorCode RenderComponent::ConnectRenderable(Ogre::MovableObject* pObject)
+GameErrorCode RenderComponent::ConnectRenderComponent(Ogre::MovableObject* pObject)
 {
 	if(pObject != nullptr)
 	{
@@ -24,6 +24,26 @@ GameErrorCode RenderComponent::ConnectRenderable(Ogre::MovableObject* pObject)
 		}
 		pObject->getUserObjectBindings().setUserAny(*this);
 		
+	} else {
+		return FWG_E_OBJECT_NOT_EXIST_ERROR;
+	}
+	
+	return FWG_NO_ERROR;
+}
+
+void RenderComponent::DisconnectRenderComponent(Ogre::MovableObject* pObject)
+{
+	if(pObject != nullptr)
+	{
+		// erase parent
+		pObject->getUserObjectBindings().setUserAny(Ogre::UserObjectBindings::getEmptyUserAny());
+	}
+}
+
+GameErrorCode RenderComponent::ConnectTransformComponent(Ogre::MovableObject* pObject)
+{
+	if(pObject != nullptr)
+	{
 		// connect to existing scene node component
 		if((m_pParent != nullptr)&&(m_pParent->GetTransformComp() != nullptr))
 		{
@@ -36,12 +56,10 @@ GameErrorCode RenderComponent::ConnectRenderable(Ogre::MovableObject* pObject)
 	return FWG_NO_ERROR;
 }
 
-void RenderComponent::DisconnectRenderable(Ogre::MovableObject* pObject)
+void RenderComponent::DisconnectTransformComponent(Ogre::MovableObject* pObject)
 {
 	if(pObject != nullptr)
 	{
-		// erase parent
-		pObject->getUserObjectBindings().setUserAny(Ogre::UserObjectBindings::getEmptyUserAny());
 		// remove from transform component
 		if((m_pParent != nullptr)&&(m_pParent->GetTransformComp() != nullptr))
 		{
@@ -55,9 +73,16 @@ GameErrorCode RenderComponent::AttachRenderObject(RenderObject* pObject)
 	GameErrorCode result = FWG_NO_ERROR;
 	
 	// connect render object to the render component
-	if(FWG_FAILED(result = ConnectRenderable(pObject->GetMovableObject())))
+	if(FWG_FAILED(result = ConnectRenderComponent(pObject->GetMovableObject())))
 	{
 		FWGLOG_ERROR_FORMAT( wxT("Connect render object to render component failed: 0x%08x"), m_pOwnerManager->GetLogger(), result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	// connect render object to the transform component
+	if(FWG_FAILED(result = ConnectTransformComponent(pObject->GetMovableObject())))
+	{
+		FWGLOG_ERROR_FORMAT( wxT("Connect render object to transform component failed: 0x%08x"), m_pOwnerManager->GetLogger(), result, FWGLOG_ENDVAL);
 		return result;
 	}
 	
@@ -79,7 +104,8 @@ void RenderComponent::Clear()
 	TRenderObjectList::Iterator iter;
 	for(iter = m_renderObjectList.Begin(); iter != m_renderObjectList.End(); iter++)
 	{
-		DisconnectRenderable((*iter)->GetMovableObject());
+		DisconnectRenderComponent((*iter)->GetMovableObject());
+		DisconnectTransformComponent((*iter)->GetMovableObject());
 		(*iter)->release();
 	}
 	
@@ -91,12 +117,20 @@ void RenderComponent::ConnectTransformComp(TransformComponent& transform)
 	TRenderObjectList::Iterator iter;
 	for(iter = m_renderObjectList.Begin(); iter != m_renderObjectList.End(); iter++)
 	{
-		DisconnectRenderable((*iter)->GetMovableObject());
-		(*iter)->release();
+		ConnectTransformComponent((*iter)->GetMovableObject());
 	}
 }
 
 void RenderComponent::RemoveRenderObject(RenderObject* pObject)
 {
-	
+	TRenderObjectList::Iterator iter;
+	iter = m_renderObjectList.Find(pObject);
+	if(iter != m_renderObjectList.End())
+	{
+		DisconnectRenderComponent((*iter)->GetMovableObject());
+		DisconnectTransformComponent((*iter)->GetMovableObject());
+		(*iter)->release();
+	}
 }
+
+

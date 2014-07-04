@@ -31,16 +31,37 @@ protected:
 
 protected:
 	/*!
-	 * \brief Disconnect ogre renderable from all systems
+	 * \brief Disconnect ogre renderable from transform component
+	 *
+	 * Disconnect ogre renderable from render component 
+	 * 
+	 * \param pRenderable
+	 */
+	void DisconnectRenderComponent(Ogre::MovableObject *pObject);
+	
+	/*!
+	 * \brief Connect ogre renderable to other objects
+	 * 
+	 * It binds ogre object to this render component.
+	 * It connects ogre object to render component (it there is some within game entity)
+	 * 
+	 * \param pRenderable 
+	 * \return 
+	 */
+	GameErrorCode ConnectRenderComponent(Ogre::MovableObject *pObject);
+	
+	
+	/*!
+	 * \brief Disconnect ogre renderable from transform component
 	 *
 	 * Disconnect ogre renderable from render component and form existing transform component
 	 * 
 	 * \param pRenderable
 	 */
-	void DisconnectRenderable(Ogre::MovableObject *pRenderable);
+	void DisconnectTransformComponent(Ogre::MovableObject *pObject);
 	
 	/*!
-	 * \brief Connect ogre renderable to other objects
+	 * \brief Connect ogre renderable to transform component
 	 * 
 	 * It binds ogre object to this render component.
 	 * It connects ogre object to existing transform component (it there is some within game entity)
@@ -48,7 +69,7 @@ protected:
 	 * \param pRenderable 
 	 * \return 
 	 */
-	GameErrorCode ConnectRenderable(Ogre::MovableObject *pRenderable);
+	GameErrorCode ConnectTransformComponent(Ogre::MovableObject *pObject);
 	
 public:
 	// Render component can be created and destroyed only by render component manager
