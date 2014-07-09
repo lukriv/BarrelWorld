@@ -66,8 +66,6 @@
 
 #define OGRE_NO_GLES3_SUPPORT 1
 
-#define OGRE_NO_LIBCPP_SUPPORT 1
-
 #define OGRE_USE_BOOST 1
 
 #define OGRE_PROFILING 0
