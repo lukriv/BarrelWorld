@@ -158,6 +158,7 @@ namespace Ogre {
 			OGRE_EXCEPT(Exception::ERR_NOT_IMPLEMENTED, 
 				"This archive does not support creation of files.", 
 				"Archive::create");
+			return DataStreamPtr();
 		}
 
 		/** Delete a named file.

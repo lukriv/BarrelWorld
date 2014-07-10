@@ -298,17 +298,13 @@ namespace Ogre {
 
 			AnimableDictionaryMap::iterator i = 
 				msAnimableDictionary.find(getAnimableDictionaryName());
-			if (i != msAnimableDictionary.end())
-			{
-				return i->second;
-			}
-			else
+			if (i == msAnimableDictionary.end())
 			{
 				OGRE_EXCEPT(Exception::ERR_ITEM_NOT_FOUND, 
 					"Animable value list not found for " + getAnimableDictionaryName(), 
 					"AnimableObject::getAnimableValueNames");
 			}
-
+			return i->second;
 		}
 
 		/** Create a reference-counted AnimableValuePtr for the named value.
@@ -322,6 +318,7 @@ namespace Ogre {
 			OGRE_EXCEPT(Exception::ERR_ITEM_NOT_FOUND, 
 				"No animable value named '" + valueName + "' present.", 
 				"AnimableObject::createAnimableValue");
+			return AnimableValuePtr();
 		}
 
 
