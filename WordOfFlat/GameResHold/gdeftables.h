@@ -96,6 +96,13 @@ struct NameDef : public DefBase {
 	NameDef() : DefBase() {}
 };
 
+struct RenderEntityDef : public DefBase {
+	RefObjSmPtr<NameDef> m_mesh;
+	RefObjSmPtr<NameDef> m_material;
+	
+	RenderEntityDef() : DefBase() {}
+};
+
 /*!
  * \class CameraDef
  * \author Lukas
@@ -138,10 +145,9 @@ struct LightDef : public DefBase {
  */
 struct RenderDef : public DefBase {
 public:
-	RefObjSmPtr<NameDef> m_mesh;
-	RefObjSmPtr<NameDef> m_material;
-	RefObjSmPtr<CameraDef> m_camera;
-	RefObjSmPtr<LightDef> m_light;
+	wxVector< RefObjSmPtr<RenderEntityDef> > m_entities;
+	wxVector< RefObjSmPtr<CameraDef> > m_cameras;
+	wxVector< RefObjSmPtr<LightDef> > m_lights;
 public:
 	RenderDef() : DefBase() {}
 };

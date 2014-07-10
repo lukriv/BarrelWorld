@@ -36,6 +36,12 @@ GameErrorCode GameTestResourceLoader::Load(GameDefinitionHolder& defHolder)
 		return result;
 	}
 	
+	if(FWG_FAILED(result = LoadRenderEntities(defHolder)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Load render entity definitions failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
 	if(FWG_FAILED(result = LoadCameras(defHolder)))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Load cameras definitions failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
@@ -151,16 +157,9 @@ GameErrorCode GameTestResourceLoader::LoadRenderObj(GameDefinitionHolder& defHol
 	
 	FWG_RETURN_FAIL(GameNewChecked(spRenderDef.OutRef()));
 	
-	if(defHolder.m_meshDefs.Exists(wxString(wxT("testCubeMesh"))))
+	if(defHolder.m_renderEntityDefs.Exists(wxString(wxT("renderEnt1"))))
 	{
-		spRenderDef->m_mesh = *defHolder.m_meshDefs.FindValue(wxString(wxT("testCubeMesh")));
-	} else {
-		return FWG_E_OBJECT_NOT_FOUND_ERROR;
-	}
-	
-	if(defHolder.m_materialDefs.Exists(wxString(wxT("testMaterial"))))
-	{
-		spRenderDef->m_material = *defHolder.m_materialDefs.FindValue(wxString(wxT("testMaterial")));
+		spRenderDef->m_entities.push_back(*defHolder.m_renderEntityDefs.FindValue(wxString(wxT("renderEnt1"))));
 	} else {
 		return FWG_E_OBJECT_NOT_FOUND_ERROR;
 	}
@@ -262,5 +261,35 @@ GameErrorCode GameTestResourceLoader::LoadCameras(GameDefinitionHolder& defHolde
 		return result;
 	}
 		
+	return FWG_NO_ERROR;
+}
+
+GameErrorCode GameTestResourceLoader::LoadRenderEntities(GameDefinitionHolder& defHolder)
+{
+	GameErrorCode result = FWG_NO_ERROR;
+	RefObjSmPtr<RenderEntityDef> spRenderEntityDef;
+	
+	FWG_RETURN_FAIL(GameNewChecked(spRenderEntityDef.OutRef()));
+	
+	if(defHolder.m_meshDefs.Exists(wxString(wxT("testCubeMesh"))))
+	{
+		spRenderEntityDef->m_mesh = *defHolder.m_meshDefs.FindValue(wxString(wxT("testCubeMesh")));
+	} else {
+		return FWG_E_OBJECT_NOT_FOUND_ERROR;
+	}
+	
+	if(defHolder.m_materialDefs.Exists(wxString(wxT("testMaterial"))))
+	{
+		spRenderEntityDef->m_material = *defHolder.m_materialDefs.FindValue(wxString(wxT("testMaterial")));
+	} else {
+		return FWG_E_OBJECT_NOT_FOUND_ERROR;
+	}
+	
+	if(FWG_FAILED(result = defHolder.InsertDef<RenderEntityDef>( wxString(wxT("renderEnt1")), spRenderEntityDef, defHolder.m_renderEntityDefs )))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Add render entity failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
 	return FWG_NO_ERROR;
 }

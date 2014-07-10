@@ -69,9 +69,9 @@ int main(int argc, char **argv)
 					spLogger, result, FWGLOG_ENDVAL);
 		return result;		
 	}
-		 
+	 
 
-	
+	FWGLOG_INFO(wxT("*************** GAME END *****************"), spLogger);
 
 	 
 	return 0;
