@@ -65,36 +65,44 @@ GameErrorCode GameEntityFactory::CreateEntity( EntityDef& entityDef, GameCompMan
 		if(!entityDef.m_renderDef.IsEmpty())
 		{
 			RefObjSmPtr<RenderDef> spRenderDef = entityDef.m_renderDef;
-			if(!spRenderDef->m_mesh.IsEmpty() && !spRenderDef->m_material.IsEmpty())
+			
+			RefObjSmPtr<RenderComponent> spRenderComp;
+			FWG_RETURN_FAIL(compMgr.GetRenderManager().CreateEmptyRenderComponent(spRenderComp.OutRef()));
+			
+			spRenderComp->SetParent(&entity);
+			entity.SetRenderComp(spRenderComp);
+			
+			if(!spRenderDef->m_entities.empty())
 			{
-				// render entity is defined
-				Ogre::Entity *pEntity = nullptr;
-				RenderObject *pRenderObject = nullptr; 
-				RefObjSmPtr<RenderObject> spRenderObject;
-				RefObjSmPtr<RenderComponent> spRenderComp;
-				
-				if(entityDef.GetName() != nullptr)
+				wxVector< RefObjSmPtr<RenderEntityDef> >::iterator iter;
+				for(iter = spRenderDef->m_entities.begin(); iter != spRenderDef->m_entities.end(); iter++)
 				{
-					pEntity = compMgr.GetRenderManager().GetOgreSceneManager()->createEntity(entityDef.GetName()->ToStdString(), spRenderDef->m_mesh->m_name.ToStdString());
-				} else {
-					return FWG_E_NOT_IMPLEMENTED_ERROR;
+					// render entity is defined
+					Ogre::Entity *pEntity = nullptr;
+					RenderObject *pRenderObject = nullptr; 
+					RefObjSmPtr<RenderObject> spRenderObject;
+					
+					
+					if(entityDef.GetName() != nullptr)
+					{
+						pEntity = compMgr.GetRenderManager().GetOgreSceneManager()->createEntity((*iter)->GetName()->ToStdString(), (*iter)->m_mesh->m_name.ToStdString());
+					} else {
+						return FWG_E_NOT_IMPLEMENTED_ERROR;
+					}
+					
+					//pEntity->setMaterialName(entityDef.m_material->m_name.ToStdString());
+					pEntity->setMaterialName((*iter)->m_material->m_name.ToStdString());
+					
+					
+					FWG_RETURN_FAIL(GameNewChecked(pRenderObject, pEntity));
+					spRenderObject.Attach(pRenderObject);
+					spRenderComp->AttachRenderObject(spRenderObject);
+			
 				}
-				
-				//pEntity->setMaterialName(entityDef.m_material->m_name.ToStdString());
-				pEntity->setMaterialName(spRenderDef->m_material->m_name.ToStdString());
-				
-				FWG_RETURN_FAIL(compMgr.GetRenderManager().CreateEmptyRenderComponent(spRenderComp.OutRef()));
-				FWG_RETURN_FAIL(GameNewChecked(pRenderObject, pEntity));
-				spRenderObject.Attach(pRenderObject);
-				spRenderComp->AttachRenderObject(spRenderObject);
-		
-				spRenderComp->SetParent(&entity);
-				
-				entity.SetRenderComp(spRenderComp);
 							
 			}
 			
-			if(!spRenderDef->m_camera.IsEmpty())
+			if(!spRenderDef->m_cameras.empty())
 			{
 				
 			}
