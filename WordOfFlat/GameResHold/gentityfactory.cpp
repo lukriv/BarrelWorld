@@ -104,7 +104,33 @@ GameErrorCode GameEntityFactory::CreateEntity( EntityDef& entityDef, GameCompMan
 			
 			if(!spRenderDef->m_cameras.empty())
 			{
-				
+				wxVector< RefObjSmPtr<CameraDef> >::iterator iter;
+				for(iter = spRenderDef->m_cameras.begin(); iter != spRenderDef->m_cameras.end(); iter++)
+				{
+					RefObjSmPtr<RenderObject> spCameraObject;
+					Ogre::Camera *pOgreCam = nullptr;
+					if(FWG_FAILED(result = compMgr.GetRenderManager().CreateCamera(*(*iter)->GetName(), spCameraObject.OutRef())))
+					{
+						FWGLOG_ERROR_FORMAT(wxT("Create new camera failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+						return result;
+					}
+					
+					pOgreCam = spCameraObject.In()->GetCamera();
+					
+					if(pOgreCam == nullptr)
+					{
+						FWGLOG_ERROR_FORMAT(wxT("Get Ogre camera failed: 0x%08x"), m_spLogger, FWG_E_MEMORY_ALLOCATION_ERROR, FWGLOG_ENDVAL);
+						return FWG_E_MEMORY_ALLOCATION_ERROR;
+					}
+					// Position it at 500 in Z direction
+					//pOgreCam->setPosition(Ogre::Vector3(0, 10, -5));
+					pOgreCam->setPosition((*iter)->m_position);
+					// Look back along -Z
+					pOgreCam->setDirection((*iter)->m_direction);
+					pOgreCam->setNearClipDistance(1);
+					spRenderComp->AttachRenderObject(spCameraObject);
+				}
+
 			}
 		}
 		
@@ -224,15 +250,4 @@ GameErrorCode GameEntityFactory::CreateEntity( EntityDef& entityDef, GameCompMan
 	return FWG_NO_ERROR;
 }
 
-const wxChar* GameEntityFactory::ConvertCameraType2Name(CameraDef::CameraDefType cameraType) const
-{
-	switch(cameraType)
-	{
-		case CameraDef::GAMEDEF_CAM_MAIN:
-			return MAIN_CAMERA_NAME;
-		case CameraDef::GAMEDEF_CAM_SECONDARY:
-			return SECONDARY_CAMERA_NAME;
-		default:
-			return nullptr;
-	}
-}
+

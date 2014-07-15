@@ -15,8 +15,6 @@ private:
 	wxAtomicInt m_refCount;
 	GameLoggerPtr m_spLogger;
 	RefObjSmPtr<GameInputSystem> m_spInputSystem;
-private:
-	const wxChar* ConvertCameraType2Name(CameraDef::CameraDefType cameraType) const;
 public:
 	GameEntityFactory() : m_refCount(1){}
 	

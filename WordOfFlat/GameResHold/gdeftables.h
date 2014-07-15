@@ -100,7 +100,10 @@ struct RenderEntityDef : public DefBase {
 	RefObjSmPtr<NameDef> m_mesh;
 	RefObjSmPtr<NameDef> m_material;
 	
-	RenderEntityDef() : DefBase() {}
+	Ogre::Vector3 m_position;
+	
+	RenderEntityDef() : DefBase(),
+						m_position(Ogre::Vector3::ZERO){}
 };
 
 /*!
@@ -112,17 +115,12 @@ struct RenderEntityDef : public DefBase {
  */
 struct CameraDef : public DefBase {
 public:
-	enum CameraDefType {
-		GAMEDEF_CAM_UNDEFINED 			= 0,
-		GAMEDEF_CAM_MAIN				= 1,
-		GAMEDEF_CAM_SECONDARY			= 2
-	};
-public:
-	CameraDefType m_cameraType;
 	Ogre::Vector3 m_position;
 	Ogre::Vector3 m_direction;
 	
-	CameraDef() {}
+	CameraDef() : DefBase(),
+				m_position(Ogre::Vector3::ZERO),
+				m_direction(Ogre::Vector3::ZERO){}
 };
 
 /*!
@@ -133,7 +131,11 @@ public:
  * \brief Light definition for render component
  */
 struct LightDef : public DefBase {
-	LightDef() {}
+	
+	Ogre::Vector3 m_position;
+	
+	LightDef() : DefBase(),
+				m_position(Ogre::Vector3::ZERO){}
 };
 
 /*!
