@@ -48,7 +48,7 @@ GameErrorCode GameTestResourceLoader::Load(GameDefinitionHolder& defHolder)
 		return result;
 	}
 	
-	if(FWG_FAILED(result = LoadRenderObj(defHolder)))
+	if(FWG_FAILED(result = LoadRenderDef(defHolder)))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Load render definitions failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
 		return result;
@@ -102,6 +102,7 @@ GameErrorCode GameTestResourceLoader::LoadEntities(GameDefinitionHolder& defHold
 	GameErrorCode result = FWG_NO_ERROR;
 	RefObjSmPtr<EntityDef> spEntityDef;
 	
+	// testing entity
 	FWG_RETURN_FAIL(GameNewChecked(spEntityDef.OutRef()));
 	
 	if(defHolder.m_renderDefs.Exists(wxString(wxT("render1"))))
@@ -140,21 +141,51 @@ GameErrorCode GameTestResourceLoader::LoadEntities(GameDefinitionHolder& defHold
 		return result;
 	}
 	
+	//camera entity
+	FWG_RETURN_FAIL(GameNewChecked(spEntityDef.OutRef()));
 	
-	//spEntityDef.Attach(new (std::nothrow) EntityDef);
-	//if(spEntityDef.IsEmpty())
-	//{
-	//	return FWG_E_MEMORY_ALLOCATION_ERROR;
-	//}
+	if(defHolder.m_renderDefs.Exists(wxString(wxT("mainCamera"))))
+	{
+		spEntityDef.In()->m_renderDef = *defHolder.m_renderDefs.FindValue(wxString(wxT("mainCamera")));
+	} else {
+		return FWG_E_OBJECT_NOT_FOUND_ERROR;
+	}
 	
+	if(defHolder.m_logicDefs.Exists(wxString(wxT("manualLogic"))))
+	{
+		spEntityDef.In()->m_logicDef = *defHolder.m_logicDefs.FindValue(wxString(wxT("manualLogic")));
+	} else {
+		return FWG_E_OBJECT_NOT_FOUND_ERROR;
+	}
+	
+	if(defHolder.m_inputDefs.Exists(wxString(wxT("testInput"))))
+	{
+		spEntityDef.In()->m_inputDef = *defHolder.m_inputDefs.FindValue(wxString(wxT("cameraInput")));
+	} else {
+		return FWG_E_OBJECT_NOT_FOUND_ERROR;
+	}
+	
+	FWG_RETURN_FAIL(GameNewChecked(spEntityDef->m_transformation.OutRef()));
+	
+	spEntityDef->m_transformation->m_position[0] = 0.0f;
+	spEntityDef->m_transformation->m_position[1] = 0.0f;
+	spEntityDef->m_transformation->m_position[2] = 0.0f;
+	
+	if(FWG_FAILED(result = defHolder.InsertDef<EntityDef>( wxString(wxT("mainCameraEntity")), spEntityDef, defHolder.m_entityDefs )))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("GameTestResourceLoader::LoadEntities() : add entity failed: 0x%08x"),
+																m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode GameTestResourceLoader::LoadRenderObj(GameDefinitionHolder& defHolder)
+GameErrorCode GameTestResourceLoader::LoadRenderDef(GameDefinitionHolder& defHolder)
 {
 	GameErrorCode result = FWG_NO_ERROR;
 	RefObjSmPtr<RenderDef> spRenderDef;
 	
+	// Create Entity
 	FWG_RETURN_FAIL(GameNewChecked(spRenderDef.OutRef()));
 	
 	if(defHolder.m_renderEntityDefs.Exists(wxString(wxT("renderEnt1"))))
@@ -165,6 +196,22 @@ GameErrorCode GameTestResourceLoader::LoadRenderObj(GameDefinitionHolder& defHol
 	}
 	
 	if(FWG_FAILED(result = defHolder.InsertDef<RenderDef>( wxString(wxT("render1")), spRenderDef, defHolder.m_renderDefs )))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Add entity failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	// Create Camera
+	FWG_RETURN_FAIL(GameNewChecked(spRenderDef.OutRef()));
+	
+	if(defHolder.m_cameraDefs.Exists(wxString(wxT("MainCamera"))))
+	{
+		spRenderDef->m_cameras.push_back(*defHolder.m_cameraDefs.FindValue(wxString(wxT("MainCamera"))));
+	} else {
+		return FWG_E_OBJECT_NOT_FOUND_ERROR;
+	}
+	
+	if(FWG_FAILED(result = defHolder.InsertDef<RenderDef>( wxString(wxT("mainCamera")), spRenderDef, defHolder.m_renderDefs )))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Add entity failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
 		return result;
@@ -228,6 +275,20 @@ GameErrorCode GameTestResourceLoader::LoadInput(GameDefinitionHolder& defHolder)
 		FWGLOG_ERROR_FORMAT(wxT("Add item failed: 0x%08x"),	m_spLogger, result, FWGLOG_ENDVAL);
 		return result;
 	}
+	
+	// camera input
+	FWG_RETURN_FAIL(GameNewChecked(spInputDef.OutRef()));
+	
+	spInputDef.In()->m_moveUp = OIS::KC_I;
+	spInputDef.In()->m_moveDown = OIS::KC_K;
+	spInputDef.In()->m_moveLeft = OIS::KC_J;
+	spInputDef.In()->m_moveRight = OIS::KC_L;
+	
+	if(FWG_FAILED(result = defHolder.InsertDef<InputDef>( wxString(wxT("cameraInput")), spInputDef, defHolder.m_inputDefs )))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Add item failed: 0x%08x"),	m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
 	return FWG_NO_ERROR;
 }
 
@@ -255,7 +316,10 @@ GameErrorCode GameTestResourceLoader::LoadCameras(GameDefinitionHolder& defHolde
 	
 	FWG_RETURN_FAIL(GameNewChecked(spCameraDef.OutRef()));
 	
-	if(FWG_FAILED(result = defHolder.InsertDef<CameraDef>( wxString(wxT("gamePlayCam")), spCameraDef, defHolder.m_cameraDefs )))
+	spCameraDef.In()->m_position = Ogre::Vector3(0, 10, -5);
+	spCameraDef.In()->m_direction = Ogre::Vector3(0,-10, 5);
+	
+	if(FWG_FAILED(result = defHolder.InsertDef<CameraDef>( wxString(wxT("MainCamera")), spCameraDef, defHolder.m_cameraDefs )))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Add item failed: 0x%08x"),	m_spLogger, result, FWGLOG_ENDVAL);
 		return result;
@@ -269,6 +333,7 @@ GameErrorCode GameTestResourceLoader::LoadRenderEntities(GameDefinitionHolder& d
 	GameErrorCode result = FWG_NO_ERROR;
 	RefObjSmPtr<RenderEntityDef> spRenderEntityDef;
 	
+	// Create Render Entity
 	FWG_RETURN_FAIL(GameNewChecked(spRenderEntityDef.OutRef()));
 	
 	if(defHolder.m_meshDefs.Exists(wxString(wxT("testCubeMesh"))))

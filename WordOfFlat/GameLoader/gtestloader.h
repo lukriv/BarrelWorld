@@ -16,7 +16,7 @@ private:
 	GameErrorCode LoadMaterials(GameDefinitionHolder& defHolder);
 	GameErrorCode LoadRenderEntities(GameDefinitionHolder& defHolder);
 	GameErrorCode LoadCameras(GameDefinitionHolder& defHolder);
-	GameErrorCode LoadRenderObj(GameDefinitionHolder& defHolder);
+	GameErrorCode LoadRenderDef(GameDefinitionHolder& defHolder);
 	GameErrorCode LoadAnimations(GameDefinitionHolder& defHolder);
 	GameErrorCode LoadAnimators(GameDefinitionHolder& defHolder);
 	GameErrorCode LoadInput(GameDefinitionHolder& defHolder);

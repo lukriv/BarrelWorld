@@ -237,17 +237,16 @@ bool ClientGameLogic::IsStopped()
 
 GameErrorCode ClientGameLogic::PrepareCameras()
 {
-	RefObjSmPtr<RenderObject> spCamera = m_spCompManager->GetRenderManager().GetMainCamera();
+	RefObjSmPtr<RenderObject> spCamera = m_spCompManager.In()->GetRenderManager().GetCamera(wxString(MAIN_CAMERA_NAME));
+	if(spCamera.IsEmpty())
+	{
+		FWGLOG_ERROR(wxT("Fatal error: MainCamera was not found"), m_pLogger);
+		return FWG_E_OBJECT_NOT_FOUND_ERROR;
+	}
+	
 	Ogre::Camera* pOgreCam = spCamera.In()->GetCamera();
 
-	// Position it at 500 in Z direction
-	pOgreCam->setPosition(Ogre::Vector3(0, 10, -5));
-	// Look back along -Z
-	pOgreCam->setDirection(Ogre::Vector3(0,-10, 5));
-	pOgreCam->setNearClipDistance(1);
-
 	m_spCompManager->GetRenderManager().GetOgreSceneManager()->setAmbientLight(Ogre::ColourValue(0.5f, 0.5f, 0.5f));
-
 
 	// prepare viewports
 	Ogre::Viewport *viewPort = m_pRenderWindow->addViewport(pOgreCam);

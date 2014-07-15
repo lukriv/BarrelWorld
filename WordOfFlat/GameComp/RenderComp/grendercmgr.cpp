@@ -20,9 +20,6 @@ GameErrorCode RenderCompManager::Initialize(Ogre::SceneManager& sceneManager)
 	
 	m_pSceneManager = &sceneManager;
 	
-	// create new main camera
-	FWG_RETURN_FAIL(CreateCamera(wxString(MAIN_CAMERA_NAME), m_spMainCamera.OutRef()));
-	
 	return FWG_NO_ERROR;
 }
 
