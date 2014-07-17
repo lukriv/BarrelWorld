@@ -1,0 +1,36 @@
+#ifndef __GAME_XML_LOADER_H__
+#define __GAME_XML_LOADER_H__
+
+#include "../GameResHold/gdefloader.h"
+#include "../GameResHold/gdefholder.h"
+#include "../GameSystem/glog.h"
+
+class GameXmlResourceLoader : public IGameDefLoader
+{
+private:
+	bool m_isInitialized;
+	GameLoggerPtr m_spLogger;
+
+private:
+	GameErrorCode LoadMeshes(GameDefinitionHolder& defHolder);
+	GameErrorCode LoadMaterials(GameDefinitionHolder& defHolder);
+	GameErrorCode LoadRenderEntities(GameDefinitionHolder& defHolder);
+	GameErrorCode LoadCameras(GameDefinitionHolder& defHolder);
+	GameErrorCode LoadRenderDef(GameDefinitionHolder& defHolder);
+	GameErrorCode LoadAnimations(GameDefinitionHolder& defHolder);
+	GameErrorCode LoadAnimators(GameDefinitionHolder& defHolder);
+	GameErrorCode LoadInput(GameDefinitionHolder& defHolder);
+	GameErrorCode LoadLogic(GameDefinitionHolder& defHolder);
+	GameErrorCode LoadEntities(GameDefinitionHolder& defHolder);
+public:
+	GameTestResourceLoader() : m_isInitialized(false) {}
+	~GameTestResourceLoader() {}
+
+	GameErrorCode Initialize(GameLogger *pLogger = NULL);
+public:
+	virtual GameErrorCode Load(GameDefinitionHolder& defHolder);
+
+};
+
+
+#endif //__GAME_XML_LOADER_H__

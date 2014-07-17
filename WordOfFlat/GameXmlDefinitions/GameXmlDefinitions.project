@@ -55,4 +55,15 @@
     </Configuration>
   </Settings>
   <Dependencies Name="Debug"/>
+  <VirtualDirectory Name="include">
+    <File Name="gxmlloader.h"/>
+    <File Name="gxmldefs.h"/>
+  </VirtualDirectory>
+  <VirtualDirectory Name="src">
+    <File Name="gxmlloader.cpp"/>
+  </VirtualDirectory>
+  <VirtualDirectory Name="resource">
+    <File Name="example.xml"/>
+    <File Name="definitions.xml"/>
+  </VirtualDirectory>
 </CodeLite_Project>
