@@ -1,0 +1,61 @@
+<definitions>
+	
+	<meshes>
+		<mesh name="mesh1">
+			<meshname value="TestingCube" />
+		</mesh>
+	</meshes>
+	
+	<materials>
+		<material name="material1">
+			<materialname value="Test/ColourTest" />
+		</material>
+	</materials>
+	
+	<inputs>
+		<input name="testInput">
+			<up value="key_w" />
+			<down value="key_s" />
+			<left value="key_a" />
+			<right value="key_d" />
+		</input>
+		
+		<input name="cameraInput">
+			<up value="key_i" />
+			<down value="key_k" />
+			<left value="key_j" />
+			<right value="key_l" />
+		</input>
+	</inputs>
+	
+	<logics>
+		<logic name="manualLogic">
+			<logictype value="MANUAL_TEST" />
+		</logic>
+	</logics>
+	
+</definitions>
+
+<world>
+	<static_definitions>
+		<render_entities>
+			<render_entity name="renderEnt1">
+				<meshref value="mesh1" />
+				<materialref value="material1" />
+				<position xyz="0.0;0.0;0.0" />
+			</render_entity>
+		</render_entities>
+		
+		<cameras>
+			<camera name="MainCamera">
+				<position xyz="0.0, 10.0, -5.0" />
+				<direction xyz="0, -10, 5" />
+			</camera>
+		</cameras>
+	</static_definitions>
+	<scene>
+		<entity name="entity1">
+		
+		</entity>
+	</scene>
+</world>
