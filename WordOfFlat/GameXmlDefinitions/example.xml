@@ -55,7 +55,13 @@
 	</static_definitions>
 	<scene>
 		<entity name="entity1">
-		
+			<transform>
+				<position xyz="0.0, 0.0, 0.0" />
+				<scale xyz="1.0, 1.0, 1.0" />
+				<rotation quat="1.0, 0.0, 0.0, 0.0" />				
+			</transform>
+			<render>
+			</render>
 		</entity>
 	</scene>
 </world>
