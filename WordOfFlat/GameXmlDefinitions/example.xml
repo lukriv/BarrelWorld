@@ -39,11 +39,7 @@
 <world>
 	<static_definitions>
 		<render_entities>
-			<render_entity name="renderEnt1">
-				<meshref value="mesh1" />
-				<materialref value="material1" />
-				<position xyz="0.0;0.0;0.0" />
-			</render_entity>
+			
 		</render_entities>
 		
 		<cameras>
@@ -60,8 +56,16 @@
 				<scale xyz="1.0, 1.0, 1.0" />
 				<rotation quat="1.0, 0.0, 0.0, 0.0" />				
 			</transform>
+			
 			<render>
+				<render_entity name="renderEnt1">
+					<meshref value="mesh1" />
+					<materialref value="material1" />
+					<position xyz="0.0;0.0;0.0" />
+				</render_entity>
 			</render>
+			
+			<inputref value="testInput" />
 		</entity>
 	</scene>
 </world>
