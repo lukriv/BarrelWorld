@@ -1,4 +1,7 @@
 #include "gxmlloader.h"
+#include "gxmldefs.h"
+
+static const wxChar* staticXmlFile = wxT("example.xml");
 
 GameErrorCode GameXmlResourceLoader::Initialize(GameLogger* pLogger)
 {
@@ -15,10 +18,40 @@ GameErrorCode GameXmlResourceLoader::Initialize(GameLogger* pLogger)
 GameErrorCode GameXmlResourceLoader::Load(GameDefinitionHolder& defHolder)
 {
 	GameErrorCode result = FWG_NO_ERROR;
+	wxXmlDocument xmlDoc;
+	
 	if(!m_isInitialized)
 	{
 		return FWG_E_OBJECT_NOT_INITIALIZED_ERROR;
 	}
+	
+	if(!xmlDoc.Load(wxString(staticXmlFile)))
+	{
+		return FWG_E_OPEN_FILE_ERROR;
+	}
+	
+	if(xmlDoc.GetRoot()->GetName() != GENERAL_TAG_ROOT_STR)
+		return false;
+	
+	//get root
+	wxXmlNode* child = xmlDoc.GetRoot()->GetChildren();
+	while(child)
+	{
+		if(child->GetName() == GENERAL_TAG_CHAPTER_STR) 
+		{
+			if(!ParseChapter(child, resMgr, sceneMgr))
+			{
+				return false;
+			}
+		} else {
+			return false;
+		}
+		
+		child = child->GetNext();
+	}
+	
+	return true;
+	
 	
 	if(FWG_FAILED(result = LoadMeshes(defHolder)))
 	{

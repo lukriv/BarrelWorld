@@ -1,18 +1,18 @@
 <definitions>
 	
-	<meshes>
+	<meshdefs>
 		<mesh name="mesh1">
 			<meshname value="TestingCube" />
 		</mesh>
-	</meshes>
+	</meshdefs>
 	
-	<materials>
+	<materialdefs>
 		<material name="material1">
 			<materialname value="Test/ColourTest" />
 		</material>
-	</materials>
+	</materialdefs>
 	
-	<inputs>
+	<inputdefs>
 		<input name="testInput">
 			<up value="key_w" />
 			<down value="key_s" />
@@ -26,29 +26,42 @@
 			<left value="key_j" />
 			<right value="key_l" />
 		</input>
-	</inputs>
+	</inputdefs>
 	
-	<logics>
+	<logicdefs>
 		<logic name="manualLogic">
 			<logictype value="MANUAL_TEST" />
 		</logic>
-	</logics>
+	</logicdefs>
+	
+	<cameradefs>
+		<camera name="MainCamera">
+				<position xyz="0.0, 10.0, -5.0" />
+				<direction xyz="0, -10, 5" />
+		</camera>
+	</cameradefs>
+	
+	<renderentdefs>
+		<renderent name="renderEnt1">
+			<meshref value="mesh1" />
+			<materialref value="material1" />
+			<position xyz="0.0;0.0;0.0" />
+		</renderent>
+	</renderentdefs>
+	
+	<renderdefs>
+		<render name="render1">
+			<renderentref value="renderEnt1" />
+		</render>
+		
+		<render name="render2">
+			<cameraref value="MainCamera" />
+		</render>
+	</renderdefs>
 	
 </definitions>
 
 <world>
-	<static_definitions>
-		<render_entities>
-			
-		</render_entities>
-		
-		<cameras>
-			<camera name="MainCamera">
-				<position xyz="0.0, 10.0, -5.0" />
-				<direction xyz="0, -10, 5" />
-			</camera>
-		</cameras>
-	</static_definitions>
 	<scene>
 		<entity name="entity1">
 			<transform>
@@ -57,15 +70,25 @@
 				<rotation quat="1.0, 0.0, 0.0, 0.0" />				
 			</transform>
 			
-			<render>
-				<render_entity name="renderEnt1">
-					<meshref value="mesh1" />
-					<materialref value="material1" />
-					<position xyz="0.0;0.0;0.0" />
-				</render_entity>
-			</render>
+			<renderref value="render1" />
 			
 			<inputref value="testInput" />
+			
+			<logicref value="manualLogic" />
+		</entity>
+		
+		<entity name="mainCameraEntity">
+			<transform>
+				<position xyz="0.0, 0.0, 0.0" />
+				<scale xyz="1.0, 1.0, 1.0" />
+				<rotation quat="1.0, 0.0, 0.0, 0.0" />				
+			</transform>
+			
+			<renderref value="render2" />
+			
+			<inputref value="cameraInput" />
+			
+			<logicref value="manualLogic" />
 		</entity>
 	</scene>
 </world>
