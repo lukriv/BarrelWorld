@@ -12,16 +12,16 @@ private:
 	GameLoggerPtr m_spLogger;
 
 private:
-	GameErrorCode LoadMeshes(GameDefinitionHolder& defHolder);
-	GameErrorCode LoadMaterials(GameDefinitionHolder& defHolder);
-	GameErrorCode LoadRenderEntities(GameDefinitionHolder& defHolder);
-	GameErrorCode LoadCameras(GameDefinitionHolder& defHolder);
-	GameErrorCode LoadRenderDef(GameDefinitionHolder& defHolder);
-	GameErrorCode LoadAnimations(GameDefinitionHolder& defHolder);
-	GameErrorCode LoadAnimators(GameDefinitionHolder& defHolder);
-	GameErrorCode LoadInput(GameDefinitionHolder& defHolder);
-	GameErrorCode LoadLogic(GameDefinitionHolder& defHolder);
-	GameErrorCode LoadEntities(GameDefinitionHolder& defHolder);
+	GameErrorCode LoadMeshes(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
+	GameErrorCode LoadMaterials(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
+	GameErrorCode LoadRenderEntities(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
+	GameErrorCode LoadCameras(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
+	GameErrorCode LoadRenderDef(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
+	GameErrorCode LoadAnimations(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
+	GameErrorCode LoadAnimators(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
+	GameErrorCode LoadInput(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
+	GameErrorCode LoadLogic(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
+	GameErrorCode LoadEntities(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
 public:
 	GameTestResourceLoader() : m_isInitialized(false) {}
 	~GameTestResourceLoader() {}

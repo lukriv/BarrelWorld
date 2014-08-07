@@ -30,8 +30,8 @@ GameErrorCode GameXmlResourceLoader::Load(GameDefinitionHolder& defHolder)
 		return FWG_E_OPEN_FILE_ERROR;
 	}
 	
-	if(xmlDoc.GetRoot()->GetName() != GENERAL_TAG_ROOT_STR)
-		return false;
+	if(xmlDoc.GetRoot()->GetName() != GAME_TAG_ROOT_STR)
+		return FWG_E_ROOT_NOT_FOUND_ERROR;
 	
 	//get root
 	wxXmlNode* child = xmlDoc.GetRoot()->GetChildren();
