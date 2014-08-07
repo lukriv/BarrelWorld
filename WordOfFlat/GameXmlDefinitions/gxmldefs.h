@@ -2,8 +2,9 @@
 #define __GAME_XML_TAGS_AND_ATTRIBUTES_DEFINITIONS_H__
 
 //tag names
-static const wxChar* GAME_TAG_ROOT_STR			= wxT("root");
+static const wxChar* GAME_TAG_ROOT_STR			= wxT("world");
 static const wxChar* GAME_TAG_DEFINITIONS_STR	= wxT("definitions");
+static const wxChar* GAME_TAG_SCENE_STR			= wxT("scene");
 
 
 //attribute names
