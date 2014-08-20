@@ -10,6 +10,16 @@ class GameXmlResourceLoader : public IGameDefLoader
 private:
 	bool m_isInitialized;
 	GameLoggerPtr m_spLogger;
+	
+	wxXmlNode* m_sceneNode;
+	wxXmlNode* m_meshDefNode;
+	wxXmlNode* m_materialDefNode;
+	wxXmlNode* m_renderEntityDefNode;
+	wxXmlNode* m_cameraDefNode;
+	wxXmlNode* m_logicDefNode;
+	wxXmlNode* m_inputDefNode;
+	wxXmlNode* m_animationDefNode;
+	wxXmlNode* m_animatorDefNode;
 
 private:
 	GameErrorCode LoadMeshes(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
@@ -23,7 +33,16 @@ private:
 	GameErrorCode LoadLogic(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
 	GameErrorCode LoadEntities(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
 public:
-	GameTestResourceLoader() : m_isInitialized(false) {}
+	GameTestResourceLoader() : m_isInitialized(false),
+						m_sceneNode(nullptr),
+						m_meshDefNode(nullptr),
+						m_materialDefNode(nullptr),
+						m_renderEntityDefNode(nullptr),
+						m_cameraDefNode(nullptr),
+						m_logicDefNode(nullptr),
+						m_inputDefNode(nullptr),
+						m_animationDefNode(nullptr),
+						m_animatorDefNode(nullptr) {}
 	~GameTestResourceLoader() {}
 
 	GameErrorCode Initialize(GameLogger *pLogger = NULL);
