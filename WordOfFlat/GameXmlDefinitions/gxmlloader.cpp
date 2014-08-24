@@ -37,7 +37,7 @@ GameErrorCode GameXmlResourceLoader::Load(GameDefinitionHolder& defHolder)
 	wxXmlNode* child = xmlDoc.GetRoot()->GetChildren();
 	while(child)
 	{
-		if(child->GetName() == GENERAL_TAG_CHAPTER_STR) 
+		if(child->GetName() == GAME_TAG_ROOT_STR) 
 		{
 			if(!ParseChapter(child, resMgr, sceneMgr))
 			{
@@ -116,42 +116,42 @@ GameErrorCode GameXmlResourceLoader::Load(GameDefinitionHolder& defHolder)
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode GameXmlResourceLoader::LoadAnimations(GameDefinitionHolder& defHolder)
+GameErrorCode GameXmlResourceLoader::LoadAnimations(wxXmlNode* pNode, GameDefinitionHolder& defHolder)
 {
 }
 
-GameErrorCode GameXmlResourceLoader::LoadAnimators(GameDefinitionHolder& defHolder)
+GameErrorCode GameXmlResourceLoader::LoadAnimators(wxXmlNode* pNode, GameDefinitionHolder& defHolder)
 {
 }
 
-GameErrorCode GameXmlResourceLoader::LoadCameras(GameDefinitionHolder& defHolder)
+GameErrorCode GameXmlResourceLoader::LoadCameras(wxXmlNode* pNode, GameDefinitionHolder& defHolder)
 {
 }
 
-GameErrorCode GameXmlResourceLoader::LoadEntities(GameDefinitionHolder& defHolder)
+GameErrorCode GameXmlResourceLoader::LoadEntities(wxXmlNode* pNode, GameDefinitionHolder& defHolder)
 {
 }
 
-GameErrorCode GameXmlResourceLoader::LoadInput(GameDefinitionHolder& defHolder)
+GameErrorCode GameXmlResourceLoader::LoadInput(wxXmlNode* pNode, GameDefinitionHolder& defHolder)
 {
 }
 
-GameErrorCode GameXmlResourceLoader::LoadLogic(GameDefinitionHolder& defHolder)
+GameErrorCode GameXmlResourceLoader::LoadLogic(wxXmlNode* pNode, GameDefinitionHolder& defHolder)
 {
 }
 
-GameErrorCode GameXmlResourceLoader::LoadMaterials(GameDefinitionHolder& defHolder)
+GameErrorCode GameXmlResourceLoader::LoadMaterials(wxXmlNode* pNode, GameDefinitionHolder& defHolder)
 {
 }
 
-GameErrorCode GameXmlResourceLoader::LoadMeshes(GameDefinitionHolder& defHolder)
+GameErrorCode GameXmlResourceLoader::LoadMeshes(wxXmlNode* pNode, GameDefinitionHolder& defHolder)
 {
 }
 
-GameErrorCode GameXmlResourceLoader::LoadRenderDef(GameDefinitionHolder& defHolder)
+GameErrorCode GameXmlResourceLoader::LoadRenderDef(wxXmlNode* pNode, GameDefinitionHolder& defHolder)
 {
 }
 
-GameErrorCode GameXmlResourceLoader::LoadRenderEntities(GameDefinitionHolder& defHolder)
+GameErrorCode GameXmlResourceLoader::LoadRenderEntities(wxXmlNode* pNode, GameDefinitionHolder& defHolder)
 {
 }
