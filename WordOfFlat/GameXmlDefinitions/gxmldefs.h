@@ -6,6 +6,18 @@ static const wxChar* GAME_TAG_ROOT_STR			= wxT("world");
 static const wxChar* GAME_TAG_DEFINITIONS_STR	= wxT("definitions");
 static const wxChar* GAME_TAG_SCENE_STR			= wxT("scene");
 
+//definitions tags
+static const wxChar* GAME_TAG_DEFS_MESHES_STR		= wxT("meshdefs");
+static const wxChar* GAME_TAG_DEFS_MATERIALS_STR	= wxT("materialdefs");
+static const wxChar* GAME_TAG_DEFS_INPUTS_STR		= wxT("inputdefs");
+static const wxChar* GAME_TAG_DEFS_LOGICS_STR		= wxT("logicdefs");
+static const wxChar* GAME_TAG_DEFS_CAMERAS_STR		= wxT("cameradefs");
+static const wxChar* GAME_TAG_DEFS_RENDER_ENTS_STR	= wxT("renderentdefs");
+static const wxChar* GAME_TAG_DEFS_RENDER_STR		= wxT("renderdefs");
+
+//component tags
+
+//component refs tags
 
 //attribute names
 static const wxChar* GAME_ATTR_NAME_STR				= wxT("name");
