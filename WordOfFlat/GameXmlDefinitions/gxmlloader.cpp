@@ -3,6 +3,17 @@
 
 static const wxChar* staticXmlFile = wxT("example.xml");
 
+
+#define SECOND_TAG_DEFINITION(test,child) if((test) != nullptr) \
+			{ \
+				FWGLOG_ERROR_FORMAT(wxT("Tag ['%s'] on line %d was already defined"), \
+								m_spLogger, \
+								(child)->GetName().GetData(), \
+								(child)->GetLineNumber(), \
+								FWGLOG_ENDVAL); \
+				return FWG_E_XML_INVALID_TAG_ERROR; \
+			}
+
 GameErrorCode GameXmlResourceLoader::Initialize(GameLogger* pLogger)
 {
 	if (m_isInitialized) {
@@ -19,6 +30,9 @@ GameErrorCode GameXmlResourceLoader::Load(GameDefinitionHolder& defHolder)
 {
 	GameErrorCode result = FWG_NO_ERROR;
 	wxXmlDocument xmlDoc;
+	
+	wxXmlNode *pDefinitions = nullptr;
+	wxXmlNode *pScene = nullptr;
 	
 	if(!m_isInitialized)
 	{
@@ -37,83 +51,39 @@ GameErrorCode GameXmlResourceLoader::Load(GameDefinitionHolder& defHolder)
 	wxXmlNode* child = xmlDoc.GetRoot()->GetChildren();
 	while(child)
 	{
-		if(child->GetName() == GAME_TAG_ROOT_STR) 
+		if(child->GetName() == GAME_TAG_DEFINITIONS_STR) 
 		{
-			if(!ParseChapter(child, resMgr, sceneMgr))
-			{
-				return false;
-			}
+			pDefinitions = child;
+		} else if(child->GetName() == GAME_TAG_SCENE_STR) {
+			pScene = child;
 		} else {
-			return false;
+			// found unknown tag
+			FWGLOG_ERROR_FORMAT(wxT("Unknown tag ['%s'] on line: %d"),
+								m_spLogger,
+								child->GetName().GetData(),
+								child->GetLineNumber(),
+								FWGLOG_ENDVAL);
+			return FWG_E_XML_UNKNOWN_TAG_ERROR;
 		}
 		
 		child = child->GetNext();
 	}
 	
-	return true;
-	
-	
-	if(FWG_FAILED(result = LoadMeshes(defHolder)))
+	if(FWG_FAILED(result = ParseDefinitions(pDefinitions, defHolder)))
 	{
-		FWGLOG_ERROR_FORMAT(wxT("Load mesh definitions failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		FWGLOG_ERROR_FORMAT(wxT("ParseDefinitions failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
 		return result;
 	}
 	
-	if(FWG_FAILED(result = LoadMaterials(defHolder)))
+	if(FWG_FAILED(result = ParseScene(pScene, defHolder)))
 	{
-		FWGLOG_ERROR_FORMAT(wxT("Load materials definitions failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		FWGLOG_ERROR_FORMAT(wxT("ParseScene failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
 		return result;
 	}
 	
-	if(FWG_FAILED(result = LoadRenderEntities(defHolder)))
-	{
-		FWGLOG_ERROR_FORMAT(wxT("Load render entity definitions failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
-		return result;
-	}
-	
-	if(FWG_FAILED(result = LoadCameras(defHolder)))
-	{
-		FWGLOG_ERROR_FORMAT(wxT("Load cameras definitions failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
-		return result;
-	}
-	
-	if(FWG_FAILED(result = LoadRenderDef(defHolder)))
-	{
-		FWGLOG_ERROR_FORMAT(wxT("Load render definitions failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
-		return result;
-	}
-	
-	if(FWG_FAILED(result = LoadAnimations(defHolder)))
-	{
-		FWGLOG_ERROR_FORMAT(wxT("Load animation definitions failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
-		return result;
-	}
-	
-	if(FWG_FAILED(result = LoadAnimators(defHolder)))
-	{
-		FWGLOG_ERROR_FORMAT(wxT("Load animator definitions failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
-		return result;
-	}
-	
-	if(FWG_FAILED(result = LoadInput(defHolder)))
-	{
-		FWGLOG_ERROR_FORMAT(wxT("Load input definitions failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
-		return result;
-	}
-	
-	if(FWG_FAILED(result = LoadLogic(defHolder)))
-	{
-		FWGLOG_ERROR_FORMAT(wxT("Load logic definitions failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
-		return result;
-	}
-	
-	if(FWG_FAILED(result = LoadEntities(defHolder)))
-	{
-		FWGLOG_ERROR_FORMAT(wxT("Load entity definitions failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
-		return result;
-	}
-		
 	return FWG_NO_ERROR;
+	
+	
 }
 
 GameErrorCode GameXmlResourceLoader::LoadAnimations(wxXmlNode* pNode, GameDefinitionHolder& defHolder)
@@ -153,5 +123,66 @@ GameErrorCode GameXmlResourceLoader::LoadRenderDef(wxXmlNode* pNode, GameDefinit
 }
 
 GameErrorCode GameXmlResourceLoader::LoadRenderEntities(wxXmlNode* pNode, GameDefinitionHolder& defHolder)
+{
+}
+
+GameErrorCode GameXmlResourceLoader::ParseDefinitions(wxXmlNode* pNode, GameDefinitionHolder& defHolder)
+{
+	GameErrorCode result = FWG_NO_ERROR;
+	
+	wxXmlNode* pMeshes = nullptr;
+	wxXmlNode* pMaterials = nullptr;
+	wxXmlNode* pInputs = nullptr;
+	wxXmlNode* pLogics = nullptr;
+	wxXmlNode* pCameras = nullptr;
+	wxXmlNode* pRenderEnts = nullptr;
+	wxXmlNode* pRenderObjs = nullptr;
+	
+	wxXmlNode* child = pNode->GetChildren();
+	while(child)
+	{
+		if(child->GetName() == GAME_TAG_DEFS_MESHES_STR) 
+		{
+			SECOND_TAG_DEFINITION_CHECK(pMeshes,child);
+			pMeshes = child;
+		} else if(child->GetName() == GAME_TAG_DEFS_MATERIALS_STR) {
+			SECOND_TAG_DEFINITION_CHECK(pMaterials,child);
+			pMaterials = child;
+		} else if(child->GetName() == GAME_TAG_DEFS_INPUTS_STR) {
+			SECOND_TAG_DEFINITION_CHECK(pInputs,child);
+			pInputs = child;
+		} else if(child->GetName() == GAME_TAG_DEFS_LOGICS_STR) {
+			SECOND_TAG_DEFINITION_CHECK(pLogics,child);
+			pLogics = child;
+		} else if(child->GetName() == GAME_TAG_DEFS_CAMERAS_STR) {
+			SECOND_TAG_DEFINITION_CHECK(pCameras,child);
+			pCameras = child;
+		} else if(child->GetName() == GAME_TAG_DEFS_RENDER_ENTS_STR) {
+			SECOND_TAG_DEFINITION_CHECK(pRenderEnts,child);
+			pRenderEnts = child;
+		} else if(child->GetName() == GAME_TAG_DEFS_RENDER_STR) {
+			SECOND_TAG_DEFINITION_CHECK(pRenderObjs,child);
+			pRenderObjs = child;
+		} else {
+			// found unknown tag
+			FWGLOG_ERROR_FORMAT(wxT("Unknown tag ['%s'] on line: %d"),
+								m_spLogger,
+								child->GetName().GetData(),
+								child->GetLineNumber(),
+								FWGLOG_ENDVAL);
+			return FWG_E_XML_UNKNOWN_TAG_ERROR;
+		}
+		
+		child = child->GetNext();
+	}
+	
+	
+}
+
+GameErrorCode GameXmlResourceLoader::ParseScene(wxXmlNode* pNode, GameDefinitionHolder& defHolder)
+{
+}
+
+GameErrorCode GameXmlResourceLoader::CreateMesh(wxXmlNode* pNode, wxString& name, RefObjSmPtr<NameDef>& spDef)
 {
 }

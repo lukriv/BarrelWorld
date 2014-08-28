@@ -150,6 +150,9 @@ FWG_UNUSED(static const wxChar* FWG_E_XML_ROOT_NOT_FOUND_ERROR_STR) = wxT("FWG_E
 #define FWG_E_XML_UNKNOWN_TAG_ERROR 0xE0000023
 FWG_UNUSED(static const wxChar* FWG_E_XML_UNKNOWN_TAG_ERROR_STR) = wxT("FWG_E_XML_UNKNOWN_TAG_ERROR");
 
+#define FWG_E_XML_INVALID_TAG_ERROR 0xE0000024
+FWG_UNUSED(static const wxChar* FWG_E_XML_INVALID_TAG_ERROR_STR) = wxT("FWG_E_XML_INVALID_TAG_ERROR");
+
 /*!
  * \brief Converts error code to error code string
  * 

@@ -11,17 +11,10 @@ private:
 	bool m_isInitialized;
 	GameLoggerPtr m_spLogger;
 	
-	wxXmlNode* m_sceneNode;
-	wxXmlNode* m_meshDefNode;
-	wxXmlNode* m_materialDefNode;
-	wxXmlNode* m_renderEntityDefNode;
-	wxXmlNode* m_cameraDefNode;
-	wxXmlNode* m_logicDefNode;
-	wxXmlNode* m_inputDefNode;
-	wxXmlNode* m_animationDefNode;
-	wxXmlNode* m_animatorDefNode;
-
 private:
+	GameErrorCode ParseDefinitions(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
+	GameErrorCode ParseScene(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
+
 	GameErrorCode LoadMeshes(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
 	GameErrorCode LoadMaterials(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
 	GameErrorCode LoadRenderEntities(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
@@ -32,6 +25,8 @@ private:
 	GameErrorCode LoadInput(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
 	GameErrorCode LoadLogic(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
 	GameErrorCode LoadEntities(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
+	
+	GameErrorCode CreateMesh(wxXmlNode* pNode, wxString& name, RefObjSmPtr<NameDef> &spDef);
 public:
 	GameTestResourceLoader() : m_isInitialized(false),
 						m_sceneNode(nullptr),
