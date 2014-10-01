@@ -35,6 +35,8 @@ WordOfFlat/WorldCli/Debug/
 WordOfFlat/WorldCli/Release/
 WordOfFlat/WorldSrv/Debug/
 WordOfFlat/WorldSrv/Release/
+WordOfFlat/GameXmlDefinitions/Debug/
+WordOfFlat/GameXmlDefinitions/Release/
 Utils/FlatWorldEditor/Debug/
 Utils/FlatWorldEditor/Release/
 Tests/GameSystemTests/Release/

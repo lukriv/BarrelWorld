@@ -65,14 +65,6 @@
   <Dependencies Name="Release"/>
   <Dependencies Name="Debug"/>
   <Settings Type="Static Library">
-    <GlobalSettings>
-      <Compiler Options="-std=c++11" C_Options="" Assembler="">
-        <IncludePath Value="../../extern/include"/>
-        <Preprocessor Value="UNICODE"/>
-      </Compiler>
-      <Linker Options=""/>
-      <ResourceCompiler Options=""/>
-    </GlobalSettings>
     <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Static Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="-g" C_Options="-g" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags=""/>
       <Linker Options="" Required="yes"/>
@@ -145,5 +137,13 @@
         <SearchPaths/>
       </Completion>
     </Configuration>
+    <GlobalSettings>
+      <Compiler Options="-std=c++11" C_Options="" Assembler="">
+        <IncludePath Value="../../extern/include"/>
+        <Preprocessor Value="UNICODE"/>
+      </Compiler>
+      <Linker Options=""/>
+      <ResourceCompiler Options=""/>
+    </GlobalSettings>
   </Settings>
 </CodeLite_Project>

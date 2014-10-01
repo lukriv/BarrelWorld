@@ -176,6 +176,50 @@ GameErrorCode GameXmlResourceLoader::ParseDefinitions(wxXmlNode* pNode, GameDefi
 		child = child->GetNext();
 	}
 	
+	if(FWG_FAILED(result = LoadMeshes(pMeshes, defHolder)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Load meshes failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	if(FWG_FAILED(result = LoadMaterials(pMaterials, defHolder)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Load materials failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+
+	if(FWG_FAILED(result = LoadRenderEntities(pRenderEnts, defHolder)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Load render entities failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	if(FWG_FAILED(result = LoadCameras(pCameras, defHolder)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("ParseDefinitions failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	if(FWG_FAILED(result = LoadRenderDef(pRenderObjs, defHolder)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("ParseDefinitions failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+		
+	if(FWG_FAILED(result = LoadInput(pInputs, defHolder)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Load inputs failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	if(FWG_FAILED(result = LoadLogic(pLogics, defHolder)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Load logic failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	return FWG_NO_ERROR;	
 	
 }
 
