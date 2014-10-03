@@ -128,6 +128,14 @@ GameErrorCode ClientGameLogic::StartGame()
 		} else {
 			FWGLOG_DEBUG(wxT("Inputs were prepared"), m_pLogger);
 		}
+		
+		if(FWG_FAILED(result = PrepareLights()))
+		{
+			FWGLOG_ERROR_FORMAT(wxT("prepare lights failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
+			return 0;
+		} else {
+			FWGLOG_DEBUG(wxT("Lights were prepared"), m_pLogger);
+		}
 	}
 	
 	// create socket worker thread
@@ -185,21 +193,6 @@ void* ClientGameLogic::Entry()
 	Ogre::Timer timer;
 	bool stopRequest = false;
 	unsigned long time = 0;
-	
-	{
-		wxCriticalSectionLocker prepareLock(m_renderLocker);
-
-
-
-		if(FWG_FAILED(result = PrepareLights()))
-		{
-			FWGLOG_ERROR_FORMAT(wxT("prepare lights failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
-			return 0;
-		} else {
-			FWGLOG_DEBUG(wxT("Lights were prepared"), m_pLogger);
-		}
-
-	}
 	
 	while(!stopRequest) 
 	{
