@@ -116,6 +116,46 @@ GameErrorCode GameXmlResourceLoader::LoadMaterials(wxXmlNode* pNode, GameDefinit
 
 GameErrorCode GameXmlResourceLoader::LoadMeshes(wxXmlNode* pNode, GameDefinitionHolder& defHolder)
 {
+	GameErrorCode result = FWG_NO_ERROR;
+	wxXmlNode* child = pNode->GetChildren();
+	while(child)
+	{
+		if(child->GetName() == GAME_TAG_COMP_MESH) 
+		{
+			SECOND_TAG_DEFINITION_CHECK(pMeshes,child);
+			pMeshes = child;
+		} else {
+			// found unknown tag
+			FWGLOG_ERROR_FORMAT(wxT("Unknown tag ['%s'] on line: %d"),
+								m_spLogger,
+								child->GetName().GetData(),
+								child->GetLineNumber(),
+								FWGLOG_ENDVAL);
+			return FWG_E_XML_UNKNOWN_TAG_ERROR;
+		}
+		
+		wxString meshName;
+		RefObjSmPtr<NameDef> spMesh;
+		
+		if(FWG_FAILED(result = CreateMesh(child, meshName, spMesh)))
+		{
+			// found unknown tag
+			FWGLOG_ERROR_FORMAT(wxT("Create mesh failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+			return result;
+		}
+
+		if(FWG_FAILED(result = defHolder.InsertDef<NameDef>( wxString(wxT("testCubeMesh")), spMeshDef, defHolder.m_meshDefs )))
+		{
+			FWGLOG_ERROR_FORMAT(wxT("Add mesh to definition holder failed: 0x%08x"),
+								m_spLogger, result, FWGLOG_ENDVAL);
+			return result;
+		}
+		
+		child = child->GetNext();
+	}
+	
+	
+	return FWG_NO_ERROR;
 }
 
 GameErrorCode GameXmlResourceLoader::LoadRenderDef(wxXmlNode* pNode, GameDefinitionHolder& defHolder)
@@ -229,4 +269,28 @@ GameErrorCode GameXmlResourceLoader::ParseScene(wxXmlNode* pNode, GameDefinition
 
 GameErrorCode GameXmlResourceLoader::CreateMesh(wxXmlNode* pNode, wxString& name, RefObjSmPtr<NameDef>& spDef)
 {
+	wxString meshName;
+	bool meshNameFound = false;
+	// get name attribute
+	name = pNode->GetAttribute(GAME_ATTR_NAME_STR);
+	wxXmlNode *child = pNode->GetChildren();
+	while (child)
+	{
+		if (child->GetName() == GAME_TAG_ITEM_MESHNAME) 
+		{
+			if(!pNode->GetAttribute(GAME_ATTR_VALUE_STR, &meshName))
+			{
+				FWGLOG_ERROR_FORMAT(wxT("'%s' attribut for '%s' is missing"),
+						m_spLogger, GAME_ATTR_VALUE_STR, GAME_TAG_ITEM_MESHNAME, FWGLOG_ENDVAL);
+				return FWG_E_XML_ATTR_NOT_FOUND_ERROR;
+			}			
+		}
+		
+		child = child->GetNext();
+		
+	}
+	
+	//TODO: create mesh structure
+	
+	return FWG_NO_ERROR;
 }

@@ -15,14 +15,18 @@ static const wxChar* GAME_TAG_DEFS_CAMERAS_STR		= wxT("cameradefs");
 static const wxChar* GAME_TAG_DEFS_RENDER_ENTS_STR	= wxT("renderentdefs");
 static const wxChar* GAME_TAG_DEFS_RENDER_STR		= wxT("renderdefs");
 
-//component tags
+// component tags
+static const wxChar* GAME_TAG_COMP_MESH 			= wxT("mesh");
+
+// component item tags 
+static const wxChar* GAME_TAG_ITEM_MESHNAME			= wxT("meshname");
+
 
 //component refs tags
 
 //attribute names
 static const wxChar* GAME_ATTR_NAME_STR				= wxT("name");
-static const wxChar* GAME_ATTR_LANGUAGE_STR			= wxT("lang");
-static const wxChar* GAME_ATTR_FILENAME_STR			= wxT("file");
+static const wxChar* GAME_ATTR_VALUE_STR			= wxT("value");
 
 //////////////////////////////////////
 /////      Attribute values      /////
