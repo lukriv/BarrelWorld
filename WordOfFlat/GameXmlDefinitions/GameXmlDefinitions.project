@@ -35,6 +35,8 @@
     <GlobalSettings>
       <Compiler Options="-std=c++11" C_Options="" Assembler="">
         <IncludePath Value="../../extern/include"/>
+        <IncludePath Value="../../extern/include/OGRE"/>
+        <IncludePath Value="../../WordOfFlat"/>
         <Preprocessor Value="UNICODE"/>
       </Compiler>
       <Linker Options=""/>

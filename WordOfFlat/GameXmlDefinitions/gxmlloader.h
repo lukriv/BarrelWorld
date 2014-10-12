@@ -1,6 +1,7 @@
 #ifndef __GAME_XML_LOADER_H__
 #define __GAME_XML_LOADER_H__
 
+#include <wx/xml/xml.h>
 #include "../GameResHold/gdefloader.h"
 #include "../GameResHold/gdefholder.h"
 #include "../GameSystem/glog.h"
@@ -10,6 +11,7 @@ class GameXmlResourceLoader : public IGameDefLoader
 private:
 	bool m_isInitialized;
 	GameLoggerPtr m_spLogger;
+	wxString m_fileName;
 	
 private:
 	GameErrorCode ParseDefinitions(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
@@ -27,20 +29,26 @@ private:
 	GameErrorCode LoadEntities(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
 	
 	GameErrorCode CreateMesh(wxXmlNode* pNode, wxString& name, RefObjSmPtr<NameDef> &spDef);
+	GameErrorCode CreateMaterial(wxXmlNode* pNode, wxString& name, RefObjSmPtr<NameDef> &spDef);
+	GameErrorCode CreateRenderEntity(wxXmlNode* pNode, GameDefinitionHolder& defHolder, wxString& name, RefObjSmPtr<RenderEntityDef> &spDef);
 public:
-	GameTestResourceLoader() : m_isInitialized(false),
-						m_sceneNode(nullptr),
-						m_meshDefNode(nullptr),
-						m_materialDefNode(nullptr),
-						m_renderEntityDefNode(nullptr),
-						m_cameraDefNode(nullptr),
-						m_logicDefNode(nullptr),
-						m_inputDefNode(nullptr),
-						m_animationDefNode(nullptr),
-						m_animatorDefNode(nullptr) {}
-	~GameTestResourceLoader() {}
+	GameXmlResourceLoader() : m_isInitialized(false) {}
+	~GameXmlResourceLoader() {}
 
-	GameErrorCode Initialize(GameLogger *pLogger = NULL);
+	/*!
+	 * \brief Initialize GameXmlResourceLoader
+	 * 
+	 * Initialize XML loader to reading or storing scene from/to given xml scene file. 
+	 * 
+	 * \param xmlFileName File name without path
+	 * \param xmlFilePath Path to file (without file name), nullptr means actual directory
+	 * \param pLogger Logger
+	 * 
+	 * \retval FWG_NO_ERROR On success
+	 * \retval Other error on fail.
+	 */
+	GameErrorCode Initialize(const wxChar *xmlFileName, const wxChar *xmlFilePath = nullptr, GameLogger *pLogger = nullptr);
+	
 public:
 	virtual GameErrorCode Load(GameDefinitionHolder& defHolder);
 

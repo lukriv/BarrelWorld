@@ -17,9 +17,19 @@ static const wxChar* GAME_TAG_DEFS_RENDER_STR		= wxT("renderdefs");
 
 // component tags
 static const wxChar* GAME_TAG_COMP_MESH 			= wxT("mesh");
+static const wxChar* GAME_TAG_COMP_MATERIAL 		= wxT("material");
+static const wxChar* GAME_TAG_COMP_RENDER_ENT 		= wxT("renderent");
+
 
 // component item tags 
 static const wxChar* GAME_TAG_ITEM_MESHNAME			= wxT("meshname");
+static const wxChar* GAME_TAG_ITEM_MATERIALNAME		= wxT("materialname");
+static const wxChar* GAME_TAG_ITEM_POSITION			= wxT("position");
+
+
+// component item tags references
+static const wxChar* GAME_TAG_ITEM_MESH_REF			= wxT("meshref");
+static const wxChar* GAME_TAG_ITEM_MATERIAL_REF		= wxT("materialref");
 
 
 //component refs tags
@@ -27,6 +37,7 @@ static const wxChar* GAME_TAG_ITEM_MESHNAME			= wxT("meshname");
 //attribute names
 static const wxChar* GAME_ATTR_NAME_STR				= wxT("name");
 static const wxChar* GAME_ATTR_VALUE_STR			= wxT("value");
+static const wxChar* GAME_ATTR_XYZ_STR				= wxT("xyz");
 
 //////////////////////////////////////
 /////      Attribute values      /////
