@@ -31,6 +31,9 @@ private:
 	GameErrorCode CreateMesh(wxXmlNode* pNode, wxString& name, RefObjSmPtr<NameDef> &spDef);
 	GameErrorCode CreateMaterial(wxXmlNode* pNode, wxString& name, RefObjSmPtr<NameDef> &spDef);
 	GameErrorCode CreateRenderEntity(wxXmlNode* pNode, GameDefinitionHolder& defHolder, wxString& name, RefObjSmPtr<RenderEntityDef> &spDef);
+	GameErrorCode CreateCamera(wxXmlNode* pNode, wxString& name, RefObjSmPtr<CameraDef> &spCameraDef);
+	
+	GameErrorCode GetAttrXYZ(wxXmlNode* pNode, Ogre::Vector3 &vector);
 public:
 	GameXmlResourceLoader() : m_isInitialized(false) {}
 	~GameXmlResourceLoader() {}

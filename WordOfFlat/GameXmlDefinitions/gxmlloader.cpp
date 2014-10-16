@@ -1,6 +1,8 @@
 #include "gxmlloader.h"
 #include "gxmldefs.h"
 #include <wx/filename.h>
+#include <wx/tokenzr.h>
+#include <wx/arrstr.h> 
 #include <GameSystem/new.h>
 
 //static const wxChar* staticXmlFile = wxT("example.xml");
@@ -106,26 +108,70 @@ GameErrorCode GameXmlResourceLoader::Load(GameDefinitionHolder& defHolder)
 
 GameErrorCode GameXmlResourceLoader::LoadAnimations(wxXmlNode* pNode, GameDefinitionHolder& defHolder)
 {
+	return FWG_E_NOT_IMPLEMENTED_ERROR;
 }
 
 GameErrorCode GameXmlResourceLoader::LoadAnimators(wxXmlNode* pNode, GameDefinitionHolder& defHolder)
 {
+	return FWG_E_NOT_IMPLEMENTED_ERROR;
 }
 
 GameErrorCode GameXmlResourceLoader::LoadCameras(wxXmlNode* pNode, GameDefinitionHolder& defHolder)
 {
+	GameErrorCode result = FWG_NO_ERROR;
+	wxXmlNode* child = pNode->GetChildren();
+	while(child)
+	{
+		if(child->GetName() == GAME_TAG_COMP_CAMERA) 
+		{
+			wxString cameraName;
+			RefObjSmPtr<CameraDef> spCamera;
+			
+			if(FWG_FAILED(result = CreateCamera(child, defHolder, renderEntName, spRenderEnt)))
+			{
+				// found unknown tag
+				FWGLOG_ERROR_FORMAT(wxT("Create render entity failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+				return result;
+			}
+
+			if(FWG_FAILED(result = defHolder.InsertDef<RenderEntityDef>( renderEntName, spRenderEnt, defHolder.m_renderEntityDefs )))
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Add render entity '%s' to definition holder from line '%d' failed: 0x%08x"),
+									m_spLogger, renderEntName.GetData().AsInternal(), child->GetLineNumber(), result, FWGLOG_ENDVAL);
+				return result;
+			}
+		} else {
+			// found unknown tag
+			FWGLOG_ERROR_FORMAT(wxT("Unknown tag ['%s'] on line: %d"),
+								m_spLogger,
+								child->GetName().GetData().AsInternal(),
+								child->GetLineNumber(),
+								FWGLOG_ENDVAL);
+			return FWG_E_XML_UNKNOWN_TAG_ERROR;
+		}
+		
+		
+		
+		child = child->GetNext();
+	}
+	
+	
+	return FWG_NO_ERROR;
 }
 
 GameErrorCode GameXmlResourceLoader::LoadEntities(wxXmlNode* pNode, GameDefinitionHolder& defHolder)
 {
+	return FWG_E_NOT_IMPLEMENTED_ERROR;
 }
 
 GameErrorCode GameXmlResourceLoader::LoadInput(wxXmlNode* pNode, GameDefinitionHolder& defHolder)
 {
+	return FWG_E_NOT_IMPLEMENTED_ERROR;
 }
 
 GameErrorCode GameXmlResourceLoader::LoadLogic(wxXmlNode* pNode, GameDefinitionHolder& defHolder)
 {
+	return FWG_E_NOT_IMPLEMENTED_ERROR;
 }
 
 GameErrorCode GameXmlResourceLoader::LoadMaterials(wxXmlNode* pNode, GameDefinitionHolder& defHolder)
@@ -216,6 +262,7 @@ GameErrorCode GameXmlResourceLoader::LoadMeshes(wxXmlNode* pNode, GameDefinition
 
 GameErrorCode GameXmlResourceLoader::LoadRenderDef(wxXmlNode* pNode, GameDefinitionHolder& defHolder)
 {
+	return FWG_E_NOT_IMPLEMENTED_ERROR;
 }
 
 GameErrorCode GameXmlResourceLoader::LoadRenderEntities(wxXmlNode* pNode, GameDefinitionHolder& defHolder)
@@ -229,7 +276,7 @@ GameErrorCode GameXmlResourceLoader::LoadRenderEntities(wxXmlNode* pNode, GameDe
 			wxString renderEntName;
 			RefObjSmPtr<RenderEntityDef> spRenderEnt;
 			
-			if(FWG_FAILED(result = CreateRenderEntity(child, renderEntName, spRenderEnt)))
+			if(FWG_FAILED(result = CreateRenderEntity(child, defHolder, renderEntName, spRenderEnt)))
 			{
 				// found unknown tag
 				FWGLOG_ERROR_FORMAT(wxT("Create render entity failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
@@ -360,6 +407,7 @@ GameErrorCode GameXmlResourceLoader::ParseDefinitions(wxXmlNode* pNode, GameDefi
 
 GameErrorCode GameXmlResourceLoader::ParseScene(wxXmlNode* pNode, GameDefinitionHolder& defHolder)
 {
+	return FWG_E_NOT_IMPLEMENTED_ERROR;
 }
 
 GameErrorCode GameXmlResourceLoader::CreateMesh(wxXmlNode* pNode, wxString& name, RefObjSmPtr<NameDef>& spDef)
@@ -476,6 +524,7 @@ GameErrorCode GameXmlResourceLoader::CreateMaterial(wxXmlNode* pNode, wxString& 
 
 GameErrorCode GameXmlResourceLoader::CreateRenderEntity(wxXmlNode* pNode, GameDefinitionHolder& defHolder, wxString& name, RefObjSmPtr<RenderEntityDef>& spDef)
 {
+	GameErrorCode result = FWG_NO_ERROR;
 	RefObjSmPtr<NameDef> spMesh;
 	RefObjSmPtr<NameDef> spMaterial;
 	Ogre::Vector3 position;
@@ -513,9 +562,76 @@ GameErrorCode GameXmlResourceLoader::CreateRenderEntity(wxXmlNode* pNode, GameDe
 				return FWG_E_XML_INVALID_ATTR_ERROR;
 			}
 			
-		} else if(GAME_TAG_COMP_MESH) {
-		} else if(GAME_TAG_ITEM_MATERIAL_REF) {
-		} else if(GAME_TAG_COMP_MATERIAL) {
+		} else if(child->GetName() == GAME_TAG_COMP_MESH) {
+			wxString meshName;
+			if (!spMesh.IsEmpty())
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Tag '%s' is duplicate on line: %d"),
+						m_spLogger, GAME_TAG_COMP_MESH, child->GetLineNumber(), FWGLOG_ENDVAL);
+				return FWG_E_XML_INVALID_TAG_ERROR;
+			}
+			
+			if(FWG_FAILED(result = CreateMesh(child, meshName, spMesh)))
+			{
+				// found unknown tag
+				FWGLOG_ERROR_FORMAT(wxT("Create mesh failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+				return result;
+			}
+
+		} else if(child->GetName() == GAME_TAG_ITEM_MATERIAL_REF) {
+			wxString materialRef;
+			if (!spMaterial.IsEmpty())
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Tag '%s' is duplicate on line: %d"),
+						m_spLogger, GAME_TAG_ITEM_MATERIAL_REF, child->GetLineNumber(), FWGLOG_ENDVAL);
+				return FWG_E_XML_INVALID_TAG_ERROR;
+			}
+			
+			// get value
+			if(!child->GetAttribute(GAME_ATTR_VALUE_STR, &materialRef))
+			{
+				FWGLOG_ERROR_FORMAT(wxT("'%s' attribut for '%s' is missing on line: %d"),
+						m_spLogger, GAME_ATTR_VALUE_STR, GAME_TAG_ITEM_MATERIAL_REF, child->GetLineNumber(), FWGLOG_ENDVAL);
+				return FWG_E_XML_ATTR_NOT_FOUND_ERROR;
+			}
+
+			// find mesh in definition holder
+			if(defHolder.m_materialDefs.Exists(materialRef))
+			{
+				spMaterial = *defHolder.m_materialDefs.FindValue(materialRef);
+			} else {
+				FWGLOG_ERROR_FORMAT(wxT("Referenced material '%s' in tag '%s' does not exists on line: %d"),
+						m_spLogger, materialRef.GetData().AsInternal(), GAME_TAG_ITEM_MATERIAL_REF, child->GetLineNumber(), FWGLOG_ENDVAL);
+				return FWG_E_XML_INVALID_ATTR_ERROR;
+			}
+		} else if(child->GetName() == GAME_TAG_COMP_MATERIAL) {
+			wxString materialName;
+			if (!spMaterial.IsEmpty())
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Tag '%s' is duplicate on line: %d"),
+						m_spLogger, GAME_TAG_ITEM_MATERIAL_REF, child->GetLineNumber(), FWGLOG_ENDVAL);
+				return FWG_E_XML_INVALID_TAG_ERROR;
+			}
+			if(FWG_FAILED(result = CreateMaterial(child, materialName, spMaterial)))
+			{
+				// found unknown tag
+				FWGLOG_ERROR_FORMAT(wxT("Create material failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+				return result;
+			}
+		} else if(child->GetName() == GAME_TAG_ITEM_POSITION) {
+			if(positionFound)
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Tag '%s' is duplicate on line: %d"),
+						m_spLogger, GAME_TAG_ITEM_POSITION, child->GetLineNumber(), FWGLOG_ENDVAL);
+				return FWG_E_XML_INVALID_TAG_ERROR;
+			}
+			
+			if(FWG_FAILED(result = GetAttrXYZ(child, position)))
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Read the position on line %d failed: 0x%08x"), m_spLogger, child->GetLineNumber(), result, FWGLOG_ENDVAL);
+				return result;
+			}
+			positionFound = true;
 		} else {
 			// found unknown tag
 			FWGLOG_ERROR_FORMAT(wxT("Unknown tag ['%s'] on line: %d"),
@@ -530,19 +646,173 @@ GameErrorCode GameXmlResourceLoader::CreateRenderEntity(wxXmlNode* pNode, GameDe
 		
 	}
 	
-	if (!materialNameFound)
+	if (spMesh.IsEmpty()||spMaterial.IsEmpty()||(!positionFound))
 	{
-		FWGLOG_ERROR_FORMAT(wxT("Tag '%s' is missing within tag '%s' on line: %d"),
-						m_spLogger, GAME_TAG_ITEM_MATERIALNAME, pNode->GetName().GetData().AsInternal(), child->GetLineNumber(), FWGLOG_ENDVAL);
+		FWGLOG_ERROR_FORMAT(wxT("Tag '%s' has not all children (mesh[%d], material[%d], position[%d]) line: %d"),
+						m_spLogger,
+						pNode->GetName().GetData().AsInternal(),
+						static_cast<int>(!spMesh.IsEmpty()),
+						static_cast<int>(!spMaterial.IsEmpty()),
+						static_cast<int>(positionFound),
+						pNode->GetLineNumber(),
+						FWGLOG_ENDVAL);
 		return FWG_E_XML_TAG_NOT_FOUND_ERROR;
+	}
+
+	// get name attribute
+	if(!pNode->GetAttribute(GAME_ATTR_NAME_STR, &name))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Tag '%s' has no name (name is mandatory in this case) line: %d"),
+						m_spLogger,
+						pNode->GetName().GetData().AsInternal(),
+						pNode->GetLineNumber(),
+						FWGLOG_ENDVAL);
+		return FWG_E_XML_ATTR_NOT_FOUND_ERROR;
 	}
 	
 	// create mesh
 	FWG_RETURN_FAIL(GameNewChecked(spDef.OutRef()));
-	spDef.In()->m_name = materialName;
-	
-	// get name attribute
-	name = pNode->GetAttribute(GAME_ATTR_NAME_STR);
+	spDef.In()->m_mesh = spMesh;
+	spDef.In()->m_material = spMaterial;
+	spDef.In()->m_position = position;
 	
 	return FWG_NO_ERROR;
 }
+
+GameErrorCode GameXmlResourceLoader::CreateCamera(wxXmlNode* pNode, wxString& name, RefObjSmPtr<CameraDef>& spCameraDef)
+{	
+	GameErrorCode result = FWG_NO_ERROR;
+	Ogre::Vector3 position;
+	Ogre::Vector3 direction;
+	
+	bool positionFound = false;
+	bool directionFound = false;
+	
+	wxXmlNode *child = pNode->GetChildren();
+	while (child)
+	{
+		if(child->GetName() == GAME_TAG_ITEM_POSITION) 
+		{
+			if(positionFound)
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Tag '%s' is duplicate on line: %d"),
+						m_spLogger, GAME_TAG_ITEM_POSITION, child->GetLineNumber(), FWGLOG_ENDVAL);
+				return FWG_E_XML_INVALID_TAG_ERROR;
+			}
+			
+			if(FWG_FAILED(result = GetAttrXYZ(child, position)))
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Read the position on line %d failed: 0x%08x"), m_spLogger, child->GetLineNumber(), result, FWGLOG_ENDVAL);
+				return result;
+			}
+			positionFound = true;
+		} else if(child->GetName() == GAME_TAG_ITEM_DIRECTION) {
+			if(directionFound)
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Tag '%s' is duplicate on line: %d"),
+						m_spLogger, GAME_TAG_ITEM_DIRECTION, child->GetLineNumber(), FWGLOG_ENDVAL);
+				return FWG_E_XML_INVALID_TAG_ERROR;
+			}
+			
+			if(FWG_FAILED(result = GetAttrXYZ(child, direction)))
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Read the direction on line %d failed: 0x%08x"), m_spLogger, child->GetLineNumber(), result, FWGLOG_ENDVAL);
+				return result;
+			}
+			directionFound = true;
+		} else {
+			// found unknown tag
+			FWGLOG_ERROR_FORMAT(wxT("Unknown tag ['%s'] on line: %d"),
+								m_spLogger,
+								child->GetName().GetData().AsInternal(),
+								child->GetLineNumber(),
+								FWGLOG_ENDVAL);
+			return FWG_E_XML_UNKNOWN_TAG_ERROR;
+		}
+		
+		child = child->GetNext();
+		
+	}
+	
+	if (!directionFound||!positionFound)
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Tag '%s' has not all children (position[%d], direction[%d]) line: %d"),
+						m_spLogger,
+						pNode->GetName().GetData().AsInternal(),
+						static_cast<int>(positionFound),
+						static_cast<int>(directionFound),
+						pNode->GetLineNumber(),
+						FWGLOG_ENDVAL);
+		return FWG_E_XML_TAG_NOT_FOUND_ERROR;
+	}
+
+	// get name attribute
+	if(!pNode->GetAttribute(GAME_ATTR_NAME_STR, &name))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Tag '%s' has no name (name is mandatory in this case) line: %d"),
+						m_spLogger,
+						pNode->GetName().GetData().AsInternal(),
+						pNode->GetLineNumber(),
+						FWGLOG_ENDVAL);
+		return FWG_E_XML_ATTR_NOT_FOUND_ERROR;
+	}
+	
+	// create camera
+	FWG_RETURN_FAIL(GameNewChecked(spCameraDef.OutRef()));
+	spCameraDef.In()->m_position = position;
+	spCameraDef.In()->m_direction = direction;
+	
+	return FWG_NO_ERROR;
+}
+
+GameErrorCode GameXmlResourceLoader::GetAttrXYZ(wxXmlNode* pNode, Ogre::Vector3 &vector)
+{
+	wxString xyzStr;
+	wxArrayString arrStr;
+	double dTemp;
+	Ogre::Vector3 tempVec;
+	if(!pNode->GetAttribute(GAME_ATTR_XYZ_STR, &xyzStr))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Tag '%s' has not attribute '%s' - line: %d"),
+						m_spLogger, pNode->GetName().GetData().AsInternal(), GAME_ATTR_XYZ_STR, pNode->GetLineNumber(), FWGLOG_ENDVAL);
+		return FWG_E_XML_ATTR_NOT_FOUND_ERROR;
+	}	
+	
+	arrStr = wxStringTokenize (xyzStr, wxString(wxT(",;")), wxTOKEN_RET_EMPTY_ALL);
+	
+	// check count
+	if(arrStr.GetCount() != 3)
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Attribute '%s' from tag '%s' on line %d, contains wrong number of items (%d)"),
+						m_spLogger, GAME_ATTR_XYZ_STR, pNode->GetName().GetData().AsInternal(),
+						pNode->GetLineNumber(),
+						arrStr.GetCount(),
+						FWGLOG_ENDVAL);
+		return FWG_E_INVALID_PARAMETER_ERROR;
+	}
+	
+	for ( wxInt32 i = 0; i < 3; i++)
+	{
+		if(!arrStr.Item(i).ToDouble(&dTemp))
+		{
+			FWGLOG_ERROR_FORMAT(wxT("Cannot convert item '%s' ( idx=[ %d ] ) to number: attribute '%s' from tag '%s' on line %d"),
+						m_spLogger,
+						arrStr.Item(i).GetData().AsInternal(),
+						i,
+						GAME_ATTR_XYZ_STR,
+						pNode->GetName().GetData().AsInternal(),
+						pNode->GetLineNumber(),
+						FWGLOG_ENDVAL);
+			return FWG_E_INVALID_PARAMETER_ERROR;
+		}
+		
+		tempVec[i] = static_cast<Ogre::Real>(dTemp);
+		
+	}
+	
+	vector = tempVec;
+	
+	return FWG_NO_ERROR;
+}
+
+
