@@ -166,7 +166,45 @@ GameErrorCode GameXmlResourceLoader::LoadEntities(wxXmlNode* pNode, GameDefiniti
 
 GameErrorCode GameXmlResourceLoader::LoadInput(wxXmlNode* pNode, GameDefinitionHolder& defHolder)
 {
-	return FWG_E_NOT_IMPLEMENTED_ERROR;
+	GameErrorCode result = FWG_NO_ERROR;
+	wxXmlNode* child = pNode->GetChildren();
+	while(child)
+	{
+		if(child->GetName() == GAME_TAG_COMP_INPUT) 
+		{
+			wxString materialName;
+			RefObjSmPtr<NameDef> spMaterial;
+			
+			if(FWG_FAILED(result = CreateMaterial(child, materialName, spMaterial)))
+			{
+				// found unknown tag
+				FWGLOG_ERROR_FORMAT(wxT("Create mesh failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+				return result;
+			}
+
+			if(FWG_FAILED(result = defHolder.InsertDef<NameDef>( materialName, spMaterial, defHolder.m_materialDefs )))
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Add material '%s' to definition holder from line '%d' failed: 0x%08x"),
+									m_spLogger, materialName.GetData().AsInternal(), child->GetLineNumber(), result, FWGLOG_ENDVAL);
+				return result;
+			}
+		} else {
+			// found unknown tag
+			FWGLOG_ERROR_FORMAT(wxT("Unknown tag ['%s'] on line: %d"),
+								m_spLogger,
+								child->GetName().GetData().AsInternal(),
+								child->GetLineNumber(),
+								FWGLOG_ENDVAL);
+			return FWG_E_XML_UNKNOWN_TAG_ERROR;
+		}
+		
+		
+		
+		child = child->GetNext();
+	}
+	
+	
+	return FWG_NO_ERROR;
 }
 
 GameErrorCode GameXmlResourceLoader::LoadLogic(wxXmlNode* pNode, GameDefinitionHolder& defHolder)
@@ -262,7 +300,45 @@ GameErrorCode GameXmlResourceLoader::LoadMeshes(wxXmlNode* pNode, GameDefinition
 
 GameErrorCode GameXmlResourceLoader::LoadRenderDef(wxXmlNode* pNode, GameDefinitionHolder& defHolder)
 {
-	return FWG_E_NOT_IMPLEMENTED_ERROR;
+	GameErrorCode result = FWG_NO_ERROR;
+	wxXmlNode* child = pNode->GetChildren();
+	while(child)
+	{
+		if(child->GetName() == GAME_TAG_COMP_RENDER) 
+		{
+			wxString renderName;
+			RefObjSmPtr<RenderDef> spRenderDef;
+			
+			if(FWG_FAILED(result = CreateRender(child, defHolder, renderName, spRenderDef)))
+			{
+				// found unknown tag
+				FWGLOG_ERROR_FORMAT(wxT("Create render component failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+				return result;
+			}
+
+			if(FWG_FAILED(result = defHolder.InsertDef<RenderDef>( renderName, spRenderDef, defHolder.m_renderDefs )))
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Add render component '%s' to definition holder from line '%d' failed: 0x%08x"),
+									m_spLogger, meshName.GetData().AsInternal(), child->GetLineNumber(), result, FWGLOG_ENDVAL);
+				return result;
+			}
+		} else {
+			// found unknown tag
+			FWGLOG_ERROR_FORMAT(wxT("Unknown tag ['%s'] on line: %d"),
+								m_spLogger,
+								child->GetName().GetData().AsInternal(),
+								child->GetLineNumber(),
+								FWGLOG_ENDVAL);
+			return FWG_E_XML_UNKNOWN_TAG_ERROR;
+		}
+		
+		
+		
+		child = child->GetNext();
+	}
+	
+	
+	return FWG_NO_ERROR;
 }
 
 GameErrorCode GameXmlResourceLoader::LoadRenderEntities(wxXmlNode* pNode, GameDefinitionHolder& defHolder)
@@ -412,6 +488,7 @@ GameErrorCode GameXmlResourceLoader::ParseScene(wxXmlNode* pNode, GameDefinition
 
 GameErrorCode GameXmlResourceLoader::CreateMesh(wxXmlNode* pNode, wxString& name, RefObjSmPtr<NameDef>& spDef)
 {
+	GameErrorCode result = FWG_NO_ERROR;
 	wxString meshName;
 	bool meshNameFound = false;
 	wxXmlNode *child = pNode->GetChildren();
@@ -428,13 +505,13 @@ GameErrorCode GameXmlResourceLoader::CreateMesh(wxXmlNode* pNode, wxString& name
 			
 			// set meshName as found
 			meshNameFound = true;				
-				
-			if(!child->GetAttribute(GAME_ATTR_VALUE_STR, &meshName))
+			
+			if(FWG_FAILED(result = GetAttrValue(child, meshName)))
 			{
-				FWGLOG_ERROR_FORMAT(wxT("'%s' attribut for '%s' is missing on line: %d"),
-						m_spLogger, GAME_ATTR_VALUE_STR, GAME_TAG_ITEM_MESHNAME, child->GetLineNumber(), FWGLOG_ENDVAL);
-				return FWG_E_XML_ATTR_NOT_FOUND_ERROR;
-			}			
+				FWGLOG_ERROR_FORMAT(wxT("Get mesh name value failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+				return result;
+			}
+
 		} else {
 			// found unknown tag
 			FWGLOG_ERROR_FORMAT(wxT("Unknown tag ['%s'] on line: %d"),
@@ -468,6 +545,7 @@ GameErrorCode GameXmlResourceLoader::CreateMesh(wxXmlNode* pNode, wxString& name
 
 GameErrorCode GameXmlResourceLoader::CreateMaterial(wxXmlNode* pNode, wxString& name, RefObjSmPtr<NameDef>& spDef)
 {
+	GameErrorCode result = FWG_NO_ERROR;
 	wxString materialName;
 	bool materialNameFound = false;
 	wxXmlNode *child = pNode->GetChildren();
@@ -484,13 +562,14 @@ GameErrorCode GameXmlResourceLoader::CreateMaterial(wxXmlNode* pNode, wxString& 
 			
 			// set meshName as found
 			materialNameFound = true;				
-				
-			if(!child->GetAttribute(GAME_ATTR_VALUE_STR, &materialName))
+			
+			if(FWG_FAILED(result = GetAttrValue(child, materialName)))
 			{
-				FWGLOG_ERROR_FORMAT(wxT("'%s' attribut for '%s' is missing on line: %d"),
-						m_spLogger, GAME_ATTR_VALUE_STR, GAME_TAG_ITEM_MATERIALNAME, child->GetLineNumber(), FWGLOG_ENDVAL);
-				return FWG_E_XML_ATTR_NOT_FOUND_ERROR;
-			}			
+				FWGLOG_ERROR_FORMAT(wxT("Get material name value failed: 0x%08x"),
+						m_spLogger, result, FWGLOG_ENDVAL);
+				return result;
+			}
+			
 		} else {
 			// found unknown tag
 			FWGLOG_ERROR_FORMAT(wxT("Unknown tag ['%s'] on line: %d"),
@@ -544,12 +623,11 @@ GameErrorCode GameXmlResourceLoader::CreateRenderEntity(wxXmlNode* pNode, GameDe
 				return FWG_E_XML_INVALID_TAG_ERROR;
 			}
 			
-			// get value
-			if(!child->GetAttribute(GAME_ATTR_VALUE_STR, &meshRef))
+			
+			if(FWG_FAILED(result = GetAttrValue(child, meshRef)))
 			{
-				FWGLOG_ERROR_FORMAT(wxT("'%s' attribut for '%s' is missing on line: %d"),
-						m_spLogger, GAME_ATTR_VALUE_STR, GAME_TAG_ITEM_MESH_REF, child->GetLineNumber(), FWGLOG_ENDVAL);
-				return FWG_E_XML_ATTR_NOT_FOUND_ERROR;
+				FWGLOG_ERROR_FORMAT(wxT("Get value failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+				return result;
 			}
 
 			// find mesh in definition holder
@@ -587,14 +665,12 @@ GameErrorCode GameXmlResourceLoader::CreateRenderEntity(wxXmlNode* pNode, GameDe
 				return FWG_E_XML_INVALID_TAG_ERROR;
 			}
 			
-			// get value
-			if(!child->GetAttribute(GAME_ATTR_VALUE_STR, &materialRef))
+			if(FWG_FAILED(result = GetAttrValue(child, materialRef)))
 			{
-				FWGLOG_ERROR_FORMAT(wxT("'%s' attribut for '%s' is missing on line: %d"),
-						m_spLogger, GAME_ATTR_VALUE_STR, GAME_TAG_ITEM_MATERIAL_REF, child->GetLineNumber(), FWGLOG_ENDVAL);
-				return FWG_E_XML_ATTR_NOT_FOUND_ERROR;
+				FWGLOG_ERROR_FORMAT(wxT("Get materialref value failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+				return result;
 			}
-
+			
 			// find mesh in definition holder
 			if(defHolder.m_materialDefs.Exists(materialRef))
 			{
@@ -765,6 +841,85 @@ GameErrorCode GameXmlResourceLoader::CreateCamera(wxXmlNode* pNode, wxString& na
 	return FWG_NO_ERROR;
 }
 
+GameErrorCode GameXmlResourceLoader::CreateRender(wxXmlNode* pNode, GameDefinitionHolder& defHolder, wxString& name, RefObjSmPtr<RenderDef>& spDef)
+{
+	GameErrorCode result = FWG_NO_ERROR;
+	wxString tempValue;
+	
+	RefObjSmPtr<RenderDef> spRenderDef;
+	wxXmlNode *child = pNode->GetChildren();
+	
+	// create new render component
+	FWG_RETURN_FAIL(GameNewChecked(spRenderDef.OutRef()));
+	
+	while (child)
+	{
+		if(child->GetName() == GAME_TAG_ITEM_RENDER_REF) 
+		{
+			tempValue.Clear(); // clear tempValue for sure
+			RefObjSmPtr<RenderEntityDef> spRenderEntDef;
+			
+			
+			if(FWG_FAILED(result = GetAttrValue(child, tempValue)))
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Read value: 0x%08x"), m_spLogger, child->GetLineNumber(), result, FWGLOG_ENDVAL);
+				return result;
+			}
+			
+			if(defHolder.m_renderEntityDefs.Exists(tempValue))
+			{
+				spRenderEntDef = *defHolder.m_renderEntityDefs.FindValue(tempValue);
+			}
+			
+			spRenderDef.In()->m_entities.Insert(spRenderEntDef);
+			
+		} else if(child->GetName() == GAME_TAG_ITEM_CAMERA_REF) {
+			
+			RefObjSmPtr<CameraDef> spCameraDef;
+			if(FWG_FAILED(result = GetAttrValue(child, tempValue)))
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Get value for cameraref failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+				return result;
+			}
+			
+			if(defHolder.m_cameraDefs.Exists(tempValue))
+			{
+				spCameraDef = *defHolder.m_cameraDefs.FindValue(tempValue);
+			}
+			
+			spRenderDef.In()->m_cameras.Insert(spCameraDef);
+			
+		} else {
+			// found unknown tag
+			FWGLOG_ERROR_FORMAT(wxT("Unknown tag ['%s'] on line: %d"),
+								m_spLogger,
+								child->GetName().GetData().AsInternal(),
+								child->GetLineNumber(),
+								FWGLOG_ENDVAL);
+			return FWG_E_XML_UNKNOWN_TAG_ERROR;
+		}
+		
+		child = child->GetNext();
+		
+	}
+	
+	// get name attribute
+	if(!pNode->GetAttribute(GAME_ATTR_NAME_STR, &name))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Tag '%s' has no name (name is mandatory in this case) line: %d"),
+						m_spLogger,
+						pNode->GetName().GetData().AsInternal(),
+						pNode->GetLineNumber(),
+						FWGLOG_ENDVAL);
+		return FWG_E_XML_ATTR_NOT_FOUND_ERROR;
+	}
+	
+	// set return value
+	spDef = spRenderDef;
+	
+	return FWG_NO_ERROR;
+}
+
 GameErrorCode GameXmlResourceLoader::GetAttrXYZ(wxXmlNode* pNode, Ogre::Vector3 &vector)
 {
 	wxString xyzStr;
@@ -815,4 +970,20 @@ GameErrorCode GameXmlResourceLoader::GetAttrXYZ(wxXmlNode* pNode, Ogre::Vector3 
 	return FWG_NO_ERROR;
 }
 
+GameErrorCode GameXmlResourceLoader::GetAttrValue(wxXmlNode *pNode, wxString &value)
+{
+	wxString tempValue;
+	// get value
+	if(!pNode->GetAttribute(GAME_ATTR_VALUE_STR, &tempValue))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("'%s' attribut from tag '%s' is missing on line: %d"),
+				m_spLogger, GAME_ATTR_VALUE_STR, pNode->GetName().GetData().AsInternal(), pNode->GetLineNumber(), FWGLOG_ENDVAL);
+		return FWG_E_XML_ATTR_NOT_FOUND_ERROR;
+	}
+	
+	// swap string containers
+	value.swap(tempValue);
+	
+	return FWG_NO_ERROR;
+}
 

@@ -20,6 +20,10 @@ static const wxChar* GAME_TAG_COMP_MESH 			= wxT("mesh");
 static const wxChar* GAME_TAG_COMP_MATERIAL 		= wxT("material");
 static const wxChar* GAME_TAG_COMP_RENDER_ENT 		= wxT("renderent");
 static const wxChar* GAME_TAG_COMP_CAMERA	 		= wxT("camera");
+static const wxChar* GAME_TAG_COMP_RENDER	 		= wxT("render");
+static const wxChar* GAME_TAG_COMP_INPUT	 		= wxT("input");
+static const wxChar* GAME_TAG_COMP_LOGIC	 		= wxT("logic");
+
 
 
 // component item tags 
@@ -31,11 +35,22 @@ static const wxChar* GAME_TAG_ITEM_DIRECTION		= wxT("direction");
 
 
 // component item tags references
-static const wxChar* GAME_TAG_ITEM_MESH_REF			= wxT("meshref");
-static const wxChar* GAME_TAG_ITEM_MATERIAL_REF		= wxT("materialref");
+static const wxChar* GAME_TAG_ITEM_MESH_REF				= wxT("meshref");
+static const wxChar* GAME_TAG_ITEM_MATERIAL_REF			= wxT("materialref");
+static const wxChar* GAME_TAG_ITEM_RENDER_ENTITY_REF	= wxT("renderentref");
+static const wxChar* GAME_TAG_ITEM_CAMERA_REF			= wxT("cameraref");
+static const wxChar* GAME_TAG_ITEM_RENDER_REF			= wxT("renderref");
+static const wxChar* GAME_TAG_ITEM_INPUT_REF			= wxT("inputref");
+static const wxChar* GAME_TAG_ITEM_LOGIC_REF			= wxT("logicref");
 
 
-//component refs tags
+
+//input component tags
+static const wxChar* GAME_TAG_INPUT_UP				= wxT("up");
+static const wxChar* GAME_TAG_INPUT_DOWN			= wxT("down");
+static const wxChar* GAME_TAG_INPUT_LEFT			= wxT("left");
+static const wxChar* GAME_TAG_INPUT_RIGHT			= wxT("right");
+
 
 //attribute names
 static const wxChar* GAME_ATTR_NAME_STR				= wxT("name");
@@ -45,6 +60,7 @@ static const wxChar* GAME_ATTR_XYZ_STR				= wxT("xyz");
 //////////////////////////////////////
 /////      Attribute values      /////
 //////////////////////////////////////
+
 
 // disciplines
 static const wxChar* DISCIPLINE_CAMOUFLAGE_STR			= wxT("camouflage");

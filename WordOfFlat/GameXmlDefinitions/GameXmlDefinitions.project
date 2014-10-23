@@ -23,6 +23,7 @@
   <VirtualDirectory Name="include">
     <File Name="gxmlloader.h"/>
     <File Name="gxmldefs.h"/>
+    <File Name="gxmlkeydefs.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="src">
     <File Name="gxmlloader.cpp"/>
