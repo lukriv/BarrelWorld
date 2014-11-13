@@ -5,13 +5,13 @@
 #include <map>
 #include "gerror.h"
 
-template<typename key, typename value>
+template<typename key, typename value, typename compare = std::less<key>>
 class GameBasMap {
-	typedef std::map<key,value> TInternalMap;
+	typedef std::map<key,value,compare> TInternalMap;
 	typedef std::pair<key,value> TInternalMapPair;
 public:
-	typedef typename std::map<key,value>::iterator Iterator;
-	typedef typename std::map<key,value>::const_iterator ConstIterator;
+	typedef typename std::map<key,value,compare>::iterator Iterator;
+	typedef typename std::map<key,value,compare>::const_iterator ConstIterator;
 
 private:
 	TInternalMap m_innerMap;
@@ -113,6 +113,8 @@ public:
 	inline Iterator End() { return static_cast<Iterator>(m_innerMap.end()); }
 	
 	inline bool IsEmpty() { return m_innerMap.empty(); }
+	
+	inline size_t Size() { return m_innerMap.size(); }
 	
 	inline void Clear()
 	{

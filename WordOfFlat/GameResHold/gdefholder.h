@@ -3,6 +3,7 @@
 
 #include <GameSystem/gdefs.h>
 #include <GameSystem/refobject.h>
+#include <GameSystem/refobjectimpl.h>
 #include <GameSystem/gmap.h>
 #include "gdeftables.h"
 
@@ -17,18 +18,16 @@ typedef GameBasMap<wxString, RefObjSmPtr<InputDef> > TInputDefMap;
 typedef GameBasMap<wxString, RefObjSmPtr<LogicDef> > TLogicDefMap;
 typedef GameBasMap<wxString, RefObjSmPtr<EntityDef> > TEntityDefMap;
 
-class GameDefinitionHolder : public IRefObject {
-private:
-	wxAtomicInt m_refCount;
+class GameDefinitionHolder : public RefObjectImpl<IRefObject> {
 public:
-	GameDefinitionHolder() : m_refCount(1) {}
+	GameDefinitionHolder() {}
 	
 	template <typename T>
 	GameErrorCode InsertDef(const wxString& name, RefObjSmPtr<T> &spDef, GameBasMap<wxString, RefObjSmPtr<T> > &basMap)
 	{
 		typename GameBasMap<wxString, RefObjSmPtr<T> >::Iterator iter;
 		FWG_RETURN_FAIL(basMap.Insert( name, spDef, iter ));
-		spDef->SetName(&(iter->first));
+		spDef->SetName(name);
 		
 		return FWG_NO_ERROR;
 	}
@@ -44,9 +43,6 @@ public:
 	TLogicDefMap m_logicDefs;
 	TEntityDefMap m_entityDefs;
 	
-
-	virtual void addRef();
-	virtual wxInt32 release();
 };
 
 

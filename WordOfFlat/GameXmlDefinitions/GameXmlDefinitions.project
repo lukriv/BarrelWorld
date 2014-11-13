@@ -19,7 +19,6 @@
   </Plugins>
   <Description/>
   <Dependencies/>
-  <Dependencies Name="Debug"/>
   <VirtualDirectory Name="include">
     <File Name="gxmlloader.h"/>
     <File Name="gxmldefs.h"/>
@@ -34,7 +33,7 @@
   </VirtualDirectory>
   <Settings Type="Static Library">
     <GlobalSettings>
-      <Compiler Options="-std=c++11" C_Options="" Assembler="">
+      <Compiler Options="-Wall;-Wno-unused-local-typedefs;-std=c++11" C_Options="" Assembler="">
         <IncludePath Value="../../extern/include"/>
         <IncludePath Value="../../extern/include/OGRE"/>
         <IncludePath Value="../../WordOfFlat"/>
@@ -52,7 +51,7 @@
         <LibraryPath Value="Debug"/>
       </Linker>
       <ResourceCompiler Options="" Required="no"/>
-      <General OutputFile="$(IntermediateDirectory)/lib$(ProjectName).a" IntermediateDirectory="./Debug" Command="" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="./Debug" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="no"/>
+      <General OutputFile="$(IntermediateDirectory)/lib$(ProjectName).a" IntermediateDirectory="./Debug" Command="" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="./Debug" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
         <![CDATA[]]>
       </Environment>
@@ -85,4 +84,5 @@
       </Completion>
     </Configuration>
   </Settings>
+  <Dependencies Name="Debug"/>
 </CodeLite_Project>

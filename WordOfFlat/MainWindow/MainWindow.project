@@ -38,20 +38,6 @@
     <File Name="ginputsystem.h"/>
     <File Name="gmainlogic.h"/>
   </VirtualDirectory>
-  <Dependencies Name="Debug">
-    <Project Name="GameSystem"/>
-    <Project Name="GameResHold"/>
-    <Project Name="GameLoader"/>
-    <Project Name="GameComp"/>
-    <Project Name="WorldCli"/>
-  </Dependencies>
-  <Dependencies Name="Release">
-    <Project Name="GameSystem"/>
-    <Project Name="GameResHold"/>
-    <Project Name="GameLoader"/>
-    <Project Name="GameComp"/>
-    <Project Name="WorldCli"/>
-  </Dependencies>
   <Settings Type="Executable">
     <GlobalSettings>
       <Compiler Options="-Wall;-Wno-unused-local-typedefs;-std=c++11" C_Options="" Assembler="">
@@ -163,4 +149,18 @@
       </Completion>
     </Configuration>
   </Settings>
+  <Dependencies Name="Debug">
+    <Project Name="GameSystem"/>
+    <Project Name="GameResHold"/>
+    <Project Name="GameLoader"/>
+    <Project Name="GameComp"/>
+    <Project Name="WorldCli"/>
+  </Dependencies>
+  <Dependencies Name="Release">
+    <Project Name="GameSystem"/>
+    <Project Name="GameResHold"/>
+    <Project Name="GameLoader"/>
+    <Project Name="GameComp"/>
+    <Project Name="WorldCli"/>
+  </Dependencies>
 </CodeLite_Project>

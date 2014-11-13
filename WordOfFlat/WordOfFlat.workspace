@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Workspace Name="WordOfFlat" Database="./WordOfFlat.tags">
-  <Project Name="MainWindow" Path="MainWindow/MainWindow.project" Active="Yes"/>
+  <Project Name="MainWindow" Path="MainWindow/MainWindow.project" Active="No"/>
   <Project Name="GameSystem" Path="GameSystem/GameSystem.project" Active="No"/>
   <Project Name="WorldSrv" Path="WorldSrv/WorldSrv.project" Active="No"/>
   <Project Name="WorldCli" Path="WorldCli/WorldCli.project" Active="No"/>
@@ -10,11 +10,11 @@
   <Project Name="GameResHold" Path="GameResHold/GameResHold.project" Active="No"/>
   <Project Name="GameLoader" Path="GameLoader/GameLoader.project" Active="No"/>
   <Project Name="GameComp" Path="GameComp/GameComp.project" Active="No"/>
-  <Project Name="Extern" Path="Extern/Extern.project" Active="No"/>
   <Project Name="GameXmlDefinitions" Path="GameXmlDefinitions/GameXmlDefinitions.project" Active="No"/>
   <Environment>
     <![CDATA[]]>
   </Environment>
+  <Project Name="Extern" Path="Extern/Extern.project" Active="Yes"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="no">
       <Project Name="GameComm" ConfigName="Debug"/>
@@ -27,8 +27,8 @@
       <Project Name="WorldCli" ConfigName="Debug"/>
       <Project Name="WorldSrv" ConfigName="Debug"/>
       <Project Name="GameComp" ConfigName="Debug"/>
-      <Project Name="Extern" ConfigName="Debug"/>
       <Project Name="GameXmlDefinitions" ConfigName="Debug"/>
+      <Project Name="Extern" ConfigName="Debug"/>
     </WorkspaceConfiguration>
     <WorkspaceConfiguration Name="Release" Selected="yes">
       <Project Name="GameComm" ConfigName="Release"/>
@@ -41,8 +41,8 @@
       <Project Name="WorldCli" ConfigName="Release"/>
       <Project Name="WorldSrv" ConfigName="Release"/>
       <Project Name="GameComp" ConfigName="Release"/>
-      <Project Name="Extern" ConfigName="Debug"/>
       <Project Name="GameXmlDefinitions" ConfigName="Debug"/>
+      <Project Name="Extern" ConfigName="Debug"/>
     </WorkspaceConfiguration>
   </BuildMatrix>
 </CodeLite_Workspace>

@@ -26,17 +26,22 @@ private:
 	GameErrorCode LoadAnimators(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
 	GameErrorCode LoadInput(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
 	GameErrorCode LoadLogic(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
-	GameErrorCode LoadEntities(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
-	
+		
 	GameErrorCode CreateMesh(wxXmlNode* pNode, wxString& name, RefObjSmPtr<NameDef> &spDef);
 	GameErrorCode CreateMaterial(wxXmlNode* pNode, wxString& name, RefObjSmPtr<NameDef> &spDef);
 	GameErrorCode CreateRenderEntity(wxXmlNode* pNode, GameDefinitionHolder& defHolder, wxString& name, RefObjSmPtr<RenderEntityDef> &spDef);
 	GameErrorCode CreateRender(wxXmlNode* pNode, GameDefinitionHolder& defHolder, wxString& name, RefObjSmPtr<RenderDef> &spDef);
 	GameErrorCode CreateCamera(wxXmlNode* pNode, wxString& name, RefObjSmPtr<CameraDef> &spCameraDef);
+	GameErrorCode CreateInput(wxXmlNode* pNode, wxString& name, RefObjSmPtr<InputDef> &spInputDef);
+	GameErrorCode CreateLogic(wxXmlNode* pNode, wxString& name, RefObjSmPtr<LogicDef> &spLogicDef);
+	GameErrorCode CreateEntity(wxXmlNode* pNode, GameDefinitionHolder& defHolder, wxString& name, RefObjSmPtr<EntityDef> &spEntity);
+	GameErrorCode CreateTransform(wxXmlNode* pNode, RefObjSmPtr<TransformDef> &spTransform);
 	
 	
 	GameErrorCode GetAttrXYZ(wxXmlNode* pNode, Ogre::Vector3 &vector);
+	GameErrorCode GetAttrQuat(wxXmlNode* pNode, Ogre::Quaternion &quat);
 	GameErrorCode GetAttrValue(wxXmlNode *pNode, wxString &value);
+	GameErrorCode GetKeyValue(wxXmlNode *pNode, wxString &action, wxInt32 &keyCode);
 public:
 	GameXmlResourceLoader() : m_isInitialized(false) {}
 	~GameXmlResourceLoader() {}
@@ -56,7 +61,7 @@ public:
 	GameErrorCode Initialize(const wxChar *xmlFileName, const wxChar *xmlFilePath = nullptr, GameLogger *pLogger = nullptr);
 	
 public:
-	virtual GameErrorCode Load(GameDefinitionHolder& defHolder);
+	virtual GameErrorCode Load(GameDefinitionHolder& defHolder) override;
 
 };
 

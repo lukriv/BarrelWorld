@@ -8,6 +8,7 @@
 
 class IGameDefLoader {
 public:
+	virtual ~IGameDefLoader() {}
 	virtual GameErrorCode Load(GameDefinitionHolder &defHolder) = 0;
 	
 };

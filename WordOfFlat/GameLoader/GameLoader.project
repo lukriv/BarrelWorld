@@ -34,8 +34,6 @@
   <VirtualDirectory Name="include">
     <File Name="gtestloader.h"/>
   </VirtualDirectory>
-  <Dependencies Name="Release"/>
-  <Dependencies Name="Debug"/>
   <Settings Type="Static Library">
     <GlobalSettings>
       <Compiler Options="-Wall;-std=c++11" C_Options="-Wall" Assembler="">
@@ -126,4 +124,6 @@
       </Completion>
     </Configuration>
   </Settings>
+  <Dependencies Name="Debug"/>
+  <Dependencies Name="Release"/>
 </CodeLite_Project>
