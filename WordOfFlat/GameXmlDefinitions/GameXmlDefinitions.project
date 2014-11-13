@@ -72,7 +72,7 @@
       </Debugger>
       <PreBuild/>
       <PostBuild/>
-      <CustomBuild Enabled="yes">
+      <CustomBuild Enabled="no">
         <RebuildCommand/>
         <CleanCommand/>
         <BuildCommand/>
