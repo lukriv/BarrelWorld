@@ -265,10 +265,10 @@ GameErrorCode GameTestResourceLoader::LoadInput(GameDefinitionHolder& defHolder)
 	
 	FWG_RETURN_FAIL(GameNewChecked(spInputDef.OutRef()));
 	
-	spInputDef.In()->m_moveUp = OIS::KC_W;
-	spInputDef.In()->m_moveDown = OIS::KC_S;
-	spInputDef.In()->m_moveLeft = OIS::KC_A;
-	spInputDef.In()->m_moveRight = OIS::KC_D;
+	FWG_RETURN_FAIL(spInputDef.In()->m_inputMap.Insert(wxT("up"), OIS::KC_W));
+	FWG_RETURN_FAIL(spInputDef.In()->m_inputMap.Insert(wxT("down"), OIS::KC_S));
+	FWG_RETURN_FAIL(spInputDef.In()->m_inputMap.Insert(wxT("left"), OIS::KC_A));
+	FWG_RETURN_FAIL(spInputDef.In()->m_inputMap.Insert(wxT("right"), OIS::KC_D));
 	
 	if(FWG_FAILED(result = defHolder.InsertDef<InputDef>( wxString(wxT("testInput")), spInputDef, defHolder.m_inputDefs )))
 	{
@@ -279,10 +279,10 @@ GameErrorCode GameTestResourceLoader::LoadInput(GameDefinitionHolder& defHolder)
 	// camera input
 	FWG_RETURN_FAIL(GameNewChecked(spInputDef.OutRef()));
 	
-	spInputDef.In()->m_moveUp = OIS::KC_I;
-	spInputDef.In()->m_moveDown = OIS::KC_K;
-	spInputDef.In()->m_moveLeft = OIS::KC_J;
-	spInputDef.In()->m_moveRight = OIS::KC_L;
+	FWG_RETURN_FAIL(spInputDef.In()->m_inputMap.Insert(wxT("up"), OIS::KC_I));
+	FWG_RETURN_FAIL(spInputDef.In()->m_inputMap.Insert(wxT("down"), OIS::KC_K));
+	FWG_RETURN_FAIL(spInputDef.In()->m_inputMap.Insert(wxT("left"), OIS::KC_J));
+	FWG_RETURN_FAIL(spInputDef.In()->m_inputMap.Insert(wxT("right"), OIS::KC_L));
 	
 	if(FWG_FAILED(result = defHolder.InsertDef<InputDef>( wxString(wxT("cameraInput")), spInputDef, defHolder.m_inputDefs )))
 	{
@@ -299,7 +299,7 @@ GameErrorCode GameTestResourceLoader::LoadLogic(GameDefinitionHolder& defHolder)
 	
 	FWG_RETURN_FAIL(GameNewChecked(spLogicDef.OutRef()));
 	
-	spLogicDef.In()->m_logicType = LogicDef::LOGIC_TYPE_MANUAL_TEST;
+	spLogicDef.In()->m_logicType = wxT("MANUAL_TEST");
 	
 	if(FWG_FAILED(result = defHolder.InsertDef<LogicDef>( wxString(wxT("manualLogic")), spLogicDef, defHolder.m_logicDefs )))
 	{

@@ -10,11 +10,11 @@
   <Project Name="GameResHold" Path="GameResHold/GameResHold.project" Active="No"/>
   <Project Name="GameLoader" Path="GameLoader/GameLoader.project" Active="No"/>
   <Project Name="GameComp" Path="GameComp/GameComp.project" Active="No"/>
-  <Project Name="Extern" Path="Extern/Extern.project" Active="No"/>
   <Project Name="GameXmlDefinitions" Path="GameXmlDefinitions/GameXmlDefinitions.project" Active="No"/>
   <Environment>
     <![CDATA[]]>
   </Environment>
+  <Project Name="Extern" Path="Extern/Extern.project" Active="No"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="no">
       <Project Name="GameComm" ConfigName="Debug"/>
@@ -27,22 +27,22 @@
       <Project Name="WorldCli" ConfigName="Debug"/>
       <Project Name="WorldSrv" ConfigName="Debug"/>
       <Project Name="GameComp" ConfigName="Debug"/>
-      <Project Name="Extern" ConfigName="Debug"/>
       <Project Name="GameXmlDefinitions" ConfigName="Debug"/>
+      <Project Name="Extern" ConfigName="Debug"/>
     </WorkspaceConfiguration>
     <WorkspaceConfiguration Name="Release" Selected="yes">
+      <Project Name="Extern" ConfigName="Debug"/>
       <Project Name="GameComm" ConfigName="Release"/>
+      <Project Name="GameComp" ConfigName="Release"/>
       <Project Name="GameLoader" ConfigName="Release"/>
       <Project Name="GameMsgCli" ConfigName="Release"/>
       <Project Name="GameMsgSrv" ConfigName="Release"/>
       <Project Name="GameResHold" ConfigName="Release"/>
       <Project Name="GameSystem" ConfigName="Release"/>
+      <Project Name="GameXmlDefinitions" ConfigName="Release"/>
       <Project Name="MainWindow" ConfigName="Release"/>
       <Project Name="WorldCli" ConfigName="Release"/>
       <Project Name="WorldSrv" ConfigName="Release"/>
-      <Project Name="GameComp" ConfigName="Release"/>
-      <Project Name="Extern" ConfigName="Debug"/>
-      <Project Name="GameXmlDefinitions" ConfigName="Debug"/>
     </WorkspaceConfiguration>
   </BuildMatrix>
 </CodeLite_Workspace>

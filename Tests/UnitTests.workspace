@@ -5,8 +5,14 @@
   <Project Name="GameMsgSrv" Path="../WordOfFlat/GameMsgSrv/GameMsgSrv.project" Active="No"/>
   <Project Name="ClientServerTests" Path="ClientServerTests/ClientServerTests.project" Active="No"/>
   <Project Name="GameComm" Path="../WordOfFlat/GameComm/GameComm.project" Active="No"/>
-  <Project Name="GameSystemTests" Path="GameSystemTests/GameSystemTests.project" Active="Yes"/>
+  <Project Name="GameSystemTests" Path="GameSystemTests/GameSystemTests.project" Active="No"/>
   <Project Name="Extern" Path="../WordOfFlat/Extern/Extern.project" Active="No"/>
+  <Project Name="XmlLoaderTests" Path="XmlLoaderTests/XmlLoaderTests.project" Active="Yes"/>
+  <Project Name="GameXmlDefinitions" Path="../WordOfFlat/GameXmlDefinitions/GameXmlDefinitions.project" Active="No"/>
+  <Environment>
+    <![CDATA[-DUNICODE]]>
+  </Environment>
+  <Project Name="GameResHold" Path="../WordOfFlat/GameResHold/GameResHold.project" Active="No"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="yes">
       <Project Name="ClientServerTests" ConfigName="Debug"/>
@@ -16,6 +22,9 @@
       <Project Name="GameSystem" ConfigName="Debug"/>
       <Project Name="GameSystemTests" ConfigName="Debug"/>
       <Project Name="Extern" ConfigName="Debug"/>
+      <Project Name="XmlLoaderTests" ConfigName="Debug"/>
+      <Project Name="GameXmlDefinitions" ConfigName="Debug"/>
+      <Project Name="GameResHold" ConfigName="Debug"/>
     </WorkspaceConfiguration>
     <WorkspaceConfiguration Name="Release" Selected="yes">
       <Project Name="GameSystem" ConfigName="Release"/>
@@ -25,9 +34,9 @@
       <Project Name="GameComm" ConfigName="Release"/>
       <Project Name="GameSystemTests" ConfigName="Release"/>
       <Project Name="Extern" ConfigName="Debug"/>
+      <Project Name="XmlLoaderTests" ConfigName="Release"/>
+      <Project Name="GameXmlDefinitions" ConfigName="Debug"/>
+      <Project Name="GameResHold" ConfigName="Release"/>
     </WorkspaceConfiguration>
   </BuildMatrix>
-  <Environment>
-    <![CDATA[-DUNICODE]]>
-  </Environment>
 </CodeLite_Workspace>

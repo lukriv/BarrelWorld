@@ -12,9 +12,12 @@ compilation.db
 cscope.out
 cscope_file.list
 
+
 Tests/ClientServerTests/Debug/
 Tests/ClientServerTests/Release/
 Tests/GameSystemTests/Debug/
+Tests/XmlLoaderTests/Debug/
+Tests/XmlLoaderTests/Release/
 WordOfFlat/GameComm/Debug/
 WordOfFlat/GameComm/Release/
 WordOfFlat/GameComp/Debug/
@@ -46,6 +49,7 @@ LoneWolf/Makefile
 Tests/ClientServerTests/ClientServerTests.txt
 Tests/GameSystemTests/GameSystemTests.txt
 Tests/Makefile
+Tests/compile_commands.json
 WordOfFlat/GameComm/GameComm.txt
 WordOfFlat/GameComp/GameComp.txt
 WordOfFlat/GameLoader/GameLoader.txt
@@ -53,10 +57,13 @@ WordOfFlat/GameMsgCli/GameMsgCli.txt
 WordOfFlat/GameMsgSrv/GameMsgSrv.txt
 WordOfFlat/GameResHold/GameResHold.txt
 WordOfFlat/GameSystem/GameSystem.txt
+WordOfFlat/GameXmlDefinitions/GameXmlDefinitions.txt
 WordOfFlat/MainWindow/MainWindow.txt
-WordOfFlat/Makefile
 WordOfFlat/WorldCli/WorldCli.txt
 WordOfFlat/WorldSrv/WorldSrv.txt
+WordOfFlat/Makefile
+WordOfFlat/compile_commands.json
+
 shmcpp/Makefile
 shmcpp/triangle/triangle.txt
 

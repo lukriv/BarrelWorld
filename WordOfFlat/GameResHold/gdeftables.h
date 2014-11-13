@@ -29,18 +29,18 @@ class DefBase : IRefObject
 {
 protected:
 	wxAtomicInt m_refCount;
-	const wxString* m_defName;
+	wxString m_defName;
 	
 public:
-	DefBase() : m_refCount(1), m_defName(NULL) {}
+	DefBase() : m_refCount(1) {}
 	virtual ~DefBase() {}
 	
-	void SetName(const wxString *pName)
+	void SetName(const wxString pName)
 	{
 		m_defName = pName;
 	}
 	
-	const wxString* GetName() const 
+	const wxString& GetName() const 
 	{
 		return m_defName;
 	}
@@ -186,35 +186,20 @@ struct AnimatorDef : public DefBase {
 
 
 struct InputDef : public DefBase {
+	typedef GameBasMap<wxString, wxInt32 > TInputMap;
 public:
-	wxInt32 m_moveUp;
-	wxInt32 m_moveDown;
-	wxInt32 m_moveLeft;
-	wxInt32 m_moveRight;
-	wxInt32 m_moveForward;
-	wxInt32 m_moveBackward;
+	TInputMap m_inputMap;
 	
 public:
-	InputDef() : m_moveUp(0)
-				, m_moveDown(0)
-				, m_moveLeft(0)
-				, m_moveRight(0)
-				, m_moveForward(0)
-				, m_moveBackward(0)
-	{}
+	InputDef() {}
 	
 };
 
 
 struct LogicDef : public DefBase {
-	enum LogicType {
-		LOGIC_TYPE_UNDEFINED 	= 0,
-		LOGIC_TYPE_MANUAL_TEST 	= 1
-	};
-	
-	LogicType m_logicType;
+	wxString m_logicType;
 public:
-	LogicDef() : m_logicType(LOGIC_TYPE_UNDEFINED) {}
+	LogicDef() {}
 };
 
 /*!

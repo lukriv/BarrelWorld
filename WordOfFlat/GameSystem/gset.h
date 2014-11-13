@@ -107,6 +107,8 @@ public:
 	
 	inline bool IsEmpty() { return m_innerSet.empty(); }
 	
+	inline size_t Size() { return m_innerSet.size(); }
+	
 	inline void Clear()
 	{
 		m_innerSet.clear();

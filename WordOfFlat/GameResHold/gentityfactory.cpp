@@ -11,6 +11,16 @@
 #include <GameComp/LogicComp/glogicman.h>
 #include <GameSystem/new.h>
 
+static const wxChar* FACTORY_INPUT_UP		 = wxT("up");
+static const wxChar* FACTORY_INPUT_DOWN		 = wxT("down");
+static const wxChar* FACTORY_INPUT_LEFT		 = wxT("left");
+static const wxChar* FACTORY_INPUT_RIGHT	 = wxT("right");
+static const wxChar* FACTORY_INPUT_FORWARD	 = wxT("forward");
+static const wxChar* FACTORY_INPUT_BACKWARD	 = wxT("backward");
+
+
+static const wxChar* FACTORY_LOGIC_TYPE_MANUAL_TEST = wxT("MANUAL_TEST");
+
 
 void GameEntityFactory::addRef()
 {
@@ -47,7 +57,7 @@ GameErrorCode GameEntityFactory::CreateAllEntities(GameDefinitionHolder &defHold
 	for (iter = defHolder.m_entityDefs.Begin(); iter != defHolder.m_entityDefs.End(); iter++)
 	{
 		GameEntity *pEntity = NULL;
-		FWG_RETURN_FAIL(compMgr.GetEntityManager().CreateEntity(*(iter->second->GetName()), pEntity));
+		FWG_RETURN_FAIL(compMgr.GetEntityManager().CreateEntity(iter->second->GetName(), pEntity));
 		FWG_RETURN_FAIL(CreateEntity(*(iter->second), compMgr, *pEntity));
 	}
 	
@@ -83,10 +93,11 @@ GameErrorCode GameEntityFactory::CreateEntity( EntityDef& entityDef, GameCompMan
 					RefObjSmPtr<RenderObject> spRenderObject;
 					
 					
-					if(entityDef.GetName() != nullptr)
+					if(!entityDef.GetName().IsEmpty())
 					{
-						pEntity = compMgr.GetRenderManager().GetOgreSceneManager()->createEntity((*iter)->GetName()->ToStdString(), (*iter)->m_mesh->m_name.ToStdString());
+						pEntity = compMgr.GetRenderManager().GetOgreSceneManager()->createEntity((*iter)->GetName().ToStdString(), (*iter)->m_mesh->m_name.ToStdString());
 					} else {
+						FWGLOG_ERROR(wxT("Render entity name is empty"), m_spLogger);
 						return FWG_E_NOT_IMPLEMENTED_ERROR;
 					}
 					
@@ -109,7 +120,7 @@ GameErrorCode GameEntityFactory::CreateEntity( EntityDef& entityDef, GameCompMan
 				{
 					RefObjSmPtr<RenderObject> spCameraObject;
 					Ogre::Camera *pOgreCam = nullptr;
-					if(FWG_FAILED(result = compMgr.GetRenderManager().CreateCamera(*(*iter)->GetName(), spCameraObject.OutRef())))
+					if(FWG_FAILED(result = compMgr.GetRenderManager().CreateCamera((*iter)->GetName(), spCameraObject.OutRef())))
 					{
 						FWGLOG_ERROR_FORMAT(wxT("Create new camera failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
 						return result;
@@ -152,69 +163,63 @@ GameErrorCode GameEntityFactory::CreateEntity( EntityDef& entityDef, GameCompMan
 		{
 			RefObjSmPtr<InputComponent> spInputComp;
 			FWG_RETURN_FAIL(GameNewChecked(spInputComp.OutRef()));
-			if(entityDef.m_inputDef.In()->m_moveUp != 0)
-			{
-				if(FWG_FAILED(result = m_spInputSystem.In()->RegisterCallback(static_cast<OIS::KeyCode>(entityDef.m_inputDef.In()->m_moveUp)
-																		, spInputComp.In()
-																		, &InputComponent::SetMoveUp))) 
-				{
-					FWGLOG_ERROR_FORMAT(wxT("Register input callback moveUp failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
-					return result;
-				}
-			}
 			
-			if(entityDef.m_inputDef.In()->m_moveDown != 0)
+			for(InputDef::TInputMap::ConstIterator iter = entityDef.m_inputDef->m_inputMap.Begin();
+				iter != entityDef.m_inputDef->m_inputMap.End();
+				iter++)
 			{
-				if(FWG_FAILED(result = m_spInputSystem->RegisterCallback(static_cast<OIS::KeyCode>(entityDef.m_inputDef.In()->m_moveDown)
-																		, spInputComp.In()
-																		, &InputComponent::SetMoveDown))) 
-				{
-					FWGLOG_ERROR_FORMAT(wxT("Register input callback moveDown failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
-					return result;
-				}
-			}
 			
-			if(entityDef.m_inputDef.In()->m_moveLeft != 0)
-			{
-				if(FWG_FAILED(result = m_spInputSystem->RegisterCallback(static_cast<OIS::KeyCode>(entityDef.m_inputDef.In()->m_moveLeft)
-																		, spInputComp.In()
-																		, &InputComponent::SetMoveLeft))) 
+				if(iter->first.Cmp(FACTORY_INPUT_UP) == 0)
 				{
-					FWGLOG_ERROR_FORMAT(wxT("Register input callback moveLeft failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
-					return result;
-				}
-			}
-			
-			if(entityDef.m_inputDef.In()->m_moveRight != 0)
-			{
-				if(FWG_FAILED(result = m_spInputSystem->RegisterCallback(static_cast<OIS::KeyCode>(entityDef.m_inputDef.In()->m_moveRight)
-																		, spInputComp.In()
-																		, &InputComponent::SetMoveRight))) 
-				{
-					FWGLOG_ERROR_FORMAT(wxT("Register input callback moveRight failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
-					return result;
-				}
-			}
-			
-			if(entityDef.m_inputDef.In()->m_moveForward != 0)
-			{
-				if(FWG_FAILED(result = m_spInputSystem->RegisterCallback(static_cast<OIS::KeyCode>(entityDef.m_inputDef.In()->m_moveForward)
-																		, spInputComp.In()
-																		, &InputComponent::SetMoveForward))) 
-				{
-					FWGLOG_ERROR_FORMAT(wxT("Register input callback moveForward failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
-					return result;
-				}
-			}
-			
-			if(entityDef.m_inputDef.In()->m_moveBackward != 0)
-			{
-				if(FWG_FAILED(result = m_spInputSystem->RegisterCallback(static_cast<OIS::KeyCode>(entityDef.m_inputDef.In()->m_moveBackward)
-																		, spInputComp.In()
-																		, &InputComponent::SetMoveBackward))) 
-				{
-					FWGLOG_ERROR_FORMAT(wxT("Register input callback moveBackward failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
-					return result;
+					if(FWG_FAILED(result = m_spInputSystem.In()->RegisterCallback(static_cast<OIS::KeyCode>(iter->second)
+																			, spInputComp.In()
+																			, &InputComponent::SetMoveUp))) 
+					{
+						FWGLOG_ERROR_FORMAT(wxT("Register input callback moveUp failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+						return result;
+					}
+				} else if (iter->first.Cmp(FACTORY_INPUT_DOWN) == 0) {
+					if(FWG_FAILED(result = m_spInputSystem->RegisterCallback(static_cast<OIS::KeyCode>(iter->second)
+																			, spInputComp.In()
+																			, &InputComponent::SetMoveDown))) 
+					{
+						FWGLOG_ERROR_FORMAT(wxT("Register input callback moveDown failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+						return result;
+					}
+				} else if (iter->first.Cmp(FACTORY_INPUT_LEFT) == 0) {
+					if(FWG_FAILED(result = m_spInputSystem->RegisterCallback(static_cast<OIS::KeyCode>(iter->second)
+																			, spInputComp.In()
+																			, &InputComponent::SetMoveLeft))) 
+					{
+						FWGLOG_ERROR_FORMAT(wxT("Register input callback moveLeft failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+						return result;
+					}
+				} else if (iter->first.Cmp(FACTORY_INPUT_RIGHT) == 0) {
+					if(FWG_FAILED(result = m_spInputSystem->RegisterCallback(static_cast<OIS::KeyCode>(iter->second)
+																			, spInputComp.In()
+																			, &InputComponent::SetMoveRight))) 
+					{
+						FWGLOG_ERROR_FORMAT(wxT("Register input callback moveRight failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+						return result;
+					}
+				} else if (iter->first.Cmp(FACTORY_INPUT_FORWARD) == 0) {
+					if(FWG_FAILED(result = m_spInputSystem->RegisterCallback(static_cast<OIS::KeyCode>(iter->second)
+																			, spInputComp.In()
+																			, &InputComponent::SetMoveForward))) 
+					{
+						FWGLOG_ERROR_FORMAT(wxT("Register input callback moveForward failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+						return result;
+					}
+				} else if (iter->first.Cmp(FACTORY_INPUT_BACKWARD) == 0) {
+					if(FWG_FAILED(result = m_spInputSystem->RegisterCallback(static_cast<OIS::KeyCode>(iter->second)
+																			, spInputComp.In()
+																			, &InputComponent::SetMoveBackward))) 
+					{
+						FWGLOG_ERROR_FORMAT(wxT("Register input callback moveBackward failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+						return result;
+					}
+				} else {
+					FWGLOG_WARNING_FORMAT(wxT("Cannot register unknown input action '%s'"), m_spLogger, iter->first.GetData().AsInternal(), FWGLOG_ENDVAL);
 				}
 			}
 			
@@ -224,17 +229,15 @@ GameErrorCode GameEntityFactory::CreateEntity( EntityDef& entityDef, GameCompMan
 		if(!entityDef.m_logicDef.IsEmpty())
 		{
 			RefObjSmPtr<LogicComponentBase> spLogicComp;
-			switch(entityDef.m_logicDef.In()->m_logicType)
+			if(entityDef.m_logicDef->m_logicType.Cmp(FACTORY_LOGIC_TYPE_MANUAL_TEST) == 0)
 			{
-				case LogicDef::LOGIC_TYPE_MANUAL_TEST:
-				{
 					LogicManualTest *pLogicMan = nullptr;
 					FWG_RETURN_FAIL(GameNewChecked(pLogicMan));
 					spLogicComp.Attach(pLogicMan);
-					break;
-				}
-				default:
-					break;
+			} else {
+				FWGLOG_ERROR_FORMAT(wxT("Unknown logic type '%s'"),
+								m_spLogger, entityDef.m_logicDef->m_logicType.GetData().AsInternal(), FWGLOG_ENDVAL);
+				return FWG_E_INVALID_PARAMETER_ERROR;
 			}
 			
 			entity.SetLogicComp(spLogicComp.In());
