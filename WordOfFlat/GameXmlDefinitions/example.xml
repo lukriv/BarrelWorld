@@ -42,33 +42,6 @@
 			</camera>
 		</cameradefs>
 		
-		<renderentdefs>
-			<renderent name="renderEnt1">
-				<meshref value="mesh1" />
-				<materialref value="material1" />
-				<position xyz="0.0;0.0;0.0" />
-			</renderent>
-			<renderent name="renderEnt2">
-				<mesh>
-					<meshname value="TestingCube" />
-				</mesh>
-				<material>
-					<materialname value="Test/ColourTest" />
-				</material>
-				<position xyz="2.0;2.0;2.0" />
-			</renderent>
-		</renderentdefs>
-		
-		<renderdefs>
-			<render name="render1">
-				<renderentref value="renderEnt1" />
-			</render>
-			
-			<render name="render2">
-				<cameraref value="MainCamera" />
-			</render>
-		</renderdefs>
-		
 	</definitions>
 
 
@@ -80,7 +53,33 @@
 				<rotation quat="1.0, 0.0, 0.0, 0.0" />				
 			</transform>
 			
-			<renderref value="render1" />
+			<render name="render1">
+				<renderent name="renderEnt1">
+					<meshref value="mesh1" />
+					<materialref value="material1" />
+					<position xyz="0.0;0.0;0.0" />
+				</renderent>
+			</render>
+			
+			<inputref value="testInput" />
+			
+			<logicref value="manualLogic" />
+		</entity>
+		
+		<entity name="entity2">
+			<transform>
+				<position xyz="1.0, 1.0, 0.0" />
+				<scale xyz="1.0, 1.0, 1.0" />
+				<rotation quat="1.0, 0.0, 0.0, 0.0" />				
+			</transform>
+			
+			<render name="render2">
+				<renderent name="renderEnt2">
+					<meshref value="mesh1" />
+					<materialref value="material1" />
+					<position xyz="0.0;0.0;0.0" />
+				</renderent>
+			</render>
 			
 			<inputref value="testInput" />
 			
@@ -94,7 +93,9 @@
 				<rotation quat="1.0, 0.0, 0.0, 0.0" />				
 			</transform>
 			
-			<renderref value="render2" />
+			<render name="render3">
+				<cameraref value="MainCamera" />
+			</render>
 			
 			<inputref value="cameraInput" />
 			

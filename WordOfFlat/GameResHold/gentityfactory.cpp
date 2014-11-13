@@ -93,10 +93,11 @@ GameErrorCode GameEntityFactory::CreateEntity( EntityDef& entityDef, GameCompMan
 					RefObjSmPtr<RenderObject> spRenderObject;
 					
 					
-					if(entityDef.GetName() == wxEmptyString)
+					if(!entityDef.GetName().IsEmpty())
 					{
 						pEntity = compMgr.GetRenderManager().GetOgreSceneManager()->createEntity((*iter)->GetName().ToStdString(), (*iter)->m_mesh->m_name.ToStdString());
 					} else {
+						FWGLOG_ERROR(wxT("Render entity name is empty"), m_spLogger);
 						return FWG_E_NOT_IMPLEMENTED_ERROR;
 					}
 					
@@ -234,6 +235,8 @@ GameErrorCode GameEntityFactory::CreateEntity( EntityDef& entityDef, GameCompMan
 					FWG_RETURN_FAIL(GameNewChecked(pLogicMan));
 					spLogicComp.Attach(pLogicMan);
 			} else {
+				FWGLOG_ERROR_FORMAT(wxT("Unknown logic type '%s'"),
+								m_spLogger, entityDef.m_logicDef->m_logicType.GetData().AsInternal(), FWGLOG_ENDVAL);
 				return FWG_E_INVALID_PARAMETER_ERROR;
 			}
 			

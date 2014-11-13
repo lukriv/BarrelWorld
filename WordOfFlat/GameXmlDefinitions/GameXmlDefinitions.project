@@ -2,11 +2,20 @@
 <CodeLite_Project Name="GameXmlDefinitions" InternalType="">
   <Plugins>
     <Plugin Name="qmake">
-      <![CDATA[00010001N0005Debug000000000000]]>
+      <![CDATA[00020001N0005Debug0000000000000001N0007Release000000000000]]>
     </Plugin>
     <Plugin Name="CMakePlugin">
       <![CDATA[[{
   "name": "Debug",
+  "enabled": false,
+  "buildDirectory": "build",
+  "sourceDirectory": "$(ProjectPath)",
+  "generator": "",
+  "buildType": "",
+  "arguments": [],
+  "parentProject": ""
+ }, {
+  "name": "Release",
   "enabled": false,
   "buildDirectory": "build",
   "sourceDirectory": "$(ProjectPath)",
@@ -31,6 +40,7 @@
     <File Name="example.xml"/>
     <File Name="definitions.xml"/>
   </VirtualDirectory>
+  <Dependencies Name="Debug"/>
   <Settings Type="Static Library">
     <GlobalSettings>
       <Compiler Options="-Wall;-Wno-unused-local-typedefs;-std=c++11" C_Options="" Assembler="">
@@ -52,6 +62,45 @@
       </Linker>
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="$(IntermediateDirectory)/lib$(ProjectName).a" IntermediateDirectory="./Debug" Command="" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="./Debug" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
+        <![CDATA[]]>
+      </Environment>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="" IsExtended="no">
+        <DebuggerSearchPaths/>
+        <PostConnectCommands/>
+        <StartupCommands/>
+      </Debugger>
+      <PreBuild/>
+      <PostBuild/>
+      <CustomBuild Enabled="yes">
+        <RebuildCommand/>
+        <CleanCommand/>
+        <BuildCommand/>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
+        <ThirdPartyToolName/>
+        <WorkingDirectory/>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
+      </AdditionalRules>
+      <Completion EnableCpp11="no">
+        <ClangCmpFlagsC/>
+        <ClangCmpFlags/>
+        <ClangPP/>
+        <SearchPaths/>
+      </Completion>
+    </Configuration>
+    <Configuration Name="Release" CompilerType="MinGW ( MinGW )" DebuggerType="GNU gdb debugger" Type="Static Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <Compiler Options="-O3" C_Options="-O3" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0"/>
+      <Linker Options="-O0" Required="yes">
+        <LibraryPath Value="."/>
+        <LibraryPath Value="Debug"/>
+      </Linker>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="$(IntermediateDirectory)/lib$(ProjectName).a" IntermediateDirectory="./Release" Command="" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="./Release" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
         <![CDATA[]]>
       </Environment>
@@ -84,5 +133,4 @@
       </Completion>
     </Configuration>
   </Settings>
-  <Dependencies Name="Debug"/>
 </CodeLite_Project>

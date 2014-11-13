@@ -5,7 +5,8 @@
 #include <OGRE/OgreSubMesh.h>
 #include <GameSystem/gerror.h>
 #include <GameSystem/new.h>
-#include <GameLoader/gtestloader.h>
+#include <GameXmlDefinitions/gxmlloader.h>
+//#include <GameLoader/gtestloader.h>
 
 
 static const wxChar* TESTING_TITLE = wxT("Flat World Client");
@@ -134,10 +135,19 @@ GameErrorCode GameClientEngine::Initialize(GameLogger* pLogger)
 	// initialize game resources
 	FWG_RETURN_FAIL(GameNewChecked(m_spDefHolder.OutRef()));
 
-	GameTestResourceLoader loader;
-
-	FWG_RETURN_FAIL(loader.Initialize(m_pLogger));
+	//GameTestResourceLoader loader;
+    //
+	//FWG_RETURN_FAIL(loader.Initialize(m_pLogger));
+	GameXmlResourceLoader loader;
+	if(FWG_FAILED(result = loader.Initialize(wxT("example.xml"), wxT("res/"), pLogger)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Xml loader initialize failed: 0x%08x"), pLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
 	FWG_RETURN_FAIL(loader.Load(*m_spDefHolder));
+	
+
 
 	FWGLOG_INFO(wxT("GameClientEngine initialized"), pLogger);
 	
@@ -172,7 +182,7 @@ GameErrorCode GameClientEngine::MainLoop()
 
 	if(FWG_FAILED( result = m_spGameLogic->LoadGame(*m_spDefHolder)))
 	{
-		FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::MainLoop() : load game logic"), m_pLogger, result, FWGLOG_ENDVAL);
+		FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::MainLoop() : load game logic failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
 		return result;
 	} else {
 		FWGLOG_DEBUG(wxT("Game loaded"), m_pLogger);
