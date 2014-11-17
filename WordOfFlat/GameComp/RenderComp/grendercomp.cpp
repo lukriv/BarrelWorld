@@ -8,6 +8,11 @@
 RenderComponent::~RenderComponent()
 {
 	Clear();
+	if((m_pSceneNode)&&(m_pOwnerManager))
+	{
+		m_pOwnerManager->GetOgreSceneManager()->destroySceneNode(m_pSceneNode);
+		m_pSceneNode = nullptr;
+	}
 }
 
 
@@ -23,6 +28,7 @@ GameErrorCode RenderComponent::ConnectRenderComponent(Ogre::MovableObject* pObje
 			return result;
 		}
 		pObject->getUserObjectBindings().setUserAny(*this);
+		m_pSceneNode->attachObject(pObject);
 		
 	} else {
 		return FWG_E_OBJECT_NOT_EXIST_ERROR;
@@ -37,34 +43,7 @@ void RenderComponent::DisconnectRenderComponent(Ogre::MovableObject* pObject)
 	{
 		// erase parent
 		pObject->getUserObjectBindings().setUserAny(Ogre::UserObjectBindings::getEmptyUserAny());
-	}
-}
-
-GameErrorCode RenderComponent::ConnectTransformComponent(Ogre::MovableObject* pObject)
-{
-	if(pObject != nullptr)
-	{
-		// connect to existing scene node component
-		if((m_pParent != nullptr)&&(m_pParent->GetTransformComp() != nullptr))
-		{
-			m_pParent->GetTransformComp()->GetSceneNode()->attachObject(pObject);
-		}
-	} else {
-		return FWG_E_OBJECT_NOT_EXIST_ERROR;
-	}
-	
-	return FWG_NO_ERROR;
-}
-
-void RenderComponent::DisconnectTransformComponent(Ogre::MovableObject* pObject)
-{
-	if(pObject != nullptr)
-	{
-		// remove from transform component
-		if((m_pParent != nullptr)&&(m_pParent->GetTransformComp() != nullptr))
-		{
-			m_pParent->GetTransformComp()->GetSceneNode()->detachObject(pObject);
-		}
+		m_pRenderNode->detachObject(pObject);
 	}
 }
 
@@ -76,13 +55,6 @@ GameErrorCode RenderComponent::AttachRenderObject(RenderObject* pObject)
 	if(FWG_FAILED(result = ConnectRenderComponent(pObject->GetMovableObject())))
 	{
 		FWGLOG_ERROR_FORMAT( wxT("Connect render object to render component failed: 0x%08x"), m_pOwnerManager->GetLogger(), result, FWGLOG_ENDVAL);
-		return result;
-	}
-	
-	// connect render object to the transform component
-	if(FWG_FAILED(result = ConnectTransformComponent(pObject->GetMovableObject())))
-	{
-		FWGLOG_ERROR_FORMAT( wxT("Connect render object to transform component failed: 0x%08x"), m_pOwnerManager->GetLogger(), result, FWGLOG_ENDVAL);
 		return result;
 	}
 	
@@ -105,7 +77,6 @@ void RenderComponent::Clear()
 	for(iter = m_renderObjectList.Begin(); iter != m_renderObjectList.End(); iter++)
 	{
 		DisconnectRenderComponent((*iter)->GetMovableObject());
-		DisconnectTransformComponent((*iter)->GetMovableObject());
 		(*iter)->release();
 	}
 	
@@ -128,9 +99,17 @@ void RenderComponent::RemoveRenderObject(RenderObject* pObject)
 	if(iter != m_renderObjectList.End())
 	{
 		DisconnectRenderComponent((*iter)->GetMovableObject());
-		DisconnectTransformComponent((*iter)->GetMovableObject());
 		(*iter)->release();
 	}
 }
 
-
+GameErrorCode RenderComponent::Initialize()
+{
+	m_pSceneNode = m_pOwnerManager->GetOgreSceneManager()->getRootSceneNode()->createChildSceneNode();
+	if(m_pSceneNode == nullptr)
+	{
+		return FWG_E_MEMORY_ALLOCATION_ERROR;
+	}
+	
+	return FWG_NO_ERROR;
+}

@@ -38,17 +38,19 @@ RenderCompManager::~RenderCompManager()
 
 GameErrorCode RenderCompManager::CreateEmptyRenderComponent(RenderComponent *&pRenderCompOut)
 {
-	RenderComponent* pRenderComp = NULL;
+	RefObjSmPtr<RenderComponent> spRenderComp;
 	
-	if(m_pSceneManager == NULL)
+	if(m_pSceneManager == nullptr)
 	{
 		// render manager is not initialized
 		return FWG_E_OBJECT_NOT_INITIALIZED_ERROR;
 	}
 	
-	FWG_RETURN_FAIL(GameNewChecked(pRenderComp, this));
+	FWG_RETURN_FAIL(GameNewChecked(spRenderComp.OutRef(), this));
 	
-	pRenderCompOut = pRenderComp;
+	FWG_RETURN_FAIL(spRenderComp->Initialize());
+	
+	pRenderCompOut = spRenderComp;
 	
 	return FWG_NO_ERROR;
 }

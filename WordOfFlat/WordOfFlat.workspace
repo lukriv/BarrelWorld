@@ -30,8 +30,7 @@
       <Project Name="GameXmlDefinitions" ConfigName="Debug"/>
       <Project Name="Extern" ConfigName="Debug"/>
     </WorkspaceConfiguration>
-    <WorkspaceConfiguration Name="Release" Selected="no">
-      <Project Name="Extern" ConfigName="Debug"/>
+    <WorkspaceConfiguration Name="Release" Selected="yes">
       <Project Name="GameComm" ConfigName="Release"/>
       <Project Name="GameComp" ConfigName="Release"/>
       <Project Name="GameLoader" ConfigName="Release"/>
@@ -43,6 +42,7 @@
       <Project Name="MainWindow" ConfigName="Release"/>
       <Project Name="WorldCli" ConfigName="Release"/>
       <Project Name="WorldSrv" ConfigName="Release"/>
+      <Project Name="Extern" ConfigName="Debug"/>
     </WorkspaceConfiguration>
   </BuildMatrix>
 </CodeLite_Workspace>
