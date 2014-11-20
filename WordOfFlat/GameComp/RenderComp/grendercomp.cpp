@@ -83,15 +83,6 @@ void RenderComponent::Clear()
 	m_renderObjectList.Clear();
 }
 
-void RenderComponent::ConnectTransformComp(TransformComponent& transform)
-{
-	TRenderObjectList::Iterator iter;
-	for(iter = m_renderObjectList.Begin(); iter != m_renderObjectList.End(); iter++)
-	{
-		ConnectTransformComponent((*iter)->GetMovableObject());
-	}
-}
-
 void RenderComponent::RemoveRenderObject(RenderObject* pObject)
 {
 	TRenderObjectList::Iterator iter;
@@ -112,4 +103,8 @@ GameErrorCode RenderComponent::Initialize()
 	}
 	
 	return FWG_NO_ERROR;
+}
+
+GameErrorCode RenderComponent::ProcessUpdate()
+{
 }

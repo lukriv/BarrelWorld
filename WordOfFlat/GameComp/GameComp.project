@@ -32,6 +32,7 @@
     <File Name="gentitymgr.h"/>
     <File Name="gentity.h"/>
     <File Name="gcompmgr.h"/>
+    <File Name="gcompbase.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="comp">
     <VirtualDirectory Name="animComp">
@@ -59,9 +60,11 @@
     <VirtualDirectory Name="physComp">
       <VirtualDirectory Name="include">
         <File Name="PhysicsComp/gphyscmgr.h"/>
+        <File Name="PhysicsComp/gphyscomp.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="src">
         <File Name="PhysicsComp/gphyscmgr.cpp"/>
+        <File Name="PhysicsComp/gphyscomp.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="animatorComp">

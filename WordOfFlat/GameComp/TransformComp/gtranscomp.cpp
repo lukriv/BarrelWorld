@@ -1,10 +1,8 @@
 #include "gtranscomp.h"
 
 
-void TransformComponent::Connect(RenderComponent& renderComp)
+TransformComponent::TransformComponent() : m_translate( 0.0f, 0.0f, 0.0f)
+										, m_scale( 1.0f, 1.0f, 1.0f)
 {
-	if(m_pSceneNode != NULL)
-	{
-		renderComp.ConnectTransformComp(*this);
-	}
+	m_rotation.identity();
 }

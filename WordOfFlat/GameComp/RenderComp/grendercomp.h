@@ -85,8 +85,12 @@ public:
 	 * \brief Destroy inner ogre object
 	 */
 	void Clear();
+
+	// update mehtods
+	GameErrorCode Update();
 	
-	void ConnectTransformComp(TransformComponent &transform);	
+	GameErrorCode ProcessUpdate();
+	
 	
 };
 

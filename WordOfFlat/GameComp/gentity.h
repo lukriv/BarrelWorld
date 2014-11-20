@@ -10,19 +10,9 @@
 #include "LogicComp/glogiccomp.h"
 #include "InputComp/ginputcomp.h"
 
-enum GameEntityType {
-	ENTITY_TYPE_NONE 					= 0,
-	ENTITY_TYPE_CHARACTER_TOPDOWN 		= 1,
-	ENTITY_TYPE_CHARACTER_FIRST_PERSON 	= 2,
-	ENTITY_TYPE_CHARACTER_THIRD_PERSON 	= 3,
-	ENTITY_TYPE_CHARACTER_AI			= 4,
-	ENTITY_TYPE_CAMERA_FREE				= 5
-};
-
 class GameEntity {
 private:
 	wxString m_entityName;
-	GameEntityType m_entityType;
 	RefObjSmPtr<TransformComponent> m_spTransformComp;
 	RefObjSmPtr<RenderComponent> m_spRenderComp;
 	RefObjSmPtr<AnimatorComponent> m_spAnimatorComp;
@@ -30,6 +20,7 @@ private:
 	RefObjSmPtr<InputComponent> m_spInputComp;
 
 public:
+
 	GameEntity() {}
 				
 	void SetName(const wxString& name) { m_entityName.assign(name);}
@@ -42,13 +33,16 @@ public:
 	void SetLogicComp(LogicComponentBase *pLogicComp);
 	void SetInputComp(InputComponent *pInputComp);
 	
-	
 	inline TransformComponent* GetTransformComp() { return m_spTransformComp; }
 	inline RenderComponent* GetRenderComp() { return m_spRenderComp; }
 	inline AnimatorComponent* GetAnimatorComp() { return m_spAnimatorComp; }
 	inline LogicComponentBase* GetLogicComp() { return m_spLogicComp; }
 	inline InputComponent* GetInputComp() { return m_spInputComp; }
-
+	
+	
+	GameErrorCode ReceiveMessage(TaskMessage& msg);
+	GameErrorCode Update(GameEntityComponent entity = ENTITY_COMP_ALL);
+	
 };
 
 
