@@ -2,46 +2,71 @@
 #define __GAME_ENTITY_H__
 
 
+#include <wx/thread.h>
 #include <GameSystem/refobjectsmptr.h>
 
-#include "TransformComp/gtranscomp.h"
-#include "RenderComp/grendercomp.h"
-#include "AnimatorComp/ganimatormgr.h"
-#include "LogicComp/glogiccomp.h"
-#include "InputComp/ginputcomp.h"
+#include "gcompbase.h"
 
 class GameEntity {
+	typedef GameBasMap< GameComponentType, RefObjSmPtr< ComponentBase > > TEntityComponentMap;
 private:
 	wxString m_entityName;
-	RefObjSmPtr<TransformComponent> m_spTransformComp;
-	RefObjSmPtr<RenderComponent> m_spRenderComp;
-	RefObjSmPtr<AnimatorComponent> m_spAnimatorComp;
-	RefObjSmPtr<LogicComponentBase> m_spLogicComp;
-	RefObjSmPtr<InputComponent> m_spInputComp;
+	wxCriticalSection m_entityLock;
+	TEntityComponentMap m_componentList;
 
 public:
 
 	GameEntity() {}
 				
+	/**
+	 * \brief Sets GameEntity unique name 
+	 */
 	void SetName(const wxString& name) { m_entityName.assign(name);}
 	
+	/**
+	 * \brief Gets GameEntity unique name
+	 */
 	const wxString& GetName() const { return m_entityName; }
 	
-	void SetTransformComp(TransformComponent* pTransComp);
-	void SetRenderComp(RenderComponent *pRenderComp);
-	void SetAnimatorComp(AnimatorComponent *pAnimatorComp);
-	void SetLogicComp(LogicComponentBase *pLogicComp);
-	void SetInputComp(InputComponent *pInputComp);
+	/**
+	 * \brief Add component to entity
+	 * 
+	 * If component type already exists within entity, it returns error.
+	 * 
+	 * @param pComp Pointer to new compoent
+	 * @return Errorcode on error. 
+	 */
+	GameErrorCode AddComponent(ComponentBase *pComp);
 	
-	inline TransformComponent* GetTransformComp() { return m_spTransformComp; }
-	inline RenderComponent* GetRenderComp() { return m_spRenderComp; }
-	inline AnimatorComponent* GetAnimatorComp() { return m_spAnimatorComp; }
-	inline LogicComponentBase* GetLogicComp() { return m_spLogicComp; }
-	inline InputComponent* GetInputComp() { return m_spInputComp; }
+	/**
+	 * \brief Remove component with same compoent type from entity
+	 * @param compType Compoent type to remove
+	 * @return Error on fail.
+	 */
+	GameErrorCode RemoveComponent(GameComponentType compType);
+	
+	/**
+	 * \brief Get component with given type
+	 * 
+	 * @param compType
+	 * @return Component of given type or nullptr if compoent is not present
+	 */
+	ComponentBase* GetComponent(GameComponentType compType);
+	
+	/**
+	 * \brief Reinitialize components after entity reconfiguration 
+	 * 
+	 * When the components of the entity are changed ( removed or added ) it is necessary to call this reconfiguration.
+	 * Some of the components may have connections on the old components (e.g. transform component on physics component) and
+	 * the not works properly if this reconfiguration was not done.
+	 * 
+	 * @return Error on failure.
+	 */
+	GameErrorCode ReinitComponents();
 	
 	
-	GameErrorCode ReceiveMessage(TaskMessage& msg);
-	GameErrorCode Update(GameEntityComponent entity = ENTITY_COMP_ALL);
+	GameErrorCode ReceiveMessage(TaskMessage& msg, GameComponentType targetMask = ENTITY_COMP_ALL);
+	GameErrorCode Update();
 	
 };
 

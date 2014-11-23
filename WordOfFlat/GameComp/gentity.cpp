@@ -1,66 +1,62 @@
 #include "gentity.h"
 
-//////////////////////////
-// inline implementation
-//////////////////////////
-void GameEntity::SetRenderComp(RenderComponent *pRenderComp)
+
+
+GameErrorCode GameEntity::AddComponent(ComponentBase* pComp)
 {
-	if(!m_spRenderComp.IsEmpty()) {
-		m_spRenderComp->SetParent(nullptr); // remove old parent
+	GameErrorCode result = FWG_NO_ERROR;
+	RefObjSmPtr<ComponentBase> spComponent(pComp);
+	
+	if(!pComp)
+	{
+		return FWG_E_INVALID_PARAMETER_ERROR;
 	}
-	m_spRenderComp = pRenderComp;
+	
+	return m_componentList->Insert(pComp->GetComponentType(), spComponent);
+}
 
-	if(m_spRenderComp != nullptr) {
-		m_spRenderComp->SetParent(this); // set new parent
+ComponentBase* GameEntity::GetComponent(GameComponentType compType)
+{
+	RefObjSmPtr<ComponentBase> *spComp = m_componentList->FindValue(compType);
+	if(spComp)
+	{
+		return spComp.In();
+	}
+	
+	return nullptr;
+}
 
-		// set connectivity with other components
-		if(m_spTransformComp != nullptr) {
-			m_spTransformComp->Connect(*m_spRenderComp);
+GameErrorCode GameEntity::ReceiveMessage(TaskMessage& msg, GameComponentType targetMask)
+{
+	TEntityComponentMap::Iterator iter;
+	for( iter = m_componentList.Begin(); iter != m_componentList.End(); iter++)
+	{
+		if((targetMask & iter->second->GetComponentType()) != nullptr)
+		{
+			iter->second->ReceiveMessage(msg);
 		}
 	}
+	
+	return FWG_NO_ERROR;
 }
 
-void GameEntity::SetAnimatorComp(AnimatorComponent* pAnimatorComp)
+GameErrorCode GameEntity::ReinitComponents()
 {
-	m_spAnimatorComp = pAnimatorComp;
-}
-
-void GameEntity::SetTransformComp(TransformComponent* pTransComp)
-{
-	m_spTransformComp = pTransComp;
-
-	// if transform is nullptr return
-	if(m_spTransformComp.IsEmpty()) return;
-
-	// connect this component with other components - if it make sense
-	if(m_spRenderComp != nullptr) {
-		m_spTransformComp->Connect(*m_spRenderComp);
+	TEntityComponentMap::Iterator iter;
+	for( iter = m_componentList.Begin(); iter != m_componentList.End(); iter++)
+	{
+		iter->second->ReinitComponent(this);
 	}
-
 }
 
-void GameEntity::SetLogicComp(LogicComponentBase* pLogicComp)
-{
-	if(!m_spLogicComp.IsEmpty()) {
-		m_spLogicComp->SetParent(nullptr);
-	}
-
-	m_spLogicComp = pLogicComp;
-
-	if(!m_spLogicComp.IsEmpty()) {
-		m_spLogicComp.In()->SetParent(this);
-	}
-
-}
-
-void GameEntity::SetInputComp(InputComponent* pInputComp)
-{
-	m_spInputComp = pInputComp;
-}
-GameErrorCode GameEntity::ReceiveMessage(TaskMessage& msg)
+GameErrorCode GameEntity::RemoveComponent(ComponentBase* pComp)
 {
 }
 
-GameErrorCode GameEntity::Update(GameEntityComponent entity)
+GameErrorCode GameEntity::RemoveComponent(GameComponentType compType)
+{
+}
+
+GameErrorCode GameEntity::Update()
 {
 }
