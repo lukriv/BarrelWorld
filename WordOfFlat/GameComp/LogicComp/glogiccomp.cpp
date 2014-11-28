@@ -19,3 +19,5 @@ LogicComponentBase::~LogicComponentBase()
 		m_pOwnerManager->RemoveLogicComp(this);
 	}
 }
+
+

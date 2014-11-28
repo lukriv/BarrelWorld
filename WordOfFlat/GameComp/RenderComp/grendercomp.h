@@ -19,49 +19,31 @@ class GameEntity;
  * \file gentityobj.h
  * \brief Geometric entity with state and transform
  */
-class RenderComponent : public RefObjectImpl<IRefObject>, public Ogre::Any {
+class RenderComponent : public ComponentBase, public Ogre::Any {
 private:
 	typedef GameBasSet<RenderObject*> TRenderObjectList;
+	typedef wxVector<TaskMessage> TMessageList;
 protected:
 	RenderCompManager *m_pOwnerManager;
-	GameEntity *m_pParent;
 	Ogre::SceneNode *m_pSceneNode;
+	GameEntity *m_pParent;
+	wxCriticalSection m_renderLock;
+	
+	RefObjSmPtr<TransformComponent> m_spTransform;
 	
 	TRenderObjectList m_renderObjectList;
+	
+	TMessageList m_receivedMessages;
 
-protected:
-	/*!
-	 * \brief Disconnect ogre renderable from transform component
-	 *
-	 * Disconnect ogre renderable from render component 
-	 * 
-	 * \param pRenderable
-	 */
-	void DisconnectRenderComponent(Ogre::MovableObject *pObject);
-	
-	/*!
-	 * \brief Connect ogre renderable to other objects
-	 * 
-	 * It binds ogre object to this render component.
-	 * It connects ogre object to render component (it there is some within game entity)
-	 * 
-	 * \param pRenderable 
-	 * \return 
-	 */
-	GameErrorCode ConnectRenderComponent(Ogre::MovableObject *pObject);
-	
-	
 public:
+
 	// Render component can be created and destroyed only by render component manager
 	RenderComponent(RenderCompManager* pCompManager) : m_pOwnerManager(pCompManager)
-													, m_pParent(nullptr)
-													, m_pSceneNode(nullptr){}
+													, m_pSceneNode(nullptr)
+													, m_pParent(nullptr) {}
 	~RenderComponent();
 	
 	GameErrorCode Initialize();
-	
-	inline void SetParent(GameEntity *pParent) { m_pParent = pParent; }
-	inline GameEntity* GetParent() { return m_pParent; }
 	
 	/*!
 	 * \brief Add new Render Object to Render Component
@@ -86,11 +68,17 @@ public:
 	 */
 	void Clear();
 
-	// update mehtods
-	GameErrorCode Update();
+	/**
+	 * \brief Process update if it is necessary
+	 */
+	void ProcessUpdate();
+	// update methods
 	
-	GameErrorCode ProcessUpdate();
+	virtual GameErrorCode ReceiveMessage(TaskMessage& msg);
 	
+	virtual GameErrorCode ReinitComponent(GameEntity* pNewParentEntity);
+	
+	virtual GameErrorCode Update();
 	
 };
 

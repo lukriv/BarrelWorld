@@ -4,6 +4,7 @@
 #include <GameSystem/refobject.h>
 #include <GameSystem/refobjectimpl.h>
 #include <GameSystem/refobjectsmptr.h>
+#include "../gcompbase.h"
 
 class GameEntity;
 class LogicCompManager;
@@ -15,31 +16,36 @@ class LogicCompManager;
  * \file gentityobj.h
  * \brief Geometric entity with state and transform
  */
-class LogicComponentBase : public RefObjectImpl<IRefObject> {
+class LogicComponentBase : public ComponentBase
+{
 protected:
 	LogicCompManager *m_pOwnerManager;
 	GameEntity *m_pParent;
-	
+
 public:
+
 	// Render component can be created and destroyed only by render component manager
-	LogicComponentBase() : m_pOwnerManager(nullptr)
+	LogicComponentBase() : ComponentBase(GAME_COMP_LOGIC)
+						, m_pOwnerManager(nullptr)
 						, m_pParent(nullptr) {}
 	virtual ~LogicComponentBase();
 
-	inline void SetOwnerManager(LogicCompManager *pOwner) { m_pOwnerManager = pOwner; }
-	
-	inline void SetParent(GameEntity *pParent) { m_pParent = pParent; }
-	inline GameEntity* GetParent() { return m_pParent; }
-	
+	inline void SetOwnerManager(LogicCompManager *pOwner) {
+		m_pOwnerManager = pOwner;
+	}
+
+	inline GameEntity* GetParent() {
+		return m_pParent;
+	}
+
 	GameErrorCode ProcessLogic();
-	
 	
 protected:
 	virtual GameErrorCode UserLogic() = 0;
 
 protected:
 	GameErrorCode PhysicsProcess();
-	
+
 };
 
 

@@ -7,6 +7,7 @@
 
 RenderCompManager::RenderCompManager(GameLogger* pLogger) : m_spLogger(pLogger)
 															, m_pSceneManager(nullptr)
+															, m_actualQueue(0)
 														
 {}
 
@@ -89,5 +90,35 @@ RenderObject* RenderCompManager::GetCamera(const wxString& cameraName)
 	}
 	
 	return nullptr;
+	
+}
+
+GameErrorCode RenderCompManager::AddToUpdateQueue(RenderComponent* pRenderComp)
+{
+	wxCriticalSectionLocker lock(m_mgrLock);
+	m_updateQueue[m_actualQueue].push_back(pRenderComp);
+	return FWG_NO_ERROR;
+}
+
+GameErrorCode RenderCompManager::ProcessAllUpdates()
+{
+	TUpdateQueue *processQueue = nullptr;
+	TUpdateQueue::iterator iter, endIter;
+	
+	wxCriticalSectionLocker processLock(m_processLock);
+	{
+		wxCriticalSectionLocker lock(m_mgrLock);
+		processQueue = m_updateQueue[m_actualQueue];
+		m_actualQueue = (m_actualQueue + 1) % 2;
+	}
+	endIter = processQueue->end();
+	for(iter = processQueue->begin(); iter != endIter; ++iter)
+	{
+		(*iter)->ProcessUpdate();
+	}
+	
+	processQueue->clear();
+	
+	return FWG_NO_ERROR;
 	
 }

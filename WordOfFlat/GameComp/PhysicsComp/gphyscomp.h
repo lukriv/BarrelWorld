@@ -4,14 +4,20 @@
 
 #include <GameSystem/gdefs.h>
 #include <GameSystem/gerror.h>
+#include "../gcompbase.h"
 
 
-class PhysicsComponent : RefObjectImpl<IRefObject> {
+class PhysicsComponent : public ComponentBase {
 	
-// IGameComponent interface
+	GameEntity *m_pParent;
 public:
-	PhysicsComponent() {}
+
+	PhysicsComponent() : ComponentBase(GAME_COMP_PHYSICS), m_pParent(nullptr) {}
 	~PhysicsComponent() {}
+	
+	virtual GameErrorCode ReceiveMessage(TaskMessage& msg);
+	virtual GameErrorCode ReinitComponent(GameEntity* pNewParentEntity);
+	virtual GameErrorCode Update();
 
 	
 };

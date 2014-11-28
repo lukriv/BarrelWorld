@@ -4,14 +4,34 @@
 #include <bullet/vectormath/vmInclude.h>
 #include <GameSystem/refobject.h>
 #include <GameSystem/refobjectimpl.h>
+#include "../gcompbase.h"
 
-struct TransformComponent : public RefObjectImpl<IRefObject> {
+struct TransformData {
+public:
+	Vectormath::Aos::Vector3 	ATTRIBUTE_ALIGNED16(m_translate);
+	Vectormath::Aos::Vector3	ATTRIBUTE_ALIGNED16(m_scale);
+	Vectormath::Aos::Quat		ATTRIBUTE_ALIGNED16(m_rotation);
+};
 
-	Vectormath::Aos::Vector3 	m_translate ATTRIBUTE_ALIGNED16;
-	Vectormath::Aos::Vector3	m_scale ATTRIBUTE_ALIGNED16;
-	Vectormath::Aos::Quat		m_rotation ATTRIBUTE_ALIGNED16;
+
+
+
+class TransformComponent : public ComponentBase {
+	TransformData *m_pTransData;
+	GameEntity* m_pParent;
+	
 public:
 	TransformComponent();
+	~TransformComponent();
+	
+	GameErrorCode Initialize();
+	
+	inline TransformData* GetData() { return m_pTransData; }
+	
+	
+	virtual GameErrorCode ReceiveMessage(TaskMessage& msg);
+	virtual GameErrorCode ReinitComponent(GameEntity* pNewParentEntity);
+	virtual GameErrorCode Update();
 	
 };
 

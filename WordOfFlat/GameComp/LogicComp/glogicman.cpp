@@ -1,6 +1,7 @@
 #include "glogicman.h"
 
 #include <GameComp/gentity.h>
+#include <OGRE/OgrePrerequisites.h>
 //#include "../InputComp/ginputcomp.h"
 
 
@@ -21,7 +22,7 @@ GameErrorCode LogicManualTest::UserLogic()
 		return FWG_E_OBJECT_NOT_INITIALIZED_ERROR;
 	}
 	
-	if(m_pParent->GetInputComp() != nullptr)
+	if(!m_spInput.IsEmpty())
 	{
 		FWG_RETURN_FAIL(ProcessInput());
 	}
@@ -62,5 +63,32 @@ GameErrorCode LogicManualTest::ProcessInput()
 		
 	}
 	
+	return FWG_NO_ERROR;
+}
+
+GameErrorCode LogicManualTest::ReceiveMessage(TaskMessage& msg)
+{
+	FWG_NO_ERROR;
+}
+
+GameErrorCode LogicManualTest::ReinitComponent(GameEntity* pNewParentEntity)
+{
+	m_pParent = pNewParentEntity;
+	if(pNewParentEntity)
+	{
+		m_spTransform = reinterpret_cast<TransformComponent*>(pNewParentEntity->GetComponent(GAME_COMP_TRANSFORM));
+		m_spInput = reinterpret_cast<InputComponent*>(pNewParentEntity->GetComponent(GAME_COMP_INPUT));
+		
+		if(m_spTransform.IsEmpty() || m_spInput.IsEmpty())
+		{
+			return FWG_E_INVALID_PARAMETER_ERROR;
+		}
+	}
+	
+	return FWG_NO_ERROR;
+}
+
+GameErrorCode LogicManualTest::Update()
+{
 	return FWG_NO_ERROR;
 }

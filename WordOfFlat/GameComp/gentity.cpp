@@ -4,7 +4,6 @@
 
 GameErrorCode GameEntity::AddComponent(ComponentBase* pComp)
 {
-	GameErrorCode result = FWG_NO_ERROR;
 	RefObjSmPtr<ComponentBase> spComponent(pComp);
 	
 	if(!pComp)
@@ -12,15 +11,15 @@ GameErrorCode GameEntity::AddComponent(ComponentBase* pComp)
 		return FWG_E_INVALID_PARAMETER_ERROR;
 	}
 	
-	return m_componentList->Insert(pComp->GetComponentType(), spComponent);
+	return m_componentList.Insert(pComp->GetComponentType(), spComponent);
 }
 
 ComponentBase* GameEntity::GetComponent(GameComponentType compType)
 {
-	RefObjSmPtr<ComponentBase> *spComp = m_componentList->FindValue(compType);
+	RefObjSmPtr<ComponentBase> *spComp = m_componentList.FindValue(compType);
 	if(spComp)
 	{
-		return spComp.In();
+		return spComp->In();
 	}
 	
 	return nullptr;
@@ -29,9 +28,9 @@ ComponentBase* GameEntity::GetComponent(GameComponentType compType)
 GameErrorCode GameEntity::ReceiveMessage(TaskMessage& msg, GameComponentType targetMask)
 {
 	TEntityComponentMap::Iterator iter;
-	for( iter = m_componentList.Begin(); iter != m_componentList.End(); iter++)
+	for( iter = m_componentList.Begin(); iter != m_componentList.End(); ++iter)
 	{
-		if((targetMask & iter->second->GetComponentType()) != nullptr)
+		if((targetMask & iter->second->GetComponentType()) != 0)
 		{
 			iter->second->ReceiveMessage(msg);
 		}
@@ -43,20 +42,27 @@ GameErrorCode GameEntity::ReceiveMessage(TaskMessage& msg, GameComponentType tar
 GameErrorCode GameEntity::ReinitComponents()
 {
 	TEntityComponentMap::Iterator iter;
-	for( iter = m_componentList.Begin(); iter != m_componentList.End(); iter++)
+	for( iter = m_componentList.Begin(); iter != m_componentList.End(); ++iter)
 	{
-		iter->second->ReinitComponent(this);
+		FWG_RETURN_FAIL(iter->second->ReinitComponent(this));
 	}
-}
-
-GameErrorCode GameEntity::RemoveComponent(ComponentBase* pComp)
-{
+	
+	return FWG_NO_ERROR;
 }
 
 GameErrorCode GameEntity::RemoveComponent(GameComponentType compType)
 {
+	m_componentList.Remove(compType);
+	return FWG_NO_ERROR;
 }
 
 GameErrorCode GameEntity::Update()
 {
+	TEntityComponentMap::Iterator iter;
+	for( iter = m_componentList.Begin(); iter != m_componentList.End(); ++iter)
+	{
+		FWG_RETURN_FAIL(iter->second->Update());
+	}
+	
+	return FWG_NO_ERROR;
 }

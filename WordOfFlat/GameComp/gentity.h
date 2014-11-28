@@ -4,6 +4,7 @@
 
 #include <wx/thread.h>
 #include <GameSystem/refobjectsmptr.h>
+#include <GameSystem/gmap.h>
 
 #include "gcompbase.h"
 
@@ -64,8 +65,21 @@ public:
 	 */
 	GameErrorCode ReinitComponents();
 	
+	/**
+	 * \brief Receive message from outside
+	 * 
+	 * Message can be sent to the selected compoents of the entity or for all components
+	 * 
+	 * @param msg Message task
+	 * @param targetMask Component receivers
+	 * @return 
+	 */
+	GameErrorCode ReceiveMessage(TaskMessage& msg, GameComponentType targetMask = GAME_COMP_ALL);
 	
-	GameErrorCode ReceiveMessage(TaskMessage& msg, GameComponentType targetMask = ENTITY_COMP_ALL);
+	/**
+	 * \brief Update all components in the entity
+	 * @return Errorcode on failture.
+	 */
 	GameErrorCode Update();
 	
 };

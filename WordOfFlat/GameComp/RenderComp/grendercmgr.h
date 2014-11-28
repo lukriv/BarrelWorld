@@ -22,11 +22,17 @@ class RenderCompManager
 {
 private:
 	typedef GameBasMap< wxString, RefObjSmPtr<RenderObject> > TGameCameraMap;
+	typedef wxVector< RenderComponent* > TUpdateQueue;
 private:
 	GameLoggerPtr m_spLogger;
 	Ogre::SceneManager* m_pSceneManager;
 	RefObjSmPtr<RenderObject> m_spMainCamera;
 	TGameCameraMap m_cameraMap;
+	wxCriticalSection m_mgrLock;
+	wxCriticalSection m_processLock;
+	
+	TUpdateQueue m_updateQueue[2];
+	wxDword m_actualQueue;
 	
 public:
 	RenderCompManager(GameLogger *pLogger);
@@ -70,6 +76,18 @@ public:
 	GameErrorCode CreateEmptyRenderComponent(RenderComponent *&pRenderComp);
 	
 	inline Ogre::SceneManager* GetOgreSceneManager() { return m_pSceneManager; }
+	
+	/**
+	 * \brief Add component to update queue
+	 * \param pRenderComp Pointer to render component
+	 */
+	GameErrorCode AddToUpdateQueue(RenderComponent *pRenderComp);
+	
+	/**
+	 * \brief Updates all components in update queue
+	 * @return FWG_NO_ERROR on success.
+	 */
+	GameErrorCode ProcessAllUpdates();
 
 };
 
