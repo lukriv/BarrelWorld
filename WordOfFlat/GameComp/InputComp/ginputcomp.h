@@ -5,6 +5,7 @@
 #include <OGRE/OgreVector2.h>
 #include <GameSystem/refobject.h>
 #include <GameSystem/refobjectimpl.h>
+#include "../gcompbase.h"
 
 
 class ControlStruct
@@ -98,12 +99,12 @@ public:
 };
 
 
-class InputComponent : public RefObjectImpl<IRefObject> 
+class InputComponent : public ComponentBase 
 {
 	ControlStruct m_ctrlStruct;
 	wxCriticalSection m_inputLock;
 public:
-	InputComponent() : m_inputLock(wxCRITSEC_DEFAULT) {}
+	InputComponent() : ComponentBase(GAME_COMP_INPUT), m_inputLock(wxCRITSEC_DEFAULT) {}
 	
 	/*!
 	 * \brief Export actual control struct state and reset it
@@ -157,6 +158,10 @@ public:
 	{
 		SetState(move, ControlStruct::INPUT_ACTION_BACKWARD);
 	}
+	
+	virtual GameErrorCode ReceiveMessage(TaskMessage& msg);
+	virtual GameErrorCode ReinitComponent(GameEntity* pNewParentEntity);
+	virtual GameErrorCode Update();
 
 protected:
 	inline void SetState(bool state, ControlStruct::StateFlags ctrlFlag)

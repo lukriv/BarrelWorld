@@ -5,7 +5,7 @@
 //#include "../InputComp/ginputcomp.h"
 
 
-const Ogre::Real STEP_SIZE = 0.1f;
+const float STEP_SIZE = 0.1f;
 
 LogicManualTest::LogicManualTest()
 {
@@ -33,42 +33,42 @@ GameErrorCode LogicManualTest::UserLogic()
 GameErrorCode LogicManualTest::ProcessInput()
 {
 	ControlStruct actualControls;
-	m_pParent->GetInputComp()->ExportControlStruct(actualControls);
+	m_spInput->ExportControlStruct(actualControls);
 	
-	if(m_pParent->GetTransformComp() != nullptr)
+	if(!m_spTransform.IsEmpty())
 	{
-		Ogre::SceneNode *pSceneNode = m_pParent->GetTransformComp()->GetSceneNode();
-		Ogre::Vector3 moveVec = Ogre::Vector3::ZERO;
+		
+		Vectormath::Aos::Vector3 moveVec = Vectormath::Aos::Vector3(0,0,0);
 		if(actualControls.IsPressed(ControlStruct::INPUT_ACTION_UP))
 		{
-			moveVec.z += STEP_SIZE;
+			moveVec.setZ(moveVec.getZ() + STEP_SIZE);
 		}
 		
 		if(actualControls.IsPressed(ControlStruct::INPUT_ACTION_DOWN))
 		{
-			moveVec.z -= STEP_SIZE;
+			moveVec.setZ(moveVec.getZ() - STEP_SIZE);
 		}
 		
 		if(actualControls.IsPressed(ControlStruct::INPUT_ACTION_LEFT))
 		{
-			moveVec.x += STEP_SIZE;
+			moveVec.setX(moveVec.getX() + STEP_SIZE);
 		}
 		
 		if(actualControls.IsPressed(ControlStruct::INPUT_ACTION_RIGHT))
 		{
-			moveVec.x -= STEP_SIZE;
+			moveVec.setX(moveVec.getX() - STEP_SIZE);
 		}
 		
-		pSceneNode->translate(moveVec);
+		m_spTransform->GetData()->m_translate += moveVec;
 		
 	}
 	
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode LogicManualTest::ReceiveMessage(TaskMessage& msg)
+GameErrorCode LogicManualTest::ReceiveMessage(TaskMessage&)
 {
-	FWG_NO_ERROR;
+	return FWG_NO_ERROR;
 }
 
 GameErrorCode LogicManualTest::ReinitComponent(GameEntity* pNewParentEntity)

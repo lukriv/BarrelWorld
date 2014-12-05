@@ -49,9 +49,8 @@ private:
 private:
 	GameLoggerPtr m_pLogger;
 	GameEngineSettings m_settings;
-	Ogre::Root *m_pRoot;
-	Ogre::RenderWindow *m_pRenderWindow;
-	OIS::InputManager*	m_pInputMgr;
+
+	
 
 	RefObjSmPtr<GameInputSystem> m_spInputSystem;
 

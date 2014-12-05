@@ -4,6 +4,7 @@
  // Base class: LogicComponentBase
 #include "glogiccomp.h"
 #include "../transformComp/gtranscomp.h"
+#include "../inputComp/ginputcomp.h"
 
 class LogicManualTest : public LogicComponentBase
 {

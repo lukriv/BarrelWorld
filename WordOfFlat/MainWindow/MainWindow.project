@@ -31,11 +31,9 @@
   <VirtualDirectory Name="src">
     <File Name="main.cpp"/>
     <File Name="gclientengine.cpp"/>
-    <File Name="ginputsystem.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="gclientengine.h"/>
-    <File Name="ginputsystem.h"/>
     <File Name="gmainlogic.h"/>
   </VirtualDirectory>
   <Settings Type="Executable">

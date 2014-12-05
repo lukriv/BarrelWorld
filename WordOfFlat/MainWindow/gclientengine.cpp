@@ -80,33 +80,10 @@ GameErrorCode GameClientEngine::Initialize(GameLogger* pLogger)
 		FWGLOG_INFO(wxT("Window was created successfuly"), m_pLogger);
 	}
 
-	// create scene manager for game logic
-	Ogre::SceneManager *pSceneManager = m_pRoot->createSceneManager(Ogre::ST_GENERIC, Ogre::String(MAIN_GAME_SCENE_MANAGER));
-	if(pSceneManager == NULL) {
-		result = FWG_E_MEMORY_ALLOCATION_ERROR;
-		FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::Initialize() : Create scene manager failed: 0x%08x"),
-		                    m_pLogger, result, FWGLOG_ENDVAL);
-		return result;
-	} else {
-		FWGLOG_INFO(wxT("Ogre scene manager was created successfuly"), m_pLogger);
-	}
+
 
 	// setting up OIS and Input system
-	size_t hWnd = 0;
-	OIS::ParamList paramList;
-	m_pRenderWindow->getCustomAttribute(Ogre::String("WINDOW"), &hWnd);
 
-	paramList.insert(OIS::ParamList::value_type("WINDOW", Ogre::StringConverter::toString(hWnd)));
-
-	m_pInputMgr = OIS::InputManager::createInputSystem(paramList);
-
-	FWG_RETURN_FAIL(GameNewChecked(m_spInputSystem.OutRef(), m_pInputMgr));
-
-	if(FWG_FAILED( result = m_spInputSystem->Initialize(m_pRenderWindow->getWidth(), m_pRenderWindow->getHeight()))) {
-		return result;
-	} else {
-		FWGLOG_INFO(wxT("Input system was successfuly"), m_pLogger);
-	}
 
 	// initialize resources
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("res", "FileSystem", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, false);

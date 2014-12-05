@@ -10,6 +10,8 @@
 #include <GameSystem/refobject.h>
 
 
+class Ogre::RenderWindow;
+
 class GameInputSystem : public OIS::KeyListener, public OIS::MouseListener, public RefObjectImpl<IRefObject> {
 private:
 	class InputCallbackBase {
@@ -31,13 +33,13 @@ private:
 	};
 
 private:
-	OIS::InputManager *m_pParent;
+	OIS::InputManager *m_pInputMgr;
 	OIS::Keyboard *m_pKeyboard;
 	OIS::Mouse *m_pMouse;
 	InputCallbackBase* m_callbackArray[255];
 public:
 
-	GameInputSystem(OIS::InputManager* pInputMgr) : m_pParent(pInputMgr),
+	GameInputSystem() : m_pInputMgr(nullptr),
 									m_pKeyboard(nullptr),
 									m_pMouse(nullptr)
 	{
@@ -49,7 +51,7 @@ public:
 
 	virtual ~GameInputSystem();
 	
-	GameErrorCode Initialize(wxInt32 width, wxInt32 height);
+	GameErrorCode Initialize(Ogre::RenderWindow * pRenderWindow);
 	
 	template<class T>
 	GameErrorCode RegisterCallback(OIS::KeyCode keyCode, T *pClass, void (T::*MethodPtr)(bool))

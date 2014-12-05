@@ -25,6 +25,11 @@ private:
 	typedef wxVector< RenderComponent* > TUpdateQueue;
 private:
 	GameLoggerPtr m_spLogger;
+	// ogre base
+	Ogre::Root *m_pRoot;
+	Ogre::RenderWindow *m_pRenderWindow;
+	
+	// optional scene manager - probably it will be only one in the project
 	Ogre::SceneManager* m_pSceneManager;
 	RefObjSmPtr<RenderObject> m_spMainCamera;
 	TGameCameraMap m_cameraMap;
@@ -48,7 +53,7 @@ public:
 	 * \param sceneManager
 	 * \return 
 	 */
-	GameErrorCode Initialize(Ogre::SceneManager& sceneManager);
+	GameErrorCode Initialize(GameEngineSettings& settings);
 	void Uninitialize();
 	
 	/*!

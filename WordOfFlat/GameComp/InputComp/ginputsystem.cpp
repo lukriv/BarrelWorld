@@ -1,5 +1,7 @@
 #include "ginputsystem.h"
-#include "MyGUI/MyGUI_InputManager.h"
+
+#include <OGRE/OgreRenderWindow.h>
+#include <MyGUI/MyGUI_InputManager.h>
 
 
 bool GameInputSystem::keyPressed(const OIS::KeyEvent& arg)
@@ -38,13 +40,31 @@ bool GameInputSystem::mouseReleased(const OIS::MouseEvent& arg, OIS::MouseButton
 	return true;
 }
 
-GameErrorCode GameInputSystem::Initialize(wxInt32 width, wxInt32 height)
+GameErrorCode GameInputSystem::Initialize(Ogre::RenderWindow * pRenderWindow)
 {
+	if(pRenderWindow == nullptr)
+	{
+		return FWG_E_INVALID_PARAMETER_ERROR;
+	}
+	
+	size_t hWnd = 0;
+	OIS::ParamList paramList;
+	pRenderWindow->getCustomAttribute(Ogre::String("WINDOW"), &hWnd);
+
+	paramList.insert(OIS::ParamList::value_type("WINDOW", Ogre::StringConverter::toString(hWnd)));
+
+	m_pInputMgr = OIS::InputManager::createInputSystem(paramList);
+	
+	if(m_pInputMgr == nullptr)
+	{
+		return FWG_E_MEMORY_ALLOCATION_ERROR;
+	}
+
 	m_pKeyboard = static_cast<OIS::Keyboard*>(m_pParent->createInputObject(OIS::OISKeyboard, true));
 	m_pMouse = static_cast<OIS::Mouse*>(m_pParent->createInputObject(OIS::OISMouse, true));
 	
-	m_pMouse->getMouseState().height = height;
-	m_pMouse->getMouseState().width = width;
+	m_pMouse->getMouseState().height = m_pRenderWindow->getHeight();
+	m_pMouse->getMouseState().width = pRenderWindow->getWidth();
 	
 	m_pKeyboard->setEventCallback(this);
 	m_pMouse->setEventCallback(this);
@@ -54,14 +74,20 @@ GameErrorCode GameInputSystem::Initialize(wxInt32 width, wxInt32 height)
 
 GameInputSystem::~GameInputSystem()
 {
-	if(m_pKeyboard)
+	if(m_pInputMgr)
 	{
-		m_pParent->destroyInputObject(m_pKeyboard);
-	}
-	
-	if(m_pMouse)
-	{
-		m_pParent->destroyInputObject(m_pMouse);
+		if(m_pKeyboard)
+		{
+			m_pInputMgr->destroyInputObject(m_pKeyboard);
+		}
+		
+		if(m_pMouse)
+		{
+			m_pInputMgr->destroyInputObject(m_pMouse);
+		}
+		
+		OIS::InputManager::destroyInputSystem(m_pInputMgr);
+		m_pInputMgr = nullptr;
 	}
 }
 

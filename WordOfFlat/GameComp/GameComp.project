@@ -86,9 +86,11 @@
     <VirtualDirectory Name="inputComp">
       <VirtualDirectory Name="include">
         <File Name="InputComp/ginputcomp.h"/>
+        <File Name="InputComp/ginputsystem.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="src">
         <File Name="InputComp/ginputcomp.cpp"/>
+        <File Name="InputComp/ginputsystem.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="logicComp">
