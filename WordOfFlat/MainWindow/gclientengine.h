@@ -13,18 +13,8 @@
 #include <WorldCli/gmenu.h>
 #include <WorldCli/gclientlogic.h>
 #include "ginputsystem.h"
+#include "gsettings.h"
 
-
-struct GameEngineSettings {
-	wxDword m_screenWidth;
-	wxDword m_screenHeight;
-	wxString m_screenTitle;
-	wxString m_worldName;
-
-	GameEngineSettings() :
-		m_screenWidth(800),
-		m_screenHeight(600) {}
-};
 
 /*! \brief Engine for control game states and processes
  *

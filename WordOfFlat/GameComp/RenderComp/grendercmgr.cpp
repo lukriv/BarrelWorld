@@ -6,6 +6,8 @@
 
 
 RenderCompManager::RenderCompManager(GameLogger* pLogger) : m_spLogger(pLogger)
+															, m_pRoot(nullptr)
+															, m_pRenderWindow(nullptr)
 															, m_pSceneManager(nullptr)
 															, m_actualQueue(0)
 														

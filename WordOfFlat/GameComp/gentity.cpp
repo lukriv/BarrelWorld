@@ -1,38 +1,57 @@
 #include "gentity.h"
 
+GameEntity::GameEntity()
+{}
 
+GameEntity::GameEntity(const GameEntity& master)
+{
+	// copy name
+	m_entityName = master.m_entityName;
+	
+	// copy components
+	for( wxInt32 iter = 0; iter < GAME_COMP_COUNT; ++iter)
+	{
+		m_componentList[iter] = master.m_componentList[iter];
+	}
+}
+
+GameEntity::~GameEntity()
+{}
+
+ComponentBase* GameEntity::GetComponent(GameComponentType compType)
+{
+	//lock
+	wxCriticalSectionLocker lock(m_entityLock);
+	
+	return m_componentList[compType].In();
+}
 
 GameErrorCode GameEntity::AddComponent(ComponentBase* pComp)
 {
-	RefObjSmPtr<ComponentBase> spComponent(pComp);
-	
 	if(!pComp)
 	{
 		return FWG_E_INVALID_PARAMETER_ERROR;
 	}
 	
-	return m_componentList.Insert(pComp->GetComponentType(), spComponent);
-}
-
-ComponentBase* GameEntity::GetComponent(GameComponentType compType)
-{
-	RefObjSmPtr<ComponentBase> *spComp = m_componentList.FindValue(compType);
-	if(spComp)
-	{
-		return spComp->In();
-	}
+	//lock
+	wxCriticalSectionLocker lock(m_entityLock);
 	
-	return nullptr;
+	m_componentList[pComp->GetComponentType()] = pComp;
+	
+	return FWG_NO_ERROR;
 }
 
-GameErrorCode GameEntity::ReceiveMessage(TaskMessage& msg, GameComponentType targetMask)
+GameErrorCode GameEntity::ReceiveMessage(TaskMessage& msg, GameComponentMaskType targetMask)
 {
-	TEntityComponentMap::Iterator iter;
-	for( iter = m_componentList.Begin(); iter != m_componentList.End(); ++iter)
+	// lock
+	wxCriticalSectionLocker lock(m_entityLock);
+	
+	TCompSmPtr* endIter = &m_componentList[GAME_COMP_COUNT];
+	for( TCompSmPtr* iter = m_componentList; iter != endIter; ++iter)
 	{
-		if((targetMask & iter->second->GetComponentType()) != 0)
+		if(!iter->IsEmpty() && ((targetMask & (1 << (*iter)->GetComponentType()))))
 		{
-			iter->second->ReceiveMessage(msg);
+			(*iter)->ReceiveMessage(msg);
 		}
 	}
 	
@@ -41,10 +60,16 @@ GameErrorCode GameEntity::ReceiveMessage(TaskMessage& msg, GameComponentType tar
 
 GameErrorCode GameEntity::ReinitComponents()
 {
-	TEntityComponentMap::Iterator iter;
-	for( iter = m_componentList.Begin(); iter != m_componentList.End(); ++iter)
+	// lock
+	wxCriticalSectionLocker lock(m_entityLock);
+	
+	TCompSmPtr* endIter = &m_componentList[GAME_COMP_COUNT];
+	for(TCompSmPtr* iter = m_componentList; iter != endIter; ++iter)
 	{
-		FWG_RETURN_FAIL(iter->second->ReinitComponent(this));
+		if(!iter->IsEmpty())
+		{
+			FWG_RETURN_FAIL((*iter)->ReinitComponent(this));
+		}
 	}
 	
 	return FWG_NO_ERROR;
@@ -52,17 +77,26 @@ GameErrorCode GameEntity::ReinitComponents()
 
 GameErrorCode GameEntity::RemoveComponent(GameComponentType compType)
 {
-	m_componentList.Remove(compType);
+	// lock
+	wxCriticalSectionLocker lock(m_entityLock);
+	
+	m_componentList[compType].Release();
 	return FWG_NO_ERROR;
 }
 
 GameErrorCode GameEntity::Update()
 {
-	TEntityComponentMap::Iterator iter;
-	for( iter = m_componentList.Begin(); iter != m_componentList.End(); ++iter)
-	{
-		FWG_RETURN_FAIL(iter->second->Update());
-	}
+	// lock
+	wxCriticalSectionLocker lock(m_entityLock);
 	
+	TCompSmPtr* endIter = &m_componentList[GAME_COMP_COUNT];
+	for(TCompSmPtr* iter = m_componentList; iter != endIter; ++iter)
+	{
+		if(!iter->IsEmpty())
+		{
+			FWG_RETURN_FAIL((*iter)->Update());
+		}
+	}
 	return FWG_NO_ERROR;
 }
+

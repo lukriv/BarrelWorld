@@ -9,26 +9,37 @@
 #include "gcompbase.h"
 
 class GameEntity {
-	typedef GameBasMap< GameComponentType, RefObjSmPtr< ComponentBase > > TEntityComponentMap;
+	typedef RefObjSmPtr< ComponentBase > TCompSmPtr;
 private:
 	wxString m_entityName;
 	wxCriticalSection m_entityLock;
-	TEntityComponentMap m_componentList;
+	TCompSmPtr m_componentList[GAME_COMP_COUNT];
 
 public:
 
-	GameEntity() {}
+	GameEntity();
+	GameEntity(const GameEntity& master);
+	
+	~GameEntity();
 				
 	/**
 	 * \brief Sets GameEntity unique name 
 	 */
-	void SetName(const wxString& name) { m_entityName.assign(name);}
+	inline void SetName(const wxString& name) { m_entityName.assign(name);}
 	
 	/**
 	 * \brief Gets GameEntity unique name
 	 */
-	const wxString& GetName() const { return m_entityName; }
-	
+	inline const wxString& GetName() const { return m_entityName; }
+
+	/**
+	 * \brief Get component with given type
+	 * 
+	 * @param compType
+	 * @return Component of given type or nullptr if compoent is not present
+	 */
+	inline ComponentBase* GetComponent(GameComponentType compType);
+				
 	/**
 	 * \brief Add component to entity
 	 * 
@@ -45,14 +56,6 @@ public:
 	 * @return Error on fail.
 	 */
 	GameErrorCode RemoveComponent(GameComponentType compType);
-	
-	/**
-	 * \brief Get component with given type
-	 * 
-	 * @param compType
-	 * @return Component of given type or nullptr if compoent is not present
-	 */
-	ComponentBase* GetComponent(GameComponentType compType);
 	
 	/**
 	 * \brief Reinitialize components after entity reconfiguration 
@@ -74,7 +77,7 @@ public:
 	 * @param targetMask Component receivers
 	 * @return 
 	 */
-	GameErrorCode ReceiveMessage(TaskMessage& msg, GameComponentType targetMask = GAME_COMP_ALL);
+	GameErrorCode ReceiveMessage(TaskMessage& msg, GameComponentMaskType targetMask = GAME_COMP_MASK_ALL);
 	
 	/**
 	 * \brief Update all components in the entity

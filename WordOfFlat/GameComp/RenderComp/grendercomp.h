@@ -2,11 +2,15 @@
 #define __GAME_RENDER_COMPONENT_H__
 
 #include <OGRE/OgreAny.h>
+#include <wx/vector.h>
+#include "wx/thread.h"
 #include <GameSystem/gerror.h>
 #include <GameSystem/refobject.h>
 #include <GameSystem/refobjectimpl.h>
 #include <GameSystem/refobjectsmptr.h>
 #include <GameSystem/gset.h>
+#include "../gcompbase.h"
+#include "../transformComp/gtranscomp.h"
 
 class RenderObject;
 class RenderCompManager;
@@ -38,7 +42,8 @@ protected:
 public:
 
 	// Render component can be created and destroyed only by render component manager
-	RenderComponent(RenderCompManager* pCompManager) : m_pOwnerManager(pCompManager)
+	RenderComponent(RenderCompManager* pCompManager) : ComponentBase(GAME_COMP_RENDER)
+													, m_pOwnerManager(pCompManager)
 													, m_pSceneNode(nullptr)
 													, m_pParent(nullptr) {}
 	~RenderComponent();

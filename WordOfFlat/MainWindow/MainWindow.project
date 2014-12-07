@@ -35,6 +35,7 @@
   <VirtualDirectory Name="include">
     <File Name="gclientengine.h"/>
     <File Name="gmainlogic.h"/>
+    <File Name="gsettings.h"/>
   </VirtualDirectory>
   <Settings Type="Executable">
     <GlobalSettings>

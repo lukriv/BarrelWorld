@@ -4,13 +4,26 @@
 
 #include <GameSystem/refobject.h>
 #include <GameSystem/refobjectimpl.h>
+
+#define GAME_COMP_COUNT 5
+
 enum GameComponentType {
-	GAME_COMP_TRANSFORM					= 1<<0,
-	GAME_COMP_RENDER		 			= 1<<1,
-	GAME_COMP_LOGIC 					= 1<<2,
-	GAME_COMP_INPUT 					= 1<<3,
-	GAME_COMP_PHYSICS					= 1<<4,
-	GAME_COMP_ALL						= wxUINT32_MAX,
+	GAME_COMP_TRANSFORM					= 0,
+	GAME_COMP_RENDER		 			= 1,
+	GAME_COMP_LOGIC 					= 2,
+	GAME_COMP_INPUT 					= 3,
+	GAME_COMP_PHYSICS					= 4,
+};
+
+
+
+enum GameComponentMaskType {
+	GAME_COMP_MASK_TRANSFORM			= 1<<GAME_COMP_TRANSFORM,
+	GAME_COMP_MASK_RENDER		 		= 1<<GAME_COMP_RENDER,
+	GAME_COMP_MASK_LOGIC 				= 1<<GAME_COMP_LOGIC,
+	GAME_COMP_MASK_INPUT 				= 1<<GAME_COMP_INPUT,
+	GAME_COMP_MASK_PHYSICS				= 1<<GAME_COMP_PHYSICS,
+	GAME_COMP_MASK_ALL					= wxUINT32_MAX,
 };
 
 class TaskMessage {
