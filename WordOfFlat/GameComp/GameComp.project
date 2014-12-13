@@ -105,6 +105,18 @@
         <File Name="LogicComp/glogicman.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
+    <VirtualDirectory Name="menuComp">
+      <VirtualDirectory Name="include">
+        <File Name="MenuComp/gmenu.h"/>
+        <File Name="MenuComp/gmenumgr.h"/>
+        <File Name="MenuComp/gmenubase.h"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="src">
+        <File Name="MenuComp/gmenu.cpp"/>
+        <File Name="MenuComp/gmenumgr.cpp"/>
+        <File Name="MenuComp/gmenubase.cpp"/>
+      </VirtualDirectory>
+    </VirtualDirectory>
   </VirtualDirectory>
   <VirtualDirectory Name="src">
     <File Name="gentitymgr.cpp"/>
@@ -118,6 +130,7 @@
       <Compiler Options="-Wall;-Wno-unused-local-typedefs;-std=c++11" C_Options="" Assembler="">
         <IncludePath Value="../../extern/include"/>
         <IncludePath Value="../../WordOfFlat"/>
+        <IncludePath Value="../../extern/include/OGRE"/>
         <IncludePath Value="../../extern/include/bullet"/>
         <Preprocessor Value="UNICODE"/>
         <Preprocessor Value="BOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN"/>

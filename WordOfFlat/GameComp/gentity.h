@@ -38,7 +38,7 @@ public:
 	 * @param compType
 	 * @return Component of given type or nullptr if compoent is not present
 	 */
-	inline ComponentBase* GetComponent(GameComponentType compType);
+	ComponentBase* GetComponent(GameComponentType compType);
 				
 	/**
 	 * \brief Add component to entity

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Workspace Name="WordOfFlat" Database="./WordOfFlat.tags">
-  <Project Name="MainWindow" Path="MainWindow/MainWindow.project" Active="Yes"/>
+  <Project Name="MainWindow" Path="MainWindow/MainWindow.project" Active="No"/>
   <Project Name="GameSystem" Path="GameSystem/GameSystem.project" Active="No"/>
   <Project Name="WorldSrv" Path="WorldSrv/WorldSrv.project" Active="No"/>
-  <Project Name="WorldCli" Path="WorldCli/WorldCli.project" Active="No"/>
+  <Project Name="WorldCli" Path="WorldCli/WorldCli.project" Active="Yes"/>
   <Project Name="GameMsgCli" Path="GameMsgCli/GameMsgCli.project" Active="No"/>
   <Project Name="GameMsgSrv" Path="GameMsgSrv/GameMsgSrv.project" Active="No"/>
   <Project Name="GameComm" Path="GameComm/GameComm.project" Active="No"/>

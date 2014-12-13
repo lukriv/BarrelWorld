@@ -1,6 +1,7 @@
 #include "ginputsystem.h"
 
 #include <OGRE/OgreRenderWindow.h>
+#include <OGRE/OgreStringConverter.h>
 #include <MyGUI/MyGUI_InputManager.h>
 
 
@@ -60,10 +61,10 @@ GameErrorCode GameInputSystem::Initialize(Ogre::RenderWindow * pRenderWindow)
 		return FWG_E_MEMORY_ALLOCATION_ERROR;
 	}
 
-	m_pKeyboard = static_cast<OIS::Keyboard*>(m_pParent->createInputObject(OIS::OISKeyboard, true));
-	m_pMouse = static_cast<OIS::Mouse*>(m_pParent->createInputObject(OIS::OISMouse, true));
+	m_pKeyboard = static_cast<OIS::Keyboard*>(m_pInputMgr->createInputObject(OIS::OISKeyboard, true));
+	m_pMouse = static_cast<OIS::Mouse*>(m_pInputMgr->createInputObject(OIS::OISMouse, true));
 	
-	m_pMouse->getMouseState().height = m_pRenderWindow->getHeight();
+	m_pMouse->getMouseState().height = pRenderWindow->getHeight();
 	m_pMouse->getMouseState().width = pRenderWindow->getWidth();
 	
 	m_pKeyboard->setEventCallback(this);
@@ -72,23 +73,30 @@ GameErrorCode GameInputSystem::Initialize(Ogre::RenderWindow * pRenderWindow)
 	return FWG_NO_ERROR;
 }
 
-GameInputSystem::~GameInputSystem()
+void GameInputSystem::Uninitialize()
 {
 	if(m_pInputMgr)
 	{
 		if(m_pKeyboard)
 		{
 			m_pInputMgr->destroyInputObject(m_pKeyboard);
+			m_pKeyboard = nullptr;
 		}
 		
 		if(m_pMouse)
 		{
 			m_pInputMgr->destroyInputObject(m_pMouse);
+			m_pMouse = nullptr;
 		}
 		
 		OIS::InputManager::destroyInputSystem(m_pInputMgr);
 		m_pInputMgr = nullptr;
 	}
+}
+
+GameInputSystem::~GameInputSystem()
+{
+	Uninitialize();
 }
 
 GameErrorCode GameInputSystem::ProcessInputs()

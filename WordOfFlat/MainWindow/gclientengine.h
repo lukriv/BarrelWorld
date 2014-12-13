@@ -39,12 +39,13 @@ private:
 private:
 	GameLoggerPtr m_pLogger;
 	GameEngineSettings m_settings;
+	
+	RefObjSmPtr<GameCompManager> m_spCompManager;
+	
 
 	
 
-	RefObjSmPtr<GameInputSystem> m_spInputSystem;
-
-	RefObjSmPtr<GameMenuResources> m_spGameMenu;
+	RefObjSmPtr<GameMenuSystem> m_spGameMenu;
 	RefObjSmPtr<ClientGameLogic> m_spGameLogic;
 	RefObjSmPtr<GameDefinitionHolder> m_spDefHolder;
 

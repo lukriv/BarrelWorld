@@ -18,11 +18,8 @@ class GameMenu;
 
 class ClientGameLogic : public RefObjectImpl<IRefObject>, protected GameThread {
 	RefObjSmPtr<GameEntityFactory> m_spEntityFactory;
-	RefObjSmPtr<GameCompManager> m_spCompManager;
-	RefObjSmPtr<GameMenu> m_spGameMenus;
-	RefObjSmPtr<GameInputSystem> m_spInputSystem;
+	
 	GameLoggerPtr m_pLogger;
-	Ogre::RenderWindow *m_pRenderWindow;
 	wxCriticalSection m_renderLocker;
 	bool m_stopRequest;
 	bool m_isInitialized;
@@ -30,7 +27,7 @@ public:
 	ClientGameLogic();
 	virtual ~ClientGameLogic();
 	
-	GameErrorCode Initialize(GameLogger *pLogger, Ogre::RenderWindow *pWindow, Ogre::SceneManager *pSceneManager, GameInputSystem *pInputSystem, GameMenuResources *pGameMenu);
+	GameErrorCode Initialize(GameLogger *pLogger, Ogre::RenderWindow *pWindow, Ogre::SceneManager *pSceneManager, GameInputSystem *pInputSystem, GameMenuSystem *pGameMenu);
 	
 	void Uninitialize();
 	

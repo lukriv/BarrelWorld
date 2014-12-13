@@ -7,30 +7,34 @@
 #include <GameSystem/refobjectimpl.h>
 #include <GameSystem/refobject.h>
 
-class ClientGameLogic;
+
+class GameMenuCallback {
+	
+	void SetExitMenu(MyGUI::Widget* _sender) = 0;
+	
+	void SetShowExit(MyGUI::Widget* _sender) = 0;
+	
+};
+
 
 // game menu with buttons and so on
 class GameMenu : public GameMenuBase {
-	ClientGameLogic* m_pClientLogic;
-	bool m_visible;
-	
+
 	// menu buttons
 	MyGUI::Button* m_pButtonExit;
 	MyGUI::Button* m_pButtonSwitch;
 	
 public:
-	GameMenu(GameMenuResources *pMenuRes);
+	GameMenu();
 	virtual ~GameMenu();
 	
-	GameErrorCode Initialize(Ogre::RenderWindow* pWindow, Ogre::SceneManager* pSceneManager, ClientGameLogic *pCliLogic);
-	
-	GameErrorCode PrepareIngameMenu(ClientGameLogic *pGameLogic);
+	GameErrorCode Initialize(GameMenuCallback*);
 	
 	void SwitchExitButton();
 	
 protected:
-	virtual GameErrorCode Create();
-	virtual GameErrorCode Destroy();
+	virtual GameErrorCode Create() override;
+	virtual void Destroy() override;
 
 };
 

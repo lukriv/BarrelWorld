@@ -117,10 +117,12 @@ struct CameraDef : public DefBase {
 public:
 	Ogre::Vector3 m_position;
 	Ogre::Vector3 m_direction;
+	Ogre::Real m_near;
 	
 	CameraDef() : DefBase(),
 				m_position(Ogre::Vector3::ZERO),
-				m_direction(Ogre::Vector3::ZERO){}
+				m_direction(Ogre::Vector3::ZERO),
+				m_near(1.0f){}
 };
 
 /*!

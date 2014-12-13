@@ -38,7 +38,9 @@ protected:
 	TRenderObjectList m_renderObjectList;
 	
 	TMessageList m_receivedMessages;
-
+protected:
+	GameErrorCode ConnectRenderComponent(Ogre::MovableObject* pObject);
+	void DisconnectRenderComponent(Ogre::MovableObject* pObject);
 public:
 
 	// Render component can be created and destroyed only by render component manager

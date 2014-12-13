@@ -39,7 +39,7 @@ void RenderComponent::DisconnectRenderComponent(Ogre::MovableObject* pObject)
 	if(pObject != nullptr) {
 		// erase parent
 		pObject->getUserObjectBindings().setUserAny(Ogre::UserObjectBindings::getEmptyUserAny());
-		m_pRenderNode->detachObject(pObject);
+		m_pSceneNode->detachObject(pObject);
 	}
 }
 
@@ -112,7 +112,7 @@ GameErrorCode RenderComponent::ReinitComponent(GameEntity* pNewParentEntity)
 		m_pParent = nullptr;
 	} else {
 		m_pParent = pNewParentEntity;
-		m_spTransform = pNewParentEntity->GetComponent(GAME_COMP_TRANSFORM);
+		m_spTransform = reinterpret_cast<TransformComponent*> (pNewParentEntity->GetComponent(GAME_COMP_TRANSFORM));
 	}
 	return FWG_NO_ERROR;
 }

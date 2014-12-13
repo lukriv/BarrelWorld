@@ -1,6 +1,7 @@
 #ifndef __GAME_INPUT_COMPONENT_H__
 #define __GAME_INPUT_COMPONENT_H__
 
+#include <OGRE/OgreRenderWindow.h>
 #include <OIS/OISInputManager.h>
 #include <OIS/OISKeyboard.h>
 #include <OIS/OISMouse.h>
@@ -10,9 +11,7 @@
 #include <GameSystem/refobject.h>
 
 
-class Ogre::RenderWindow;
-
-class GameInputSystem : public OIS::KeyListener, public OIS::MouseListener, public RefObjectImpl<IRefObject> {
+class GameInputSystem : public OIS::KeyListener, public OIS::MouseListener {
 private:
 	class InputCallbackBase {
 	public: 
@@ -52,6 +51,7 @@ public:
 	virtual ~GameInputSystem();
 	
 	GameErrorCode Initialize(Ogre::RenderWindow * pRenderWindow);
+	void Uninitialize();
 	
 	template<class T>
 	GameErrorCode RegisterCallback(OIS::KeyCode keyCode, T *pClass, void (T::*MethodPtr)(bool))

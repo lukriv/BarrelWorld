@@ -10,7 +10,7 @@
 
 
 
-class GameEntityFactory : IRefObject {
+class GameEntityFactory : public RefObjectImpl<IRefObject> {
 private:
 	wxAtomicInt m_refCount;
 	GameLoggerPtr m_spLogger;
@@ -26,9 +26,6 @@ public:
 	
 	GameErrorCode CreateEntity( EntityDef &entityDef, GameCompManager& compMgr, GameEntity &entity);
 	
-public:
- 	virtual void addRef();
-	virtual wxInt32 release();
 };
 
 

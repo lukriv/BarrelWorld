@@ -1,8 +1,13 @@
 #include "grendercmgr.h"
 
+#include <OGRE/OgreRoot.h>
+#include <OGRE/OgreRenderWindow.h>
+#include <OGRE/OgreEntity.h>
 #include <GameSystem/new.h>
 #include "grendercomp.h"
 #include "grenderobj.h"
+
+static const char* MAIN_GAME_SCENE_MANAGER = "MainSceneManager";
 
 
 RenderCompManager::RenderCompManager(GameLogger* pLogger) : m_spLogger(pLogger)
@@ -23,7 +28,7 @@ GameErrorCode RenderCompManager::Initialize(GameEngineSettings& settings)
 	if (m_pRoot == nullptr) {
 		result = FWG_E_MEMORY_ALLOCATION_ERROR;
 		FWGLOG_ERROR_FORMAT(wxT("Create ogre root failed: 0x%08x"),
-		                    m_pLogger, result, FWGLOG_ENDVAL);
+		                    m_spLogger, result, FWGLOG_ENDVAL);
 		return result;
 	}
 
@@ -47,7 +52,7 @@ GameErrorCode RenderCompManager::Initialize(GameEngineSettings& settings)
 	if(m_pRenderWindow == nullptr) {
 		result = FWG_E_MEMORY_ALLOCATION_ERROR;
 		FWGLOG_ERROR_FORMAT(wxT("Create render window failed: 0x%08x"),
-		                    m_pLogger, result, FWGLOG_ENDVAL);
+		                    m_spLogger, result, FWGLOG_ENDVAL);
 		return result;
 	}
 
@@ -56,7 +61,7 @@ GameErrorCode RenderCompManager::Initialize(GameEngineSettings& settings)
 	if(m_pSceneManager == nullptr) {
 		result = FWG_E_MEMORY_ALLOCATION_ERROR;
 		FWGLOG_ERROR_FORMAT(wxT("Create scene manager failed: 0x%08x"),
-		                    m_pLogger, result, FWGLOG_ENDVAL);
+		                    m_spLogger, result, FWGLOG_ENDVAL);
 		return result;
 	}
 	
@@ -67,7 +72,27 @@ void RenderCompManager::Uninitialize()
 {
 	m_spMainCamera.Release();
 	m_cameraMap.Clear();
-	m_pSceneManager = NULL;
+		
+	if(m_pRenderWindow != nullptr) 
+	{
+		m_pRenderWindow->removeAllListeners();
+		m_pRenderWindow->removeAllViewports();
+		if (m_pRoot != nullptr) m_pRoot->detachRenderTarget(m_pRenderWindow);
+		m_pRenderWindow->destroy();
+	}
+
+	if(m_pSceneManager != nullptr)
+	{
+		m_pRoot->destroySceneManager(m_pSceneManager);
+	}
+
+	// delete ogre root
+	if(m_pRoot != nullptr) 
+	{
+		delete m_pRoot;
+		m_pRoot = nullptr;
+	}
+	
 }
 
 RenderCompManager::~RenderCompManager()
@@ -76,47 +101,8 @@ RenderCompManager::~RenderCompManager()
 }
 
 
-GameErrorCode RenderCompManager::CreateEmptyRenderComponent(RenderComponent *&pRenderCompOut)
-{
-	RefObjSmPtr<RenderComponent> spRenderComp;
-	
-	if(m_pSceneManager == nullptr)
-	{
-		// render manager is not initialized
-		return FWG_E_OBJECT_NOT_INITIALIZED_ERROR;
-	}
-	
-	FWG_RETURN_FAIL(GameNewChecked(spRenderComp.OutRef(), this));
-	
-	FWG_RETURN_FAIL(spRenderComp->Initialize());
-	
-	pRenderCompOut = spRenderComp;
-	
-	return FWG_NO_ERROR;
-}
 
 
-GameErrorCode RenderCompManager::CreateCamera(const wxString& cameraName, RenderObject*& pGameCameraOut)
-{
-	GameErrorCode result = FWG_NO_ERROR;
-	Ogre::Camera *pCamera = m_pSceneManager->createCamera(cameraName.ToStdString());
-	RenderObject *pGameCamera = NULL;
-	
-	if(FWG_FAILED(result = GameNewChecked(pGameCamera, pCamera)))
-	{
-		m_pSceneManager->destroyMovableObject(pCamera);
-		return result;
-	}
-	
-	if(FWG_FAILED(result = m_cameraMap.Insert(cameraName, pGameCamera)))
-	{
-		return result;
-	}
-		
-	pGameCameraOut = pGameCamera;
-		
-	return result;
-}
 
 RenderObject* RenderCompManager::GetCamera(const wxString& cameraName)
 {
@@ -147,7 +133,7 @@ GameErrorCode RenderCompManager::ProcessAllUpdates()
 	wxCriticalSectionLocker processLock(m_processLock);
 	{
 		wxCriticalSectionLocker lock(m_mgrLock);
-		processQueue = m_updateQueue[m_actualQueue];
+		processQueue = &m_updateQueue[m_actualQueue];
 		m_actualQueue = (m_actualQueue + 1) % 2;
 	}
 	endIter = processQueue->end();
@@ -160,4 +146,130 @@ GameErrorCode RenderCompManager::ProcessAllUpdates()
 	
 	return FWG_NO_ERROR;
 	
+}
+
+//////////////
+// creators //
+//////////////
+GameErrorCode RenderCompManager::CreateEmptyRenderComponent(RenderComponent *&pRenderCompOut)
+{
+	RefObjSmPtr<RenderComponent> spRenderComp;
+	
+	if(m_pSceneManager == nullptr)
+	{
+		// render manager is not initialized
+		return FWG_E_OBJECT_NOT_INITIALIZED_ERROR;
+	}
+	
+	FWG_RETURN_FAIL(GameNewChecked(spRenderComp.OutRef(), this));
+	
+	FWG_RETURN_FAIL(spRenderComp->Initialize());
+	
+	pRenderCompOut = spRenderComp;
+	
+	return FWG_NO_ERROR;
+}
+
+GameErrorCode RenderCompManager::CreateRenderComponent(const RenderDef& renderCompDef, RenderComponent*& pRenderComp)
+{	
+	GameErrorCode result = FWG_NO_ERROR;
+	RefObjSmPtr<RenderComponent> spRenderComp;
+	FWG_RETURN_FAIL(CreateEmptyRenderComponent(spRenderComp.OutRef()));
+	
+	if(!renderCompDef.m_entities.empty())
+	{
+		wxVector< RefObjSmPtr<RenderEntityDef> >::const_iterator iter;
+		for(iter = renderCompDef.m_entities.begin(); iter != renderCompDef.m_entities.end(); ++iter)
+		{
+			RefObjSmPtr<RenderObject> spRenderObject;
+			if(FWG_FAILED(result = CreateRenderObject(**iter, spRenderObject.OutRef())))
+			{
+				FWGLOG_ERROR_FORMAT(wxT("CreateRenderComponent failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+				return result;
+			}
+			spRenderComp->AttachRenderObject(spRenderObject);
+		}
+	}
+	
+	if(!renderCompDef.m_cameras.empty())
+	{
+		wxVector< RefObjSmPtr<CameraDef> >::const_iterator iter;
+		for(iter = renderCompDef.m_cameras.begin(); iter != renderCompDef.m_cameras.end(); iter++)
+		{
+			RefObjSmPtr<RenderObject> spRenderObject;
+			if(FWG_FAILED(result = CreateCamera(**iter, spRenderObject.OutRef())))
+			{
+				FWGLOG_ERROR_FORMAT(wxT("CreateCamera failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+				return result;
+			}
+			spRenderComp->AttachRenderObject(spRenderObject);
+		}
+	}
+	
+	pRenderComp = spRenderComp.Detach();
+	
+	return result;
+}
+
+GameErrorCode RenderCompManager::CreateRenderObject(const RenderEntityDef& renderObjectDef, RenderObject*& pRenderObject)
+{
+	// render entity is defined
+	Ogre::Entity *pEntity = nullptr;
+	RefObjSmPtr<RenderObject> spRenderObject;
+	
+	
+	if(!renderObjectDef.GetName().IsEmpty())
+	{
+		pEntity = m_pSceneManager->createEntity(renderObjectDef.GetName().ToStdString(), renderObjectDef.m_mesh->m_name.ToStdString());
+	} else {
+		FWGLOG_ERROR(wxT("Render entity name is empty"), m_spLogger);
+		return FWG_E_NOT_IMPLEMENTED_ERROR;
+	}
+	
+	//pEntity->setMaterialName(entityDef.m_material->m_name.ToStdString());
+	pEntity->setMaterialName(renderObjectDef.m_material->m_name.ToStdString());
+	
+	
+	FWG_RETURN_FAIL(GameNewChecked(spRenderObject.OutRef(), pEntity));
+	
+	pRenderObject = spRenderObject.Detach();
+	
+	return FWG_NO_ERROR;
+}
+
+GameErrorCode RenderCompManager::CreateCamera(const CameraDef &cameraDef, RenderObject*& pGameCameraOut)
+{
+	GameErrorCode result = FWG_NO_ERROR;
+	RefObjSmPtr<RenderObject> spCameraObject;
+	Ogre::Camera *pOgreCam = nullptr;
+	
+	// create ogre camera
+	pOgreCam = m_pSceneManager->createCamera(cameraDef.GetName().ToStdString());
+	if(pOgreCam == nullptr)
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Get Ogre camera failed: 0x%08x"), m_spLogger, FWG_E_MEMORY_ALLOCATION_ERROR, FWGLOG_ENDVAL);
+		return FWG_E_MEMORY_ALLOCATION_ERROR;
+	}
+
+	// Position it at 500 in Z direction
+	//pOgreCam->setPosition(Ogre::Vector3(0, 10, -5));
+	pOgreCam->setPosition(cameraDef.m_position);
+	// Look back along -Z
+	pOgreCam->setDirection(cameraDef.m_direction);
+	pOgreCam->setNearClipDistance(cameraDef.m_near);
+	
+	if(FWG_FAILED(result = GameNewChecked(spCameraObject.OutRef(), pOgreCam)))
+	{
+		m_pSceneManager->destroyMovableObject(pOgreCam);
+		return result;
+	}
+	
+	if(FWG_FAILED(result = m_cameraMap.Insert(cameraDef.GetName().ToStdString(), spCameraObject)))
+	{
+		return result;
+	}
+		
+	pGameCameraOut = spCameraObject.Detach();
+		
+	return result;
 }

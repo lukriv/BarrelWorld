@@ -16,7 +16,7 @@ ClientGameLogic::~ClientGameLogic()
 	Uninitialize();
 }
 
-GameErrorCode ClientGameLogic::Initialize(GameLogger* pLogger, Ogre::RenderWindow* pWindow, Ogre::SceneManager* pSceneManager, GameInputSystem* pInputSystem, GameMenuResources* pGameMenuRes)
+GameErrorCode ClientGameLogic::Initialize(GameLogger* pLogger, Ogre::RenderWindow* pWindow, Ogre::SceneManager* pSceneManager, GameInputSystem* pInputSystem, GameMenuSystem* pGameMenuRes)
 {
 	GameErrorCode result = FWG_NO_ERROR;
 	if(m_isInitialized)

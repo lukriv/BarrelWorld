@@ -22,20 +22,6 @@ static const wxChar* FACTORY_INPUT_BACKWARD	 = wxT("backward");
 static const wxChar* FACTORY_LOGIC_TYPE_MANUAL_TEST = wxT("MANUAL_TEST");
 
 
-void GameEntityFactory::addRef()
-{
-	wxAtomicInc(m_refCount);
-}
-
-wxInt32 GameEntityFactory::release()
-{
-	wxInt32 refCount = wxAtomicDec(m_refCount);
-	if (refCount == 0)
-	{
-		delete this;
-	}
-	return refCount;
-}
 
 GameErrorCode GameEntityFactory::Initialize(GameLogger* pLogger, GameInputSystem *pInputSystem)
 {
@@ -74,75 +60,10 @@ GameErrorCode GameEntityFactory::CreateEntity( EntityDef& entityDef, GameCompMan
 		GameErrorCode result = FWG_NO_ERROR;
 		if(!entityDef.m_renderDef.IsEmpty())
 		{
-			RefObjSmPtr<RenderDef> spRenderDef = entityDef.m_renderDef;
-			
-			RefObjSmPtr<RenderComponent> spRenderComp;
-			FWG_RETURN_FAIL(compMgr.GetRenderManager().CreateEmptyRenderComponent(spRenderComp.OutRef()));
+
 			
 			spRenderComp->SetParent(&entity);
 			entity.SetRenderComp(spRenderComp);
-			
-			if(!spRenderDef->m_entities.empty())
-			{
-				wxVector< RefObjSmPtr<RenderEntityDef> >::iterator iter;
-				for(iter = spRenderDef->m_entities.begin(); iter != spRenderDef->m_entities.end(); iter++)
-				{
-					// render entity is defined
-					Ogre::Entity *pEntity = nullptr;
-					RenderObject *pRenderObject = nullptr; 
-					RefObjSmPtr<RenderObject> spRenderObject;
-					
-					
-					if(!entityDef.GetName().IsEmpty())
-					{
-						pEntity = compMgr.GetRenderManager().GetOgreSceneManager()->createEntity((*iter)->GetName().ToStdString(), (*iter)->m_mesh->m_name.ToStdString());
-					} else {
-						FWGLOG_ERROR(wxT("Render entity name is empty"), m_spLogger);
-						return FWG_E_NOT_IMPLEMENTED_ERROR;
-					}
-					
-					//pEntity->setMaterialName(entityDef.m_material->m_name.ToStdString());
-					pEntity->setMaterialName((*iter)->m_material->m_name.ToStdString());
-					
-					
-					FWG_RETURN_FAIL(GameNewChecked(pRenderObject, pEntity));
-					spRenderObject.Attach(pRenderObject);
-					spRenderComp->AttachRenderObject(spRenderObject);
-			
-				}
-							
-			}
-			
-			if(!spRenderDef->m_cameras.empty())
-			{
-				wxVector< RefObjSmPtr<CameraDef> >::iterator iter;
-				for(iter = spRenderDef->m_cameras.begin(); iter != spRenderDef->m_cameras.end(); iter++)
-				{
-					RefObjSmPtr<RenderObject> spCameraObject;
-					Ogre::Camera *pOgreCam = nullptr;
-					if(FWG_FAILED(result = compMgr.GetRenderManager().CreateCamera((*iter)->GetName(), spCameraObject.OutRef())))
-					{
-						FWGLOG_ERROR_FORMAT(wxT("Create new camera failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
-						return result;
-					}
-					
-					pOgreCam = spCameraObject.In()->GetCamera();
-					
-					if(pOgreCam == nullptr)
-					{
-						FWGLOG_ERROR_FORMAT(wxT("Get Ogre camera failed: 0x%08x"), m_spLogger, FWG_E_MEMORY_ALLOCATION_ERROR, FWGLOG_ENDVAL);
-						return FWG_E_MEMORY_ALLOCATION_ERROR;
-					}
-					// Position it at 500 in Z direction
-					//pOgreCam->setPosition(Ogre::Vector3(0, 10, -5));
-					pOgreCam->setPosition((*iter)->m_position);
-					// Look back along -Z
-					pOgreCam->setDirection((*iter)->m_direction);
-					pOgreCam->setNearClipDistance(1);
-					spRenderComp->AttachRenderObject(spCameraObject);
-				}
-
-			}
 		}
 		
 		if(!entityDef.m_transformation.IsEmpty())

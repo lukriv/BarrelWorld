@@ -10,48 +10,7 @@
 
 
 static const wxChar* TESTING_TITLE = wxT("Flat World Client");
-static const char* MAIN_GAME_SCENE_MANAGER = "MainSceneManager";
 
-GameErrorCode GameClientEngine::CreateWindow()
-{
-	GameErrorCode result = FWG_NO_ERROR;
-	// Create the main window
-	m_pRoot = new Ogre::Root("", "");
-	if (m_pRoot == NULL) {
-		result = FWG_E_MEMORY_ALLOCATION_ERROR;
-		FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::CreateWindow() : Create ogre root failed: 0x%08x"),
-		                    m_pLogger, result, FWGLOG_ENDVAL);
-		return result;
-	}
-
-	m_pRoot->loadPlugin("RenderSystem_GL");
-	Ogre::RenderSystemList::const_iterator it = m_pRoot->getAvailableRenderers().begin();
-	Ogre::RenderSystem *pRenSys = NULL;
-
-	if(m_pRoot->getAvailableRenderers().size() == 1) {
-		pRenSys = *it;
-	}
-	m_pRoot->setRenderSystem(pRenSys);
-	m_pRoot->initialise(false);
-
-
-	m_pRenderWindow = m_pRoot->createRenderWindow(m_settings.m_screenTitle.ToStdString()
-	                  , m_settings.m_screenWidth
-	                  , m_settings.m_screenHeight
-	                  , false
-	                  , 0);
-
-	if(m_pRenderWindow == NULL) {
-		result = FWG_E_MEMORY_ALLOCATION_ERROR;
-		FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::CreateWindow() : Create render window failed: 0x%08x"),
-		                    m_pLogger, result, FWGLOG_ENDVAL);
-		return result;
-	}
-
-
-
-	return result;
-}
 
 GameErrorCode GameClientEngine::Initialize(GameLogger* pLogger)
 {
@@ -70,34 +29,23 @@ GameErrorCode GameClientEngine::Initialize(GameLogger* pLogger)
 	} else {
 		FWGLOG_INFO(wxT("Setting was loaded successfuly"), m_pLogger);
 	}
-
-	// create window and sets render system
-	if(FWG_FAILED(result = CreateWindow())) {
-		FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::Initialize() : Create window failed: 0x%08x"),
-		                    m_pLogger, result, FWGLOG_ENDVAL);
-		return result;
-	} else {
-		FWGLOG_INFO(wxT("Window was created successfuly"), m_pLogger);
-	}
-
-
-
-	// setting up OIS and Input system
-
-
+	
 	// initialize resources
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("res", "FileSystem", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, false);
 
 	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
-
-
-	FWGLOG_INFO(wxT("Resource initialization was successful"), m_pLogger);
-
-	// initialize GUI
-	FWG_RETURN_FAIL( GameNewChecked(m_spGameMenu.OutRef()));
-	FWG_RETURN_FAIL( m_spGameMenu->Initialize(pLogger, m_pRenderWindow, pSceneManager));
 	
-	FWGLOG_INFO(wxT("MyGUI initialization was successful"), m_pLogger);
+	// create new component manager
+	FWG_RETURN_FAIL(GameNewChecked(m_spCompManager.OutRef()));
+
+	// create window and sets render system
+	if(FWG_FAILED(result = m_spCompManager->Initialize(m_settings))) {
+		FWGLOG_ERROR_FORMAT(wxT("Initialize component manager failed: 0x%08x"),
+		                    m_pLogger, result, FWGLOG_ENDVAL);
+		return result;
+	} else {
+		FWGLOG_INFO(wxT("Component manager was initialized successfuly"), m_pLogger);
+	}
 
 	// initialize game logic (component manager)
 	FWG_RETURN_FAIL(GameNewChecked(m_spGameLogic.OutRef()));
@@ -352,24 +300,7 @@ GameClientEngine::~GameClientEngine()
 		m_pInputMgr = nullptr;
 	}
 
-	if(m_pRenderWindow != NULL) {
-		m_pRenderWindow->removeAllListeners();
-		m_pRenderWindow->removeAllViewports();
-		if (m_pRoot != NULL) m_pRoot->detachRenderTarget(m_pRenderWindow);
-		m_pRenderWindow->destroy();
-	}
 
-	Ogre::SceneManager *pSceneMgr = m_pRoot->getSceneManager(MAIN_GAME_SCENE_MANAGER);
-	if(pSceneMgr != NULL)
-	{
-		m_pRoot->destroySceneManager(pSceneMgr);
-	}
-
-	if(m_pRoot != NULL) {
-
-		m_pRoot->destroyAllRenderQueueInvocationSequences();
-		m_pRoot = NULL;
-	}
 }
 
 

@@ -30,13 +30,9 @@
   <Dependencies/>
   <VirtualDirectory Name="src">
     <File Name="gclientlogic.cpp"/>
-    <File Name="gmenu.cpp"/>
-    <File Name="gmenumgr.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="gclientlogic.h"/>
-    <File Name="gmenu.h"/>
-    <File Name="gmenumgr.h"/>
   </VirtualDirectory>
   <Settings Type="Static Library">
     <GlobalSettings>
