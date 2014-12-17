@@ -9,7 +9,7 @@ struct GameEngineSettings {
 	wxDword m_screenHeight;
 	wxString m_screenTitle;
 	wxString m_worldName;
-
+	
 	GameEngineSettings() :
 		m_screenWidth(800),
 		m_screenHeight(600) {}

@@ -8,47 +8,23 @@
 
 GameMenuBase::~GameMenuBase()
 {
-	if(m_pMenuRes)
+	if(m_pRootWindow)
 	{
-		m_pMenuRes->RemoveMenu(this);
-		m_pMenuRes = nullptr;
+		m_pRootWindow->destroy();
+		m_pRootWindow = nullptr;
 	}
 }
 
-GameMenuBase::GameMenuBase() : m_pMenuRes(nullptr)
-							, m_enabled(false) {}
+GameMenuBase::GameMenuBase(GameMenuSystem *pMenuRes, GameLogger *pLogger) : m_spLogger(pLogger)	
+																,m_pMenuRes(pMenuRes) {}
 
 
-GameErrorCode GameMenuBase::Enable()
+GameErrorCode GameMenuBase::CreateRootWindow(const wxString& windowName)
 {
-	wxCriticalSectionLocker lock(m_menuLock);
-	
-	if((!m_enabled)&&(m_pMenuRes))
+	if(!m_pRootWindow)
 	{
-		FWG_RETURN_FAIL(m_pMenuRes->SwitchMenu(this));
-		FWG_RETURN_FAIL(Create());
-		m_enabled = true;
+		m_pRootWindow = CEGUI::WindowManager::getSingleton().createWindow( "DefaultWindow", windowName.ToStdString() );	
 	}
 	
-	return FWG_NO_ERROR;
-}
-
-
-GameErrorCode GameMenuBase::Disable()
-{
-	wxCriticalSectionLocker lock(m_menuLock);
-	
-	if(m_enabled)
-	{
-		FWG_RETURN_FAIL(Destroy());
-		m_enabled = false;
-	}
-	
-	return FWG_NO_ERROR;
-}
-
-void GameMenuBase::SetMenuSystem(GameMenuSystem* pMenuRes)
-{
-	wxCriticalSectionLocker lock(m_menuLock);
-	m_pMenuRes = pMenuRes;
+	return FWG_NO_ERROR;	
 }

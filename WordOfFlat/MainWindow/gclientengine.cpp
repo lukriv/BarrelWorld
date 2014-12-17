@@ -30,11 +30,6 @@ GameErrorCode GameClientEngine::Initialize(GameLogger* pLogger)
 		FWGLOG_INFO(wxT("Setting was loaded successfuly"), m_pLogger);
 	}
 	
-	// initialize resources
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("res", "FileSystem", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, false);
-
-	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
-	
 	// create new component manager
 	FWG_RETURN_FAIL(GameNewChecked(m_spCompManager.OutRef()));
 
@@ -47,30 +42,14 @@ GameErrorCode GameClientEngine::Initialize(GameLogger* pLogger)
 		FWGLOG_INFO(wxT("Component manager was initialized successfuly"), m_pLogger);
 	}
 
-	// initialize game logic (component manager)
-	FWG_RETURN_FAIL(GameNewChecked(m_spGameLogic.OutRef()));
-	if (FWG_FAILED(result = m_spGameLogic.In()->Initialize(pLogger, m_pRenderWindow, pSceneManager, m_spInputSystem.In(), m_spGameMenu.In()))) {
-		FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::Initialize() : Client Logic initialize failed: 0x%08x"), pLogger, result, FWGLOG_ENDVAL);
-		return result;
-	} else {
-		FWGLOG_INFO(wxT("GameLogic initialization was successful"), m_pLogger);
-	}
-
-
 	// initialize game resources
-	FWG_RETURN_FAIL(GameNewChecked(m_spDefHolder.OutRef()));
+	FWG_RETURN_FAIL(GameNewChecked(m_spFactory.OutRef(), pLogger));	
+	
 
 	//GameTestResourceLoader loader;
     //
 	//FWG_RETURN_FAIL(loader.Initialize(m_pLogger));
-	GameXmlResourceLoader loader;
-	if(FWG_FAILED(result = loader.Initialize(wxT("example.xml"), wxT("res/"), pLogger)))
-	{
-		FWGLOG_ERROR_FORMAT(wxT("Xml loader initialize failed: 0x%08x"), pLogger, result, FWGLOG_ENDVAL);
-		return result;
-	}
-	
-	FWG_RETURN_FAIL(loader.Load(*m_spDefHolder));
+
 	
 
 
@@ -305,21 +284,19 @@ GameClientEngine::~GameClientEngine()
 
 
 
-bool GameClientEngine::GameRenderListener::frameStarted(const Ogre::FrameEvent& evt)
+bool GameClientEngine::GameRenderListener::frameStarted(const Ogre::FrameEvent&)
 {
-	m_pOwner->m_spGameLogic.In()->GetRenderLocker().Enter();
-	//FWGLOG_TRACE(wxT("entered to render lock"), m_pOwner->m_pLogger);
 	return true;
 }
 
 bool GameClientEngine::GameRenderListener::frameRenderingQueued(const Ogre::FrameEvent& evt)
 {
 	// leave render section
-	m_pOwner->m_spGameLogic.In()->GetRenderLocker().Leave();
-	//FWGLOG_TRACE(wxT("leaved render lock"), m_pOwner->m_pLogger);
+	
+	evt.
 	
 	// process inputs
-	m_pOwner->m_spInputSystem->ProcessInputs();
+	if(m_pOwner->ProcessUpdate();
 	if (m_pOwner->m_spGameLogic->IsStopped())
 	{
 		return false;	
@@ -330,10 +307,8 @@ bool GameClientEngine::GameRenderListener::frameRenderingQueued(const Ogre::Fram
 	}
 }
 
-bool GameClientEngine::GameRenderListener::frameEnded(const Ogre::FrameEvent& evt)
+bool GameClientEngine::GameRenderListener::frameEnded(const Ogre::FrameEvent&)
 {
-	m_pOwner->m_spGameLogic.In()->GetRenderLocker().Leave();
-	//FWGLOG_TRACE(wxT("leaved render lock"), m_pOwner->m_pLogger);
 	return true;
 }
 

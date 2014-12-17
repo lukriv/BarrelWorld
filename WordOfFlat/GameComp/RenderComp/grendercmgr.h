@@ -59,6 +59,8 @@ public:
 	
 	inline GameLogger * GetLogger() { return m_spLogger; }
 	
+	inline Ogre::Root* GetOgreRoot() { return m_pRoot; }
+	
 	inline Ogre::SceneManager* GetOgreSceneManager() { return m_pSceneManager; }
 	
 	inline Ogre::RenderWindow* GetOgreRenderWindow() { return m_pRenderWindow; }
@@ -71,6 +73,8 @@ public:
 	RenderObject* GetCamera(const wxString& cameraName);
 	
 	RenderObject* GetMainCamera() { return m_spMainCamera; }
+	
+	GameErrorCode SetMainCamera( RenderObject *pCameraObject);
 	
 	
 	

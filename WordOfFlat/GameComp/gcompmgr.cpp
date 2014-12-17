@@ -2,8 +2,8 @@
 
 GameCompManager::GameCompManager(GameLogger *pLogger) : m_spLogger(pLogger)
 														, m_renderMgr(pLogger)
-														, m_inputSystem()
 														, m_menuMgr(pLogger)
+														, m_inputSystem()
 														, m_logicMgr(pLogger)
 														, m_entityMgr(pLogger)
 {}
@@ -22,7 +22,7 @@ GameErrorCode GameCompManager::Initialize(GameEngineSettings& settings)
 	
 	FWGLOG_INFO(wxT("Render manager initialization was successful"), m_spLogger);
 	
-	if(FWG_FAILED(result = m_menuMgr.Initialize(m_renderMgr.GetOgreRenderWindow(), m_renderMgr.GetOgreSceneManager())))
+	if(FWG_FAILED(result = m_menuMgr.Initialize(m_renderMgr.GetOgreRenderWindow())))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Menu manager initialize failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
 		return result;

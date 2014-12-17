@@ -1,41 +1,44 @@
 #ifndef __GAME_MENU_H__
 #define __GAME_MENU_H__
 
-#include "gmenumgr.h"
-
 #include <GameSystem/glog.h>
 #include <GameSystem/refobjectimpl.h>
 #include <GameSystem/refobject.h>
 
+#include "gmenumgr.h"
+#include "gmenubase.h"
 
 class GameMenuCallback {
+public:
 	
-	void SetExitMenu(MyGUI::Widget* _sender) = 0;
-	
-	void SetShowExit(MyGUI::Widget* _sender) = 0;
-	
+	virtual void OnExitEvent() = 0;
 };
 
 
 // game menu with buttons and so on
 class GameMenu : public GameMenuBase {
 
+	bool m_isInitialized;
 	// menu buttons
-	MyGUI::Button* m_pButtonExit;
-	MyGUI::Button* m_pButtonSwitch;
+	CEGUI::Window* m_pButtonExit;
+	CEGUI::Window* m_pButtonSwitch;
+	
+	GameMenuCallback* m_pCallback;
 	
 public:
-	GameMenu();
+	GameMenu(GameMenuSystem *pMenuRes, GameLogger *pLogger);
 	virtual ~GameMenu();
 	
 	GameErrorCode Initialize(GameMenuCallback*);
 	
-	void SwitchExitButton();
+	// menu events
+	bool ExitEvent(const CEGUI::EventArgs& /*e*/);
+	bool SwitchEvent(const CEGUI::EventArgs& /*e*/);
 	
-protected:
-	virtual GameErrorCode Create() override;
-	virtual void Destroy() override;
-
+public:
+	
+	virtual GameErrorCode Show() override;
+	
 };
 
 #endif // __GAME_MENU_H__

@@ -30,7 +30,7 @@
       <Project Name="GameXmlDefinitions" ConfigName="Debug"/>
       <Project Name="Extern" ConfigName="Debug"/>
     </WorkspaceConfiguration>
-    <WorkspaceConfiguration Name="Release" Selected="yes">
+    <WorkspaceConfiguration Name="Release" Selected="no">
       <Project Name="GameComm" ConfigName="Release"/>
       <Project Name="GameComp" ConfigName="Release"/>
       <Project Name="GameLoader" ConfigName="Release"/>

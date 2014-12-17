@@ -35,16 +35,6 @@
     <File Name="gcompbase.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="comp">
-    <VirtualDirectory Name="animComp">
-      <VirtualDirectory Name="include">
-        <File Name="AnimationComp/ganimation.h"/>
-        <File Name="AnimationComp/ganimcmgr.h"/>
-      </VirtualDirectory>
-      <VirtualDirectory Name="src">
-        <File Name="AnimationComp/ganimation.cpp"/>
-        <File Name="AnimationComp/ganimcmgr.cpp"/>
-      </VirtualDirectory>
-    </VirtualDirectory>
     <VirtualDirectory Name="renderComp">
       <VirtualDirectory Name="include">
         <File Name="RenderComp/grendercomp.h"/>
@@ -65,14 +55,6 @@
       <VirtualDirectory Name="src">
         <File Name="PhysicsComp/gphyscmgr.cpp"/>
         <File Name="PhysicsComp/gphyscomp.cpp"/>
-      </VirtualDirectory>
-    </VirtualDirectory>
-    <VirtualDirectory Name="animatorComp">
-      <VirtualDirectory Name="include">
-        <File Name="AnimatorComp/ganimatormgr.h"/>
-      </VirtualDirectory>
-      <VirtualDirectory Name="src">
-        <File Name="AnimatorComp/ganimatormgr.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="transformComp">
@@ -123,8 +105,6 @@
     <File Name="gentity.cpp"/>
     <File Name="gcompmgr.cpp"/>
   </VirtualDirectory>
-  <Dependencies Name="Debug"/>
-  <Dependencies Name="Release"/>
   <Settings Type="Static Library">
     <GlobalSettings>
       <Compiler Options="-Wall;-Wno-unused-local-typedefs;-std=c++11" C_Options="" Assembler="">
@@ -217,4 +197,6 @@
       </Completion>
     </Configuration>
   </Settings>
+  <Dependencies Name="Debug"/>
+  <Dependencies Name="Release"/>
 </CodeLite_Project>

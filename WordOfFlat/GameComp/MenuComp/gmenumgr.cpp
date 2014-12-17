@@ -1,99 +1,41 @@
 #include "gmenumgr.h"
 
-#include <MyGUI/MyGUI_PointerManager.h>
-#include <MyGUI/MyGUI_Button.h>
+#include <CEGUI/RendererModules/Ogre/Renderer.h>
 
 GameMenuSystem::GameMenuSystem(GameLogger *pLogger) : m_pLogger(pLogger)
-						, m_pGui(nullptr)
-						, m_pGuiPlatform(nullptr)
-						, m_actualViewportIndex(0) {}
+													, m_pGuiSystem(nullptr) {}
 
 GameMenuSystem::~GameMenuSystem()
 {
 	Uninitialize();
 }
 
-GameErrorCode GameMenuSystem::Initialize( Ogre::RenderWindow* pWindow, Ogre::SceneManager* pSceneManager)
+GameErrorCode GameMenuSystem::Initialize( Ogre::RenderWindow* pWindow )
 {
 	
-	// initialize MyGUI
-	FWG_RETURN_FAIL(GameNewChecked(m_pGuiPlatform));
-	m_pGuiPlatform->initialise(pWindow, pSceneManager);
-	
-	FWG_RETURN_FAIL(GameNewChecked(m_pGui));
-	m_pGui->initialise();
-	
-	return FWG_NO_ERROR;
-}
-
-void GameMenuSystem::SetActualViewportIndex(wxInt32 actViewportIndex)
-{
-	wxCriticalSectionLocker lock(m_systemLock);
-	m_actualViewportIndex = actViewportIndex;
-}
-
-wxInt32 GameMenuSystem::GetActualViewportIndex()
-{ 
-	wxCriticalSectionLocker lock(m_systemLock);
-	return m_actualViewportIndex; 
-}
-
-void GameMenuSystem::AddMenu(GameMenuBase* pMenu)
-{	
-	TMenuList::iterator iter;
-	wxCriticalSectionLocker lock(m_systemLock);
-	
-	iter = m_menuList.Find(pMenu);
-	if(iter == m_menuList.end())
-	{
-		m_menuList.insert(pMenu);
-	}
-}
-
-void GameMenuSystem::RemoveMenu(GameMenuBase* pMenu)
-{
-	TMenuList::iterator iter;
-	wxCriticalSectionLocker lock(m_systemLock);
-	
-	iter = m_menuList.Find(pMenu);
-	if(iter != m_menuList.end())
-	{
-		m_menuList.erase(iter);
-	}
-}
-
-GameErrorCode GameMenuSystem::SwitchMenu(GameMenuBase* pMenu)
-{
-	TMenuList::iterator iter;
-	wxCriticalSectionLocker lock(m_systemLock);
-	
-	for(iter = m_menuList.begin(); iter != m_menuList.end(); iter++)
-	{
-		if(*iter != pMenu) 
-		{
-			(*iter)->Destroy();
-		}
-	}
-	
-	m_pGuiPlatform->getRenderManagerPtr()->setActiveViewport(m_actualViewportIndex);
+	CEGUI::OgreRenderer& ogreRenderer =  CEGUI::OgreRenderer::create (*pWindow);
+	CEGUI::OgreResourceProvider* pOgreResource = &CEGUI::OgreRenderer::createOgreResourceProvider();
+	m_pGuiSystem = &CEGUI::System::create( ogreRenderer, reinterpret_cast<CEGUI::ResourceProvider*>(pOgreResource) );
 	
 	return FWG_NO_ERROR;
 }
 
 void GameMenuSystem::Uninitialize()
 {
-	if(m_pGui)
+	
+    if (m_pGuiSystem)
 	{
-		m_pGui->shutdown();
-		delete m_pGui;
-		m_pGui = nullptr;
+		// get extern renderer and resource provider
+		CEGUI::OgreRenderer* pRenderer = reinterpret_cast<CEGUI::OgreRenderer*>(m_pGuiSystem->getRenderer());
+		CEGUI::OgreResourceProvider* pResourceProvider = reinterpret_cast<CEGUI::OgreResourceProvider*>(m_pGuiSystem->getResourceProvider());
+	
+		// destroy cegui system
+		CEGUI::System::destroy();
+		m_pGuiSystem = nullptr;
+
+		CEGUI::OgreRenderer::destroyOgreResourceProvider(*pResourceProvider);
+		CEGUI::OgreRenderer::destroy(*pRenderer);
 	}
 	
-	if(m_pGuiPlatform)
-	{
-		m_pGuiPlatform->shutdown();
-		delete m_pGuiPlatform;
-		m_pGuiPlatform = nullptr;
-	}
 }
 

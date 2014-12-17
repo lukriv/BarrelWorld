@@ -31,11 +31,13 @@
   <VirtualDirectory Name="src">
     <File Name="main.cpp"/>
     <File Name="gclientengine.cpp"/>
+    <File Name="gmmstate.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="gclientengine.h"/>
     <File Name="gmainlogic.h"/>
     <File Name="gsettings.h"/>
+    <File Name="gmmstate.h"/>
   </VirtualDirectory>
   <Settings Type="Executable">
     <GlobalSettings>

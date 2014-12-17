@@ -34,10 +34,9 @@ TransformComponent::~TransformComponent()
 	}
 }
 
-GameErrorCode TransformComponent::ReceiveMessage(TaskMessage& msg)
+GameErrorCode TransformComponent::ReceiveMessage(TaskMessage& )
 {
-	FWG_UNREFERENCED_VARIABLE(msg);
-	return FWG_E_NOT_IMPLEMENTED_ERROR;
+	return FWG_NO_ERROR;
 }
 
 GameErrorCode TransformComponent::ReinitComponent(GameEntity* pNewParentEntity)

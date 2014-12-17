@@ -65,6 +65,11 @@ GameErrorCode RenderCompManager::Initialize(GameEngineSettings& settings)
 		return result;
 	}
 	
+	// initialize Ogre resources
+	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("res", "FileSystem", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, false);
+
+	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+	
 	return FWG_NO_ERROR;
 }
 
@@ -272,4 +277,37 @@ GameErrorCode RenderCompManager::CreateCamera(const CameraDef &cameraDef, Render
 	pGameCameraOut = spCameraObject.Detach();
 		
 	return result;
+}
+
+GameErrorCode RenderCompManager::SetMainCamera(RenderObject* pCameraObject)
+{
+	if ((!pCameraObject)||(!pCameraObject->IsCameraType()))
+	{
+		return FWG_E_INVALID_PARAMETER_ERROR;
+	}
+	
+	if(!m_pRenderWindow)
+	{
+		return FWG_E_OBJECT_NOT_INITIALIZED_ERROR;
+	}
+	
+	wxCriticalSectionLocker lock(m_mgrLock);
+	
+	Ogre::Viewport *pViewport = nullptr;
+	
+	// check if main viewport exists
+	if(m_pRenderWindow->hasViewportWithZOrder(0))
+	{
+		pViewport = m_pRenderWindow->getViewport(0);
+		pViewport->setCamera(pCameraObject->GetCamera());
+	} else {
+		// create new main viewport
+		pViewport = m_pRenderWindow->addViewport(pCameraObject->GetCamera());
+	}
+	
+	pViewport->setBackgroundColour(Ogre::ColourValue(0.0f,0.0f,0.0f));
+	
+	m_spMainCamera = pCameraObject;
+	
+	return FWG_NO_ERROR;	
 }

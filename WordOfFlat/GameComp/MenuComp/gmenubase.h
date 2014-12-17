@@ -1,37 +1,44 @@
 #ifndef __GAME_MENU_BASE_H__
 #define __GAME_MENU_BASE_H__
 
+
+#include <wx/thread.h>
+#include <CEGUI/Window.h>
+#include <GameSystem/refobject.h>
+#include <GameSystem/refobjectimpl.h>
+#include <GameSystem/glog.h>
+
+
 class GameMenuSystem;
 
 class GameMenuBase : public RefObjectImpl<IRefObject> {
+private:
+	CEGUI::Window *m_pRootWindow;
 protected:
+	GameLoggerPtr m_spLogger;
 	GameMenuSystem *m_pMenuRes;
-	bool m_enabled;
+	
 	wxCriticalSection m_menuLock;
 public:
-	GameMenuBase();
+	GameMenuBase(GameMenuSystem *pMenuRes, GameLogger* pLogger);
 	virtual ~GameMenuBase();
 	
 	/**
 	 * \brief Shows this menu
 	 * 
-	 * All other menus will be disabled.
+	 * All other menus will be hidden.
 	 */
-	GameErrorCode Enable();
-	
-	/**
-	 * \brief Hides this menu
-	 * 
-	 * It disables this menu. Other menus does not change its state (will be hidden too).
-	 * 
-	 * @return 
-	 */
-	GameErrorCode Disable();
-protected:
-	void SetMenuSystem(GameMenuSystem *pMenuRes);
+	virtual GameErrorCode Show() = 0;
 
-	virtual GameErrorCode Create() = 0;
-	virtual void Destroy() = 0;
+protected:
+	/**
+	 * \brief Get menu root window 
+	 */
+	inline CEGUI::Window* GetRootWindow() { return m_pRootWindow; }
+	
+	GameErrorCode CreateRootWindow( const wxString &windowName );
+	
+	GameLoggerPtr GetLogger() { return m_spLogger; }
 	
 	friend class GameMenuSystem;
 };

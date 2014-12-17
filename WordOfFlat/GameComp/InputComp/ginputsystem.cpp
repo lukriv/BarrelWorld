@@ -2,8 +2,31 @@
 
 #include <OGRE/OgreRenderWindow.h>
 #include <OGRE/OgreStringConverter.h>
-#include <MyGUI/MyGUI_InputManager.h>
+#include <CEGUI/CEGUI.h>
 
+CEGUI::MouseButton ConvertMouseButtonId(OIS::MouseButtonID mouseButtonId)
+{
+	switch(mouseButtonId)
+	{
+	case OIS::MB_Left:
+		return CEGUI::LeftButton;
+		
+	case OIS::MB_Right:
+		return CEGUI::RightButton;
+		
+	case OIS::MB_Middle:
+		return CEGUI::MiddleButton;
+		
+	case OIS::MB_Button3: 
+		return CEGUI::X1Button;
+		
+	case OIS::MB_Button4:
+		return CEGUI::X2Button;
+		
+	default:
+		return CEGUI::NoButton;
+	}
+}
 
 bool GameInputSystem::keyPressed(const OIS::KeyEvent& arg)
 {
@@ -25,19 +48,19 @@ bool GameInputSystem::keyReleased(const OIS::KeyEvent& arg)
 
 bool GameInputSystem::mouseMoved(const OIS::MouseEvent& arg)
 {
-	MyGUI::InputManager::getInstance().injectMouseMove(arg.state.X.abs, arg.state.Y.abs, arg.state.Z.abs);
+	CEGUI::System::getSingleton().getDefaultGUIContext().injectMousePosition(static_cast<float>(arg.state.X.abs), static_cast<float>(arg.state.Y.abs));
 	return true;
 }
 
 bool GameInputSystem::mousePressed(const OIS::MouseEvent& arg, OIS::MouseButtonID id)
 {
-	MyGUI::InputManager::getInstance().injectMousePress(arg.state.X.abs, arg.state.Y.abs, MyGUI::MouseButton::Enum(id));
+	CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseButtonDown(ConvertMouseButtonId(id));
 	return true;
 }
 
 bool GameInputSystem::mouseReleased(const OIS::MouseEvent& arg, OIS::MouseButtonID id)
 {
-	MyGUI::InputManager::getInstance().injectMouseRelease(arg.state.X.abs, arg.state.Y.abs, MyGUI::MouseButton::Enum(id));
+	CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseButtonUp(ConvertMouseButtonId(id));
 	return true;
 }
 

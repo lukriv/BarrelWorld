@@ -23,19 +23,6 @@ static const wxChar* FACTORY_LOGIC_TYPE_MANUAL_TEST = wxT("MANUAL_TEST");
 
 
 
-GameErrorCode GameEntityFactory::Initialize(GameLogger* pLogger, GameInputSystem *pInputSystem)
-{
-	m_spLogger = pLogger;
-	m_spInputSystem = pInputSystem;	
-	return FWG_NO_ERROR;
-}
-
-void GameEntityFactory::Uninitialize()
-{
-	m_spInputSystem.Release();
-	m_spLogger.Release();
-}
-
 GameErrorCode GameEntityFactory::CreateAllEntities(GameDefinitionHolder &defHolder, GameCompManager& compMgr)
 {
 	TEntityDefMap::Iterator iter;
