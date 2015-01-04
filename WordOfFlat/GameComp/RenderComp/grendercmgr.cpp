@@ -77,18 +77,20 @@ void RenderCompManager::Uninitialize()
 {
 	m_spMainCamera.Release();
 	m_cameraMap.Clear();
-		
+	
 	if(m_pRenderWindow != nullptr) 
 	{
 		m_pRenderWindow->removeAllListeners();
 		m_pRenderWindow->removeAllViewports();
 		if (m_pRoot != nullptr) m_pRoot->detachRenderTarget(m_pRenderWindow);
 		m_pRenderWindow->destroy();
+		m_pRenderWindow = nullptr;
 	}
 
 	if(m_pSceneManager != nullptr)
 	{
 		m_pRoot->destroySceneManager(m_pSceneManager);
+		m_pSceneManager = nullptr;
 	}
 
 	// delete ogre root
@@ -170,7 +172,7 @@ GameErrorCode RenderCompManager::CreateEmptyRenderComponent(RenderComponent *&pR
 	
 	FWG_RETURN_FAIL(spRenderComp->Initialize());
 	
-	pRenderCompOut = spRenderComp;
+	pRenderCompOut = spRenderComp.Detach();
 	
 	return FWG_NO_ERROR;
 }
@@ -294,20 +296,36 @@ GameErrorCode RenderCompManager::SetMainCamera(RenderObject* pCameraObject)
 	wxCriticalSectionLocker lock(m_mgrLock);
 	
 	Ogre::Viewport *pViewport = nullptr;
+	Ogre::Camera *pCamera = pCameraObject->GetCamera();
 	
 	// check if main viewport exists
 	if(m_pRenderWindow->hasViewportWithZOrder(0))
 	{
+		
 		pViewport = m_pRenderWindow->getViewport(0);
-		pViewport->setCamera(pCameraObject->GetCamera());
+		pViewport->setCamera(pCamera);
 	} else {
 		// create new main viewport
 		pViewport = m_pRenderWindow->addViewport(pCameraObject->GetCamera());
 	}
 	
 	pViewport->setBackgroundColour(Ogre::ColourValue(0.0f,0.0f,0.0f));
+	pCamera->setAspectRatio(Ogre::Real(pViewport->getActualWidth()) / Ogre::Real(pViewport->getActualHeight()));
 	
 	m_spMainCamera = pCameraObject;
 	
 	return FWG_NO_ERROR;	
+}
+
+GameErrorCode RenderCompManager::SetMainCamera(const wxString& cameraName)
+{
+	RefObjSmPtr<RenderObject> spCamera;
+	
+	spCamera = GetCamera(cameraName);
+	if(!spCamera.IsEmpty())
+	{
+		return SetMainCamera(spCamera);
+	} else {
+		return FWG_E_OBJECT_NOT_FOUND_ERROR;
+	}
 }

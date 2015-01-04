@@ -3,10 +3,11 @@
 
 #include <wx/vector.h>
 #include <wx/atomic.h>
-#include "OGRE/OgreVector3.h"
-#include "OGRE/OgreQuaternion.h"
-#include "../GameSystem/refobject.h"
-#include "../GameSystem/refobjectsmptr.h"
+#include <OGRE/OgreVector3.h>
+#include <OGRE/OgreQuaternion.h>
+#include <GameSystem/refobject.h>
+#include <GameSystem/refobjectsmptr.h>
+#include <GameSystem/gmap.h>
 
 // Game entity type - on this depends input behavior of entity
 enum GameDefEntityType {

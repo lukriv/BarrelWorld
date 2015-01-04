@@ -60,9 +60,11 @@
     <VirtualDirectory Name="transformComp">
       <VirtualDirectory Name="include">
         <File Name="TransformComp/gtranscomp.h"/>
+        <File Name="TransformComp/gtranscmgr.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="src">
         <File Name="TransformComp/gtranscomp.cpp"/>
+        <File Name="TransformComp/gtranscmgr.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="inputComp">

@@ -17,6 +17,8 @@ private:
 private:
 	GameLoggerPtr m_spLogger;
 	TLogicCompList m_logicCompList;
+	
+	wxCriticalSection m_lockMgr;
 public:
 	LogicCompManager(GameLogger *pLogger);
 	virtual ~LogicCompManager();

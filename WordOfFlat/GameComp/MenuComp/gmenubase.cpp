@@ -15,8 +15,9 @@ GameMenuBase::~GameMenuBase()
 	}
 }
 
-GameMenuBase::GameMenuBase(GameMenuSystem *pMenuRes, GameLogger *pLogger) : m_spLogger(pLogger)	
-																,m_pMenuRes(pMenuRes) {}
+GameMenuBase::GameMenuBase(GameMenuSystem *pMenuRes, GameLogger *pLogger) : m_pRootWindow(nullptr)
+																, m_spLogger(pLogger)	
+																, m_pMenuRes(pMenuRes) {}
 
 
 GameErrorCode GameMenuBase::CreateRootWindow(const wxString& windowName)

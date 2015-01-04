@@ -4,6 +4,7 @@
 #include <OGRE/OgreSceneManager.h>
 #include <MainWindow/gsettings.h>
 #include "gentitymgr.h"
+#include "TransformComp/gtranscmgr.h"
 #include "RenderComp/grendercmgr.h"
 #include "InputComp/ginputsystem.h"
 #include "MenuComp/gmenumgr.h"
@@ -12,6 +13,7 @@
 
 class GameCompManager : public RefObjectImpl<IRefObject> {
 	GameLoggerPtr m_spLogger;
+	TransformCompManager m_tranformMgr;
 	RenderCompManager m_renderMgr;
 	GameMenuSystem m_menuMgr;
 	GameInputSystem m_inputSystem;
@@ -24,6 +26,7 @@ public:
 	GameErrorCode Initialize(GameEngineSettings& settings);
 	void Uninitialize();
 	
+	inline TransformCompManager& GetTransformManager() { return m_tranformMgr; }
 	inline RenderCompManager& GetRenderManager() { return m_renderMgr; }
 	inline GameMenuSystem& GetMenuSystem() { return m_menuMgr; }
 	inline GameInputSystem&	GetInputSystem() { return m_inputSystem; }

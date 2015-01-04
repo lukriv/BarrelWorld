@@ -1,7 +1,6 @@
 #ifndef __GAME_RENDER_COMPONENT_MANAGER_H__
 #define __GAME_RENDER_COMPONENT_MANAGER_H__
 
-#include <set>
 #include <OGRE/OgreSceneManager.h>
 #include <wx/thread.h>
 
@@ -75,6 +74,8 @@ public:
 	RenderObject* GetMainCamera() { return m_spMainCamera; }
 	
 	GameErrorCode SetMainCamera( RenderObject *pCameraObject);
+	
+	GameErrorCode SetMainCamera( const wxString& cameraName );
 	
 	
 	

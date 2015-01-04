@@ -54,7 +54,7 @@ GameErrorCode GameLogger::Initialize(const wxChar* loggerName, const wxChar* log
 		return result;
 	}
 	
-	if (!(m_loggerFile.Open(wxString(loggerFileName), wxString("a"))))
+	if (!(m_loggerFile.Open(wxString(loggerFileName), wxString("w"))))
 	{
 		printf("Failed to open logger file, aborting.");
         return -1;
@@ -145,6 +145,7 @@ void GameLogger::LogFileWrite(const wxString& msg)
 	m_loggerFile.Write(msg);
 	m_loggerFile.Write(wxT("\n")); // add new line
 	m_loggerFile.Flush();
+	//wxThread::Sleep(100);
 }
 
 

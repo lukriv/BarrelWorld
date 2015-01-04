@@ -24,8 +24,12 @@ GameErrorCode RenderComponent::ConnectRenderComponent(Ogre::MovableObject* pObje
 			FWGLOG_ERROR_FORMAT( wxT("Connect renderable failed: 0x%08x"), m_pOwnerManager->GetLogger(), result, FWGLOG_ENDVAL);
 			return result;
 		}
-		pObject->getUserObjectBindings().setUserAny(*this);
+		
 		m_pSceneNode->attachObject(pObject);
+		FWGLOG_DEBUG(wxT("attach objects successful"), m_pOwnerManager->GetLogger());
+		
+		pObject->getUserObjectBindings().setUserAny(*this);
+		FWGLOG_DEBUG(wxT("user bind object successful"), m_pOwnerManager->GetLogger());
 
 	} else {
 		return FWG_E_OBJECT_NOT_EXIST_ERROR;
@@ -68,11 +72,12 @@ GameErrorCode RenderComponent::AttachRenderObject(RenderObject* pObject)
 void RenderComponent::Clear()
 {
 	TRenderObjectList::Iterator iter;
-	for(iter = m_renderObjectList.Begin(); iter != m_renderObjectList.End(); iter++) {
+	for(iter = m_renderObjectList.Begin(); iter != m_renderObjectList.End(); ++iter) 
+	{
 		DisconnectRenderComponent((*iter)->GetMovableObject());
 		(*iter)->release();
 	}
-
+	
 	m_renderObjectList.Clear();
 }
 
@@ -127,6 +132,8 @@ void RenderComponent::ProcessUpdate()
 	wxCriticalSectionLocker lock(m_renderLock);
 	if(!m_spTransform.IsEmpty())
 	{
-		//todo: update scene node transform
+		//todo: upgrade updating scene node transform
+		TransformData* pTransData = m_spTransform->GetData();
+		m_pSceneNode->setPosition(pTransData->m_translate.getX(), pTransData->m_translate.getY(), pTransData->m_translate.getZ());
 	}
 }

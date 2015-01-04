@@ -125,6 +125,12 @@ void GameConvertErrCode2String(GameErrorCode errCode, wxString &errorStr)
 	case FWG_E_XML_ATTR_NOT_FOUND_ERROR:
 		errorStr.assign(FWG_E_XML_ATTR_NOT_FOUND_ERROR_STR);
 		break;
+	case FWG_E_MENU_SYSTEM_ERROR:
+		errorStr.assign(FWG_E_MENU_SYSTEM_ERROR_STR);
+		break;
+	case FWG_E_RENDER_SYSTEM_ERROR:
+		errorStr.assign(FWG_E_RENDER_SYSTEM_ERROR_STR);
+		break;
 	default:
 		errorStr.assign(_T("Unknown Error"));
 		break;

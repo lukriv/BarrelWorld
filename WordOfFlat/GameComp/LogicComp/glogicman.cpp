@@ -41,27 +41,31 @@ GameErrorCode LogicManualTest::ProcessInput()
 		Vectormath::Aos::Vector3 moveVec = Vectormath::Aos::Vector3(0,0,0);
 		if(actualControls.IsPressed(ControlStruct::INPUT_ACTION_UP))
 		{
-			moveVec.setZ(moveVec.getZ() + STEP_SIZE);
+			moveVec.setZ(STEP_SIZE);
 		}
 		
 		if(actualControls.IsPressed(ControlStruct::INPUT_ACTION_DOWN))
 		{
-			moveVec.setZ(moveVec.getZ() - STEP_SIZE);
+			moveVec.setZ(-STEP_SIZE);
 		}
 		
 		if(actualControls.IsPressed(ControlStruct::INPUT_ACTION_LEFT))
 		{
-			moveVec.setX(moveVec.getX() + STEP_SIZE);
+			moveVec.setX(STEP_SIZE);
 		}
 		
 		if(actualControls.IsPressed(ControlStruct::INPUT_ACTION_RIGHT))
 		{
-			moveVec.setX(moveVec.getX() - STEP_SIZE);
+			moveVec.setX(-STEP_SIZE);
 		}
 		
 		m_spTransform->GetData()->m_translate += moveVec;
 		
 	}
+	
+	// update render component
+	ComponentBase* pRender = m_pParent->GetComponent(GAME_COMP_RENDER);
+	if(pRender != nullptr) pRender->Update();
 	
 	return FWG_NO_ERROR;
 }

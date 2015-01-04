@@ -18,6 +18,7 @@ GameEntity::GameEntity(const GameEntity& master)
 GameEntity::~GameEntity()
 {}
 
+
 ComponentBase* GameEntity::GetComponent(GameComponentType compType)
 {
 	//lock

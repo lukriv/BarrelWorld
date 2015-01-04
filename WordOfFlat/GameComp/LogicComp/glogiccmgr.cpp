@@ -11,6 +11,7 @@ LogicCompManager::~LogicCompManager()
 
 GameErrorCode LogicCompManager::AddLogicComp(LogicComponentBase* pLogicComp)
 {
+	wxCriticalSectionLocker lock( m_lockMgr );
 	FWG_RETURN_FAIL(m_logicCompList.Insert(pLogicComp));
 	pLogicComp->SetOwnerManager(this);
 	return FWG_NO_ERROR;
@@ -19,7 +20,8 @@ GameErrorCode LogicCompManager::AddLogicComp(LogicComponentBase* pLogicComp)
 GameErrorCode LogicCompManager::ProcessLogicStep()
 {
 	GameErrorCode result = FWG_NO_ERROR;
-	for(auto iter = m_logicCompList.Begin(); iter != m_logicCompList.End(); iter++)
+	wxCriticalSectionLocker lock(m_lockMgr);
+	for(auto iter = m_logicCompList.Begin(); iter != m_logicCompList.End(); ++iter)
 	{
 		if(FWG_FAILED(result = (*iter)->ProcessLogic()))
 		{
@@ -33,5 +35,7 @@ GameErrorCode LogicCompManager::ProcessLogicStep()
 void LogicCompManager::RemoveLogicComp(LogicComponentBase* pLogicComp)
 {
 	pLogicComp->SetOwnerManager(nullptr);
+	
+	wxCriticalSectionLocker lock(m_lockMgr);
 	m_logicCompList.Remove(pLogicComp);
 }

@@ -12,7 +12,8 @@ TransformComponent::TransformComponent() : ComponentBase(GAME_COMP_TRANSFORM)
 GameErrorCode TransformComponent::Initialize()
 {
 	TAllocator allocator;
-	m_pTransData = allocator.allocate(1);
+	//m_pTransData = allocator.allocate(1);
+	FWG_RETURN_FAIL(GameNewChecked(m_pTransData));
 	if(m_pTransData == nullptr)
 	{
 		return FWG_E_MEMORY_ALLOCATION_ERROR;
@@ -29,7 +30,8 @@ TransformComponent::~TransformComponent()
 	TAllocator allocator;
 	if(m_pTransData != nullptr)
 	{
-		allocator.deallocate(m_pTransData);
+		//allocator.deallocate(m_pTransData);
+		GameDelete(m_pTransData);
 		m_pTransData = nullptr;
 	}
 }

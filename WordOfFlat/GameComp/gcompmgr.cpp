@@ -1,14 +1,18 @@
 #include "gcompmgr.h"
 
 GameCompManager::GameCompManager(GameLogger *pLogger) : m_spLogger(pLogger)
+														, m_tranformMgr(pLogger)
 														, m_renderMgr(pLogger)
 														, m_menuMgr(pLogger)
-														, m_inputSystem()
+														, m_inputSystem(pLogger)
 														, m_logicMgr(pLogger)
 														, m_entityMgr(pLogger)
 {}
 
-GameCompManager::~GameCompManager() {}
+GameCompManager::~GameCompManager() 
+{
+	Uninitialize();
+}
 
 GameErrorCode GameCompManager::Initialize(GameEngineSettings& settings)
 {
@@ -28,9 +32,9 @@ GameErrorCode GameCompManager::Initialize(GameEngineSettings& settings)
 		return result;
 	} 
 	
-	FWGLOG_INFO(wxT("Menu system initialization was successful"), m_spLogger);
+	//FWGLOG_INFO(wxT("Menu system initialization was successful"), m_spLogger);
 	
-	if(FWG_FAILED(result = m_inputSystem.Initialize(m_renderMgr.GetOgreRenderWindow())))
+	if(FWG_FAILED(result = m_inputSystem.Initialize(m_renderMgr.GetOgreRenderWindow(), true)))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Input system initialize failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
 		return result;
@@ -56,7 +60,8 @@ GameErrorCode GameCompManager::Initialize(GameEngineSettings& settings)
 void GameCompManager::Uninitialize()
 {
 	m_entityMgr.DestroyAllEntities();
-	m_menuMgr.Uninitialize();
 	m_inputSystem.Uninitialize();
+	m_menuMgr.Uninitialize();
 	m_renderMgr.Uninitialize();
+	
 }

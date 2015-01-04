@@ -39,11 +39,27 @@
     <File Name="gsettings.h"/>
     <File Name="gmmstate.h"/>
   </VirtualDirectory>
+  <Dependencies Name="Release">
+    <Project Name="GameSystem"/>
+    <Project Name="GameResHold"/>
+    <Project Name="GameXmlDefinitions"/>
+    <Project Name="GameLoader"/>
+    <Project Name="GameComp"/>
+    <Project Name="WorldCli"/>
+  </Dependencies>
+  <Dependencies Name="Debug">
+    <Project Name="GameSystem"/>
+    <Project Name="GameResHold"/>
+    <Project Name="GameLoader"/>
+    <Project Name="GameXmlDefinitions"/>
+    <Project Name="GameComp"/>
+  </Dependencies>
   <Settings Type="Executable">
     <GlobalSettings>
       <Compiler Options="-Wall;-Wno-unused-local-typedefs;-std=c++11" C_Options="" Assembler="">
         <IncludePath Value="../../extern/include"/>
         <IncludePath Value="../../extern/include/OGRE"/>
+        <IncludePath Value="../../extern/include/bullet"/>
         <IncludePath Value="../../WordOfFlat"/>
         <Preprocessor Value="UNICODE"/>
         <Preprocessor Value="BOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN"/>
@@ -57,12 +73,13 @@
         <Library Value="GameResHold"/>
         <Library Value="GameComp"/>
         <Library Value="GameSystem"/>
-        <Library Value="libMyGUI.OgrePlatform.a"/>
-        <Library Value="libMyGUIEngine.dll.a"/>
+        <Library Value="libCEGUIBase-0.dll.a"/>
+        <Library Value="libCEGUIOgreRenderer-0.dll.a"/>
         <Library Value="libwxbase30u_xml.a"/>
         <Library Value="libwxbase30u.a"/>
         <Library Value="libOgreMain.dll.a"/>
         <Library Value="libRenderSystem_GL.dll.a"/>
+        <Library Value="libLinearMath.a"/>
         <Library Value="OIS.dll"/>
       </Linker>
       <ResourceCompiler Options=""/>
@@ -154,20 +171,4 @@
       </Completion>
     </Configuration>
   </Settings>
-  <Dependencies Name="Debug">
-    <Project Name="GameSystem"/>
-    <Project Name="GameResHold"/>
-    <Project Name="GameLoader"/>
-    <Project Name="GameXmlDefinitions"/>
-    <Project Name="GameComp"/>
-    <Project Name="WorldCli"/>
-  </Dependencies>
-  <Dependencies Name="Release">
-    <Project Name="GameSystem"/>
-    <Project Name="GameResHold"/>
-    <Project Name="GameXmlDefinitions"/>
-    <Project Name="GameLoader"/>
-    <Project Name="GameComp"/>
-    <Project Name="WorldCli"/>
-  </Dependencies>
 </CodeLite_Project>

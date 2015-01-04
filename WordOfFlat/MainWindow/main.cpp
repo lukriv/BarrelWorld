@@ -69,6 +69,8 @@ int main(int argc, char **argv)
 					spLogger, result, FWGLOG_ENDVAL);
 		return result;		
 	}
+	
+	gameEngine.Uninitialize();
 	 
 
 	FWGLOG_INFO(wxT("*************** GAME END *****************"), spLogger);

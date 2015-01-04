@@ -1,11 +1,14 @@
 #ifndef __GAME_MAIN_MENU_STATE_H__
 #define __GAME_MAIN_MENU_STATE_H__
 
+#include <OGRE/OgreFrameListener.h>
+#include <GameComp/MenuComp/gmenu.h>
+#include "gclientengine.h"
 
 /**
  * \brief Game Ogre listener
  */
-struct GameMainMenuState : public Ogre::FrameListener {
+class GameMainMenuState : public Ogre::FrameListener {
 private:
 	class MenuCallback : public GameMenuCallback {
 		GameMainMenuState* m_pOwner;
@@ -24,7 +27,7 @@ private:
 	bool m_exitState;
 	
 public:
-	GameRenderListener(GameClientEngine *pOwner, GameCompManager *pCompMgr) : m_pOwner(pOwner)
+	GameMainMenuState(GameClientEngine *pOwner, GameCompManager *pCompMgr) : m_pOwner(pOwner)
 																		, m_spCompManager(pCompMgr)
 																		, m_pMenuClbk(nullptr)
 																		, m_nextState(GAME_STATE_EXIT)

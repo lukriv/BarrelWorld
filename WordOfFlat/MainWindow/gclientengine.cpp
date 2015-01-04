@@ -6,6 +6,7 @@
 #include <GameSystem/gerror.h>
 #include <GameSystem/new.h>
 #include <GameXmlDefinitions/gxmlloader.h>
+#include "gmmstate.h"
 //#include <GameLoader/gtestloader.h>
 
 
@@ -31,7 +32,7 @@ GameErrorCode GameClientEngine::Initialize(GameLogger* pLogger)
 	}
 	
 	// create new component manager
-	FWG_RETURN_FAIL(GameNewChecked(m_spCompManager.OutRef()));
+	FWG_RETURN_FAIL(GameNewChecked(m_spCompManager.OutRef(), m_pLogger));
 
 	// create window and sets render system
 	if(FWG_FAILED(result = m_spCompManager->Initialize(m_settings))) {
@@ -77,45 +78,37 @@ GameErrorCode GameClientEngine::MainLoop()
 {
 	GameErrorCode result = FWG_NO_ERROR;
 
-	GameRenderListener listener(this);
+	GameMainMenuState mainMenuState(this, m_spCompManager);
 
-	FWGLOG_DEBUG(wxT("Main loop started"), m_pLogger);
+	FWGLOG_INFO(wxT("Start game"), m_pLogger);
 	
-	//register frame listener
-	m_pRoot->addFrameListener(&listener);
-
-	if(FWG_FAILED( result = m_spGameLogic->LoadGame(*m_spDefHolder)))
+	GameState mainState = GAME_STATE_MAIN_MENU; // initial state
+	wxString nextStateParams; 
+	
+	while (mainState != GAME_STATE_EXIT)
 	{
-		FWGLOG_ERROR_FORMAT(wxT("GameClientEngine::MainLoop() : load game logic failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
-		return result;
-	} else {
-		FWGLOG_DEBUG(wxT("Game loaded"), m_pLogger);
+		switch(mainState)
+		{
+			case GAME_STATE_MAIN_MENU:
+			{
+				if(FWG_FAILED(result = mainMenuState.ProcessState(mainState, nextStateParams)))
+				{
+					FWGLOG_ERROR_FORMAT(wxT("Main menu game state failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
+					return result;
+				}
+				break;
+			}
+			case GAME_STATE_EXIT:
+				FWGLOG_WARNING(wxT("Game state GAME_STATE_EXIT should never do this"), m_pLogger);
+				break;
+			default:
+				FWGLOG_ERROR_FORMAT(wxT("Unknown game state ( %d )"), m_pLogger, mainState, FWGLOG_ENDVAL);
+				break;
+		}
 	}
 
-	if(FWG_FAILED( result = m_spGameLogic->StartGame()))
-	{
-		FWGLOG_ERROR_FORMAT(wxT("Start game logic failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
-		return result;		
-	} else {
-		FWGLOG_DEBUG(wxT("Game logic started"), m_pLogger);
-	}
-
-	//enter render crit section
-	//m_spGameLogic.In()->GetRenderLocker().Enter();
-	FWGLOG_DEBUG(wxT("Start rendering"), m_pLogger);
-	m_pRoot->startRendering();
 	
-	if(FWG_FAILED(result = m_spGameLogic.In()->StopGame()))
-	{
-		FWGLOG_ERROR_FORMAT(wxT("Stop game logic failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
-		return result;		
-	} else {
-		FWGLOG_DEBUG(wxT("Game logic stopped"), m_pLogger);
-	}
-	
-	
-	FWGLOG_DEBUG(wxT("Removing listener"), m_pLogger);
-	m_pRoot->removeFrameListener(&listener);
+	FWGLOG_INFO(wxT("Stopping game"), m_pLogger);
 
 	return result;
 }
@@ -155,7 +148,7 @@ GameErrorCode GameClientEngine::CreateTestingWorld()
 		-sqrt13,-sqrt13,sqrt13,     //7 normal
 	};
 
-	Ogre::RenderSystem *pRenSys = m_pRoot->getRenderSystem();
+	Ogre::RenderSystem *pRenSys = m_spCompManager->GetRenderManager().GetOgreRoot()->getRenderSystem();
 	Ogre::RGBA colours[nVertices];
 	Ogre::RGBA *pColour = colours;
 
@@ -263,53 +256,16 @@ GameErrorCode GameClientEngine::CreateTestingWorld()
 
 }
 
+void GameClientEngine::Uninitialize()
+{
+	m_spCompManager.Release();
+	m_spFactory.Release();
+}
+
 GameClientEngine::~GameClientEngine()
 {
-	//m_spGameLogic.In()->Uninitialize();
-	//m_spGameMenu.In()->Uninitialize();
-	
-	m_spGameLogic.Release();
-	m_spGameMenu.Release();
-
-	// release Input system and OIS Input Manager
-	m_spInputSystem.Release();
-	if(m_pInputMgr != nullptr)
-	{
-		OIS::InputManager::destroyInputSystem(m_pInputMgr);
-		m_pInputMgr = nullptr;
-	}
-
-
+	Uninitialize();
 }
 
-
-
-bool GameClientEngine::GameRenderListener::frameStarted(const Ogre::FrameEvent&)
-{
-	return true;
-}
-
-bool GameClientEngine::GameRenderListener::frameRenderingQueued(const Ogre::FrameEvent& evt)
-{
-	// leave render section
-	
-	evt.
-	
-	// process inputs
-	if(m_pOwner->ProcessUpdate();
-	if (m_pOwner->m_spGameLogic->IsStopped())
-	{
-		return false;	
-	} else {
-		m_pOwner->m_spGameLogic.In()->GetRenderLocker().Enter();
-		//FWGLOG_TRACE(wxT("entered to render lock"), m_pOwner->m_pLogger);
-		return true;
-	}
-}
-
-bool GameClientEngine::GameRenderListener::frameEnded(const Ogre::FrameEvent&)
-{
-	return true;
-}
 
 

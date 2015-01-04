@@ -41,11 +41,14 @@
     <File Name="gentitycreator.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="impl"/>
+  <Dependencies Name="Debug"/>
+  <Dependencies Name="Release"/>
   <Settings Type="Static Library">
     <GlobalSettings>
       <Compiler Options="-Wall;-Wno-unused-local-typedefs;-std=c++11" C_Options="-Wall" Assembler="">
         <IncludePath Value="../../extern/include"/>
         <IncludePath Value="../../WordOfFlat"/>
+        <IncludePath Value="../../extern/include/bullet"/>
         <Preprocessor Value="UNICODE"/>
         <Preprocessor Value="BOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN"/>
       </Compiler>
@@ -129,6 +132,4 @@
       </Completion>
     </Configuration>
   </Settings>
-  <Dependencies Name="Debug"/>
-  <Dependencies Name="Release"/>
 </CodeLite_Project>

@@ -1,9 +1,12 @@
 #include "gmmstate.h"
 #include "GameXmlDefinitions/gxmlloader.h"
+#include "GameComp/RenderComp/grenderobj.h"
+#include "GameComp/RenderComp/grendercomp.h"
 
-static const LogicStepTime = 1.0f / 60.0f;
+static const float LogicStepTime = 1.0f / 60.0f;
 
-m_spInputSystem->RegisterCallback(OIS::KC_ESCAPE, this, &ClientGameLogic::SetExit)))
+//m_spInputSystem->RegisterCallback(OIS::KC_ESCAPE, this, &ClientGameLogic::SetExit)))
+
 
 
 GameErrorCode GameMainMenuState::ProcessUpdate(float secDiff)
@@ -15,7 +18,7 @@ GameErrorCode GameMainMenuState::ProcessUpdate(float secDiff)
 	logicStep -= secDiff;
 	if(logicStep < 0)
 	{
-		if(FWG_FAILED(result = m_spCompManager->GetRenderManager().ProcessLogicStep();))
+		if(FWG_FAILED(result = m_spCompManager->GetLogicManager().ProcessLogicStep()))
 		{
 			FWGLOG_ERROR_FORMAT(wxT("Process logic steps failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
 			return result;
@@ -39,30 +42,50 @@ GameErrorCode GameMainMenuState::ProcessUpdate(float secDiff)
 
 GameErrorCode GameMainMenuState::ProcessState(GameState& nextState, wxString& nextStateParams)
 {
-	if((!m_pOwner)||(!m_spCompManager.IsEmpty()))
+	if((!m_pOwner)||(m_spCompManager.IsEmpty()))
 	{
 		return FWG_E_INVALID_PARAMETER_ERROR;
 	}
 	
+	GameErrorCode result = FWG_NO_ERROR;
 	GameXmlResourceLoader loader;
+	GameDefinitionHolder defHolder;
+	
 	if(FWG_FAILED(result = loader.Initialize(wxT("example.xml"), wxT("res/"), m_pOwner->GetLogger())))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Xml loader initialize failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
 		return result;
 	}
 	
-	if(FWG_FAILED(result = loader.Load(*m_spDefHolder)))
+	FWGLOG_INFO(wxT("Loader successfully initialized"), m_pOwner->GetLogger());
+	
+	if(FWG_FAILED(result = loader.Load(defHolder)))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Load xml failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
 		return result;
 	}
+
+	FWGLOG_INFO(wxT("Scene loaded"), m_pOwner->GetLogger());
 	
-	GameDefinitionHolder defHolder;
 	if(FWG_FAILED(result = m_pOwner->GetFactory()->CreateAllEntities(defHolder, *m_spCompManager)))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Create entities failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
 		return result;
 	}
+
+	FWGLOG_INFO(wxT("All entities created"), m_pOwner->GetLogger());
+	
+	if(FWG_FAILED(result = m_spCompManager->GetRenderManager().SetMainCamera("MainCamera")))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Set main camera failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	FWGLOG_INFO(wxT("Main camera set"), m_pOwner->GetLogger());
+	
+	// temporary light for menus
+	m_spCompManager->GetRenderManager().GetOgreSceneManager()->setAmbientLight(Ogre::ColourValue(0.5,0.5,0.5));
+	
 	
 	if(m_spMenu.IsEmpty())
 	{
@@ -74,6 +97,13 @@ GameErrorCode GameMainMenuState::ProcessState(GameState& nextState, wxString& ne
 			FWGLOG_ERROR_FORMAT(wxT("Initialize menu failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
 			return result;			
 		}
+	}
+	
+	// register key callback
+	if(FWG_FAILED(result = m_spCompManager->GetInputSystem().RegisterCallback(OIS::KC_ESCAPE, this, &GameMainMenuState::SetExitInputClbk)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Register input callback failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
+		return result;
 	}
 	
 	FWG_RETURN_FAIL(m_spMenu->Show());
@@ -109,6 +139,12 @@ bool GameMainMenuState::frameRenderingQueued(const Ogre::FrameEvent& evt)
 	if(FWG_FAILED(result = ProcessUpdate(evt.timeSinceLastFrame)))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Process update failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
+		return false;
+	}
+	
+	// exit
+	if(m_exitState)
+	{
 		return false;
 	}
 	

@@ -108,6 +108,8 @@ public:
 		return &(iter->second);	
 	}
 	
+	inline ConstIterator Begin() const { return static_cast<ConstIterator>(m_innerMap.begin()); }
+	inline ConstIterator End() const { return static_cast<ConstIterator>(m_innerMap.end()); }
 	
 	inline Iterator Begin() { return static_cast<Iterator>(m_innerMap.begin()); }
 	inline Iterator End() { return static_cast<Iterator>(m_innerMap.end()); }

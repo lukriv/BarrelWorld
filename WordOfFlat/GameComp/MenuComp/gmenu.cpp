@@ -17,6 +17,8 @@ GameErrorCode GameMenu::Initialize(GameMenuCallback* pCallback)
 	{
 		FWGLOG_ERROR(wxT("Callback pointer cannot be nullptr"), GetLogger());
 		return FWG_E_INVALID_PARAMETER_ERROR;
+	} else {
+		m_pCallback = pCallback;
 	}
 	
 	// check if the right scheme is already loaded and alternatively load
@@ -44,6 +46,11 @@ GameErrorCode GameMenu::Initialize(GameMenuCallback* pCallback)
 	m_pButtonSwitch->setText("Switch");
 	
 	m_pButtonSwitch->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&GameMenu::SwitchEvent, this));
+	
+	// set buttons to root window
+	GetRootWindow()->addChild(m_pButtonExit);
+	GetRootWindow()->addChild(m_pButtonSwitch);
+	
 	// load 
 	return FWG_NO_ERROR;
 }

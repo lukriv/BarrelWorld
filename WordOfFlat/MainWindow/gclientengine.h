@@ -10,15 +10,13 @@
 #include <GameComp/gcompmgr.h>
 #include <GameResHold/gdefholder.h>
 #include <GameResHold/gentityfactory.h>
-#include <WorldCli/gmenu.h>
-#include <WorldCli/gclientlogic.h>
-#include "ginputsystem.h"
 #include "gsettings.h"
 
 
 enum GameState {
-	GAME_STATE_UNKNOWN 	= 0,
-	GAME_STATE_EXIT		= 1,
+	GAME_STATE_UNKNOWN 		= 0,
+	GAME_STATE_EXIT			= 1,
+	GAME_STATE_MAIN_MENU	= 2,
 };
 
 
@@ -55,6 +53,11 @@ public:
 	 * \return
 	 */
 	GameErrorCode Initialize(GameLogger* pLogger = nullptr);
+	void Uninitialize();
+	
+	/**
+	 * \brief Runs game engine main loop.
+	 */
 	GameErrorCode MainLoop();
 
 	inline GameLogger* GetLogger() { return m_pLogger; }
