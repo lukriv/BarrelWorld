@@ -26,10 +26,10 @@ GameErrorCode GameMenuSystem::Initialize( Ogre::RenderWindow* pWindow )
 		//}
 		
 		FWGLOG_ERROR_FORMAT(wxT("CEGUI error '%s', message: '%s', function: '%s', filename: '%s', line: '%d' "), m_pLogger
-						, exc.getName().c_str()
-						, exc.getMessage().c_str()
-						, exc.getFunctionName().c_str()
-						, exc.getFileName().c_str()
+						, wxString::FromUTF8(exc.getName().c_str()).GetData().AsInternal()
+						, wxString::FromUTF8(exc.getMessage().c_str()).GetData().AsInternal()
+						, wxString::FromUTF8(exc.getFunctionName().c_str()).GetData().AsInternal()
+						, wxString::FromUTF8(exc.getFileName().c_str()).GetData().AsInternal()
 						, exc.getLine()
 						, FWGLOG_ENDVAL );
 		result = FWG_E_MENU_SYSTEM_ERROR;
