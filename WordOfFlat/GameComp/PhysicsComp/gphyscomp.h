@@ -6,14 +6,24 @@
 #include <GameSystem/gerror.h>
 #include "../gcompbase.h"
 
+class btCollisionObject;
+
 
 class PhysicsComponent : public ComponentBase {
 	
 	GameEntity *m_pParent;
+	btCollisionObject *m_pColObject;
+	
 public:
 
-	PhysicsComponent() : ComponentBase(GAME_COMP_PHYSICS), m_pParent(nullptr) {}
+	PhysicsComponent(btCollisionObject *pColObject) : ComponentBase(GAME_COMP_PHYSICS)
+						, m_pParent(nullptr)
+						, m_pColObject(pColObject) {}
 	~PhysicsComponent() {}
+	
+	GameErrorCode Initialize();
+	
+	inline btCollisionObject * GetCollisionObject() { return m_pColObject; }
 	
 	virtual GameErrorCode ReceiveMessage(TaskMessage& msg);
 	virtual GameErrorCode ReinitComponent(GameEntity* pNewParentEntity);

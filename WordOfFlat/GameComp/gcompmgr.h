@@ -8,6 +8,7 @@
 #include "RenderComp/grendercmgr.h"
 #include "InputComp/ginputsystem.h"
 #include "MenuComp/gmenumgr.h"
+#include "PhysicsComp/gphyscmgr.h"
 #include "LogicComp/glogiccmgr.h"
 
 
@@ -17,6 +18,7 @@ class GameCompManager : public RefObjectImpl<IRefObject> {
 	RenderCompManager m_renderMgr;
 	GameMenuSystem m_menuMgr;
 	GameInputSystem m_inputSystem;
+	PhysicsCompManager m_physicsManager;
 	LogicCompManager m_logicMgr;
 	GameEntityManager m_entityMgr; // should be the last manager (first in destroy)
 public:
@@ -30,6 +32,7 @@ public:
 	inline RenderCompManager& GetRenderManager() { return m_renderMgr; }
 	inline GameMenuSystem& GetMenuSystem() { return m_menuMgr; }
 	inline GameInputSystem&	GetInputSystem() { return m_inputSystem; }
+	inline PhysicsCompManager& GetPhysicsManager() { return m_physicsManager; }
 	inline LogicCompManager& GetLogicManager() { return m_logicMgr; }
 	inline GameEntityManager& GetEntityManager() { return m_entityMgr; }
 

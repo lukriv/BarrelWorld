@@ -79,6 +79,8 @@
         <Library Value="libwxbase30u.a"/>
         <Library Value="libOgreMain.dll.a"/>
         <Library Value="libRenderSystem_GL.dll.a"/>
+        <Library Value="BulletDynamics"/>
+        <Library Value="BulletCollision"/>
         <Library Value="libLinearMath.a"/>
         <Library Value="OIS.dll"/>
       </Linker>

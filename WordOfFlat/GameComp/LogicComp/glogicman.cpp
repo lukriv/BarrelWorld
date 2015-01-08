@@ -32,6 +32,7 @@ GameErrorCode LogicManualTest::UserLogic()
 
 GameErrorCode LogicManualTest::ProcessInput()
 {
+	GameErrorCode result = FWG_NO_ERROR;
 	ControlStruct actualControls;
 	m_spInput->ExportControlStruct(actualControls);
 	
@@ -64,8 +65,10 @@ GameErrorCode LogicManualTest::ProcessInput()
 	}
 	
 	// update render component
-	ComponentBase* pRender = m_pParent->GetComponent(GAME_COMP_RENDER);
-	if(pRender != nullptr) pRender->Update();
+	if(FWG_FAILED(result = m_pParent->Update()))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Update component failed: 0x%08x"), m_pOwnerManager->)
+	}
 	
 	return FWG_NO_ERROR;
 }

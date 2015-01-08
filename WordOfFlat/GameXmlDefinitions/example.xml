@@ -2,9 +2,7 @@
 	<definitions>
 		
 		<meshdefs>
-			<mesh name="mesh1">
-				<meshname value="TestingCube" />
-			</mesh>
+			
 		</meshdefs>
 		
 		<materialdefs>
@@ -64,6 +62,13 @@
 			<inputref value="testInput" />
 			
 			<logicref value="manualLogic" />
+			<physics>
+				<shape type="shape_box">
+					<param name="boxHalfSize" value="0.5, 0.5, 0.5" />
+				</shape>
+				<param name="mass" value="1.0" />
+				<param name="inertia" value="0.0,0.0,0.0" />
+			</physics>
 		</entity>
 		
 		<entity name="entity2">
@@ -75,7 +80,9 @@
 			
 			<render name="render2">
 				<renderent name="renderEnt2">
-					<meshref value="mesh1" />
+					<mesh>
+						<param name="meshname" value="TestingCube" />
+					</mesh>
 					<materialref value="material1" />
 					<position xyz="0.0;0.0;0.0" />
 				</renderent>
@@ -84,6 +91,14 @@
 			<inputref value="testInput" />
 			
 			<logicref value="manualLogic" />
+			
+			<physics>
+				<shape type="shape_box">
+					<param name="boxHalfSize" value="0.5, 0.5, 0.5" />
+				</shape>
+				<param name="mass" value="1.0" />
+				<param name="inertia" value="0.0,0.0,0.0" />
+			</physics>
 		</entity>
 		
 		<entity name="mainCameraEntity">
@@ -100,6 +115,7 @@
 			<inputref value="cameraInput" />
 			
 			<logicref value="manualLogic" />
+			
 		</entity>
 	</scene>
 </world>

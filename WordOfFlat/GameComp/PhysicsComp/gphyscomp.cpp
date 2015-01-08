@@ -13,6 +13,7 @@ GameErrorCode PhysicsComponent::ReinitComponent(GameEntity* pNewParentEntity)
 
 GameErrorCode PhysicsComponent::Update()
 {
+	btBoxShape
 	return FWG_NO_ERROR;
 }
 

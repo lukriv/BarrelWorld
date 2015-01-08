@@ -17,6 +17,15 @@ enum GameDefEntityType {
 };
 
 
+enum GameDefType {
+	GAMEDEF_TYPE_UNKNOWN	= 0,
+	GAMEDEF_TYPE_POSITION	= 1,
+	GAMEDEF_TYPE_SCALE		= 2,
+	GAMEDEF_TYPE_ROTATION	= 3,
+	GAMEDEF_TYPE_NEAR		= 4
+};
+
+
 
 
 /*!
@@ -64,7 +73,14 @@ public:
 
 };
 
+typedef GameBasMap<GameDefType, Ogre::Vector3> Vec3Map;
 
+/**
+ * \brief Generic definition holder
+ */
+struct GenericDef : public DefBase {
+	Vec3Map m_vec3params;
+}
 
 /*!
  * \class TranformCompDef
@@ -156,35 +172,6 @@ public:
 public:
 	RenderDef() : DefBase() {}
 };
-
-
-/*!
- * \class AnimationDef
- * \author Lukas
- * \date 22.3.2014
- * \file gdeftables.h
- * \brief Animation definitions
- */
-struct AnimationDef : public DefBase {
-	wxString m_animationName; //!< Name of animation
-	bool m_repeat; //!< Animation repeating
-
-	AnimationDef() : DefBase(), m_repeat(false) {}
-};
-
-/*!
- * \class AnimatorDef
- * \author Lukas
- * \date 22.3.2014
- * \file gdeftables.h
- * \brief Class for managing animations
- */
-struct AnimatorDef : public DefBase {
-	wxVector< RefObjSmPtr<AnimationDef> > m_animList; //!< List of animation belong
-
-	AnimatorDef() {}
-};
-
 
 
 

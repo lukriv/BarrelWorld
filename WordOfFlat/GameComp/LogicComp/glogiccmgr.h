@@ -23,10 +23,19 @@ public:
 	LogicCompManager(GameLogger *pLogger);
 	virtual ~LogicCompManager();
 	
+	inline GameLogger* GetLogger() { return m_spLogger; }
+	
+	/**
+	 * \brief Add logic component in manager
+	 * \param pLogicComp Logic component
+	 */
 	GameErrorCode AddLogicComp(LogicComponentBase *pLogicComp);
 	
 	void RemoveLogicComp(LogicComponentBase *pLogicComp);
 	
+	/**
+	 * \brief Process all logic components in this manager
+	 */
 	GameErrorCode ProcessLogicStep();
 
 };
