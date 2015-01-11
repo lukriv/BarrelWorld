@@ -12,8 +12,6 @@ typedef GameBasMap<wxString, RefObjSmPtr<NameDef> > TNameDefMap;
 typedef GameBasMap<wxString, RefObjSmPtr<RenderEntityDef> > TRenderEntityDefMap;
 typedef GameBasMap<wxString, RefObjSmPtr<RenderDef> > TRenderDefMap;
 typedef GameBasMap<wxString, RefObjSmPtr<CameraDef> > TCameraDefMap;
-typedef GameBasMap<wxString, RefObjSmPtr<AnimationDef> > TAnimationDefMap;
-typedef GameBasMap<wxString, RefObjSmPtr<AnimatorDef> > TAnimatorDefMap;
 typedef GameBasMap<wxString, RefObjSmPtr<InputDef> > TInputDefMap;
 typedef GameBasMap<wxString, RefObjSmPtr<LogicDef> > TLogicDefMap;
 typedef GameBasMap<wxString, RefObjSmPtr<EntityDef> > TEntityDefMap;
@@ -37,8 +35,6 @@ public:
 	TRenderEntityDefMap m_renderEntityDefs;
 	TCameraDefMap m_cameraDefs;
 	TRenderDefMap m_renderDefs;
-	TAnimationDefMap m_animationDefs;
-	TAnimatorDefMap	m_animatorDefs;
 	TInputDefMap m_inputDefs;
 	TLogicDefMap m_logicDefs;
 	TEntityDefMap m_entityDefs;

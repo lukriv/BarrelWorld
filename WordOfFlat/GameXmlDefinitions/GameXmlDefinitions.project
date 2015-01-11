@@ -32,6 +32,7 @@
     <File Name="gxmlloader.h"/>
     <File Name="gxmldefs.h"/>
     <File Name="gxmlkeydefs.h"/>
+    <File Name="gxmlparams.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="src">
     <File Name="gxmlloader.cpp"/>
@@ -40,9 +41,11 @@
     <File Name="example.xml"/>
     <File Name="definitions.xml"/>
   </VirtualDirectory>
+  <Dependencies Name="Debug"/>
+  <Dependencies Name="Release"/>
   <Settings Type="Static Library">
     <GlobalSettings>
-      <Compiler Options="-Wall;-Wno-unused-local-typedefs;-std=c++11" C_Options="" Assembler="">
+      <Compiler Options="-Wall;-Wno-unused-local-typedefs;-Wno-invalid-offsetof;-std=c++11" C_Options="" Assembler="">
         <IncludePath Value="../../extern/include"/>
         <IncludePath Value="../../extern/include/OGRE"/>
         <IncludePath Value="../../WordOfFlat"/>
@@ -132,6 +135,4 @@
       </Completion>
     </Configuration>
   </Settings>
-  <Dependencies Name="Debug"/>
-  <Dependencies Name="Release"/>
 </CodeLite_Project>

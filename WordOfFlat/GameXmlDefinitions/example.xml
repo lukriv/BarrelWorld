@@ -2,7 +2,9 @@
 	<definitions>
 		
 		<meshdefs>
-			
+			<mesh name="mesh1">
+				<param name="meshname" value="TestingCube" />
+			</mesh>
 		</meshdefs>
 		
 		<materialdefs>
@@ -29,14 +31,14 @@
 		
 		<logicdefs>
 			<logic name="manualLogic">
-				<logictype value="MANUAL_TEST" />
+				<param name="logictype" value="MANUAL_TEST" />
 			</logic>
 		</logicdefs>
 		
 		<cameradefs>
 			<camera name="MainCamera">
-					<position xyz="0.0, 10.0, -5.0" />
-					<direction xyz="0, -10, 5" />
+				<param name="position" value="0.0, 10.0, -5.0" />
+				<param name="direction" value="0, -10, 5" />
 			</camera>
 		</cameradefs>
 		
@@ -46,16 +48,16 @@
 	<scene>
 		<entity name="entity1">
 			<transform>
-				<position xyz="0.0, 0.0, 0.0" />
-				<scale xyz="1.0, 1.0, 1.0" />
-				<rotation quat="1.0, 0.0, 0.0, 0.0" />				
+				<param name="position" value="0.0, 0.0, 0.0" />
+				<param name="scale" value="1.0, 1.0, 1.0" />
+				<param name="rotation" value="1.0, 0.0, 0.0, 0.0" />				
 			</transform>
 			
 			<render name="render1">
 				<renderent name="renderEnt1">
 					<meshref value="mesh1" />
 					<materialref value="material1" />
-					<position xyz="0.0;0.0;0.0" />
+					<param name="position" value="0.0;0.0;0.0" />
 				</renderent>
 			</render>
 			
@@ -73,9 +75,9 @@
 		
 		<entity name="entity2">
 			<transform>
-				<position xyz="1.0, 1.0, 0.0" />
-				<scale xyz="1.0, 1.0, 1.0" />
-				<rotation quat="1.0, 0.0, 0.0, 0.0" />				
+				<param name="position" value="1.0, 1.0, 0.0" />
+				<param name="scale" value="1.0, 1.0, 1.0" />
+				<param name="rotation" value="1.0, 0.0, 0.0, 0.0" />				
 			</transform>
 			
 			<render name="render2">
@@ -84,7 +86,7 @@
 						<param name="meshname" value="TestingCube" />
 					</mesh>
 					<materialref value="material1" />
-					<position xyz="0.0;0.0;0.0" />
+					<param name="position" value="0.0;0.0;0.0" />
 				</renderent>
 			</render>
 			
@@ -93,7 +95,7 @@
 			<logicref value="manualLogic" />
 			
 			<physics>
-				<shape type="shape_box">
+				<shape type="box">
 					<param name="boxHalfSize" value="0.5, 0.5, 0.5" />
 				</shape>
 				<param name="mass" value="1.0" />
@@ -103,9 +105,9 @@
 		
 		<entity name="mainCameraEntity">
 			<transform>
-				<position xyz="0.0, 0.0, 0.0" />
-				<scale xyz="1.0, 1.0, 1.0" />
-				<rotation quat="1.0, 0.0, 0.0, 0.0" />				
+				<param name="position" value="0.0, 0.0, 0.0" />
+				<param name="scale" value="1.0, 1.0, 1.0" />
+				<param name="rotation" value="1.0, 0.0, 0.0, 0.0" />				
 			</transform>
 			
 			<render name="render3">

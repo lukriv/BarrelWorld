@@ -2,9 +2,12 @@
 #define __GAME_XML_LOADER_H__
 
 #include <wx/xml/xml.h>
-#include "../GameResHold/gdefloader.h"
-#include "../GameResHold/gdefholder.h"
-#include "../GameSystem/glog.h"
+#include <GameResHold/gdefloader.h>
+#include <GameResHold/gdefholder.h>
+#include <GameSystem/glog.h>
+#include <GameSystem/gset.h>
+
+struct ParamDefinition;
 
 class GameXmlResourceLoader : public IGameDefLoader
 {
@@ -22,8 +25,6 @@ private:
 	GameErrorCode LoadRenderEntities(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
 	GameErrorCode LoadCameras(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
 	GameErrorCode LoadRenderDef(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
-	GameErrorCode LoadAnimations(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
-	GameErrorCode LoadAnimators(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
 	GameErrorCode LoadInput(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
 	GameErrorCode LoadLogic(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
 		
@@ -36,10 +37,26 @@ private:
 	GameErrorCode CreateLogic(wxXmlNode* pNode, wxString& name, RefObjSmPtr<LogicDef> &spLogicDef);
 	GameErrorCode CreateEntity(wxXmlNode* pNode, GameDefinitionHolder& defHolder, wxString& name, RefObjSmPtr<EntityDef> &spEntity);
 	GameErrorCode CreateTransform(wxXmlNode* pNode, RefObjSmPtr<TransformDef> &spTransform);
+	GameErrorCode CreatePhysicsShape(wxXmlNode* pNode, RefObjSmPtr<PhysShapeDef> &spPhysicsShape);
+	GameErrorCode CreatePhysics(wxXmlNode* pNode, RefObjSmPtr<PhysCompDef> &spPhysics);
+	
+	/**
+	 * \brief Get and parse param tag and its attributes
+	 * @param pNode Param tag node
+	 * @param pDefTable Definition table for pObject
+	 * @param tableSize Size of definition table
+	 * @param paramName returned parameter name
+	 * @param pObject Address of returned object
+	 */
+	GameErrorCode GetParameter(wxXmlNode* pNode, const ParamDefinition* pDefTable, wxInt32 tableSize, wxString &paramName, void* pObject);
+	
+	GameErrorCode ParametersValidate(GameBasSet<wxString> &foundedParams, const ParamDefinition* pDefTable, wxInt32 tableSize );
 	
 	
-	GameErrorCode GetAttrXYZ(wxXmlNode* pNode, Ogre::Vector3 &vector);
-	GameErrorCode GetAttrQuat(wxXmlNode* pNode, Ogre::Quaternion &quat);
+	GameErrorCode ConvertToVec3(const wxString& input, Ogre::Vector3 *resultVec);
+	GameErrorCode ConvertToQuat(const wxString& input, Ogre::Quaternion *resultQuat);
+	GameErrorCode ConvertToShapeType(const wxString& input, wxInt32 &retType);
+		
 	GameErrorCode GetAttrValue(wxXmlNode *pNode, wxString &value);
 	GameErrorCode GetKeyValue(wxXmlNode *pNode, wxString &action, wxInt32 &keyCode);
 public:

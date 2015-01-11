@@ -161,8 +161,6 @@ SUITE(LoadXml)
 		CHECK_EQUAL( 0, defHolder.m_renderEntityDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_cameraDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_renderDefs.Size());
-		CHECK_EQUAL( 0, defHolder.m_animationDefs.Size());
-		CHECK_EQUAL( 0, defHolder.m_animatorDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_inputDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_logicDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_entityDefs.Size());
@@ -201,8 +199,6 @@ SUITE(LoadXml)
 		CHECK_EQUAL( 0, defHolder.m_renderEntityDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_cameraDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_renderDefs.Size());
-		CHECK_EQUAL( 0, defHolder.m_animationDefs.Size());
-		CHECK_EQUAL( 0, defHolder.m_animatorDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_inputDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_logicDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_entityDefs.Size());
@@ -240,8 +236,6 @@ SUITE(LoadXml)
 		CHECK_EQUAL( 1, defHolder.m_renderEntityDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_cameraDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_renderDefs.Size());
-		CHECK_EQUAL( 0, defHolder.m_animationDefs.Size());
-		CHECK_EQUAL( 0, defHolder.m_animatorDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_inputDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_logicDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_entityDefs.Size());
@@ -285,8 +279,6 @@ SUITE(LoadXml)
 		CHECK_EQUAL( 1, defHolder.m_renderEntityDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_cameraDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_renderDefs.Size());
-		CHECK_EQUAL( 0, defHolder.m_animationDefs.Size());
-		CHECK_EQUAL( 0, defHolder.m_animatorDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_inputDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_logicDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_entityDefs.Size());
@@ -325,8 +317,6 @@ SUITE(LoadXml)
 		CHECK_EQUAL( 0, defHolder.m_renderEntityDefs.Size());
 		CHECK_EQUAL( 1, defHolder.m_cameraDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_renderDefs.Size());
-		CHECK_EQUAL( 0, defHolder.m_animationDefs.Size());
-		CHECK_EQUAL( 0, defHolder.m_animatorDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_inputDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_logicDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_entityDefs.Size());
@@ -364,8 +354,6 @@ SUITE(LoadXml)
 		CHECK_EQUAL( 2, defHolder.m_renderEntityDefs.Size());
 		CHECK_EQUAL( 1, defHolder.m_cameraDefs.Size());
 		CHECK_EQUAL( 2, defHolder.m_renderDefs.Size());
-		CHECK_EQUAL( 0, defHolder.m_animationDefs.Size());
-		CHECK_EQUAL( 0, defHolder.m_animatorDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_inputDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_logicDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_entityDefs.Size());
@@ -442,8 +430,6 @@ SUITE(LoadXml)
 		CHECK_EQUAL( 0, defHolder.m_renderEntityDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_cameraDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_renderDefs.Size());
-		CHECK_EQUAL( 0, defHolder.m_animationDefs.Size());
-		CHECK_EQUAL( 0, defHolder.m_animatorDefs.Size());
 		CHECK_EQUAL( 2, defHolder.m_inputDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_logicDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_entityDefs.Size());
@@ -503,8 +489,6 @@ SUITE(LoadXml)
 		CHECK_EQUAL( 0, defHolder.m_renderEntityDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_cameraDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_renderDefs.Size());
-		CHECK_EQUAL( 0, defHolder.m_animationDefs.Size());
-		CHECK_EQUAL( 0, defHolder.m_animatorDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_inputDefs.Size());
 		CHECK_EQUAL( 1, defHolder.m_logicDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_entityDefs.Size());
@@ -541,8 +525,6 @@ SUITE(LoadXml)
 		CHECK_EQUAL( 2, defHolder.m_renderEntityDefs.Size());
 		CHECK_EQUAL( 1, defHolder.m_cameraDefs.Size());
 		CHECK_EQUAL( 2, defHolder.m_renderDefs.Size());
-		CHECK_EQUAL( 0, defHolder.m_animationDefs.Size());
-		CHECK_EQUAL( 0, defHolder.m_animatorDefs.Size());
 		CHECK_EQUAL( 2, defHolder.m_inputDefs.Size());
 		CHECK_EQUAL( 1, defHolder.m_logicDefs.Size());
 		CHECK_EQUAL( 2, defHolder.m_entityDefs.Size());
@@ -564,7 +546,6 @@ SUITE(LoadXml)
 				CHECK(!(*spEntity)->m_renderDef.IsEmpty());
 				CHECK(!(*spEntity)->m_logicDef.IsEmpty());
 				CHECK(!(*spEntity)->m_inputDef.IsEmpty());
-				CHECK((*spEntity)->m_animatorDef.IsEmpty());
 			}
 		}
 		
@@ -585,10 +566,59 @@ SUITE(LoadXml)
 				CHECK(!(*spEntity)->m_renderDef.IsEmpty());
 				CHECK(!(*spEntity)->m_logicDef.IsEmpty());
 				CHECK(!(*spEntity)->m_inputDef.IsEmpty());
-				CHECK((*spEntity)->m_animatorDef.IsEmpty());
 			}
 		}
 	}
 	
+	TEST_FIXTURE(LoadFixture, LoadPhysics)
+	{
+		// prep
+		wxString testFile;
+		GameXmlResourceLoader testLoader;
+		GameDefinitionHolder defHolder;
+		RefObjSmPtr<EntityDef> *spEntity = nullptr;
+		
+		CHECK(CreateTestFile(LOADPHYSICSTEST_DEFINITION_FILE, testFile));
+		CHECK(FWG_SUCCEDED(testLoader.Initialize(testFile, nullptr, m_spLogger)));
+		
+		// test
+		CHECK(FWG_SUCCEDED(testLoader.Load(defHolder)));
+		
+		// check
+		CHECK_EQUAL( 0, defHolder.m_meshDefs.Size());
+		CHECK_EQUAL( 0, defHolder.m_materialDefs.Size());
+		CHECK_EQUAL( 0, defHolder.m_renderEntityDefs.Size());
+		CHECK_EQUAL( 0, defHolder.m_cameraDefs.Size());
+		CHECK_EQUAL( 0, defHolder.m_renderDefs.Size());
+		CHECK_EQUAL( 0, defHolder.m_inputDefs.Size());
+		CHECK_EQUAL( 0, defHolder.m_logicDefs.Size());
+		CHECK_EQUAL( 1, defHolder.m_entityDefs.Size());
+		
+		spEntity = defHolder.m_entityDefs.FindValue(TEST_ENTITY1_NAME);
+		CHECK(spEntity != nullptr);
+		if(spEntity)
+		{	
+			CHECK(!(*spEntity).IsEmpty());
+			if(!(*spEntity).IsEmpty())
+			{
+				CHECK((*spEntity)->m_transformation.IsEmpty());
+				CHECK((*spEntity)->m_renderDef.IsEmpty());
+				CHECK((*spEntity)->m_logicDef.IsEmpty());
+				CHECK((*spEntity)->m_inputDef.IsEmpty());
+				CHECK(!(*spEntity)->m_physDef.IsEmpty());
+				if(!(*spEntity)->m_physDef.IsEmpty())
+				{
+					CHECK(!(*spEntity)->m_physDef->m_shape.IsEmpty());
+					if(!(*spEntity)->m_physDef->m_shape.IsEmpty())
+					{
+						CHECK((*spEntity)->m_physDef->m_shape->m_shapeType == TEST_PHYSICS_SHAPE_BOXTYPE);
+						CHECK((*spEntity)->m_physDef->m_shape->m_boxHalfSize == TEST_PHYSICS_BOX_BOXHALFSIZE);
+					}
+					CHECK((*spEntity)->m_physDef->m_mass == TEST_PHYSICS_MASS);
+					CHECK((*spEntity)->m_physDef->m_inertiaVector == TEST_PHYSICS_INERTIA);
+				}
+			}
+		}
+	}
 
 }

@@ -25,19 +25,12 @@ static const wxChar* GAME_TAG_COMP_RENDER	 		= wxT("render");
 static const wxChar* GAME_TAG_COMP_INPUT	 		= wxT("input");
 static const wxChar* GAME_TAG_COMP_LOGIC	 		= wxT("logic");
 static const wxChar* GAME_TAG_COMP_TRANSFORM 		= wxT("transform");
+static const wxChar* GAME_TAG_COMP_PHYSICS 			= wxT("physics");
+static const wxChar* GAME_TAG_COMP_SHAPE 			= wxT("shape");
 
 
-
-// component item tags 
-static const wxChar* GAME_TAG_ITEM_MESHNAME			= wxT("meshname");
-static const wxChar* GAME_TAG_ITEM_MATERIALNAME		= wxT("materialname");
-static const wxChar* GAME_TAG_ITEM_LOGICTYPE		= wxT("logictype");
-static const wxChar* GAME_TAG_ITEM_POSITION			= wxT("position");
-static const wxChar* GAME_TAG_ITEM_DIRECTION		= wxT("direction");
-static const wxChar* GAME_TAG_ITEM_SCALE			= wxT("scale");
-static const wxChar* GAME_TAG_ITEM_ROTATION			= wxT("rotation");
-
-
+// parameter tag
+static const wxChar* GAME_TAG_ITEM_PARAM		= wxT("param");
 
 // component item tags references
 static const wxChar* GAME_TAG_ITEM_MESH_REF				= wxT("meshref");
@@ -57,8 +50,8 @@ static const wxChar* GAME_TAG_INPUT_KEY				= wxT("key");
 static const wxChar* GAME_ATTR_NAME_STR				= wxT("name");
 static const wxChar* GAME_ATTR_VALUE_STR			= wxT("value");
 static const wxChar* GAME_ATTR_ACTION_STR			= wxT("action");
-static const wxChar* GAME_ATTR_XYZ_STR				= wxT("xyz");
-static const wxChar* GAME_ATTR_QUAT_STR				= wxT("quat");
+static const wxChar* GAME_ATTR_TYPE_STR				= wxT("type");
+
 
 //////////////////////////////////////
 /////      Attribute values      /////

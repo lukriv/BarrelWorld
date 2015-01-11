@@ -17,17 +17,6 @@ enum GameDefEntityType {
 };
 
 
-enum GameDefType {
-	GAMEDEF_TYPE_UNKNOWN	= 0,
-	GAMEDEF_TYPE_POSITION	= 1,
-	GAMEDEF_TYPE_SCALE		= 2,
-	GAMEDEF_TYPE_ROTATION	= 3,
-	GAMEDEF_TYPE_NEAR		= 4
-};
-
-
-
-
 /*!
  * \class DefBase
  * \author Lukas
@@ -73,14 +62,6 @@ public:
 
 };
 
-typedef GameBasMap<GameDefType, Ogre::Vector3> Vec3Map;
-
-/**
- * \brief Generic definition holder
- */
-struct GenericDef : public DefBase {
-	Vec3Map m_vec3params;
-}
 
 /*!
  * \class TranformCompDef
@@ -192,6 +173,34 @@ public:
 	LogicDef() {}
 };
 
+
+struct PhysShapeDef : public DefBase {
+public:
+	enum ShapeType {
+		SHAPE_TYPE_UNKNOWN 	= 0,
+		SHAPE_TYPE_BOX		= 1,
+	};
+public:
+	ShapeType m_shapeType;
+	Ogre::Vector3 m_boxHalfSize;
+	
+	
+	PhysShapeDef() : DefBase()
+				, m_shapeType(SHAPE_TYPE_UNKNOWN)
+				, m_boxHalfSize(Ogre::Vector3::UNIT_SCALE) {}
+	
+};
+
+struct PhysCompDef : public DefBase {
+	RefObjSmPtr<PhysShapeDef> m_shape;
+	float m_mass;
+	Ogre::Vector3 m_inertiaVector;
+	
+	PhysCompDef() : DefBase()
+					, m_mass(0.0f)
+					, m_inertiaVector(Ogre::Vector3::ZERO) {}
+};
+
 /*!
  * \class EntityDef
  * \author Lukas
@@ -202,10 +211,9 @@ public:
 struct EntityDef : public DefBase {
 	RefObjSmPtr<TransformDef> m_transformation;
 	RefObjSmPtr<RenderDef> m_renderDef;
-	RefObjSmPtr<AnimatorDef> m_animatorDef;
 	RefObjSmPtr<InputDef> m_inputDef;
 	RefObjSmPtr<LogicDef> m_logicDef;
-
+	RefObjSmPtr<PhysCompDef> m_physDef;
 	EntityDef() : DefBase() {}
 };
 
