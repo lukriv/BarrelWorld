@@ -91,9 +91,36 @@ void RenderComponent::RemoveRenderObject(RenderObject* pObject)
 	}
 }
 
-GameErrorCode RenderComponent::Initialize()
+GameErrorCode RenderComponent::Initialize(GameEntity* pParentEntity)
 {
-	m_pSceneNode = m_pOwnerManager->GetOgreSceneManager()->getRootSceneNode()->createChildSceneNode();
+	if(m_pSceneNode != nullptr)
+	{
+		// component was already initialized
+		return FWG_NO_ERROR;
+	}
+	
+	// parent entity cannot be null
+	if(pParentEntity == nullptr)
+	{
+		return FWG_E_INVALID_PARAMETER_ERROR;
+	}
+	
+	m_spTransform = reinterpret_cast<TransformComponent*> (pParentEntity->GetComponent(GAME_COMP_TRANSFORM));
+	if(m_spTransform.IsEmpty())
+	{
+		// transform component cannot be null - add transform component to entity at first
+		return FWG_E_INVALID_PARAMETER_ERROR;
+	}
+	
+	// initialize parent entity
+	m_pParent = pParentEntity;
+	
+	TransformData* transData = m_spTransform->GetData();
+	
+	m_pSceneNode = m_pOwnerManager->GetOgreSceneManager()->getRootSceneNode()->createChildSceneNode(
+		Ogre::Vector3(transData->m_translate.getX(), transData->m_translate.getY(), transData->m_translate.getZ())
+		, Ogre::Quaternion(transData->m_rotation.getW(), transData->m_rotation.getX(), transData->m_rotation.getY(), transData->m_rotation.getZ()));
+	
 	if(m_pSceneNode == nullptr) {
 		return FWG_E_MEMORY_ALLOCATION_ERROR;
 	}

@@ -48,6 +48,7 @@ shmcpp/triangle/Debug/
 LoneWolf/Makefile
 Tests/ClientServerTests/ClientServerTests.txt
 Tests/GameSystemTests/GameSystemTests.txt
+Tests/XmlLoaderTests/XmlLoaderTests.txt
 Tests/Makefile
 Tests/compile_commands.json
 WordOfFlat/GameComm/GameComm.txt
@@ -61,6 +62,7 @@ WordOfFlat/GameXmlDefinitions/GameXmlDefinitions.txt
 WordOfFlat/MainWindow/MainWindow.txt
 WordOfFlat/WorldCli/WorldCli.txt
 WordOfFlat/WorldSrv/WorldSrv.txt
+
 WordOfFlat/Makefile
 WordOfFlat/compile_commands.json
 

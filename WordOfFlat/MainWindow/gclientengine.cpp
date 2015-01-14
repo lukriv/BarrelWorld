@@ -251,6 +251,14 @@ GameErrorCode GameClientEngine::CreateTestingWorld()
 	                                   Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 
 	spMaterial->getTechnique(0)->getPass(0)->setVertexColourTracking(Ogre::TVC_AMBIENT);
+	
+	// next material
+	spMaterial = Ogre::MaterialManager::getSingleton().create(
+	                                   "DebugLines",
+	                                   Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+
+	spMaterial->setReceiveShadows(false);
+	spMaterial->getTechnique(0)->getPass(0)->setVertexColourTracking(Ogre::TVC_AMBIENT | Ogre::TVC_DIFFUSE | Ogre::TVC_EMISSIVE);
 
 	return result;
 

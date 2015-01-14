@@ -2,6 +2,7 @@
 #include "GameXmlDefinitions/gxmlloader.h"
 #include "GameComp/RenderComp/grenderobj.h"
 #include "GameComp/RenderComp/grendercomp.h"
+#include <GameComp/PhysicsComp/gphysdbgdraw.h>
 
 static const float LogicStepTime = 1.0f / 60.0f;
 
@@ -18,6 +19,17 @@ GameErrorCode GameMainMenuState::ProcessUpdate(float secDiff)
 	logicStep -= secDiff;
 	if(logicStep < 0)
 	{
+		if(FWG_FAILED(result = m_spCompManager->GetPhysicsManager().ProcessPhysics()))
+		{
+			FWGLOG_ERROR_FORMAT(wxT("Process physics steps failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
+			return result;
+		}
+		
+		if(m_pDebugDraw)
+		{
+			m_pDebugDraw->Update();
+		}
+
 		if(FWG_FAILED(result = m_spCompManager->GetLogicManager().ProcessLogicStep()))
 		{
 			FWGLOG_ERROR_FORMAT(wxT("Process logic steps failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
@@ -110,8 +122,15 @@ GameErrorCode GameMainMenuState::ProcessState(GameState& nextState, wxString& ne
 	
 	m_spCompManager->GetRenderManager().GetOgreRoot()->addFrameListener(this);
 	
+	// physics debug draw
+	m_pDebugDraw = new CDebugDraw( m_spCompManager->GetRenderManager().GetOgreSceneManager()
+											, m_spCompManager->GetPhysicsManager().GetDynamicsWorld());
+	
 	m_spCompManager->GetRenderManager().GetOgreRoot()->startRendering();
 	
+	delete m_pDebugDraw;
+	m_pDebugDraw = nullptr;
+ 	
 	m_spCompManager->GetRenderManager().GetOgreRoot()->removeFrameListener(this);
 	
 	nextState = m_nextState;

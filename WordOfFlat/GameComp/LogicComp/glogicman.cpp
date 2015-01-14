@@ -2,6 +2,8 @@
 
 #include <GameComp/gentity.h>
 #include <OGRE/OgrePrerequisites.h>
+
+#include "glogiccmgr.h"
 //#include "../InputComp/ginputcomp.h"
 
 
@@ -13,6 +15,26 @@ LogicManualTest::LogicManualTest()
 
 LogicManualTest::~LogicManualTest()
 {
+}
+
+GameErrorCode LogicManualTest::Initialize(GameEntity* pEntity)
+{
+	if(pEntity == nullptr)
+	{
+		return FWG_E_INVALID_PARAMETER_ERROR;
+	}
+	
+	m_spTransform = reinterpret_cast<TransformComponent*>(pEntity->GetComponent(GAME_COMP_TRANSFORM));
+	m_spInput = reinterpret_cast<InputComponent*>(pEntity->GetComponent(GAME_COMP_INPUT));
+		
+	if(m_spTransform.IsEmpty() || m_spInput.IsEmpty())
+	{
+		return FWG_E_INVALID_PARAMETER_ERROR;
+	}
+	
+	m_pParent = pEntity;
+	
+	return FWG_NO_ERROR;
 }
 
 GameErrorCode LogicManualTest::UserLogic()
@@ -67,7 +89,8 @@ GameErrorCode LogicManualTest::ProcessInput()
 	// update render component
 	if(FWG_FAILED(result = m_pParent->Update()))
 	{
-		FWGLOG_ERROR_FORMAT(wxT("Update component failed: 0x%08x"), m_pOwnerManager->)
+		FWGLOG_ERROR_FORMAT(wxT("Update component failed: 0x%08x"), m_pOwnerManager->GetLogger(), result, FWGLOG_ENDVAL);
+		return result;
 	}
 	
 	return FWG_NO_ERROR;
@@ -99,3 +122,5 @@ GameErrorCode LogicManualTest::Update()
 {
 	return FWG_NO_ERROR;
 }
+
+

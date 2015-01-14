@@ -4,6 +4,7 @@
 #include <OGRE/OgreRenderWindow.h>
 #include <OGRE/OgreEntity.h>
 #include <GameSystem/new.h>
+#include <GameComp/gentity.h>
 #include "grendercomp.h"
 #include "grenderobj.h"
 
@@ -158,8 +159,10 @@ GameErrorCode RenderCompManager::ProcessAllUpdates()
 //////////////
 // creators //
 //////////////
-GameErrorCode RenderCompManager::CreateEmptyRenderComponent(RenderComponent *&pRenderCompOut)
-{
+
+GameErrorCode RenderCompManager::CreateRenderComponent(const RenderDef& renderCompDef, GameEntity* pEntity)
+{	
+	GameErrorCode result = FWG_NO_ERROR;
 	RefObjSmPtr<RenderComponent> spRenderComp;
 	
 	if(m_pSceneManager == nullptr)
@@ -170,18 +173,7 @@ GameErrorCode RenderCompManager::CreateEmptyRenderComponent(RenderComponent *&pR
 	
 	FWG_RETURN_FAIL(GameNewChecked(spRenderComp.OutRef(), this));
 	
-	FWG_RETURN_FAIL(spRenderComp->Initialize());
-	
-	pRenderCompOut = spRenderComp.Detach();
-	
-	return FWG_NO_ERROR;
-}
-
-GameErrorCode RenderCompManager::CreateRenderComponent(const RenderDef& renderCompDef, RenderComponent*& pRenderComp)
-{	
-	GameErrorCode result = FWG_NO_ERROR;
-	RefObjSmPtr<RenderComponent> spRenderComp;
-	FWG_RETURN_FAIL(CreateEmptyRenderComponent(spRenderComp.OutRef()));
+	FWG_RETURN_FAIL(spRenderComp->Initialize(pEntity));
 	
 	if(!renderCompDef.m_entities.empty())
 	{
@@ -213,7 +205,11 @@ GameErrorCode RenderCompManager::CreateRenderComponent(const RenderDef& renderCo
 		}
 	}
 	
-	pRenderComp = spRenderComp.Detach();
+	if(FWG_FAILED(result = pEntity->AddComponent(spRenderComp)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Add render component to entity failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
 	
 	return result;
 }

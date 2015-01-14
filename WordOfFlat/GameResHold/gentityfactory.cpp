@@ -14,7 +14,7 @@
 
 
 
-static const wxChar* FACTORY_LOGIC_TYPE_MANUAL_TEST = wxT("MANUAL_TEST");
+
 
 
 
@@ -35,41 +35,39 @@ GameErrorCode GameEntityFactory::CreateAllEntities(GameDefinitionHolder &defHold
 
 GameErrorCode GameEntityFactory::CreateEntity( EntityDef& entityDef, GameCompManager& compMgr, GameEntity& entity)
 {
-	
+	GameErrorCode result = FWG_NO_ERROR;	
 	if(compMgr.GetRenderManager().GetOgreSceneManager() != nullptr)
 	{
-		GameErrorCode result = FWG_NO_ERROR;
-		if(!entityDef.m_renderDef.IsEmpty())
-		{
-			RefObjSmPtr<RenderComponent> spRenderComp;
-			if(FWG_FAILED(result = compMgr.GetRenderManager().CreateRenderComponent(*entityDef.m_renderDef, spRenderComp.OutRef())))
-			{
-				FWGLOG_ERROR_FORMAT(wxT("Create Render component failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL );
-				return result;
-			}
-        
-			if(FWG_FAILED(result = entity.AddComponent(spRenderComp)))
-			{
-				FWGLOG_ERROR_FORMAT(wxT("Add render component to entity failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL );
-				return result;
-			}
-		}
 		
 		if(!entityDef.m_transformation.IsEmpty())
 		{
-			RefObjSmPtr<TransformComponent> spTransform;
-			if(FWG_FAILED(result = compMgr.GetTransformManager().CreateTransformComponent(*entityDef.m_transformation, spTransform.OutRef())))
+			if(FWG_FAILED(result = compMgr.GetTransformManager().CreateTransformComponent(*entityDef.m_transformation, &entity)))
 			{
 				FWGLOG_ERROR_FORMAT(wxT("Create transform component failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL );
 				return result;
 			}
-			
-			if(FWG_FAILED(result = entity.AddComponent(spTransform)))
+		}
+		
+
+		if(!entityDef.m_renderDef.IsEmpty())
+		{
+			if(FWG_FAILED(result = compMgr.GetRenderManager().CreateRenderComponent(*entityDef.m_renderDef, &entity)))
 			{
-				FWGLOG_ERROR_FORMAT(wxT("Add transform component to entity failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL );
+				FWGLOG_ERROR_FORMAT(wxT("Create Render component failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL );
 				return result;
 			}
 		}
+		
+		if(!entityDef.m_physDef.IsEmpty())
+		{
+			if(FWG_FAILED(result = compMgr.GetPhysicsManager().CreatePhysicsComponent(*entityDef.m_physDef, &entity)))
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Create physics component failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL );
+				return result;
+			}
+		}
+		
+
 		
 		if(!entityDef.m_inputDef.IsEmpty())
 		{
@@ -89,36 +87,11 @@ GameErrorCode GameEntityFactory::CreateEntity( EntityDef& entityDef, GameCompMan
 		
 		if(!entityDef.m_logicDef.IsEmpty())
 		{
-			RefObjSmPtr<LogicComponentBase> spLogicComp;
-			if(entityDef.m_logicDef->m_logicType.Cmp(FACTORY_LOGIC_TYPE_MANUAL_TEST) == 0)
+			if(FWG_FAILED(result = compMgr.GetLogicManager().CreateLogicComp(*entityDef.m_logicDef, &entity)))
 			{
-					LogicManualTest *pLogicMan = nullptr;
-					FWG_RETURN_FAIL(GameNewChecked(pLogicMan));
-					spLogicComp.Attach(pLogicMan);
-			} else {
-				FWGLOG_ERROR_FORMAT(wxT("Unknown logic type '%s'"),
-								m_spLogger, entityDef.m_logicDef->m_logicType.GetData().AsInternal(), FWGLOG_ENDVAL);
-				return FWG_E_INVALID_PARAMETER_ERROR;
-			}
-			
-			if(FWG_FAILED(result = entity.AddComponent(spLogicComp)))
-			{
-				FWGLOG_ERROR_FORMAT(wxT("Add logic component to entity failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL );
+				FWGLOG_ERROR_FORMAT(wxT("Create logic component failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL );
 				return result;
 			}
-			
-			if(FWG_FAILED(result = compMgr.GetLogicManager().AddLogicComp(spLogicComp.In())))
-			{
-				FWGLOG_ERROR_FORMAT(wxT("Added logic component to logic manager failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
-				return result;
-			}
-		}
-		
-		// it is necessary to reinit component
-		if(FWG_FAILED(result = entity.ReinitComponents()))
-		{
-			FWGLOG_ERROR_FORMAT(wxT("Reinit entity components failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
-			return result;
 		}
 		
 	}

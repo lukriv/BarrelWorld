@@ -59,6 +59,52 @@ private:
 		
 	GameErrorCode GetAttrValue(wxXmlNode *pNode, wxString &value);
 	GameErrorCode GetKeyValue(wxXmlNode *pNode, wxString &action, wxInt32 &keyCode);
+private:
+	/**
+	 * \brief 
+	 * @param pNode Parent node
+	 * @param defHolder Definitions holder
+	 */
+	GameErrorCode ConstructDefinitions(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
+	GameErrorCode ConstructScene(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
+
+	GameErrorCode StoreMeshes(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
+	GameErrorCode StoreMaterials(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
+	GameErrorCode StoreRenderEntities(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
+	GameErrorCode StoreCameras(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
+	GameErrorCode StoreRenderDef(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
+	GameErrorCode StoreInput(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
+	GameErrorCode StoreLogic(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
+		
+	GameErrorCode CreateNodeMesh(wxXmlNode* pNode, const wxString& name, const NameDef* pDef);
+	GameErrorCode CreateNodeMaterial(wxXmlNode* pNode, const wxString& name, const NameDef* spDef);
+	GameErrorCode CreateNodeRenderEntity(wxXmlNode* pNode, GameDefinitionHolder& defHolder, const wxString& name, const RenderEntityDef* pDef);
+	GameErrorCode CreateNodeRender(wxXmlNode* pNode, GameDefinitionHolder& defHolder, const wxString& name, const RenderDef* pDef);
+	GameErrorCode CreateNodeCamera(wxXmlNode* pNode, const wxString& name, const CameraDef* pCameraDef);
+	GameErrorCode CreateNodeInput(wxXmlNode* pNode, const wxString& name, const InputDef* pInputDef);
+	GameErrorCode CreateNodeLogic(wxXmlNode* pNode, const wxString& name, const LogicDef* pLogicDef);
+	GameErrorCode CreateNodeEntity(wxXmlNode* pNode, GameDefinitionHolder& defHolder, const wxString& name, const EntityDef* pEntity);
+	GameErrorCode CreateNodeTransform(wxXmlNode* pNode, const TransformDef* pTransform);
+	GameErrorCode CreateNodePhysicsShape(wxXmlNode* pNode, const PhysShapeDef* pPhysicsShape);
+	GameErrorCode CreateNodePhysics(wxXmlNode* pNode, const PhysCompDef* pPhysics);
+	
+	/**
+	 * \brief Get and parse param tag and its attributes
+	 * @param pNode Param tag node
+	 * @param pDefTable Definition table for pObject
+	 * @param tableSize Size of definition table
+	 * @param paramName returned parameter name
+	 * @param pObject Address of returned object
+	 */
+	GameErrorCode AddParameter(wxXmlNode* pNode, const ParamDefinition* pDefTable, wxInt32 tableSize, wxString &paramName, void* pObject);
+	
+	GameErrorCode ConvertFromVec3( const Ogre::Vector3 &resultVec, wxString& output);
+	GameErrorCode ConvertFromQuat( const Ogre::Quaternion &resultQuat, wxString& output);
+	GameErrorCode ConvertFromShapeType( wxInt32 retType, wxString& output);
+		
+	GameErrorCode AddAttrValue(wxXmlNode *pNode, const wxString &value);
+	GameErrorCode AddKeyValue(wxXmlNode *pNode, const wxString &action, const wxInt32 &keyCode);
+
 public:
 	GameXmlResourceLoader() : m_isInitialized(false) {}
 	~GameXmlResourceLoader() {}

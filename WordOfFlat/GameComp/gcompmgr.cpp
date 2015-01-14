@@ -5,6 +5,7 @@ GameCompManager::GameCompManager(GameLogger *pLogger) : m_spLogger(pLogger)
 														, m_renderMgr(pLogger)
 														, m_menuMgr(pLogger)
 														, m_inputSystem(pLogger)
+														, m_physicsManager(pLogger)
 														, m_logicMgr(pLogger)
 														, m_entityMgr(pLogger)
 {}

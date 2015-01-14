@@ -51,10 +51,13 @@
       <VirtualDirectory Name="include">
         <File Name="PhysicsComp/gphyscmgr.h"/>
         <File Name="PhysicsComp/gphyscomp.h"/>
+        <File Name="PhysicsComp/gogrebulletutils.h"/>
+        <File Name="PhysicsComp/gphysdbgdraw.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="src">
         <File Name="PhysicsComp/gphyscmgr.cpp"/>
         <File Name="PhysicsComp/gphyscomp.cpp"/>
+        <File Name="PhysicsComp/gphysdgbdraw.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="transformComp">
@@ -87,6 +90,7 @@
         <File Name="LogicComp/glogiccomp.cpp"/>
         <File Name="LogicComp/glogiccmgr.cpp"/>
         <File Name="LogicComp/glogicman.cpp"/>
+        <File Name="LogicComp/glogiccreator.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="menuComp">

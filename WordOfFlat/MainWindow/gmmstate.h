@@ -5,6 +5,8 @@
 #include <GameComp/MenuComp/gmenu.h>
 #include "gclientengine.h"
 
+class CDebugDraw;
+
 /**
  * \brief Game Ogre listener
  */
@@ -21,17 +23,20 @@ private:
 	RefObjSmPtr<GameCompManager> m_spCompManager;
 	RefObjSmPtr<GameMenu> m_spMenu;
 	
+	
 	MenuCallback *m_pMenuClbk;
 	GameState m_nextState;
 	wxString m_nextStateParams;
 	bool m_exitState;
+	CDebugDraw* m_pDebugDraw;
 	
 public:
 	GameMainMenuState(GameClientEngine *pOwner, GameCompManager *pCompMgr) : m_pOwner(pOwner)
 																		, m_spCompManager(pCompMgr)
 																		, m_pMenuClbk(nullptr)
 																		, m_nextState(GAME_STATE_EXIT)
-																		, m_exitState(false){}
+																		, m_exitState(false)
+																		, m_pDebugDraw(nullptr){}
 	
 																		
 	GameErrorCode ProcessState(GameState &nextState, wxString &nextStateParams );

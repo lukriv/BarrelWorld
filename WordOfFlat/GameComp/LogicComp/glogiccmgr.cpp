@@ -39,3 +39,7 @@ void LogicCompManager::RemoveLogicComp(LogicComponentBase* pLogicComp)
 	wxCriticalSectionLocker lock(m_lockMgr);
 	m_logicCompList.Remove(pLogicComp);
 }
+
+
+
+

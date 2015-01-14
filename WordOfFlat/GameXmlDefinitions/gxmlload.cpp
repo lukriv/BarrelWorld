@@ -1923,12 +1923,16 @@ GameErrorCode GameXmlResourceLoader::CreatePhysicsShape(wxXmlNode* pNode, RefObj
 
 GameErrorCode GameXmlResourceLoader::ConvertToShapeType(const wxString& input, wxInt32& retType)
 {
-	if(input.Cmp(GAME_PHYSICS_SHAPE_TYPE_BOX) == 0)
+	const PhysicsShapeTypeConvertRow *pConv = nullptr;
+	const PhysicsShapeTypeConvertRow *endPoint = &PhysicsShapeTypeConvertTable[WXSIZEOF(PhysicsShapeTypeConvertTable)];
+	for (pConv = PhysicsShapeTypeConvertTable; pConv != endPoint; ++pConv)
 	{
-		retType = PhysShapeDef::SHAPE_TYPE_BOX;
-	} else {
-		return FWG_E_XML_INVALID_ATTR_ERROR;
+		if(input.Cmp(pConv->m_typeName) == 0)
+		{
+			retType = pConv->m_typeEnum;
+			return FWG_NO_ERROR;
+		}
 	}
 	
-	return FWG_NO_ERROR;
+	return FWG_E_XML_INVALID_ATTR_ERROR;
 }

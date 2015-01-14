@@ -9,6 +9,7 @@
 
 
 class TransformComponent;
+class GameEntity;
 
 class TransformCompManager
 {
@@ -23,18 +24,12 @@ public:
 	// Creators //
 	//////////////
 	
-	/*!
-	 * \brief Create empty transform component
-	 * \return Pointer to newly created transform component (can be NULL)
-	 */
-	GameErrorCode CreateEmptyTransformComponent(TransformComponent *&pRenderComp);
-	
 	/**
 	 * \brief Create transform component from transform component definition
 	 * \param transCompDef
-	 * \param pTransformComp
+	 * \param pEntity transform component container
 	 */
-	GameErrorCode CreateTransformComponent(const TransformDef &transCompDef, TransformComponent *&pTransformComp);
+	GameErrorCode CreateTransformComponent(const TransformDef &transCompDef, GameEntity *pEntity);
 	
 };
 

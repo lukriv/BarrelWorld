@@ -14,10 +14,13 @@ public:
 	LogicManualTest();
 	~LogicManualTest();
 	
-	virtual GameErrorCode ReceiveMessage(TaskMessage& msg);
-	virtual GameErrorCode ReinitComponent(GameEntity* pNewParentEntity);
-	virtual	GameErrorCode Update();
-
+	GameErrorCode Initialize(GameEntity *pEntity);
+	
+	virtual GameErrorCode ReceiveMessage(TaskMessage& msg) override;
+	virtual GameErrorCode ReinitComponent(GameEntity* pNewParentEntity) override;
+	virtual	GameErrorCode Update() override;
+	
+	
 
 protected:
 	virtual GameErrorCode UserLogic();

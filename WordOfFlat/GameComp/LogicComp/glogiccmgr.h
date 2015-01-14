@@ -9,6 +9,8 @@
 
 
 class LogicComponentBase;
+class GameEntity;
+struct LogicDef;
 
 class LogicCompManager
 {
@@ -30,6 +32,9 @@ public:
 	 * \param pLogicComp Logic component
 	 */
 	GameErrorCode AddLogicComp(LogicComponentBase *pLogicComp);
+	
+	
+	GameErrorCode CreateLogicComp(LogicDef &logicDef, GameEntity *pEntity);
 	
 	void RemoveLogicComp(LogicComponentBase *pLogicComp);
 	

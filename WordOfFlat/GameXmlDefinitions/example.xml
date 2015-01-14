@@ -9,7 +9,7 @@
 		
 		<materialdefs>
 			<material name="material1">
-				<materialname value="Test/ColourTest" />
+				<param name="materialname" value="Test/ColourTest" />
 			</material>
 		</materialdefs>
 		
@@ -65,7 +65,7 @@
 			
 			<logicref value="manualLogic" />
 			<physics>
-				<shape type="shape_box">
+				<shape type="box">
 					<param name="boxHalfSize" value="0.5, 0.5, 0.5" />
 				</shape>
 				<param name="mass" value="1.0" />

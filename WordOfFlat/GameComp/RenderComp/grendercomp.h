@@ -50,7 +50,7 @@ public:
 													, m_pParent(nullptr) {}
 	~RenderComponent();
 	
-	GameErrorCode Initialize();
+	GameErrorCode Initialize(GameEntity* pParentEntity);
 	
 	/*!
 	 * \brief Add new Render Object to Render Component

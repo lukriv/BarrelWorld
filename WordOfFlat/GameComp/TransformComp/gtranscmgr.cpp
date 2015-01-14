@@ -1,6 +1,8 @@
 #include "gtranscmgr.h"
 #include <GameSystem/new.h>
+#include <GameComp/gentity.h>
 #include "gtranscomp.h"
+
 
 
 
@@ -10,27 +12,17 @@ TransformCompManager::TransformCompManager(GameLogger* pLogger) : m_spLogger(pLo
 TransformCompManager::~TransformCompManager()
 {}
 
-GameErrorCode TransformCompManager::CreateEmptyTransformComponent(TransformComponent*& pTransformComp)
+GameErrorCode TransformCompManager::CreateTransformComponent(const TransformDef& transCompDef, GameEntity *pEntity)
 {
-	RefObjSmPtr<TransformComponent> spTransComp;
 	GameErrorCode result = FWG_NO_ERROR;
+	RefObjSmPtr<TransformComponent> spTransComp;
 	FWG_RETURN_FAIL( GameNewChecked(spTransComp.OutRef()) );
-	if(FWG_FAILED(result = spTransComp->Initialize()))
+	
+	if(FWG_FAILED(result = spTransComp->Initialize(pEntity)))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Tranform component initialize failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
 		return result;
 	}
-	
-	pTransformComp = spTransComp.Detach();
-	
-	return FWG_NO_ERROR;
-}
-
-GameErrorCode TransformCompManager::CreateTransformComponent(const TransformDef& transCompDef, TransformComponent*& pTransformComp)
-{
-	RefObjSmPtr<TransformComponent> spTransComp;
-	
-	FWG_RETURN_FAIL(CreateEmptyTransformComponent(spTransComp.OutRef()));
 	
 	spTransComp->GetData()->m_translate = Vectormath::Aos::Vector3(transCompDef.m_position.x, transCompDef.m_position.y, transCompDef.m_position.z);
 	spTransComp->GetData()->m_scale = Vectormath::Aos::Vector3(transCompDef.m_scale.x, transCompDef.m_scale.y, transCompDef.m_scale.z);
@@ -40,8 +32,12 @@ GameErrorCode TransformCompManager::CreateTransformComponent(const TransformDef&
 	spTransComp->GetData()->m_rotation.setZ(transCompDef.m_rotation.z);
 	spTransComp->GetData()->m_rotation.setW(transCompDef.m_rotation.w);
 	
-	pTransformComp = spTransComp.Detach();
+	if(FWG_FAILED(result = pEntity->AddComponent(spTransComp)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Add tranform component to entity failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
 
-	return FWG_NO_ERROR;
+	return result;
 	
 }

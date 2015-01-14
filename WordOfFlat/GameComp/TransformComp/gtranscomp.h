@@ -2,6 +2,7 @@
 #define __GAME_TRANSFORM_COMPONENT_H__
 
 #include <bullet/vectormath/vmInclude.h>
+#include <bullet/LinearMath/btMotionState.h>
 #include <GameSystem/refobject.h>
 #include <GameSystem/refobjectimpl.h>
 #include "../gcompbase.h"
@@ -14,9 +15,9 @@ public:
 };
 
 
+class GameEntity;
 
-
-class TransformComponent : public ComponentBase {
+class TransformComponent : public ComponentBase, public btMotionState {
 	TransformData *m_pTransData;
 	GameEntity* m_pParent;
 	
@@ -24,7 +25,7 @@ public:
 	TransformComponent();
 	~TransformComponent();
 	
-	GameErrorCode Initialize();
+	GameErrorCode Initialize(GameEntity *pEntity);
 	
 	inline TransformData* GetData() { return m_pTransData; }
 	
@@ -32,6 +33,9 @@ public:
 	virtual GameErrorCode ReceiveMessage(TaskMessage& msg);
 	virtual GameErrorCode ReinitComponent(GameEntity* pNewParentEntity);
 	virtual GameErrorCode Update();
+	
+	virtual void getWorldTransform(btTransform& worldTrans) const override;
+	virtual void setWorldTransform(const btTransform& worldTrans) override;
 	
 };
 

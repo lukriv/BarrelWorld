@@ -19,6 +19,7 @@ static const wxChar* FWG_UNUSED(SECONDARY_CAMERA_NAME) = wxT("SecondCamera");
 
 class RenderComponent;
 class RenderObject;
+class GameEntity;
 
 class RenderCompManager
 {
@@ -99,18 +100,12 @@ public:
 	// Creators //
 	//////////////
 	
-	/*!
-	 * \brief Create empty render component
-	 * \return Pointer to newly created render component (can be NULL)
-	 */
-	GameErrorCode CreateEmptyRenderComponent(RenderComponent *&pRenderComp);
-	
 	/**
 	 * \brief Create render component from render component definition
 	 * \param renderCompDef
 	 * \param pRenderComp
 	 */
-	GameErrorCode CreateRenderComponent(const RenderDef &renderCompDef, RenderComponent *&pRenderComp);
+	GameErrorCode CreateRenderComponent(const RenderDef &renderCompDef, GameEntity *pEntity);
 	
 	/*!
 	 * \brief Create RenderObject from Render Object Definition

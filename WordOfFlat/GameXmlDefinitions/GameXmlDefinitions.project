@@ -35,7 +35,8 @@
     <File Name="gxmlparams.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="src">
-    <File Name="gxmlloader.cpp"/>
+    <File Name="gxmlstore.cpp"/>
+    <File Name="gxmlload.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="resource">
     <File Name="example.xml"/>

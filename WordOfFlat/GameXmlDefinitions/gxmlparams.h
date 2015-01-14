@@ -21,9 +21,6 @@ static const wxChar* GAME_PARAM_INERTIA			= wxT("inertia");
 static const wxChar* GAME_PARAM_BOX_HALF_SIZE	= wxT("boxHalfSize");
 
 
-static const wxChar* GAME_PHYSICS_SHAPE_TYPE_BOX = wxT("box");
-
-
 enum GameDefType {
 	GAMEDEF_TYPE_UNKNOWN 	= 0,
 	GAMEDEF_TYPE_TEXT		= 1,
@@ -41,6 +38,16 @@ struct ParamDefinition {
 	bool m_mandatory;	
 };
 
+
+struct PhysicsShapeTypeConvertRow {
+	const wxChar* m_typeName;
+	PhysShapeDef::ShapeType m_typeEnum;
+};
+
+static const PhysicsShapeTypeConvertRow PhysicsShapeTypeConvertTable[] = 
+{
+	{ wxT("box"), PhysShapeDef::SHAPE_TYPE_BOX }
+};
 
 // mesh parameters
 static const ParamDefinition MeshXmlParamTable[] = {
