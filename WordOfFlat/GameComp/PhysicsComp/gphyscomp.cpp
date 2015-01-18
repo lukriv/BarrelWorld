@@ -21,7 +21,7 @@ GameErrorCode PhysicsComponent::Update()
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode PhysicsComponent::Initialize(GameEntity* pParentEntity, btRigidBody *pColObj)
+GameErrorCode PhysicsComponent::InitializeInternal(GameEntity* pParentEntity, btCollisionObject * pColObj)
 {
 	if((pParentEntity == nullptr)||(pColObj == nullptr))
 	{
@@ -29,10 +29,30 @@ GameErrorCode PhysicsComponent::Initialize(GameEntity* pParentEntity, btRigidBod
 	}
 	
 	m_pParent = pParentEntity;
+	
 	m_pColObject = pColObj;
 	
+	return FWG_NO_ERROR;
+}
+
+GameErrorCode PhysicsComponent::Initialize(GameEntity* pParentEntity, btCollisionObject* pColObj)
+{
+	FWG_RETURN_FAIL(InitializeInternal(pParentEntity, pColObj));
+	
 	m_pOwnerMgr->GetDynamicsWorld()->addCollisionObject(m_pColObject);
-	//m_pOwnerMgr->GetDynamicsWorld()->addRigidBody(m_pColObject);
+	
+	m_type = PhysicsComponent::PHYS_COMP_TYPE_COLLISION;
+	
+	return FWG_NO_ERROR;	
+}
+
+GameErrorCode PhysicsComponent::Initialize(GameEntity* pParentEntity, btRigidBody* pColObj)
+{
+	FWG_RETURN_FAIL(InitializeInternal(pParentEntity, pColObj));
+	
+	m_pOwnerMgr->GetDynamicsWorld()->addRigidBody(pColObj);
+	
+	m_type = PhysicsComponent::PHYS_COMP_TYPE_RIGID;
 	
 	return FWG_NO_ERROR;
 }
@@ -40,3 +60,4 @@ GameErrorCode PhysicsComponent::Initialize(GameEntity* pParentEntity, btRigidBod
 PhysicsComponent::~PhysicsComponent()
 {
 }
+

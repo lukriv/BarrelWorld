@@ -56,6 +56,7 @@ private:
 	GameErrorCode ConvertToVec3(const wxString& input, Ogre::Vector3 *resultVec);
 	GameErrorCode ConvertToQuat(const wxString& input, Ogre::Quaternion *resultQuat);
 	GameErrorCode ConvertToShapeType(const wxString& input, wxInt32 &retType);
+	GameErrorCode ConvertToPhysicsType(const wxString& input, wxInt32& retType);
 		
 	GameErrorCode GetAttrValue(wxXmlNode *pNode, wxString &value);
 	GameErrorCode GetKeyValue(wxXmlNode *pNode, wxString &action, wxInt32 &keyCode);

@@ -130,7 +130,14 @@ GameErrorCode RenderComponent::Initialize(GameEntity* pParentEntity)
 
 GameErrorCode RenderComponent::ReceiveMessage(TaskMessage& msg)
 {
-	return FWG_E_NOT_IMPLEMENTED_ERROR;
+	switch(msg.GetTaskType())
+	{
+		case GAME_TAST_TRANSFORM_UPDATE:
+		{
+			return m_pOwnerManager->AddToUpdateQueue(this);
+		}
+	}
+	return FWG_NO_ERROR;
 }
 
 GameErrorCode RenderComponent::ReinitComponent(GameEntity* pNewParentEntity)

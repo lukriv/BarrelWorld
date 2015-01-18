@@ -49,6 +49,17 @@ static const PhysicsShapeTypeConvertRow PhysicsShapeTypeConvertTable[] =
 	{ wxT("box"), PhysShapeDef::SHAPE_TYPE_BOX }
 };
 
+struct PhysicsTypeConvertRow {
+	const wxChar* m_typeName;
+	PhysCompDef::PhysicsType m_typeEnum;
+};
+
+static const PhysicsTypeConvertRow PhysicsTypeConvertTable[] = 
+{
+	{ wxT("rigid"), 	PhysCompDef::PHYS_TYPE_RIGID 		},
+	{ wxT("collision"), PhysCompDef::PHYS_TYPE_COLLISION	}
+};
+
 // mesh parameters
 static const ParamDefinition MeshXmlParamTable[] = {
 	{ GAME_PARAM_MESHNAME, GAMEDEF_TYPE_TEXT, offsetof(struct NameDef, m_name), true },

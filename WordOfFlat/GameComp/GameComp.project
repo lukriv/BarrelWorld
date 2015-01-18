@@ -33,6 +33,7 @@
     <File Name="gentity.h"/>
     <File Name="gcompmgr.h"/>
     <File Name="gcompbase.h"/>
+    <File Name="gcompdefs.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="comp">
     <VirtualDirectory Name="renderComp">

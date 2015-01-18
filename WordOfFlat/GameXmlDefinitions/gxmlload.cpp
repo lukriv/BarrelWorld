@@ -1738,10 +1738,31 @@ GameErrorCode GameXmlResourceLoader::CreatePhysics(wxXmlNode* pNode, RefObjSmPtr
 {
 	GameErrorCode result = FWG_NO_ERROR;
 	RefObjSmPtr<PhysCompDef> spPhysicsTemp;
+	wxString typeStr;
 	
 	GameBasSet<wxString> foundedParams;
 	
 	FWG_RETURN_FAIL( GameNewChecked(spPhysicsTemp.OutRef()));
+	
+	if(!pNode->GetAttribute(wxString(GAME_ATTR_TYPE_STR), &typeStr))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Attribut parameter '%s' not found ( tag '%s' on line %d )"), m_spLogger
+							, GAME_ATTR_TYPE_STR
+							, pNode->GetName().GetData().AsInternal()
+							, pNode->GetLineNumber()
+							, FWGLOG_ENDVAL);
+		return FWG_E_XML_ATTR_NOT_FOUND_ERROR;
+	}
+	
+	if(FWG_FAILED(result = ConvertToPhysicsType(typeStr, reinterpret_cast<wxInt32&>(spPhysicsTemp->m_physType))))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Attribut parameter '%s' contain unknown type ( tag '%s' on line %d )"), m_spLogger
+							, GAME_ATTR_TYPE_STR
+							, pNode->GetName().GetData().AsInternal()
+							, pNode->GetLineNumber()
+							, FWGLOG_ENDVAL);
+		return result;
+	}
 	
 	wxXmlNode *child = pNode->GetChildren();
 	while (child)
@@ -1926,6 +1947,22 @@ GameErrorCode GameXmlResourceLoader::ConvertToShapeType(const wxString& input, w
 	const PhysicsShapeTypeConvertRow *pConv = nullptr;
 	const PhysicsShapeTypeConvertRow *endPoint = &PhysicsShapeTypeConvertTable[WXSIZEOF(PhysicsShapeTypeConvertTable)];
 	for (pConv = PhysicsShapeTypeConvertTable; pConv != endPoint; ++pConv)
+	{
+		if(input.Cmp(pConv->m_typeName) == 0)
+		{
+			retType = pConv->m_typeEnum;
+			return FWG_NO_ERROR;
+		}
+	}
+	
+	return FWG_E_XML_INVALID_ATTR_ERROR;
+}
+
+GameErrorCode GameXmlResourceLoader::ConvertToPhysicsType(const wxString& input, wxInt32& retType)
+{
+	const PhysicsTypeConvertRow *pConv = nullptr;
+	const PhysicsTypeConvertRow *endPoint = &PhysicsTypeConvertTable[WXSIZEOF(PhysicsTypeConvertTable)];
+	for (pConv = PhysicsTypeConvertTable; pConv != endPoint; ++pConv)
 	{
 		if(input.Cmp(pConv->m_typeName) == 0)
 		{

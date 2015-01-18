@@ -192,11 +192,20 @@ public:
 };
 
 struct PhysCompDef : public DefBase {
+public:
+	enum PhysicsType {
+		PHYS_TYPE_UNKNOWN 	= 0,
+		PHYS_TYPE_COLLISION = 1,
+		PHYS_TYPE_RIGID		= 2
+	};
+public:
+	PhysicsType m_physType;
 	RefObjSmPtr<PhysShapeDef> m_shape;
 	float m_mass;
 	Ogre::Vector3 m_inertiaVector;
 	
 	PhysCompDef() : DefBase()
+					, m_physType(PHYS_TYPE_UNKNOWN)
 					, m_mass(0.0f)
 					, m_inertiaVector(Ogre::Vector3::ZERO) {}
 };

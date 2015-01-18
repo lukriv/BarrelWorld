@@ -137,19 +137,35 @@ GameErrorCode PhysicsCompManager::CreatePhysicsComponent(PhysCompDef& physDef, G
 	}
 	
 	TransformComponent *pTrans = reinterpret_cast<TransformComponent*>(pEntity->GetComponent(GAME_COMP_TRANSFORM));
-	btScalar mass = physDef.m_mass;
-	btVector3 localInertia(physDef.m_inertiaVector.x, physDef.m_inertiaVector.y, physDef.m_inertiaVector.z);
-	
-	pColShape->calculateLocalInertia(mass, localInertia);
-	
-	btRigidBody::btRigidBodyConstructionInfo info(mass, pTrans, pColShape, localInertia);
-	
-	btRigidBody *body = new btRigidBody(info);
-	
-	if(FWG_FAILED(result = spPhysComp->Initialize(pEntity, body)))
+	switch(physDef.m_physType)
 	{
-		FWGLOG_ERROR_FORMAT(wxT("Physics component initialize failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
-		return result;		
+		case PhysCompDef::PHYS_TYPE_RIGID:
+		{
+			btScalar mass = physDef.m_mass;
+			btVector3 localInertia(physDef.m_inertiaVector.x, physDef.m_inertiaVector.y, physDef.m_inertiaVector.z);
+			
+			pColShape->calculateLocalInertia(mass, localInertia);
+			
+			btRigidBody::btRigidBodyConstructionInfo info(mass, pTrans, pColShape, localInertia);
+			
+			btRigidBody *body = new btRigidBody(info);
+			
+			if(FWG_FAILED(result = spPhysComp->Initialize(pEntity, body)))
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Physics component initialize failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+				return result;		
+			}
+			break;
+		}
+		case PhysCompDef::PHYS_TYPE_COLLISION:
+		{
+			btCollisionObject* pColObj = new btCollisionObject;
+			// todo: end collision type implementation - needs to be 
+			
+			
+			
+			break;
+		}
 	}
 	
 	if(FWG_FAILED(result = pEntity->AddComponent(spPhysComp)))
