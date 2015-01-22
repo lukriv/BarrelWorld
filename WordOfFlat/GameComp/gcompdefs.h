@@ -26,7 +26,7 @@ enum GameComponentMaskType {
 
 enum GameTaskMessageType {
 	GAME_TASK_UNKNOWN				= 0,
-	GAME_TAST_TRANSFORM_UPDATE		= 1
+	GAME_TASK_TRANSFORM_UPDATE		= 1
 };
 
 

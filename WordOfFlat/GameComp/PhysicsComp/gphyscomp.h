@@ -8,6 +8,7 @@
 
 class btCollisionObject;
 class PhysicsCompManager;
+//class TransformComponent;
 
 class PhysicsComponent : public ComponentBase {
 protected:
@@ -21,6 +22,7 @@ protected:
 	PhysicsCompManager *m_pOwnerMgr;
 	GameEntity *m_pParent;
 	btCollisionObject *m_pColObject;
+	//RefObjSmPtr<TransformComponent> m_spTransform;
 
 protected:
 	GameErrorCode InitializeInternal (GameEntity *pParentEntity, btCollisionObject *pColObj);

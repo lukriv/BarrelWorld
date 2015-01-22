@@ -42,7 +42,7 @@ GameErrorCode GameEntity::AddComponent(ComponentBase* pComp)
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode GameEntity::ReceiveMessage(TaskMessage& msg, GameComponentMaskType targetMask)
+GameErrorCode GameEntity::ReceiveMessage(TaskMessage& msg, wxDword targetMask)
 {
 	// lock
 	wxCriticalSectionLocker lock(m_entityLock);

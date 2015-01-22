@@ -1,6 +1,9 @@
 #ifndef __GAME_OGRE_BULLET_UTILS_MANAGER_H__
 #define __GAME_OGRE_BULLET_UTILS_MANAGER_H__
 
+#include <OGRE/OgreVector3.h>
+#include <OGRE/OgreQuaternion.h>
+
 
 inline btVector3 cvt(const Ogre::Vector3 &V){
     return btVector3(V.x, V.y, V.z);

@@ -152,7 +152,7 @@ GameErrorCode PhysicsCompManager::CreatePhysicsComponent(PhysCompDef& physDef, G
 			
 			if(FWG_FAILED(result = spPhysComp->Initialize(pEntity, body)))
 			{
-				FWGLOG_ERROR_FORMAT(wxT("Physics component initialize failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+				FWGLOG_ERROR_FORMAT(wxT("Physics component initialize (rigidbody) failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
 				return result;		
 			}
 			break;
@@ -160,12 +160,21 @@ GameErrorCode PhysicsCompManager::CreatePhysicsComponent(PhysCompDef& physDef, G
 		case PhysCompDef::PHYS_TYPE_COLLISION:
 		{
 			btCollisionObject* pColObj = new btCollisionObject;
-			// todo: end collision type implementation - needs to be 
+			btTransform transform;
+			pTrans->getWorldTransform(transform);
+			pColObj->setWorldTransform(transform);
+			pColObj->setCollisionShape(pColShape);
 			
-			
-			
+			if(FWG_FAILED(result = spPhysComp->Initialize(pEntity, pColObj)))
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Physics component initialize (collision) failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+				return result;		
+			}
+						
 			break;
 		}
+		default:
+			break;
 	}
 	
 	if(FWG_FAILED(result = pEntity->AddComponent(spPhysComp)))

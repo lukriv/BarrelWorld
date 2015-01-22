@@ -5,13 +5,14 @@
 #include <bullet/LinearMath/btMotionState.h>
 #include <GameSystem/refobject.h>
 #include <GameSystem/refobjectimpl.h>
+#include <GameComp/PhysicsComp/gogrebulletutils.h>
 #include "../gcompbase.h"
 
-struct TransformData {
+ATTRIBUTE_ALIGNED16(struct) TransformData {
 public:
-	Vectormath::Aos::Vector3 	ATTRIBUTE_ALIGNED16(m_translate);
-	Vectormath::Aos::Vector3	ATTRIBUTE_ALIGNED16(m_scale);
-	Vectormath::Aos::Quat		ATTRIBUTE_ALIGNED16(m_rotation);
+	btVector3 		m_translate;
+	btVector3		m_scale;
+	btQuaternion	m_rotation;
 };
 
 
@@ -29,6 +30,8 @@ public:
 	
 	inline TransformData* GetData() { return m_pTransData; }
 	
+	inline const Ogre::Quaternion GetOgreRotation();
+	inline const Ogre::Vector3 GetOgreTranlate();
 	
 	virtual GameErrorCode ReceiveMessage(TaskMessage& msg);
 	virtual GameErrorCode ReinitComponent(GameEntity* pNewParentEntity);
@@ -38,6 +41,17 @@ public:
 	virtual void setWorldTransform(const btTransform& worldTrans) override;
 	
 };
+
+
+const Ogre::Quaternion TransformComponent::GetOgreRotation()
+{
+	return cvt(m_pTransData->m_rotation);
+}
+
+const Ogre::Vector3 TransformComponent::GetOgreTranlate()
+{
+	return cvt(m_pTransData->m_translate);
+}
 
 
 #endif //__GAME_TRANSFORM_COMPONENT_MANAGER_H__

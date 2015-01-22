@@ -1,6 +1,7 @@
 #include "gtranscomp.h"
 
 #include <bullet/LinearMath/btAlignedAllocator.h>
+#include <GameComp/gentity.h>
 
 typedef btAlignedAllocator< TransformData, 16 > TAllocator;
 
@@ -23,9 +24,9 @@ GameErrorCode TransformComponent::Initialize(GameEntity *pEntity)
 	{
 		return FWG_E_MEMORY_ALLOCATION_ERROR;
 	}
-	m_pTransData->m_translate = Vectormath::Aos::Vector3(0.0f, 0.0f, 0.0f);
-	m_pTransData->m_scale = Vectormath::Aos::Vector3(1.0f, 1.0f, 1.0f);
-	m_pTransData->m_rotation.identity();
+	m_pTransData->m_translate = btVector3(0.0f, 0.0f, 0.0f);
+	m_pTransData->m_scale = btVector3(1.0f, 1.0f, 1.0f);
+	m_pTransData->m_rotation = btQuaternion::getIdentity();
 	
 	// set parent
 	m_pParent = pEntity;
@@ -66,13 +67,8 @@ void TransformComponent::getWorldTransform(btTransform& worldTrans) const
 {
 	if(m_pTransData)
 	{
-		btVector3 transform(m_pTransData->m_translate.getX()
-							, m_pTransData->m_translate.getY()
-							, m_pTransData->m_translate.getZ());
-		btQuaternion rotation(m_pTransData->m_rotation.getX()
-							, m_pTransData->m_rotation.getY()
-							, m_pTransData->m_rotation.getZ()
-							, m_pTransData->m_rotation.getW());
+		btVector3 transform(m_pTransData->m_translate);
+		btQuaternion rotation(m_pTransData->m_rotation);
 							
 		worldTrans.setOrigin(transform);
 		worldTrans.setRotation(rotation);
@@ -81,16 +77,12 @@ void TransformComponent::getWorldTransform(btTransform& worldTrans) const
 
 void TransformComponent::setWorldTransform(const btTransform& worldTrans)
 {
-	btQuaternion rotation = worldTrans.getRotation();
-	btVector3 translation = worldTrans.getOrigin();
+	m_pTransData->m_rotation = worldTrans.getRotation();
+	m_pTransData->m_translate = worldTrans.getOrigin();
 	
-	m_pTransData->m_translate.setX(translation.getX());
-	m_pTransData->m_translate.setY(translation.getY());
-	m_pTransData->m_translate.setZ(translation.getZ());
-	
-	m_pTransData->m_rotation.setX(rotation.getX());
-	m_pTransData->m_rotation.setY(rotation.getY());
-	m_pTransData->m_rotation.setZ(rotation.getZ());
-	m_pTransData->m_rotation.setW(rotation.getW());
+	//transform was updated
+	TaskMessage task(GAME_TASK_TRANSFORM_UPDATE);
+	m_pParent->ReceiveMessage(task, (GAME_COMP_MASK_ALL ^ GAME_COMP_MASK_PHYSICS));
+
 }
 

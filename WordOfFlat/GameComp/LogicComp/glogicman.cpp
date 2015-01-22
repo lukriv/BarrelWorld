@@ -61,7 +61,7 @@ GameErrorCode LogicManualTest::ProcessInput()
 	if(!m_spTransform.IsEmpty())
 	{
 		
-		Vectormath::Aos::Vector3 moveVec = Vectormath::Aos::Vector3(0,0,0);
+		btVector3 moveVec = btVector3(0,0,0);
 		if(actualControls.IsPressed(ControlStruct::INPUT_ACTION_UP))
 		{
 			moveVec.setZ(STEP_SIZE);
@@ -87,7 +87,8 @@ GameErrorCode LogicManualTest::ProcessInput()
 	}
 	
 	// update render component
-	if(FWG_FAILED(result = m_pParent->Update()))
+	TaskMessage task(GAME_TASK_TRANSFORM_UPDATE);
+	if(FWG_FAILED(result = m_pParent->ReceiveMessage(task)))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Update component failed: 0x%08x"), m_pOwnerManager->GetLogger(), result, FWGLOG_ENDVAL);
 		return result;

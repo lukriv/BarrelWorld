@@ -1,10 +1,28 @@
 #include "gphyscomp.h"
 
 #include "gphyscmgr.h"
+#include <GameComp/transformComp/gtranscomp.h>
+#include <GameComp/gentity.h>
 
 GameErrorCode PhysicsComponent::ReceiveMessage(TaskMessage& msg)
 {
-	return FWG_E_NOT_IMPLEMENTED_ERROR;
+	switch(msg.GetTaskType())
+	{
+		case GAME_TASK_TRANSFORM_UPDATE:
+		{
+			//if(m_type == PHYS_COMP_TYPE_COLLISION)
+			//{
+				RefObjSmPtr<TransformComponent> spTransform = reinterpret_cast<TransformComponent*>(m_pParent->GetComponent(GAME_COMP_TRANSFORM));
+				btTransform transform;
+				spTransform->getWorldTransform(transform);
+				m_pColObject->setWorldTransform(transform);
+			//}
+			break;
+		}
+		default: 
+			break;
+	}
+	return FWG_NO_ERROR;
 }
 
 GameErrorCode PhysicsComponent::ReinitComponent(GameEntity* pNewParentEntity)
@@ -31,6 +49,9 @@ GameErrorCode PhysicsComponent::InitializeInternal(GameEntity* pParentEntity, bt
 	m_pParent = pParentEntity;
 	
 	m_pColObject = pColObj;
+	
+	// set pointer to this object
+	m_pColObject->setUserPointer(reinterpret_cast<void*>(this));
 	
 	return FWG_NO_ERROR;
 }
@@ -59,5 +80,21 @@ GameErrorCode PhysicsComponent::Initialize(GameEntity* pParentEntity, btRigidBod
 
 PhysicsComponent::~PhysicsComponent()
 {
+	if(m_pColObject)
+	{
+		m_pColObject->setUserPointer(nullptr);
+		switch(m_type)
+		{
+			case PHYS_COMP_TYPE_RIGID:
+				m_pOwnerMgr->GetDynamicsWorld()->removeRigidBody(reinterpret_cast<btRigidBody*>(m_pColObject));
+				break;
+			case PHYS_COMP_TYPE_COLLISION:
+				m_pOwnerMgr->GetDynamicsWorld()->removeCollisionObject(m_pColObject);
+				break;
+			default:
+				break;
+		}
+		m_pColObject = nullptr;
+	}
 }
 

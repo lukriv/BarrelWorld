@@ -77,7 +77,7 @@ public:
 	 * @param targetMask Component receivers
 	 * @return 
 	 */
-	GameErrorCode ReceiveMessage(TaskMessage& msg, GameComponentMaskType targetMask = GAME_COMP_MASK_ALL);
+	GameErrorCode ReceiveMessage(TaskMessage& msg, wxDword targetMask = GAME_COMP_MASK_ALL);
 	
 	/**
 	 * \brief Update all components in the entity

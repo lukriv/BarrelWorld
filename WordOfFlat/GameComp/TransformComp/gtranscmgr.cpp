@@ -24,8 +24,8 @@ GameErrorCode TransformCompManager::CreateTransformComponent(const TransformDef&
 		return result;
 	}
 	
-	spTransComp->GetData()->m_translate = Vectormath::Aos::Vector3(transCompDef.m_position.x, transCompDef.m_position.y, transCompDef.m_position.z);
-	spTransComp->GetData()->m_scale = Vectormath::Aos::Vector3(transCompDef.m_scale.x, transCompDef.m_scale.y, transCompDef.m_scale.z);
+	spTransComp->GetData()->m_translate = btVector3(transCompDef.m_position.x, transCompDef.m_position.y, transCompDef.m_position.z);
+	spTransComp->GetData()->m_scale = btVector3(transCompDef.m_scale.x, transCompDef.m_scale.y, transCompDef.m_scale.z);
 	
 	spTransComp->GetData()->m_rotation.setX(transCompDef.m_rotation.x);
 	spTransComp->GetData()->m_rotation.setY(transCompDef.m_rotation.y);

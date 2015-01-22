@@ -132,10 +132,12 @@ GameErrorCode RenderComponent::ReceiveMessage(TaskMessage& msg)
 {
 	switch(msg.GetTaskType())
 	{
-		case GAME_TAST_TRANSFORM_UPDATE:
+		case GAME_TASK_TRANSFORM_UPDATE:
 		{
 			return m_pOwnerManager->AddToUpdateQueue(this);
 		}
+		default:
+			break;
 	}
 	return FWG_NO_ERROR;
 }
@@ -167,7 +169,8 @@ void RenderComponent::ProcessUpdate()
 	if(!m_spTransform.IsEmpty())
 	{
 		//todo: upgrade updating scene node transform
-		TransformData* pTransData = m_spTransform->GetData();
-		m_pSceneNode->setPosition(pTransData->m_translate.getX(), pTransData->m_translate.getY(), pTransData->m_translate.getZ());
+		
+		m_pSceneNode->setPosition(m_spTransform->GetOgreTranlate());
+		m_pSceneNode->setOrientation(m_spTransform->GetOgreRotation());
 	}
 }
