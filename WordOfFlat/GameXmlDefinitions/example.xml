@@ -46,6 +46,13 @@
 
 
 	<scene>
+		<terrain>
+			<param name="mapSize" value="1025" />
+			<param name="worldSize" value="1025" />
+			<terrainpages>
+				<terrainpage filename="terrain_00000000.bmp" pageX="0" pageY="0" />
+			</terrainpages>
+		</terrain>
 		<entity name="entity1">
 			<transform>
 				<param name="position" value="0.0, 0.0, 0.0" />

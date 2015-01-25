@@ -41,8 +41,6 @@
     <File Name="gentitycreator.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="impl"/>
-  <Dependencies Name="Debug"/>
-  <Dependencies Name="Release"/>
   <Settings Type="Static Library">
     <GlobalSettings>
       <Compiler Options="-Wall;-Wno-unused-local-typedefs;-std=c++11" C_Options="-Wall" Assembler="">
@@ -132,4 +130,6 @@
       </Completion>
     </Configuration>
   </Settings>
+  <Dependencies Name="Debug"/>
+  <Dependencies Name="Release"/>
 </CodeLite_Project>

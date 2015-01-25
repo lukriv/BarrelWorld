@@ -39,6 +39,8 @@ public:
 	TLogicDefMap m_logicDefs;
 	TEntityDefMap m_entityDefs;
 	
+	RefObjSmPtr< TerrainDef > m_spTerrain;
+	
 };
 
 

@@ -210,6 +210,12 @@ public:
 					, m_inertiaVector(Ogre::Vector3::ZERO) {}
 };
 
+struct TerrainPage : public DefBase {
+	wxString m_filename;
+	wxInt32 m_pageX;
+	wxInt32 m_pageY;
+};
+
 /*!
  * \class EntityDef
  * \author Lukas
@@ -224,6 +230,12 @@ struct EntityDef : public DefBase {
 	RefObjSmPtr<LogicDef> m_logicDef;
 	RefObjSmPtr<PhysCompDef> m_physDef;
 	EntityDef() : DefBase() {}
+};
+
+struct TerrainDef : public DefBase {
+	wxDword m_mapSize;
+	float m_worldSize;
+	wxVector< RefObjSmPtr<TerrainPage> > m_terrainPages;
 };
 
 
