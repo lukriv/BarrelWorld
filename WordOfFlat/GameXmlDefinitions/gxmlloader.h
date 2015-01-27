@@ -39,6 +39,8 @@ private:
 	GameErrorCode CreateTransform(wxXmlNode* pNode, RefObjSmPtr<TransformDef> &spTransform);
 	GameErrorCode CreatePhysicsShape(wxXmlNode* pNode, RefObjSmPtr<PhysShapeDef> &spPhysicsShape);
 	GameErrorCode CreatePhysics(wxXmlNode* pNode, RefObjSmPtr<PhysCompDef> &spPhysics);
+	GameErrorCode CreateTerrain(wxXmlNode* pNode, RefObjSmPtr<TerrainDef> &spTerrain);
+	GameErrorCode CreateTerrainPage(wxXmlNode* pNode, RefObjSmPtr<TerrainPage> &spTerrainPage);
 	
 	/**
 	 * \brief Get and parse param tag and its attributes
@@ -48,7 +50,7 @@ private:
 	 * @param paramName returned parameter name
 	 * @param pObject Address of returned object
 	 */
-	GameErrorCode GetParameter(wxXmlNode* pNode, const ParamDefinition* pDefTable, wxInt32 tableSize, wxString &paramName, void* pObject);
+	GameErrorCode GetParameter(wxXmlNode* pNode, const ParamDefinition* pDefTable, wxInt32 tableSize, void* pObject);
 	
 	GameErrorCode ParametersValidate(GameBasSet<wxString> &foundedParams, const ParamDefinition* pDefTable, wxInt32 tableSize );
 	
@@ -57,6 +59,9 @@ private:
 	GameErrorCode ConvertToQuat(const wxString& input, Ogre::Quaternion *resultQuat);
 	GameErrorCode ConvertToShapeType(const wxString& input, wxInt32 &retType);
 	GameErrorCode ConvertToPhysicsType(const wxString& input, wxInt32& retType);
+	GameErrorCode ConvertToInt32(const wxString& input, wxInt32& output);
+	GameErrorCode ConvertToDword(const wxString& input, wxDword& output);
+	GameErrorCode ConvertToFloat(const wxString& input, float& output);
 		
 	GameErrorCode GetAttrValue(wxXmlNode *pNode, wxString &value);
 	GameErrorCode GetKeyValue(wxXmlNode *pNode, wxString &action, wxInt32 &keyCode);
@@ -88,6 +93,8 @@ private:
 	GameErrorCode CreateNodeTransform(wxXmlNode* pNode, const TransformDef* pTransform);
 	GameErrorCode CreateNodePhysicsShape(wxXmlNode* pNode, const PhysShapeDef* pPhysicsShape);
 	GameErrorCode CreateNodePhysics(wxXmlNode* pNode, const PhysCompDef* pPhysics);
+	GameErrorCode CreateNodeTerrain(wxXmlNode* pNode,const RefObjSmPtr<TerrainDef> &spTerrain);
+	GameErrorCode CreateNodeTerrainPage(wxXmlNode* pNode, const RefObjSmPtr<TerrainPage> &spTerrainPage);
 	
 	/**
 	 * \brief Get and parse param tag and its attributes

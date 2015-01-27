@@ -168,6 +168,10 @@ FWG_UNUSED(static const wxChar* FWG_E_MENU_SYSTEM_ERROR_STR) = wxT("FWG_E_MENU_S
 #define FWG_E_RENDER_SYSTEM_ERROR 0xE0000029
 FWG_UNUSED(static const wxChar* FWG_E_RENDER_SYSTEM_ERROR_STR) = wxT("FWG_E_RENDER_SYSTEM_ERROR");
 
+#define FWG_E_BAD_CONVERSION_ERROR 0xE000002a
+FWG_UNUSED(static const wxChar* FWG_E_BAD_CONVERSION_ERROR_STR) = wxT("FWG_E_BAD_CONVERSION_ERROR");
+
+
 /*!
  * \brief Converts error code to error code string
  * 

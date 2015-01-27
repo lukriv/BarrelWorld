@@ -3,13 +3,13 @@
 		
 		<meshdefs>
 			<mesh name="mesh1">
-				<param name="meshname" value="TestingCube" />
+				<meshname>TestingCube</meshname>
 			</mesh>
 		</meshdefs>
 		
 		<materialdefs>
 			<material name="material1">
-				<param name="materialname" value="Test/ColourTest" />
+				<materialname>Test/ColourTest</materialname>
 			</material>
 		</materialdefs>
 		
@@ -31,14 +31,14 @@
 		
 		<logicdefs>
 			<logic name="manualLogic">
-				<param name="logictype" value="MANUAL_TEST" />
+				<logictype>MANUAL_TEST</logictype>
 			</logic>
 		</logicdefs>
 		
 		<cameradefs>
 			<camera name="MainCamera">
-				<param name="position" value="0.0, 10.0, -5.0" />
-				<param name="direction" value="0, -10, 5" />
+				<position>0.0, 10.0, -5.0</position>
+				<direction>0, -10, 5</direction>
 			</camera>
 		</cameradefs>
 		
@@ -47,24 +47,28 @@
 
 	<scene>
 		<terrain>
-			<param name="mapSize" value="1025" />
-			<param name="worldSize" value="1025" />
+			<mapSize>1025</mapSize>
+			<worldSize>1025</worldSize>
 			<terrainpages>
-				<terrainpage filename="terrain_00000000.bmp" pageX="0" pageY="0" />
+				<terrainpage>
+					<filename>terrain_00000000.bmp</filename>
+					<pageX>0</pageX>
+					<pageY>0</pageY>
+				</terrainpage>
 			</terrainpages>
 		</terrain>
 		<entity name="entity1">
 			<transform>
-				<param name="position" value="0.0, 0.0, 0.0" />
-				<param name="scale" value="1.0, 1.0, 1.0" />
-				<param name="rotation" value="1.0, 0.0, 0.0, 0.0" />				
+				<position>0.0, 0.0, 0.0</position>
+				<scale>1.0, 1.0, 1.0</scale>
+				<rotation>1.0, 0.0, 0.0, 0.0</rotation>				
 			</transform>
 			
 			<render name="render1">
 				<renderent name="renderEnt1">
 					<meshref value="mesh1" />
 					<materialref value="material1" />
-					<param name="position" value="0.0;0.0;0.0" />
+					<position>0.0;0.0;0.0</position>
 				</renderent>
 			</render>
 			
@@ -73,27 +77,27 @@
 			<logicref value="manualLogic" />
 			<physics type="rigid">
 				<shape type="box">
-					<param name="boxHalfSize" value="1.0, 1.0, 1.0" />
+					<boxHalfSize>1.0, 1.0, 1.0</boxHalfSize>
 				</shape>
-				<param name="mass" value="1.0" />
-				<param name="inertia" value="0.0,0.0,0.0" />
+				<mass>1.0</mass>
+				<inertia>0.0,0.0,0.0</inertia>
 			</physics>
 		</entity>
 		
 		<entity name="entity2">
 			<transform>
-				<param name="position" value="1.0, 1.0, 0.0" />
-				<param name="scale" value="1.0, 1.0, 1.0" />
-				<param name="rotation" value="1.0, 0.0, 0.0, 0.0" />				
+				<position>1.0, 1.0, 0.0</position>
+				<scale>1.0, 1.0, 1.0</scale>
+				<rotation>1.0, 0.0, 0.0, 0.0</rotation>				
 			</transform>
 			
 			<render name="render2">
 				<renderent name="renderEnt2">
 					<mesh>
-						<param name="meshname" value="TestingCube" />
+						<meshname>TestingCube</meshname>
 					</mesh>
 					<materialref value="material1" />
-					<param name="position" value="0.0;0.0;0.0" />
+					<position>0.0;0.0;0.0</position>
 				</renderent>
 			</render>
 			
@@ -103,18 +107,18 @@
 			
 			<physics type="collision">
 				<shape type="box">
-					<param name="boxHalfSize" value="1.0, 1.0, 1.0" />
+					<boxHalfSize>1.0, 1.0, 1.0</boxHalfSize>
 				</shape>
-				<param name="mass" value="1.0" />
-				<param name="inertia" value="0.0,0.0,0.0" />
+				<mass>1.0</mass>
+				<inertia>0.0,0.0,0.0</inertia>
 			</physics>
 		</entity>
 		
 		<entity name="mainCameraEntity">
 			<transform>
-				<param name="position" value="0.0, 0.0, 0.0" />
-				<param name="scale" value="1.0, 1.0, 1.0" />
-				<param name="rotation" value="1.0, 0.0, 0.0, 0.0" />				
+				<position>0.0, 0.0, 0.0</position>
+				<scale>1.0, 1.0, 1.0</scale>
+				<rotation>1.0, 0.0, 0.0, 0.0</rotation>				
 			</transform>
 			
 			<render name="render3">

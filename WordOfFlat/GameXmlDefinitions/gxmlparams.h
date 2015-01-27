@@ -7,27 +7,32 @@
 
 #include <GameResHold/gdeftables.h>
 
-static const wxChar* GAME_PARAM_MESHNAME		= wxT("meshname");
-static const wxChar* GAME_PARAM_MATERIALNAME	= wxT("materialname");
-static const wxChar* GAME_PARAM_GROUPNAME		= wxT("groupname");
-static const wxChar* GAME_PARAM_LOGICTYPE		= wxT("logictype");
-static const wxChar* GAME_PARAM_POSITION		= wxT("position");
-static const wxChar* GAME_PARAM_DIRECTION		= wxT("direction");
-static const wxChar* GAME_PARAM_NEAR			= wxT("near");
-static const wxChar* GAME_PARAM_SCALE			= wxT("scale");
-static const wxChar* GAME_PARAM_ROTATION		= wxT("rotation");
-static const wxChar* GAME_PARAM_MASS			= wxT("mass");
-static const wxChar* GAME_PARAM_INERTIA			= wxT("inertia");
-static const wxChar* GAME_PARAM_BOX_HALF_SIZE	= wxT("boxHalfSize");
-
+static const wxChar* GAME_PARAM_MESHNAME			= wxT("meshname");
+static const wxChar* GAME_PARAM_MATERIALNAME		= wxT("materialname");
+static const wxChar* GAME_PARAM_GROUPNAME			= wxT("groupname");
+static const wxChar* GAME_PARAM_LOGICTYPE			= wxT("logictype");
+static const wxChar* GAME_PARAM_POSITION			= wxT("position");
+static const wxChar* GAME_PARAM_DIRECTION			= wxT("direction");
+static const wxChar* GAME_PARAM_NEAR				= wxT("near");
+static const wxChar* GAME_PARAM_SCALE				= wxT("scale");
+static const wxChar* GAME_PARAM_ROTATION			= wxT("rotation");
+static const wxChar* GAME_PARAM_MASS				= wxT("mass");
+static const wxChar* GAME_PARAM_INERTIA				= wxT("inertia");
+static const wxChar* GAME_PARAM_BOX_HALF_SIZE		= wxT("boxHalfSize");
+static const wxChar* GAME_PARAM_TERRAIN_MAPSIZE		= wxT("mapSize");
+static const wxChar* GAME_PARAM_TERRAIN_WORLDSIZE	= wxT("worldSize");
+static const wxChar* GAME_PARAM_FILENAME			= wxT("filename");
+static const wxChar* GAME_PARAM_TERRAIN_PAGEX		= wxT("pageX");
+static const wxChar* GAME_PARAM_TERRAIN_PAGEY		= wxT("pageY");
 
 enum GameDefType {
 	GAMEDEF_TYPE_UNKNOWN 	= 0,
 	GAMEDEF_TYPE_TEXT		= 1,
 	GAMEDEF_TYPE_INT		= 2,
-	GAMEDEF_TYPE_FLOAT		= 3,
-	GAMEDEF_TYPE_VEC3		= 4,
-	GAMEDEF_TYPE_QUAT		= 5,
+	GAMEDEF_TYPE_DWORD		= 3,
+	GAMEDEF_TYPE_FLOAT		= 4,
+	GAMEDEF_TYPE_VEC3		= 5,
+	GAMEDEF_TYPE_QUAT		= 6,
 };
 
 
@@ -98,6 +103,17 @@ static const ParamDefinition PhysicsXmlParamTable[] = {
 
 static const ParamDefinition PhysicsShapeXmlParamTable[] = {
 	{ GAME_PARAM_BOX_HALF_SIZE, GAMEDEF_TYPE_VEC3, offsetof(struct PhysShapeDef, m_boxHalfSize), false },
+};
+
+static const ParamDefinition TerrainXmlParamTable[] = {
+	{ GAME_PARAM_TERRAIN_MAPSIZE, GAMEDEF_TYPE_DWORD, offsetof(struct TerrainDef, m_mapSize), true },
+	{ GAME_PARAM_TERRAIN_WORLDSIZE, GAMEDEF_TYPE_FLOAT, offsetof(struct TerrainDef, m_worldSize), true },
+};
+
+static const ParamDefinition TerrainPageXmlParamTable[] = {
+	{ GAME_PARAM_FILENAME, GAMEDEF_TYPE_TEXT, offsetof(struct TerrainPage, m_filename), true },
+	{ GAME_PARAM_TERRAIN_PAGEX, GAMEDEF_TYPE_INT, offsetof(struct TerrainPage, m_pageX), true },
+	{ GAME_PARAM_TERRAIN_PAGEY, GAMEDEF_TYPE_INT, offsetof(struct TerrainPage, m_pageY), true },
 };
 
 

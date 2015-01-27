@@ -572,6 +572,22 @@ GameErrorCode GameXmlResourceLoader::ParseScene(wxXmlNode* pNode, GameDefinition
 									m_spLogger, entityName.GetData().AsInternal(), child->GetLineNumber(), result, FWGLOG_ENDVAL);
 				return result;
 			}
+		} else if(child->GetName() == GAME_TAG_COMP_TERRAIN) {
+			if(!defHolder.m_spTerrain.IsEmpty())
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Tag '%s' already defined"), m_spLogger
+										, child->GetName().GetData().AsInternal()
+										, FWGLOG_ENDVAL);
+				return FWG_E_XML_INVALID_TAG_ERROR;
+			}
+
+			if(FWG_FAILED(result = CreateTerrain(child, defHolder.m_spTerrain)))
+			{
+				// found unknown tag
+				FWGLOG_ERROR_FORMAT(wxT("Create terrain failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+				return result;
+			}
+
 		} else {
 			// found unknown tag
 			FWGLOG_ERROR_FORMAT(wxT("Unknown tag ['%s'] on line: %d"),
@@ -598,37 +614,33 @@ GameErrorCode GameXmlResourceLoader::CreateMesh(wxXmlNode* pNode, wxString& name
 	wxXmlNode *child = pNode->GetChildren();
 	while (child)
 	{
-		if (child->GetName() == GAME_TAG_ITEM_PARAM) 
-		{
 
-			wxString paramName;
+		{
 			// set meshName as found
-			if(FWG_FAILED(result = GetParameter(child, MeshXmlParamTable, WXSIZEOF(MeshXmlParamTable), paramName, (void*)spDef.In())))
+			if(FWG_FAILED(result = GetParameter(child, MeshXmlParamTable, WXSIZEOF(MeshXmlParamTable), (void*)spDef.In())))
 			{
-				FWGLOG_ERROR_FORMAT(wxT("Get parameter value failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+				FWGLOG_ERROR_FORMAT(wxT("Unknown tag within tag ['%s'] on line: %d"),
+								m_spLogger,
+								pNode->GetName().GetData().AsInternal(),
+								pNode->GetLineNumber(),
+								FWGLOG_ENDVAL);
 				return result;
 			}
 			
-			if(foundedParams.Exists(paramName))
+			if(foundedParams.Exists(child->GetName()))
 			{
-				FWGLOG_ERROR_FORMAT(wxT("Attribut parameter '%s' already exists ( tag '%s' on line %d )"), m_spLogger
-							, paramName.GetData().AsInternal()
+				FWGLOG_ERROR_FORMAT(wxT("Parameter '%s' already exists ( tag '%s' on line %d )"), m_spLogger
 							, child->GetName().GetData().AsInternal()
-							, child->GetLineNumber()
+							, pNode->GetName().GetData().AsInternal()
+							, pNode->GetLineNumber()
 							, FWGLOG_ENDVAL);
-				return FWG_E_XML_INVALID_ATTR_ERROR;
+				return FWG_E_XML_INVALID_TAG_ERROR;
 			}
 			
-			FWG_RETURN_FAIL(foundedParams.Insert(paramName));
-
-		} else {
-			// found unknown tag
-			FWGLOG_ERROR_FORMAT(wxT("Unknown tag ['%s'] on line: %d"),
-								m_spLogger,
-								child->GetName().GetData().AsInternal(),
-								child->GetLineNumber(),
-								FWGLOG_ENDVAL);
-			return FWG_E_XML_UNKNOWN_TAG_ERROR;
+			if(child->GetType() == wxXML_ELEMENT_NODE)
+			{
+				FWG_RETURN_FAIL(foundedParams.Insert(child->GetName()));
+			}
 		}
 		
 		child = child->GetNext();
@@ -637,7 +649,7 @@ GameErrorCode GameXmlResourceLoader::CreateMesh(wxXmlNode* pNode, wxString& name
 	
 	if (FWG_FAILED(result = ParametersValidate(foundedParams, MeshXmlParamTable, WXSIZEOF(MeshXmlParamTable))))
 	{
-		FWGLOG_ERROR_FORMAT(wxT("Tag '%s' is not valid line %d: 0x%08x"),
+		FWGLOG_ERROR_FORMAT(wxT("Tag '%s' have not all mandatory subtags line %d: 0x%08x"),
 						m_spLogger
 						, pNode->GetName().GetData().AsInternal()
 						, pNode->GetLineNumber()
@@ -664,37 +676,34 @@ GameErrorCode GameXmlResourceLoader::CreateMaterial(wxXmlNode* pNode, wxString& 
 	
 	while (child)
 	{
-		if (child->GetName() == GAME_TAG_ITEM_PARAM) 
 		{
 
-			wxString paramName;
 			// set meshName as found
-			if(FWG_FAILED(result = GetParameter(child, MaterialXmlParamTable, WXSIZEOF(MaterialXmlParamTable), paramName, (void*)spDef.In())))
+			if(FWG_FAILED(result = GetParameter(child, MaterialXmlParamTable, WXSIZEOF(MaterialXmlParamTable), (void*)spDef.In())))
 			{
-				FWGLOG_ERROR_FORMAT(wxT("Get parameter value failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+				FWGLOG_ERROR_FORMAT(wxT("Unknown tag within tag ['%s'] on line: %d"),
+								m_spLogger,
+								pNode->GetName().GetData().AsInternal(),
+								pNode->GetLineNumber(),
+								FWGLOG_ENDVAL);
 				return result;
 			}
 			
-			if(foundedParams.Exists(paramName))
+			if(foundedParams.Exists(child->GetName()))
 			{
-				FWGLOG_ERROR_FORMAT(wxT("Attribut parameter '%s' already exists ( tag '%s' on line %d )"), m_spLogger
-							, paramName.GetData().AsInternal()
+				FWGLOG_ERROR_FORMAT(wxT("Parameter '%s' already exists ( tag '%s' on line %d )"), m_spLogger
 							, child->GetName().GetData().AsInternal()
-							, child->GetLineNumber()
+							, pNode->GetName().GetData().AsInternal()
+							, pNode->GetLineNumber()
 							, FWGLOG_ENDVAL);
 				return FWG_E_XML_INVALID_ATTR_ERROR;
 			}
 			
-			FWG_RETURN_FAIL(foundedParams.Insert(paramName));
+			if(child->GetType() == wxXML_ELEMENT_NODE)
+			{
+				FWG_RETURN_FAIL(foundedParams.Insert(child->GetName()));
+			}
 
-		} else {
-			// found unknown tag
-			FWGLOG_ERROR_FORMAT(wxT("Unknown tag ['%s'] on line: %d"),
-								m_spLogger,
-								child->GetName().GetData().AsInternal(),
-								child->GetLineNumber(),
-								FWGLOG_ENDVAL);
-			return FWG_E_XML_UNKNOWN_TAG_ERROR;
 		}
 		
 		child = child->GetNext();
@@ -703,7 +712,7 @@ GameErrorCode GameXmlResourceLoader::CreateMaterial(wxXmlNode* pNode, wxString& 
 	
 	if (FWG_FAILED(result = ParametersValidate(foundedParams, MaterialXmlParamTable, WXSIZEOF(MaterialXmlParamTable))))
 	{
-		FWGLOG_ERROR_FORMAT(wxT("Tag '%s' is not valid line %d: 0x%08x"),
+		FWGLOG_ERROR_FORMAT(wxT("Tag '%s' have not all mandatory subtags line %d: 0x%08x"),
 						m_spLogger
 						, pNode->GetName().GetData().AsInternal()
 						, pNode->GetLineNumber()
@@ -813,36 +822,34 @@ GameErrorCode GameXmlResourceLoader::CreateRenderEntity(wxXmlNode* pNode, GameDe
 				FWGLOG_ERROR_FORMAT(wxT("Create material failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
 				return result;
 			}
-		} else if (child->GetName() == GAME_TAG_ITEM_PARAM) {
+		} else {
 
-			wxString paramName;
 			// set meshName as found
-			if(FWG_FAILED(result = GetParameter(child, RenderEntityXmlParamTable, WXSIZEOF(RenderEntityXmlParamTable), paramName, (void*)spDef.In())))
+			if(FWG_FAILED(result = GetParameter(child, RenderEntityXmlParamTable, WXSIZEOF(RenderEntityXmlParamTable), (void*)spDef.In())))
 			{
-				FWGLOG_ERROR_FORMAT(wxT("Get parameter value failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+				FWGLOG_ERROR_FORMAT(wxT("Unknown tag within tag ['%s'] on line: %d"),
+								m_spLogger,
+								pNode->GetName().GetData().AsInternal(),
+								pNode->GetLineNumber(),
+								FWGLOG_ENDVAL);
 				return result;
 			}
 			
-			if(foundedParams.Exists(paramName))
+			if(foundedParams.Exists(child->GetName()))
 			{
-				FWGLOG_ERROR_FORMAT(wxT("Attribut parameter '%s' already exists ( tag '%s' on line %d )"), m_spLogger
-							, paramName.GetData().AsInternal()
+				FWGLOG_ERROR_FORMAT(wxT("Parameter '%s' already exists ( tag '%s' on line %d )"), m_spLogger
 							, child->GetName().GetData().AsInternal()
-							, child->GetLineNumber()
+							, pNode->GetName().GetData().AsInternal()
+							, pNode->GetLineNumber()
 							, FWGLOG_ENDVAL);
 				return FWG_E_XML_INVALID_ATTR_ERROR;
 			}
 			
-			FWG_RETURN_FAIL(foundedParams.Insert(paramName));
+			if(child->GetType() == wxXML_ELEMENT_NODE)
+			{
+				FWG_RETURN_FAIL(foundedParams.Insert(child->GetName()));
+			}
 
-		} else {
-			// found unknown tag
-			FWGLOG_ERROR_FORMAT(wxT("Unknown tag ['%s'] on line: %d"),
-								m_spLogger,
-								child->GetName().GetData().AsInternal(),
-								child->GetLineNumber(),
-								FWGLOG_ENDVAL);
-			return FWG_E_XML_UNKNOWN_TAG_ERROR;
 		}
 		
 		child = child->GetNext();
@@ -863,7 +870,7 @@ GameErrorCode GameXmlResourceLoader::CreateRenderEntity(wxXmlNode* pNode, GameDe
 	
 	if (FWG_FAILED(result = ParametersValidate(foundedParams, RenderEntityXmlParamTable, WXSIZEOF(RenderEntityXmlParamTable))))
 	{
-		FWGLOG_ERROR_FORMAT(wxT("Tag '%s' is not valid line %d: 0x%08x"),
+		FWGLOG_ERROR_FORMAT(wxT("Tag '%s' have not all mandatory subtags line %d: 0x%08x"),
 						m_spLogger
 						, pNode->GetName().GetData().AsInternal()
 						, pNode->GetLineNumber()
@@ -901,36 +908,34 @@ GameErrorCode GameXmlResourceLoader::CreateCamera(wxXmlNode* pNode, wxString& na
 	wxXmlNode *child = pNode->GetChildren();
 	while (child)
 	{
-		if (child->GetName() == GAME_TAG_ITEM_PARAM) {
+		{
 
-			wxString paramName;
 			// set meshName as found
-			if(FWG_FAILED(result = GetParameter(child, CameraXmlParamTable, WXSIZEOF(CameraXmlParamTable), paramName, (void*)spCameraDef.In())))
+			if(FWG_FAILED(result = GetParameter(child, CameraXmlParamTable, WXSIZEOF(CameraXmlParamTable), (void*)spCameraDef.In())))
 			{
-				FWGLOG_ERROR_FORMAT(wxT("Get parameter value failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+				FWGLOG_ERROR_FORMAT(wxT("Unknown tag within tag ['%s'] on line: %d"),
+								m_spLogger,
+								pNode->GetName().GetData().AsInternal(),
+								pNode->GetLineNumber(),
+								FWGLOG_ENDVAL);
 				return result;
 			}
 			
-			if(foundedParams.Exists(paramName))
+			if(foundedParams.Exists(child->GetName()))
 			{
-				FWGLOG_ERROR_FORMAT(wxT("Attribut parameter '%s' already exists ( tag '%s' on line %d )"), m_spLogger
-							, paramName.GetData().AsInternal()
+				FWGLOG_ERROR_FORMAT(wxT("Parameter '%s' already exists ( tag '%s' on line %d )"), m_spLogger
+							, child->GetName().GetData().AsInternal()
 							, child->GetName().GetData().AsInternal()
 							, child->GetLineNumber()
 							, FWGLOG_ENDVAL);
 				return FWG_E_XML_INVALID_ATTR_ERROR;
 			}
 			
-			FWG_RETURN_FAIL(foundedParams.Insert(paramName));
+			if(child->GetType() == wxXML_ELEMENT_NODE)
+			{
+				FWG_RETURN_FAIL(foundedParams.Insert(child->GetName()));
+			}
 
-		} else {
-			// found unknown tag
-			FWGLOG_ERROR_FORMAT(wxT("Unknown tag ['%s'] on line: %d"),
-								m_spLogger,
-								child->GetName().GetData().AsInternal(),
-								child->GetLineNumber(),
-								FWGLOG_ENDVAL);
-			return FWG_E_XML_UNKNOWN_TAG_ERROR;
 		}
 		
 		child = child->GetNext();
@@ -939,7 +944,7 @@ GameErrorCode GameXmlResourceLoader::CreateCamera(wxXmlNode* pNode, wxString& na
 	
 	if (FWG_FAILED(result = ParametersValidate(foundedParams, CameraXmlParamTable, WXSIZEOF(CameraXmlParamTable))))
 	{
-		FWGLOG_ERROR_FORMAT(wxT("Tag '%s' is not valid line %d: 0x%08x"),
+		FWGLOG_ERROR_FORMAT(wxT("Tag '%s' have not all mandatory subtags line %d: 0x%08x"),
 						m_spLogger
 						, pNode->GetName().GetData().AsInternal()
 						, pNode->GetLineNumber()
@@ -1132,36 +1137,34 @@ GameErrorCode GameXmlResourceLoader::CreateLogic(wxXmlNode* pNode, wxString& nam
 	wxXmlNode *child = pNode->GetChildren();
 	while (child)
 	{
-		if (child->GetName() == GAME_TAG_ITEM_PARAM) {
+		{
 
-			wxString paramName;
 			// set meshName as found
-			if(FWG_FAILED(result = GetParameter(child, LogicXmlParamTable, WXSIZEOF(LogicXmlParamTable), paramName, (void*)spLogicDef.In())))
+			if(FWG_FAILED(result = GetParameter(child, LogicXmlParamTable, WXSIZEOF(LogicXmlParamTable), (void*)spLogicDef.In())))
 			{
-				FWGLOG_ERROR_FORMAT(wxT("Get parameter value failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+				FWGLOG_ERROR_FORMAT(wxT("Unknown tag within tag ['%s'] on line: %d"),
+								m_spLogger,
+								pNode->GetName().GetData().AsInternal(),
+								pNode->GetLineNumber(),
+								FWGLOG_ENDVAL);
 				return result;
 			}
 			
-			if(foundedParams.Exists(paramName))
+			if(foundedParams.Exists(child->GetName()))
 			{
-				FWGLOG_ERROR_FORMAT(wxT("Attribut parameter '%s' already exists ( tag '%s' on line %d )"), m_spLogger
-							, paramName.GetData().AsInternal()
+				FWGLOG_ERROR_FORMAT(wxT("Parameter '%s' already exists ( tag '%s' on line %d )"), m_spLogger
 							, child->GetName().GetData().AsInternal()
-							, child->GetLineNumber()
+							, pNode->GetName().GetData().AsInternal()
+							, pNode->GetLineNumber()
 							, FWGLOG_ENDVAL);
 				return FWG_E_XML_INVALID_ATTR_ERROR;
 			}
 			
-			FWG_RETURN_FAIL(foundedParams.Insert(paramName));
+			if(child->GetType() == wxXML_ELEMENT_NODE)
+			{
+				FWG_RETURN_FAIL(foundedParams.Insert(child->GetName()));
+			}
 
-		} else {
-			// found unknown tag
-			FWGLOG_ERROR_FORMAT(wxT("Unknown tag ['%s'] on line: %d"),
-								m_spLogger,
-								child->GetName().GetData().AsInternal(),
-								child->GetLineNumber(),
-								FWGLOG_ENDVAL);
-			return FWG_E_XML_UNKNOWN_TAG_ERROR;
 		}
 		
 		child = child->GetNext();
@@ -1170,7 +1173,7 @@ GameErrorCode GameXmlResourceLoader::CreateLogic(wxXmlNode* pNode, wxString& nam
 	
 	if (FWG_FAILED(result = ParametersValidate(foundedParams, LogicXmlParamTable, WXSIZEOF(LogicXmlParamTable))))
 	{
-		FWGLOG_ERROR_FORMAT(wxT("Tag '%s' is not valid line %d: 0x%08x"),
+		FWGLOG_ERROR_FORMAT(wxT("Tag '%s' have not all mandatory subtags line %d: 0x%08x"),
 						m_spLogger
 						, pNode->GetName().GetData().AsInternal()
 						, pNode->GetLineNumber()
@@ -1198,36 +1201,34 @@ GameErrorCode GameXmlResourceLoader::CreateTransform(wxXmlNode* pNode, RefObjSmP
 	wxXmlNode *child = pNode->GetChildren();
 	while (child)
 	{
-		if (child->GetName() == GAME_TAG_ITEM_PARAM) {
+		{
 
-			wxString paramName;
 			// set meshName as found
-			if(FWG_FAILED(result = GetParameter(child, TransformXmlParamTable, WXSIZEOF(TransformXmlParamTable), paramName, (void*)spTransformTemp.In())))
+			if(FWG_FAILED(result = GetParameter(child, TransformXmlParamTable, WXSIZEOF(TransformXmlParamTable), (void*)spTransformTemp.In())))
 			{
-				FWGLOG_ERROR_FORMAT(wxT("Get parameter value failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+				FWGLOG_ERROR_FORMAT(wxT("Unknown tag within tag ['%s'] on line: %d"),
+								m_spLogger,
+								pNode->GetName().GetData().AsInternal(),
+								pNode->GetLineNumber(),
+								FWGLOG_ENDVAL);
 				return result;
 			}
 			
-			if(foundedParams.Exists(paramName))
+			if(foundedParams.Exists(child->GetName()))
 			{
-				FWGLOG_ERROR_FORMAT(wxT("Attribut parameter '%s' already exists ( tag '%s' on line %d )"), m_spLogger
-							, paramName.GetData().AsInternal()
+				FWGLOG_ERROR_FORMAT(wxT("Parameter '%s' already exists ( tag '%s' on line %d )"), m_spLogger
 							, child->GetName().GetData().AsInternal()
-							, child->GetLineNumber()
+							, pNode->GetName().GetData().AsInternal()
+							, pNode->GetLineNumber()
 							, FWGLOG_ENDVAL);
 				return FWG_E_XML_INVALID_ATTR_ERROR;
 			}
 			
-			FWG_RETURN_FAIL(foundedParams.Insert(paramName));
+			if(child->GetType() == wxXML_ELEMENT_NODE)
+			{
+				FWG_RETURN_FAIL(foundedParams.Insert(child->GetName()));
+			}
 
-		} else {
-			// found unknown tag
-			FWGLOG_ERROR_FORMAT(wxT("Unknown tag ['%s'] on line: %d"),
-								m_spLogger,
-								child->GetName().GetData().AsInternal(),
-								child->GetLineNumber(),
-								FWGLOG_ENDVAL);
-			return FWG_E_XML_UNKNOWN_TAG_ERROR;
 		}
 		
 		child = child->GetNext();
@@ -1236,7 +1237,7 @@ GameErrorCode GameXmlResourceLoader::CreateTransform(wxXmlNode* pNode, RefObjSmP
 	
 	if (FWG_FAILED(result = ParametersValidate(foundedParams, TransformXmlParamTable, WXSIZEOF(TransformXmlParamTable))))
 	{
-		FWGLOG_ERROR_FORMAT(wxT("Tag '%s' is not valid line %d: 0x%08x"),
+		FWGLOG_ERROR_FORMAT(wxT("Tag '%s' have not all mandatory subtags line %d: 0x%08x"),
 						m_spLogger
 						, pNode->GetName().GetData().AsInternal()
 						, pNode->GetLineNumber()
@@ -1461,27 +1462,22 @@ GameErrorCode GameXmlResourceLoader::CreateEntity(wxXmlNode* pNode, GameDefiniti
 }
 
 
-GameErrorCode GameXmlResourceLoader::GetParameter(wxXmlNode* pNode, const ParamDefinition* pDefTable, wxInt32 tableSize, wxString& paramName, void* pObject)
+GameErrorCode GameXmlResourceLoader::GetParameter(wxXmlNode* pNode, const ParamDefinition* pDefTable, wxInt32 tableSize, void* pObject)
 {
 	GameErrorCode result = FWG_NO_ERROR;
+	wxString paramName;
 	wxString paramValue;
 	
-	if(!pNode->GetAttribute(GAME_ATTR_NAME_STR, &paramName))
+	
+	if(pNode->GetType() == wxXML_COMMENT_NODE)
 	{
-		FWGLOG_ERROR_FORMAT(wxT("Tag '%s' has not attribute '%s' - line: %d"),
-						m_spLogger, pNode->GetName().GetData().AsInternal(), GAME_ATTR_NAME_STR, pNode->GetLineNumber(), FWGLOG_ENDVAL);
-		return FWG_E_XML_ATTR_NOT_FOUND_ERROR;
+		return FWG_NO_ERROR;
 	}
-
-	if(!pNode->GetAttribute(GAME_ATTR_VALUE_STR, &paramValue))
-	{
-		FWGLOG_ERROR_FORMAT(wxT("Tag '%s' has not attribute '%s' - line: %d"),
-						m_spLogger, pNode->GetName().GetData().AsInternal(), GAME_ATTR_VALUE_STR, pNode->GetLineNumber(), FWGLOG_ENDVAL);
-		return FWG_E_XML_ATTR_NOT_FOUND_ERROR;
-	}	
 	
-	const ParamDefinition *pParDef = nullptr;
+	paramName.assign(pNode->GetName());
 	
+	const ParamDefinition* pParDef = nullptr;
+		
 	for(pParDef = pDefTable; pParDef < &pDefTable[tableSize]; ++pParDef)
 	{
 		if(paramName.CmpNoCase(pParDef->m_paramName) == 0)
@@ -1492,11 +1488,26 @@ GameErrorCode GameXmlResourceLoader::GetParameter(wxXmlNode* pNode, const ParamD
 	
 	if(pParDef == &pDefTable[tableSize])
 	{
-		FWGLOG_ERROR_FORMAT(wxT("Parameter with name '%s' is not known - line: %d"),
-						m_spLogger, paramName.GetData().AsInternal(), pNode->GetLineNumber(), FWGLOG_ENDVAL);
-		return FWG_E_XML_INVALID_TAG_ERROR;
+		FWGLOG_ERROR_FORMAT(wxT("Unknown tag ['%s'] on line: %d"),
+								m_spLogger,
+								pNode->GetName().GetData().AsInternal(),
+								pNode->GetLineNumber(),
+								FWGLOG_ENDVAL);
+		return FWG_E_XML_UNKNOWN_TAG_ERROR;
 	}
 	
+	// get content
+	wxXmlNode* pChild = pNode->GetChildren();
+	if ( (pChild == nullptr) || (pChild->GetType() != wxXML_TEXT_NODE) )
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Tag with name '%s' has no text content on line: %d"),
+						m_spLogger, paramName.GetData().AsInternal(), pNode->GetLineNumber(), FWGLOG_ENDVAL);
+		return FWG_E_XML_INVALID_TAG_ERROR;
+	} else {
+		paramValue = pChild->GetContent();
+	}
+	
+	// prepare base address
 	char *pObjectMember = static_cast<char*>(pObject) + pParDef->m_structOffset;
 	
 	// get data from text
@@ -1509,22 +1520,54 @@ GameErrorCode GameXmlResourceLoader::GetParameter(wxXmlNode* pNode, const ParamD
 			break;
 		}
 		case GAMEDEF_TYPE_INT:
+		{
+			wxInt32 *pInt32 = reinterpret_cast<wxInt32*>(pObjectMember);
+			
+			if(FWG_FAILED(result = ConvertToInt32(paramValue, *pInt32)))
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Cannot convert '%s' to int in tag '%s' on line: %d"),
+						m_spLogger,
+						paramValue.GetData().AsInternal(),
+						pNode->GetName().GetData().AsInternal(),
+						pNode->GetLineNumber(),						
+						FWGLOG_ENDVAL);
+				return result;
+			}
+			
 			break;
+		}
+		case GAMEDEF_TYPE_DWORD:
+		{
+			wxDword *pDword = reinterpret_cast<wxDword*>(pObjectMember);
+			
+			if(FWG_FAILED(result = ConvertToDword(paramValue, *pDword)))
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Cannot convert '%s' to dword in tag '%s' on line: %d"),
+						m_spLogger,
+						paramValue.GetData().AsInternal(),
+						pNode->GetName().GetData().AsInternal(),
+						pNode->GetLineNumber(),						
+						FWGLOG_ENDVAL);
+				return result;
+			}
+			
+			break;
+		}
 		case GAMEDEF_TYPE_FLOAT:
 		{
 			float *pFloat = reinterpret_cast<float*>(pObjectMember);
-			double temp;
-			if(!paramValue.ToDouble(&temp))
+			
+			if(FWG_FAILED(result = ConvertToFloat(paramValue, *pFloat)))
 			{
-				FWGLOG_ERROR_FORMAT(wxT("Cannot convert item '%s' to float on line: %d"),
+				FWGLOG_ERROR_FORMAT(wxT("Cannot convert '%s' to float in tag '%s' on line: %d"),
 						m_spLogger,
 						paramValue.GetData().AsInternal(),
+						pNode->GetName().GetData().AsInternal(),
 						pNode->GetLineNumber(),						
 						FWGLOG_ENDVAL);
-				return FWG_E_INVALID_PARAMETER_ERROR;
+				return result;
 			}
 			
-			*pFloat = (float)temp;
 			break;
 		}
 		case GAMEDEF_TYPE_VEC3:
@@ -1532,12 +1575,13 @@ GameErrorCode GameXmlResourceLoader::GetParameter(wxXmlNode* pNode, const ParamD
 			Ogre::Vector3 *pVec3 = reinterpret_cast<Ogre::Vector3*>(pObjectMember);
 			if(FWG_FAILED(result = ConvertToVec3(paramValue, pVec3)))
 			{
-				FWGLOG_ERROR_FORMAT(wxT("Cannot convert item '%s' to vector on line: %d"),
+				FWGLOG_ERROR_FORMAT(wxT("Cannot convert '%s' to vector in tag '%s' on line: %d"),
 						m_spLogger,
 						paramValue.GetData().AsInternal(),
+						pNode->GetName().GetData().AsInternal(),
 						pNode->GetLineNumber(),						
 						FWGLOG_ENDVAL);
-				return FWG_E_INVALID_PARAMETER_ERROR;
+				return result;
 			}
 			break;
 		}
@@ -1546,17 +1590,18 @@ GameErrorCode GameXmlResourceLoader::GetParameter(wxXmlNode* pNode, const ParamD
 			Ogre::Quaternion *pQuat = reinterpret_cast<Ogre::Quaternion*>(pObjectMember);
 			if(FWG_FAILED(result = ConvertToQuat(paramValue, pQuat)))
 			{
-				FWGLOG_ERROR_FORMAT(wxT("Cannot convert item '%s' to quaternion on line: %d"),
+				FWGLOG_ERROR_FORMAT(wxT("Cannot convert '%s' to quaternion in tag '%s' on line: %d"),
 						m_spLogger,
 						paramValue.GetData().AsInternal(),
+						pNode->GetName().GetData().AsInternal(),
 						pNode->GetLineNumber(),						
 						FWGLOG_ENDVAL);
-				return FWG_E_INVALID_PARAMETER_ERROR;
+				return result;
 			}
 			break;
 		}
 		default:
-			FWGLOG_ERROR_FORMAT(wxT("Parameter with name '%s' has unknown type - line: %d"),
+			FWGLOG_ERROR_FORMAT(wxT("Parameter with name '%s' in tag has unknown type - line: %d"),
 						m_spLogger, paramName.GetData().AsInternal(), pNode->GetLineNumber(), FWGLOG_ENDVAL);
 			return FWG_E_INVALID_PARAMETER_ERROR;
 	}
@@ -1767,29 +1812,7 @@ GameErrorCode GameXmlResourceLoader::CreatePhysics(wxXmlNode* pNode, RefObjSmPtr
 	wxXmlNode *child = pNode->GetChildren();
 	while (child)
 	{
-		if (child->GetName() == GAME_TAG_ITEM_PARAM) {
-
-			wxString paramName;
-			// set meshName as found
-			if(FWG_FAILED(result = GetParameter(child, PhysicsXmlParamTable, WXSIZEOF(PhysicsXmlParamTable), paramName, (void*)spPhysicsTemp.In())))
-			{
-				FWGLOG_ERROR_FORMAT(wxT("Get parameter value failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
-				return result;
-			}
-			
-			if(foundedParams.Exists(paramName))
-			{
-				FWGLOG_ERROR_FORMAT(wxT("Attribut parameter '%s' already exists ( tag '%s' on line %d )"), m_spLogger
-							, paramName.GetData().AsInternal()
-							, child->GetName().GetData().AsInternal()
-							, child->GetLineNumber()
-							, FWGLOG_ENDVAL);
-				return FWG_E_XML_INVALID_ATTR_ERROR;
-			}
-			
-			FWG_RETURN_FAIL(foundedParams.Insert(paramName));
-
-		} else if (child->GetName() == GAME_TAG_COMP_SHAPE) {
+		if (child->GetName() == GAME_TAG_COMP_SHAPE) {
 
 			wxString paramName;
 			if( !spPhysicsTemp->m_shape.IsEmpty())
@@ -1806,13 +1829,33 @@ GameErrorCode GameXmlResourceLoader::CreatePhysics(wxXmlNode* pNode, RefObjSmPtr
 			}
 			
 		} else {
-			// found unknown tag
-			FWGLOG_ERROR_FORMAT(wxT("Unknown tag ['%s'] on line: %d"),
+
+			// set meshName as found
+			if(FWG_FAILED(result = GetParameter(child, PhysicsXmlParamTable, WXSIZEOF(PhysicsXmlParamTable), (void*)spPhysicsTemp.In())))
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Unknown tag within tag ['%s'] on line: %d"),
 								m_spLogger,
-								child->GetName().GetData().AsInternal(),
-								child->GetLineNumber(),
+								pNode->GetName().GetData().AsInternal(),
+								pNode->GetLineNumber(),
 								FWGLOG_ENDVAL);
-			return FWG_E_XML_UNKNOWN_TAG_ERROR;
+				return result;
+			}
+			
+			if(foundedParams.Exists(child->GetName()))
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Parameter '%s' already exists ( tag '%s' on line %d )"), m_spLogger
+							, child->GetName().GetData().AsInternal()
+							, pNode->GetName().GetData().AsInternal()
+							, pNode->GetLineNumber()
+							, FWGLOG_ENDVAL);
+				return FWG_E_XML_INVALID_ATTR_ERROR;
+			}
+			
+			if(child->GetType() == wxXML_ELEMENT_NODE)
+			{
+				FWG_RETURN_FAIL(foundedParams.Insert(child->GetName()));
+			}
+
 		}
 		
 		child = child->GetNext();
@@ -1821,7 +1864,7 @@ GameErrorCode GameXmlResourceLoader::CreatePhysics(wxXmlNode* pNode, RefObjSmPtr
 	
 	if (FWG_FAILED(result = ParametersValidate(foundedParams, PhysicsXmlParamTable, WXSIZEOF(PhysicsXmlParamTable))))
 	{
-		FWGLOG_ERROR_FORMAT(wxT("Tag '%s' is not valid line %d: 0x%08x"),
+		FWGLOG_ERROR_FORMAT(wxT("Tag '%s' have not all mandatory subtags line %d: 0x%08x"),
 						m_spLogger
 						, pNode->GetName().GetData().AsInternal()
 						, pNode->GetLineNumber()
@@ -1871,29 +1914,8 @@ GameErrorCode GameXmlResourceLoader::CreatePhysicsShape(wxXmlNode* pNode, RefObj
 	wxXmlNode *child = pNode->GetChildren();
 	while (child)
 	{
-		if (child->GetName() == GAME_TAG_ITEM_PARAM) {
-
-			wxString paramName;
-			// set meshName as found
-			if(FWG_FAILED(result = GetParameter(child, PhysicsShapeXmlParamTable, WXSIZEOF(PhysicsShapeXmlParamTable), paramName, (void*)spShapeTemp.In())))
-			{
-				FWGLOG_ERROR_FORMAT(wxT("Get parameter value failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
-				return result;
-			}
-			
-			if(foundedParams.Exists(paramName))
-			{
-				FWGLOG_ERROR_FORMAT(wxT("Attribut parameter '%s' already exists ( tag '%s' on line %d )"), m_spLogger
-							, paramName.GetData().AsInternal()
-							, child->GetName().GetData().AsInternal()
-							, child->GetLineNumber()
-							, FWGLOG_ENDVAL);
-				return FWG_E_XML_INVALID_ATTR_ERROR;
-			}
-			
-			FWG_RETURN_FAIL(foundedParams.Insert(paramName));
-
-		} else if (child->GetName() == GAME_TAG_COMP_SHAPE) {
+		if (child->GetName() == GAME_TAG_COMP_SHAPE) 
+		{
 
 			// not implemented yet - posibility for 
 			return FWG_E_NOT_IMPLEMENTED_ERROR;
@@ -1912,13 +1934,33 @@ GameErrorCode GameXmlResourceLoader::CreatePhysicsShape(wxXmlNode* pNode, RefObj
 			//}
 			
 		} else {
-			// found unknown tag
-			FWGLOG_ERROR_FORMAT(wxT("Unknown tag ['%s'] on line: %d"),
+
+			// set meshName as found
+			if(FWG_FAILED(result = GetParameter(child, PhysicsShapeXmlParamTable, WXSIZEOF(PhysicsShapeXmlParamTable), (void*)spShapeTemp.In())))
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Unknown tag within tag ['%s'] on line: %d"),
 								m_spLogger,
-								child->GetName().GetData().AsInternal(),
-								child->GetLineNumber(),
+								pNode->GetName().GetData().AsInternal(),
+								pNode->GetLineNumber(),
 								FWGLOG_ENDVAL);
-			return FWG_E_XML_UNKNOWN_TAG_ERROR;
+				return result;
+			}
+			
+			if(foundedParams.Exists(child->GetName()))
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Parameter '%s' already exists ( tag '%s' on line %d )"), m_spLogger
+							, child->GetName().GetData().AsInternal()
+							, pNode->GetName().GetData().AsInternal()
+							, pNode->GetLineNumber()
+							, FWGLOG_ENDVAL);
+				return FWG_E_XML_INVALID_ATTR_ERROR;
+			}
+			
+			if(child->GetType() == wxXML_ELEMENT_NODE)
+			{
+				FWG_RETURN_FAIL(foundedParams.Insert(child->GetName()));
+			}
+
 		}
 		
 		child = child->GetNext();
@@ -1927,7 +1969,7 @@ GameErrorCode GameXmlResourceLoader::CreatePhysicsShape(wxXmlNode* pNode, RefObj
 	
 	if (FWG_FAILED(result = ParametersValidate(foundedParams, PhysicsShapeXmlParamTable, WXSIZEOF(PhysicsShapeXmlParamTable))))
 	{
-		FWGLOG_ERROR_FORMAT(wxT("Tag '%s' is not valid line %d: 0x%08x"),
+		FWGLOG_ERROR_FORMAT(wxT("Tag '%s' have not all mandatory subtags line %d: 0x%08x"),
 						m_spLogger
 						, pNode->GetName().GetData().AsInternal()
 						, pNode->GetLineNumber()
@@ -1973,3 +2015,207 @@ GameErrorCode GameXmlResourceLoader::ConvertToPhysicsType(const wxString& input,
 	
 	return FWG_E_XML_INVALID_ATTR_ERROR;
 }
+
+GameErrorCode GameXmlResourceLoader::ConvertToDword(const wxString& input, wxDword& output)
+{
+	unsigned long value = 0;
+	if(!input.ToULong(&value))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Cannot convert '%s' to wxDword value"), m_spLogger
+						, input.GetData().AsInternal()
+						, FWGLOG_ENDVAL);
+		return FWG_E_BAD_CONVERSION_ERROR;
+	}
+	
+	output = value;
+	return FWG_NO_ERROR;
+}
+
+GameErrorCode GameXmlResourceLoader::ConvertToInt32(const wxString& input, wxInt32& output)
+{
+	
+	long value = 0;
+	if(!input.ToLong(&value))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Cannot convert '%s' to wxInt32 value"), m_spLogger
+						, input.GetData().AsInternal()
+						, FWGLOG_ENDVAL);
+		return FWG_E_BAD_CONVERSION_ERROR;
+	}
+	
+	output = value;
+	return FWG_NO_ERROR;
+}
+
+GameErrorCode GameXmlResourceLoader::ConvertToFloat(const wxString& input, float& output)
+{
+	double value = 0.0;
+	if(!input.ToDouble(&value))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Cannot convert '%s' to float value"), m_spLogger
+						, input.GetData().AsInternal()
+						, FWGLOG_ENDVAL);
+		return FWG_E_BAD_CONVERSION_ERROR;
+	}
+	
+	output = static_cast<float>(value);
+	return FWG_NO_ERROR;
+}
+
+GameErrorCode GameXmlResourceLoader::CreateTerrain(wxXmlNode* pNode, RefObjSmPtr<TerrainDef>& spTerrain)
+{
+	GameErrorCode result = FWG_NO_ERROR;
+	RefObjSmPtr<TerrainDef> spTerrainTemp;
+	
+	GameBasSet<wxString> foundedParams;
+	
+	FWG_RETURN_FAIL( GameNewChecked(spTerrainTemp.OutRef()));
+	
+	wxXmlNode *child = pNode->GetChildren();
+	while (child)
+	{
+		if (child->GetName() == GAME_TAG_COMP_TERRAIN_PAGES) 
+		{
+			// create terrain pages
+			wxXmlNode *pTerrainPages = child->GetChildren();
+			
+			while(pTerrainPages)
+			{
+				if(pTerrainPages->GetName() == GAME_TAG_COMP_TERRAIN_PAGE)
+				{
+					RefObjSmPtr<TerrainPage> spTerrainPage;
+					FWG_RETURN_FAIL(GameNewChecked(spTerrainPage.OutRef()));
+					if(FWG_FAILED(result = CreateTerrainPage(pTerrainPages, spTerrainPage)))
+					{
+						FWGLOG_ERROR_FORMAT(wxT("Create terrain page failed on line: %d with error: 0x%08x"),
+									m_spLogger,
+									pNode->GetLineNumber(),
+									result,
+									FWGLOG_ENDVAL);
+						return result;
+					}
+					// add terrain page
+					spTerrainTemp->m_terrainPages.push_back(spTerrainPage);
+				} else if(pTerrainPages->GetType() != wxXML_COMMENT_NODE) {
+					FWGLOG_ERROR_FORMAT(wxT("Unknown tag within tag ['%s'] on line: %d"),
+									m_spLogger,
+									pNode->GetName().GetData().AsInternal(),
+									pNode->GetLineNumber(),
+									FWGLOG_ENDVAL);
+					return FWG_E_XML_INVALID_TAG_ERROR;
+				}
+				pTerrainPages = pTerrainPages->GetNext();
+			}
+		} else {
+
+			// set meshName as found
+			if(FWG_FAILED(result = GetParameter(child, TerrainXmlParamTable, WXSIZEOF(TerrainXmlParamTable), (void*)spTerrainTemp.In())))
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Unknown tag within tag ['%s'] on line: %d"),
+								m_spLogger,
+								pNode->GetName().GetData().AsInternal(),
+								pNode->GetLineNumber(),
+								FWGLOG_ENDVAL);
+				return result;
+			}
+			
+			if(foundedParams.Exists(child->GetName()))
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Parameter '%s' already exists ( tag '%s' on line %d )"), m_spLogger
+							, child->GetName().GetData().AsInternal()
+							, pNode->GetName().GetData().AsInternal()
+							, pNode->GetLineNumber()
+							, FWGLOG_ENDVAL);
+				return FWG_E_XML_INVALID_ATTR_ERROR;
+			}
+			
+			if(child->GetType() == wxXML_ELEMENT_NODE)
+			{
+				FWG_RETURN_FAIL(foundedParams.Insert(child->GetName()));
+			}
+		}
+		
+		child = child->GetNext();
+		
+	}
+	
+	if (FWG_FAILED(result = ParametersValidate(foundedParams, TerrainXmlParamTable, WXSIZEOF(TerrainXmlParamTable))))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Tag '%s' have not all mandatory subtags line %d: 0x%08x"),
+						m_spLogger
+						, pNode->GetName().GetData().AsInternal()
+						, pNode->GetLineNumber()
+						, result
+						, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	// set return value
+	spTerrain = spTerrainTemp;
+	
+	return FWG_NO_ERROR;
+}
+
+GameErrorCode GameXmlResourceLoader::CreateTerrainPage(wxXmlNode* pNode, RefObjSmPtr<TerrainPage>& spTerrainPage)
+{
+	GameErrorCode result = FWG_NO_ERROR;
+	RefObjSmPtr<TerrainPage> spTerrainPageTemp;
+	
+	GameBasSet<wxString> foundedParams;
+	
+	FWG_RETURN_FAIL( GameNewChecked(spTerrainPageTemp.OutRef()));
+	
+	wxXmlNode *child = pNode->GetChildren();
+	while (child)
+	{
+		{
+
+			// set meshName as found
+			if(FWG_FAILED(result = GetParameter(child, TerrainPageXmlParamTable, WXSIZEOF(TerrainPageXmlParamTable), (void*)spTerrainPageTemp.In())))
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Unknown tag within tag ['%s'] on line: %d"),
+								m_spLogger,
+								pNode->GetName().GetData().AsInternal(),
+								pNode->GetLineNumber(),
+								FWGLOG_ENDVAL);
+				return result;
+			}
+			
+			if(foundedParams.Exists(child->GetName()))
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Parameter '%s' already exists ( tag '%s' on line %d )"), m_spLogger
+							, child->GetName().GetData().AsInternal()
+							, pNode->GetName().GetData().AsInternal()
+							, pNode->GetLineNumber()
+							, FWGLOG_ENDVAL);
+				return FWG_E_XML_INVALID_ATTR_ERROR;
+			}
+			
+			if(child->GetType() == wxXML_ELEMENT_NODE)
+			{
+				FWG_RETURN_FAIL(foundedParams.Insert(child->GetName()));
+			}
+
+		}
+		
+		child = child->GetNext();
+		
+	}
+	
+	if (FWG_FAILED(result = ParametersValidate(foundedParams, TerrainPageXmlParamTable, WXSIZEOF(TerrainPageXmlParamTable))))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Tag '%s' have not all mandatory subtags line %d: 0x%08x"),
+						m_spLogger
+						, pNode->GetName().GetData().AsInternal()
+						, pNode->GetLineNumber()
+						, result
+						, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	// set return value
+	spTerrainPage = spTerrainPageTemp;
+	
+	return FWG_NO_ERROR;
+}
+

@@ -164,6 +164,7 @@ SUITE(LoadXml)
 		CHECK_EQUAL( 0, defHolder.m_inputDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_logicDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_entityDefs.Size());
+		CHECK_EQUAL( true, defHolder.m_spTerrain.IsEmpty());
 		
 		spTestMesh = defHolder.m_meshDefs.FindValue(TEST_MESH_NAME);
 		CHECK(spTestMesh != nullptr);
@@ -202,6 +203,7 @@ SUITE(LoadXml)
 		CHECK_EQUAL( 0, defHolder.m_inputDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_logicDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_entityDefs.Size());
+		CHECK_EQUAL( true, defHolder.m_spTerrain.IsEmpty());
 		
 		spTestRenderEnt = defHolder.m_materialDefs.FindValue(TEST_MATERIAL_NAME);
 		CHECK(spTestRenderEnt != nullptr);
@@ -239,6 +241,7 @@ SUITE(LoadXml)
 		CHECK_EQUAL( 0, defHolder.m_inputDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_logicDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_entityDefs.Size());
+		CHECK_EQUAL( true, defHolder.m_spTerrain.IsEmpty());
 		
 		spTestRenderEnt = defHolder.m_renderEntityDefs.FindValue(TEST_RENDER_ENT1_NAME);
 		CHECK(spTestRenderEnt != nullptr);
@@ -282,6 +285,7 @@ SUITE(LoadXml)
 		CHECK_EQUAL( 0, defHolder.m_inputDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_logicDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_entityDefs.Size());
+		CHECK_EQUAL( true, defHolder.m_spTerrain.IsEmpty());
 		
 		spTestRenderEnt = defHolder.m_renderEntityDefs.FindValue(TEST_RENDER_ENT2_NAME);
 		CHECK(spTestRenderEnt != nullptr);
@@ -320,6 +324,7 @@ SUITE(LoadXml)
 		CHECK_EQUAL( 0, defHolder.m_inputDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_logicDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_entityDefs.Size());
+		CHECK_EQUAL( true, defHolder.m_spTerrain.IsEmpty());
 		
 		spCamera = defHolder.m_cameraDefs.FindValue(TEST_CAMERA_NAME);
 		CHECK(spCamera != nullptr);
@@ -357,6 +362,7 @@ SUITE(LoadXml)
 		CHECK_EQUAL( 0, defHolder.m_inputDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_logicDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_entityDefs.Size());
+		CHECK_EQUAL( true, defHolder.m_spTerrain.IsEmpty());
 		
 		spRender = defHolder.m_renderDefs.FindValue(TEST_RENDER1_NAME);
 		CHECK(spRender != nullptr);
@@ -433,6 +439,7 @@ SUITE(LoadXml)
 		CHECK_EQUAL( 2, defHolder.m_inputDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_logicDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_entityDefs.Size());
+		CHECK_EQUAL( true, defHolder.m_spTerrain.IsEmpty());
 		
 		spInput = defHolder.m_inputDefs.FindValue(TEST_INPUT1_NAME);
 		CHECK(spInput != nullptr);
@@ -492,6 +499,7 @@ SUITE(LoadXml)
 		CHECK_EQUAL( 0, defHolder.m_inputDefs.Size());
 		CHECK_EQUAL( 1, defHolder.m_logicDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_entityDefs.Size());
+		CHECK_EQUAL( true, defHolder.m_spTerrain.IsEmpty());
 		
 		spLogic = defHolder.m_logicDefs.FindValue(TEST_LOGIC_NAME);
 		CHECK(spLogic != nullptr);
@@ -528,6 +536,7 @@ SUITE(LoadXml)
 		CHECK_EQUAL( 2, defHolder.m_inputDefs.Size());
 		CHECK_EQUAL( 1, defHolder.m_logicDefs.Size());
 		CHECK_EQUAL( 2, defHolder.m_entityDefs.Size());
+		CHECK_EQUAL( true, defHolder.m_spTerrain.IsEmpty());
 		
 		spEntity = defHolder.m_entityDefs.FindValue(TEST_ENTITY1_NAME);
 		CHECK(spEntity != nullptr);
@@ -593,6 +602,7 @@ SUITE(LoadXml)
 		CHECK_EQUAL( 0, defHolder.m_inputDefs.Size());
 		CHECK_EQUAL( 0, defHolder.m_logicDefs.Size());
 		CHECK_EQUAL( 1, defHolder.m_entityDefs.Size());
+		CHECK_EQUAL( true, defHolder.m_spTerrain.IsEmpty());
 		
 		spEntity = defHolder.m_entityDefs.FindValue(TEST_ENTITY1_NAME);
 		CHECK(spEntity != nullptr);
@@ -616,7 +626,48 @@ SUITE(LoadXml)
 					}
 					CHECK((*spEntity)->m_physDef->m_mass == TEST_PHYSICS_MASS);
 					CHECK((*spEntity)->m_physDef->m_inertiaVector == TEST_PHYSICS_INERTIA);
+					CHECK((*spEntity)->m_physDef->m_physType == PhysCompDef::PHYS_TYPE_COLLISION);
 				}
+			}
+		}
+	}
+	
+	TEST_FIXTURE(LoadFixture, LoadTerrain)
+	{
+		// prep
+		wxString testFile;
+		GameXmlResourceLoader testLoader;
+		GameDefinitionHolder defHolder;
+		
+		CHECK(CreateTestFile(LOADTERRAINTEST_DEFINITION_FILE, testFile));
+		CHECK(FWG_SUCCEDED(testLoader.Initialize(testFile, nullptr, m_spLogger)));
+		
+		// test
+		CHECK(FWG_SUCCEDED(testLoader.Load(defHolder)));
+		
+		// check
+		CHECK_EQUAL( 0, defHolder.m_meshDefs.Size());
+		CHECK_EQUAL( 0, defHolder.m_materialDefs.Size());
+		CHECK_EQUAL( 0, defHolder.m_renderEntityDefs.Size());
+		CHECK_EQUAL( 0, defHolder.m_cameraDefs.Size());
+		CHECK_EQUAL( 0, defHolder.m_renderDefs.Size());
+		CHECK_EQUAL( 0, defHolder.m_inputDefs.Size());
+		CHECK_EQUAL( 0, defHolder.m_logicDefs.Size());
+		CHECK_EQUAL( 0, defHolder.m_entityDefs.Size());
+		CHECK_EQUAL( false, defHolder.m_spTerrain.IsEmpty());
+		
+		if(!defHolder.m_spTerrain.IsEmpty())
+		{
+			TerrainDef *pTerrainDef = defHolder.m_spTerrain.In();
+			CHECK_EQUAL( TEST_TERRAIN_MAPSIZE, pTerrainDef->m_mapSize);
+			CHECK_EQUAL( TEST_TERRAIN_WORLDSIZE, pTerrainDef->m_worldSize);
+			CHECK_EQUAL( 1, pTerrainDef->m_terrainPages.size());
+			if(pTerrainDef->m_terrainPages.size() == 1)
+			{
+				TerrainPage *pTerrainPage = pTerrainDef->m_terrainPages[0].In();
+				CHECK_EQUAL( 0, wxString(pTerrainPage->m_filename).Cmp(TEST_TERRAINPAGE_FILENAME));
+				CHECK_EQUAL( TEST_TERRAINPAGE_PAGEX, pTerrainPage->m_pageX);
+				CHECK_EQUAL( TEST_TERRAINPAGE_PAGEY, pTerrainPage->m_pageY);
 			}
 		}
 	}

@@ -27,10 +27,13 @@ static const wxChar* GAME_TAG_COMP_LOGIC	 		= wxT("logic");
 static const wxChar* GAME_TAG_COMP_TRANSFORM 		= wxT("transform");
 static const wxChar* GAME_TAG_COMP_PHYSICS 			= wxT("physics");
 static const wxChar* GAME_TAG_COMP_SHAPE 			= wxT("shape");
+static const wxChar* GAME_TAG_COMP_TERRAIN 			= wxT("terrain");
+static const wxChar* GAME_TAG_COMP_TERRAIN_PAGES	= wxT("terrainpages");
+static const wxChar* GAME_TAG_COMP_TERRAIN_PAGE		= wxT("terrainpage");
 
 
-// parameter tag
-static const wxChar* GAME_TAG_ITEM_PARAM		= wxT("param");
+
+
 
 // component item tags references
 static const wxChar* GAME_TAG_ITEM_MESH_REF				= wxT("meshref");
@@ -51,6 +54,7 @@ static const wxChar* GAME_ATTR_NAME_STR				= wxT("name");
 static const wxChar* GAME_ATTR_VALUE_STR			= wxT("value");
 static const wxChar* GAME_ATTR_ACTION_STR			= wxT("action");
 static const wxChar* GAME_ATTR_TYPE_STR				= wxT("type");
+
 
 
 //////////////////////////////////////
