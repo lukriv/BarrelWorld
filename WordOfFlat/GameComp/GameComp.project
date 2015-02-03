@@ -34,8 +34,6 @@
     <File Name="gcompmgr.h"/>
     <File Name="gcompbase.h"/>
     <File Name="gcompdefs.h"/>
-    <File Name="gterrainmgr.h"/>
-    <File Name="gterrainent.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="comp">
     <VirtualDirectory Name="renderComp">
@@ -108,12 +106,19 @@
         <File Name="MenuComp/gmenubase.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
+    <VirtualDirectory Name="terrainComp">
+      <VirtualDirectory Name="include">
+        <File Name="TerrainComp/gterrainmgr.h"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="src">
+        <File Name="TerrainComp/gterrainmgr.cpp"/>
+      </VirtualDirectory>
+    </VirtualDirectory>
   </VirtualDirectory>
   <VirtualDirectory Name="src">
     <File Name="gentitymgr.cpp"/>
     <File Name="gentity.cpp"/>
     <File Name="gcompmgr.cpp"/>
-    <File Name="gterrainmgr.cpp"/>
   </VirtualDirectory>
   <Dependencies Name="Debug"/>
   <Dependencies Name="Release"/>

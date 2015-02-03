@@ -8,6 +8,7 @@ GameCompManager::GameCompManager(GameLogger *pLogger) : m_spLogger(pLogger)
 														, m_physicsManager(pLogger)
 														, m_logicMgr(pLogger)
 														, m_entityMgr(pLogger)
+														, m_terrainMgr(pLogger)
 {}
 
 GameCompManager::~GameCompManager() 
@@ -62,12 +63,18 @@ GameErrorCode GameCompManager::Initialize(GameEngineSettings& settings)
 	//	FWGLOG_ERROR_FORMAT(wxT("Menu manager initialize failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
 	//	return result;
 	//} 
+	if(FWG_FAILED(result = m_terrainMgr.Initialize(&m_renderMgr, &m_physicsManager)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Terrain manager initialize failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
 
 	return FWG_NO_ERROR;
 }
 
 void GameCompManager::Uninitialize()
 {
+	m_terrainMgr.Uninitialize();
 	m_entityMgr.DestroyAllEntities();
 	m_physicsManager.Uninitialize();
 	m_inputSystem.Uninitialize();

@@ -260,6 +260,7 @@ GameErrorCode RenderCompManager::CreateCamera(const CameraDef &cameraDef, Render
 	// Look back along -Z
 	pOgreCam->setDirection(cameraDef.m_direction);
 	pOgreCam->setNearClipDistance(cameraDef.m_near);
+	pOgreCam->setFarClipDistance(50000);
 	
 	if(FWG_FAILED(result = GameNewChecked(spCameraObject.OutRef(), pOgreCam)))
 	{

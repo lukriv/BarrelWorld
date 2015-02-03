@@ -41,9 +41,12 @@
     <File Name="gentitycreator.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="impl"/>
+  <Dependencies Name="Debug"/>
+  <Dependencies Name="Release"/>
   <Settings Type="Static Library">
     <GlobalSettings>
       <Compiler Options="-Wall;-Wno-unused-local-typedefs;-std=c++11" C_Options="-Wall" Assembler="">
+        <IncludePath Value="../../extern/include/wx/gcc_dll/mswu"/>
         <IncludePath Value="../../extern/include"/>
         <IncludePath Value="../../WordOfFlat"/>
         <IncludePath Value="../../extern/include/bullet"/>
@@ -130,6 +133,4 @@
       </Completion>
     </Configuration>
   </Settings>
-  <Dependencies Name="Debug"/>
-  <Dependencies Name="Release"/>
 </CodeLite_Project>

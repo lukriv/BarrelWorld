@@ -57,6 +57,7 @@
   <Settings Type="Executable">
     <GlobalSettings>
       <Compiler Options="-Wall;-Wno-unused-local-typedefs;-std=c++11" C_Options="" Assembler="">
+        <IncludePath Value="../../extern/include/wx/gcc_dll/mswu"/>
         <IncludePath Value="../../extern/include"/>
         <IncludePath Value="../../extern/include/OGRE"/>
         <IncludePath Value="../../extern/include/bullet"/>
@@ -77,6 +78,7 @@
         <Library Value="libCEGUIOgreRenderer-0.dll.a"/>
         <Library Value="libwxbase30u_xml.a"/>
         <Library Value="libwxbase30u.a"/>
+        <Library Value="libOgreTerrain.dll.a"/>
         <Library Value="libOgreMain.dll.a"/>
         <Library Value="libRenderSystem_GL.dll.a"/>
         <Library Value="BulletDynamics"/>

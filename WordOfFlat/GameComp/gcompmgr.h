@@ -10,6 +10,7 @@
 #include "MenuComp/gmenumgr.h"
 #include "PhysicsComp/gphyscmgr.h"
 #include "LogicComp/glogiccmgr.h"
+#include "TerrainComp/gterrainmgr.h"
 
 
 class GameCompManager : public RefObjectImpl<IRefObject> {
@@ -21,6 +22,7 @@ class GameCompManager : public RefObjectImpl<IRefObject> {
 	PhysicsCompManager m_physicsManager;
 	LogicCompManager m_logicMgr;
 	GameEntityManager m_entityMgr; // should be the last manager (first in destroy)
+	GameTerrainManager m_terrainMgr; 
 public:
 	GameCompManager(GameLogger *pLogger);
 	~GameCompManager();
@@ -35,6 +37,7 @@ public:
 	inline PhysicsCompManager& GetPhysicsManager() { return m_physicsManager; }
 	inline LogicCompManager& GetLogicManager() { return m_logicMgr; }
 	inline GameEntityManager& GetEntityManager() { return m_entityMgr; }
+	inline GameTerrainManager& GetTerrainManager() { return m_terrainMgr; }
 
 };
 

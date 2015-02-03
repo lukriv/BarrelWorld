@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Workspace Name="WordOfFlat" Database="./WordOfFlat.tags">
-  <Project Name="MainWindow" Path="MainWindow/MainWindow.project" Active="No"/>
+  <Project Name="MainWindow" Path="MainWindow/MainWindow.project" Active="Yes"/>
   <Project Name="GameSystem" Path="GameSystem/GameSystem.project" Active="No"/>
   <Project Name="WorldSrv" Path="WorldSrv/WorldSrv.project" Active="No"/>
   <Project Name="WorldCli" Path="WorldCli/WorldCli.project" Active="No"/>
@@ -10,10 +10,7 @@
   <Project Name="GameResHold" Path="GameResHold/GameResHold.project" Active="No"/>
   <Project Name="GameLoader" Path="GameLoader/GameLoader.project" Active="No"/>
   <Project Name="GameComp" Path="GameComp/GameComp.project" Active="No"/>
-  <Project Name="GameXmlDefinitions" Path="GameXmlDefinitions/GameXmlDefinitions.project" Active="Yes"/>
-  <Environment>
-    <![CDATA[]]>
-  </Environment>
+  <Project Name="GameXmlDefinitions" Path="GameXmlDefinitions/GameXmlDefinitions.project" Active="No"/>
   <Project Name="Extern" Path="Extern/Extern.project" Active="No"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="yes">
@@ -45,4 +42,7 @@
       <Project Name="Extern" ConfigName="Debug"/>
     </WorkspaceConfiguration>
   </BuildMatrix>
+  <Environment>
+    <![CDATA[]]>
+  </Environment>
 </CodeLite_Workspace>

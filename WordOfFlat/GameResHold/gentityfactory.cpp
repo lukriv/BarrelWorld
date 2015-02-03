@@ -99,4 +99,12 @@ GameErrorCode GameEntityFactory::CreateEntity( EntityDef& entityDef, GameCompMan
 	return FWG_NO_ERROR;
 }
 
-
+GameErrorCode GameEntityFactory::CreateTerrain(GameDefinitionHolder& defHolder, GameCompManager& compMgr)
+{
+	if(!defHolder.m_spTerrain.IsEmpty())
+	{
+		return compMgr.GetTerrainManager().CreateTerrainGroup(*defHolder.m_spTerrain);
+	}
+	
+	return FWG_NO_ERROR;
+}

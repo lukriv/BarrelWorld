@@ -62,9 +62,12 @@
     </VirtualDirectory>
     <File Name="refobjectimpl.h"/>
   </VirtualDirectory>
+  <Dependencies Name="Debug"/>
+  <Dependencies Name="Release"/>
   <Settings Type="Static Library">
     <GlobalSettings>
       <Compiler Options="-std=c++11" C_Options="" Assembler="">
+        <IncludePath Value="../../extern/include/wx/gcc_dll/mswu"/>
         <IncludePath Value="../../extern/include"/>
         <Preprocessor Value="UNICODE"/>
       </Compiler>
@@ -144,6 +147,4 @@
       </Completion>
     </Configuration>
   </Settings>
-  <Dependencies Name="Debug"/>
-  <Dependencies Name="Release"/>
 </CodeLite_Project>

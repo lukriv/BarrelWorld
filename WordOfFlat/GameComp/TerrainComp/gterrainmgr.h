@@ -10,8 +10,8 @@
 class RenderCompManager;
 class PhysicsCompManager;
 
-class GameTerrainEntity;
 
+class btRigidBody;
 namespace Ogre {
 	class TerrainGlobalOptions;
 	class TerrainGroup;
@@ -19,7 +19,7 @@ namespace Ogre {
 
 
 class GameTerrainManager {
-	typedef wxVector< wxVector<GameTerrainEntity*> > TTerrainGrid;
+	typedef wxVector< btRigidBody* > TPhysTerrainGrid;
 private:
 	GameLoggerPtr m_spLogger;
 	
@@ -30,7 +30,8 @@ private:
 	Ogre::TerrainGlobalOptions* m_globalTerrainOptions;
 	Ogre::TerrainGroup* m_pTerrainGroup;
 	
-	TTerrainGrid m_terrainGrid;
+	wxInt32 m_gridOrigin[2];
+	TPhysTerrainGrid m_physTerrainGrid;
 	
 public:
 	GameTerrainManager(GameLogger *pLogger);
@@ -46,6 +47,8 @@ public:
 	 * @return 
 	 */
 	GameErrorCode Initialize(RenderCompManager *pRenderMgr, PhysicsCompManager *pPhysMgr);
+	
+	void Uninitialize();
 	
 	inline GameLogger * GetLogger() { return m_spLogger; }
 	

@@ -94,6 +94,7 @@ PhysicsComponent::~PhysicsComponent()
 			default:
 				break;
 		}
+		delete m_pColObject;
 		m_pColObject = nullptr;
 	}
 }
