@@ -3,7 +3,7 @@
 #include <OGRE/Terrain/OgreTerrain.h>
 #include <OGRE/Terrain/OgreTerrainGroup.h>
 
-//#include <bullet/BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h>
+#include <bullet/BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h>
 
 #include "RenderComp/grendercmgr.h"
 #include "PhysicsComp/gphyscmgr.h"
@@ -11,7 +11,10 @@
 
 
 GameTerrainManager::GameTerrainManager(GameLogger* pLogger) : m_spLogger(pLogger)
+															, m_pRenderMgr(nullptr)
+															, m_pPhysicsMgr(nullptr)
 															, m_globalTerrainOptions(nullptr)
+															, m_pTerrainGroup(nullptr)
 {}
 
 GameTerrainManager::~GameTerrainManager()
@@ -101,7 +104,7 @@ GameErrorCode GameTerrainManager::CreateTerrainGroup(TerrainDef& terrainDef)
 	if(m_pRenderMgr)
 	{
 		
-
+    
 		
 		// create new terrain group
 		m_pTerrainGroup = OGRE_NEW Ogre::TerrainGroup(m_pRenderMgr->GetOgreSceneManager()
@@ -119,10 +122,10 @@ GameErrorCode GameTerrainManager::CreateTerrainGroup(TerrainDef& terrainDef)
 		defaultimp.minBatchSize = 33;
 		defaultimp.maxBatchSize = 65;
 		
-		defaultimp.layerList.resize(1);
-		defaultimp.layerList[0].worldSize = 100;
-		defaultimp.layerList[0].textureNames.push_back("grass.png");
-		//defaultimp.layerList[0].textureNames.push_back("grass_0_normalheight.dds");
+		//defaultimp.layerList.resize(1);
+		//defaultimp.layerList[0].worldSize = 100;
+		//defaultimp.layerList[0].textureNames.push_back("grass.png");
+		////defaultimp.layerList[0].textureNames.push_back("grass_0_normalheight.dds");
 		
 	}
 	
@@ -138,33 +141,33 @@ GameErrorCode GameTerrainManager::CreateTerrainGroup(TerrainDef& terrainDef)
 			m_pTerrainGroup->defineTerrain(pTerrPage->m_pageX, pTerrPage->m_pageY, &img);
 		}
 		
-		//if(m_pPhysicsMgr)		
-		//{
-		//	
-		//	btHeightfieldTerrainShape *pTerrainShape = new btHeightfieldTerrainShape(terrainDef.m_mapSize,
-		//																		terrainDef.m_mapSize,
-		//																		img.getData(),
-		//																		1,
-		//																		-100,
-		//																		256,
-		//																		1,
-		//																		PHY_UCHAR,
-		//																		true);
-		//	
-		//	btDefaultMotionState *state = new btDefaultMotionState();
-		//	
-		//	btScalar mass = 0;
-		//	btVector3 localInertia(0, 0, 0);
-		//	
-		//	pTerrainShape->calculateLocalInertia(mass, localInertia);
-		//	
-		//	btRigidBody::btRigidBodyConstructionInfo info(mass, state, pTerrainShape, localInertia);
-		//	
-		//	btRigidBody *body = new btRigidBody(info);
-		//	
-		//	m_physTerrainGrid.push_back(body);
-		//	m_pPhysicsMgr->GetDynamicsWorld()->addRigidBody(body);
-		//}
+		if(m_pPhysicsMgr)		
+		{
+			
+			btHeightfieldTerrainShape *pTerrainShape = new btHeightfieldTerrainShape(terrainDef.m_mapSize,
+																				terrainDef.m_mapSize,
+																				img.getData(),
+																				1,
+																				0,
+																				255,
+																				1,
+																				PHY_UCHAR,
+																				true);
+			
+			btDefaultMotionState *state = new btDefaultMotionState();
+			
+			btScalar mass = 0;
+			btVector3 localInertia(0, 0, 0);
+			
+			pTerrainShape->calculateLocalInertia(mass, localInertia);
+			
+			btRigidBody::btRigidBodyConstructionInfo info(mass, state, pTerrainShape, localInertia);
+			
+			btRigidBody *body = new btRigidBody(info);
+			
+			m_physTerrainGrid.push_back(body);
+			m_pPhysicsMgr->GetDynamicsWorld()->addRigidBody(body);
+		}
 		
 	}
 	

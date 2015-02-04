@@ -134,7 +134,8 @@ GameErrorCode RenderComponent::ReceiveMessage(TaskMessage& msg)
 	{
 		case GAME_TASK_TRANSFORM_UPDATE:
 		{
-			return m_pOwnerManager->AddToUpdateQueue(this);
+			Update();
+			break;
 		}
 		default:
 			break;
@@ -160,7 +161,15 @@ GameErrorCode RenderComponent::ReinitComponent(GameEntity* pNewParentEntity)
 
 GameErrorCode RenderComponent::Update()
 {
-	return m_pOwnerManager->AddToUpdateQueue(this);
+	if(!m_alreadyInUpdateQueue)
+	{
+		FWGLOG_DEBUG_FORMAT(wxT("Add to update queue: %s"), m_pOwnerManager->GetLogger(),
+														m_pParent->GetName().GetData().AsInternal(),
+														FWGLOG_ENDVAL);
+		m_alreadyInUpdateQueue = true;
+		return m_pOwnerManager->AddToUpdateQueue(this);
+	}
+	return FWG_NO_ERROR;
 }
 
 void RenderComponent::ProcessUpdate()
@@ -173,4 +182,6 @@ void RenderComponent::ProcessUpdate()
 		m_pSceneNode->setPosition(m_spTransform->GetOgreTranlate());
 		m_pSceneNode->setOrientation(m_spTransform->GetOgreRotation());
 	}
+	
+	m_alreadyInUpdateQueue = false;
 }

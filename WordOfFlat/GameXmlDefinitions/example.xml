@@ -59,7 +59,7 @@
 		</terrain>
 		<entity name="entity1">
 			<transform>
-				<position>0.0, 0.0, 0.0</position>
+				<position>0.0, 15.0, 0.0</position>
 				<scale>1.0, 1.0, 1.0</scale>
 				<rotation>1.0, 0.0, 0.0, 0.0</rotation>				
 			</transform>
@@ -72,9 +72,6 @@
 				</renderent>
 			</render>
 			
-			<inputref value="testInput" />
-			
-			<logicref value="manualLogic" />
 			<physics type="rigid">
 				<shape type="box">
 					<boxHalfSize>1.0, 1.0, 1.0</boxHalfSize>
@@ -86,7 +83,7 @@
 		
 		<entity name="entity2">
 			<transform>
-				<position>1.0, 1.0, 0.0</position>
+				<position>1.0, 10.0, 0.0</position>
 				<scale>1.0, 1.0, 1.0</scale>
 				<rotation>1.0, 0.0, 0.0, 0.0</rotation>				
 			</transform>
@@ -116,7 +113,7 @@
 		
 		<entity name="mainCameraEntity">
 			<transform>
-				<position>0.0, 0.0, 0.0</position>
+				<position>0.0, 10.0, 0.0</position>
 				<scale>1.0, 1.0, 1.0</scale>
 				<rotation>1.0, 0.0, 0.0, 0.0</rotation>				
 			</transform>

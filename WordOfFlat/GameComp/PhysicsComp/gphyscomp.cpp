@@ -16,6 +16,9 @@ GameErrorCode PhysicsComponent::ReceiveMessage(TaskMessage& msg)
 				btTransform transform;
 				spTransform->getWorldTransform(transform);
 				m_pColObject->setWorldTransform(transform);
+			//FWGLOG_DEBUG_FORMAT(wxT("Update physics for entity: %s"), m_pOwnerMgr->GetLogger(),
+			//													m_pParent->GetName().GetData().AsInternal(),
+			//													FWGLOG_ENDVAL);
 			//}
 			break;
 		}

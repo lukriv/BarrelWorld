@@ -38,6 +38,7 @@ protected:
 	TRenderObjectList m_renderObjectList;
 	
 	TMessageList m_receivedMessages;
+	bool m_alreadyInUpdateQueue;
 protected:
 	GameErrorCode ConnectRenderComponent(Ogre::MovableObject* pObject);
 	void DisconnectRenderComponent(Ogre::MovableObject* pObject);
@@ -47,7 +48,8 @@ public:
 	RenderComponent(RenderCompManager* pCompManager) : ComponentBase(GAME_COMP_RENDER)
 													, m_pOwnerManager(pCompManager)
 													, m_pSceneNode(nullptr)
-													, m_pParent(nullptr) {}
+													, m_pParent(nullptr)
+													, m_alreadyInUpdateQueue(false){}
 	~RenderComponent();
 	
 	GameErrorCode Initialize(GameEntity* pParentEntity);

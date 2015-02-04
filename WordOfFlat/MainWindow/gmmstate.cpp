@@ -19,6 +19,7 @@ GameErrorCode GameMainMenuState::ProcessUpdate(float secDiff)
 	logicStep -= secDiff;
 	if(logicStep < 0)
 	{
+		FWGLOG_DEBUG(wxT("Start logic and physics steps"), m_pOwner->GetLogger());
 		if(FWG_FAILED(result = m_spCompManager->GetPhysicsManager().ProcessPhysics()))
 		{
 			FWGLOG_ERROR_FORMAT(wxT("Process physics steps failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
@@ -36,6 +37,8 @@ GameErrorCode GameMainMenuState::ProcessUpdate(float secDiff)
 			return result;
 		}
 		
+		FWGLOG_DEBUG(wxT("End logic and physics steps"), m_pOwner->GetLogger());
+		
 		logicStep += LogicStepTime;
 	}
 	
@@ -44,7 +47,6 @@ GameErrorCode GameMainMenuState::ProcessUpdate(float secDiff)
 		FWGLOG_ERROR_FORMAT(wxT("Process render updates failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
 		return result;
 	}
-	
 	
 	return FWG_NO_ERROR;
 	

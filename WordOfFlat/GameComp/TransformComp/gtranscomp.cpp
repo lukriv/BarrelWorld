@@ -82,7 +82,7 @@ void TransformComponent::setWorldTransform(const btTransform& worldTrans)
 	
 	//transform was updated
 	TaskMessage task(GAME_TASK_TRANSFORM_UPDATE);
-	m_pParent->ReceiveMessage(task, (GAME_COMP_MASK_ALL ^ GAME_COMP_MASK_PHYSICS));
-
+	m_pParent->ReceiveMessage(task, (~GAME_COMP_MASK_PHYSICS));
+		
 }
 

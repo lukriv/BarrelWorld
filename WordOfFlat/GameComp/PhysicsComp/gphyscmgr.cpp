@@ -74,6 +74,9 @@ GameErrorCode PhysicsCompManager::Initialize()
 		return FWG_E_MEMORY_ALLOCATION_ERROR;
 	}
 	
+	btVector3 grav = m_pDynamicsWorld->getGravity();
+	FWGLOG_INFO_FORMAT(wxT("gravity = %f, %f, %f"), m_spLogger, grav.getX(),grav.getY(),grav.getZ(), FWGLOG_ENDVAL);
+	
 	return FWG_NO_ERROR;
 }
 
@@ -189,6 +192,6 @@ GameErrorCode PhysicsCompManager::CreatePhysicsComponent(PhysCompDef& physDef, G
 
 GameErrorCode PhysicsCompManager::ProcessPhysics()
 {
-	m_pDynamicsWorld->stepSimulation(1.0f/60.0f);
+	m_pDynamicsWorld->stepSimulation(btScalar(1.)/btScalar(60.));
 	return FWG_NO_ERROR;
 }
