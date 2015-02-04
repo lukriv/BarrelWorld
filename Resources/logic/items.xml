@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+
+<definitions>
+	<character type="cube">
+		<body>
+			<skin>
+				<color>RGB</color>
+				<texture></texture>
+			</skin>
+			<hair>
+				<color>RGB</color>
+				<texture></texture>
+			</hair>
+			<eyes>
+				<color>RGB</color>
+				<texture></texture>
+			</eyes>
+			<height max="1.6" >1.6</height>
+			<age max="100" >25</age>
+			<weight max="200" >80</weight>
+		</body>
+		<attributes>
+			<strength max="" ></strength>
+			<agility max="" ></agility>
+			<wisdom max="100" >55</wisdom>
+			<intelligence max="100" >100</intelligence>
+		</attributes>
+		<state>
+			<health max="100">100</health>
+			<energy max="100">100</energy>
+		</state>
+		<needs>
+			<food add="8">8</food>
+			<warm add="5"></warm>
+			<sleep add="2"></sleep>
+			<sex add="1"></sex>
+			<safety add="5"></safety>
+			<social add="0"></social>
+			<happiness add="0"></happiness>
+		</needs>
+		<priorities>
+			<power>10</power>
+			<wealth>5</wealth>
+			<family>1</family>
+			<glory>2</glory>
+		</priorities>
+		<wants>
+			<want weight="1">rankUp</want>
+		</wants>
+		<fears>
+			<fear weight="1">dogs</fear>
+			<fear weight="1">starvation</fear>
+		</fears>
+		<skills>
+			<skill name="tracking" level="" >
+			<skill level="1">tracking</skill>
+			<skill level="2">archery</skill>
+		</skills>
+		<disease>
+		</disease>
+		
+			
+	</character>
+</definitions>
