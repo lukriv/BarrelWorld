@@ -37,12 +37,20 @@ private:
 		
 		const void* GetClassPointer() const override { return static_cast<void*>(m_pClass); }
 	};
-
+public:
+	class InputMouseCallback {
+		virtual bool OnMouseMoved( const OIS::MouseState &arg ) = 0;
+		virtual bool OnMousePressed( const OIS::MouseState &arg, OIS::MouseButtonID id ) = 0;
+		virtual bool OnMouseReleased( const OIS::MouseState &arg, OIS::MouseButtonID id ) = 0;
+	};
+	
 private:
 	OIS::InputManager *m_pInputMgr;
 	OIS::Keyboard *m_pKeyboard;
 	OIS::Mouse *m_pMouse;
 	InputCallbackBase* m_callbackArray[255];
+	
+	InputMouseCallback
 	
 	wxCriticalSection m_callbackArrayLock;	
 	bool m_processMenuEvents;
@@ -127,6 +135,10 @@ public:
 	 * 
 	 */
 	void UnregisterAllCallbacks();
+	
+	GameErrorCode RegisterCallback(InputMouseCallback *pMouseCallback);
+	
+	void UnregisterCallback(InputMouseCallback *pMouseCallback);
 	
 	/// create methods
 	GameErrorCode CreateAndRegisterInputComponent( const InputDef &inputDef, InputComponent *&pNewInputComp);
