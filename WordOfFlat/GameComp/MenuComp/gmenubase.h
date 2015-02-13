@@ -8,19 +8,21 @@
 #include <GameSystem/refobjectimpl.h>
 #include <GameSystem/glog.h>
 
+#include <GameComp/InputComp/ginputsystem.h>
 
 class GameMenuSystem;
 
-class GameMenuBase : public RefObjectImpl<IRefObject> {
+class GameMenuBase : public RefObjectImpl<IRefObject>, public GameInputSystem::InputMouseCallback{
 private:
 	CEGUI::Window *m_pRootWindow;
 protected:
 	GameLoggerPtr m_spLogger;
 	GameMenuSystem *m_pMenuRes;
+	GameInputSystem *m_pInputSystem;
 	
 	wxCriticalSection m_menuLock;
 public:
-	GameMenuBase(GameMenuSystem *pMenuRes, GameLogger* pLogger);
+	GameMenuBase(GameMenuSystem *pMenuRes, GameInputSystem *pInputSystem, GameLogger* pLogger);
 	virtual ~GameMenuBase();
 	
 	/**
@@ -29,6 +31,12 @@ public:
 	 * All other menus will be hidden.
 	 */
 	virtual GameErrorCode Show() = 0;
+	
+	
+	// input mouse callback virtual methods
+	virtual void OnMouseMoved(const OIS::MouseState& arg) override;
+	virtual void OnMousePressed(const OIS::MouseState& arg, OIS::MouseButtonID id) override;
+	virtual void OnMouseReleased(const OIS::MouseState& arg, OIS::MouseButtonID id) override;
 
 protected:
 	/**
@@ -42,6 +50,9 @@ protected:
 	
 	friend class GameMenuSystem;
 };
+
+// menu utilities
+CEGUI::MouseButton ConvertMouseButtonId(OIS::MouseButtonID mouseButtonId);
 
 
 #endif //__GAME_MENU_BASE_H__

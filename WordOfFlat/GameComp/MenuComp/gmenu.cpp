@@ -2,7 +2,7 @@
 
 #include <CEGUI/CEGUI.h>
 
-GameMenu::GameMenu(GameMenuSystem *pMenuRes, GameLogger *pLogger) : GameMenuBase(pMenuRes, pLogger) 
+GameMenu::GameMenu(GameMenuSystem *pMenuRes, GameInputSystem *pInputSystem, GameLogger *pLogger) : GameMenuBase(pMenuRes, pInputSystem, pLogger) 
 					, m_isInitialized(false)
 					, m_pButtonExit(nullptr)
 					, m_pButtonSwitch(nullptr)
@@ -65,12 +65,24 @@ GameErrorCode GameMenu::Initialize(GameMenuCallback* pCallback)
 		return FWG_E_MENU_SYSTEM_ERROR;
 	}
 	
+	// register input callback to input system
+	if(FWG_FAILED(result = m_pInputSystem->RegisterCallback(this)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Register mouse callback failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
 	// load 
 	return FWG_NO_ERROR;
 }
 
 GameMenu::~GameMenu()
 {
+	if(m_pInputSystem)
+	{
+		m_pInputSystem->UnregisterCallback(this);
+	}
+	
 	if(m_pButtonExit)
 	{
 		m_pButtonExit->removeAllEvents();
@@ -120,4 +132,23 @@ bool GameMenu::SwitchEvent(const CEGUI::EventArgs&)
 	}
 	
 	return true;
+}
+
+
+void GameMenu::OnMouseMoved(const OIS::MouseState& arg)
+{
+	if((arg.buttons & (1 << OIS::MB_Right)) == 0)
+	{
+		CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseMove(static_cast<float>(arg.X.rel), static_cast<float>(arg.Y.rel));
+	}
+}
+
+void GameMenu::OnMousePressed(const OIS::MouseState& arg, OIS::MouseButtonID id)
+{
+	CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseButtonDown(ConvertMouseButtonId(id));
+}
+
+void GameMenu::OnMouseReleased(const OIS::MouseState& arg, OIS::MouseButtonID id)
+{
+	CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseButtonUp(ConvertMouseButtonId(id));
 }

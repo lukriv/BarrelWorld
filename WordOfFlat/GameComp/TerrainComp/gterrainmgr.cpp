@@ -122,9 +122,9 @@ GameErrorCode GameTerrainManager::CreateTerrainGroup(TerrainDef& terrainDef)
 		defaultimp.minBatchSize = 33;
 		defaultimp.maxBatchSize = 65;
 		
-		//defaultimp.layerList.resize(1);
-		//defaultimp.layerList[0].worldSize = 100;
-		//defaultimp.layerList[0].textureNames.push_back("grass.png");
+		defaultimp.layerList.resize(1);
+		defaultimp.layerList[0].worldSize = 100;
+		defaultimp.layerList[0].textureNames.push_back("grass.png");
 		////defaultimp.layerList[0].textureNames.push_back("grass_0_normalheight.dds");
 		
 	}

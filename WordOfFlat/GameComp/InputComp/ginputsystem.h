@@ -11,6 +11,7 @@
 #include <GameSystem/refobjectimpl.h>
 #include <GameSystem/refobject.h>
 #include <GameSystem/glog.h>
+#include <GameSystem/gset.h>
 
 class InputDef;
 class InputComponent;
@@ -39,9 +40,10 @@ private:
 	};
 public:
 	class InputMouseCallback {
-		virtual bool OnMouseMoved( const OIS::MouseState &arg ) = 0;
-		virtual bool OnMousePressed( const OIS::MouseState &arg, OIS::MouseButtonID id ) = 0;
-		virtual bool OnMouseReleased( const OIS::MouseState &arg, OIS::MouseButtonID id ) = 0;
+	public:
+		virtual void OnMouseMoved( const OIS::MouseState &arg ) = 0;
+		virtual void OnMousePressed( const OIS::MouseState &arg, OIS::MouseButtonID id ) = 0;
+		virtual void OnMouseReleased( const OIS::MouseState &arg, OIS::MouseButtonID id ) = 0;
 	};
 	
 private:
@@ -50,7 +52,7 @@ private:
 	OIS::Mouse *m_pMouse;
 	InputCallbackBase* m_callbackArray[255];
 	
-	InputMouseCallback
+	GameBasSet<InputMouseCallback*> m_mouseCallbacks;
 	
 	wxCriticalSection m_callbackArrayLock;	
 	bool m_processMenuEvents;
@@ -142,6 +144,8 @@ public:
 	
 	/// create methods
 	GameErrorCode CreateAndRegisterInputComponent( const InputDef &inputDef, InputComponent *&pNewInputComp);
+	
+	inline GameLogger * GetLogger() { return m_spLogger; }
 	
 	/// virtual methods
 	virtual GameErrorCode ProcessInputs();

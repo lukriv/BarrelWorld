@@ -75,10 +75,14 @@
       <VirtualDirectory Name="include">
         <File Name="InputComp/ginputcomp.h"/>
         <File Name="InputComp/ginputsystem.h"/>
+        <File Name="InputComp/gcharinput.h"/>
+        <File Name="InputComp/gfreecaminput.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="src">
         <File Name="InputComp/ginputcomp.cpp"/>
         <File Name="InputComp/ginputsystem.cpp"/>
+        <File Name="InputComp/gcharinput.cpp"/>
+        <File Name="InputComp/gfreecaminput.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="logicComp">
@@ -86,12 +90,14 @@
         <File Name="LogicComp/glogiccomp.h"/>
         <File Name="LogicComp/glogiccmgr.h"/>
         <File Name="LogicComp/glogicman.h"/>
+        <File Name="LogicComp/glogicfreecam.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="src">
         <File Name="LogicComp/glogiccomp.cpp"/>
         <File Name="LogicComp/glogiccmgr.cpp"/>
         <File Name="LogicComp/glogicman.cpp"/>
         <File Name="LogicComp/glogiccreator.cpp"/>
+        <File Name="LogicComp/glogicfreecam.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="menuComp">

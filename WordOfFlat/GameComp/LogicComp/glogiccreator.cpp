@@ -4,9 +4,12 @@
 #include <GameResHold/gdeftables.h>
 #include <GameComp/gentity.h>
 #include "glogicman.h"
+#include "glogicfreecam.h"
 
 
 static const wxChar* FACTORY_LOGIC_TYPE_MANUAL_TEST = wxT("MANUAL_TEST");
+static const wxChar* FACTORY_LOGIC_TYPE_FREE_CAMERA = wxT("FREE_CAMERA");
+
 
 GameErrorCode LogicCompManager::CreateLogicComp(LogicDef& logicDef, GameEntity* pEntity)
 {
@@ -21,6 +24,17 @@ GameErrorCode LogicCompManager::CreateLogicComp(LogicDef& logicDef, GameEntity* 
 		if(FWG_FAILED(result = pLogicMan->Initialize(pEntity)))
 		{
 			FWGLOG_ERROR_FORMAT(wxT("Initialize manual logic failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+			return result;
+		}
+		
+	} else if(logicDef.m_logicType.Cmp(FACTORY_LOGIC_TYPE_FREE_CAMERA) == 0) {
+		LogicFreeCamera *pLogicFreeCam = nullptr;
+		FWG_RETURN_FAIL(GameNewChecked(pLogicFreeCam));
+		// prevent memory leak
+		spLogicComp.Attach(pLogicFreeCam);
+		if(FWG_FAILED(result = pLogicFreeCam->Initialize(pEntity)))
+		{
+			FWGLOG_ERROR_FORMAT(wxT("Initialize free camera logic failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
 			return result;
 		}
 		

@@ -159,10 +159,17 @@ public:
 struct InputDef : public DefBase {
 	typedef GameBasMap<wxString, wxInt32 > TInputMap;
 public:
+	enum InputType {
+		INPUT_TYPE_GENERIC 		= 0,
+		INPUT_TYPE_CHARACTER 	= 1,
+		INPUT_TYPE_FREE_CAMERA 	= 2,
+	};
+public:
+	InputType m_inputType;
 	TInputMap m_inputMap;
 	
 public:
-	InputDef() {}
+	InputDef() : m_inputType(INPUT_TYPE_GENERIC) {}
 	
 };
 

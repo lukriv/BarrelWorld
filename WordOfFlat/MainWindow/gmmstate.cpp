@@ -112,13 +112,14 @@ GameErrorCode GameMainMenuState::ProcessState(GameState& nextState, wxString& ne
 	if(m_spMenu.IsEmpty())
 	{
 		// create new menu
-		FWG_RETURN_FAIL(GameNewChecked(m_spMenu.OutRef(), &m_spCompManager->GetMenuSystem(), m_pOwner->GetLogger()));
+		FWG_RETURN_FAIL(GameNewChecked(m_spMenu.OutRef(), &m_spCompManager->GetMenuSystem(), &m_spCompManager->GetInputSystem(), m_pOwner->GetLogger()));
 		FWG_RETURN_FAIL(GameNewChecked(m_pMenuClbk, this));
 		if(FWG_FAILED(result = m_spMenu->Initialize(m_pMenuClbk)))
 		{
 			FWGLOG_ERROR_FORMAT(wxT("Initialize menu failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
 			return result;			
 		}
+		
 	}
 	
 	// register key callback
@@ -133,13 +134,15 @@ GameErrorCode GameMainMenuState::ProcessState(GameState& nextState, wxString& ne
 	m_spCompManager->GetRenderManager().GetOgreRoot()->addFrameListener(this);
 	
 	// physics debug draw
-	m_pDebugDraw = new CDebugDraw( m_spCompManager->GetRenderManager().GetOgreSceneManager()
-											, m_spCompManager->GetPhysicsManager().GetDynamicsWorld());
+	//m_pDebugDraw = new CDebugDraw( m_spCompManager->GetRenderManager().GetOgreSceneManager(), m_spCompManager->GetPhysicsManager().GetDynamicsWorld());
 	
 	m_spCompManager->GetRenderManager().GetOgreRoot()->startRendering();
 	
-	delete m_pDebugDraw;
-	m_pDebugDraw = nullptr;
+	if(m_pDebugDraw)
+	{
+		delete m_pDebugDraw;
+		m_pDebugDraw = nullptr;
+	}
  	
 	m_spCompManager->GetRenderManager().GetOgreRoot()->removeFrameListener(this);
 	

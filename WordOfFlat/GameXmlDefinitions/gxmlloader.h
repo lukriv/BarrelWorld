@@ -58,7 +58,8 @@ private:
 	GameErrorCode ConvertToVec3(const wxString& input, Ogre::Vector3 *resultVec);
 	GameErrorCode ConvertToQuat(const wxString& input, Ogre::Quaternion *resultQuat);
 	GameErrorCode ConvertToShapeType(const wxString& input, wxInt32 &retType);
-	GameErrorCode ConvertToPhysicsType(const wxString& input, wxInt32& retType);
+	static GameErrorCode ConvertToPhysicsType(const wxString& input, wxInt32& retType);
+	GameErrorCode ConvertToInputType(const wxString& input, InputDef::InputType& retType);
 	GameErrorCode ConvertToInt32(const wxString& input, wxInt32& output);
 	GameErrorCode ConvertToDword(const wxString& input, wxDword& output);
 	GameErrorCode ConvertToFloat(const wxString& input, float& output);

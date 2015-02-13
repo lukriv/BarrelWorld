@@ -43,7 +43,7 @@ struct ParamDefinition {
 	bool m_mandatory;	
 };
 
-
+//////////////////////////////////////////////
 struct PhysicsShapeTypeConvertRow {
 	const wxChar* m_typeName;
 	PhysShapeDef::ShapeType m_typeEnum;
@@ -54,6 +54,7 @@ static const PhysicsShapeTypeConvertRow PhysicsShapeTypeConvertTable[] =
 	{ wxT("box"), PhysShapeDef::SHAPE_TYPE_BOX }
 };
 
+/////////////////////////////////////////////////
 struct PhysicsTypeConvertRow {
 	const wxChar* m_typeName;
 	PhysCompDef::PhysicsType m_typeEnum;
@@ -63,6 +64,19 @@ static const PhysicsTypeConvertRow PhysicsTypeConvertTable[] =
 {
 	{ wxT("rigid"), 	PhysCompDef::PHYS_TYPE_RIGID 		},
 	{ wxT("collision"), PhysCompDef::PHYS_TYPE_COLLISION	}
+};
+
+//////////////////////////////////////////
+struct InputTypeConvertRow {
+	const wxChar* m_typeName;
+	InputDef::InputType m_typeEnum;
+}; 
+
+static const InputTypeConvertRow InputTypeConvertTable[] = 
+{
+	{ wxT("generic"),	 	InputDef::INPUT_TYPE_GENERIC		},
+	{ wxT("character"), 	InputDef::INPUT_TYPE_CHARACTER		},
+	{ wxT("freeCamera"), 	InputDef::INPUT_TYPE_FREE_CAMERA	}
 };
 
 // mesh parameters

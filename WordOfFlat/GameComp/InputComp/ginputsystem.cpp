@@ -2,35 +2,12 @@
 
 #include <OGRE/OgreRenderWindow.h>
 #include <OGRE/OgreStringConverter.h>
-#include <CEGUI/CEGUI.h>
 
 #include <GameResHold/gdeftables.h>
 #include "ginputcomp.h"
+#include "gcharinput.h"
+#include "gfreecaminput.h"
 
-
-CEGUI::MouseButton ConvertMouseButtonId(OIS::MouseButtonID mouseButtonId)
-{
-	switch(mouseButtonId)
-	{
-	case OIS::MB_Left:
-		return CEGUI::LeftButton;
-		
-	case OIS::MB_Right:
-		return CEGUI::RightButton;
-		
-	case OIS::MB_Middle:
-		return CEGUI::MiddleButton;
-		
-	case OIS::MB_Button3: 
-		return CEGUI::X1Button;
-		
-	case OIS::MB_Button4:
-		return CEGUI::X2Button;
-		
-	default:
-		return CEGUI::NoButton;
-	}
-}
 
 bool GameInputSystem::keyPressed(const OIS::KeyEvent& arg)
 {
@@ -54,22 +31,31 @@ bool GameInputSystem::keyReleased(const OIS::KeyEvent& arg)
 
 bool GameInputSystem::mouseMoved(const OIS::MouseEvent& arg)
 {
-	if(m_processMenuEvents)
-		CEGUI::System::getSingleton().getDefaultGUIContext().injectMousePosition(static_cast<float>(arg.state.X.abs), static_cast<float>(arg.state.Y.abs));
+	wxCriticalSectionLocker lock(m_callbackArrayLock);
+	for (auto iter = m_mouseCallbacks.Begin(); iter != m_mouseCallbacks.End(); ++iter)
+	{
+		(*iter)->OnMouseMoved(arg.state);
+	}
 	return true;
 }
 
 bool GameInputSystem::mousePressed(const OIS::MouseEvent& arg, OIS::MouseButtonID id)
 {
-	if(m_processMenuEvents)
-		CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseButtonDown(ConvertMouseButtonId(id));
+	wxCriticalSectionLocker lock(m_callbackArrayLock);
+	for (auto iter = m_mouseCallbacks.Begin(); iter != m_mouseCallbacks.End(); ++iter)
+	{
+		(*iter)->OnMousePressed(arg.state, id);
+	}
 	return true;
 }
 
 bool GameInputSystem::mouseReleased(const OIS::MouseEvent& arg, OIS::MouseButtonID id)
 {
-	if(m_processMenuEvents)
-		CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseButtonUp(ConvertMouseButtonId(id));
+	wxCriticalSectionLocker lock(m_callbackArrayLock);
+	for (auto iter = m_mouseCallbacks.Begin(); iter != m_mouseCallbacks.End(); ++iter)
+	{
+		(*iter)->OnMouseReleased(arg.state, id);
+	}
 	return true;
 }
 
@@ -156,83 +142,50 @@ GameErrorCode GameInputSystem::ProcessInputs()
 }
 
 
-/// create methods ///
-static const wxChar* FACTORY_INPUT_UP		 = wxT("up");
-static const wxChar* FACTORY_INPUT_DOWN		 = wxT("down");
-static const wxChar* FACTORY_INPUT_LEFT		 = wxT("left");
-static const wxChar* FACTORY_INPUT_RIGHT	 = wxT("right");
-static const wxChar* FACTORY_INPUT_FORWARD	 = wxT("forward");
-static const wxChar* FACTORY_INPUT_BACKWARD	 = wxT("backward");
+
 
 GameErrorCode GameInputSystem::CreateAndRegisterInputComponent( const InputDef &inputDef, InputComponent *&pNewInputComp)
 {
-	GameErrorCode result = FWG_NO_ERROR;
-	RefObjSmPtr<InputComponent> spInputComp;
-	FWG_RETURN_FAIL(GameNewChecked(spInputComp.OutRef()));
-	
-	for(InputDef::TInputMap::ConstIterator iter = inputDef.m_inputMap.Begin();
-		iter != inputDef.m_inputMap.End();
-		++iter)
-	{
-	
-		if(iter->first.Cmp(FACTORY_INPUT_UP) == 0)
-		{
-			if(FWG_FAILED(result = RegisterCallback(static_cast<OIS::KeyCode>(iter->second)
-																	, spInputComp.In()
-																	, &InputComponent::SetMoveUp))) 
-			{
-				FWGLOG_ERROR_FORMAT(wxT("Register input callback moveUp failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
-				return result;
-			}
-		} else if (iter->first.Cmp(FACTORY_INPUT_DOWN) == 0) {
-			if(FWG_FAILED(result = RegisterCallback(static_cast<OIS::KeyCode>(iter->second)
-																	, spInputComp.In()
-																	, &InputComponent::SetMoveDown))) 
-			{
-				FWGLOG_ERROR_FORMAT(wxT("Register input callback moveDown failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
-				return result;
-			}
-		} else if (iter->first.Cmp(FACTORY_INPUT_LEFT) == 0) {
-			if(FWG_FAILED(result = RegisterCallback(static_cast<OIS::KeyCode>(iter->second)
-																	, spInputComp.In()
-																	, &InputComponent::SetMoveLeft))) 
-			{
-				FWGLOG_ERROR_FORMAT(wxT("Register input callback moveLeft failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
-				return result;
-			}
-		} else if (iter->first.Cmp(FACTORY_INPUT_RIGHT) == 0) {
-			if(FWG_FAILED(result = RegisterCallback(static_cast<OIS::KeyCode>(iter->second)
-																	, spInputComp.In()
-																	, &InputComponent::SetMoveRight))) 
-			{
-				FWGLOG_ERROR_FORMAT(wxT("Register input callback moveRight failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
-				return result;
-			}
-		} else if (iter->first.Cmp(FACTORY_INPUT_FORWARD) == 0) {
-			if(FWG_FAILED(result = RegisterCallback(static_cast<OIS::KeyCode>(iter->second)
-																	, spInputComp.In()
-																	, &InputComponent::SetMoveForward))) 
-			{
-				FWGLOG_ERROR_FORMAT(wxT("Register input callback moveForward failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
-				return result;
-			}
-		} else if (iter->first.Cmp(FACTORY_INPUT_BACKWARD) == 0) {
-			if(FWG_FAILED(result = RegisterCallback(static_cast<OIS::KeyCode>(iter->second)
-																	, spInputComp.In()
-																	, &InputComponent::SetMoveBackward))) 
-			{
-				FWGLOG_ERROR_FORMAT(wxT("Register input callback moveBackward failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
-				return result;
-			}
-		} else {
-			FWGLOG_WARNING_FORMAT(wxT("Cannot register unknown input action '%s'"), m_spLogger, iter->first.GetData().AsInternal(), FWGLOG_ENDVAL);
-		}
+	switch (inputDef.m_inputType) {
+		case InputDef::INPUT_TYPE_GENERIC:
+			break;
+		case InputDef::INPUT_TYPE_CHARACTER:
+			return CharacterInput::CreateObject(inputDef, *this, pNewInputComp);
+		case InputDef::INPUT_TYPE_FREE_CAMERA:
+			return FreeCameraInput::CreateObject(inputDef, *this, pNewInputComp);
+		default:
+			FWGLOG_ERROR(wxT("Unknown input component type"), m_spLogger);
+			return FWG_E_INVALID_PARAMETER_ERROR;
+			break;
 	}
-	
-	pNewInputComp = spInputComp.Detach();
 	
 	return FWG_NO_ERROR;
 }
 
+GameErrorCode GameInputSystem::RegisterCallback(InputMouseCallback* pMouseCallback)
+{
+	if(pMouseCallback != nullptr)
+	{
+		wxCriticalSectionLocker lock(m_callbackArrayLock);
+		if(m_mouseCallbacks.Exists(pMouseCallback))
+		{
+			return FWG_E_OBJECT_ALREADY_EXISTS_ERROR;
+		} else {
+			return m_mouseCallbacks.Insert(pMouseCallback);
+		}
+	}
+	
+	return FWG_E_INVALID_PARAMETER_ERROR;
+}
 
-
+void GameInputSystem::UnregisterCallback(InputMouseCallback* pMouseCallback)
+{
+	if(pMouseCallback != nullptr)
+	{
+		wxCriticalSectionLocker lock(m_callbackArrayLock);
+		if(m_mouseCallbacks.Exists(pMouseCallback))
+		{
+			m_mouseCallbacks.Remove(pMouseCallback);
+		}
+	}
+}

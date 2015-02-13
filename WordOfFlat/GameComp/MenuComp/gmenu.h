@@ -26,7 +26,7 @@ class GameMenu : public GameMenuBase {
 	GameMenuCallback* m_pCallback;
 	
 public:
-	GameMenu(GameMenuSystem *pMenuRes, GameLogger *pLogger);
+	GameMenu(GameMenuSystem *pMenuRes, GameInputSystem *pInputSystem, GameLogger *pLogger);
 	virtual ~GameMenu();
 	
 	GameErrorCode Initialize(GameMenuCallback*);
@@ -34,6 +34,12 @@ public:
 	// menu events
 	bool ExitEvent(const CEGUI::EventArgs& /*e*/);
 	bool SwitchEvent(const CEGUI::EventArgs& /*e*/);
+	
+	
+	// input mouse callback virtual methods
+	virtual void OnMouseMoved(const OIS::MouseState& arg) override;
+	virtual void OnMousePressed(const OIS::MouseState& arg, OIS::MouseButtonID id) override;
+	virtual void OnMouseReleased(const OIS::MouseState& arg, OIS::MouseButtonID id) override;
 	
 public:
 	

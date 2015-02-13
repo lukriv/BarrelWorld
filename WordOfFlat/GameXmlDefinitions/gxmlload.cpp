@@ -1066,7 +1066,8 @@ GameErrorCode GameXmlResourceLoader::CreateInput(wxXmlNode* pNode, wxString& nam
 {
 	GameErrorCode result = FWG_NO_ERROR;
 	wxInt32 keyCode = 0;
-	wxString action;	
+	wxString action;
+	wxString typeStr;
 	RefObjSmPtr<InputDef> spTempInput;
 	
 	wxXmlNode *child = pNode->GetChildren();
@@ -1117,6 +1118,21 @@ GameErrorCode GameXmlResourceLoader::CreateInput(wxXmlNode* pNode, wxString& nam
 						pNode->GetLineNumber(),
 						FWGLOG_ENDVAL);
 		return FWG_E_XML_ATTR_NOT_FOUND_ERROR;
+	}
+	
+	// get type attribute
+	if(pNode->GetAttribute(GAME_ATTR_TYPE_STR, &typeStr))
+	{
+		if(FWG_FAILED(result = ConvertToInputType(typeStr, spTempInput->m_inputType)))
+		{
+			FWGLOG_ERROR_FORMAT(wxT("Tag '%s' has not valid type attribute on line: %d"),
+						m_spLogger,
+						pNode->GetName().GetData().AsInternal(),
+						pNode->GetLineNumber(),
+						FWGLOG_ENDVAL);
+			return FWG_E_XML_INVALID_ATTR_ERROR;
+		}
+		
 	}
 	
 	// set return value
@@ -2005,6 +2021,23 @@ GameErrorCode GameXmlResourceLoader::ConvertToPhysicsType(const wxString& input,
 	const PhysicsTypeConvertRow *pConv = nullptr;
 	const PhysicsTypeConvertRow *endPoint = &PhysicsTypeConvertTable[WXSIZEOF(PhysicsTypeConvertTable)];
 	for (pConv = PhysicsTypeConvertTable; pConv != endPoint; ++pConv)
+	{
+		if(input.Cmp(pConv->m_typeName) == 0)
+		{
+			retType = pConv->m_typeEnum;
+			return FWG_NO_ERROR;
+		}
+	}
+	
+	return FWG_E_XML_INVALID_ATTR_ERROR;
+}
+
+
+GameErrorCode GameXmlResourceLoader::ConvertToInputType(const wxString& input, InputDef::InputType& retType)
+{
+	const InputTypeConvertRow *pConv = nullptr;
+	const InputTypeConvertRow *endPoint = &InputTypeConvertTable[WXSIZEOF(InputTypeConvertTable)];
+	for (pConv = InputTypeConvertTable; pConv != endPoint; ++pConv)
 	{
 		if(input.Cmp(pConv->m_typeName) == 0)
 		{

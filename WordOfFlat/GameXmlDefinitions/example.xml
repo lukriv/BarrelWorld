@@ -14,16 +14,16 @@
 		</materialdefs>
 		
 		<inputdefs>
-			<input name="testInput">
+			<input name="testInput" type="character">
 				<key action="up" value="key_w" />
 				<key action="down" value="key_s" />
 				<key action="left" value="key_a" />
 				<key action="right" value="key_d" />
 			</input>
 			
-			<input name="cameraInput">
-				<key action="up" value="key_i" />
-				<key action="down" value="key_k" />
+			<input name="cameraInput" type="freeCamera">
+				<key action="forward" value="key_i" />
+				<key action="backward" value="key_k" />
 				<key action="left" value="key_j" />
 				<key action="right" value="key_l" />
 			</input>
@@ -32,6 +32,9 @@
 		<logicdefs>
 			<logic name="manualLogic">
 				<logictype>MANUAL_TEST</logictype>
+			</logic>
+			<logic name="freeCameraLogic">
+				<logictype>FREE_CAMERA</logictype>
 			</logic>
 		</logicdefs>
 		

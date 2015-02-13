@@ -4,6 +4,7 @@
 #include <OGRE/OgrePrerequisites.h>
 
 #include "glogiccmgr.h"
+#include "../InputComp/gcharinput.h"
 //#include "../InputComp/ginputcomp.h"
 
 
@@ -62,22 +63,22 @@ GameErrorCode LogicManualTest::ProcessInput()
 	{
 		
 		btVector3 moveVec = btVector3(0,0,0);
-		if(actualControls.IsPressed(ControlStruct::INPUT_ACTION_UP))
+		if(actualControls.IsPressed(CharacterInput::INPUT_ACTION_UP))
 		{
 			moveVec.setZ(STEP_SIZE);
 		}
 		
-		if(actualControls.IsPressed(ControlStruct::INPUT_ACTION_DOWN))
+		if(actualControls.IsPressed(CharacterInput::INPUT_ACTION_DOWN))
 		{
 			moveVec.setZ(-STEP_SIZE);
 		}
 		
-		if(actualControls.IsPressed(ControlStruct::INPUT_ACTION_LEFT))
+		if(actualControls.IsPressed(CharacterInput::INPUT_ACTION_LEFT))
 		{
 			moveVec.setX(STEP_SIZE);
 		}
 		
-		if(actualControls.IsPressed(ControlStruct::INPUT_ACTION_RIGHT))
+		if(actualControls.IsPressed(CharacterInput::INPUT_ACTION_RIGHT))
 		{
 			moveVec.setX(-STEP_SIZE);
 		}
