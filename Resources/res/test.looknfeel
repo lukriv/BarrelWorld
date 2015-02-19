@@ -1,0 +1,188 @@
+<?xml version="1.0" ?>
+<Falagard version="7">
+
+	<WidgetLook name="Test/Empty">
+		
+		<ImagerySection name="normal_img">
+		    <FrameComponent>
+                <Image component="TopLeftCorner" name="Test/ButtonNormalTL"/>
+                <Image component="TopRightCorner" name="Test/ButtonNormalTR"/>
+                <Image component="BottomLeftCorner" name="Test/ButtonNormalBL"/>
+                <Image component="BottomRightCorner" name="Test/ButtonNormalBR"/>
+                <Image component="LeftEdge" name="Test/ButtonNormalL"/>
+                <Image component="RightEdge" name="Test/ButtonNormalR"/>
+                <Image component="TopEdge" name="Test/ButtonNormalT"/>
+                <Image component="BottomEdge" name="Test/ButtonNormalB"/>
+            </FrameComponent>
+			<ImageryComponent>
+                <Area>
+                    <Dim type="LeftEdge">
+                        <ImageDim name="Test/ButtonNormalL" dimension="Width" />
+                    </Dim>
+                    <Dim type="TopEdge">
+                        <ImageDim name="Test/ButtonNormalT" dimension="Height" />
+                    </Dim>
+                    <Dim type="RightEdge">
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="1" type="Width"/>
+                            <ImageDim name="Test/ButtonNormalR" dimension="Width" />
+                        </OperatorDim>
+                    </Dim>
+                    <Dim type="BottomEdge">
+                        <OperatorDim op="Subtract">
+							<UnifiedDim scale="1" type="Height" />
+							<ImageDim name="Test/ButtonNormalB" dimension="Height" />
+						</OperatorDim>
+                    </Dim>
+                </Area>
+                <Image name="Test/ButtonNormalFill"/>
+                <VertFormat type="Stretched"/>
+                <HorzFormat type="Stretched"/>
+			</ImageryComponent>
+		</ImagerySection>
+		
+		<StateImagery name="Enabled">
+            <Layer>
+                <Section section="normal_img">
+                </Section>
+            </Layer>
+        </StateImagery>
+        
+		<StateImagery name="Disabled">
+            <Layer>
+                <Section section="normal_img">
+                </Section>
+            </Layer>
+        </StateImagery>
+
+    </WidgetLook>
+
+	<WidgetLook name="Test/Button">
+		
+		<ImagerySection name="label">
+			<TextComponent>
+				<Area>
+					<Dim type="LeftEdge"><AbsoluteDim value="0" /></Dim>
+					<Dim type="TopEdge"><AbsoluteDim value="0" /></Dim>
+					<Dim type="Width"><UnifiedDim scale="1" type="Width" /></Dim>
+					<Dim type="Height"><UnifiedDim scale="1" type="Height" /></Dim>
+				</Area>
+				<VertFormat type="CentreAligned" />
+				<HorzFormat type="WordWrapCentreAligned" />
+			</TextComponent>
+		</ImagerySection>
+		
+		<ImagerySection name="normal_imagery">
+		    <FrameComponent>
+                <Image component="TopLeftCorner" name="Test/ButtonNormalTL"/>
+                <Image component="TopRightCorner" name="Test/ButtonNormalTR"/>
+                <Image component="BottomLeftCorner" name="Test/ButtonNormalBL"/>
+                <Image component="BottomRightCorner" name="Test/ButtonNormalBR"/>
+                <Image component="LeftEdge" name="Test/ButtonNormalL"/>
+                <Image component="RightEdge" name="Test/ButtonNormalR"/>
+                <Image component="TopEdge" name="Test/ButtonNormalT"/>
+                <Image component="BottomEdge" name="Test/ButtonNormalB"/>
+            </FrameComponent>
+			<ImageryComponent>
+                <Area>
+                    <Dim type="LeftEdge">
+                        <ImageDim name="Test/ButtonNormalL" dimension="Width"/>
+                    </Dim>
+                    <Dim type="TopEdge">
+                        <ImageDim name="Test/ButtonNormalT" dimension="Height"/>
+                    </Dim>
+                    <Dim type="RightEdge">
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="1" type="Width"/>
+                            <ImageDim name="Test/ButtonNormalR" dimension="Width"/>
+                        </OperatorDim>
+                    </Dim>
+                    <Dim type="BottomEdge">
+						<OperatorDim op="Subtract">
+							<UnifiedDim scale="1" type="Height" />
+							<ImageDim name="Test/ButtonNormalB" dimension="Height" />
+						</OperatorDim>
+                    </Dim>
+                </Area>
+                <Image name="Test/ButtonNormalFill"/>
+                <VertFormat type="Stretched"/>
+                <HorzFormat type="Stretched"/>
+			</ImageryComponent>
+		</ImagerySection>
+		
+		<ImagerySection name="pushed_imagery">
+			<FrameComponent>
+                <Image component="TopLeftCorner" name="Test/ButtonPushedTL"/>
+                <Image component="TopRightCorner" name="Test/ButtonPushedTR"/>
+                <Image component="BottomLeftCorner" name="Test/ButtonPushedBL"/>
+                <Image component="BottomRightCorner" name="Test/ButtonPushedBR"/>
+                <Image component="LeftEdge" name="Test/ButtonPushedL"/>
+                <Image component="RightEdge" name="Test/ButtonPushedR"/>
+                <Image component="TopEdge" name="Test/ButtonPushedT"/>
+                <Image component="BottomEdge" name="Test/ButtonPushedB"/>
+            </FrameComponent>
+			<ImageryComponent>
+                <Area>
+                    <Dim type="LeftEdge">
+                        <ImageDim name="Test/ButtonPushedL" dimension="Width" />
+                    </Dim>
+                    <Dim type="TopEdge">
+                        <ImageDim name="Test/ButtonPushedT" dimension="Height" />
+                    </Dim>
+                    <Dim type="RightEdge">
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="1" type="Width" />
+                            <ImageDim name="Test/ButtonPushedR" dimension="Width" />
+                        </OperatorDim>
+                    </Dim>
+                    <Dim type="BottomEdge">
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="1" type="Height" />
+                            <ImageDim name="Test/ButtonPushedB" dimension="Height" />
+                        </OperatorDim>
+                    </Dim>
+                </Area>
+                <Image name="Test/ButtonPushedFill"/>
+                <VertFormat type="Stretched"/>
+                <HorzFormat type="Stretched"/>
+			</ImageryComponent>
+		</ImagerySection>
+	
+		<StateImagery name="Normal">
+			<Layer>
+				<Section section="normal_imagery" />
+				<Section section="label" />
+			</Layer>
+		</StateImagery>
+		
+		<StateImagery name="Hover">
+			<Layer>
+				<Section section="normal_imagery" />
+				<Section section="label" />
+			</Layer>
+		</StateImagery>
+
+		<StateImagery name="Pushed">
+			<Layer>
+				<Section section="pushed_imagery" />
+				<Section section="label" />
+			</Layer>
+		</StateImagery>
+		
+		<StateImagery name="PushedOff">
+			<Layer>
+				<Section section="pushed_imagery" />
+				<Section section="label" />
+			</Layer>
+		</StateImagery>
+
+		<StateImagery name="Disabled">
+			<Layer>
+				<Section section="normal_imagery" />
+				<Section section="label" />
+			</Layer>
+		</StateImagery>
+	
+    </WidgetLook>
+
+</Falagard>

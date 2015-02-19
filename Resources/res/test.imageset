@@ -1,0 +1,21 @@
+<Imageset autoScaled="false" imagefile="button.png" name="Test" nativeHorzRes="800" nativeVertRes="600" version="2">
+    <Image height="9" name="ButtonPushedL" width="78" xPos="0" yPos="30" />
+    <Image height="9" name="ButtonNormalL" width="78" xPos="1" yPos="110" />
+    <Image height="9" name="ButtonPushedFill" width="9" xPos="78" yPos="30" />
+    <Image height="9" name="ButtonNormalFill" width="9" xPos="79" yPos="110" />
+    <Image height="30" name="ButtonNormalTL" width="78" xPos="1" yPos="80" />
+    <Image height="30" name="ButtonNormalT" width="9" xPos="79" yPos="80" />
+    <Image height="29" name="ButtonNormalBL" width="78" xPos="1" yPos="119" />
+    <Image height="29" name="ButtonNormalB" width="9" xPos="79" yPos="119" />
+    <Image height="30" name="ButtonNormalTR" width="82" xPos="88" yPos="80" />
+    <Image height="9" name="ButtonNormalR" width="82" xPos="88" yPos="110" />
+    <Image height="29" name="ButtonNormalBR" width="82" xPos="88" yPos="119" />
+    <Image height="29" name="ButtonPushedBL" width="78" xPos="0" yPos="39" />
+    <Image height="30" name="ButtonPushedTL" width="78" xPos="0" yPos="0" />
+    <Image height="30" name="ButtonPushedTR" width="82" xPos="87" yPos="0" />
+    <Image height="29" name="ButtonPushedBR" width="82" xPos="87" yPos="39" />
+    <Image height="30" name="ButtonPushedT" width="9" xPos="78" yPos="0" />
+    <Image height="29" name="ButtonPushedB" width="9" xPos="78" yPos="39" />
+    <Image height="9" name="ButtonPushedR" width="82" xPos="87" yPos="30" />
+    <Image height="28" name="Cursor" width="38" xPos="43" yPos="171" />
+</Imageset>
