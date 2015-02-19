@@ -2,6 +2,7 @@
 #define __GAME_TERRAIN_MANAGER_H__
 
 #include <wx/vector.h>
+#include <wx/scopedarray.h>
 #include <GameSystem/gmap.h>
 #include <GameSystem/glog.h>
 #include <GameResHold/gdeftables.h>
@@ -17,8 +18,16 @@ namespace Ogre {
 };
 
 
+struct PhysicsTerrainData {
+	btRigidBody* m_pRigidBody;
+	float* m_pTerrainData;
+	
+	PhysicsTerrainData() : m_pRigidBody(nullptr), m_pTerrainData(nullptr) {}
+};
+
+
 class GameTerrainManager {
-	typedef wxVector< btRigidBody* > TPhysTerrainGrid;
+	typedef wxVector< PhysicsTerrainData > TPhysTerrainGrid;
 private:
 	GameLoggerPtr m_spLogger;
 	
@@ -65,7 +74,7 @@ public:
 protected:
 	GameErrorCode PrepareTerrainGlobalOptions();
 
-	GameErrorCode LoadTerrainData(const wxString &resource, wxDword terrDataSize, float *&retData, float &minHeight, float &maxHeight);
+	GameErrorCode LoadTerrainData(const wxString &resource, wxDword terrDataSize, wxScopedArray<float> &retData, float &minHeight, float &maxHeight);
 };
 
 

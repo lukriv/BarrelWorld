@@ -4,6 +4,7 @@
 #include <GameComp/inputComp/gfreecaminput.h>
 
 const btScalar STEP_SIZE = 0.02f;
+const btScalar MOVE_STEP_SIZE = 1.0f;
 
 static const btScalar _2_PI = SIMD_2_PI;
 static const btScalar _HALF_PI = SIMD_HALF_PI;
@@ -68,7 +69,7 @@ GameErrorCode LogicFreeCamera::ProcessInput()
 		if(actualControls.IsPressed(FreeCameraInput::INPUT_ACTION_FORWARD|FreeCameraInput::INPUT_ACTION_BACKWARD)
 				&& !(actualControls.IsPressed(FreeCameraInput::INPUT_ACTION_FORWARD) && actualControls.IsPressed(FreeCameraInput::INPUT_ACTION_BACKWARD)))
 		{
-			btVector3 dirVec(0,0,actualControls.IsPressed(FreeCameraInput::INPUT_ACTION_FORWARD)?0.3f:-0.3f);
+			btVector3 dirVec(0,0,actualControls.IsPressed(FreeCameraInput::INPUT_ACTION_FORWARD)? MOVE_STEP_SIZE : -MOVE_STEP_SIZE );
 			m_spTransform->GetData()->m_translate += dirVec.rotate(m_spTransform->GetData()->m_rotation.getAxis(), m_spTransform->GetData()->m_rotation.getAngle());;
 		}
 		

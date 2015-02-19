@@ -1,5 +1,6 @@
 #include "grendercomp.h"
 
+#include <OGRE/OgreNode.h>
 #include "grendercmgr.h"
 #include "../gentity.h"
 #include "grenderobj.h"
@@ -176,7 +177,6 @@ void RenderComponent::ProcessUpdate()
 	if(!m_spTransform.IsEmpty())
 	{
 		//todo: upgrade updating scene node transform
-		
 		m_pSceneNode->setPosition(m_spTransform->GetOgreTranlate());
 		m_pSceneNode->setOrientation(m_spTransform->GetOgreRotation());
 	}

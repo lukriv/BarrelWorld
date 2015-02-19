@@ -135,7 +135,7 @@ GameErrorCode GameMainMenuState::ProcessState(GameState& nextState, wxString& ne
 	m_spCompManager->GetRenderManager().GetOgreRoot()->addFrameListener(this);
 	
 	// physics debug draw
-	//m_pDebugDraw = new CDebugDraw( m_spCompManager->GetRenderManager().GetOgreSceneManager(), m_spCompManager->GetPhysicsManager().GetDynamicsWorld());
+	m_pDebugDraw = new CDebugDraw( m_spCompManager->GetRenderManager().GetOgreSceneManager(), m_spCompManager->GetPhysicsManager().GetDynamicsWorld());
 	
 	m_spCompManager->GetRenderManager().GetOgreRoot()->startRendering();
 	

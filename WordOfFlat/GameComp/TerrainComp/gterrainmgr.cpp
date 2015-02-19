@@ -61,11 +61,17 @@ void GameTerrainManager::Uninitialize()
 		TPhysTerrainGrid::iterator iter;
 		for( iter = m_physTerrainGrid.begin(); iter != m_physTerrainGrid.end(); ++iter)
 		{
-			if(*iter != nullptr)
+			if(iter->m_pRigidBody != nullptr)
 			{
-				m_pPhysicsMgr->GetDynamicsWorld()->removeRigidBody(*iter);
-				delete *iter;
-				*iter = nullptr;
+				m_pPhysicsMgr->GetDynamicsWorld()->removeRigidBody(iter->m_pRigidBody);
+				delete iter->m_pRigidBody;
+				iter->m_pRigidBody = nullptr;
+			}
+			
+			if(iter->m_pTerrainData != nullptr)
+			{
+				delete[] iter->m_pTerrainData;
+				iter->m_pTerrainData = nullptr;
 			}
 		}
 		
@@ -126,13 +132,13 @@ GameErrorCode GameTerrainManager::CreateTerrainGroup(TerrainDef& terrainDef)
 	{
 		TerrainPage *pTerrPage = (*iter).In();
 		
-		float* pTerrainData = nullptr;
+		wxScopedArray<float> apTerrain;
 		float minH = 0.0f;
 		float maxH = 0.0f;
 				
 		FWG_RETURN_FAIL( LoadTerrainData(terrainDef.m_terrainPages[0]->m_filename
 						, terrainDef.m_mapSize
-						, pTerrainData
+						, apTerrain
 						, minH
 						, maxH) );
 		
@@ -154,7 +160,7 @@ GameErrorCode GameTerrainManager::CreateTerrainGroup(TerrainDef& terrainDef)
 			//impData.inputFloat = pTerrainData;
 			
 			
-			m_pTerrainGroup->defineTerrain(pTerrPage->m_pageX, pTerrPage->m_pageY, pTerrainData);
+			m_pTerrainGroup->defineTerrain(pTerrPage->m_pageX, pTerrPage->m_pageY, apTerrain.get());
 			
 			
 			//m_pTerrainGroup->getTerrain(pTerrPage->m_pageX, pTerrPage->m_pageY)->prepare(impData);
@@ -162,6 +168,16 @@ GameErrorCode GameTerrainManager::CreateTerrainGroup(TerrainDef& terrainDef)
 		
 		if(m_pPhysicsMgr)		
 		{
+			float* pTerrainData = new (std::nothrow) float[terrainDef.m_mapSize*terrainDef.m_mapSize];
+			for (wxDword i = 0; i < terrainDef.m_mapSize; ++i)
+			{
+				memcpy( pTerrainData + terrainDef.m_mapSize * i
+					, apTerrain.get() + terrainDef.m_mapSize*(terrainDef.m_mapSize-i-1)
+					, sizeof(float)*(terrainDef.m_mapSize) );
+			}
+			
+			
+			
 			
 			btHeightfieldTerrainShape *pTerrainShape = new btHeightfieldTerrainShape(terrainDef.m_mapSize,
 																				terrainDef.m_mapSize,
@@ -184,7 +200,13 @@ GameErrorCode GameTerrainManager::CreateTerrainGroup(TerrainDef& terrainDef)
 			
 			btRigidBody *body = new btRigidBody(info);
 			
-			m_physTerrainGrid.push_back(body);
+			body->getWorldTransform().setOrigin(btVector3(0, maxH - minH,0));
+			
+			PhysicsTerrainData terrData;
+			terrData.m_pRigidBody = body;
+			terrData.m_pTerrainData = pTerrainData;
+			
+			m_physTerrainGrid.push_back(terrData);
 			m_pPhysicsMgr->GetDynamicsWorld()->addRigidBody(body);
 		}
 		
@@ -232,7 +254,7 @@ GameErrorCode GameTerrainManager::CreateTerrainGroup(TerrainDef& terrainDef)
 }
 
 
-GameErrorCode GameTerrainManager::LoadTerrainData( const wxString& resource, wxDword terrDataSize, float *&retData, float &minHeight, float &maxHeight)
+GameErrorCode GameTerrainManager::LoadTerrainData( const wxString& resource, wxDword terrDataSize, wxScopedArray<float> &retData, float &minHeight, float &maxHeight)
 {
 	Ogre::Image img;
 	img.load(resource.ToStdString(), Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
@@ -255,7 +277,7 @@ GameErrorCode GameTerrainManager::LoadTerrainData( const wxString& resource, wxD
 	
 	Ogre::uchar *pImgData = img.getData();
 	
-	float* pFloat = new (std::nothrow) float[terrDataSize*terrDataSize];
+	wxScopedArray<float> apFloat(new (std::nothrow) float[terrDataSize*terrDataSize]);
 	
 	FWGLOG_DEBUG_FORMAT(wxT("Image size = %u, dataSize = %u"), m_spLogger, img.getSize(), (terrDataSize*terrDataSize), FWGLOG_ENDVAL);
 	
@@ -263,7 +285,7 @@ GameErrorCode GameTerrainManager::LoadTerrainData( const wxString& resource, wxD
 	minHeight = 100000; 
 	maxHeight = -100000;
 	
-	if(pFloat == nullptr)
+	if(apFloat.get() == nullptr)
 	{
 		return FWG_E_MEMORY_ALLOCATION_ERROR;
 	}
@@ -272,7 +294,7 @@ GameErrorCode GameTerrainManager::LoadTerrainData( const wxString& resource, wxD
 	for (wxDword i = 0; i < img.getSize() ; ++i)
 	{
 		float temp = (static_cast<float>(pImgData[i])/255.0f) * 100.0f;
-		pFloat[i] = temp;
+		apFloat[i] = temp;
 		if (minHeight > temp)
 		{
 			minHeight = temp;
@@ -286,7 +308,7 @@ GameErrorCode GameTerrainManager::LoadTerrainData( const wxString& resource, wxD
 		//FWGLOG_DEBUG_FORMAT(wxT("TerrainData[%u] = %.4f, imgData[%u] = %u"), m_spLogger, i, pFloat[i], i, pImgData[i], FWGLOG_ENDVAL);
 	}
 	
-	retData = pFloat;
+	retData.swap(apFloat);
 	
 	FWGLOG_DEBUG_FORMAT(wxT("TerrainData min = %.4f, max = %.4f"), m_spLogger, minHeight, maxHeight, FWGLOG_ENDVAL);
 	

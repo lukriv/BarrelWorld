@@ -23,55 +23,64 @@ GameErrorCode RenderCompManager::Initialize(GameEngineSettings& settings)
 {
 	// is or is not initialized
 	GameErrorCode result = FWG_NO_ERROR;
+	try {
+		// Create the main window
+		m_pRoot = new Ogre::Root("", "");
+		if (m_pRoot == nullptr) {
+			result = FWG_E_MEMORY_ALLOCATION_ERROR;
+			FWGLOG_ERROR_FORMAT(wxT("Create ogre root failed: 0x%08x"),
+								m_spLogger, result, FWGLOG_ENDVAL);
+			return result;
+		}
+
+		m_pRoot->loadPlugin("RenderSystem_GL");
+		m_pRoot->loadPlugin("Plugin_OctreeSceneManager");
+		Ogre::RenderSystemList::const_iterator it = m_pRoot->getAvailableRenderers().begin();
+		Ogre::RenderSystem *pRenSys = nullptr;
+
+		if(m_pRoot->getAvailableRenderers().size() == 1) {
+			pRenSys = *it;
+		}
+		m_pRoot->setRenderSystem(pRenSys);
+		m_pRoot->initialise(false);
+
+
+		m_pRenderWindow = m_pRoot->createRenderWindow(settings.m_screenTitle.ToStdString()
+						  , settings.m_screenWidth
+						  , settings.m_screenHeight
+						  , false
+						  , 0);
+
+		if(m_pRenderWindow == nullptr) {
+			result = FWG_E_MEMORY_ALLOCATION_ERROR;
+			FWGLOG_ERROR_FORMAT(wxT("Create render window failed: 0x%08x"),
+								m_spLogger, result, FWGLOG_ENDVAL);
+			return result;
+		}
+
+		// create scene manager for game logic
+		//m_pSceneManager = m_pRoot->createSceneManager(Ogre::ST_GENERIC, Ogre::String(MAIN_GAME_SCENE_MANAGER));
+		m_pSceneManager = m_pRoot->createSceneManager("OctreeSceneManager", Ogre::String(MAIN_GAME_SCENE_MANAGER));
+		if(m_pSceneManager == nullptr) {
+			result = FWG_E_MEMORY_ALLOCATION_ERROR;
+			FWGLOG_ERROR_FORMAT(wxT("Create scene manager failed: 0x%08x"),
+								m_spLogger, result, FWGLOG_ENDVAL);
+			return result;
+		}
+		
+		// initialize Ogre resources
+		Ogre::ResourceGroupManager::getSingleton().addResourceLocation("res", "FileSystem", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, false);
+
+		Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+		
+	} catch(Ogre::Exception &exc) {
+		FWGLOG_ERROR_FORMAT(wxT("OGRE error message: '%s'"), m_spLogger
+						, wxString::FromUTF8(exc.getFullDescription().c_str()).GetData().AsInternal()
+						, FWGLOG_ENDVAL );
+		return FWG_E_RENDER_SYSTEM_ERROR;
+	}
 	
-	// Create the main window
-	m_pRoot = new Ogre::Root("", "");
-	if (m_pRoot == nullptr) {
-		result = FWG_E_MEMORY_ALLOCATION_ERROR;
-		FWGLOG_ERROR_FORMAT(wxT("Create ogre root failed: 0x%08x"),
-		                    m_spLogger, result, FWGLOG_ENDVAL);
-		return result;
-	}
-
-	m_pRoot->loadPlugin("RenderSystem_GL");
-	Ogre::RenderSystemList::const_iterator it = m_pRoot->getAvailableRenderers().begin();
-	Ogre::RenderSystem *pRenSys = nullptr;
-
-	if(m_pRoot->getAvailableRenderers().size() == 1) {
-		pRenSys = *it;
-	}
-	m_pRoot->setRenderSystem(pRenSys);
-	m_pRoot->initialise(false);
-
-
-	m_pRenderWindow = m_pRoot->createRenderWindow(settings.m_screenTitle.ToStdString()
-	                  , settings.m_screenWidth
-	                  , settings.m_screenHeight
-	                  , false
-	                  , 0);
-
-	if(m_pRenderWindow == nullptr) {
-		result = FWG_E_MEMORY_ALLOCATION_ERROR;
-		FWGLOG_ERROR_FORMAT(wxT("Create render window failed: 0x%08x"),
-		                    m_spLogger, result, FWGLOG_ENDVAL);
-		return result;
-	}
-
-	// create scene manager for game logic
-	m_pSceneManager = m_pRoot->createSceneManager(Ogre::ST_GENERIC, Ogre::String(MAIN_GAME_SCENE_MANAGER));
-	if(m_pSceneManager == nullptr) {
-		result = FWG_E_MEMORY_ALLOCATION_ERROR;
-		FWGLOG_ERROR_FORMAT(wxT("Create scene manager failed: 0x%08x"),
-		                    m_spLogger, result, FWGLOG_ENDVAL);
-		return result;
-	}
-	
-	// initialize Ogre resources
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("res", "FileSystem", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, false);
-
-	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
-	
-	return FWG_NO_ERROR;
+	return result;
 }
 
 void RenderCompManager::Uninitialize()
