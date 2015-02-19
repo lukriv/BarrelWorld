@@ -6,7 +6,6 @@
 #include <GameSystem/glog.h>
 #include <GameResHold/gdeftables.h>
 
-
 class RenderCompManager;
 class PhysicsCompManager;
 
@@ -52,6 +51,9 @@ public:
 	
 	inline GameLogger * GetLogger() { return m_spLogger; }
 	
+	
+	
+	
 	/**
 	 * \brief Create new terrain group from terrain definition
 	 * 
@@ -60,7 +62,10 @@ public:
 	 * @param terrainDef
 	 */
 	GameErrorCode CreateTerrainGroup (TerrainDef &terrainDef);
-	
+protected:
+	GameErrorCode PrepareTerrainGlobalOptions();
+
+	GameErrorCode LoadTerrainData(const wxString &resource, wxDword terrDataSize, float *&retData, float &minHeight, float &maxHeight);
 };
 
 

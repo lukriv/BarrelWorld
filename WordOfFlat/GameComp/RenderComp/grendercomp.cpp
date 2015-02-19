@@ -163,9 +163,7 @@ GameErrorCode RenderComponent::Update()
 {
 	if(!m_alreadyInUpdateQueue)
 	{
-		FWGLOG_DEBUG_FORMAT(wxT("Add to update queue: %s"), m_pOwnerManager->GetLogger(),
-														m_pParent->GetName().GetData().AsInternal(),
-														FWGLOG_ENDVAL);
+		//FWGLOG_DEBUG_FORMAT(wxT("Add to update queue: %s"), m_pOwnerManager->GetLogger(), m_pParent->GetName().GetData().AsInternal(), FWGLOG_ENDVAL);
 		m_alreadyInUpdateQueue = true;
 		return m_pOwnerManager->AddToUpdateQueue(this);
 	}

@@ -134,6 +134,9 @@ void GameConvertErrCode2String(GameErrorCode errCode, wxString &errorStr)
 	case FWG_E_BAD_CONVERSION_ERROR:
 		errorStr.assign(FWG_E_BAD_CONVERSION_ERROR_STR);
 		break;
+	case FWG_E_INVALID_DATA_ERROR:
+		errorStr.assign(FWG_E_INVALID_DATA_ERROR_STR);
+		break;
 	default:
 		errorStr.assign(_T("Unknown Error"));
 		break;

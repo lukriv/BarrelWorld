@@ -9,7 +9,6 @@
 #include "PhysicsComp/gphyscmgr.h"
 
 
-
 GameTerrainManager::GameTerrainManager(GameLogger* pLogger) : m_spLogger(pLogger)
 															, m_pRenderMgr(nullptr)
 															, m_pPhysicsMgr(nullptr)
@@ -32,27 +31,8 @@ GameErrorCode GameTerrainManager::Initialize(RenderCompManager* pRenderMgr, Phys
 	
 	if(m_pRenderMgr)
 	{
-		m_globalTerrainOptions = OGRE_NEW Ogre::TerrainGlobalOptions();
 		
-		
-		//Ogre::Vector3 lightdir(0.55, -0.3, 0.75);
-		//lightdir.normalise();
-        //
-		//Ogre::Light* light = mSceneMgr->createLight("tstLight");
-		//light->setType(Ogre::Light::LT_DIRECTIONAL);
-		//light->setDirection(lightdir);
-		//light->setDiffuseColour(Ogre::ColourValue::White);
-		//light->setSpecularColour(Ogre::ColourValue(0.4, 0.4, 0.4));
-		
-		
-		m_globalTerrainOptions->setMaxPixelError(8);
-		
-		// lightmapped terrain distance
-		m_globalTerrainOptions->setCompositeMapDistance(3000);
-		
-		// set ambient color
-		m_globalTerrainOptions->setCompositeMapAmbient(m_pRenderMgr->GetOgreSceneManager()->getAmbientLight());
-		
+		FWG_RETURN_FAIL(PrepareTerrainGlobalOptions());
 	}
 	
 	
@@ -111,8 +91,10 @@ GameErrorCode GameTerrainManager::CreateTerrainGroup(TerrainDef& terrainDef)
 													, Ogre::Terrain::ALIGN_X_Z
 													, terrainDef.m_mapSize
 													, terrainDef.m_worldSize);
-													
+		m_pTerrainGroup->setFilenameConvention("testTerrain", "dat");										
 		m_pTerrainGroup->setOrigin(Ogre::Vector3::ZERO);
+		
+		//FWG_RETURN_FAIL(PrepareTerrainGlobalOptions());
 		
 		// configure terrain defaults
 		Ogre::Terrain::ImportData& defaultimp = m_pTerrainGroup->getDefaultImportSettings();
@@ -125,7 +107,17 @@ GameErrorCode GameTerrainManager::CreateTerrainGroup(TerrainDef& terrainDef)
 		defaultimp.layerList.resize(1);
 		defaultimp.layerList[0].worldSize = 100;
 		defaultimp.layerList[0].textureNames.push_back("grass.png");
-		////defaultimp.layerList[0].textureNames.push_back("grass_0_normalheight.dds");
+		defaultimp.layerList[0].textureNames.push_back("grassnormal.png");
+		//defaultimp.layerList.resize(1);
+		//defaultimp.layerList[0].worldSize = 100;
+		//defaultimp.layerList[0].textureNames.push_back("dirt_grayrocky_diffusespecular.dds");
+		//defaultimp.layerList[0].textureNames.push_back("dirt_grayrocky_normalheight.dds");
+		//defaultimp.layerList[1].worldSize = 30;
+		//defaultimp.layerList[1].textureNames.push_back("grass_green-01_diffusespecular.dds");
+		//defaultimp.layerList[1].textureNames.push_back("grass_green-01_normalheight.dds");
+		//defaultimp.layerList[2].worldSize = 200;
+		//defaultimp.layerList[2].textureNames.push_back("growth_weirdfungus-03_diffusespecular.dds");
+		//defaultimp.layerList[2].textureNames.push_back("growth_weirdfungus-03_normalheight.dds");
 		
 	}
 	
@@ -133,12 +125,39 @@ GameErrorCode GameTerrainManager::CreateTerrainGroup(TerrainDef& terrainDef)
 	for (iter = terrainDef.m_terrainPages.begin(); iter != terrainDef.m_terrainPages.end(); ++iter)
 	{
 		TerrainPage *pTerrPage = (*iter).In();
-		Ogre::Image img;
-		img.load(pTerrPage->m_filename.ToStdString(), Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+		
+		float* pTerrainData = nullptr;
+		float minH = 0.0f;
+		float maxH = 0.0f;
+				
+		FWG_RETURN_FAIL( LoadTerrainData(terrainDef.m_terrainPages[0]->m_filename
+						, terrainDef.m_mapSize
+						, pTerrainData
+						, minH
+						, maxH) );
 		
 		if(m_pRenderMgr)
 		{
-			m_pTerrainGroup->defineTerrain(pTerrPage->m_pageX, pTerrPage->m_pageY, &img);
+		   // import settings
+		   	//Ogre::Image img;
+			//img.load(terrainDef.m_terrainPages[0]->m_filename.ToStdString(), Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+
+			//m_pTerrainGroup->defineTerrain(pTerrPage->m_pageX, pTerrPage->m_pageY, &img);
+			
+			//Ogre::Terrain::ImportData impData;
+			//
+			//
+			//
+			//impData.terrainSize = terrainDef.m_mapSize;
+			//impData.worldSize = terrainDef.m_worldSize;
+			//impData.inputScale = 1.0; // due terrain.png
+			//impData.inputFloat = pTerrainData;
+			
+			
+			m_pTerrainGroup->defineTerrain(pTerrPage->m_pageX, pTerrPage->m_pageY, pTerrainData);
+			
+			
+			//m_pTerrainGroup->getTerrain(pTerrPage->m_pageX, pTerrPage->m_pageY)->prepare(impData);
 		}
 		
 		if(m_pPhysicsMgr)		
@@ -146,13 +165,13 @@ GameErrorCode GameTerrainManager::CreateTerrainGroup(TerrainDef& terrainDef)
 			
 			btHeightfieldTerrainShape *pTerrainShape = new btHeightfieldTerrainShape(terrainDef.m_mapSize,
 																				terrainDef.m_mapSize,
-																				img.getData(),
+																				pTerrainData,
 																				1,
-																				0,
-																				255,
+																				minH,
+																				maxH,
 																				1,
-																				PHY_UCHAR,
-																				true);
+																				PHY_FLOAT,
+																				false);
 			
 			btDefaultMotionState *state = new btDefaultMotionState();
 			
@@ -169,6 +188,8 @@ GameErrorCode GameTerrainManager::CreateTerrainGroup(TerrainDef& terrainDef)
 			m_pPhysicsMgr->GetDynamicsWorld()->addRigidBody(body);
 		}
 		
+		//delete[] pTerrainData;
+		
 	}
 	
 	if(m_pTerrainGroup)
@@ -177,6 +198,128 @@ GameErrorCode GameTerrainManager::CreateTerrainGroup(TerrainDef& terrainDef)
 		m_pTerrainGroup->freeTemporaryResources();
 	}
 	
+	//{
+	//	Ogre::Terrain *pTerrain = m_pTerrainGroup->getTerrain( 0, 0);
+	//	wxDword maxSize = pTerrain->getSize() * pTerrain->getSize();
+	//	float * pTerrData = pTerrain->getHeightData();
+	//	
+	//	// initialize min and max
+	//	float minHeight = 100000; 
+	//	float maxHeight = -100000;
+	//	
+	//	FWGLOG_DEBUG_FORMAT(wxT("Terrain size = %u"), m_spLogger, pTerrain->getSize(), FWGLOG_ENDVAL);
+	//	
+	//	for (wxDword i = 0; i < maxSize ; ++i)
+	//	{
+	//		if (minHeight > pTerrData[i])
+	//		{
+	//			minHeight = pTerrData[i];
+	//		}
+	//		
+	//		if (maxHeight < pTerrData[i])
+	//		{
+	//			maxHeight = pTerrData[i];
+	//		}
+	//		FWGLOG_DEBUG_FORMAT(wxT("TerrainData[%u] = %.4f"), m_spLogger, i, pTerrData[i], FWGLOG_ENDVAL);
+	//	}
+	//	
+	//	FWGLOG_DEBUG_FORMAT(wxT("TerrainData min = %.4f, max = %.4f"), m_spLogger, minHeight, maxHeight, FWGLOG_ENDVAL);
+	//}
+	
+	
+	
 	return FWG_NO_ERROR;
 }
 
+
+GameErrorCode GameTerrainManager::LoadTerrainData( const wxString& resource, wxDword terrDataSize, float *&retData, float &minHeight, float &maxHeight)
+{
+	Ogre::Image img;
+	img.load(resource.ToStdString(), Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+	
+	if (( img.getHeight() != terrDataSize) || (img.getWidth() != terrDataSize))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Invalid image size: %u x %u (expected %u x %u)"), m_spLogger
+				, img.getHeight()
+				, img.getWidth()
+				, terrDataSize
+				, terrDataSize
+				, FWGLOG_ENDVAL);
+		return FWG_E_INVALID_DATA_ERROR;
+	} else {
+		FWGLOG_DEBUG_FORMAT(wxT("Image size: %u x %u"), m_spLogger
+				, img.getHeight()
+				, img.getWidth()
+				, FWGLOG_ENDVAL);
+	}
+	
+	Ogre::uchar *pImgData = img.getData();
+	
+	float* pFloat = new (std::nothrow) float[terrDataSize*terrDataSize];
+	
+	FWGLOG_DEBUG_FORMAT(wxT("Image size = %u, dataSize = %u"), m_spLogger, img.getSize(), (terrDataSize*terrDataSize), FWGLOG_ENDVAL);
+	
+	// initialize min and max
+	minHeight = 100000; 
+	maxHeight = -100000;
+	
+	if(pFloat == nullptr)
+	{
+		return FWG_E_MEMORY_ALLOCATION_ERROR;
+	}
+	
+	
+	for (wxDword i = 0; i < img.getSize() ; ++i)
+	{
+		float temp = (static_cast<float>(pImgData[i])/255.0f) * 100.0f;
+		pFloat[i] = temp;
+		if (minHeight > temp)
+		{
+			minHeight = temp;
+		}
+		
+		if (maxHeight < temp)
+		{
+			maxHeight = temp;
+		}
+		
+		//FWGLOG_DEBUG_FORMAT(wxT("TerrainData[%u] = %.4f, imgData[%u] = %u"), m_spLogger, i, pFloat[i], i, pImgData[i], FWGLOG_ENDVAL);
+	}
+	
+	retData = pFloat;
+	
+	FWGLOG_DEBUG_FORMAT(wxT("TerrainData min = %.4f, max = %.4f"), m_spLogger, minHeight, maxHeight, FWGLOG_ENDVAL);
+	
+	return FWG_NO_ERROR;
+}
+
+GameErrorCode GameTerrainManager::PrepareTerrainGlobalOptions()
+{
+	
+	m_globalTerrainOptions = OGRE_NEW Ogre::TerrainGlobalOptions();
+	
+	
+	Ogre::Vector3 lightdir(0.55, -0.3, 0.75);
+	lightdir.normalise();
+    
+    
+	Ogre::Light* l = m_pRenderMgr->GetOgreSceneManager()->createLight("tstLight");
+	l->setType(Ogre::Light::LT_DIRECTIONAL);
+	l->setDirection(lightdir);
+	l->setDiffuseColour(Ogre::ColourValue::White);
+	l->setSpecularColour(Ogre::ColourValue(0.4, 0.4, 0.4));
+	
+	
+	m_globalTerrainOptions->setMaxPixelError(8);
+	
+	// lightmapped terrain distance
+	m_globalTerrainOptions->setCompositeMapDistance(3000);
+	
+	// set ambient color
+	m_globalTerrainOptions->setLightMapDirection(l->getDerivedDirection());
+	m_globalTerrainOptions->setCompositeMapAmbient(m_pRenderMgr->GetOgreSceneManager()->getAmbientLight());
+	m_globalTerrainOptions->setCompositeMapDiffuse(l->getDiffuseColour());
+	
+	return FWG_NO_ERROR;
+
+}
