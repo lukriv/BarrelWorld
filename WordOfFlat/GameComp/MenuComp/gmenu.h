@@ -10,8 +10,9 @@
 
 class GameMenuCallback {
 public:
-	
+	virtual void OnSwitchEvent() = 0;
 	virtual void OnExitEvent() = 0;
+	virtual void OnDebugEvent() = 0;
 };
 
 
@@ -22,6 +23,7 @@ class GameMenu : public GameMenuBase {
 	// menu buttons
 	CEGUI::Window* m_pButtonExit;
 	CEGUI::Window* m_pButtonSwitch;
+	CEGUI::Window* m_pButtonDebug;
 	
 	GameMenuCallback* m_pCallback;
 	
@@ -34,6 +36,7 @@ public:
 	// menu events
 	bool ExitEvent(const CEGUI::EventArgs& /*e*/);
 	bool SwitchEvent(const CEGUI::EventArgs& /*e*/);
+	bool DebugEvent(const CEGUI::EventArgs& /*e*/);
 	
 	
 	// input mouse callback virtual methods

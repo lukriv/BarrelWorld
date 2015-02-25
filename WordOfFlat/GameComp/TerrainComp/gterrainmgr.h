@@ -19,10 +19,11 @@ namespace Ogre {
 
 
 struct PhysicsTerrainData {
+	wxInt32 m_objectCount;
 	btRigidBody* m_pRigidBody;
 	float* m_pTerrainData;
 	
-	PhysicsTerrainData() : m_pRigidBody(nullptr), m_pTerrainData(nullptr) {}
+	PhysicsTerrainData() : m_objectCount(0), m_pRigidBody(nullptr), m_pTerrainData(nullptr) {}
 };
 
 

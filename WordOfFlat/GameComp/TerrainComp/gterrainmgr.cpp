@@ -8,6 +8,8 @@
 #include "RenderComp/grendercmgr.h"
 #include "PhysicsComp/gphyscmgr.h"
 
+// chunk size must be 2^n
+static const wxInt32 CHUNK_SIZE = 32;
 
 GameTerrainManager::GameTerrainManager(GameLogger* pLogger) : m_spLogger(pLogger)
 															, m_pRenderMgr(nullptr)
@@ -86,6 +88,15 @@ GameErrorCode GameTerrainManager::CreateTerrainGroup(TerrainDef& terrainDef)
 		// more then one terrain group is not allowed
 		return FWG_E_OBJECT_ALREADY_EXISTS_ERROR;
 	}
+
+	// grid size	
+	wxInt32 gridMin[2] = {wxINT32_MAX, wxINT32_MAX};
+	wxInt32 gridMax[2] = {wxINT32_MIN, wxINT32_MIN};
+	wxInt32 gridSize[2] = { 0, 0};
+
+	wxInt32 sideSize = 0;
+	wxInt32 gridArraySize = 0;
+	
 	
 	if(m_pRenderMgr)
 	{
@@ -128,6 +139,49 @@ GameErrorCode GameTerrainManager::CreateTerrainGroup(TerrainDef& terrainDef)
 	}
 	
 	wxVector< RefObjSmPtr<TerrainPage> >::iterator iter;
+	//precount terrain grid size
+	for (iter = terrainDef.m_terrainPages.begin(); iter != terrainDef.m_terrainPages.end(); ++iter)
+	{
+		if( (*iter)->m_pageX > gridMax[0] )
+		{
+			gridMax[0] = (*iter)->m_pageX;
+		}
+		
+		if( (*iter)->m_pageX < gridMin[0] )
+		{
+			gridMin[0] = (*iter)->m_pageX;
+		}
+		
+		if( (*iter)->m_pageY > gridMax[1] )
+		{
+			gridMax[1] = (*iter)->m_pageY;
+		}
+		
+		if( (*iter)->m_pageY < gridMin[1] )
+		{
+			gridMin[1] = (*iter)->m_pageY;
+		}
+	}
+	
+	gridSize[0] = gridMax[0] - gridMin[0] + 1;
+	gridSize[1] = gridMax[1] - gridMin[1] + 1;
+	
+	// compute gridArraySize
+	sideSize = (terrainDef.m_mapSize - 1)/CHUNK_SIZE;
+	gridArraySize = gridSize[0] * gridSize[1] * sideSize * sideSize;
+	
+	FWGLOG_INFO_FORMAT(wxT("Ogre terrain grid min[ %d, %d], max[ %d, %d], size[ %d, %d]"), m_spLogger
+						, gridMin[0], gridMin[1] 
+						, gridMax[0], gridMax[1]
+						, gridSize[0], gridSize[1]
+						, FWGLOG_ENDVAL	);
+						
+	FWGLOG_INFO_FORMAT(wxT("Physics terrain grid min[ %d, %d], max[ %d, %d], size[ %d, %d]"), m_spLogger
+						, gridMin[0], gridMin[1] 
+						, gridMax[0], gridMax[1]
+						, gridSize[0], gridSize[1]
+						, FWGLOG_ENDVAL	);						
+	
 	for (iter = terrainDef.m_terrainPages.begin(); iter != terrainDef.m_terrainPages.end(); ++iter)
 	{
 		TerrainPage *pTerrPage = (*iter).In();
@@ -168,6 +222,12 @@ GameErrorCode GameTerrainManager::CreateTerrainGroup(TerrainDef& terrainDef)
 		
 		if(m_pPhysicsMgr)		
 		{
+			
+			// prepare physics grid - grid will be separated to the chunks
+
+			
+			
+			
 			float* pTerrainData = new (std::nothrow) float[terrainDef.m_mapSize*terrainDef.m_mapSize];
 			for (wxDword i = 0; i < terrainDef.m_mapSize; ++i)
 			{
@@ -187,7 +247,7 @@ GameErrorCode GameTerrainManager::CreateTerrainGroup(TerrainDef& terrainDef)
 																				maxH,
 																				1,
 																				PHY_FLOAT,
-																				false);
+																				true);
 			
 			btDefaultMotionState *state = new btDefaultMotionState();
 			
@@ -196,11 +256,14 @@ GameErrorCode GameTerrainManager::CreateTerrainGroup(TerrainDef& terrainDef)
 			
 			pTerrainShape->calculateLocalInertia(mass, localInertia);
 			
+			pTerrainShape->setUseZigzagSubdivision(true);
+			//pTerrainShape->setUseDiamondSubdivision(true);
+			
 			btRigidBody::btRigidBodyConstructionInfo info(mass, state, pTerrainShape, localInertia);
 			
 			btRigidBody *body = new btRigidBody(info);
 			
-			body->getWorldTransform().setOrigin(btVector3(0, maxH - minH,0));
+			body->getWorldTransform().setOrigin(btVector3(0, (maxH + minH)/2.0f ,0));
 			
 			PhysicsTerrainData terrData;
 			terrData.m_pRigidBody = body;
@@ -332,7 +395,7 @@ GameErrorCode GameTerrainManager::PrepareTerrainGlobalOptions()
 	l->setSpecularColour(Ogre::ColourValue(0.4, 0.4, 0.4));
 	
 	
-	m_globalTerrainOptions->setMaxPixelError(8);
+	m_globalTerrainOptions->setMaxPixelError(4);
 	
 	// lightmapped terrain distance
 	m_globalTerrainOptions->setCompositeMapDistance(3000);

@@ -73,6 +73,13 @@ GameErrorCode LogicFreeCamera::ProcessInput()
 			m_spTransform->GetData()->m_translate += dirVec.rotate(m_spTransform->GetData()->m_rotation.getAxis(), m_spTransform->GetData()->m_rotation.getAngle());;
 		}
 		
+		if(actualControls.IsPressed(FreeCameraInput::INPUT_ACTION_LEFT|FreeCameraInput::INPUT_ACTION_RIGHT)
+				&& !(actualControls.IsPressed(FreeCameraInput::INPUT_ACTION_LEFT) && actualControls.IsPressed(FreeCameraInput::INPUT_ACTION_RIGHT)))
+		{
+			btVector3 dirVec( actualControls.IsPressed(FreeCameraInput::INPUT_ACTION_LEFT) ? MOVE_STEP_SIZE : -MOVE_STEP_SIZE, 0, 0);
+			m_spTransform->GetData()->m_translate += dirVec.rotate(m_spTransform->GetData()->m_rotation.getAxis(), m_spTransform->GetData()->m_rotation.getAngle());;
+		}
+		
 
 		
 	}

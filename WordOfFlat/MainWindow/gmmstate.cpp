@@ -49,6 +49,20 @@ GameErrorCode GameMainMenuState::ProcessUpdate(float secDiff)
 		return result;
 	}
 	
+	if(m_switchPolyMode)
+	{
+		Ogre::Camera *pCamera = m_spCompManager->GetRenderManager().GetMainCamera()->GetCamera();
+		Ogre::PolygonMode polyMode = pCamera->getPolygonMode();
+		if(polyMode == Ogre::PM_SOLID)
+		{
+			pCamera->setPolygonMode(Ogre::PM_WIREFRAME);
+		} else {
+			pCamera->setPolygonMode(Ogre::PM_SOLID);
+		}
+		
+		m_switchPolyMode = false;
+	}
+	
 	return FWG_NO_ERROR;
 	
 }
@@ -135,7 +149,7 @@ GameErrorCode GameMainMenuState::ProcessState(GameState& nextState, wxString& ne
 	m_spCompManager->GetRenderManager().GetOgreRoot()->addFrameListener(this);
 	
 	// physics debug draw
-	m_pDebugDraw = new CDebugDraw( m_spCompManager->GetRenderManager().GetOgreSceneManager(), m_spCompManager->GetPhysicsManager().GetDynamicsWorld());
+	//m_pDebugDraw = new CDebugDraw( m_spCompManager->GetRenderManager().GetOgreSceneManager(), m_spCompManager->GetPhysicsManager().GetDynamicsWorld());
 	
 	m_spCompManager->GetRenderManager().GetOgreRoot()->startRendering();
 	
@@ -197,9 +211,29 @@ void GameMainMenuState::SetExitInputClbk(bool)
 	m_exitState = true;
 }
 
+void GameMainMenuState::SwitchPhysicsDebug()
+{
+	if(!m_pDebugDraw)
+	{
+		m_pDebugDraw = new CDebugDraw( m_spCompManager->GetRenderManager().GetOgreSceneManager(), m_spCompManager->GetPhysicsManager().GetDynamicsWorld());
+	} else {
+		delete m_pDebugDraw;
+		m_pDebugDraw = nullptr;
+	}
+}
+
 void GameMainMenuState::MenuCallback::OnExitEvent()
 {
 	m_pOwner->m_nextState = GAME_STATE_EXIT;
 	m_pOwner->m_exitState = true;
 }
 
+void GameMainMenuState::MenuCallback::OnSwitchEvent()
+{
+	m_pOwner->m_switchPolyMode = true;
+}
+
+void GameMainMenuState::MenuCallback::OnDebugEvent()
+{
+	m_pOwner->SwitchPhysicsDebug();
+}

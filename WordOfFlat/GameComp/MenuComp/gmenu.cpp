@@ -6,6 +6,7 @@ GameMenu::GameMenu(GameMenuSystem *pMenuRes, GameInputSystem *pInputSystem, Game
 					, m_isInitialized(false)
 					, m_pButtonExit(nullptr)
 					, m_pButtonSwitch(nullptr)
+					, m_pButtonDebug(nullptr)
 					, m_pCallback(nullptr) {}
 
 
@@ -36,22 +37,31 @@ GameErrorCode GameMenu::Initialize(GameMenuCallback* pCallback)
 		}
 		
 		m_pButtonExit = CEGUI::WindowManager::getSingleton().createWindow( "Test/Button", "mainMenu/ExitButton");
-		m_pButtonExit->setPosition(CEGUI::UVector2(CEGUI::UDim(0.1,0),CEGUI::UDim(0.1,0)));
+		m_pButtonExit->setPosition(CEGUI::UVector2(CEGUI::UDim(0.05,0),CEGUI::UDim(0.05,0)));
 		m_pButtonExit->setSize(CEGUI::USize (CEGUI::UDim(0,200), CEGUI::UDim(0,75)));
 		m_pButtonExit->setText("Exit");
 		
 		m_pButtonExit->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&GameMenu::ExitEvent, this));
 		
 		m_pButtonSwitch = CEGUI::WindowManager::getSingleton().createWindow( "Test/Button", "mainMenu/SwitchButton");
-		m_pButtonSwitch->setPosition(CEGUI::UVector2(CEGUI::UDim(0.1,0),CEGUI::UDim(0.3,0)));
+		m_pButtonSwitch->setPosition(CEGUI::UVector2(CEGUI::UDim(0.05,0),CEGUI::UDim(0.2,0)));
 		m_pButtonSwitch->setSize(CEGUI::USize (CEGUI::UDim(0,200), CEGUI::UDim(0,75)));
 		m_pButtonSwitch->setText("Switch");
 		
 		m_pButtonSwitch->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&GameMenu::SwitchEvent, this));
 		
+		m_pButtonDebug = CEGUI::WindowManager::getSingleton().createWindow( "Test/Button", "mainMenu/DebugButton");
+		m_pButtonDebug->setPosition(CEGUI::UVector2(CEGUI::UDim(0.05,0),CEGUI::UDim(0.35,0)));
+		m_pButtonDebug->setSize(CEGUI::USize (CEGUI::UDim(0,200), CEGUI::UDim(0,75)));
+		m_pButtonDebug->setText("Debug");
+		
+		m_pButtonDebug->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&GameMenu::DebugEvent, this));
+
+		
 		// set buttons to root window
 		GetRootWindow()->addChild(m_pButtonExit);
 		GetRootWindow()->addChild(m_pButtonSwitch);
+		GetRootWindow()->addChild(m_pButtonDebug);
 		
 	} catch (Ogre::Exception &ex) {
 		FWGLOG_ERROR_FORMAT(wxT("Ogre exception raised: '%s'"), GetLogger()
@@ -124,15 +134,31 @@ bool GameMenu::ExitEvent(const CEGUI::EventArgs&)
 bool GameMenu::SwitchEvent(const CEGUI::EventArgs&)
 {
 
-	if(m_pButtonExit->isVisible())
+	//if(m_pButtonExit->isVisible())
+	//{
+	//	m_pButtonExit->setVisible(false);
+	//} else {
+	//	m_pButtonExit->setVisible(true);
+	//}
+	
+	if(m_pCallback)
 	{
-		m_pButtonExit->setVisible(false);
-	} else {
-		m_pButtonExit->setVisible(true);
+		m_pCallback->OnSwitchEvent();
 	}
 	
 	return true;
 }
+
+bool GameMenu::DebugEvent(const CEGUI::EventArgs&)
+{
+	if(m_pCallback)
+	{
+		m_pCallback->OnDebugEvent();
+	}
+	
+	return true;
+}
+
 
 
 void GameMenu::OnMouseMoved(const OIS::MouseState& arg)

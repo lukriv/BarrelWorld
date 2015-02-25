@@ -16,7 +16,9 @@ private:
 		GameMainMenuState* m_pOwner;
 	public:
 		MenuCallback(GameMainMenuState *pOwner) : m_pOwner(pOwner) {}
+		virtual void OnSwitchEvent() override;
 		virtual void OnExitEvent() override;
+		virtual void OnDebugEvent() override;
 	};
 private:
 	GameClientEngine *m_pOwner;
@@ -28,6 +30,7 @@ private:
 	GameState m_nextState;
 	wxString m_nextStateParams;
 	bool m_exitState;
+	bool m_switchPolyMode;
 	CDebugDraw* m_pDebugDraw;
 	
 public:
@@ -36,6 +39,7 @@ public:
 																		, m_pMenuClbk(nullptr)
 																		, m_nextState(GAME_STATE_EXIT)
 																		, m_exitState(false)
+																		, m_switchPolyMode(false)
 																		, m_pDebugDraw(nullptr){}
 	
 																		
@@ -49,6 +53,8 @@ public:
 	
 	// input system callbacks
 	void SetExitInputClbk(bool exit);
+	void ChangeView();
+	void SwitchPhysicsDebug();
 	
 	
 	
