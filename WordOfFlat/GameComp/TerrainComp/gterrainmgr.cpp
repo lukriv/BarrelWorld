@@ -9,7 +9,9 @@
 #include "PhysicsComp/gphyscmgr.h"
 
 // chunk size must be 2^n
-static const wxInt32 CHUNK_SIZE = 32;
+static const wxInt32 CHUNK_SHIFT = 6; // n
+static const wxInt32 CHUNK_SIZE = 1<<CHUNK_SHIFT;
+static const wxInt32 CHUNK_VERTICES = CHUNK_SIZE + 1;
 
 GameTerrainManager::GameTerrainManager(GameLogger* pLogger) : m_spLogger(pLogger)
 															, m_pRenderMgr(nullptr)
@@ -167,8 +169,12 @@ GameErrorCode GameTerrainManager::CreateTerrainGroup(TerrainDef& terrainDef)
 	gridSize[1] = gridMax[1] - gridMin[1] + 1;
 	
 	// compute gridArraySize
-	sideSize = (terrainDef.m_mapSize - 1)/CHUNK_SIZE;
+	sideSize = (terrainDef.m_mapSize - 1) >> CHUNK_SHIFT;
 	gridArraySize = gridSize[0] * gridSize[1] * sideSize * sideSize;
+	btScalar terrainScale = static_cast<btScalar>(terrainDef.m_worldSize) / static_cast<btScalar>(terrainDef.m_mapSize - 1);
+	btScalar chunkWorldSize = static_cast<btScalar>(CHUNK_SIZE) * terrainScale;
+	//btScalar halfChunkWorldSize = chunkWorldSize / 2.0f;
+	
 	
 	FWGLOG_INFO_FORMAT(wxT("Ogre terrain grid min[ %d, %d], max[ %d, %d], size[ %d, %d]"), m_spLogger
 						, gridMin[0], gridMin[1] 
@@ -181,6 +187,13 @@ GameErrorCode GameTerrainManager::CreateTerrainGroup(TerrainDef& terrainDef)
 						, gridMax[0], gridMax[1]
 						, gridSize[0], gridSize[1]
 						, FWGLOG_ENDVAL	);						
+						
+	FWGLOG_INFO_FORMAT(wxT("Terrain grid size ( %d ), terrain scale ( %.4f ), chunk world size ( %.4f), side number of physics terr. to ogre terr. ( %d )"), m_spLogger
+						, gridArraySize
+						, terrainScale
+						, chunkWorldSize
+						, sideSize
+						, FWGLOG_ENDVAL	);
 	
 	for (iter = terrainDef.m_terrainPages.begin(); iter != terrainDef.m_terrainPages.end(); ++iter)
 	{
@@ -224,56 +237,94 @@ GameErrorCode GameTerrainManager::CreateTerrainGroup(TerrainDef& terrainDef)
 		{
 			
 			// prepare physics grid - grid will be separated to the chunks
-
+			m_physTerrainGrid.resize(gridArraySize);
 			
-			
-			
-			float* pTerrainData = new (std::nothrow) float[terrainDef.m_mapSize*terrainDef.m_mapSize];
-			for (wxDword i = 0; i < terrainDef.m_mapSize; ++i)
+			for (wxInt32 gridY = 0; gridY < sideSize; ++gridY )
 			{
-				memcpy( pTerrainData + terrainDef.m_mapSize * i
-					, apTerrain.get() + terrainDef.m_mapSize*(terrainDef.m_mapSize-i-1)
-					, sizeof(float)*(terrainDef.m_mapSize) );
+				for (wxInt32 gridX = 0; gridX < sideSize; ++gridX )
+				{
+					float minHeight = 1000000.0f;
+					float maxHeight = -1000000.0f;
+					float *pTerrainData = new (std::nothrow) float[CHUNK_VERTICES*CHUNK_VERTICES];
+					wxInt32 gridIndex = gridSize[0]*sideSize*(gridY + sideSize*(pTerrPage->m_pageY - gridMin[1])) + gridX + sideSize*(pTerrPage->m_pageX - gridMin[0]);
+					
+					//FWGLOG_DEBUG_FORMAT(wxT("Grid slot[ %d, %d]: index = %d, origin[ %.4f, %.4f]"), m_spLogger
+					//	, gridX
+					//	, gridY
+					//	, gridIndex
+					//	, (static_cast<btScalar>(gridX - sideSize/2)+0.5f)*chunkWorldSize + static_cast<btScalar>(pTerrPage->m_pageX)*terrainDef.m_worldSize
+					//	, (static_cast<btScalar>(gridY - sideSize/2)+0.5f)*chunkWorldSize + static_cast<btScalar>(pTerrPage->m_pageY)*terrainDef.m_worldSize
+					//	, FWGLOG_ENDVAL);
+					
+					for (wxInt32 i = 0; i < CHUNK_VERTICES; ++i)
+					{
+						float *pTerrBegin = apTerrain.get() + terrainDef.m_mapSize*(terrainDef.m_mapSize-i-1-gridY*CHUNK_SIZE) + gridX*CHUNK_SIZE;
+						memcpy( pTerrainData + CHUNK_VERTICES*i
+								, pTerrBegin
+								, CHUNK_VERTICES * sizeof(float));
+						
+
+						for (wxInt32 j = 0; j < CHUNK_VERTICES; ++j)
+						{
+							if (minHeight > pTerrBegin[j])
+							{
+								minHeight = pTerrBegin[j];
+							}
+							
+							if (maxHeight < pTerrBegin[j])
+							{
+								maxHeight = pTerrBegin[j];
+							}
+						}
+						
+						
+								
+						
+					}
+					
+					btHeightfieldTerrainShape *pTerrainShape = new btHeightfieldTerrainShape(CHUNK_VERTICES,
+																						CHUNK_VERTICES,
+																						pTerrainData,
+																						1,
+																						minHeight,
+																						maxHeight,
+																						1,
+																						PHY_FLOAT,
+																						true);
+					btDefaultMotionState *state = new btDefaultMotionState();
+					
+					btScalar mass = 0;
+					btVector3 localInertia(0, 0, 0);
+					
+					pTerrainShape->calculateLocalInertia(mass, localInertia);
+					
+					pTerrainShape->setLocalScaling( btVector3(terrainScale, 1, terrainScale) );
+					
+					pTerrainShape->setUseZigzagSubdivision(true);
+					//pTerrainShape->setUseDiamondSubdivision(true);
+					
+					btRigidBody::btRigidBodyConstructionInfo info(mass, state, pTerrainShape, localInertia);
+					
+					btRigidBody *pBody = new btRigidBody(info);
+					
+					pBody->getWorldTransform().setOrigin(btVector3( (static_cast<btScalar>(gridX - sideSize/2)+0.5f)*chunkWorldSize + static_cast<btScalar>(pTerrPage->m_pageX)*terrainDef.m_worldSize
+													, (maxHeight + minHeight)/2.0f 
+													, (static_cast<btScalar>(gridY - sideSize/2)+0.5f)*chunkWorldSize + static_cast<btScalar>(-pTerrPage->m_pageY)*terrainDef.m_worldSize));
+					
+					PhysicsTerrainData terrData;
+					terrData.m_pRigidBody = pBody;
+					terrData.m_pTerrainData = pTerrainData;
+					
+					m_physTerrainGrid[ gridIndex ] = terrData;
+					
+					
+					m_pPhysicsMgr->GetDynamicsWorld()->addRigidBody(pBody);
+				}
 			}
 			
 			
-			
-			
-			btHeightfieldTerrainShape *pTerrainShape = new btHeightfieldTerrainShape(terrainDef.m_mapSize,
-																				terrainDef.m_mapSize,
-																				pTerrainData,
-																				1,
-																				minH,
-																				maxH,
-																				1,
-																				PHY_FLOAT,
-																				true);
-			
-			btDefaultMotionState *state = new btDefaultMotionState();
-			
-			btScalar mass = 0;
-			btVector3 localInertia(0, 0, 0);
-			
-			pTerrainShape->calculateLocalInertia(mass, localInertia);
-			
-			pTerrainShape->setUseZigzagSubdivision(true);
-			//pTerrainShape->setUseDiamondSubdivision(true);
-			
-			btRigidBody::btRigidBodyConstructionInfo info(mass, state, pTerrainShape, localInertia);
-			
-			btRigidBody *body = new btRigidBody(info);
-			
-			body->getWorldTransform().setOrigin(btVector3(0, (maxH + minH)/2.0f ,0));
-			
-			PhysicsTerrainData terrData;
-			terrData.m_pRigidBody = body;
-			terrData.m_pTerrainData = pTerrainData;
-			
-			m_physTerrainGrid.push_back(terrData);
-			m_pPhysicsMgr->GetDynamicsWorld()->addRigidBody(body);
 		}
 		
-		//delete[] pTerrainData;
 		
 	}
 	

@@ -24,6 +24,20 @@ struct PhysicsTerrainData {
 	float* m_pTerrainData;
 	
 	PhysicsTerrainData() : m_objectCount(0), m_pRigidBody(nullptr), m_pTerrainData(nullptr) {}
+	
+	PhysicsTerrainData& operator=(const PhysicsTerrainData& terData)
+	{
+		if(this == &terData)
+		{
+			return *this;
+		}
+		
+		m_objectCount = terData.m_objectCount;
+		m_pRigidBody = terData.m_pRigidBody;
+		m_pTerrainData = terData.m_pTerrainData;
+		
+		return *this;
+	}
 };
 
 

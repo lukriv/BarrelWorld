@@ -51,10 +51,10 @@
 	<scene>
 		<terrain>
 			<mapSize>513</mapSize>
-			<worldSize>1000</worldSize>
+			<worldSize>512</worldSize>
 			<terrainpages>
 				<terrainpage>
-					<filename>terrain.png</filename>
+					<filename>terrain_00000000.bmp</filename>
 					<pageX>0</pageX>
 					<pageY>0</pageY>
 				</terrainpage>
@@ -69,6 +69,54 @@
 			
 			<render name="render1">
 				<renderent name="renderEnt1">
+					<meshref value="mesh1" />
+					<materialref value="material1" />
+					<position>0.0;0.0;0.0</position>
+				</renderent>
+			</render>
+			
+			<physics type="rigid">
+				<shape type="box">
+					<boxHalfSize>1.0, 1.0, 1.0</boxHalfSize>
+				</shape>
+				<mass>1.0</mass>
+				<inertia>0.0,0.0,0.0</inertia>
+			</physics>
+		</entity>
+		
+		<entity name="entity3">
+			<transform>
+				<position>5.0, 150.0, 0.0</position>
+				<scale>1.0, 1.0, 1.0</scale>
+				<rotation>1.0, 0.0, 0.0, 0.0</rotation>				
+			</transform>
+			
+			<render name="render3">
+				<renderent name="renderEnt3">
+					<meshref value="mesh1" />
+					<materialref value="material1" />
+					<position>0.0;0.0;0.0</position>
+				</renderent>
+			</render>
+			
+			<physics type="rigid">
+				<shape type="box">
+					<boxHalfSize>1.0, 1.0, 1.0</boxHalfSize>
+				</shape>
+				<mass>1.0</mass>
+				<inertia>0.0,0.0,0.0</inertia>
+			</physics>
+		</entity>
+		
+		<entity name="entity4">
+			<transform>
+				<position>0.0, 150.0, 5.0</position>
+				<scale>1.0, 1.0, 1.0</scale>
+				<rotation>1.0, 0.0, 0.0, 0.0</rotation>				
+			</transform>
+			
+			<render name="render4">
+				<renderent name="renderEnt4">
 					<meshref value="mesh1" />
 					<materialref value="material1" />
 					<position>0.0;0.0;0.0</position>
@@ -121,7 +169,7 @@
 				<rotation>1.0, 0.0, 0.0, 0.0</rotation>				
 			</transform>
 			
-			<render name="render3">
+			<render name="camera">
 				<cameraref value="MainCamera" />
 			</render>
 			
