@@ -7,7 +7,7 @@
 #include <GameSystem/refobjectimpl.h>
 #include <GameSystem/refobjectsmptr.h>
 
-
+class GameCompManager;
 class LogicComponentBase;
 class GameEntity;
 struct LogicDef;
@@ -18,6 +18,7 @@ private:
 	typedef GameBasSet<LogicComponentBase*> TLogicCompList;
 private:
 	GameLoggerPtr m_spLogger;
+	GameCompManager *m_pComponentManager;
 	TLogicCompList m_logicCompList;
 	
 	wxCriticalSection m_lockMgr;
@@ -26,6 +27,11 @@ public:
 	virtual ~LogicCompManager();
 	
 	inline GameLogger* GetLogger() { return m_spLogger; }
+	
+	inline GameCompManager* GetComponentMgr() { return m_spComponentManager; }
+	
+	GameErrorCode Initialize(GameCompManager *pComponentManager);
+	
 	
 	/**
 	 * \brief Add logic component in manager

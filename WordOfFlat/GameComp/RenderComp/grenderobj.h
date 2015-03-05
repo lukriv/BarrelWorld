@@ -16,7 +16,7 @@ public:
 	
 	inline Ogre::MovableObject* GetMovableObject() { return m_pObject; }
 	
-	
+	// camera cast
 	inline bool IsCameraType() 
 	{
 		return (m_pObject->getMovableType().compare("Camera") == 0);
@@ -25,6 +25,17 @@ public:
 	inline Ogre::Camera* GetCamera() 
 	{ 
 		return (IsCameraType()?reinterpret_cast<Ogre::Camera*>(m_pObject):nullptr); 
+	}
+	
+	// manual object cast
+	inline bool IsManualObject()
+	{
+		return (m_pObject->getMovableType().compare("ManualObject") == 0);
+	}
+	
+	inline Ogre::ManualObject* GetManualObject()
+	{
+		return (IsManualObject()?reinterpret_cast<Ogre::ManualObject*>(m_pObject):nullptr);
 	}
 	 
 };

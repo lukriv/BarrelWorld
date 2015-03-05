@@ -153,6 +153,8 @@ GameErrorCode GameInputSystem::CreateAndRegisterInputComponent( const InputDef &
 			return CharacterInput::CreateObject(inputDef, *this, pNewInputComp);
 		case InputDef::INPUT_TYPE_FREE_CAMERA:
 			return FreeCameraInput::CreateObject(inputDef, *this, pNewInputComp);
+		case InputDef::INPUT_TYPE_GENERIC_MOUSE:
+			return GenericMouseInput::CreateObject(inputDef, *this, pNewInputComp);
 		default:
 			FWGLOG_ERROR(wxT("Unknown input component type"), m_spLogger);
 			return FWG_E_INVALID_PARAMETER_ERROR;

@@ -1,8 +1,10 @@
 #include "glogiccmgr.h"
 
 #include "glogiccomp.h"
+#include "../gcompmgr.h"
 
 LogicCompManager::LogicCompManager(GameLogger *pLogger) : m_spLogger(pLogger)
+												, m_pComponentManager(nullptr)
 {
 }
 
@@ -40,6 +42,9 @@ void LogicCompManager::RemoveLogicComp(LogicComponentBase* pLogicComp)
 	m_logicCompList.Remove(pLogicComp);
 }
 
-
-
-
+GameErrorCode LogicCompManager::Initialize(GameCompManager* pComponentManager)
+{
+	m_pComponentManager = pComponentManager;
+	
+	return FWG_NO_ERROR;
+}

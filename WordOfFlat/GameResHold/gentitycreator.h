@@ -6,16 +6,24 @@
 #include "../GameSystem/refobjectsmptr.h"
 
 
-class GameEntityCreator : public IRefObject {
+/**
+ * @class GameEntityCreator
+ * @author Lukas
+ * @date 03/01/15
+ * @file gentitycreator.h
+ * @brief Create random definition of diferent game object
+ * 
+ * Creates e.g. entity definitions for diferent game object
+ * 
+ */
+class GameEntityCreator : public RefObjectImpl<IRefObject> {
 private:
-	wxAtomicInt m_refCount;
+	GameLoggerPtr m_spLogger;
+public:
+	GameEntityCreator(GameLogger *pLogger) : m_spLogger(pLogger) {}
 	
-public:
-	GameEntityCreator() : m_refCount(1) {}
+	GameErrorCode CreateTerrainDecal(EntityDef *&pTerrDecalDef);
 
-public:
-	virtual void addRef();
-	virtual wxInt32 release();
 };
 
 

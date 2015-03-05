@@ -52,11 +52,11 @@ GameErrorCode GameCompManager::Initialize(GameEngineSettings& settings)
 	
 	FWGLOG_INFO(wxT("Physics system initialization was successful"), m_spLogger);
 	
-	//if(FWG_FAILED(result = m_logicMgr.Initialize(m_renderMgr.GetOgreRenderWindow(), m_renderMgr.GetOgreSceneManager())))
-	//{
-	//	FWGLOG_ERROR_FORMAT(wxT("Menu manager initialize failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
-	//	return result;
-	//} 
+	if(FWG_FAILED(result = m_logicMgr.Initialize(C)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Menu manager initialize failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	} 
 	
 	//if(FWG_FAILED(result = m_entityMgr.Initialize(m_renderMgr.GetOgreRenderWindow(), m_renderMgr.GetOgreSceneManager())))
 	//{

@@ -77,12 +77,14 @@
         <File Name="InputComp/ginputsystem.h"/>
         <File Name="InputComp/gcharinput.h"/>
         <File Name="InputComp/gfreecaminput.h"/>
+        <File Name="InputComp/gmouseinput.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="src">
         <File Name="InputComp/ginputcomp.cpp"/>
         <File Name="InputComp/ginputsystem.cpp"/>
         <File Name="InputComp/gcharinput.cpp"/>
         <File Name="InputComp/gfreecaminput.cpp"/>
+        <File Name="InputComp/gmouseinput.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="logicComp">
@@ -91,6 +93,7 @@
         <File Name="LogicComp/glogiccmgr.h"/>
         <File Name="LogicComp/glogicman.h"/>
         <File Name="LogicComp/glogicfreecam.h"/>
+        <File Name="LogicComp/glogicterrdecal.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="src">
         <File Name="LogicComp/glogiccomp.cpp"/>
@@ -98,6 +101,7 @@
         <File Name="LogicComp/glogicman.cpp"/>
         <File Name="LogicComp/glogiccreator.cpp"/>
         <File Name="LogicComp/glogicfreecam.cpp"/>
+        <File Name="LogicComp/glogicterrdecal.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="menuComp">

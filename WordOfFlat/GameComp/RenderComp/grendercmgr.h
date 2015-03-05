@@ -121,6 +121,15 @@ public:
 	 * \return Errorcode
 	 */
 	GameErrorCode CreateCamera(const CameraDef &cameraDef, RenderObject *&pCamera);	
+	
+	
+	
+	/**
+	 * @brief Create empty ogre manual object
+	 * @param manObjDef
+	 * @param pManObj
+	 */
+	GameErrorCode CreateManualObject(const ManualObjectDef &manObjDef, RenderObject *&pManObj);
 
 
 };

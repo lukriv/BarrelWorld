@@ -123,6 +123,10 @@ public:
 				m_near(1.0f){}
 };
 
+struct ManualObjectDef : public DefBase {
+	wxString m_manualObjectType;
+};
+
 /*!
  * \class LightDef
  * \author Lukas
@@ -148,6 +152,7 @@ struct LightDef : public DefBase {
 struct RenderDef : public DefBase {
 public:
 	wxVector< RefObjSmPtr<RenderEntityDef> > m_entities;
+	wxVector< RefObjSmPtr<ManualObjectDef> > m_manualObject;
 	wxVector< RefObjSmPtr<CameraDef> > m_cameras;
 	wxVector< RefObjSmPtr<LightDef> > m_lights;
 public:
@@ -160,9 +165,10 @@ struct InputDef : public DefBase {
 	typedef GameBasMap<wxString, wxInt32 > TInputMap;
 public:
 	enum InputType {
-		INPUT_TYPE_GENERIC 		= 0,
-		INPUT_TYPE_CHARACTER 	= 1,
-		INPUT_TYPE_FREE_CAMERA 	= 2,
+		INPUT_TYPE_GENERIC 			= 0,
+		INPUT_TYPE_CHARACTER 		= 1,
+		INPUT_TYPE_FREE_CAMERA 		= 2,
+		INPUT_TYPE_GENERIC_MOUSE	= 3
 	};
 public:
 	InputType m_inputType;

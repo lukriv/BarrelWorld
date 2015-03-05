@@ -19,7 +19,7 @@ public:
 	
 	GameErrorCode CreateAllEntities(GameDefinitionHolder &defHolder, GameCompManager& compMgr);
 	
-	GameErrorCode CreateEntity( EntityDef &entityDef, GameCompManager& compMgr, GameEntity &entity);
+	GameErrorCode CreateEntity( EntityDef &entityDef, GameCompManager& compMgr, GameEntity *&pEntity);
 	
 };
 

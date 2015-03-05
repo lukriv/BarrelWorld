@@ -7,8 +7,9 @@
 #include "glogicfreecam.h"
 
 
-static const wxChar* FACTORY_LOGIC_TYPE_MANUAL_TEST = wxT("MANUAL_TEST");
-static const wxChar* FACTORY_LOGIC_TYPE_FREE_CAMERA = wxT("FREE_CAMERA");
+static const wxChar* FACTORY_LOGIC_TYPE_MANUAL_TEST 	= wxT("MANUAL_TEST");
+static const wxChar* FACTORY_LOGIC_TYPE_FREE_CAMERA 	= wxT("FREE_CAMERA");
+static const wxChar* FACTORY_LOGIC_TYPE_TERRAIN_DECAL 	= wxT("TERRAIN_DECAL");
 
 
 GameErrorCode LogicCompManager::CreateLogicComp(LogicDef& logicDef, GameEntity* pEntity)
