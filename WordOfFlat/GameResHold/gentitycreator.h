@@ -2,8 +2,11 @@
 #define __DYNAMIC_ENTITY_CREATOR_H__
 
 #include <wx/atomic.h>
-#include "../GameSystem/refobject.h"
-#include "../GameSystem/refobjectsmptr.h"
+#include <GameSystem/refobject.h>
+#include <GameSystem/refobjectsmptr.h>
+#include <GameSystem/refobjectimpl.h>
+#include <GameSystem/glog.h>
+#include "gdeftables.h"
 
 
 /**
@@ -22,7 +25,7 @@ private:
 public:
 	GameEntityCreator(GameLogger *pLogger) : m_spLogger(pLogger) {}
 	
-	GameErrorCode CreateTerrainDecal(EntityDef *&pTerrDecalDef);
+	GameErrorCode CreateTerrainDecal(GameCompManager& compMgr, GameEntity *&pTerrDecal);
 
 };
 

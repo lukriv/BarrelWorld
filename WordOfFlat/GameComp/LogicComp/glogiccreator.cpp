@@ -39,6 +39,16 @@ GameErrorCode LogicCompManager::CreateLogicComp(LogicDef& logicDef, GameEntity* 
 			return result;
 		}
 		
+	} else if(logicDef.m_logicType.Cmp(FACTORY_LOGIC_TYPE_TERRAIN_DECAL) == 0) {
+		LogicTerrainDecal *pLogicTerrainDecal = nullptr;
+		FWG_RETURN_FAIL(GameNewChecked(pLogicTerrainDecal));
+		// prevent memory leak
+		spLogicComp.Attach(pLogicTerrainDecal);
+		if(FWG_FAILED(result = pLogicTerrainDecal->Initialize(m_pComponentManager->GetTerrainManager(), pEntity))
+		{
+			FWGLOG_ERROR_FORMAT(wxT("Initialize terrain decal logic failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+			return result;
+		}
 	} else {
 		FWGLOG_ERROR_FORMAT(wxT("Unknown logic type '%s'"),
 						m_spLogger, logicDef.m_logicType.GetData().AsInternal(), FWGLOG_ENDVAL);

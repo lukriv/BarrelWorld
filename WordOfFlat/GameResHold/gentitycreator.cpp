@@ -1,6 +1,8 @@
 #include "gentitycreator.h"
 
-GameErrorCode GameEntityCreator::CreateTerrainDecal(EntityDef*& pTerrDecalDef, const Ogre::Vector3 &initialPosition)
+static const wxChar* TERRAIN_DECAL_LOGIC = wxT("TERRAIN_DECAL");
+
+GameErrorCode GameEntityCreator::CreateTerrainDecal(EntityDef*& pTerrDecalDef)
 {
 	RefObjSmPtr<EntityDef> spEntityDef;
 	FWG_RETURN_FAIL (GameNewChecked(spEntityDef.OutRef()));
@@ -8,11 +10,15 @@ GameErrorCode GameEntityCreator::CreateTerrainDecal(EntityDef*& pTerrDecalDef, c
 	// create transformation
 	FWG_RETURN_FAIL (GameNewChecked(spEntityDef->m_transformation.OutRef()));
 	
-	spEntityDef->m_transformation->GetData()->m_translate = initialPosition;
+	FWG_RETURN_FAIL (GameNewChecked(spEntityDef->m_logicDef.OutRef()));
 	
-	FWG_RETURN_FAIL (GameNewChecked(spEntityDef->))
-	
+	spEntityDef->m_logicDef->m_logicType = ;
 	
 	pTerrDecalDef = spEntityDef.Detach();
 	return FWG_NO_ERROR;
+}
+
+GameErrorCode GameEntityCreator::CreateTerrainDecal(GameCompManager& compMgr, GameEntity*& pTerrDecal)
+{
+	compMgr.GetEntityManager().CreateEntity("terrainDecal, ")
 }

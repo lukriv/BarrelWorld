@@ -13,6 +13,7 @@ class LogicTerrainDecal : public LogicComponentBase
 {
 	RefObjSmPtr<TransformComponent> m_spTransform;
 	RefObjSmPtr<InputComponent> m_spInput;
+	GameTerrainManager *m_pTerrainMgr;
 public:
 	LogicTerrainDecal();
 	~LogicTerrainDecal();
@@ -28,8 +29,6 @@ public:
 protected:
 	virtual GameErrorCode UserLogic();
 	
-protected:
-	GameErrorCode ProcessInput();
 };
 
 #endif // __GAME_FREE_CAMERA_LOGIC_TEST_H__

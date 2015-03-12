@@ -123,8 +123,19 @@ public:
 				m_near(1.0f){}
 };
 
+/**
+ * @class ManualObjectDef
+ * @author Lukas
+ * @date 03/12/15
+ * @file gdeftables.h
+ * @brief Manual object definition
+ * 
+ * Create specific manual object for different kind of use (e.g. terrain decal)
+ * 
+ */
 struct ManualObjectDef : public DefBase {
 	wxString m_manualObjectType;
+	RefObjSmPtr<NameDef> m_material;
 };
 
 /*!

@@ -335,3 +335,18 @@ GameErrorCode RenderCompManager::SetMainCamera(const wxString& cameraName)
 		return FWG_E_OBJECT_NOT_FOUND_ERROR;
 	}
 }
+
+
+static const wxChar* MANUAL_OBJECT_TERRAIN_DECAL = wxT("TerrainDecal");
+
+GameErrorCode RenderCompManager::CreateManualObject(const ManualObjectDef& manObjDef, RenderObject*& pManObj)
+{
+	GameErrorCode result = FWG_NO_ERROR;
+	RefObjSmPtr<RenderObject> spManualObject;
+	if(manObjDef.m_manualObjectType.Cmp(MANUAL_OBJECT_TERRAIN_DECAL) == 0)
+	{
+		//TODO: create terrain decal manual object
+	}
+	
+	return result;
+}
