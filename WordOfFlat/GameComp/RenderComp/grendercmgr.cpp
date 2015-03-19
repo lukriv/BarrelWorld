@@ -118,8 +118,21 @@ RenderCompManager::~RenderCompManager()
 }
 
 
+void RenderCompManager::StartRendering()
+{
+	DisableCreating();
+	m_pRoot->startRendering();
+}
 
+void RenderCompManager::DisableCreating()
+{
+	m_renderLock->Enter();
+}
 
+void RenderCompManager::EnableCreating()
+{
+	m_renderLock->Leave();
+}
 
 RenderObject* RenderCompManager::GetCamera(const wxString& cameraName)
 {
@@ -153,6 +166,8 @@ GameErrorCode RenderCompManager::ProcessAllUpdates()
 		processQueue = &m_updateQueue[m_actualQueue];
 		m_actualQueue = (m_actualQueue + 1) % 2;
 	}
+	// disable render lock
+	wxCriticalSectionLocker renderLock(m_renderLock);
 	endIter = processQueue->end();
 	for(iter = processQueue->begin(); iter != endIter; ++iter)
 	{
@@ -163,6 +178,56 @@ GameErrorCode RenderCompManager::ProcessAllUpdates()
 	
 	return FWG_NO_ERROR;
 	
+}
+
+GameErrorCode RenderCompManager::SetMainCamera(RenderObject* pCameraObject)
+{
+	if ((!pCameraObject)||(!pCameraObject->IsCameraType()))
+	{
+		return FWG_E_INVALID_PARAMETER_ERROR;
+	}
+	
+	if(!m_pRenderWindow)
+	{
+		return FWG_E_OBJECT_NOT_INITIALIZED_ERROR;
+	}
+	
+	wxCriticalSectionLocker renderLock(m_renderLock);
+	wxCriticalSectionLocker lock(m_mgrLock);
+	
+	Ogre::Viewport *pViewport = nullptr;
+	Ogre::Camera *pCamera = pCameraObject->GetCamera();
+	
+	// check if main viewport exists
+	if(m_pRenderWindow->hasViewportWithZOrder(0))
+	{
+		
+		pViewport = m_pRenderWindow->getViewport(0);
+		pViewport->setCamera(pCamera);
+	} else {
+		// create new main viewport
+		pViewport = m_pRenderWindow->addViewport(pCameraObject->GetCamera());
+	}
+	
+	pViewport->setBackgroundColour(Ogre::ColourValue(0.0f,0.0f,0.0f));
+	pCamera->setAspectRatio(Ogre::Real(pViewport->getActualWidth()) / Ogre::Real(pViewport->getActualHeight()));
+	
+	m_spMainCamera = pCameraObject;
+	
+	return FWG_NO_ERROR;	
+}
+
+GameErrorCode RenderCompManager::SetMainCamera(const wxString& cameraName)
+{
+	RefObjSmPtr<RenderObject> spCamera;
+	
+	spCamera = GetCamera(cameraName);
+	if(!spCamera.IsEmpty())
+	{
+		return SetMainCamera(spCamera);
+	} else {
+		return FWG_E_OBJECT_NOT_FOUND_ERROR;
+	}
 }
 
 //////////////
@@ -180,6 +245,7 @@ GameErrorCode RenderCompManager::CreateRenderComponent(const RenderDef& renderCo
 		return FWG_E_OBJECT_NOT_INITIALIZED_ERROR;
 	}
 	
+	wxCriticalSectionLocker renderLock(m_renderLock);	
 	FWG_RETURN_FAIL(GameNewChecked(spRenderComp.OutRef(), this));
 	
 	FWG_RETURN_FAIL(spRenderComp->Initialize(pEntity));
@@ -229,7 +295,7 @@ GameErrorCode RenderCompManager::CreateRenderObject(const RenderEntityDef& rende
 	Ogre::Entity *pEntity = nullptr;
 	RefObjSmPtr<RenderObject> spRenderObject;
 	
-	
+	wxCriticalSectionLocker renderLock(m_renderLock);
 	if(!renderObjectDef.GetName().IsEmpty())
 	{
 		pEntity = m_pSceneManager->createEntity(renderObjectDef.GetName().ToStdString(), renderObjectDef.m_mesh->m_name.ToStdString());
@@ -254,7 +320,7 @@ GameErrorCode RenderCompManager::CreateCamera(const CameraDef &cameraDef, Render
 	GameErrorCode result = FWG_NO_ERROR;
 	RefObjSmPtr<RenderObject> spCameraObject;
 	Ogre::Camera *pOgreCam = nullptr;
-	
+	wxCriticalSectionLocker renderLock(m_renderLock);
 	// create ogre camera
 	pOgreCam = m_pSceneManager->createCamera(cameraDef.GetName().ToStdString());
 	if(pOgreCam == nullptr)
@@ -287,54 +353,7 @@ GameErrorCode RenderCompManager::CreateCamera(const CameraDef &cameraDef, Render
 	return result;
 }
 
-GameErrorCode RenderCompManager::SetMainCamera(RenderObject* pCameraObject)
-{
-	if ((!pCameraObject)||(!pCameraObject->IsCameraType()))
-	{
-		return FWG_E_INVALID_PARAMETER_ERROR;
-	}
-	
-	if(!m_pRenderWindow)
-	{
-		return FWG_E_OBJECT_NOT_INITIALIZED_ERROR;
-	}
-	
-	wxCriticalSectionLocker lock(m_mgrLock);
-	
-	Ogre::Viewport *pViewport = nullptr;
-	Ogre::Camera *pCamera = pCameraObject->GetCamera();
-	
-	// check if main viewport exists
-	if(m_pRenderWindow->hasViewportWithZOrder(0))
-	{
-		
-		pViewport = m_pRenderWindow->getViewport(0);
-		pViewport->setCamera(pCamera);
-	} else {
-		// create new main viewport
-		pViewport = m_pRenderWindow->addViewport(pCameraObject->GetCamera());
-	}
-	
-	pViewport->setBackgroundColour(Ogre::ColourValue(0.0f,0.0f,0.0f));
-	pCamera->setAspectRatio(Ogre::Real(pViewport->getActualWidth()) / Ogre::Real(pViewport->getActualHeight()));
-	
-	m_spMainCamera = pCameraObject;
-	
-	return FWG_NO_ERROR;	
-}
 
-GameErrorCode RenderCompManager::SetMainCamera(const wxString& cameraName)
-{
-	RefObjSmPtr<RenderObject> spCamera;
-	
-	spCamera = GetCamera(cameraName);
-	if(!spCamera.IsEmpty())
-	{
-		return SetMainCamera(spCamera);
-	} else {
-		return FWG_E_OBJECT_NOT_FOUND_ERROR;
-	}
-}
 
 
 static const wxChar* MANUAL_OBJECT_TERRAIN_DECAL = wxT("TerrainDecal");
@@ -343,10 +362,52 @@ GameErrorCode RenderCompManager::CreateManualObject(const ManualObjectDef& manOb
 {
 	GameErrorCode result = FWG_NO_ERROR;
 	RefObjSmPtr<RenderObject> spManualObject;
+	wxCriticalSectionLocker renderLock(m_renderLock);
 	if(manObjDef.m_manualObjectType.Cmp(MANUAL_OBJECT_TERRAIN_DECAL) == 0)
 	{
 		//TODO: create terrain decal manual object
+		ManualObject* pMeshDecal = nullptr;
+		
+		if(!renderObjectDef.GetName().IsEmpty())
+		{
+			pMeshDecal = new Ogre::ManualObject(manObjDef.GetName().ToStdString());
+		} else {
+			FWGLOG_ERROR(wxT("Manual object name is empty"), m_spLogger);
+			return FWG_E_NOT_IMPLEMENTED_ERROR;
+		}
+		
+		m_pSceneManager->getRootSceneNode()->attachObject(mMeshDecal);
+		
+		wxInt32 x_size = 4;  // number of polygons
+		wxInt32 z_size = 4;
+		
+		pMeshDecal->begin(manObjDef.m_material->m_name.ToStdString(), Ogre::RenderOperation::OT_TRIANGLE_LIST);
+		for (wxInt32 i=0; i <= x_size; ++i)
+		{
+			for (wxInt32 j=0; j <= z_size; ++j)
+			{
+				pMeshDecal->position(Ogre::Vector3(i, 0, j));
+				pMeshDecal->textureCoord((float)i / (float)x_size, (float)j / (float)z_size);
+			}
+		}
+		
+		for (wxInt32 i=0; i<x_size; ++i)
+		{
+			for (wxInt32 j=0; j<z_size; ++j)
+			{
+				pMeshDecal->quad( i * (x_size+1) + j,
+							i * (x_size+1) + j + 1,
+							(i + 1) * (x_size+1) + j + 1,
+							(i + 1) * (x_size+1) + j);
+			}
+		}
+		pMeshDecal->end();
+		
+		FWG_RETURN_FAIL(GameNewChecked(spManualObject.OutRef(), pMeshDecal));
 	}
+	
+	pManObj = spManualObject.Detach();
 	
 	return result;
 }
+

@@ -38,6 +38,7 @@ private:
 	TGameCameraMap m_cameraMap;
 	wxCriticalSection m_mgrLock;
 	wxCriticalSection m_processLock;
+	wxCriticalSection m_renderLock;
 	
 	TUpdateQueue m_updateQueue[2];
 	wxDword m_actualQueue;
@@ -78,10 +79,18 @@ public:
 	
 	GameErrorCode SetMainCamera( const wxString& cameraName );
 	
+	/**
+	 * @brief Starts rendering
+	 * 
+	 * It calls Ogre::Root->startRendering() and after this call is blocked creating render component
+	 * until the EnableCreating() is called.
+	 * 
+	 */
+	void StartRendering();
 	
+	void EnableCreating();
 	
-	
-	
+	void DisableCreating();
 	
 	/**
 	 * \brief Add component to update queue
