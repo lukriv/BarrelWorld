@@ -9,6 +9,8 @@
 #include "gdeftables.h"
 
 
+class GameCompManager;
+
 /**
  * @class GameEntityCreator
  * @author Lukas
@@ -25,7 +27,7 @@ private:
 public:
 	GameEntityCreator(GameLogger *pLogger) : m_spLogger(pLogger) {}
 	
-	GameErrorCode CreateTerrainDecal(GameCompManager& compMgr, GameEntity *&pTerrDecal);
+	GameErrorCode CreateTerrainDecal(EntityDef *&pTerrDecalDef);
 
 };
 

@@ -138,7 +138,7 @@ public:
 	 * @param manObjDef
 	 * @param pManObj
 	 */
-	GameErrorCode CreateManualObject(const ManualObjectDef &manObjDef, RenderObject *&pManObj);
+	GameErrorCode CreateManualObject(const ManualObjectDef& manObjDef, RenderObject*& pManObj);
 
 
 };
