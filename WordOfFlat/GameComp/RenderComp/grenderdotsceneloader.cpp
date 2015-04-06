@@ -81,9 +81,9 @@ GameErrorCode RenderDotSceneLoader::ProcessScene(wxXmlNode* XMLRoot)
 	
 	while(pElement)
 	{
- 
-		// Process nodes (?)
-		if(pElement->GetName() == wxT("nodes")) {
+ 		// Process nodes (?)
+		if(pElement->GetName() == wxT("nodes")) 
+		{
 			FWG_RETURN_FAIL(ProcessNodes(pElement));
 		// Process externals (?)
 		} else if(pElement->GetName() == wxT("externals")) {
@@ -116,43 +116,56 @@ GameErrorCode RenderDotSceneLoader::ProcessScene(wxXmlNode* XMLRoot)
  
 GameErrorCode RenderDotSceneLoader::ProcessNodes(wxXmlNode *XMLNode)
 {
+	GameErrorCode result = FWG_NO_ERROR;
     wxXmlNode *pElement = XMLNode->GetChildren();
+	
  
 	while(pElement)
 	{
 		// Process node (*)
-		pElement = XMLNode->FirstChildElement("node");
-		while(pElement)
+		if (pElement->GetName() == wxT("node"))
 		{
-			processNode(pElement);
-			pElement = pElement->NextSiblingElement("node");
+			if(FWG_FAILED(result = ProcessNode(pElement)))
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Process node failed: 0x%08x"), m_pLogger, result, FWGLOG_ENDVAL);
+				return result;
+			}
 		}
 	 
 		// Process position (?)
-		pElement = XMLNode->FirstChildElement("position");
-		if(pElement)
+		if(pElement->GetName() == wxT("position"))
 		{
-			m_pAttachNode->setPosition(parseVector3(pElement));
-			m_pAttachNode->setInitialState();
+			FWGLOG_WARNING_FORMAT(wxT("'%s' for tag '%s'  is not supported"), m_pLogger
+					, wxT("position"), XMLNode->GetName().data().AsInternal(), FWGLOG_ENDVAL);
+			//m_pAttachNode->setPosition(parseVector3(pElement));
+			//m_pAttachNode->setInitialState();
 		}
 	 
 		// Process rotation (?)
-		pElement = XMLNode->FirstChildElement("rotation");
-		if(pElement)
+		if(pElement->GetName() == wxT("rotation"))
 		{
-			m_pAttachNode->setOrientation(parseQuaternion(pElement));
-			m_pAttachNode->setInitialState();
+			FWGLOG_WARNING_FORMAT(wxT("'%s' for tag '%s'  is not supported"), m_pLogger
+					, wxT("rotation"), XMLNode->GetName().data().AsInternal(), FWGLOG_ENDVAL);
+
+			//m_pAttachNode->setOrientation(parseQuaternion(pElement));
+			//m_pAttachNode->setInitialState();
 		}
 	 
 		// Process scale (?)
-		pElement = XMLNode->FirstChildElement("scale");
-		if(pElement)
+		if(pElement->GetName() == wxT("scale"))
 		{
-			m_pAttachNode->setScale(parseVector3(pElement));
-			m_pAttachNode->setInitialState();
+			FWGLOG_WARNING_FORMAT(wxT("'%s' for tag '%s'  is not supported"), m_pLogger
+					, wxT("scale"), XMLNode->GetName().data().AsInternal(), FWGLOG_ENDVAL);
+			//m_pAttachNode->setScale(parseVector3(pElement));
+			//m_pAttachNode->setInitialState();
 		}
+		
+		pElement = pElement->GetNext();
 	
 	}
+	
+	
+	return result;
 }
  
 void RenderDotSceneLoader::processExternals(TiXmlElement *XMLNode)
@@ -354,130 +367,139 @@ void RenderDotSceneLoader::processCamera(TiXmlElement *XMLNode, SceneNode *pPare
         ;//!< @todo Implement the camera user data reference
 }
  
-void RenderDotSceneLoader::processNode(TiXmlElement *XMLNode, SceneNode *pParent)
+GameErrorCode RenderDotSceneLoader::ProcessNode(wxXmlNode *XMLNode, SceneNode *pParent)
 {
+	GameErrorCode result = FWG_NO_ERROR;
     // Construct the node's name
-    String name = m_sPrependNode + getAttrib(XMLNode, "name");
+	wxString name = m_sPrependNode + XMLNode->GetAttribute(wxT("name"));
  
     // Create the scene node
-    SceneNode *pNode;
+    SceneNode *pNode = nullptr;
     if(name.empty())
     {
         // Let Ogre choose the name
         if(pParent)
+		{
             pNode = pParent->createChildSceneNode();
-        else
+		} else {
             pNode = m_pAttachNode->createChildSceneNode();
-    }
-    else
-    {
+		}
+    } else {
         // Provide the name
         if(pParent)
+		{
             pNode = pParent->createChildSceneNode(name);
-        else
+        } else {
             pNode = m_pAttachNode->createChildSceneNode(name);
+		}
     }
  
     // Process other attributes
-    String id = getAttrib(XMLNode, "id");
-    bool isTarget = getAttribBool(XMLNode, "isTarget");
+    wxString id = XMLNode->GetAttribute(wxT("id"));
+    bool isTarget = GetAttribBool(XMLNode, wxT("isTarget"));
  
-    TiXmlElement *pElement;
+    wxXmlNode *pElement = nullptr;
  
-    // Process position (?)
-    pElement = XMLNode->FirstChildElement("position");
-    if(pElement)
-    {
-        pNode->setPosition(parseVector3(pElement));
-        pNode->setInitialState();
-    }
- 
-    // Process rotation (?)
-    pElement = XMLNode->FirstChildElement("rotation");
-    if(pElement)
-    {
-        pNode->setOrientation(parseQuaternion(pElement));
-        pNode->setInitialState();
-    }
- 
-    // Process scale (?)
-    pElement = XMLNode->FirstChildElement("scale");
-    if(pElement)
-    {
-        pNode->setScale(parseVector3(pElement));
-        pNode->setInitialState();
-    }
- 
-    // Process lookTarget (?)
-    pElement = XMLNode->FirstChildElement("lookTarget");
-    if(pElement)
-        processLookTarget(pElement, pNode);
- 
-    // Process trackTarget (?)
-    pElement = XMLNode->FirstChildElement("trackTarget");
-    if(pElement)
-        processTrackTarget(pElement, pNode);
- 
-    // Process node (*)
-    pElement = XMLNode->FirstChildElement("node");
-    while(pElement)
-    {
-        processNode(pElement, pNode);
-        pElement = pElement->NextSiblingElement("node");
-    }
- 
-    // Process entity (*)
-    pElement = XMLNode->FirstChildElement("entity");
-    while(pElement)
-    {
-        processEntity(pElement, pNode);
-        pElement = pElement->NextSiblingElement("entity");
-    }
- 
-    // Process light (*)
-    pElement = XMLNode->FirstChildElement("light");
-    while(pElement)
-    {
-        processLight(pElement, pNode);
-        pElement = pElement->NextSiblingElement("light");
-    }
- 
-    // Process camera (*)
-    pElement = XMLNode->FirstChildElement("camera");
-    while(pElement)
-    {
-        processCamera(pElement, pNode);
-        pElement = pElement->NextSiblingElement("camera");
-    }
- 
-    // Process particleSystem (*)
-    pElement = XMLNode->FirstChildElement("particleSystem");
-    while(pElement)
-    {
-        processParticleSystem(pElement, pNode);
-        pElement = pElement->NextSiblingElement("particleSystem");
-    }
- 
-    // Process billboardSet (*)
-    pElement = XMLNode->FirstChildElement("billboardSet");
-    while(pElement)
-    {
-        processBillboardSet(pElement, pNode);
-        pElement = pElement->NextSiblingElement("billboardSet");
-    }
- 
-    // Process plane (*)
-    pElement = XMLNode->FirstChildElement("plane");
-    while(pElement)
-    {
-        processPlane(pElement, pNode);
-        pElement = pElement->NextSiblingElement("plane");
-    }
- 
-    // Process userDataReference (?)
-    pElement = XMLNode->FirstChildElement("userDataReference");
-    if(pElement)
-        processUserDataReference(pElement, pNode);
+	while(pElement)
+	{
+		// Process position (?)
+		if(pElement->GetName() == wxT("position"))
+		{
+			pNode->setPosition(parseVector3(pElement));
+			pNode->setInitialState();
+		}
+	 
+		// Process rotation (?)
+		pElement = XMLNode->FirstChildElement("rotation");
+		if(pElement)
+		{
+			pNode->setOrientation(parseQuaternion(pElement));
+			pNode->setInitialState();
+		}
+	 
+		// Process scale (?)
+		pElement = XMLNode->FirstChildElement("scale");
+		if(pElement)
+		{
+			pNode->setScale(parseVector3(pElement));
+			pNode->setInitialState();
+		}
+	 
+		// Process lookTarget (?)
+		pElement = XMLNode->FirstChildElement("lookTarget");
+		if(pElement)
+			processLookTarget(pElement, pNode);
+	 
+		// Process trackTarget (?)
+		pElement = XMLNode->FirstChildElement("trackTarget");
+		if(pElement)
+			processTrackTarget(pElement, pNode);
+	 
+		// Process node (*)
+		pElement = XMLNode->FirstChildElement("node");
+		while(pElement)
+		{
+			processNode(pElement, pNode);
+			pElement = pElement->NextSiblingElement("node");
+		}
+	 
+		// Process entity (*)
+		pElement = XMLNode->FirstChildElement("entity");
+		while(pElement)
+		{
+			processEntity(pElement, pNode);
+			pElement = pElement->NextSiblingElement("entity");
+		}
+	 
+		// Process light (*)
+		pElement = XMLNode->FirstChildElement("light");
+		while(pElement)
+		{
+			processLight(pElement, pNode);
+			pElement = pElement->NextSiblingElement("light");
+		}
+	 
+		// Process camera (*)
+		pElement = XMLNode->FirstChildElement("camera");
+		while(pElement)
+		{
+			processCamera(pElement, pNode);
+			pElement = pElement->NextSiblingElement("camera");
+		}
+	 
+		// Process particleSystem (*)
+		pElement = XMLNode->FirstChildElement("particleSystem");
+		while(pElement)
+		{
+			processParticleSystem(pElement, pNode);
+			pElement = pElement->NextSiblingElement("particleSystem");
+		}
+	 
+		// Process billboardSet (*)
+		pElement = XMLNode->FirstChildElement("billboardSet");
+		while(pElement)
+		{
+			processBillboardSet(pElement, pNode);
+			pElement = pElement->NextSiblingElement("billboardSet");
+		}
+	 
+		// Process plane (*)
+		pElement = XMLNode->FirstChildElement("plane");
+		while(pElement)
+		{
+			processPlane(pElement, pNode);
+			pElement = pElement->NextSiblingElement("plane");
+		}
+	 
+		// Process userDataReference (?)
+		pElement = XMLNode->FirstChildElement("userDataReference");
+		if(pElement)
+			processUserDataReference(pElement, pNode);
+		
+		pElement = pElement->GetNext();
+	}
+	
+	return result;
 }
  
 void RenderDotSceneLoader::processLookTarget(TiXmlElement *XMLNode, SceneNode *pParent)
@@ -778,13 +800,18 @@ Real RenderDotSceneLoader::getAttribReal(TiXmlElement *XMLNode, const String &at
         return defaultValue;
 }
  
-bool RenderDotSceneLoader::getAttribBool(TiXmlElement *XMLNode, const String &attrib, bool defaultValue)
+bool RenderDotSceneLoader::GetAttribBool(wxXmlNode *XMLNode, const wxString &attrib, bool defaultValue)
 {
-    if(!XMLNode->Attribute(attrib))
+    wxString attrValue;
+	if(!XMLNode->GetAttribute(attrib, &attrValue))
+	{
         return defaultValue;
- 
-    if(String(XMLNode->Attribute(attrib)) == "true")
+	}
+	
+	if(attrValue == wxT("true"))
+	{
         return true;
+	}
  
     return false;
 }

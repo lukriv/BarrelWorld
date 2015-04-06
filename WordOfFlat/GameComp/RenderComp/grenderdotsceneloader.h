@@ -45,7 +45,7 @@ protected:
     void processLight(TiXmlElement *XMLNode, SceneNode *pParent = 0);
     void processCamera(TiXmlElement *XMLNode, SceneNode *pParent = 0);
 
-    void processNode(TiXmlElement *XMLNode, SceneNode *pParent = 0);
+    GameErrorCode ProcessNode(wxXmlNode *XMLNode, SceneNode *pParent = 0);
     void processLookTarget(TiXmlElement *XMLNode, SceneNode *pParent);
     void processTrackTarget(TiXmlElement *XMLNode, SceneNode *pParent);
     void processEntity(TiXmlElement *XMLNode, SceneNode *pParent);
@@ -64,13 +64,15 @@ protected:
 
     String getAttrib(TiXmlElement *XMLNode, const String &parameter, const String &defaultValue = "");
     Real getAttribReal(TiXmlElement *XMLNode, const String &parameter, Real defaultValue = 0);
-    bool getAttribBool(TiXmlElement *XMLNode, const String &parameter, bool defaultValue = false);
+    bool GetAttribBool(wxXmlNode *XMLNode, const wxString &parameter, bool defaultValue = false);
 
     Vector3 parseVector3(TiXmlElement *XMLNode);
     Quaternion parseQuaternion(TiXmlElement *XMLNode);
     ColourValue parseColour(TiXmlElement *XMLNode);
 
 	void ProcessUnknownTag(wxXmlNode *xmlNode);
+	
+protected:
 
     SceneManager *m_sceneMgr;
     SceneNode *m_pAttachNode;
