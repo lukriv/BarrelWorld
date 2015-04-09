@@ -2,6 +2,7 @@
 #define __GAME_RENDER_DOT_SCENE_LOADER_H__
 
 #include <wx/xml/xml.h>
+#include <OGRE/OgreSceneManager.h>
 #include <GameSystem/glog.h>
 #include <GameSystem/gset.h>
 
@@ -36,48 +37,47 @@ protected:
     GameErrorCode ProcessScene(wxXmlNode *XMLRoot);
 
     GameErrorCode ProcessNodes(wxXmlNode *XMLNode);
-    void processExternals(TiXmlElement *XMLNode);
-    void processEnvironment(TiXmlElement *XMLNode);
+    GameErrorCode ProcessExternals(wxXmlNode *XMLNode);
+    GameErrorCode ProcessEnvironment(wxXmlNode *XMLNode);
     void processTerrain(TiXmlElement *XMLNode);
-    void processUserDataReference(TiXmlElement *XMLNode, SceneNode *pParent = 0);
-    void processUserDataReference(TiXmlElement *XMLNode, Entity *pEntity);
+    void processUserDataReference(TiXmlElement *XMLNode, Ogre::SceneNode *pParent = 0);
+    void processUserDataReference(TiXmlElement *XMLNode, Ogre::Entity *pEntity);
     void processOctree(TiXmlElement *XMLNode);
-    void processLight(TiXmlElement *XMLNode, SceneNode *pParent = 0);
-    void processCamera(TiXmlElement *XMLNode, SceneNode *pParent = 0);
+    GameErrorCode ProcessLight(wxXmlNode *XMLNode, Ogre::SceneNode *pParent = 0);
+    GameErrorCode ProcessCamera(wxXmlNode *XMLNode, Ogre::SceneNode *pParent = 0);
 
-    GameErrorCode ProcessNode(wxXmlNode *XMLNode, SceneNode *pParent = 0);
-    void processLookTarget(TiXmlElement *XMLNode, SceneNode *pParent);
-    void processTrackTarget(TiXmlElement *XMLNode, SceneNode *pParent);
-    void processEntity(TiXmlElement *XMLNode, SceneNode *pParent);
-    void processParticleSystem(TiXmlElement *XMLNode, SceneNode *pParent);
-    void processBillboardSet(TiXmlElement *XMLNode, SceneNode *pParent);
+    GameErrorCode ProcessNode(wxXmlNode *XMLNode, Ogre::SceneNode *pParent = 0);
+    GameErrorCode ProcessLookTarget(wxXmlNode *XMLNode, Ogre::SceneNode *pParent);
+    GameErrorCode ProcessTrackTarget(wxXmlNode *XMLNode, Ogre::SceneNode *pParent);
+    GameErrorCode ProcessEntity(wxXmlNode *XMLNode, Ogre::SceneNode *pParent);
+    GameErrorCode ProcessParticleSystem(wxXmlNode *XMLNode, Ogre::SceneNode *pParent);
+    GameErrorCode ProcessBillboardSet(wxXmlNode *XMLNode, Ogre::SceneNode *pParent);
     void processPlane(TiXmlElement *XMLNode, SceneNode *pParent);
 
-    void processFog(TiXmlElement *XMLNode);
-    void processSkyBox(TiXmlElement *XMLNode);
+    GameErrorCode ProcessFog(wxXmlNode *XMLNode);
+    GameErrorCode ProcessSkyBox(wxXmlNode *XMLNode);
     void processSkyDome(TiXmlElement *XMLNode);
     void processSkyPlane(TiXmlElement *XMLNode);
     void processClipping(TiXmlElement *XMLNode);
 
-    void processLightRange(TiXmlElement *XMLNode, Light *pLight);
-    void processLightAttenuation(TiXmlElement *XMLNode, Light *pLight);
+    void ProcessLightRange(wxXmlNode *XMLNode, Ogre::Light *pLight);
+    void ProcessLightAttenuation(wxXmlNode *XMLNode, Ogre::Light *pLight);
 
-    String getAttrib(TiXmlElement *XMLNode, const String &parameter, const String &defaultValue = "");
-    Real getAttribReal(TiXmlElement *XMLNode, const String &parameter, Real defaultValue = 0);
+    Ogre::Real GetAttribReal(wxXmlNode *XMLNode, const wxString &parameter, Ogre::Real defaultValue = 0.0);
     bool GetAttribBool(wxXmlNode *XMLNode, const wxString &parameter, bool defaultValue = false);
 
-    Vector3 parseVector3(TiXmlElement *XMLNode);
-    Quaternion parseQuaternion(TiXmlElement *XMLNode);
-    ColourValue parseColour(TiXmlElement *XMLNode);
+    Ogre::Vector3 ParseVector3(wxXmlNode *XMLNode);
+    Ogre::Quaternion ParseQuaternion(wxXmlNode *XMLNode);
+    Ogre::ColourValue ParseColour(wxXmlNode *XMLNode);
 
 	void ProcessUnknownTag(wxXmlNode *xmlNode);
 	
 protected:
 
-    SceneManager *m_sceneMgr;
-    SceneNode *m_pAttachNode;
-    String m_sGroupName;
-    String m_sPrependNode;
+    Ogre::SceneManager *m_sceneMgr;
+    Ogre::SceneNode *m_pAttachNode;
+    wxString m_sGroupName;
+    wxString m_sPrependNode;
 
 };
 

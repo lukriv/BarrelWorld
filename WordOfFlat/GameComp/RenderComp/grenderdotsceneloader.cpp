@@ -1,6 +1,9 @@
-#include "grenderRenderDotSceneLoader.h"
+#include "gRenderDotSceneLoader.h"
+#include <wx/sstream.h>
 
-RenderDotSceneLoader::RenderDotSceneLoader(GameLogger *pLogger) : m_pLogger(pLogger)
+RenderDotSceneLoader::RenderDotSceneLoader(GameLogger *pLogger) : m_pLogger(pLogger),
+																m_sceneMgr(nullptr),
+																m_pAttachNode(nullptr)
 {
 }
 
@@ -55,24 +58,24 @@ GameErrorCode RenderDotSceneLoader::ProcessScene(wxXmlNode* XMLRoot)
 	wxString attr;
 	
     wxString message = "Parsing dotScene file with version " + version;
-    if(XMLRoot->GetAttribute(wxT("ID"), &attr)
+    if(XMLRoot->GetAttribute(wxT("ID"), &attr))
 	{
-        message += ", id " + attr;
+        message += wxT(", id ") + attr;
 	}
 	
-    if(XMLRoot->GetAttribute(wxT("sceneManager"), &attr)
+    if(XMLRoot->GetAttribute(wxT("sceneManager"), &attr))
 	{
-        message += ", scene manager " + attr);
+        message += wxT(", scene manager ") + attr;
 	}
 	attr.Clear();
-    if(XMLRoot->GetAttribute(wxT("minOgreVersion"), &attr)
+    if(XMLRoot->GetAttribute(wxT("minOgreVersion"), &attr))
 	{
-        message += ", min. Ogre version " + attr);
+        message += wxT(", min. Ogre version ") + attr;
 	}
 	attr.Clear();
-    if(XMLRoot->GetAttribute(wxT("author"), &attr)
+    if(XMLRoot->GetAttribute(wxT("author"), &attr))
 	{
-        message += ", author " + attr);
+        message += wxT(", author ") + attr;
 	}
  
     FWGLOG_DEBUG_FORMAT(wxT("%s"), m_pLogger, message, FWGLOG_ENDVAL);
@@ -87,7 +90,7 @@ GameErrorCode RenderDotSceneLoader::ProcessScene(wxXmlNode* XMLRoot)
 			FWG_RETURN_FAIL(ProcessNodes(pElement));
 		// Process externals (?)
 		} else if(pElement->GetName() == wxT("externals")) {
-			FWG_RETURN_FAIL(processExternals(pElement));
+			FWG_RETURN_FAIL(ProcessExternals(pElement));
 		// Process environment (?)
 		} else if(pElement->GetName() == wxT("environment")) {
 			FWG_RETURN_FAIL(processEnvironment(pElement));
@@ -168,55 +171,110 @@ GameErrorCode RenderDotSceneLoader::ProcessNodes(wxXmlNode *XMLNode)
 	return result;
 }
  
-void RenderDotSceneLoader::processExternals(TiXmlElement *XMLNode)
+GameErrorCode RenderDotSceneLoader::ProcessExternals(wxXmlNode *XMLNode)
 {
     //! @todo Implement this
+	FWGLOG_DEBUG(wxT("Process externals is not supported!"), m_pLogger);
+	return FWG_NO_ERROR;
 }
  
-void RenderDotSceneLoader::processEnvironment(TiXmlElement *XMLNode)
+GameErrorCode RenderDotSceneLoader::ProcessEnvironment(wxXmlNode *XMLNode)
 {
-    TiXmlElement *pElement;
+	GameErrorCode result = FWG_NO_ERROR;
+    wxXmlNode *pElement = XMLNode->GetChildren();
  
-    // Process fog (?)
-    pElement = XMLNode->FirstChildElement("fog");
-    if(pElement)
-        processFog(pElement);
- 
-    // Process skyBox (?)
-    pElement = XMLNode->FirstChildElement("skyBox");
-    if(pElement)
-        processSkyBox(pElement);
- 
-    // Process skyDome (?)
-    pElement = XMLNode->FirstChildElement("skyDome");
-    if(pElement)
-        processSkyDome(pElement);
- 
-    // Process skyPlane (?)
-    pElement = XMLNode->FirstChildElement("skyPlane");
-    if(pElement)
-        processSkyPlane(pElement);
- 
-    // Process clipping (?)
-    pElement = XMLNode->FirstChildElement("clipping");
-    if(pElement)
-        processClipping(pElement);
- 
-    // Process colourAmbient (?)
-    pElement = XMLNode->FirstChildElement("colourAmbient");
-    if(pElement)
-        m_sceneMgr->setAmbientLight(parseColour(pElement));
- 
-    // Process colourBackground (?)
-    //! @todo Set the background colour of all viewports (RenderWindow has to be provided then)
-    pElement = XMLNode->FirstChildElement("colourBackground");
-    if(pElement)
-        ;//mSceneMgr->set(parseColour(pElement));
- 
-    // Process userDataReference (?)
-    pElement = XMLNode->FirstChildElement("userDataReference");
-    if(pElement)
-        processUserDataReference(pElement);
+	while(pElement)
+	{
+		// Process fog (?)
+		if(pElement->GetName() == wxT("fog"))
+		{
+			if( FWG_FAILED( result = ProcessFog(pElement)))
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Process element '%s' failed ( 0x%08x ) on line %d"), m_pLogger,
+									pElement->GetName().data().AsInternal(),
+									result,
+									pElement->GetLineNumber(),
+									FWGLOG_ENDVAL);
+				return result;
+			}
+		// Process skyBox (?)
+		} else if(pElement->GetName() == wxT("skyBox")) {
+			if( FWG_FAILED( result = ProcessSkyBox(pElement)))
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Process element '%s' failed ( 0x%08x ) on line %d"), m_pLogger,
+									pElement->GetName().data().AsInternal(),
+									result,
+									pElement->GetLineNumber(),
+									FWGLOG_ENDVAL);
+				return result;
+			}
+	 
+		// Process skyDome (?)
+		} else if(pElement->GetName() == wxT("skyDome")) {
+			if( FWG_FAILED( result = ProcessSkyDome(pElement)))
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Process element '%s' failed ( 0x%08x ) on line %d"), m_pLogger,
+									pElement->GetName().data().AsInternal(),
+									result,
+									pElement->GetLineNumber(),
+									FWGLOG_ENDVAL);
+				return result;
+			}
+	 
+		// Process skyPlane (?)
+		} else if(pElement->GetName() == wxT("skyPlane")) {
+			if( FWG_FAILED( result = ProcessSkyPlane(pElement)))
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Process element '%s' failed ( 0x%08x ) on line %d"), m_pLogger,
+									pElement->GetName().data().AsInternal(),
+									result,
+									pElement->GetLineNumber(),
+									FWGLOG_ENDVAL);
+				return result;
+			}
+	 
+		// Process clipping (?)
+		} else if(pElement->GetName() == wxT("clipping")) {
+			if( FWG_FAILED( result = ProcessClipping(pElement)))
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Process element '%s' failed ( 0x%08x ) on line %d"), m_pLogger,
+									pElement->GetName().data().AsInternal(),
+									result,
+									pElement->GetLineNumber(),
+									FWGLOG_ENDVAL);
+				return result;
+			}
+	 
+		// Process colourAmbient (?)
+		} else if(pElement->GetName() == wxT("colourAmbient")) {
+			m_sceneMgr->setAmbientLight(parseColour(pElement))))
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Process element '%s' failed ( 0x%08x ) on line %d"), m_pLogger,
+									pElement->GetName().data().AsInternal(),
+									result,
+									pElement->GetLineNumber(),
+									FWGLOG_ENDVAL);
+				return result;
+			}
+	 
+		// Process colourBackground (?)
+		//! @todo Set the background colour of all viewports (RenderWindow has to be provided then)
+		} else if(pElement->GetName() == wxT("colourBackground")) {
+			;//mSceneMgr->set(parseColour(pElement));
+	 
+		// Process userDataReference (?)
+		} else if(pElement->GetName() == wxT("userDataReference")) {
+			processUserDataReference(pElement);
+			
+		} else {
+			ProcessUnknownTag(pElement);
+		}
+			
+		pElement = pElement->GetNext();
+		
+	}
+	
+	return result;
 }
  
 void RenderDotSceneLoader::processTerrain(TiXmlElement *XMLNode)
@@ -234,81 +292,96 @@ void RenderDotSceneLoader::processOctree(TiXmlElement *XMLNode)
     //! @todo Implement this
 }
  
-void RenderDotSceneLoader::processLight(TiXmlElement *XMLNode, SceneNode *pParent)
+GameErrorCode RenderDotSceneLoader::ProcessLight(wxXmlNode *XMLNode, Ogre::SceneNode *pParent)
 {
     // Process attributes
-    String name = getAttrib(XMLNode, "name");
-    String id = getAttrib(XMLNode, "id");
- 
+    wxString name = XMLNode->GetAttribute(wxT("name"));
+    wxString id = XMLNode->GetAttribute(wxT("id"));
+	
+	Light *pLight = nullptr;
+	
     // Create the light
-    Light *pLight = m_sceneMgr->createLight(name);
+	if(name.IsEmpty())
+	{
+		pLight = m_sceneMgr->createLight();
+	} else {
+		pLight = m_sceneMgr->createLight(name);
+	}
+    
     if(pParent)
+	{
         pParent->attachObject(pLight);
+	}
  
-    String sValue = getAttrib(XMLNode, "type");
-    if(sValue == "point")
+    wxString sValue = XMLNode->GetAttribute(wxT("type"));
+    if(sValue == wxT("point"))
+	{
         pLight->setType(Light::LT_POINT);
-    else if(sValue == "directional")
+    } else if(sValue == wxT("directional")) {
         pLight->setType(Light::LT_DIRECTIONAL);
-    else if(sValue == "spot")
+    } else if(sValue == wxT("spot")) {
         pLight->setType(Light::LT_SPOTLIGHT);
-    else if(sValue == "radPoint")
+	} else if(sValue == wxT("radPoint")) {
         pLight->setType(Light::LT_POINT);
+	}
  
-    pLight->setVisible(getAttribBool(XMLNode, "visible", true));
-    pLight->setCastShadows(getAttribBool(XMLNode, "castShadows", true));
+    pLight->setVisible(GetAttribBool(XMLNode, wxT("visible"), true));
+    pLight->setCastShadows(GetAttribBool(XMLNode, wxT("castShadows"), true));
  
-    TiXmlElement *pElement;
+    wxXmlNode *pElement = XMLNode->GetChildren();
  
-    // Process position (?)
-    pElement = XMLNode->FirstChildElement("position");
-    if(pElement)
-        pLight->setPosition(parseVector3(pElement));
- 
-    // Process normal (?)
-    pElement = XMLNode->FirstChildElement("normal");
-    if(pElement)
-        pLight->setDirection(parseVector3(pElement));
- 
-    // Process colourDiffuse (?)
-    pElement = XMLNode->FirstChildElement("colourDiffuse");
-    if(pElement)
-        pLight->setDiffuseColour(parseColour(pElement));
- 
-    // Process colourSpecular (?)
-    pElement = XMLNode->FirstChildElement("colourSpecular");
-    if(pElement)
-        pLight->setSpecularColour(parseColour(pElement));
- 
-    // Process lightRange (?)
-    pElement = XMLNode->FirstChildElement("lightRange");
-    if(pElement)
-        processLightRange(pElement, pLight);
- 
-    // Process lightAttenuation (?)
-    pElement = XMLNode->FirstChildElement("lightAttenuation");
-    if(pElement)
-        processLightAttenuation(pElement, pLight);
- 
-    // Process userDataReference (?)
-    pElement = XMLNode->FirstChildElement("userDataReference");
-    if(pElement)
-        ;//processUserDataReference(pElement, pLight);
+	while(pElement)
+	{
+		// Process position (?)
+		if(pElement->GetName() == wxT("position"))
+		{
+			pLight->setPosition(ParseVector3(pElement));
+		// Process normal (?)
+		} else if(pElement->GetName() == wxT("normal")) {
+			pLight->setDirection(ParseVector3(pElement));
+		// Process colourDiffuse (?)
+		} else if(pElement->GetName() == wxT("colourDiffuse")) {
+			pLight->setDiffuseColour(ParseColour(pElement));
+		// Process colourSpecular (?)
+		} else if(pElement->GetName() == wxT("colourSpecular")) {
+			pLight->setSpecularColour(ParseColour(pElement));
+		// Process lightRange (?)
+		} else if(pElement->GetName() == wxT("lightRange")) {
+			ProcessLightRange(pElement, pLight);
+		// Process lightAttenuation (?)
+		} else if(pElement->GetName() == wxT("lightAttenuation")) {
+			ProcessLightAttenuation(pElement, pLight);
+		// Process userDataReference (?)
+		} else if(pElement->GetName() == wxT("userDataReference")) {
+			FWGLOG_WARNING_FORMAT(wxT("Tag '%s' is not supported - line %d"), m_pLogger
+					, XMLNode->GetName().data().AsInternal()
+					, XMLNode->GetLineNumber()
+					, FWGLOG_ENDVAL);
+			//processUserDataReference(pElement, pLight);
+		} else {
+			ProcessUnknownTag(pElement);
+		}
+		pElement = pElement->GetNext();		
+	}
+	
+	return FWG_NO_ERROR;
 }
  
-void RenderDotSceneLoader::processCamera(TiXmlElement *XMLNode, SceneNode *pParent)
+GameErrorCode RenderDotSceneLoader::ProcessCamera(wxXmlNode *XMLNode, Ogre::SceneNode *pParent)
 {
     // Process attributes
-    String name = getAttrib(XMLNode, "name");
-    String id = getAttrib(XMLNode, "id");
-    Real fov = getAttribReal(XMLNode, "fov", 45);
-    Real aspectRatio = getAttribReal(XMLNode, "aspectRatio", 1.3333);
-    String projectionType = getAttrib(XMLNode, "projectionType", "perspective");
+    wxString name = XMLNode->GetAttribute(wxT("name"));
+    wxString id = XMLNode->GetAttribute(wxT("id"));
+    Ogre::Real fov = GetAttribReal(XMLNode, wxT("fov"), 45);
+    Ogre::Real aspectRatio = GetAttribReal(XMLNode, wxT("aspectRatio"), 1.3333);
+    wxString projectionType = XMLNode->GetAttribute(wxT("projectionType"), wxT("perspective"));
  
     // Create the camera
-    Camera *pCamera = m_sceneMgr->createCamera(name);
+    Ogre::Camera *pCamera = m_sceneMgr->createCamera(name.ToStdString());
     if(pParent)
+	{
         pParent->attachObject(pCamera);
+	}
  
     // Set the field-of-view
     //! @todo Is this always in degrees?
@@ -318,53 +391,70 @@ void RenderDotSceneLoader::processCamera(TiXmlElement *XMLNode, SceneNode *pPare
     pCamera->setAspectRatio(aspectRatio);
  
     // Set the projection type
-    if(projectionType == "perspective")
-        pCamera->setProjectionType(PT_PERSPECTIVE);
-    else if(projectionType == "orthographic")
-        pCamera->setProjectionType(PT_ORTHOGRAPHIC);
+    if(projectionType == wxT("perspective"))
+	{
+        pCamera->setProjectionType(Ogre::PT_PERSPECTIVE);
+    } else if(projectionType == "orthographic") {
+        pCamera->setProjectionType(Ogre::PT_ORTHOGRAPHIC);
+	}
  
-    TiXmlElement *pElement;
+    wxXmlNode *pElement = XMLNode->GetChildren();
  
-    // Process clipping (?)
-    pElement = XMLNode->FirstChildElement("clipping");
-    if(pElement)
-    {
-        Real nearDist = getAttribReal(pElement, "near");
-        pCamera->setNearClipDistance(nearDist);
+	while(pElement)
+	{
  
-        Real farDist =  getAttribReal(pElement, "far");
-        pCamera->setFarClipDistance(farDist);
-    }
- 
-    // Process position (?)
-    pElement = XMLNode->FirstChildElement("position");
-    if(pElement)
-        pCamera->setPosition(parseVector3(pElement));
- 
-    // Process rotation (?)
-    pElement = XMLNode->FirstChildElement("rotation");
-    if(pElement)
-        pCamera->setOrientation(parseQuaternion(pElement));
- 
-    // Process normal (?)
-    pElement = XMLNode->FirstChildElement("normal");
-    if(pElement)
-        ;//!< @todo What to do with this element?
- 
-    // Process lookTarget (?)
-    pElement = XMLNode->FirstChildElement("lookTarget");
-    if(pElement)
-        ;//!< @todo Implement the camera look target
- 
-    // Process trackTarget (?)
-    pElement = XMLNode->FirstChildElement("trackTarget");
-    if(pElement)
-        ;//!< @todo Implement the camera track target
- 
-    // Process userDataReference (?)
-    pElement = XMLNode->FirstChildElement("userDataReference");
-    if(pElement)
-        ;//!< @todo Implement the camera user data reference
+		// Process clipping (?)
+		if(pElement->GetName() == wxT("clipping"))
+		{
+			Ogre::Real nearDist = GetAttribReal(pElement, "near");
+			pCamera->setNearClipDistance(nearDist);
+	 
+			Ogre::Real farDist =  getAttribReal(pElement, "far", 50000.0);
+			pCamera->setFarClipDistance(farDist);
+		
+		// Process position (?)
+		} else if(pElement->GetName() == wxT("position")) {
+			pCamera->setPosition(ParseVector3(pElement));
+	 
+		// Process rotation (?)
+		} else if(pElement->GetName() == wxT("rotation")) {
+			pCamera->setOrientation(ParseQuaternion(pElement));
+	 
+		// Process normal (?)
+		} else if(pElement->GetName() == wxT("normal")) {
+			FWGLOG_WARNING_FORMAT(wxT("Tag '%s' is not supported - line %d"), m_pLogger
+					, XMLNode->GetName().data().AsInternal()
+					, XMLNode->GetLineNumber()
+					, FWGLOG_ENDVAL);
+	 
+		// Process lookTarget (?)
+		} else if(pElement->GetName() == wxT("lookTarget")) {
+			FWGLOG_WARNING_FORMAT(wxT("Tag '%s' is not supported - line %d"), m_pLogger
+					, XMLNode->GetName().data().AsInternal()
+					, XMLNode->GetLineNumber()
+					, FWGLOG_ENDVAL);
+	 
+		// Process trackTarget (?)
+		} else if(pElement->GetName() == wxT("trackTarget")) {
+			FWGLOG_WARNING_FORMAT(wxT("Tag '%s' is not supported - line %d"), m_pLogger
+					, XMLNode->GetName().data().AsInternal()
+					, XMLNode->GetLineNumber()
+					, FWGLOG_ENDVAL);
+	 
+		// Process userDataReference (?)
+		} else if(pElement->GetName() == wxT("userDataReference")) {
+			FWGLOG_WARNING_FORMAT(wxT("Tag '%s' is not supported - line %d"), m_pLogger
+					, XMLNode->GetName().data().AsInternal()
+					, XMLNode->GetLineNumber()
+					, FWGLOG_ENDVAL);
+		} else {
+			ProcessUnknownTag(pElement);
+		}
+		
+		pElement = pElement->GetNext();	
+	}
+	
+	return FWG_NO_ERROR;
 }
  
 GameErrorCode RenderDotSceneLoader::ProcessNode(wxXmlNode *XMLNode, SceneNode *pParent)
@@ -374,7 +464,7 @@ GameErrorCode RenderDotSceneLoader::ProcessNode(wxXmlNode *XMLNode, SceneNode *p
 	wxString name = m_sPrependNode + XMLNode->GetAttribute(wxT("name"));
  
     // Create the scene node
-    SceneNode *pNode = nullptr;
+    Ogre::SceneNode *pNode = nullptr;
     if(name.empty())
     {
         // Let Ogre choose the name
@@ -405,96 +495,139 @@ GameErrorCode RenderDotSceneLoader::ProcessNode(wxXmlNode *XMLNode, SceneNode *p
 		// Process position (?)
 		if(pElement->GetName() == wxT("position"))
 		{
-			pNode->setPosition(parseVector3(pElement));
+			pNode->setPosition(ParseVector3(pElement));
 			pNode->setInitialState();
-		}
-	 
+		 	 
 		// Process rotation (?)
-		pElement = XMLNode->FirstChildElement("rotation");
-		if(pElement)
-		{
-			pNode->setOrientation(parseQuaternion(pElement));
+		} else if(pElement->GetName() == wxT("rotation")) {
+			pNode->setOrientation(ParseQuaternion(pElement));
 			pNode->setInitialState();
-		}
-	 
+
 		// Process scale (?)
-		pElement = XMLNode->FirstChildElement("scale");
-		if(pElement)
-		{
-			pNode->setScale(parseVector3(pElement));
+		} else if(pElement->GetName() == wxT("scale")) {
+			pNode->setScale(ParseVector3(pElement));
 			pNode->setInitialState();
-		}
-	 
+		
 		// Process lookTarget (?)
-		pElement = XMLNode->FirstChildElement("lookTarget");
-		if(pElement)
-			processLookTarget(pElement, pNode);
-	 
+		} else if(pElement->GetName() == wxT("lookTarget")) {
+			if(FWG_FAILED(result = ProcessLookTarget(pElement, pNode)))
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Process element '%s' failed ( 0x%08x ) on line %d"), m_pLogger,
+									pElement->GetName().data().AsInternal(),
+									result,
+									pElement->GetLineNumber(),
+									FWGLOG_ENDVAL);
+				return result;
+			}
+		
 		// Process trackTarget (?)
-		pElement = XMLNode->FirstChildElement("trackTarget");
-		if(pElement)
-			processTrackTarget(pElement, pNode);
-	 
+		} else if(pElement->GetName() == wxT("trackTarget")) {
+			if(FWG_FAILED(result = ProcessTrackTarget(pElement, pNode)))
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Process element '%s' failed ( 0x%08x ) on line %d"), m_pLogger,
+									pElement->GetName().data().AsInternal(),
+									result,
+									pElement->GetLineNumber(),
+									FWGLOG_ENDVAL);
+				return result;
+			}
+			
+		
 		// Process node (*)
-		pElement = XMLNode->FirstChildElement("node");
-		while(pElement)
-		{
-			processNode(pElement, pNode);
-			pElement = pElement->NextSiblingElement("node");
-		}
+		} else if(pElement->GetName() == wxT("node")) {
+			if(FWG_FAILED(result = ProcessNode(pElement, pNode)))
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Process element '%s' failed ( 0x%08x ) on line %d"), m_pLogger,
+									pElement->GetName().data().AsInternal(),
+									result,
+									pElement->GetLineNumber(),
+									FWGLOG_ENDVAL);
+				return result;
+			}
 	 
 		// Process entity (*)
-		pElement = XMLNode->FirstChildElement("entity");
-		while(pElement)
-		{
-			processEntity(pElement, pNode);
-			pElement = pElement->NextSiblingElement("entity");
-		}
-	 
+		} else if(pElement->GetName() == wxT("entity")) {
+			if(FWG_FAILED(result = ProcessEntity(pElement, pNode)))
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Process element '%s' failed ( 0x%08x ) on line %d"), m_pLogger,
+									pElement->GetName().data().AsInternal(),
+									result,
+									pElement->GetLineNumber(),
+									FWGLOG_ENDVAL);
+				return result;
+			}
+			
 		// Process light (*)
-		pElement = XMLNode->FirstChildElement("light");
-		while(pElement)
-		{
-			processLight(pElement, pNode);
-			pElement = pElement->NextSiblingElement("light");
-		}
-	 
+		} else if(pElement->GetName() == wxT("light")) {
+			if(FWG_FAILED(result = ProcessLight(pElement, pNode)))
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Process element '%s' failed ( 0x%08x ) on line %d"), m_pLogger,
+									pElement->GetName().data().AsInternal(),
+									result,
+									pElement->GetLineNumber(),
+									FWGLOG_ENDVAL);
+				return result;
+			}
+			 
 		// Process camera (*)
-		pElement = XMLNode->FirstChildElement("camera");
-		while(pElement)
-		{
-			processCamera(pElement, pNode);
-			pElement = pElement->NextSiblingElement("camera");
-		}
+		} else if(pElement->GetName() == wxT("camera")) {
+			if(FWG_FAILED(result = ProcessCamera(pElement, pNode)))
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Process element '%s' failed ( 0x%08x ) on line %d"), m_pLogger,
+									pElement->GetName().data().AsInternal(),
+									result,
+									pElement->GetLineNumber(),
+									FWGLOG_ENDVAL);
+				return result;
+			}
+		
 	 
 		// Process particleSystem (*)
-		pElement = XMLNode->FirstChildElement("particleSystem");
-		while(pElement)
-		{
-			processParticleSystem(pElement, pNode);
-			pElement = pElement->NextSiblingElement("particleSystem");
-		}
+		} else if(pElement->GetName() == wxT("particleSystem")) {
+			if(FWG_FAILED(result = ProcessParticleSystem(pElement, pNode)))
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Process element '%s' failed ( 0x%08x ) on line %d"), m_pLogger,
+									pElement->GetName().data().AsInternal(),
+									result,
+									pElement->GetLineNumber(),
+									FWGLOG_ENDVAL);
+				return result;
+			}
+		
 	 
 		// Process billboardSet (*)
-		pElement = XMLNode->FirstChildElement("billboardSet");
-		while(pElement)
-		{
-			processBillboardSet(pElement, pNode);
-			pElement = pElement->NextSiblingElement("billboardSet");
-		}
+		} else if(pElement->GetName() == wxT("billboardSet")) {
+			if(FWG_FAILED(result = ProcessBillboardSet(pElement, pNode)))
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Process element '%s' failed ( 0x%08x ) on line %d"), m_pLogger,
+									pElement->GetName().data().AsInternal(),
+									result,
+									pElement->GetLineNumber(),
+									FWGLOG_ENDVAL);
+				return result;
+			}
 	 
 		// Process plane (*)
-		pElement = XMLNode->FirstChildElement("plane");
-		while(pElement)
-		{
-			processPlane(pElement, pNode);
-			pElement = pElement->NextSiblingElement("plane");
-		}
+		} else if(pElement->GetName() == wxT("plane")) {
+			if(FWG_FAILED(result = ProcessPlane(pElement, pNode)))
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Process element '%s' failed ( 0x%08x ) on line %d"), m_pLogger,
+									pElement->GetName().data().AsInternal(),
+									result,
+									pElement->GetLineNumber(),
+									FWGLOG_ENDVAL);
+				return result;
+			}
 	 
 		// Process userDataReference (?)
-		pElement = XMLNode->FirstChildElement("userDataReference");
-		if(pElement)
-			processUserDataReference(pElement, pNode);
+		} else if(pElement->GetName() == wxT("userDataReference")) {
+			FWGLOG_WARNING_FORMAT(wxT("Tag '%s' on line %d is not supported"),m_pLogger
+								, pElement->GetName().data().AsInternal()
+								, pElement->GetLineNumber()
+								, FWGLOG_ENDVAL);
+		} else {
+			ProcessUnknownTag(pElement);
+		}
 		
 		pElement = pElement->GetNext();
 	}
@@ -502,213 +635,221 @@ GameErrorCode RenderDotSceneLoader::ProcessNode(wxXmlNode *XMLNode, SceneNode *p
 	return result;
 }
  
-void RenderDotSceneLoader::processLookTarget(TiXmlElement *XMLNode, SceneNode *pParent)
+GameErrorCode RenderDotSceneLoader::ProcessLookTarget(wxXmlNode */*XMLNode*/, SceneNode */*pParent*/)
 {
-    //! @todo Is this correct? Cause I don't have a clue actually
- 
-    // Process attributes
-    String nodeName = getAttrib(XMLNode, "nodeName");
- 
-    Node::TransformSpace relativeTo = Node::TS_PARENT;
-    String sValue = getAttrib(XMLNode, "relativeTo");
-    if(sValue == "local")
-        relativeTo = Node::TS_LOCAL;
-    else if(sValue == "parent")
-        relativeTo = Node::TS_PARENT;
-    else if(sValue == "world")
-        relativeTo = Node::TS_WORLD;
- 
-    TiXmlElement *pElement;
- 
-    // Process position (?)
-    Vector3 position;
-    pElement = XMLNode->FirstChildElement("position");
-    if(pElement)
-        position = parseVector3(pElement);
- 
-    // Process localDirection (?)
-    Vector3 localDirection = Vector3::NEGATIVE_UNIT_Z;
-    pElement = XMLNode->FirstChildElement("localDirection");
-    if(pElement)
-        localDirection = parseVector3(pElement);
- 
-    // Setup the look target
-    try
-    {
-        if(!nodeName.empty())
-        {
-            SceneNode *pLookNode = m_sceneMgr->getSceneNode(nodeName);
-            position = pLookNode->_getDerivedPosition();
-        }
- 
-        pParent->lookAt(position, relativeTo, localDirection);
-    }
-    catch(Ogre::Exception &/*e*/)
-    {
-        LogManager::getSingleton().logMessage("[RenderDotSceneLoader] Error processing a look target!");
-    }
+	FWGLOG_WARNING(wxT("ProcessLookTarget is not implemented yet"), m_pLogger);
+	return FWG_E_NOT_IMPLEMENTED_ERROR;
 }
  
-void RenderDotSceneLoader::processTrackTarget(TiXmlElement *XMLNode, SceneNode *pParent)
+GameErrorCode RenderDotSceneLoader::ProcessTrackTarget(wxXmlNode */*XMLNode*/, SceneNode */*pParent*/)
 {
+	FWGLOG_WARNING(wxT("ProcessTrackTarget is not implemented yet"), m_pLogger);
+	return FWG_E_NOT_IMPLEMENTED_ERROR;
     // Process attributes
-    String nodeName = getAttrib(XMLNode, "nodeName");
- 
-    TiXmlElement *pElement;
- 
-    // Process localDirection (?)
-    Vector3 localDirection = Vector3::NEGATIVE_UNIT_Z;
-    pElement = XMLNode->FirstChildElement("localDirection");
-    if(pElement)
-        localDirection = parseVector3(pElement);
- 
-    // Process offset (?)
-    Vector3 offset = Vector3::ZERO;
-    pElement = XMLNode->FirstChildElement("offset");
-    if(pElement)
-        offset = parseVector3(pElement);
- 
-    // Setup the track target
-    try
-    {
-        SceneNode *pTrackNode = m_sceneMgr->getSceneNode(nodeName);
-        pParent->setAutoTracking(true, pTrackNode, localDirection, offset);
-    }
-    catch(Ogre::Exception &/*e*/)
-    {
-        LogManager::getSingleton().logMessage("[RenderDotSceneLoader] Error processing a track target!");
-    }
+    //String nodeName = getAttrib(XMLNode, "nodeName");
+    //
+    //TiXmlElement *pElement;
+    //
+    //// Process localDirection (?)
+    //Vector3 localDirection = Vector3::NEGATIVE_UNIT_Z;
+    //pElement = XMLNode->FirstChildElement("localDirection");
+    //if(pElement)
+    //    localDirection = parseVector3(pElement);
+    //
+    //// Process offset (?)
+    //Vector3 offset = Vector3::ZERO;
+    //pElement = XMLNode->FirstChildElement("offset");
+    //if(pElement)
+    //    offset = parseVector3(pElement);
+    //
+    //// Setup the track target
+    //try
+    //{
+    //    SceneNode *pTrackNode = m_sceneMgr->getSceneNode(nodeName);
+    //    pParent->setAutoTracking(true, pTrackNode, localDirection, offset);
+    //}
+    //catch(Ogre::Exception &/*e*/)
+    //{
+    //    LogManager::getSingleton().logMessage("[RenderDotSceneLoader] Error processing a track target!");
+    //}
 }
  
-void RenderDotSceneLoader::processEntity(TiXmlElement *XMLNode, SceneNode *pParent)
+GameErrorCode RenderDotSceneLoader::ProcessEntity(wxXmlNode *XMLNode, Ogre::SceneNode *pParent)
 {
     // Process attributes
-    String name = getAttrib(XMLNode, "name");
-    String id = getAttrib(XMLNode, "id");
-    String meshFile = getAttrib(XMLNode, "meshFile");
-    String materialFile = getAttrib(XMLNode, "materialFile");
-    bool isStatic = getAttribBool(XMLNode, "static", false);;
-    bool castShadows = getAttribBool(XMLNode, "castShadows", true);
+    wxString name = XMLNode->GetAttribute(wxT("name"));
+    wxString id = XMLNode->GetAttribute(wxT("id"));
+    wxString meshFile = XMLNode->GetAttribute(wxT("meshFile"));
+    wxString materialFile = XMLNode->GetAttribute(wxT("materialFile"));
+    bool isStatic = GetAttribBool(XMLNode, wxT("static"), false);
+    bool castShadows = GetAttribBool(XMLNode, wxT("castShadows"), true);
  
     // TEMP: Maintain a list of static and dynamic objects
     if(isStatic)
+	{
         staticObjects.push_back(name);
-    else
+	} else {
         dynamicObjects.push_back(name);
+	}
+	
+	// Create the entity
+	Ogre::Entity *pEntity = nullptr;
+	try
+	{
+		Ogre::MeshManager::getSingleton().load(meshFile, m_sGroupName.ToStdString());
+		if(name.IsEmpty())
+		{
+			pEntity = m_sceneMgr->createEntity(meshFile);
+		} else {
+			pEntity = m_sceneMgr->createEntity(name, meshFile);
+		}
+		
+		pEntity->setCastShadows(castShadows);
+		pParent->attachObject(pEntity);
+	
+		if(!materialFile.IsEmpty())
+		{
+			pEntity->setMaterialName(materialFile);
+		}
+	} catch(Ogre::Exception &e)	{
+		FWGLOG_ERROR_FORMAT(wxT("Error loading an entity - ogre exception: '%s'"), m_pLogger
+								, wxString::FromUTF8(e.getFullDescription().c_str()).GetData().AsInternal()
+								, FWGLOG_ENDVAL);
+		return FWG_E_RENDER_SYSTEM_ERROR;
+	}
  
-    TiXmlElement *pElement;
+    wxXmlNode *pElement = XMLNode->GetChildren();
  
-    // Process vertexBuffer (?)
-    pElement = XMLNode->FirstChildElement("vertexBuffer");
-    if(pElement)
-        ;//processVertexBuffer(pElement);
+	while(pElement)
+	{
+		// Process vertexBuffer (?)
+		if(pElement->GetName() == wxT("vertexBuffer"))
+		{
+			FWGLOG_WARNING_FORMAT(wxT("Tag '%s' on line %d is not supported"),m_pLogger
+								, pElement->GetName().data().AsInternal()
+								, pElement->GetLineNumber()
+								, FWGLOG_ENDVAL);
+		} else if(pElement->GetName() == wxT("indexBuffer")) {
+			FWGLOG_WARNING_FORMAT(wxT("Tag '%s' on line %d is not supported"),m_pLogger
+								, pElement->GetName().data().AsInternal()
+								, pElement->GetLineNumber()
+								, FWGLOG_ENDVAL);			
+		}		// Process userDataReference (?)
+		else if(pElement->GetName() == wxT("userDataReference")) {
+			FWGLOG_WARNING_FORMAT(wxT("Tag '%s' on line %d is not supported"),m_pLogger
+								, pElement->GetName().data().AsInternal()
+								, pElement->GetLineNumber()
+								, FWGLOG_ENDVAL);
+		}
+	}
  
-    // Process indexBuffer (?)
-    pElement = XMLNode->FirstChildElement("indexBuffer");
-    if(pElement)
-        ;//processIndexBuffer(pElement);
- 
-    // Create the entity
-    Entity *pEntity = 0;
-    try
-    {
-        MeshManager::getSingleton().load(meshFile, m_sGroupName);
-        pEntity = m_sceneMgr->createEntity(name, meshFile);
-        pEntity->setCastShadows(castShadows);
-        pParent->attachObject(pEntity);
- 
-        if(!materialFile.empty())
-            pEntity->setMaterialName(materialFile);
-    }
-    catch(Ogre::Exception &/*e*/)
-    {
-        LogManager::getSingleton().logMessage("[RenderDotSceneLoader] Error loading an entity!");
-    }
- 
-    // Process userDataReference (?)
-    pElement = XMLNode->FirstChildElement("userDataReference");
-    if(pElement)
-        processUserDataReference(pElement, pEntity);
- 
- 
+	return FWG_NO_ERROR;
 }
  
-void RenderDotSceneLoader::processParticleSystem(TiXmlElement *XMLNode, SceneNode *pParent)
+GameErrorCode RenderDotSceneLoader::ProcessParticleSystem(wxXmlNode *XMLNode, Ogre::SceneNode *pParent)
 {
     // Process attributes
-    String name = getAttrib(XMLNode, "name");
-    String id = getAttrib(XMLNode, "id");
-    String file = getAttrib(XMLNode, "file");
+    wxString name = XMLNode->GetAttribute(wxT("name"));
+    wxString id = XMLNode->GetAttribute(wxT("id"));
+    wxString file = XMLNode->GetAttribute(wxT("file"));
  
     // Create the particle system
     try
     {
-        ParticleSystem *pParticles = m_sceneMgr->createParticleSystem(name, file);
+        Ogre::ParticleSystem *pParticles = m_sceneMgr->createParticleSystem(name, file);
         pParent->attachObject(pParticles);
+    } catch(Ogre::Exception &e) {
+        FWGLOG_ERROR_FORMAT(wxT("Error creating a particle system: %s"), m_pLogger
+								, wxString::FromUTF8(e.getFullDescription().c_str()).GetData().AsInternal()
+								, FWGLOG_ENDVAL);
+		return FWG_E_RENDER_SYSTEM_ERROR;
     }
-    catch(Ogre::Exception &/*e*/)
-    {
-        LogManager::getSingleton().logMessage("[RenderDotSceneLoader] Error creating a particle system!");
-    }
+	
+	return FWG_NO_ERROR;
 }
  
-void RenderDotSceneLoader::processBillboardSet(TiXmlElement *XMLNode, SceneNode *pParent)
+GameErrorCode RenderDotSceneLoader::ProcessBillboardSet(wxXmlNode *, Ogre::SceneNode *)
 {
     //! @todo Implement this
+	return FWG_E_NOT_IMPLEMENTED_ERROR;
 }
  
-void RenderDotSceneLoader::processPlane(TiXmlElement *XMLNode, SceneNode *pParent)
+GameErrorCode RenderDotSceneLoader::ProcessPlane(wxXmlNode *, Ogre::SceneNode *)
 {
     //! @todo Implement this
+	return FWG_E_NOT_IMPLEMENTED_ERROR;
 }
  
-void RenderDotSceneLoader::processFog(TiXmlElement *XMLNode)
+GameErrorCode RenderDotSceneLoader::ProcessFog(wxXmlNode *XMLNode)
 {
     // Process attributes
-    Real expDensity = getAttribReal(XMLNode, "expDensity", 0.001);
-    Real linearStart = getAttribReal(XMLNode, "linearStart", 0.0);
-    Real linearEnd = getAttribReal(XMLNode, "linearEnd", 1.0);
+    Ogre::Real expDensity = GetAttribReal(XMLNode, wxT("expDensity"), 0.001);
+    Ogre::Real linearStart = GetAttribReal(XMLNode, wxT("linearStart"), 0.0);
+    Ogre::Real linearEnd = GetAttribReal(XMLNode, wxT("linearEnd"), 1.0);
  
-    FogMode mode = FOG_NONE;
-    String sMode = getAttrib(XMLNode, "mode");
-    if(sMode == "none")
+    Ogre::FogMode mode = Ogre::FOG_NONE;
+    wxString sMode = XMLNode->GetAttribute(wxT("mode"));
+    if(sMode == wxT("none"))
+	{
         mode = FOG_NONE;
-    else if(sMode == "exp")
+    } else if(sMode == wxT("exp")) {
         mode = FOG_EXP;
-    else if(sMode == "exp2")
+    } else if(sMode == wxT("exp2")) {
         mode = FOG_EXP2;
-    else if(sMode == "linear")
+    } else if(sMode == wxT("linear")) {
         mode = FOG_LINEAR;
+	}
  
-    TiXmlElement *pElement;
- 
-    // Process colourDiffuse (?)
-    ColourValue colourDiffuse = ColourValue::White;
-    pElement = XMLNode->FirstChildElement("colourDiffuse");
-    if(pElement)
-        colourDiffuse = parseColour(pElement);
+    wxXmlNode *pElement = XMLNode->GetChildren();
+	Ogre::ColourValue colourDiffuse = ColourValue::White;
+	while(pElement)
+	{
+		// Process colourDiffuse (?)
+		
+		if(pElement->GetName() == wxT("colourDiffuse"))
+		{
+			colourDiffuse = ParseColour(pElement);
+		} else {
+			ProcessUnknownTag(pElement);
+		}
+		
+		pElement = pElement->GetNext();
+	}
  
     // Setup the fog
     m_sceneMgr->setFog(mode, colourDiffuse, expDensity, linearStart, linearEnd);
+	
+	return FWG_NO_ERROR;
 }
  
-void RenderDotSceneLoader::processSkyBox(TiXmlElement *XMLNode)
+GameErrorCode RenderDotSceneLoader::ProcessSkyBox(wxXmlNode *XMLNode)
 {
     // Process attributes
-    String material = getAttrib(XMLNode, "material");
-    Real distance = getAttribReal(XMLNode, "distance", 5000);
-    bool drawFirst = getAttribBool(XMLNode, "drawFirst", true);
+    wxString material = XMLNode->GetAttribute(wxT("material"));
+    Ogre::Real distance = GetAttribReal(XMLNode, wxT("distance"), 5000);
+    bool drawFirst = GetAttribBool(XMLNode, wxT("drawFirst"), true);
  
-    TiXmlElement *pElement;
+    wxXmlNode *pElement = XMLNode->GetChildren();
  
-    // Process rotation (?)
-    Quaternion rotation = Quaternion::IDENTITY;
-    pElement = XMLNode->FirstChildElement("rotation");
-    if(pElement)
-        rotation = parseQuaternion(pElement);
+	Ogre::Quaternion rotation = Quaternion::IDENTITY;
+	while(pElement)
+	{
+		// Process rotation (?)
+		if(pElement->GetName() == wxT("rotation"))
+		{
+			rotation = ParseQuaternion(pElement);
+		} else {
+			ProcessUnknownTag(pElement);
+		}
+		
+		pElement = pElement->GetNext();
+			
+	}
  
     // Setup the sky box
     m_sceneMgr->setSkyBox(true, material, distance, drawFirst, rotation, m_sGroupName);
+	
+	return FWG_NO_ERROR;
 }
  
 void RenderDotSceneLoader::processSkyDome(TiXmlElement *XMLNode)
@@ -761,24 +902,26 @@ void RenderDotSceneLoader::processClipping(TiXmlElement *XMLNode)
     Real fFar = getAttribReal(XMLNode, "far", 1);
 }
  
-void RenderDotSceneLoader::processLightRange(TiXmlElement *XMLNode, Light *pLight)
+void RenderDotSceneLoader::ProcessLightRange(wxXmlNode *XMLNode, Ogre::Light *pLight)
 {
     // Process attributes
-    Real inner = getAttribReal(XMLNode, "inner");
-    Real outer = getAttribReal(XMLNode, "outer");
-    Real falloff = getAttribReal(XMLNode, "falloff", 1.0);
+    Ogre::Real inner = GetAttribReal(XMLNode, "inner");
+    Ogre::Real outer = GetAttribReal(XMLNode, "outer");
+    Ogre::Real falloff = GetAttribReal(XMLNode, "falloff", 1.0);
  
     // Setup the light range
-    pLight->setSpotlightRange(Angle(inner), Angle(outer), falloff);
+    pLight->setSpotlightRange(Ogre::Angle(inner), Ogre::Angle(outer), falloff);
+	
+	return FWG_NO_ERROR;
 }
  
-void RenderDotSceneLoader::processLightAttenuation(TiXmlElement *XMLNode, Light *pLight)
+void RenderDotSceneLoader::ProcessLightAttenuation(wxXmlNode *XMLNode, Ogre::Light *pLight)
 {
     // Process attributes
-    Real range = getAttribReal(XMLNode, "range");
-    Real constant = getAttribReal(XMLNode, "constant");
-    Real linear = getAttribReal(XMLNode, "linear");
-    Real quadratic = getAttribReal(XMLNode, "quadratic");
+    Ogre::Real range = GetAttribReal(XMLNode, "range");
+    Ogre::Real constant = GetAttribReal(XMLNode, "constant");
+    Ogre::Real linear = GetAttribReal(XMLNode, "linear", 1.0);
+    Ogre::Real quadratic = GetAttribReal(XMLNode, "quadratic");
  
     // Setup the light attenuation
     pLight->setAttenuation(range, constant, linear, quadratic);
@@ -792,12 +935,27 @@ String RenderDotSceneLoader::getAttrib(TiXmlElement *XMLNode, const String &attr
         return defaultValue;
 }
  
-Real RenderDotSceneLoader::getAttribReal(TiXmlElement *XMLNode, const String &attrib, Real defaultValue)
+Ogre::Real RenderDotSceneLoader::GetAttribReal(wxXmlNode *XMLNode, const wxString &attrib, Ogre::Real defaultValue)
 {
-    if(XMLNode->Attribute(attrib))
-        return StringConverter::parseReal(XMLNode->Attribute(attrib));
-    else
-        return defaultValue;
+	Ogre::Real retVal = defaultValue;
+	wxString realStr;
+    if(XMLNode->GetAttribute(attrib, &realStr))
+	{
+		double temp = 0.0;
+		if(realStr.ToDouble(temp))
+		{
+			retVal = static_cast<Ogre::Real>(temp);
+		} else {
+			FWGLOG_WARNING_FORMAT(wxT("Attribute '%s' from tag '%s' on line %d not contains real value ('%s')"), m_pLogger
+									, attrib.data().AsInternal()
+									, XMLNode->GetName().data().AsInternal()
+									, XMLNode->GetLineNumber()
+									, realStr.data().AsInternal()
+									, FWGLOG_ENDVAL);
+		}
+    }
+	
+	return retVal;
 }
  
 bool RenderDotSceneLoader::GetAttribBool(wxXmlNode *XMLNode, const wxString &attrib, bool defaultValue)
@@ -816,57 +974,104 @@ bool RenderDotSceneLoader::GetAttribBool(wxXmlNode *XMLNode, const wxString &att
     return false;
 }
  
-Vector3 RenderDotSceneLoader::parseVector3(TiXmlElement *XMLNode)
+Ogre::Vector3 RenderDotSceneLoader::ParseVector3(wxXmlNode *XMLNode)
 {
-    return Vector3(
-        StringConverter::parseReal(XMLNode->Attribute("x")),
-        StringConverter::parseReal(XMLNode->Attribute("y")),
-        StringConverter::parseReal(XMLNode->Attribute("z"))
-    );
+	double temp = 0.0;
+	
+	Ogre::Real vec[3] = {0.0, 0.0, 0.0};
+	
+	if(XMLNode->GetAttribute(wxT("x"), wxT("0.0")).ToDouble(&temp))
+	{
+		vec[0] = static_cast<Ogre::Real>(temp);
+	}
+	
+	if(XMLNode->GetAttribute(wxT("y"), wxT("0.0")).ToDouble(&temp))
+	{
+		vec[1] = static_cast<Ogre::Real>(temp);
+	}
+	
+	if(XMLNode->GetAttribute(wxT("z"), wxT("0.0")).ToDouble(&temp))
+	{
+		vec[2] = static_cast<Ogre::Real>(temp);
+	}
+	
+    return Ogre::Vector3(vec);
 }
  
-Quaternion RenderDotSceneLoader::parseQuaternion(TiXmlElement *XMLNode)
+Ogre::Quaternion RenderDotSceneLoader::ParseQuaternion(wxXmlNode *XMLNode)
 {
-    //! @todo Fix this crap!
- 
-    Quaternion orientation;
- 
-    if(XMLNode->Attribute("qx"))
+	double temp = 0.0;
+	if(XMLNode->HasAttribute(wxT("qx")))
     {
-        orientation.x = StringConverter::parseReal(XMLNode->Attribute("qx"));
-        orientation.y = StringConverter::parseReal(XMLNode->Attribute("qy"));
-        orientation.z = StringConverter::parseReal(XMLNode->Attribute("qz"));
-        orientation.w = StringConverter::parseReal(XMLNode->Attribute("qw"));
+		Ogre::Real qx = 0.0; 
+		Ogre::Real qy = 0.0;
+		Ogre::Real qz = 0.0;
+		Ogre::Real qw = 0.0;
+		
+		if(XMLNode->GetAttribute(wxT("qx"), wxT("0.0")).ToDouble(&temp))
+		{
+			qx = static_cast<Ogre::Real>(temp);
+		}
+		
+		if(XMLNode->GetAttribute(wxT("qy"), wxT("0.0")).ToDouble(&temp))
+		{
+			qy = static_cast<Ogre::Real>(temp);
+		}
+		
+		if(XMLNode->GetAttribute(wxT("qz"), wxT("0.0")).ToDouble(&temp))
+		{
+			qz = static_cast<Ogre::Real>(temp);
+		}
+		
+		if(XMLNode->GetAttribute(wxT("qw"), wxT("0.0")).ToDouble(&temp))
+		{
+			qw = static_cast<Ogre::Real>(temp);
+		}
+		
+		return Ogre::Quaternion(qw,qx,qy,qz);
     }
-    else if(XMLNode->Attribute("axisX"))
+    else if(XMLNode->HasAttribute(wxT("axisX")))
     {
-        Vector3 axis;
-        axis.x = StringConverter::parseReal(XMLNode->Attribute("axisX"));
-        axis.y = StringConverter::parseReal(XMLNode->Attribute("axisY"));
-        axis.z = StringConverter::parseReal(XMLNode->Attribute("axisZ"));
-        Real angle = StringConverter::parseReal(XMLNode->Attribute("angle"));;
-        orientation.FromAngleAxis(Ogre::Angle(angle), axis);
-    }
-    else if(XMLNode->Attribute("angleX"))
+		Ogre::Vector3 axis(Ogre::Vector3::ZERO);
+		Ogre::Real angle = 0.0;
+		
+		if(XMLNode->GetAttribute(wxT("axisX"), wxT("0.0")).ToDouble(&temp))
+		{
+			axis.x = static_cast<Ogre::Real>(temp);
+		}
+		
+		if(XMLNode->GetAttribute(wxT("axisY"), wxT("0.0")).ToDouble(&temp))
+		{
+			axis.y = static_cast<Ogre::Real>(temp);
+		}
+		
+		if(XMLNode->GetAttribute(wxT("axisZ"), wxT("0.0")).ToDouble(&temp))
+		{
+			axis.z = static_cast<Ogre::Real>(temp);
+		}
+		
+		if(XMLNode->GetAttribute(wxT("angle"), wxT("0.0")).ToDouble(&temp))
+		{
+			angle = static_cast<Ogre::Real>(temp);
+		}
+		
+        return Ogre::Quaternion(Ogre::Angle(angle), axis);
+    } 
+	else if(XMLNode->HasAttribute(wxT("angleX")))
     {
-        Vector3 axis;
-        axis.x = StringConverter::parseReal(XMLNode->Attribute("angleX"));
-        axis.y = StringConverter::parseReal(XMLNode->Attribute("angleY"));
-        axis.z = StringConverter::parseReal(XMLNode->Attribute("angleZ"));
-        //orientation.FromAxes(&axis);
-        //orientation.F
+		FWGLOG_WARNING(wxT("Reading from angles is not supported"), m_pLogger);
     }
- 
-    return orientation;
+	
+	return Ogre::Quaternion;
 }
  
-ColourValue RenderDotSceneLoader::parseColour(TiXmlElement *XMLNode)
+Ogre::ColourValue RenderDotSceneLoader::ParseColour(wxXmlNode *XMLNode)
 {
-    return ColourValue(
-        StringConverter::parseReal(XMLNode->Attribute("r")),
-        StringConverter::parseReal(XMLNode->Attribute("g")),
-        StringConverter::parseReal(XMLNode->Attribute("b")),
-        XMLNode->Attribute("a") != NULL ? StringConverter::parseReal(XMLNode->Attribute("a")) : 1
+    return Ogre::ColourValue(
+        GetAttribReal(XMLNode, wxT("r")),
+        GetAttribReal(XMLNode, wxT("g")),
+        GetAttribReal(XMLNode, wxT("b")),
+        XMLNode->HasAttribute(wxT("a"))? GetAttribReal(XMLNode, wxT("a")) : 1.0
     );
 }
  
