@@ -27,7 +27,7 @@ public:
 	~RenderDotSceneLoader();
 	
 	GameErrorCode ParseDotScene(const wxString &SceneString, Ogre::SceneManager *yourSceneMgr, Ogre::SceneNode *pAttachNode = NULL, const wxString &sPrependNode = wxT(""));    
-	wxString getProperty(const wxString &ndNm, const wxString &prop);
+	//wxString getProperty(const wxString &ndNm, const wxString &prop);
  
     wxVector<nodeProperty> nodeProperties;
     wxVector<wxString> staticObjects;
@@ -39,10 +39,7 @@ protected:
     GameErrorCode ProcessNodes(wxXmlNode *XMLNode);
     GameErrorCode ProcessExternals(wxXmlNode *XMLNode);
     GameErrorCode ProcessEnvironment(wxXmlNode *XMLNode);
-    void processTerrain(TiXmlElement *XMLNode);
-    void processUserDataReference(TiXmlElement *XMLNode, Ogre::SceneNode *pParent = 0);
-    void processUserDataReference(TiXmlElement *XMLNode, Ogre::Entity *pEntity);
-    void processOctree(TiXmlElement *XMLNode);
+    GameErrorCode ProcessTerrain(wxXmlNode *XMLNode);
     GameErrorCode ProcessLight(wxXmlNode *XMLNode, Ogre::SceneNode *pParent = 0);
     GameErrorCode ProcessCamera(wxXmlNode *XMLNode, Ogre::SceneNode *pParent = 0);
 
@@ -52,13 +49,13 @@ protected:
     GameErrorCode ProcessEntity(wxXmlNode *XMLNode, Ogre::SceneNode *pParent);
     GameErrorCode ProcessParticleSystem(wxXmlNode *XMLNode, Ogre::SceneNode *pParent);
     GameErrorCode ProcessBillboardSet(wxXmlNode *XMLNode, Ogre::SceneNode *pParent);
-    void processPlane(TiXmlElement *XMLNode, SceneNode *pParent);
-
+	GameErrorCode ProcessPlane(wxXmlNode *XMLNode, Ogre::SceneNode *pParent);
+ 
     GameErrorCode ProcessFog(wxXmlNode *XMLNode);
     GameErrorCode ProcessSkyBox(wxXmlNode *XMLNode);
-    void processSkyDome(TiXmlElement *XMLNode);
-    void processSkyPlane(TiXmlElement *XMLNode);
-    void processClipping(TiXmlElement *XMLNode);
+    GameErrorCode ProcessSkyDome(wxXmlNode *XMLNode);
+    GameErrorCode ProcessSkyPlane(wxXmlNode *XMLNode);
+    GameErrorCode ProcessClipping(wxXmlNode *XMLNode);
 
     void ProcessLightRange(wxXmlNode *XMLNode, Ogre::Light *pLight);
     void ProcessLightAttenuation(wxXmlNode *XMLNode, Ogre::Light *pLight);

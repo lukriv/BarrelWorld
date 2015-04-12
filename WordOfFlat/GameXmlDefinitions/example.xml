@@ -1,7 +1,7 @@
 <world>
 	<definitions>
 		
-		<meshdefs>
+		<!-- <meshdefs>
 			<mesh name="mesh1">
 				<meshname>TestingCube</meshname>
 			</mesh>
@@ -11,7 +11,7 @@
 			<material name="material1">
 				<materialname>Test/ColourTest</materialname>
 			</material>
-		</materialdefs>
+		</materialdefs> -->
 		
 		<inputdefs>
 			<input name="testInput" type="character">
@@ -38,12 +38,12 @@
 			</logic>
 		</logicdefs>
 		
-		<cameradefs>
+		<!-- <cameradefs>
 			<camera name="MainCamera">
 				<position>0.0, 10.0, -5.0</position>
 				<direction>0, -10, 5</direction>
 			</camera>
-		</cameradefs>
+		</cameradefs> -->
 		
 	</definitions>
 
@@ -68,11 +68,11 @@
 			</transform>
 			
 			<render name="render1">
-				<renderent name="renderEnt1">
+				<!-- <renderent name="renderEnt1">
 					<meshref value="mesh1" />
 					<materialref value="material1" />
 					<position>0.0;0.0;0.0</position>
-				</renderent>
+				</renderent> -->
 			</render>
 			
 			<physics type="rigid">
@@ -92,13 +92,13 @@
 			</transform>
 			
 			<render name="render2">
-				<renderent name="renderEnt2">
+				<!-- <renderent name="renderEnt2">
 					<mesh>
 						<meshname>TestingCube</meshname>
 					</mesh>
 					<materialref value="material1" />
 					<position>0.0;0.0;0.0</position>
-				</renderent>
+				</renderent> -->
 			</render>
 			
 			<inputref value="testInput" />
@@ -122,7 +122,7 @@
 			</transform>
 			
 			<render name="render3">
-				<cameraref value="MainCamera" />
+				<!-- <cameraref value="MainCamera" /> -->
 			</render>
 			
 			<inputref value="cameraInput" />
