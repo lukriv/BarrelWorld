@@ -55,24 +55,6 @@ public:
 	GameErrorCode Initialize(GameEntity* pParentEntity);
 	
 	/*!
-	 * \brief Add new Render Object to Render Component
-	 * 
-	 * To Render Component can be attached more than one object.
-	 * 
-	 * \param pObject Render Object
-	 * \retval FWG_E_RENDER_OBJECT_ALREADY_ATTACHED_ERROR If Render Object is already attached to another Render Component.
-	 * \retval Other error on some memory error
-	 * \retval FWG_NO_ERROR Object was successfully attached.
-	 */
-	GameErrorCode AttachRenderObject(RenderObject* pObject);
-	
-	/*!
-	 * \brief Remove render object from render component
-	 * \param pObject
-	 */
-	void RemoveRenderObject(RenderObject* pObject);
-	
-	/*!
 	 * \brief Destroy inner ogre object
 	 */
 	void Clear();
