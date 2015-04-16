@@ -1,4 +1,4 @@
 [submodule "extern"]
 	path = extern
-	url = git://gitorious.org/firstwxgame/firstwxgamedeps.git
+	url = git@github.com:lukriv/BarrelWorldDeps.git
 	branch = master
