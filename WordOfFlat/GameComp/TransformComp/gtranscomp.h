@@ -15,23 +15,20 @@ public:
 	btQuaternion	m_rotation;
 };
 
-
-class GameEntity;
+class wxXmlNode;
 
 class TransformComponent : public ComponentBase, public btMotionState {
-	TransformData *m_pTransData;
-	GameEntity* m_pParent;
-	
+	TransformData *m_pTransData;	
 public:
 	TransformComponent();
 	~TransformComponent();
 	
-	GameErrorCode Initialize(GameEntity *pEntity);
+	GameErrorCode Initialize();
 	
 	inline TransformData* GetData() { return m_pTransData; }
 	
 	inline const Ogre::Quaternion GetOgreRotation();
-	inline const Ogre::Vector3 GetOgreTranlate();
+	inline const Ogre::Vector3 GetOgreTranslate();
 	
 	virtual GameErrorCode ReceiveMessage(TaskMessage& msg);
 	virtual GameErrorCode ReinitComponent(GameEntity* pNewParentEntity);
@@ -39,6 +36,9 @@ public:
 	
 	virtual void getWorldTransform(btTransform& worldTrans) const override;
 	virtual void setWorldTransform(const btTransform& worldTrans) override;
+	
+	GameErrorCode Load(wxXmlNode *XMLNode);
+	GameErrorCode Store(wxXmlNode *ParentNode);
 	
 };
 
@@ -48,7 +48,7 @@ const Ogre::Quaternion TransformComponent::GetOgreRotation()
 	return cvt(m_pTransData->m_rotation);
 }
 
-const Ogre::Vector3 TransformComponent::GetOgreTranlate()
+const Ogre::Vector3 TransformComponent::GetOgreTranslate()
 {
 	return cvt(m_pTransData->m_translate);
 }

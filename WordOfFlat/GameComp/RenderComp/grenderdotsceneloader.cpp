@@ -33,8 +33,13 @@ GameErrorCode RenderDotSceneLoader::ParseDotScene(const wxString& SceneString, O
 	}
   
     // Validate the File
-    XMLRoot = XMLDoc.GetRoot();
-    if( XMLRoot->GetName() != wxT("scene") ) 
+    return ParseDotScene(XMLDoc.GetRoot(),yourSceneMgr,pAttachNode,sPrependNode);
+
+}
+
+GameErrorCode RenderDotSceneLoader::ParseDotScene(wxXmlNode* XMLRoot, Ogre::SceneManager* yourSceneMgr, Ogre::SceneNode* pAttachNode, const wxString& sPrependNode)
+{
+	if( XMLRoot->GetName() != wxT("scene") ) 
 	{
         FWGLOG_ERROR(wxT("Error: Missing <scene>" ), m_pLogger);
         return FWG_E_XML_ROOT_NOT_FOUND_ERROR;
@@ -1111,3 +1116,4 @@ void RenderDotSceneLoader::ProcessUnknownTag(wxXmlNode* xmlNode)
 																, FWGLOG_ENDVAL);
 	}
 }
+

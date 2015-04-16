@@ -1,0 +1,14 @@
+<!-- render types -->
+<render type="simpleObject">
+	<mesh>mesh_name</mesh>
+	<material>material_name</material>
+</render>
+
+<!-- physics types -->
+<physics type="simpleObject">
+	<file>physics_definition_filename</file>
+</physics>
+
+<!-- logic types -->
+<logic type="manualTest"></logic>
+<logic type="freeCamera"></logic>

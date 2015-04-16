@@ -11,7 +11,7 @@
 class GameEntity {
 	typedef RefObjSmPtr< ComponentBase > TCompSmPtr;
 private:
-	wxString m_entityName;
+	wxDword m_id;
 	wxCriticalSection m_entityLock;
 	TCompSmPtr m_componentList[GAME_COMP_COUNT];
 
@@ -23,14 +23,14 @@ public:
 	~GameEntity();
 				
 	/**
-	 * \brief Sets GameEntity unique name 
+	 * \brief Sets GameEntity unique id 
 	 */
-	inline void SetName(const wxString& name) { m_entityName.assign(name);}
+	inline void SetId(wxDword id) { m_id = id;}
 	
 	/**
 	 * \brief Gets GameEntity unique name
 	 */
-	inline const wxString& GetName() const { return m_entityName; }
+	inline wxDword GetId() const { return m_id; }
 
 	/**
 	 * \brief Get component with given type

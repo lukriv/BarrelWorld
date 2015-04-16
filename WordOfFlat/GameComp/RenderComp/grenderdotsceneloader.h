@@ -6,18 +6,6 @@
 #include <GameSystem/glog.h>
 #include <GameSystem/gset.h>
 
-class nodeProperty
-{
-public:
-    wxString nodeName;
-    wxString propertyNm;
-    wxString valueName;
-    wxString typeName;
-
-    nodeProperty(const wxString &node, const wxString &propertyName, const wxString &value, const wxString &type)
-        : nodeName(node), propertyNm(propertyName), valueName(value), typeName(type) {}
-};
-
 class RenderDotSceneLoader
 {
 private:
@@ -27,12 +15,8 @@ public:
 	~RenderDotSceneLoader();
 	
 	GameErrorCode ParseDotScene(const wxString &SceneString, Ogre::SceneManager *yourSceneMgr, Ogre::SceneNode *pAttachNode = NULL, const wxString &sPrependNode = wxT(""));    
-	//wxString getProperty(const wxString &ndNm, const wxString &prop);
+	GameErrorCode ParseDotScene(wxXmlNode *XMLSceneRoot, Ogre::SceneManager *yourSceneMgr, Ogre::SceneNode *pAttachNode = NULL, const wxString &sPrependNode = wxT(""));    
  
-    wxVector<nodeProperty> nodeProperties;
-    wxVector<wxString> staticObjects;
-    wxVector<wxString> dynamicObjects;
-	
 protected:
     GameErrorCode ProcessScene(wxXmlNode *XMLRoot);
 

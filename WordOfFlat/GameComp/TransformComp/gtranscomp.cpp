@@ -2,21 +2,16 @@
 
 #include <bullet/LinearMath/btAlignedAllocator.h>
 #include <GameComp/gentity.h>
+#include <GameXmlDefinitions/gxmldefs.h>
 
 typedef btAlignedAllocator< TransformData, 16 > TAllocator;
 
 TransformComponent::TransformComponent() : ComponentBase(GAME_COMP_TRANSFORM)
 										, m_pTransData(nullptr)
-										, m_pParent(nullptr)
 {}
 
-GameErrorCode TransformComponent::Initialize(GameEntity *pEntity)
+GameErrorCode TransformComponent::Initialize()
 {
-	if(pEntity == nullptr)
-	{
-		return FWG_E_INVALID_PARAMETER_ERROR;
-	}
-	
 	TAllocator allocator;
 	m_pTransData = allocator.allocate(1);
 	//FWG_RETURN_FAIL(GameNewChecked(m_pTransData));
@@ -27,9 +22,6 @@ GameErrorCode TransformComponent::Initialize(GameEntity *pEntity)
 	m_pTransData->m_translate = btVector3(0.0f, 0.0f, 0.0f);
 	m_pTransData->m_scale = btVector3(1.0f, 1.0f, 1.0f);
 	m_pTransData->m_rotation = btQuaternion::getIdentity();
-	
-	// set parent
-	m_pParent = pEntity;
 	
 	return FWG_NO_ERROR;
 }
@@ -47,13 +39,6 @@ TransformComponent::~TransformComponent()
 
 GameErrorCode TransformComponent::ReceiveMessage(TaskMessage& )
 {
-	return FWG_NO_ERROR;
-}
-
-GameErrorCode TransformComponent::ReinitComponent(GameEntity* pNewParentEntity)
-{
-	//connection to physics does the physics component itself
-	m_pParent = pNewParentEntity;
 	return FWG_NO_ERROR;
 }
 
@@ -82,7 +67,57 @@ void TransformComponent::setWorldTransform(const btTransform& worldTrans)
 	
 	//transform was updated
 	TaskMessage task(GAME_TASK_TRANSFORM_UPDATE);
-	m_pParent->ReceiveMessage(task, (~GAME_COMP_MASK_PHYSICS));
-		
+	GetParentEntity()->ReceiveMessage(task, (~GAME_COMP_MASK_PHYSICS)); 
 }
 
+GameErrorCode TransformComponent::Store(wxXmlNode* pParentNode)
+{
+	wxXmlNode *pNewNode = nullptr;
+	wxXmlNode *pTempNode = nullptr;
+	FWG_RETURN_FAIL(GameNewChecked(pNewNode, wxXML_ELEMENT_NODE, GAME_TAG_COMP_TRANSFORM));
+	wxScopedPtr<wxXmlNode> apNewNode(pNewNode);
+	//FWG_RETURN_FAIL(GameNew())
+	
+	//todo: complete this
+	
+	
+}
+
+
+GameErrorCode TransformComponent::Load(wxXmlNode* pNode)
+{
+	if(pNode->GetName() != GAME_TAG_COMP_TRANSFORM)
+	{
+		return FWG_E_XML_INVALID_TAG_ERROR;
+	}
+	
+	wxString nodeContent;
+	wxXmlNode *pChild = pNode->GetChildren();
+	
+	for(pChild)
+	{
+		if(pChild->GetName() == GAME_TAG_PARAM_POSITION)
+		{
+			Ogre::Vector3 vec;
+			FWG_RETURN_FAIL(GameXmlUtils::GetNodeContent(pChild, nodeContent));
+			FWG_RETURN_FAIL(GameXmlUtils::ConvertToVec3(nodeContent, vec));
+			m_pTransData->m_translate = cvt(vec);
+		} else if(pChild->GetName() == GAME_TAG_PARAM_SCALE) {
+			Ogre::Vector3 vec;
+			FWG_RETURN_FAIL(GameXmlUtils::GetNodeContent(pChild, nodeContent));
+			FWG_RETURN_FAIL(GameXmlUtils::ConvertToVec3(nodeContent, vec));
+			m_pTransData->m_scale = cvt(vec);
+		} else if(pChild->GetName() == GAME_TAG_PARAM_ROTATION) {
+			Ogre::Quaternion quat;
+			FWG_RETURN_FAIL(GameXmlUtils::GetNodeContent(pChild, nodeContent));
+			FWG_RETURN_FAIL(GameXmlUtils::ConvertToQuat(nodeContent, quat));
+			m_pTransData->m_rotation = cvt(quat);
+		} else {
+			GameXmlUtils::ProcessUnknownTag(pChild);
+		}
+		pChild = pChild->GetNext();
+	}
+	
+	return FWG_NO_ERROR;
+	
+}

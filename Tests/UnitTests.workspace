@@ -5,9 +5,9 @@
   <Project Name="GameMsgSrv" Path="../WordOfFlat/GameMsgSrv/GameMsgSrv.project" Active="No"/>
   <Project Name="ClientServerTests" Path="ClientServerTests/ClientServerTests.project" Active="No"/>
   <Project Name="GameComm" Path="../WordOfFlat/GameComm/GameComm.project" Active="No"/>
-  <Project Name="GameSystemTests" Path="GameSystemTests/GameSystemTests.project" Active="No"/>
+  <Project Name="GameSystemTests" Path="GameSystemTests/GameSystemTests.project" Active="Yes"/>
   <Project Name="Extern" Path="../WordOfFlat/Extern/Extern.project" Active="No"/>
-  <Project Name="XmlLoaderTests" Path="XmlLoaderTests/XmlLoaderTests.project" Active="Yes"/>
+  <Project Name="XmlLoaderTests" Path="XmlLoaderTests/XmlLoaderTests.project" Active="No"/>
   <Project Name="GameXmlDefinitions" Path="../WordOfFlat/GameXmlDefinitions/GameXmlDefinitions.project" Active="No"/>
   <Environment>
     <![CDATA[-DUNICODE]]>

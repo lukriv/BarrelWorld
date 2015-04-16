@@ -29,7 +29,9 @@ public:
 	 * \param transCompDef
 	 * \param pEntity transform component container
 	 */
-	GameErrorCode CreateTransformComponent(const TransformDef &transCompDef, GameEntity *pEntity);
+	GameErrorCode CreateTransformComponent( TransformComponent *&pTransComp, const btVector3& position, const btVector3& scale, const btQuaternion& rotation);
+	
+	GameErrorCode CreateTransformComponent( TransformComponent *&pTransComp );
 	
 };
 

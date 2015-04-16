@@ -29,22 +29,6 @@
 			</input>
 		</inputdefs>
 		
-		<logicdefs>
-			<logic name="manualLogic">
-				<logictype>MANUAL_TEST</logictype>
-			</logic>
-			<logic name="freeCameraLogic">
-				<logictype>FREE_CAMERA</logictype>
-			</logic>
-		</logicdefs>
-		
-		<!-- <cameradefs>
-			<camera name="MainCamera">
-				<position>0.0, 10.0, -5.0</position>
-				<direction>0, -10, 5</direction>
-			</camera>
-		</cameradefs> -->
-		
 	</definitions>
 
 
@@ -60,14 +44,16 @@
 				</terrainpage>
 			</terrainpages>
 		</terrain>
-		<entity name="entity1">
+		<entity>
 			<transform>
 				<position>0.0, 15.0, 0.0</position>
 				<scale>1.0, 1.0, 1.0</scale>
 				<rotation>1.0, 0.0, 0.0, 0.0</rotation>				
 			</transform>
 			
-			<render name="render1">
+			<render type="simpleObject">
+				<mesh>mesh_name</mesh>
+				<material>material_name</material>
 				<!-- <renderent name="renderEnt1">
 					<meshref value="mesh1" />
 					<materialref value="material1" />
@@ -75,23 +61,23 @@
 				</renderent> -->
 			</render>
 			
-			<physics type="rigid">
-				<shape type="box">
+			<physics type="simpleObject">
+				<!-- <shape type="box">
 					<boxHalfSize>1.0, 1.0, 1.0</boxHalfSize>
 				</shape>
 				<mass>1.0</mass>
-				<inertia>0.0,0.0,0.0</inertia>
+				<inertia>0.0,0.0,0.0</inertia> -->
 			</physics>
 		</entity>
 		
-		<entity name="entity2">
+		<entity>
 			<transform>
 				<position>1.0, 10.0, 0.0</position>
 				<scale>1.0, 1.0, 1.0</scale>
 				<rotation>1.0, 0.0, 0.0, 0.0</rotation>				
 			</transform>
 			
-			<render name="render2">
+			<render>
 				<!-- <renderent name="renderEnt2">
 					<mesh>
 						<meshname>TestingCube</meshname>
@@ -101,33 +87,43 @@
 				</renderent> -->
 			</render>
 			
-			<inputref value="testInput" />
+			<inputref>testInput</inputref>
 			
-			<logicref value="manualLogic" />
+			<logic type="manualTest"></logic>
 			
-			<physics type="collision">
-				<shape type="box">
+			<physics>
+				<!-- <shape type="box">
 					<boxHalfSize>1.0, 1.0, 1.0</boxHalfSize>
 				</shape>
 				<mass>1.0</mass>
-				<inertia>0.0,0.0,0.0</inertia>
+				<inertia>0.0,0.0,0.0</inertia> -->
 			</physics>
 		</entity>
 		
-		<entity name="mainCameraEntity">
+		<entity>
 			<transform>
 				<position>0.0, 10.0, 0.0</position>
 				<scale>1.0, 1.0, 1.0</scale>
 				<rotation>1.0, 0.0, 0.0, 0.0</rotation>				
 			</transform>
 			
-			<render name="render3">
+			<render type="genericObject">
+				<scene>
+					<nodes>
+						<node>
+							<camera projectionType="perspective">
+								<clipping near="0.1" far="50000" />
+							</camera>
+						</node>
+					</nodes>
+				</scene>
 				<!-- <cameraref value="MainCamera" /> -->
 			</render>
 			
-			<inputref value="cameraInput" />
+			<inputref>cameraInput</inputref>
 			
-			<logicref value="manualLogic" />
+			
+			<logic type="freeCamera"></logic>
 			
 		</entity>
 	</scene>

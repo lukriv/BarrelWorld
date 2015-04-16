@@ -10,26 +10,49 @@
 class TaskMessage {
 	GameTaskMessageType m_taskType;
 public:
+	TaskMessage() : m_taskType(GAME_TASK_UNKNOWN) {}
 	TaskMessage(GameTaskMessageType taskType) : m_taskType(taskType) {}
+	TaskMessage( const TaskMessage& that)
+	{
+		m_taskType = that.m_taskType;
+	}
+	
 	inline GameTaskMessageType GetTaskType() { return m_taskType; }
 	
+	TaskMessage &operator=(const TaskMessage& taskmsg)
+	{
+		if(&taskmsg != this)
+		{
+			m_taskType = taskmsg.m_taskType;
+		}
+		
+		return *this;
+	}
 };
 
 class GameEntity; // forward declaration of GameEntity
 
 class ComponentBase : public RefObjectImpl<IRefObject> {
 	GameComponentType m_compType;
+	GameEntity *m_pParent;
 	bool m_enabled;
 public:
-	ComponentBase(GameComponentType compType) : m_compType(compType), m_enabled(true) {}
+	ComponentBase(GameComponentType compType) : m_compType(compType)
+											, m_pParent(nullptr)
+											, m_enabled(true) {}
 	
 	inline GameComponentType GetComponentType() { return m_compType; }
 	
 	inline void Enable(bool enable) { m_enabled = enable; }
 	inline bool IsEnabled() { return m_enabled; }
 	
+	inline void SetParentEntity(GameEntity *pNewParentEntity) 
+	{
+		m_pParent = pNewParentEntity;
+	}
 	
-	virtual GameErrorCode ReinitComponent(GameEntity *pNewParentEntity) = 0;
+	inline GameEntity* GetParentEntity() { return m_pParent; }
+	
 	virtual GameErrorCode Update() = 0;
 	virtual GameErrorCode ReceiveMessage(TaskMessage &msg) = 0;
 	

@@ -7,9 +7,6 @@
 
 #include <GameResHold/gdeftables.h>
 
-static const wxChar* GAME_PARAM_MESHNAME			= wxT("meshname");
-static const wxChar* GAME_PARAM_MATERIALNAME		= wxT("materialname");
-static const wxChar* GAME_PARAM_GROUPNAME			= wxT("groupname");
 static const wxChar* GAME_PARAM_LOGICTYPE			= wxT("logictype");
 static const wxChar* GAME_PARAM_POSITION			= wxT("position");
 static const wxChar* GAME_PARAM_DIRECTION			= wxT("direction");
@@ -80,26 +77,6 @@ static const InputTypeConvertRow InputTypeConvertTable[] =
 };
 
 // mesh parameters
-static const ParamDefinition MeshXmlParamTable[] = {
-	{ GAME_PARAM_MESHNAME, GAMEDEF_TYPE_TEXT, offsetof(struct NameDef, m_name), true },
-	{ GAME_PARAM_GROUPNAME, GAMEDEF_TYPE_TEXT, offsetof(struct NameDef, m_group), false }
-};
-
-static const ParamDefinition MaterialXmlParamTable[] = {
-	{ GAME_PARAM_MATERIALNAME, GAMEDEF_TYPE_TEXT, offsetof(struct NameDef, m_name), true },
-	{ GAME_PARAM_GROUPNAME, GAMEDEF_TYPE_TEXT, offsetof(struct NameDef, m_group), false }
-};
-
-static const ParamDefinition RenderEntityXmlParamTable[] = {
-	{ GAME_PARAM_POSITION, GAMEDEF_TYPE_VEC3, offsetof(struct RenderEntityDef, m_position), false }
-};
-
-static const ParamDefinition CameraXmlParamTable[] = {
-	{ GAME_PARAM_POSITION, GAMEDEF_TYPE_VEC3, offsetof(struct CameraDef, m_position), true },
-	{ GAME_PARAM_DIRECTION, GAMEDEF_TYPE_VEC3, offsetof(struct CameraDef, m_direction), true },
-	{ GAME_PARAM_NEAR, GAMEDEF_TYPE_FLOAT, offsetof(struct CameraDef, m_near), false },
-};
-
 static const ParamDefinition LogicXmlParamTable[] = {
 	{ GAME_PARAM_LOGICTYPE, GAMEDEF_TYPE_TEXT, offsetof(struct LogicDef, m_logicType), true }
 };

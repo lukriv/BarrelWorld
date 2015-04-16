@@ -15,6 +15,7 @@ RenderCompManager::RenderCompManager(GameLogger* pLogger) : m_spLogger(pLogger)
 															, m_pRoot(nullptr)
 															, m_pRenderWindow(nullptr)
 															, m_pSceneManager(nullptr)
+															, m_pMainCamera(nullptr)
 															, m_actualQueue(0)
 														
 {}
@@ -85,7 +86,7 @@ GameErrorCode RenderCompManager::Initialize(GameEngineSettings& settings)
 
 void RenderCompManager::Uninitialize()
 {
-	m_spMainCamera.Release();
+	m_pMainCamera.Release();
 	m_cameraMap.Clear();
 	
 	if(m_pRenderWindow != nullptr) 
@@ -180,9 +181,9 @@ GameErrorCode RenderCompManager::ProcessAllUpdates()
 	
 }
 
-GameErrorCode RenderCompManager::SetMainCamera(RenderObject* pCameraObject)
+GameErrorCode RenderCompManager::SetMainCamera(Ogre::Camera* pCamera)
 {
-	if ((!pCameraObject)||(!pCameraObject->IsCameraType()))
+	if (!pCamera)
 	{
 		return FWG_E_INVALID_PARAMETER_ERROR;
 	}
@@ -196,7 +197,6 @@ GameErrorCode RenderCompManager::SetMainCamera(RenderObject* pCameraObject)
 	wxCriticalSectionLocker lock(m_mgrLock);
 	
 	Ogre::Viewport *pViewport = nullptr;
-	Ogre::Camera *pCamera = pCameraObject->GetCamera();
 	
 	// check if main viewport exists
 	if(m_pRenderWindow->hasViewportWithZOrder(0))
@@ -206,13 +206,13 @@ GameErrorCode RenderCompManager::SetMainCamera(RenderObject* pCameraObject)
 		pViewport->setCamera(pCamera);
 	} else {
 		// create new main viewport
-		pViewport = m_pRenderWindow->addViewport(pCameraObject->GetCamera());
+		pViewport = m_pRenderWindow->addViewport(pCamera);
 	}
 	
 	pViewport->setBackgroundColour(Ogre::ColourValue(0.0f,0.0f,0.0f));
 	pCamera->setAspectRatio(Ogre::Real(pViewport->getActualWidth()) / Ogre::Real(pViewport->getActualHeight()));
 	
-	m_spMainCamera = pCameraObject;
+	m_pMainCamera = pCamera;
 	
 	return FWG_NO_ERROR;	
 }

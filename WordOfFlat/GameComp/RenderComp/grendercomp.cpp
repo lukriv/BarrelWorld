@@ -92,7 +92,7 @@ void RenderComponent::RemoveRenderObject(RenderObject* pObject)
 	}
 }
 
-GameErrorCode RenderComponent::Initialize(GameEntity* pParentEntity)
+GameErrorCode RenderComponent::Initialize(const Ogre::Vector3& translate, const Ogre::Quaternion& rotation)
 {
 	if(m_pSceneNode != nullptr)
 	{
@@ -100,27 +100,7 @@ GameErrorCode RenderComponent::Initialize(GameEntity* pParentEntity)
 		return FWG_NO_ERROR;
 	}
 	
-	// parent entity cannot be null
-	if(pParentEntity == nullptr)
-	{
-		return FWG_E_INVALID_PARAMETER_ERROR;
-	}
-	
-	m_spTransform = reinterpret_cast<TransformComponent*> (pParentEntity->GetComponent(GAME_COMP_TRANSFORM));
-	if(m_spTransform.IsEmpty())
-	{
-		// transform component cannot be null - add transform component to entity at first
-		return FWG_E_INVALID_PARAMETER_ERROR;
-	}
-	
-	// initialize parent entity
-	m_pParent = pParentEntity;
-	
-	TransformData* transData = m_spTransform->GetData();
-	
-	m_pSceneNode = m_pOwnerManager->GetOgreSceneManager()->getRootSceneNode()->createChildSceneNode(
-		Ogre::Vector3(transData->m_translate.getX(), transData->m_translate.getY(), transData->m_translate.getZ())
-		, Ogre::Quaternion(transData->m_rotation.getW(), transData->m_rotation.getX(), transData->m_rotation.getY(), transData->m_rotation.getZ()));
+	m_pSceneNode = m_pOwnerManager->GetOgreSceneManager()->getRootSceneNode()->createChildSceneNode( translate, rotation);
 	
 	if(m_pSceneNode == nullptr) {
 		return FWG_E_MEMORY_ALLOCATION_ERROR;
@@ -131,37 +111,17 @@ GameErrorCode RenderComponent::Initialize(GameEntity* pParentEntity)
 
 GameErrorCode RenderComponent::ReceiveMessage(TaskMessage& msg)
 {
-	switch(msg.GetTaskType())
-	{
-		case GAME_TASK_TRANSFORM_UPDATE:
-		{
-			Update();
-			break;
-		}
-		default:
-			break;
-	}
+	wxCriticalSectionLocker lock(m_renderLock);
+	
+	m_receivedMessages.push_back(msg);
+	
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode RenderComponent::ReinitComponent(GameEntity* pNewParentEntity)
-{
-	// lock component
-	wxCriticalSectionLocker lock(m_renderLock);
-	// get pointer to transform component if it is there
-	if(pNewParentEntity == nullptr)
-	{
-		m_spTransform.Release();
-		m_pParent = nullptr;
-	} else {
-		m_pParent = pNewParentEntity;
-		m_spTransform = reinterpret_cast<TransformComponent*> (pNewParentEntity->GetComponent(GAME_COMP_TRANSFORM));
-	}
-	return FWG_NO_ERROR;
-}
 
 GameErrorCode RenderComponent::Update()
 {
+	wxCriticalSectionLocker lock(m_renderLock);
 	if(!m_alreadyInUpdateQueue)
 	{
 		//FWGLOG_DEBUG_FORMAT(wxT("Add to update queue: %s"), m_pOwnerManager->GetLogger(), m_pParent->GetName().GetData().AsInternal(), FWGLOG_ENDVAL);
@@ -171,15 +131,5 @@ GameErrorCode RenderComponent::Update()
 	return FWG_NO_ERROR;
 }
 
-void RenderComponent::ProcessUpdate()
-{
-	wxCriticalSectionLocker lock(m_renderLock);
-	if(!m_spTransform.IsEmpty())
-	{
-		//todo: upgrade updating scene node transform
-		m_pSceneNode->setPosition(m_spTransform->GetOgreTranlate());
-		m_pSceneNode->setOrientation(m_spTransform->GetOgreRotation());
-	}
-	
-	m_alreadyInUpdateQueue = false;
-}
+
+

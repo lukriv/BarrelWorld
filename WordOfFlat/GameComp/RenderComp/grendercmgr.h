@@ -34,7 +34,7 @@ private:
 	
 	// optional scene manager - probably it will be only one in the project
 	Ogre::SceneManager* m_pSceneManager;
-	RefObjSmPtr<RenderObject> m_spMainCamera;
+	Ogre::Camera* m_pMainCamera;
 	TGameCameraMap m_cameraMap;
 	wxCriticalSection m_mgrLock;
 	wxCriticalSection m_processLock;
@@ -71,11 +71,11 @@ public:
 	 * \param cameraName
 	 * \return 
 	 */
-	RenderObject* GetCamera(const wxString& cameraName);
+	Ogre::Camera* GetCamera(const wxString& cameraName);
 	
-	RenderObject* GetMainCamera() { return m_spMainCamera; }
+	Ogre::Camera* GetMainCamera() { return m_pMainCamera; }
 	
-	GameErrorCode SetMainCamera( RenderObject *pCameraObject);
+	GameErrorCode SetMainCamera( Ogre::Camera *pCameraObject);
 	
 	GameErrorCode SetMainCamera( const wxString& cameraName );
 	

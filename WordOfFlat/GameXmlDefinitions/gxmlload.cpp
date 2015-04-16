@@ -288,49 +288,6 @@ GameErrorCode GameXmlResourceLoader::LoadMaterials(wxXmlNode* pNode, GameDefinit
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode GameXmlResourceLoader::LoadMeshes(wxXmlNode* pNode, GameDefinitionHolder& defHolder)
-{
-	GameErrorCode result = FWG_NO_ERROR;
-	wxXmlNode* child = pNode->GetChildren();
-	while(child)
-	{
-		if(child->GetName() == GAME_TAG_COMP_MESH) 
-		{
-			wxString meshName;
-			RefObjSmPtr<NameDef> spMesh;
-			
-			if(FWG_FAILED(result = CreateMesh(child, meshName, spMesh)))
-			{
-				// found unknown tag
-				FWGLOG_ERROR_FORMAT(wxT("Create mesh failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
-				return result;
-			}
-
-			if(FWG_FAILED(result = defHolder.InsertDef<NameDef>( meshName, spMesh, defHolder.m_meshDefs )))
-			{
-				FWGLOG_ERROR_FORMAT(wxT("Add mesh '%s' to definition holder from line '%d' failed: 0x%08x"),
-									m_spLogger, meshName.GetData().AsInternal(), child->GetLineNumber(), result, FWGLOG_ENDVAL);
-				return result;
-			}
-		} else {
-			// found unknown tag
-			FWGLOG_ERROR_FORMAT(wxT("Unknown tag ['%s'] on line: %d"),
-								m_spLogger,
-								child->GetName().GetData().AsInternal(),
-								child->GetLineNumber(),
-								FWGLOG_ENDVAL);
-			return FWG_E_XML_UNKNOWN_TAG_ERROR;
-		}
-		
-		
-		
-		child = child->GetNext();
-	}
-	
-	
-	return FWG_NO_ERROR;
-}
-
 GameErrorCode GameXmlResourceLoader::LoadRenderDef(wxXmlNode* pNode, GameDefinitionHolder& defHolder)
 {
 	GameErrorCode result = FWG_NO_ERROR;
@@ -421,39 +378,15 @@ GameErrorCode GameXmlResourceLoader::ParseDefinitions(wxXmlNode* pNode, GameDefi
 {
 	GameErrorCode result = FWG_NO_ERROR;
 	
-	wxXmlNode* pMeshes = nullptr;
-	wxXmlNode* pMaterials = nullptr;
 	wxXmlNode* pInputs = nullptr;
-	wxXmlNode* pLogics = nullptr;
-	wxXmlNode* pCameras = nullptr;
-	wxXmlNode* pRenderEnts = nullptr;
-	wxXmlNode* pRenderObjs = nullptr;
 	
 	wxXmlNode* child = pNode->GetChildren();
 	while(child)
 	{
-		if(child->GetName() == GAME_TAG_DEFS_MESHES_STR) 
-		{
-			SECOND_TAG_DEFINITION_CHECK(pMeshes,child);
-			pMeshes = child;
-		} else if(child->GetName() == GAME_TAG_DEFS_MATERIALS_STR) {
-			SECOND_TAG_DEFINITION_CHECK(pMaterials,child);
-			pMaterials = child;
-		} else if(child->GetName() == GAME_TAG_DEFS_INPUTS_STR) {
+
+		if(child->GetName() == GAME_TAG_DEFS_INPUTS_STR) {
 			SECOND_TAG_DEFINITION_CHECK(pInputs,child);
 			pInputs = child;
-		} else if(child->GetName() == GAME_TAG_DEFS_LOGICS_STR) {
-			SECOND_TAG_DEFINITION_CHECK(pLogics,child);
-			pLogics = child;
-		} else if(child->GetName() == GAME_TAG_DEFS_CAMERAS_STR) {
-			SECOND_TAG_DEFINITION_CHECK(pCameras,child);
-			pCameras = child;
-		} else if(child->GetName() == GAME_TAG_DEFS_RENDER_ENTS_STR) {
-			SECOND_TAG_DEFINITION_CHECK(pRenderEnts,child);
-			pRenderEnts = child;
-		} else if(child->GetName() == GAME_TAG_DEFS_RENDER_STR) {
-			SECOND_TAG_DEFINITION_CHECK(pRenderObjs,child);
-			pRenderObjs = child;
 		} else {
 			// found unknown tag
 			FWGLOG_ERROR_FORMAT(wxT("Unknown tag ['%s'] on line: %d"),
@@ -467,60 +400,6 @@ GameErrorCode GameXmlResourceLoader::ParseDefinitions(wxXmlNode* pNode, GameDefi
 		child = child->GetNext();
 	}
 	
-	if(pMeshes)
-	{
-		if(FWG_FAILED(result = LoadMeshes(pMeshes, defHolder)))
-		{
-			FWGLOG_ERROR_FORMAT(wxT("Load meshes failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
-			return result;
-		}
-	} else {
-		FWGLOG_INFO(wxT("No mesh definitions found"), m_spLogger);
-	}
-	
-	if(pMaterials)
-	{
-		if(FWG_FAILED(result = LoadMaterials(pMaterials, defHolder)))
-		{
-			FWGLOG_ERROR_FORMAT(wxT("Load materials failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
-			return result;
-		}
-	} else {
-		FWGLOG_INFO(wxT("No material definitions found"), m_spLogger);
-	}
-	
-	if(pRenderEnts)
-	{
-		if(FWG_FAILED(result = LoadRenderEntities(pRenderEnts, defHolder)))
-		{
-			FWGLOG_ERROR_FORMAT(wxT("Load render entities failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
-			return result;
-		}
-	} else {
-		FWGLOG_INFO(wxT("No render entity definitions found"), m_spLogger);
-	}
-	
-	if(pCameras)
-	{
-		if(FWG_FAILED(result = LoadCameras(pCameras, defHolder)))
-		{
-			FWGLOG_ERROR_FORMAT(wxT("ParseDefinitions failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
-			return result;
-		}
-	} else {
-		FWGLOG_INFO(wxT("No camera definitions found"), m_spLogger);
-	}
-	
-	if(pRenderObjs)
-	{
-		if(FWG_FAILED(result = LoadRenderDef(pRenderObjs, defHolder)))
-		{
-			FWGLOG_ERROR_FORMAT(wxT("ParseDefinitions failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
-			return result;
-		}
-	} else {
-		FWGLOG_INFO(wxT("No render object definitions found"), m_spLogger);
-	}
 	
 	if(pInputs)
 	{
@@ -533,16 +412,6 @@ GameErrorCode GameXmlResourceLoader::ParseDefinitions(wxXmlNode* pNode, GameDefi
 		FWGLOG_INFO(wxT("No input definitions found"), m_spLogger);
 	}
 	
-	if(pLogics)
-	{
-		if(FWG_FAILED(result = LoadLogic(pLogics, defHolder)))
-		{
-			FWGLOG_ERROR_FORMAT(wxT("Load logic failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
-			return result;
-		}
-	} else {
-		FWGLOG_INFO(wxT("No logic definitions found"), m_spLogger);
-	}
 	
 	return FWG_NO_ERROR;	
 	
@@ -980,42 +849,7 @@ GameErrorCode GameXmlResourceLoader::CreateRender(wxXmlNode* pNode, GameDefiniti
 	
 	while (child)
 	{
-		if(child->GetName() == GAME_TAG_ITEM_RENDER_ENTITY_REF) 
-		{
-			tempValue.Clear(); // clear tempValue for sure
-			RefObjSmPtr<RenderEntityDef> spRenderEntDef;
-			
-			if(FWG_FAILED(result = GetAttrValue(child, tempValue)))
-			{
-				FWGLOG_ERROR_FORMAT(wxT("Read value: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
-				return result;
-			}
-			
-			if(defHolder.m_renderEntityDefs.Exists(tempValue))
-			{
-				spRenderEntDef = *defHolder.m_renderEntityDefs.FindValue(tempValue);
-			}
-			
-			spRenderDef.In()->m_entities.push_back(spRenderEntDef);
-		} else if(child->GetName() == GAME_TAG_COMP_RENDER_ENT) {
-			wxString name;
-			tempValue.Clear(); // clear tempValue for sure
-			RefObjSmPtr<RenderEntityDef> spRenderEntDef;
-			
-			if(FWG_FAILED(result = CreateRenderEntity(child, defHolder, name, spRenderEntDef)))
-			{
-				FWGLOG_ERROR_FORMAT(wxT("Create render entity failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
-				return result;
-			}
-			
-			if(FWG_FAILED(result = defHolder.InsertDef(name,spRenderEntDef,defHolder.m_renderEntityDefs)))
-			{
-				FWGLOG_ERROR_FORMAT(wxT("Insert render entity on line '%d' to defHolder failed: 0x%08x"), m_spLogger, child->GetLineNumber(), result, FWGLOG_ENDVAL);
-				return result;
-			}
-			
-			spRenderDef.In()->m_entities.push_back(spRenderEntDef);
-		} else if(child->GetName() == GAME_TAG_ITEM_CAMERA_REF) {
+		if(child->GetName() == GAME_TAG_ITEM_CAMERA_REF) {
 			
 			RefObjSmPtr<CameraDef> spCameraDef;
 			if(FWG_FAILED(result = GetAttrValue(child, tempValue)))
@@ -1539,7 +1373,7 @@ GameErrorCode GameXmlResourceLoader::GetParameter(wxXmlNode* pNode, const ParamD
 		{
 			wxInt32 *pInt32 = reinterpret_cast<wxInt32*>(pObjectMember);
 			
-			if(FWG_FAILED(result = ConvertToInt32(paramValue, *pInt32)))
+			if(FWG_FAILED(result = GameXmlUtils::ConvertToInt32(paramValue, *pInt32)))
 			{
 				FWGLOG_ERROR_FORMAT(wxT("Cannot convert '%s' to int in tag '%s' on line: %d"),
 						m_spLogger,
@@ -1556,7 +1390,7 @@ GameErrorCode GameXmlResourceLoader::GetParameter(wxXmlNode* pNode, const ParamD
 		{
 			wxDword *pDword = reinterpret_cast<wxDword*>(pObjectMember);
 			
-			if(FWG_FAILED(result = ConvertToDword(paramValue, *pDword)))
+			if(FWG_FAILED(result = GameXmlUtils::ConvertToDword(paramValue, *pDword)))
 			{
 				FWGLOG_ERROR_FORMAT(wxT("Cannot convert '%s' to dword in tag '%s' on line: %d"),
 						m_spLogger,
@@ -1573,7 +1407,7 @@ GameErrorCode GameXmlResourceLoader::GetParameter(wxXmlNode* pNode, const ParamD
 		{
 			float *pFloat = reinterpret_cast<float*>(pObjectMember);
 			
-			if(FWG_FAILED(result = ConvertToFloat(paramValue, *pFloat)))
+			if(FWG_FAILED(result = GameXmlUtils::ConvertToFloat(paramValue, *pFloat)))
 			{
 				FWGLOG_ERROR_FORMAT(wxT("Cannot convert '%s' to float in tag '%s' on line: %d"),
 						m_spLogger,
@@ -1589,7 +1423,7 @@ GameErrorCode GameXmlResourceLoader::GetParameter(wxXmlNode* pNode, const ParamD
 		case GAMEDEF_TYPE_VEC3:
 		{
 			Ogre::Vector3 *pVec3 = reinterpret_cast<Ogre::Vector3*>(pObjectMember);
-			if(FWG_FAILED(result = ConvertToVec3(paramValue, pVec3)))
+			if(FWG_FAILED(result = GameXmlUtils::ConvertToVec3(paramValue, pVec3)))
 			{
 				FWGLOG_ERROR_FORMAT(wxT("Cannot convert '%s' to vector in tag '%s' on line: %d"),
 						m_spLogger,
@@ -1604,7 +1438,7 @@ GameErrorCode GameXmlResourceLoader::GetParameter(wxXmlNode* pNode, const ParamD
 		case GAMEDEF_TYPE_QUAT:
 		{
 			Ogre::Quaternion *pQuat = reinterpret_cast<Ogre::Quaternion*>(pObjectMember);
-			if(FWG_FAILED(result = ConvertToQuat(paramValue, pQuat)))
+			if(FWG_FAILED(result = GameXmlUtils::ConvertToQuat(paramValue, pQuat)))
 			{
 				FWGLOG_ERROR_FORMAT(wxT("Cannot convert '%s' to quaternion in tag '%s' on line: %d"),
 						m_spLogger,
@@ -1645,84 +1479,6 @@ GameErrorCode GameXmlResourceLoader::ParametersValidate(GameBasSet<wxString>& fo
 	
 	return FWG_NO_ERROR;
 }
-
-GameErrorCode GameXmlResourceLoader::ConvertToQuat(const wxString& input, Ogre::Quaternion* resultQuat)
-{
-	wxArrayString arrStr = wxStringTokenize (input, wxString(wxT(",;")), wxTOKEN_RET_EMPTY_ALL);
-	double dTemp = 0;
-	Ogre::Quaternion tempQuat;
-	
-	// check count
-	if(arrStr.GetCount() != 4)
-	{
-		FWGLOG_ERROR_FORMAT(wxT("String '%s' cannot be convert to quaternion (has %d sections instead 4)"),
-						m_spLogger,
-						input.GetData().AsInternal(),
-						arrStr.GetCount(),
-						FWGLOG_ENDVAL);
-		return FWG_E_INVALID_PARAMETER_ERROR;
-	}
-	
-	for ( wxInt32 i = 0; i < 4; i++)
-	{
-		if(!arrStr.Item(i).ToDouble(&dTemp))
-		{
-			FWGLOG_ERROR_FORMAT(wxT("Cannot convert item '%s' ( idx=[ %d ] ) to number"),
-						m_spLogger,
-						arrStr.Item(i).GetData().AsInternal(),
-						i,						
-						FWGLOG_ENDVAL);
-			return FWG_E_INVALID_PARAMETER_ERROR;
-		}
-		
-		tempQuat[i] = static_cast<Ogre::Real>(dTemp);
-		
-	}
-	
-	*resultQuat = tempQuat;
-	
-	return FWG_NO_ERROR;
-}
-
-GameErrorCode GameXmlResourceLoader::ConvertToVec3(const wxString& input, Ogre::Vector3* resultVec)
-{
-	wxArrayString arrStr = wxStringTokenize (input, wxString(wxT(",;")), wxTOKEN_RET_EMPTY_ALL);
-	double dTemp = 0;
-	Ogre::Vector3 tempVec;
-	
-	// check count
-	if(arrStr.GetCount() != 3)
-	{
-		FWGLOG_ERROR_FORMAT(wxT("String '%s' cannot be convert to vector3 (has %d sections instead 3)"),
-						m_spLogger,
-						input.GetData().AsInternal(),
-						arrStr.GetCount(),
-						FWGLOG_ENDVAL);
-		return FWG_E_INVALID_PARAMETER_ERROR;
-	}
-	
-	for ( wxInt32 i = 0; i < 3; i++)
-	{
-		if(!arrStr.Item(i).ToDouble(&dTemp))
-		{
-			FWGLOG_ERROR_FORMAT(wxT("Cannot convert item '%s' ( idx=[ %d ] ) to number"),
-						m_spLogger,
-						arrStr.Item(i).GetData().AsInternal(),
-						i,						
-						FWGLOG_ENDVAL);
-			return FWG_E_INVALID_PARAMETER_ERROR;
-		}
-		
-		tempVec[i] = static_cast<Ogre::Real>(dTemp);
-		
-	}
-	
-	*resultVec = tempVec;
-	
-	return FWG_NO_ERROR;
-}
-
-
 
 GameErrorCode GameXmlResourceLoader::GetAttrValue(wxXmlNode *pNode, wxString &value)
 {
@@ -2047,52 +1803,6 @@ GameErrorCode GameXmlResourceLoader::ConvertToInputType(const wxString& input, I
 	}
 	
 	return FWG_E_XML_INVALID_ATTR_ERROR;
-}
-
-GameErrorCode GameXmlResourceLoader::ConvertToDword(const wxString& input, wxDword& output)
-{
-	unsigned long value = 0;
-	if(!input.ToULong(&value))
-	{
-		FWGLOG_ERROR_FORMAT(wxT("Cannot convert '%s' to wxDword value"), m_spLogger
-						, input.GetData().AsInternal()
-						, FWGLOG_ENDVAL);
-		return FWG_E_BAD_CONVERSION_ERROR;
-	}
-	
-	output = value;
-	return FWG_NO_ERROR;
-}
-
-GameErrorCode GameXmlResourceLoader::ConvertToInt32(const wxString& input, wxInt32& output)
-{
-	
-	long value = 0;
-	if(!input.ToLong(&value))
-	{
-		FWGLOG_ERROR_FORMAT(wxT("Cannot convert '%s' to wxInt32 value"), m_spLogger
-						, input.GetData().AsInternal()
-						, FWGLOG_ENDVAL);
-		return FWG_E_BAD_CONVERSION_ERROR;
-	}
-	
-	output = value;
-	return FWG_NO_ERROR;
-}
-
-GameErrorCode GameXmlResourceLoader::ConvertToFloat(const wxString& input, float& output)
-{
-	double value = 0.0;
-	if(!input.ToDouble(&value))
-	{
-		FWGLOG_ERROR_FORMAT(wxT("Cannot convert '%s' to float value"), m_spLogger
-						, input.GetData().AsInternal()
-						, FWGLOG_ENDVAL);
-		return FWG_E_BAD_CONVERSION_ERROR;
-	}
-	
-	output = static_cast<float>(value);
-	return FWG_NO_ERROR;
 }
 
 GameErrorCode GameXmlResourceLoader::CreateTerrain(wxXmlNode* pNode, RefObjSmPtr<TerrainDef>& spTerrain)

@@ -80,78 +80,6 @@ struct TransformDef : public DefBase {
 					, m_rotation(Ogre::Quaternion::IDENTITY) {}
 };
 
-/*!
- * \class NameDef
- * \author Lukas
- * \date 22.3.2014
- * \file gdeftables.h
- * \brief Used for named resources
- */
-struct NameDef : public DefBase {
-	wxString m_name; //!< Name of the mesh
-	wxString m_group; //!< Name of mesh group to which mesh belongs
-
-	NameDef() : DefBase() {}
-};
-
-struct RenderEntityDef : public DefBase {
-	RefObjSmPtr<NameDef> m_mesh;
-	RefObjSmPtr<NameDef> m_material;
-	
-	Ogre::Vector3 m_position;
-	
-	RenderEntityDef() : DefBase(),
-						m_position(Ogre::Vector3::ZERO){}
-};
-
-/*!
- * \class CameraDef
- * \author Lukas
- * \date 06/01/14
- * \file gdeftables.h
- * \brief Camera definition
- */
-struct CameraDef : public DefBase {
-public:
-	Ogre::Vector3 m_position;
-	Ogre::Vector3 m_direction;
-	Ogre::Real m_near;
-	
-	CameraDef() : DefBase(),
-				m_position(Ogre::Vector3::ZERO),
-				m_direction(Ogre::Vector3::ZERO),
-				m_near(1.0f){}
-};
-
-/**
- * @class ManualObjectDef
- * @author Lukas
- * @date 03/12/15
- * @file gdeftables.h
- * @brief Manual object definition
- * 
- * Create specific manual object for different kind of use (e.g. terrain decal)
- * 
- */
-struct ManualObjectDef : public DefBase {
-	wxString m_manualObjectType;
-	RefObjSmPtr<NameDef> m_material;
-};
-
-/*!
- * \class LightDef
- * \author Lukas
- * \date 06/01/14
- * \file gdeftables.h
- * \brief Light definition for render component
- */
-struct LightDef : public DefBase {
-	
-	Ogre::Vector3 m_position;
-	
-	LightDef() : DefBase(),
-				m_position(Ogre::Vector3::ZERO){}
-};
 
 /*!
  * \class RenderDef
@@ -162,10 +90,7 @@ struct LightDef : public DefBase {
  */
 struct RenderDef : public DefBase {
 public:
-	wxVector< RefObjSmPtr<RenderEntityDef> > m_entities;
-	wxVector< RefObjSmPtr<ManualObjectDef> > m_manualObject;
-	wxVector< RefObjSmPtr<CameraDef> > m_cameras;
-	wxVector< RefObjSmPtr<LightDef> > m_lights;
+	wxString m_dotSceneDef;
 public:
 	RenderDef() : DefBase() {}
 };

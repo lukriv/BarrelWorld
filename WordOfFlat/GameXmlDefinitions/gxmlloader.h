@@ -20,19 +20,11 @@ private:
 	GameErrorCode ParseDefinitions(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
 	GameErrorCode ParseScene(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
 
-	GameErrorCode LoadMeshes(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
-	GameErrorCode LoadMaterials(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
-	GameErrorCode LoadRenderEntities(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
-	GameErrorCode LoadCameras(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
 	GameErrorCode LoadRenderDef(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
 	GameErrorCode LoadInput(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
 	GameErrorCode LoadLogic(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
 		
-	GameErrorCode CreateMesh(wxXmlNode* pNode, wxString& name, RefObjSmPtr<NameDef> &spDef);
-	GameErrorCode CreateMaterial(wxXmlNode* pNode, wxString& name, RefObjSmPtr<NameDef> &spDef);
-	GameErrorCode CreateRenderEntity(wxXmlNode* pNode, GameDefinitionHolder& defHolder, wxString& name, RefObjSmPtr<RenderEntityDef> &spDef);
 	GameErrorCode CreateRender(wxXmlNode* pNode, GameDefinitionHolder& defHolder, wxString& name, RefObjSmPtr<RenderDef> &spDef);
-	GameErrorCode CreateCamera(wxXmlNode* pNode, wxString& name, RefObjSmPtr<CameraDef> &spCameraDef);
 	GameErrorCode CreateInput(wxXmlNode* pNode, wxString& name, RefObjSmPtr<InputDef> &spInputDef);
 	GameErrorCode CreateLogic(wxXmlNode* pNode, wxString& name, RefObjSmPtr<LogicDef> &spLogicDef);
 	GameErrorCode CreateEntity(wxXmlNode* pNode, GameDefinitionHolder& defHolder, wxString& name, RefObjSmPtr<EntityDef> &spEntity);
@@ -55,14 +47,9 @@ private:
 	GameErrorCode ParametersValidate(GameBasSet<wxString> &foundedParams, const ParamDefinition* pDefTable, wxInt32 tableSize );
 	
 	
-	GameErrorCode ConvertToVec3(const wxString& input, Ogre::Vector3 *resultVec);
-	GameErrorCode ConvertToQuat(const wxString& input, Ogre::Quaternion *resultQuat);
 	GameErrorCode ConvertToShapeType(const wxString& input, wxInt32 &retType);
 	static GameErrorCode ConvertToPhysicsType(const wxString& input, wxInt32& retType);
 	GameErrorCode ConvertToInputType(const wxString& input, InputDef::InputType& retType);
-	GameErrorCode ConvertToInt32(const wxString& input, wxInt32& output);
-	GameErrorCode ConvertToDword(const wxString& input, wxDword& output);
-	GameErrorCode ConvertToFloat(const wxString& input, float& output);
 		
 	GameErrorCode GetAttrValue(wxXmlNode *pNode, wxString &value);
 	GameErrorCode GetKeyValue(wxXmlNode *pNode, wxString &action, wxInt32 &keyCode);
@@ -75,19 +62,11 @@ private:
 	GameErrorCode ConstructDefinitions(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
 	GameErrorCode ConstructScene(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
 
-	GameErrorCode StoreMeshes(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
-	GameErrorCode StoreMaterials(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
-	GameErrorCode StoreRenderEntities(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
-	GameErrorCode StoreCameras(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
 	GameErrorCode StoreRenderDef(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
 	GameErrorCode StoreInput(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
 	GameErrorCode StoreLogic(wxXmlNode* pNode, GameDefinitionHolder& defHolder);
 		
-	GameErrorCode CreateNodeMesh(wxXmlNode* pNode, const wxString& name, const NameDef* pDef);
-	GameErrorCode CreateNodeMaterial(wxXmlNode* pNode, const wxString& name, const NameDef* spDef);
-	GameErrorCode CreateNodeRenderEntity(wxXmlNode* pNode, GameDefinitionHolder& defHolder, const wxString& name, const RenderEntityDef* pDef);
 	GameErrorCode CreateNodeRender(wxXmlNode* pNode, GameDefinitionHolder& defHolder, const wxString& name, const RenderDef* pDef);
-	GameErrorCode CreateNodeCamera(wxXmlNode* pNode, const wxString& name, const CameraDef* pCameraDef);
 	GameErrorCode CreateNodeInput(wxXmlNode* pNode, const wxString& name, const InputDef* pInputDef);
 	GameErrorCode CreateNodeLogic(wxXmlNode* pNode, const wxString& name, const LogicDef* pLogicDef);
 	GameErrorCode CreateNodeEntity(wxXmlNode* pNode, GameDefinitionHolder& defHolder, const wxString& name, const EntityDef* pEntity);

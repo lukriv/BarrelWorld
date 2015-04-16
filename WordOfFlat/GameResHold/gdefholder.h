@@ -8,10 +8,7 @@
 #include "gdeftables.h"
 
 
-typedef GameBasMap<wxString, RefObjSmPtr<NameDef> > TNameDefMap;
-typedef GameBasMap<wxString, RefObjSmPtr<RenderEntityDef> > TRenderEntityDefMap;
 typedef GameBasMap<wxString, RefObjSmPtr<RenderDef> > TRenderDefMap;
-typedef GameBasMap<wxString, RefObjSmPtr<CameraDef> > TCameraDefMap;
 typedef GameBasMap<wxString, RefObjSmPtr<InputDef> > TInputDefMap;
 typedef GameBasMap<wxString, RefObjSmPtr<LogicDef> > TLogicDefMap;
 typedef GameBasMap<wxString, RefObjSmPtr<EntityDef> > TEntityDefMap;

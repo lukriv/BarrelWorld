@@ -24,18 +24,13 @@ class GameEntity;
  * \brief Geometric entity with state and transform
  */
 class RenderComponent : public ComponentBase, public Ogre::Any {
-private:
-	typedef GameBasSet<RenderObject*> TRenderObjectList;
+protected:
 	typedef wxVector<TaskMessage> TMessageList;
 protected:
 	RenderCompManager *m_pOwnerManager;
 	Ogre::SceneNode *m_pSceneNode;
-	GameEntity *m_pParent;
+	
 	wxCriticalSection m_renderLock;
-	
-	RefObjSmPtr<TransformComponent> m_spTransform;
-	
-	TRenderObjectList m_renderObjectList;
 	
 	TMessageList m_receivedMessages;
 	bool m_alreadyInUpdateQueue;
@@ -48,11 +43,10 @@ public:
 	RenderComponent(RenderCompManager* pCompManager) : ComponentBase(GAME_COMP_RENDER)
 													, m_pOwnerManager(pCompManager)
 													, m_pSceneNode(nullptr)
-													, m_pParent(nullptr)
 													, m_alreadyInUpdateQueue(false){}
 	~RenderComponent();
 	
-	GameErrorCode Initialize(GameEntity* pParentEntity);
+	GameErrorCode Initialize(const Ogre::Vector3& tranlate, const Ogre::Quaternion& rotation);
 	
 	/*!
 	 * \brief Destroy inner ogre object
@@ -62,14 +56,12 @@ public:
 	/**
 	 * \brief Process update if it is necessary
 	 */
-	void ProcessUpdate();
+	virtual void ProcessUpdate() = 0;
 	// update methods
 	
 	virtual GameErrorCode ReceiveMessage(TaskMessage& msg);
 	
-	virtual GameErrorCode ReinitComponent(GameEntity* pNewParentEntity);
-	
-	virtual GameErrorCode Update();
+	virtual GameErrorCode ReinitComponent();
 	
 };
 
