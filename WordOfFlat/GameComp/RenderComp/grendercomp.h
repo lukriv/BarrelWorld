@@ -12,7 +12,6 @@
 #include "../gcompbase.h"
 #include "../transformComp/gtranscomp.h"
 
-class RenderObject;
 class RenderCompManager;
 class GameEntity;
 
@@ -40,7 +39,7 @@ protected:
 public:
 
 	// Render component can be created and destroyed only by render component manager
-	RenderComponent(RenderCompManager* pCompManager) : ComponentBase(GAME_COMP_RENDER)
+	RenderComponent(GameComponentType compType, RenderCompManager* pCompManager) : ComponentBase(compType)
 													, m_pOwnerManager(pCompManager)
 													, m_pSceneNode(nullptr)
 													, m_alreadyInUpdateQueue(false){}
@@ -60,9 +59,6 @@ public:
 	// update methods
 	
 	virtual GameErrorCode ReceiveMessage(TaskMessage& msg);
-	
-	virtual GameErrorCode ReinitComponent();
-	
 };
 
 #endif //__GAME_RENDER_COMPONENT_H__

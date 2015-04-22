@@ -836,66 +836,6 @@ GameErrorCode GameXmlResourceLoader::CreateCamera(wxXmlNode* pNode, wxString& na
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode GameXmlResourceLoader::CreateRender(wxXmlNode* pNode, GameDefinitionHolder& defHolder, wxString& name, RefObjSmPtr<RenderDef>& spDef)
-{
-	GameErrorCode result = FWG_NO_ERROR;
-	wxString tempValue;
-	
-	RefObjSmPtr<RenderDef> spRenderDef;
-	wxXmlNode *child = pNode->GetChildren();
-	
-	// create new render component
-	FWG_RETURN_FAIL(GameNewChecked(spRenderDef.OutRef()));
-	
-	while (child)
-	{
-		if(child->GetName() == GAME_TAG_ITEM_CAMERA_REF) {
-			
-			RefObjSmPtr<CameraDef> spCameraDef;
-			if(FWG_FAILED(result = GetAttrValue(child, tempValue)))
-			{
-				FWGLOG_ERROR_FORMAT(wxT("Get value for cameraref failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
-				return result;
-			}
-			
-			if(defHolder.m_cameraDefs.Exists(tempValue))
-			{
-				spCameraDef = *defHolder.m_cameraDefs.FindValue(tempValue);
-			}
-			
-			spRenderDef.In()->m_cameras.push_back(spCameraDef);
-			
-		} else {
-			// found unknown tag
-			FWGLOG_ERROR_FORMAT(wxT("Unknown tag ['%s'] on line: %d"),
-								m_spLogger,
-								child->GetName().GetData().AsInternal(),
-								child->GetLineNumber(),
-								FWGLOG_ENDVAL);
-			return FWG_E_XML_UNKNOWN_TAG_ERROR;
-		}
-		
-		child = child->GetNext();
-		
-	}
-	
-	// get name attribute
-	if(!pNode->GetAttribute(GAME_ATTR_NAME_STR, &name))
-	{
-		FWGLOG_ERROR_FORMAT(wxT("Tag '%s' has no name (name is mandatory in this case) line: %d"),
-						m_spLogger,
-						pNode->GetName().GetData().AsInternal(),
-						pNode->GetLineNumber(),
-						FWGLOG_ENDVAL);
-		return FWG_E_XML_ATTR_NOT_FOUND_ERROR;
-	}
-	
-	// set return value
-	spDef = spRenderDef;
-	
-	return FWG_NO_ERROR;
-}
-
 GameErrorCode GameXmlResourceLoader::CreateInput(wxXmlNode* pNode, wxString& name, RefObjSmPtr<InputDef> &spInputDef)
 {
 	GameErrorCode result = FWG_NO_ERROR;

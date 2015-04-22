@@ -42,14 +42,14 @@
         <File Name="RenderComp/grendercmgr.h"/>
         <File Name="RenderComp/grenderdotsceneloader.h"/>
         <File Name="RenderComp/grenderTerrDec.h"/>
-        <File Name="RenderComp/grendertestbox.h"/>
+        <File Name="RenderComp/grenderrigidbody.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="src">
         <File Name="RenderComp/grendercomp.cpp"/>
         <File Name="RenderComp/grendercmgr.cpp"/>
         <File Name="RenderComp/grenderdotsceneloader.cpp"/>
         <File Name="RenderComp/grenderTerrDec.cpp"/>
-        <File Name="RenderComp/grendertestbox.cpp"/>
+        <File Name="RenderComp/grenderrigidbody.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="physComp">

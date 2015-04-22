@@ -11,6 +11,11 @@ public:
 	RenderTerrainDecal();
 	~RenderTerrainDecal();
 
+	GameErrorCode Create(const wxString& materialName);
+	
+	GameErrorCode Load(wxXmlNode* XMLNode);
+    GameErrorCode Store(wxXmlNode* ParentNode);
+
 };
 
 #endif // __GAME_RENDER_TERRAIN_DECAL_H__

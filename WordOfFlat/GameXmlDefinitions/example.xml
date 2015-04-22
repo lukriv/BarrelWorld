@@ -1,34 +1,5 @@
 <world>
 	<definitions>
-		
-		<!-- <meshdefs>
-			<mesh name="mesh1">
-				<meshname>TestingCube</meshname>
-			</mesh>
-		</meshdefs>
-		
-		<materialdefs>
-			<material name="material1">
-				<materialname>Test/ColourTest</materialname>
-			</material>
-		</materialdefs> -->
-		
-		<inputdefs>
-			<input name="testInput" type="character">
-				<key action="up" value="key_w" />
-				<key action="down" value="key_s" />
-				<key action="left" value="key_a" />
-				<key action="right" value="key_d" />
-			</input>
-			
-			<input name="cameraInput" type="freeCamera">
-				<key action="forward" value="key_i" />
-				<key action="backward" value="key_k" />
-				<key action="left" value="key_j" />
-				<key action="right" value="key_l" />
-			</input>
-		</inputdefs>
-		
 	</definitions>
 
 
@@ -51,7 +22,7 @@
 				<rotation>1.0, 0.0, 0.0, 0.0</rotation>				
 			</transform>
 			
-			<render type="simpleObject">
+			<renderRigidBody>
 				<mesh>mesh_name</mesh>
 				<material>material_name</material>
 				<!-- <renderent name="renderEnt1">
@@ -59,15 +30,15 @@
 					<materialref value="material1" />
 					<position>0.0;0.0;0.0</position>
 				</renderent> -->
-			</render>
+			</renderRigidBody>
 			
-			<physics type="simpleObject">
+			<physicsRigidBody>
 				<!-- <shape type="box">
 					<boxHalfSize>1.0, 1.0, 1.0</boxHalfSize>
 				</shape>
 				<mass>1.0</mass>
 				<inertia>0.0,0.0,0.0</inertia> -->
-			</physics>
+			</physicsRigidBody>
 		</entity>
 		
 		<entity>
@@ -77,7 +48,7 @@
 				<rotation>1.0, 0.0, 0.0, 0.0</rotation>				
 			</transform>
 			
-			<render>
+			<renderRigidBody>
 				<!-- <renderent name="renderEnt2">
 					<mesh>
 						<meshname>TestingCube</meshname>
@@ -85,19 +56,24 @@
 					<materialref value="material1" />
 					<position>0.0;0.0;0.0</position>
 				</renderent> -->
-			</render>
+			</renderRigidBody>
 			
-			<inputref>testInput</inputref>
+			<inputKeysOnly>
+				<key action="up" value="key_w" />
+				<key action="down" value="key_s" />
+				<key action="left" value="key_a" />
+				<key action="right" value="key_d" />
+			</inputKeyOnly>
 			
 			<logic type="manualTest"></logic>
 			
-			<physics>
+			<physicsRigidBody>
 				<!-- <shape type="box">
 					<boxHalfSize>1.0, 1.0, 1.0</boxHalfSize>
 				</shape>
 				<mass>1.0</mass>
 				<inertia>0.0,0.0,0.0</inertia> -->
-			</physics>
+			</physicsRigidBody>
 		</entity>
 		
 		<entity>
@@ -107,7 +83,7 @@
 				<rotation>1.0, 0.0, 0.0, 0.0</rotation>				
 			</transform>
 			
-			<render type="genericObject">
+			<renderGenericDotScene>
 				<scene>
 					<nodes>
 						<node>
@@ -118,12 +94,17 @@
 					</nodes>
 				</scene>
 				<!-- <cameraref value="MainCamera" /> -->
-			</render>
+			</renderGenericDotScene>
 			
-			<inputref>cameraInput</inputref>
+			<inputKeysAndMouse>
+				<key action="forward" value="key_i" />
+				<key action="backward" value="key_k" />
+				<key action="left" value="key_j" />
+				<key action="right" value="key_l" />
+			</inputKeysAndMouse>
 			
 			
-			<logic type="freeCamera"></logic>
+			<logicFreeCamera></logicFreeCamera>
 			
 		</entity>
 	</scene>

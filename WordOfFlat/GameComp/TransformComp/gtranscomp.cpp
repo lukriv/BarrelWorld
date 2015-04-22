@@ -1,8 +1,11 @@
 #include "gtranscomp.h"
 
+#include <wx/xml/xml.h>
+#include <wx/scopedptr.h>
 #include <bullet/LinearMath/btAlignedAllocator.h>
 #include <GameComp/gentity.h>
 #include <GameXmlDefinitions/gxmldefs.h>
+#include <GameXmlDefinitions/gxmlutils.h>
 
 typedef btAlignedAllocator< TransformData, 16 > TAllocator;
 
@@ -74,12 +77,40 @@ GameErrorCode TransformComponent::Store(wxXmlNode* pParentNode)
 {
 	wxXmlNode *pNewNode = nullptr;
 	wxXmlNode *pTempNode = nullptr;
+	wxString content;
 	FWG_RETURN_FAIL(GameNewChecked(pNewNode, wxXML_ELEMENT_NODE, GAME_TAG_COMP_TRANSFORM));
 	wxScopedPtr<wxXmlNode> apNewNode(pNewNode);
-	//FWG_RETURN_FAIL(GameNew())
 	
-	//todo: complete this
 	
+	// add position
+	FWG_RETURN_FAIL(GameXmlUtils::ConvertFromVec3(cvt(m_pTransData->m_translate), content));
+	FWG_RETURN_FAIL(GameNewChecked(pTempNode
+									, pNewNode
+									, wxXML_ELEMENT_NODE
+									, GAME_TAG_PARAM_POSITION
+									, content));
+	
+	// add scale
+	content.Clear();
+	FWG_RETURN_FAIL(GameXmlUtils::ConvertFromVec3(cvt(m_pTransData->m_scale), content));
+	FWG_RETURN_FAIL(GameNewChecked(pTempNode
+									, pNewNode
+									, wxXML_ELEMENT_NODE
+									, GAME_TAG_PARAM_SCALE
+									, content));
+									
+	// add rotation
+	content.Clear();
+	FWG_RETURN_FAIL(GameXmlUtils::ConvertFromQuat(cvt(m_pTransData->m_rotation), content));
+	FWG_RETURN_FAIL(GameNewChecked(pTempNode
+									, pNewNode
+									, wxXML_ELEMENT_NODE
+									, GAME_TAG_PARAM_ROTATION
+									, content));
+	
+	pParentNode->AddChild(apNewNode.release());
+	
+	return FWG_NO_ERROR;
 	
 }
 
@@ -94,7 +125,7 @@ GameErrorCode TransformComponent::Load(wxXmlNode* pNode)
 	wxString nodeContent;
 	wxXmlNode *pChild = pNode->GetChildren();
 	
-	for(pChild)
+	while(pChild)
 	{
 		if(pChild->GetName() == GAME_TAG_PARAM_POSITION)
 		{
@@ -113,7 +144,7 @@ GameErrorCode TransformComponent::Load(wxXmlNode* pNode)
 			FWG_RETURN_FAIL(GameXmlUtils::ConvertToQuat(nodeContent, quat));
 			m_pTransData->m_rotation = cvt(quat);
 		} else {
-			GameXmlUtils::ProcessUnknownTag(pChild);
+			GameXmlUtils::ProcessUnknownTag(pChild, nullptr);
 		}
 		pChild = pChild->GetNext();
 	}

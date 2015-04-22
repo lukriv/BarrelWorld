@@ -3,7 +3,6 @@
 #include <OGRE/OgreNode.h>
 #include "grendercmgr.h"
 #include "../gentity.h"
-#include "grenderobj.h"
 #include <GameComp/TransformComp/gtranscomp.h>
 
 RenderComponent::~RenderComponent()

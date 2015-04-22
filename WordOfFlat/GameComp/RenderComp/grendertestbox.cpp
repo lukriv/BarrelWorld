@@ -1,4 +1,4 @@
-#include "grendertestbox.h"
+#include "grenderrigidbody.h"
 
 RenderTestBox::RenderTestBox()
 {

@@ -105,42 +105,6 @@ public:
 	GameErrorCode ProcessAllUpdates();
 	
 	
-	//////////////
-	// Creators //
-	//////////////
-	
-	/**
-	 * \brief Create render component from render component definition
-	 * \param renderCompDef
-	 * \param pRenderComp
-	 */
-	GameErrorCode CreateRenderComponent(const RenderDef &renderCompDef, GameEntity *pEntity);
-	
-	/*!
-	 * \brief Create RenderObject from Render Object Definition
-	 * 
-	 * \param renderObjectDef
-	 * \param pRenderObject
-	 */
-	GameErrorCode CreateRenderObject(const RenderEntityDef &renderObjectDef, RenderObject *&pRenderObject);
-	
-	/*!
-	 * \brief Create ogre camera attached to its scene node
-	 * \param pCamera
-	 * \return Errorcode
-	 */
-	GameErrorCode CreateCamera(const CameraDef &cameraDef, RenderObject *&pCamera);	
-	
-	
-	
-	/**
-	 * @brief Create empty ogre manual object
-	 * @param manObjDef
-	 * @param pManObj
-	 */
-	GameErrorCode CreateManualObject(const ManualObjectDef& manObjDef, RenderObject*& pManObj);
-
-
 };
 
 #endif // __GAME_RENDER_COMPONENT_MANAGER_H__
