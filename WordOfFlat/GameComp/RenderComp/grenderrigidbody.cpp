@@ -21,6 +21,7 @@ RenderRigidBody::~RenderRigidBody()
 
 GameErrorCode RenderRigidBody::Initialize(TransformComponent* pTransform)
 {
+	GameErrorCode result = FWG_NO_ERROR;
     m_spTransform = pTransform;
     if(m_spTransform.IsEmpty()) 
 	{
@@ -30,8 +31,11 @@ GameErrorCode RenderRigidBody::Initialize(TransformComponent* pTransform)
 
     TransformData* transData = m_spTransform->GetData();
 
-        if(FWG_FAILED(RenderComponent::Initialize( Ogre::Vector3(transData->m_translate.getX(), transData->m_translate.getY(), transData->m_translate.getZ())
-		, Ogre::Quaternion(transData->m_rotation.getW(), transData->m_rotation.getX(), transData->m_rotation.getY(), transData->m_rotation.getZ()))));
+	if(FWG_FAILED(result = RenderComponent::Initialize( Ogre::Vector3(transData->m_translate.getX(), transData->m_translate.getY(), transData->m_translate.getZ())
+		, Ogre::Quaternion(transData->m_rotation.getW(), transData->m_rotation.getX(), transData->m_rotation.getY(), transData->m_rotation.getZ()))))
+	{
+		return result;	
+	}
 	
 
 

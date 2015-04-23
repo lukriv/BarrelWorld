@@ -45,7 +45,7 @@ public:
 													, m_alreadyInUpdateQueue(false){}
 	~RenderComponent();
 	
-	GameErrorCode Initialize(const Ogre::Vector3& tranlate, const Ogre::Quaternion& rotation);
+	GameErrorCode Initialize(const Ogre::Vector3& tranlate = Ogre::Vector3::ZERO, const Ogre::Quaternion& rotation = Ogre::Quaternion::IDENTITY);
 	
 	/*!
 	 * \brief Destroy inner ogre object

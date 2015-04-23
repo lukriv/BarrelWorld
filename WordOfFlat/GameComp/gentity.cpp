@@ -44,7 +44,7 @@ GameErrorCode GameEntity::AddComponent(ComponentBase* pComp)
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode GameEntity::ReceiveMessage(TaskMessage& msg, wxDword targetMask)
+GameErrorCode GameEntity::ReceiveMessage(TaskMessage& msg)
 {
 	// lock
 	wxCriticalSectionLocker lock(m_entityLock);
@@ -52,7 +52,7 @@ GameErrorCode GameEntity::ReceiveMessage(TaskMessage& msg, wxDword targetMask)
 	TCompSmPtr* endIter = &m_componentList[GAME_COMP_COUNT];
 	for( TCompSmPtr* iter = m_componentList; iter != endIter; ++iter)
 	{
-		if(!iter->IsEmpty() && ((targetMask & (1 << (*iter)->GetComponentType()))))
+		if(!iter->IsEmpty())
 		{
 			(*iter)->ReceiveMessage(msg);
 		}
