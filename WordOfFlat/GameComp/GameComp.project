@@ -43,6 +43,7 @@
         <File Name="RenderComp/grenderdotsceneloader.h"/>
         <File Name="RenderComp/grenderTerrDec.h"/>
         <File Name="RenderComp/grenderrigidbody.h"/>
+        <File Name="RenderComp/grendercamera.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="src">
         <File Name="RenderComp/grendercomp.cpp"/>
@@ -50,6 +51,7 @@
         <File Name="RenderComp/grenderdotsceneloader.cpp"/>
         <File Name="RenderComp/grenderTerrDec.cpp"/>
         <File Name="RenderComp/grenderrigidbody.cpp"/>
+        <File Name="RenderComp/grendercamera.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="physComp">

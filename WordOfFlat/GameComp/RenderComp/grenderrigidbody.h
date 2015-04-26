@@ -1,5 +1,5 @@
-#ifndef __GAME_RENDER_TEST_BOX_H__
-#define __GAME_RENDER_TEST_BOX_H__
+#ifndef __GAME_RENDER_RIGID_BODY_H__
+#define __GAME_RENDER_RIGID_BODY_H__
 
 #include "grendercomp.h"
 
@@ -37,4 +37,4 @@ public:
 	virtual void ProcessUpdate() override;
 };
 
-#endif // __GAME_RENDER_TEST_BOX_H__
+#endif // __GAME_RENDER_RIGID_BODY_H__
