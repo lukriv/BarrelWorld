@@ -1,8 +1,15 @@
 <!-- render types -->
-<render type="simpleObject">
+<renderRigidBody>
 	<mesh>mesh_name</mesh>
 	<material>material_name</material>
-</render>
+</renderRigidBody>
+
+<renderCamera name="CameraName">
+	<projection>perspective|orthographic</projection>
+	<fov>angle</fov>
+	<near>near_clipping</near>
+	<far>far_clipping</far>
+</renderCamera>
 
 <!-- physics types -->
 <physics type="simpleObject">

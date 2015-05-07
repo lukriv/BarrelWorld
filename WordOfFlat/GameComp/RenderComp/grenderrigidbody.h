@@ -2,6 +2,7 @@
 #define __GAME_RENDER_RIGID_BODY_H__
 
 #include "grendercomp.h"
+#include "grendermoveable.h"
 
 /**
  * @class RenderRigidBody
@@ -17,7 +18,7 @@
 class RenderRigidBody : public RenderComponent
 {
 
-    RefObjSmPtr<TransformComponent> m_spTransform;
+    RefObjSmPtr<RenderMoveable> m_spMoveable;
 	Ogre::Entity *m_pEntity;
 	
 public:
@@ -25,7 +26,7 @@ public:
     RenderRigidBody(RenderCompManager* pCompManager);
     ~RenderRigidBody();
 
-    GameErrorCode Initialize(TransformComponent* pTransform);
+    GameErrorCode Initialize(RenderMoveable* pRenderMoveable);
 	
 	GameErrorCode Create(const wxString& meshName, const wxString& materialName );
 	

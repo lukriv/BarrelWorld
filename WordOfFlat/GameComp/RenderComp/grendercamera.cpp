@@ -1,7 +1,14 @@
 #include "grendercamera.h"
 
+#include "grendercmgr.h"
+#include "grendermoveable.h"
+#include <wx/xml/xml.h>
+#include <wx/scopedptr.h>
+#include <GameXmlDefinitions/gxmldefs.h>
+#include <GameXmlDefinitions/gxmlutils.h>
 
-RenderCamera::RenderCamera(RenderCompManager* pCompManager)
+RenderCamera::RenderCamera(RenderCompManager* pCompManager) : RenderComponent(GAME_COMP_RENDER_CAMERA, pCompManager)
+											, m_pCamera(nullptr)
 {
 }
 
@@ -9,25 +16,15 @@ RenderCamera::~RenderCamera()
 {
 }
 
-GameErrorCode RenderCamera::Initialize(TransformComponent* pTransform)
+GameErrorCode RenderCamera::Initialize(RenderMoveable* pRenderMoveable)
 {
-	GameErrorCode result = FWG_NO_ERROR;
-    m_spTransform = pTransform;
-    if(m_spTransform.IsEmpty()) 
+    m_spMoveable = pRenderMoveable;
+    if((m_spMoveable.IsEmpty()||pRenderMoveable->GetSceneNode() == nullptr)) 
 	{
 		// transform component cannot be null - add transform component to entity at first
+		m_spMoveable.Release();
 		return FWG_E_INVALID_PARAMETER_ERROR;
     }
-
-    TransformData* transData = m_spTransform->GetData();
-
-	if(FWG_FAILED(result = RenderComponent::Initialize( Ogre::Vector3(transData->m_translate.getX(), transData->m_translate.getY(), transData->m_translate.getZ())
-		, Ogre::Quaternion(transData->m_rotation.getW(), transData->m_rotation.getX(), transData->m_rotation.getY(), transData->m_rotation.getZ()))))
-	{
-		return result;	
-	}
-	
-
 
 	return FWG_NO_ERROR;
 }
@@ -38,76 +35,107 @@ void RenderCamera::Clear()
 
 GameErrorCode RenderCamera::Create(const wxString& cameraName)
 {
+	m_pCamera = m_pOwnerManager->GetOgreSceneManager()->createCamera(cameraName.ToStdString());
+	return FWG_NO_ERROR;
 }
 
 Ogre::Camera* RenderCamera::GetOgreCamera()
 {
+	return m_pCamera;
 }
 
 
 
-GameErrorCode RenderCamera::Load(wxXmlNode* XMLNode)
+GameErrorCode RenderCamera::Load(wxXmlNode* pNode)
 {
 	// todo: refactor this loader
 	
-	// Process attributes
-    wxString name = XMLNode->GetAttribute(wxT("name"));
-    wxString id = XMLNode->GetAttribute(wxT("id"));
-    Ogre::Real fov = GetAttribReal(XMLNode, wxT("fov"), 45);
-    Ogre::Real aspectRatio = GetAttribReal(XMLNode, wxT("aspectRatio"), 1.3333);
-    wxString projectionType = XMLNode->GetAttribute(wxT("projectionType"), wxT("perspective"));
+	if(m_spMoveable.IsEmpty())
+	{
+		FWGLOG_ERROR(wxT("Object is not initialized"), m_pOwnerManager->GetLogger());
+		return FWG_E_OBJECT_NOT_INITIALIZED_ERROR;
+	}
+	
+	if(pNode->GetName() != GAME_TAG_COMP_RENDER_CAMERA)
+	{
+		return FWG_E_XML_INVALID_TAG_ERROR;
+	}
+	
+	wxString temp;
+	float tempFloat = 0.0;
+	
+	wxString name;
+	
+	if(!pNode->GetAttribute(GAME_TAG_ATTR_NAME, &name))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Camera component on line %d does not contain '%s' attribute"), m_pOwnerManager->GetLogger()
+													, pNode->GetLineNumber()
+													, GAME_TAG_ATTR_NAME
+													, FWGLOG_ENDVAL);
+		return FWG_E_XML_ATTR_NOT_FOUND_ERROR;
+	}
+	
+    wxString projectionType = GAME_TAG_VALUE_PERSPECTIVE;
  
     // Create the camera
-    Ogre::Camera *pCamera = m_sceneMgr->createCamera(name.ToStdString());
-    if(pParent)
-	{
-        pParent->attachObject(pCamera);
-	}
+    m_pCamera = m_pOwnerManager->GetOgreSceneManager()->createCamera(name.ToStdString());
+    
+	// attach camera to the node
+	m_spMoveable->GetSceneNode()->attachObject(m_pCamera);
+
  
-    // Set the field-of-view
-    //! @todo Is this always in degrees?
-    pCamera->setFOVy(Ogre::Degree(fov));
- 
-    // Set the aspect ratio
-    pCamera->setAspectRatio(aspectRatio);
- 
-    // Set the projection type
-    if(projectionType == wxT("perspective"))
-	{
-        pCamera->setProjectionType(Ogre::PT_PERSPECTIVE);
-    } else if(projectionType == wxT("orthographic")) {
-        pCamera->setProjectionType(Ogre::PT_ORTHOGRAPHIC);
-	}
- 
-    wxXmlNode *pElement = XMLNode->GetChildren();
+    wxXmlNode *pElement = pNode->GetChildren();
  
 	while(pElement)
 	{
  
 		// Process clipping (?)
-		if(pElement->GetName() == wxT("clipping"))
+		if(pElement->GetName() == GAME_TAG_PARAM_FOV)
 		{
-			Ogre::Real nearDist = GetAttribReal(pElement, wxT("near"));
-			pCamera->setNearClipDistance(nearDist);
-	 
-			Ogre::Real farDist =  GetAttribReal(pElement, wxT("far"), 50000.0);
-			pCamera->setFarClipDistance(farDist);
-		
+			FWG_RETURN_FAIL(GameXmlUtils::GetNodeContent(pElement, temp, m_pOwnerManager->GetLogger()));
+			FWG_RETURN_FAIL(GameXmlUtils::ConvertToFloat(temp, tempFloat));
+			
+			// Set the field-of-view
+			//! @todo Is this always in degrees?
+			m_pCamera->setFOVy(Ogre::Degree(static_cast<Ogre::Real>(tempFloat)));
+	
 		// Process position (?)
-		} else if(pElement->GetName() == wxT("position")) {
-			pCamera->setPosition(ParseVector3(pElement));
+		} else if(pElement->GetName() == GAME_TAG_PARAM_PROJECTION) {
+
+			FWG_RETURN_FAIL(GameXmlUtils::GetNodeContent(pElement, temp, m_pOwnerManager->GetLogger()));
+			if(projectionType == GAME_TAG_VALUE_PERSPECTIVE)
+			{
+				m_pCamera->setProjectionType(Ogre::PT_PERSPECTIVE);
+			} else if(projectionType == GAME_TAG_VALUE_ORTHOGRAPHIC) {
+				m_pCamera->setProjectionType(Ogre::PT_ORTHOGRAPHIC);
+			} else {
+				FWGLOG_WARNING_FORMAT(wxT("Unknown projection type value '%s' on line %d"), m_pOwnerManager->GetLogger()
+													, temp.GetData().AsInternal()
+													, pElement->GetLineNumber()
+													, FWGLOG_ENDVAL);													
+			}
 	 
 		// Process rotation (?)
-		} else if(pElement->GetName() == wxT("rotation")) {
-			pCamera->setOrientation(ParseQuaternion(pElement));
+		} else if(pElement->GetName() == GAME_TAG_PARAM_FAR) {
+			FWG_RETURN_FAIL(GameXmlUtils::GetNodeContent(pElement, temp, m_pOwnerManager->GetLogger()));
+			FWG_RETURN_FAIL(GameXmlUtils::ConvertToFloat(temp, tempFloat));
+			m_pCamera->setFarClipDistance(tempFloat);
+
+		} else if(pElement->GetName() == GAME_TAG_PARAM_NEAR) {
+			FWG_RETURN_FAIL(GameXmlUtils::GetNodeContent(pElement, temp, m_pOwnerManager->GetLogger()));
+			FWG_RETURN_FAIL(GameXmlUtils::ConvertToFloat(temp, tempFloat));
+			
+			m_pCamera->setNearClipDistance(tempFloat);
 	 
 		} else {
-			ProcessUnknownTag(pElement);
+			GameXmlUtils::ProcessUnknownTag(pElement, m_pOwnerManager->GetLogger());
 		}
 		
 		pElement = pElement->GetNext();	
 	}
 	
+	
+		
 	return FWG_NO_ERROR;
 }
 
@@ -117,8 +145,80 @@ void RenderCamera::ProcessUpdate()
 
 
 
-GameErrorCode RenderCamera::Store(wxXmlNode* ParentNode)
+GameErrorCode RenderCamera::Store(wxXmlNode* pParentNode)
 {
+	if(pParentNode == nullptr)
+	{
+		return FWG_E_INVALID_PARAMETER_ERROR;
+	}
+	
+	if(m_pCamera == nullptr)
+	{
+		return FWG_E_OBJECT_NOT_INITIALIZED_ERROR;
+	}
+	
+	wxXmlNode *pNewNode = nullptr;
+	wxXmlNode *pTempNode = nullptr;
+	wxString content;
+	Ogre::String contentOgre;
+	FWG_RETURN_FAIL(GameNewChecked(pNewNode, wxXML_ELEMENT_NODE, GAME_TAG_COMP_RENDER_CAMERA));
+	wxScopedPtr<wxXmlNode> apNewNode(pNewNode);
+	
+	
+	// get camera name
+	contentOgre = m_pCamera->getName();
+	pNewNode->AddAttribute(GAME_TAG_ATTR_NAME, wxString::FromUTF8(contentOgre.c_str()));
+	
+	// fov
+	Ogre::Radian radian = m_pCamera->getFOVy();
+	float tempFloat = static_cast<float>(radian.valueDegrees());
+	FWG_RETURN_FAIL(GameXmlUtils::ConvertFromFloat( tempFloat, content));
+	FWG_RETURN_FAIL(GameNewChecked(pTempNode
+								, pNewNode
+								, wxXML_ELEMENT_NODE
+								, GAME_TAG_PARAM_FOV
+								, content));
+	// projection
+	switch(m_pCamera->getProjectionType())
+	{
+		case Ogre::PT_ORTHOGRAPHIC:
+			content = GAME_TAG_VALUE_ORTHOGRAPHIC;
+			break;
+		case Ogre::PT_PERSPECTIVE:
+		default:
+			content = GAME_TAG_VALUE_PERSPECTIVE;
+			break;
+	}
+	
+	FWG_RETURN_FAIL(GameNewChecked(pTempNode
+								, pNewNode
+								, wxXML_ELEMENT_NODE
+								, GAME_TAG_PARAM_PROJECTION
+								, content));
+	// near
+	tempFloat = static_cast<float>(m_pCamera->getNearClipDistance());
+	FWG_RETURN_FAIL(GameXmlUtils::ConvertFromFloat( tempFloat, content));
+	
+	FWG_RETURN_FAIL(GameNewChecked(pTempNode
+								, pNewNode
+								, wxXML_ELEMENT_NODE
+								, GAME_TAG_PARAM_NEAR
+								, content));
+								
+	// far
+	tempFloat = static_cast<float>(m_pCamera->getFarClipDistance());
+	FWG_RETURN_FAIL(GameXmlUtils::ConvertFromFloat( tempFloat, content));
+	
+	FWG_RETURN_FAIL(GameNewChecked(pTempNode
+								, pNewNode
+								, wxXML_ELEMENT_NODE
+								, GAME_TAG_PARAM_FAR
+								, content));
+								
+	pParentNode->AddChild(apNewNode.release());
+	
+	return FWG_NO_ERROR;	
+	
 }
 
 

@@ -44,6 +44,7 @@
         <File Name="RenderComp/grenderTerrDec.h"/>
         <File Name="RenderComp/grenderrigidbody.h"/>
         <File Name="RenderComp/grendercamera.h"/>
+        <File Name="RenderComp/grendermoveable.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="src">
         <File Name="RenderComp/grendercomp.cpp"/>
@@ -52,6 +53,7 @@
         <File Name="RenderComp/grenderTerrDec.cpp"/>
         <File Name="RenderComp/grenderrigidbody.cpp"/>
         <File Name="RenderComp/grendercamera.cpp"/>
+        <File Name="RenderComp/grendermoveable.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="physComp">
@@ -60,11 +62,15 @@
         <File Name="PhysicsComp/gphyscomp.h"/>
         <File Name="PhysicsComp/gogrebulletutils.h"/>
         <File Name="PhysicsComp/gphysdbgdraw.h"/>
+        <File Name="PhysicsComp/gphysrigidbody.h"/>
+        <File Name="PhysicsComp/gphysstaticobj.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="src">
         <File Name="PhysicsComp/gphyscmgr.cpp"/>
         <File Name="PhysicsComp/gphyscomp.cpp"/>
         <File Name="PhysicsComp/gphysdgbdraw.cpp"/>
+        <File Name="PhysicsComp/gphysrigidbody.cpp"/>
+        <File Name="PhysicsComp/gphysstaticobj.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="transformComp">

@@ -16,6 +16,7 @@ static const wxChar* FWG_UNUSED(GAME_TAG_DEFS_RENDER_STR)		= wxT("renderdefs");
 static const wxChar* FWG_UNUSED(GAME_TAG_COMP_TRANSFORM) 			= wxT("transform");
 static const wxChar* FWG_UNUSED(GAME_TAG_COMP_INPUT)	 			= wxT("input");
 static const wxChar* FWG_UNUSED(GAME_TAG_COMP_RENDER_RIGID_BODY)	= wxT("renderRigidBody");
+static const wxChar* FWG_UNUSED(GAME_TAG_COMP_RENDER_CAMERA)		= wxT("renderCamera");
 static const wxChar* FWG_UNUSED(GAME_TAG_COMP_LOGIC_FREE_CAMERA)	= wxT("logicFreeCamera");
 
 static const wxChar* FWG_UNUSED(GAME_TAG_COMP_PHYSICS_RIGID_BODY)	= wxT("physicsRigidBody");
@@ -32,6 +33,10 @@ static const wxChar* FWG_UNUSED(GAME_TAG_PARAM_SCALE)				= wxT("scale");
 static const wxChar* FWG_UNUSED(GAME_TAG_PARAM_ROTATION)			= wxT("rotation");
 static const wxChar* FWG_UNUSED(GAME_TAG_PARAM_MESH)				= wxT("mesh");
 static const wxChar* FWG_UNUSED(GAME_TAG_PARAM_MATERIAL)			= wxT("material");
+static const wxChar* FWG_UNUSED(GAME_TAG_PARAM_FOV)					= wxT("fov");
+static const wxChar* FWG_UNUSED(GAME_TAG_PARAM_PROJECTION)			= wxT("projection");
+static const wxChar* FWG_UNUSED(GAME_TAG_PARAM_NEAR)				= wxT("near");
+static const wxChar* FWG_UNUSED(GAME_TAG_PARAM_FAR)					= wxT("far");
                      
                      
                      
@@ -46,17 +51,18 @@ static const wxChar* FWG_UNUSED(GAME_TAG_ITEM_LOGIC_REF)			= wxT("logicref");
 //input component tags
 
 //attribute names
-static const wxChar* FWG_UNUSED(GAME_ATTR_NAME_STR)				= wxT("name");
-static const wxChar* FWG_UNUSED(GAME_ATTR_VALUE_STR)			= wxT("value");
-static const wxChar* FWG_UNUSED(GAME_ATTR_ACTION_STR)			= wxT("action");
-static const wxChar* FWG_UNUSED(GAME_ATTR_TYPE_STR)				= wxT("type");
+static const wxChar* FWG_UNUSED(GAME_TAG_ATTR_NAME)				= wxT("name");
+static const wxChar* FWG_UNUSED(GAME_TAG_ATTR_VALUE)			= wxT("value");
+static const wxChar* FWG_UNUSED(GAME_TAG_ATTR_ACTION)			= wxT("action");
+static const wxChar* FWG_UNUSED(GAME_TAG_ATTR_TYPE)				= wxT("type");
 
 
 
 //////////////////////////////////////
 /////      Attribute values      /////
 //////////////////////////////////////
-
+static const wxChar* FWG_UNUSED(GAME_TAG_VALUE_ORTHOGRAPHIC)		= wxT("orthographic");
+static const wxChar* FWG_UNUSED(GAME_TAG_VALUE_PERSPECTIVE)			= wxT("perspective");
 
 
 

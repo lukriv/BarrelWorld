@@ -19,8 +19,7 @@ GameErrorCode RenderTerrainDecal::Initialize()
 {
 	Ogre::Ray verticalRay( Ogre::Vector3(0, 5000, 0), Ogre::Vector3::NEGATIVE_UNIT_Y );
 	m_pRayQuery = m_pOwnerManager->GetOgreSceneManager()->createRayQuery(verticalRay);
-	return RenderComponent::Initialize();
-
+	return FWG_NO_ERROR;
 }
 
 Ogre::Real RenderTerrainDecal::GetTerrainHeight(Ogre::Real x, Ogre::Real z)
@@ -87,11 +86,6 @@ GameErrorCode RenderTerrainDecal::Create(const wxString& materialName)
 	wxCriticalSectionLocker renderLock(m_renderLock);
 	//TODO: create terrain decal manual object
 	
-	if(m_pSceneNode == nullptr)
-	{
-		return FWG_E_OBJECT_NOT_INITIALIZED_ERROR;
-	}
-	
 	if(m_pManObject != nullptr)
 	{
 		FWGLOG_WARNING(wxT("Object is already created"), m_pOwnerManager->GetLogger());
@@ -127,7 +121,7 @@ GameErrorCode RenderTerrainDecal::Create(const wxString& materialName)
 	}
 	m_pManObject->end();
 	
-	m_pSceneNode->attachObject(m_pManObject);
+	m_pOwnerManager->GetOgreSceneManager()->getRootSceneNode()->attachObject(m_pManObject);
 	
 	return result;
 }

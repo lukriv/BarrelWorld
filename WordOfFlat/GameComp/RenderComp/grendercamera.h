@@ -3,6 +3,8 @@
 
 #include "grendercomp.h"
 
+class RenderMoveable;
+
 /**
  * \brief Render generic object reads generic dotScene format and display it
  *
@@ -11,7 +13,7 @@
 class RenderCamera : public RenderComponent
 {
 
-    RefObjSmPtr<TransformComponent> m_spTransform;
+    RefObjSmPtr<RenderMoveable> m_spMoveable;
 	Ogre::Camera *m_pCamera;
 	
 public:
@@ -19,7 +21,7 @@ public:
     RenderCamera(RenderCompManager* pCompManager);
     ~RenderCamera();
 
-    GameErrorCode Initialize(TransformComponent* pTransform);
+    GameErrorCode Initialize(RenderMoveable* pRenderMoveable);
 	
 	GameErrorCode Create(const wxString& cameraName);
 	

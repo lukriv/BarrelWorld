@@ -23,8 +23,8 @@
 			</transform>
 			
 			<renderRigidBody>
-				<mesh>mesh_name</mesh>
-				<material>material_name</material>
+				<mesh>TestingCube</mesh>
+				<material>Test/ColourTest</material>
 				<!-- <renderent name="renderEnt1">
 					<meshref value="mesh1" />
 					<materialref value="material1" />
@@ -49,13 +49,8 @@
 			</transform>
 			
 			<renderRigidBody>
-				<!-- <renderent name="renderEnt2">
-					<mesh>
-						<meshname>TestingCube</meshname>
-					</mesh>
-					<materialref value="material1" />
-					<position>0.0;0.0;0.0</position>
-				</renderent> -->
+				<mesh>TestingCube</mesh>
+				<material>material1</material>
 			</renderRigidBody>
 			
 			<inputKeysOnly>
@@ -83,7 +78,7 @@
 				<rotation>1.0, 0.0, 0.0, 0.0</rotation>				
 			</transform>
 			
-			<renderGenericDotScene>
+			<renderCamera>
 				<scene>
 					<nodes>
 						<node>
@@ -94,7 +89,7 @@
 					</nodes>
 				</scene>
 				<!-- <cameraref value="MainCamera" /> -->
-			</renderGenericDotScene>
+			</renderCamera>
 			
 			<inputKeysAndMouse>
 				<key action="forward" value="key_i" />

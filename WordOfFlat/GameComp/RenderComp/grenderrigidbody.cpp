@@ -19,25 +19,15 @@ RenderRigidBody::~RenderRigidBody()
 	Clear();
 }
 
-GameErrorCode RenderRigidBody::Initialize(TransformComponent* pTransform)
+GameErrorCode RenderRigidBody::Initialize(RenderMoveable* pRenderMoveable)
 {
-	GameErrorCode result = FWG_NO_ERROR;
-    m_spTransform = pTransform;
-    if(m_spTransform.IsEmpty()) 
+    m_spMoveable = pRenderMoveable;
+    if(m_spMoveable.IsEmpty()||(pRenderMoveable->GetSceneNode() == nullptr)) 
 	{
 		// transform component cannot be null - add transform component to entity at first
+		m_spMoveable.Release();
 		return FWG_E_INVALID_PARAMETER_ERROR;
     }
-
-    TransformData* transData = m_spTransform->GetData();
-
-	if(FWG_FAILED(result = RenderComponent::Initialize( Ogre::Vector3(transData->m_translate.getX(), transData->m_translate.getY(), transData->m_translate.getZ())
-		, Ogre::Quaternion(transData->m_rotation.getW(), transData->m_rotation.getX(), transData->m_rotation.getY(), transData->m_rotation.getZ()))))
-	{
-		return result;	
-	}
-	
-
 
 	return FWG_NO_ERROR;
 }
@@ -50,13 +40,6 @@ void RenderRigidBody::ProcessUpdate()
     for(iter = m_receivedMessages.begin(); iter != m_receivedMessages.end(); ++iter) {
 		switch(iter->GetTaskType()) 
 		{
-		case GAME_TASK_TRANSFORM_UPDATE:
-			if(!m_spTransform.IsEmpty()) {
-				// todo: upgrade updating scene node transform
-				m_pSceneNode->setPosition(m_spTransform->GetOgreTranslate());
-				m_pSceneNode->setOrientation(m_spTransform->GetOgreRotation());
-			}
-			break;
 		default:
 			break;
 		}
@@ -91,14 +74,14 @@ GameErrorCode RenderRigidBody::Create(const wxString& meshName, const wxString& 
 								, m_pOwnerManager->GetLogger());
 	}
 	
-	m_pSceneNode->attachObject(m_pEntity);
+	m_spMoveable->GetSceneNode()->attachObject(m_pEntity);
 	
 	return FWG_NO_ERROR;
 }
 
 GameErrorCode RenderRigidBody::Load(wxXmlNode* pNode)
 {
-	if(m_pSceneNode == nullptr)
+	if(m_spMoveable.IsEmpty())
 	{
 		FWGLOG_ERROR(wxT("Object is not initialized"), m_pOwnerManager->GetLogger());
 		return FWG_E_OBJECT_NOT_INITIALIZED_ERROR;
@@ -195,7 +178,7 @@ void RenderRigidBody::Clear()
 {
 	if(m_pEntity != nullptr)
 	{
-		m_pSceneNode->detachObject(m_pEntity);
+		m_spMoveable->GetSceneNode()->detachObject(m_pEntity);
 		m_pOwnerManager->GetOgreSceneManager()->destroyEntity(m_pEntity);
 		m_pEntity = nullptr;
 	}

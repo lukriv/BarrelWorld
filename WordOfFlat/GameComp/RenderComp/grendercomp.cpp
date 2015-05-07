@@ -6,48 +6,27 @@
 #include <GameComp/TransformComp/gtranscomp.h>
 
 RenderComponent::~RenderComponent()
-{
-	Clear();
-	if((m_pSceneNode)&&(m_pOwnerManager)) {
-		m_pOwnerManager->GetOgreSceneManager()->destroySceneNode(m_pSceneNode);
-		m_pSceneNode = nullptr;
-	}
-}
-
-void RenderComponent::Clear()
-{
-	if(m_pSceneNode)
-	{
-		m_pSceneNode->removeAndDestroyAllChildren();
-		m_pSceneNode->getParentSceneNode()->removeChild(m_pSceneNode);
-		m_pOwnerManager->GetOgreSceneManager()->destroySceneNode(m_pSceneNode);
-		m_pSceneNode = nullptr;
-	}
-}
-
-GameErrorCode RenderComponent::Initialize(const Ogre::Vector3& translate, const Ogre::Quaternion& rotation)
-{
-	if(m_pSceneNode != nullptr)
-	{
-		// component was already initialized
-		return FWG_NO_ERROR;
-	}
-	
-	m_pSceneNode = m_pOwnerManager->GetOgreSceneManager()->getRootSceneNode()->createChildSceneNode( translate, rotation);
-	
-	if(m_pSceneNode == nullptr) {
-		return FWG_E_MEMORY_ALLOCATION_ERROR;
-	}
-
-	return FWG_NO_ERROR;
-}
+{}
 
 GameErrorCode RenderComponent::ReceiveMessage(TaskMessage& msg)
 {
+	GameErrorCode result = FWG_NO_ERROR;
 	wxCriticalSectionLocker lock(m_renderLock);
 	
 	m_receivedMessages.push_back(msg);
 	
-	return FWG_NO_ERROR;
+	if(!m_alreadyInUpdateQueue)
+	{
+		if(FWG_FAILED(result = m_pOwnerManager->AddToUpdateQueue(this)))
+		{
+			FWGLOG_ERROR_FORMAT(wxT("Add to update queue failed: 0x%08x"), m_pOwnerManager->GetLogger()
+														, result, FWGLOG_ENDVAL);
+			return result;
+		}
+		
+		m_alreadyInUpdateQueue = true;
+	}
+	
+	return result;
 }
 

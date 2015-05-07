@@ -27,8 +27,6 @@ protected:
 	typedef wxVector<TaskMessage> TMessageList;
 protected:
 	RenderCompManager *m_pOwnerManager;
-	Ogre::SceneNode *m_pSceneNode;
-	
 	wxCriticalSection m_renderLock;
 	
 	TMessageList m_receivedMessages;
@@ -41,17 +39,9 @@ public:
 	// Render component can be created and destroyed only by render component manager
 	RenderComponent(GameComponentType compType, RenderCompManager* pCompManager) : ComponentBase(compType)
 													, m_pOwnerManager(pCompManager)
-													, m_pSceneNode(nullptr)
 													, m_alreadyInUpdateQueue(false){}
 	~RenderComponent();
 	
-	GameErrorCode Initialize(const Ogre::Vector3& tranlate = Ogre::Vector3::ZERO, const Ogre::Quaternion& rotation = Ogre::Quaternion::IDENTITY);
-	
-	/*!
-	 * \brief Destroy inner ogre object
-	 */
-	void Clear();
-
 	/**
 	 * \brief Process update if it is necessary
 	 */
