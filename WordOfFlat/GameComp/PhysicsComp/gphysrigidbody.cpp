@@ -78,6 +78,10 @@ GameErrorCode PhysicsRigidBody::Create(btScalar mass, btCollisionShape* pColShap
 	
 }
 
+GameErrorCode PhysicsRigidBody::Load(wxXmlNode* XMLNode)
+{
+}
 
-
-
+GameErrorCode PhysicsRigidBody::Store(wxXmlNode* ParentNode)
+{
+}
