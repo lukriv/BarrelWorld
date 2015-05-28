@@ -18,7 +18,6 @@ private:
 	typedef GameBasSet<LogicComponentBase*> TLogicCompList;
 private:
 	GameLoggerPtr m_spLogger;
-	GameCompManager *m_pComponentManager;
 	TLogicCompList m_logicCompList;
 	
 	wxCriticalSection m_lockMgr;
@@ -28,9 +27,7 @@ public:
 	
 	inline GameLogger* GetLogger() { return m_spLogger; }
 	
-	inline GameCompManager* GetComponentMgr() { return m_spComponentManager; }
-	
-	GameErrorCode Initialize(GameCompManager *pComponentManager);
+	GameErrorCode Initialize();
 	
 	
 	/**
@@ -38,9 +35,6 @@ public:
 	 * \param pLogicComp Logic component
 	 */
 	GameErrorCode AddLogicComp(LogicComponentBase *pLogicComp);
-	
-	
-	GameErrorCode CreateLogicComp(LogicDef &logicDef, GameEntity *pEntity);
 	
 	void RemoveLogicComp(LogicComponentBase *pLogicComp);
 	

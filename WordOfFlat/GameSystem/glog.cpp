@@ -1,8 +1,11 @@
 #include "glog.h"
-#include <wx/datetime.h>
+
 #include <cstdio>
-#include "glogconst.h"
 #include <stdarg.h>
+
+#include <wx/datetime.h>
+
+#include "glogconst.h"
 
 // initilize global variable
 GameLoggerCreator* GameLoggerCreator::m_pLoggerCreator = NULL;

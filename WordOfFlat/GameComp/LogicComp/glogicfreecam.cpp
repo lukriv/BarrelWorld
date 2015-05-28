@@ -1,7 +1,7 @@
 #include "glogicfreecam.h"
 #include "glogiccmgr.h"
 #include <GameComp/gentity.h>
-#include <GameComp/inputComp/gfreecaminput.h>
+#include <GameComp/inputComp/ginputfreecam.h>
 
 const btScalar STEP_SIZE = 0.02f;
 const btScalar MOVE_STEP_SIZE = 1.0f;
@@ -9,22 +9,20 @@ const btScalar MOVE_STEP_SIZE = 1.0f;
 static const btScalar _2_PI = SIMD_2_PI;
 static const btScalar _HALF_PI = SIMD_HALF_PI;
 
-GameErrorCode LogicFreeCamera::Initialize(GameEntity* pEntity)
+GameErrorCode LogicFreeCamera::Initialize(TransformComponent *pTransform, InputComponent *pInput)
 {
 	if(pEntity == nullptr)
 	{
 		return FWG_E_INVALID_PARAMETER_ERROR;
 	}
 	
-	m_spTransform = reinterpret_cast<TransformComponent*>(pEntity->GetComponent(GAME_COMP_TRANSFORM));
-	m_spInput = reinterpret_cast<InputComponent*>(pEntity->GetComponent(GAME_COMP_INPUT));
+	m_spTransform = pTransform;
+	m_spInput = pInput;
 		
 	if(m_spTransform.IsEmpty() || m_spInput.IsEmpty())
 	{
 		return FWG_E_INVALID_PARAMETER_ERROR;
 	}
-	
-	m_pParent = pEntity;
 	
 	return FWG_NO_ERROR;
 }
@@ -100,29 +98,8 @@ GameErrorCode LogicFreeCamera::ReceiveMessage(TaskMessage& msg)
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode LogicFreeCamera::ReinitComponent(GameEntity* pNewParentEntity)
-{
-	m_pParent = pNewParentEntity;
-	if(pNewParentEntity)
-	{
-		m_spTransform = reinterpret_cast<TransformComponent*>(pNewParentEntity->GetComponent(GAME_COMP_TRANSFORM));
-		m_spInput = reinterpret_cast<InputComponent*>(pNewParentEntity->GetComponent(GAME_COMP_INPUT));
-		
-		if(m_spTransform.IsEmpty() || m_spInput.IsEmpty())
-		{
-			return FWG_E_INVALID_PARAMETER_ERROR;
-		}
-	}
-	
-	return FWG_NO_ERROR;
-}
 
 GameErrorCode LogicFreeCamera::Update()
-{
-	return FWG_NO_ERROR;
-}
-
-GameErrorCode LogicFreeCamera::UserLogic()
 {
 	if(m_pParent == nullptr)
 	{
@@ -134,6 +111,16 @@ GameErrorCode LogicFreeCamera::UserLogic()
 		FWG_RETURN_FAIL(ProcessInput());
 	}
 	
+	return FWG_NO_ERROR;
+}
+
+GameErrorCode LogicManualTest::Load(wxXmlNode* pNode)
+{
+	return FWG_NO_ERROR;
+}
+
+GameErrorCode LogicManualTest::Store(wxXmlNode* pParentNode)
+{
 	return FWG_NO_ERROR;
 }
 

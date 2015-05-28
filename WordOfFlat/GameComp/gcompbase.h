@@ -53,7 +53,6 @@ public:
 	
 	inline GameEntity* GetParentEntity() { return m_pParent; }
 	
-	virtual GameErrorCode Update() = 0;
 	virtual GameErrorCode ReceiveMessage(TaskMessage &msg) = 0;
 	
 };

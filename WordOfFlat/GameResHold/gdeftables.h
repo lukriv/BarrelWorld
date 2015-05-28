@@ -97,7 +97,7 @@ public:
 
 
 
-struct InputDef : public DefBase {
+struct InputDefOld : public DefBase {
 	typedef GameBasMap<wxString, wxInt32 > TInputMap;
 public:
 	enum InputType {
@@ -159,11 +159,7 @@ public:
 					, m_inertiaVector(Ogre::Vector3::ZERO) {}
 };
 
-struct TerrainPage : public DefBase {
-	wxString m_filename;
-	wxInt32 m_pageX;
-	wxInt32 m_pageY;
-};
+
 
 /*!
  * \class EntityDef
@@ -179,6 +175,12 @@ struct EntityDef : public DefBase {
 	RefObjSmPtr<LogicDef> m_logicDef;
 	RefObjSmPtr<PhysCompDef> m_physDef;
 	EntityDef() : DefBase() {}
+};
+
+struct TerrainPage : public DefBase {
+	wxString m_filename;
+	wxInt32 m_pageX;
+	wxInt32 m_pageY;
 };
 
 struct TerrainDef : public DefBase {

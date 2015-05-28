@@ -24,7 +24,8 @@ public:
 	virtual GameErrorCode ReinitComponent(GameEntity* pNewParentEntity) override;
 	virtual	GameErrorCode Update() override;
 	
-	
+	GameErrorCode Load(wxXmlNode *pNode);
+	GameErrorCode Store(wxXmlNode *pParentNode);
 
 protected:
 	virtual GameErrorCode UserLogic();

@@ -42,9 +42,8 @@ void LogicCompManager::RemoveLogicComp(LogicComponentBase* pLogicComp)
 	m_logicCompList.Remove(pLogicComp);
 }
 
-GameErrorCode LogicCompManager::Initialize(GameCompManager* pComponentManager)
+GameErrorCode LogicCompManager::Initialize()
 {
-	m_pComponentManager = pComponentManager;
 	
 	return FWG_NO_ERROR;
 }

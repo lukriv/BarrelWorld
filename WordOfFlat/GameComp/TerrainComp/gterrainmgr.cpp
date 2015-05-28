@@ -4,7 +4,10 @@
 #include <OGRE/Terrain/OgreTerrainGroup.h>
 
 #include <bullet/BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h>
+#include <wx/xml/xml.h>
 
+#include <GameXmlDefinitions/gxmldefs.h>
+#include <GameXmlDefinitions/gxmlutils.h>
 #include "RenderComp/grendercmgr.h"
 #include "PhysicsComp/gphyscmgr.h"
 
@@ -12,6 +15,18 @@
 static const wxInt32 CHUNK_SHIFT = 6; // n
 static const wxInt32 CHUNK_SIZE = 1<<CHUNK_SHIFT;
 static const wxInt32 CHUNK_VERTICES = CHUNK_SIZE + 1;
+
+struct TerrainPage : public RefObjectImpl<IRefObject> {
+	wxString m_filename;
+	wxInt32 m_pageX;
+	wxInt32 m_pageY;
+};
+
+struct TerrainDef : public RefObjectImpl<IRefObject> {
+	wxDword m_mapSize;
+	float m_worldSize;
+	wxVector< RefObjSmPtr<TerrainPage> > m_terrainPages;
+};
 
 GameTerrainManager::GameTerrainManager(GameLogger* pLogger) : m_spLogger(pLogger)
 															, m_pRenderMgr(nullptr)
@@ -458,4 +473,142 @@ GameErrorCode GameTerrainManager::PrepareTerrainGlobalOptions()
 	
 	return FWG_NO_ERROR;
 
+}
+
+GameErrorCode GameTerrainManager::Load(wxXmlNode* pNode)
+{
+	GameErrorCode result = FWG_NO_ERROR;
+	RefObjSmPtr<TerrainDef> spTerrainDef;
+	if(FWG_FAILED(result = CreateTerrainDef(pNode, spTerrainDef)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Reading terrain definitions failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	if(FWG_FAILED(result = CreateTerrainGroup(*spTerrainDef)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Create terrain group failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	return result;
+	
+}
+
+
+GameErrorCode GameTerrainManager::CreateTerrainDef(wxXmlNode* pNode, RefObjSmPtr<TerrainDef>& spTerrain)
+{
+	GameErrorCode result = FWG_NO_ERROR;
+	RefObjSmPtr<TerrainDef> spTerrainTemp;
+	
+	wxString tempParam;
+	
+	FWG_RETURN_FAIL( GameNewChecked(spTerrainTemp.OutRef()));
+	
+	wxXmlNode *child = pNode->GetChildren();
+	while (child)
+	{
+		if (child->GetName() == GAME_TAG_COMP_TERRAIN_PAGES) 
+		{
+			// create terrain pages
+			wxXmlNode *pTerrainPages = child->GetChildren();
+			
+			while(pTerrainPages)
+			{
+				if(pTerrainPages->GetName() == GAME_TAG_COMP_TERRAIN_PAGE)
+				{
+					RefObjSmPtr<TerrainPage> spTerrainPage;
+					FWG_RETURN_FAIL(GameNewChecked(spTerrainPage.OutRef()));
+					if(FWG_FAILED(result = CreateTerrainPageDef(pTerrainPages, spTerrainPage)))
+					{
+						FWGLOG_ERROR_FORMAT(wxT("Create terrain page failed on line: %d with error: 0x%08x"),
+									m_spLogger,
+									pNode->GetLineNumber(),
+									result,
+									FWGLOG_ENDVAL);
+						return result;
+					}
+					// add terrain page
+					spTerrainTemp->m_terrainPages.push_back(spTerrainPage);
+				} else if(pTerrainPages->GetType() != wxXML_COMMENT_NODE) {
+					FWGLOG_ERROR_FORMAT(wxT("Unknown tag within tag ['%s'] on line: %d"),
+									m_spLogger,
+									pNode->GetName().GetData().AsInternal(),
+									pNode->GetLineNumber(),
+									FWGLOG_ENDVAL);
+					return FWG_E_XML_INVALID_TAG_ERROR;
+				}
+				pTerrainPages = pTerrainPages->GetNext();
+			}
+		} else if(child->GetName() == GAME_PARAM_TERRAIN_MAPSIZE) {
+			// mapsize
+			wxInt32 tempInt = 0;
+			FWG_RETURN_FAIL(GameXmlUtils::GetNodeContent(child, tempParam, m_spLogger));
+			FWG_RETURN_FAIL(GameXmlUtils::ConvertToInt32(tempParam, tempInt));
+			
+			spTerrainTemp->m_mapSize = static_cast<wxDword>(tempInt);
+			
+		} else if(child->GetName() == GAME_PARAM_TERRAIN_WORLDSIZE) {
+			// worldsize
+			FWG_RETURN_FAIL(GameXmlUtils::GetNodeContent(child, tempParam, m_spLogger));
+			FWG_RETURN_FAIL(GameXmlUtils::ConvertToFloat(tempParam, spTerrainTemp->m_worldSize));
+		} else {
+			GameXmlUtils::ProcessUnknownTag(child, m_spLogger);
+		}
+		
+		child = child->GetNext();
+		
+	}
+	
+	// set return value
+	spTerrain = spTerrainTemp;
+	
+	return FWG_NO_ERROR;
+}
+
+GameErrorCode GameTerrainManager::CreateTerrainPageDef(wxXmlNode* pNode, RefObjSmPtr<TerrainPage>& spTerrainPage)
+{
+	//GameErrorCode result = FWG_NO_ERROR;
+	RefObjSmPtr<TerrainPage> spTerrainPageTemp;
+	
+	wxString tempParam;
+	
+	FWG_RETURN_FAIL( GameNewChecked(spTerrainPageTemp.OutRef()));
+	
+	wxXmlNode *child = pNode->GetChildren();
+	while (child)
+	{
+		if (child->GetName() == GAME_PARAM_FILENAME) 
+		{
+			// filename
+			FWG_RETURN_FAIL(GameXmlUtils::GetNodeContent(child, spTerrainPageTemp->m_filename, m_spLogger));
+		} else if(child->GetName() == GAME_PARAM_TERRAIN_PAGEX) {
+			// page x
+			FWG_RETURN_FAIL(GameXmlUtils::GetNodeContent(child, tempParam, m_spLogger));
+			FWG_RETURN_FAIL(GameXmlUtils::ConvertToInt32(tempParam, spTerrainPageTemp->m_pageX));
+			
+			
+		} else if(child->GetName() == GAME_PARAM_TERRAIN_PAGEY) {
+			// page y
+			FWG_RETURN_FAIL(GameXmlUtils::GetNodeContent(child, tempParam, m_spLogger));
+			FWG_RETURN_FAIL(GameXmlUtils::ConvertToInt32(tempParam, spTerrainPageTemp->m_pageY));
+		} else {
+			GameXmlUtils::ProcessUnknownTag(child, m_spLogger);
+		}
+		
+		child = child->GetNext();
+		
+	}
+	
+	// set return value
+	spTerrainPage = spTerrainPageTemp;
+	
+	return FWG_NO_ERROR;
+}
+
+
+GameErrorCode GameTerrainManager::Store(wxXmlNode* pParentNode)
+{
+	FWGLOG_WARNING(wxT("Terrain storing is not implemented yet!"), m_spLogger);
+	return FWG_NO_ERROR;
 }

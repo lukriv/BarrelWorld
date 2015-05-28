@@ -9,10 +9,7 @@ GameEntity::GameEntity(const GameEntity& master)
 	m_id = master.m_id;
 	
 	// copy components
-	for( wxInt32 iter = 0; iter < GAME_COMP_COUNT; ++iter)
-	{
-		m_componentList[iter] = master.m_componentList[iter];
-	}
+	m_componentList=master.m_componentList;
 }
 
 GameEntity::~GameEntity()
@@ -23,6 +20,7 @@ ComponentBase* GameEntity::GetComponent(GameComponentType compType)
 {
 	//lock
 	wxCriticalSectionLocker lock(m_entityLock);
+	
 	
 	return m_componentList[compType].In();
 }
@@ -49,12 +47,12 @@ GameErrorCode GameEntity::ReceiveMessage(TaskMessage& msg)
 	// lock
 	wxCriticalSectionLocker lock(m_entityLock);
 	
-	TCompSmPtr* endIter = &m_componentList[GAME_COMP_COUNT];
-	for( TCompSmPtr* iter = m_componentList; iter != endIter; ++iter)
+	TCompMap::Iterator endIter = m_componentList.End();
+	for( TCompMap::Iterator iter = m_componentList.Begin(); iter != endIter; ++iter)
 	{
-		if(!iter->IsEmpty())
+		if(!iter->second.IsEmpty())
 		{
-			(*iter)->ReceiveMessage(msg);
+			iter->second->ReceiveMessage(msg);
 		}
 	}
 	
@@ -72,5 +70,7 @@ GameErrorCode GameEntity::RemoveComponent(GameComponentType compType)
 	return FWG_NO_ERROR;
 }
 
-
-
+void GameEntity::Clear()
+{
+	m_componentList.Clear();
+}

@@ -1,7 +1,12 @@
 #include "gphysstaticobj.h"
 
+#include <wx/xml/xml.h>
+#include <wx/scopedptr.h>
 #include <bullet/BulletCollision/CollisionShapes/btCollisionShape.h>
+#include <GameXmlDefinitions/gxmldefs.h>
+#include <GameXmlDefinitions/gxmlutils.h>
 
+#include "gphysshapeload.h"
 #include "gphyscmgr.h"
 #include "../transformComp/gtranscomp.h"
 
@@ -80,10 +85,59 @@ GameErrorCode PhysicsStaticObject::ReceiveMessage(TaskMessage& msg)
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode PhysicsStaticObject::Load(wxXmlNode* XMLNode)
+GameErrorCode PhysicsStaticObject::Load(wxXmlNode* pNode)
 {
+	if(pNode->GetName() != GAME_TAG_COMP_PHYSICS_STATIC_OBJECT)
+	{
+		return FWG_E_XML_INVALID_TAG_ERROR;
+	}
+	
+	wxString tempContent;
+	wxXmlNode *pChild = pNode->GetChildren();
+	btCollisionShape *pCollShape = nullptr;
+	
+	while(pChild)
+	{
+		if(pChild->GetName() == GAME_TAG_COMP_PHYSICS_SHAPE)
+		{
+			PhysicsShapeLoader shapeLoader(m_pOwnerMgr->GetLogger());
+			FWG_RETURN_FAIL(shapeLoader.LoadShape(pChild, pCollShape));
+		} else {
+			GameXmlUtils::ProcessUnknownTag(pChild, m_pOwnerMgr->GetLogger());
+		}
+		pChild = pChild->GetNext();
+	}
+	
+	return Create( pCollShape);
 }
 
-GameErrorCode PhysicsStaticObject::Store(wxXmlNode* ParentNode)
+GameErrorCode PhysicsStaticObject::Store(wxXmlNode* pParentNode)
 {
+	if(!m_pColObject)
+	{
+		return FWG_E_OBJECT_NOT_EXIST_ERROR;
+	}
+	
+	GameErrorCode result = FWG_NO_ERROR;
+	wxXmlNode *pNewNode = nullptr;
+	//wxXmlNode *pTempNode = nullptr;
+	wxString content;
+	FWG_RETURN_FAIL(GameNewChecked(pNewNode, wxXML_ELEMENT_NODE, GAME_TAG_COMP_PHYSICS_STATIC_OBJECT));
+	wxScopedPtr<wxXmlNode> apNewNode(pNewNode);
+	
+	if(m_pColObject->getCollisionShape())
+	{
+		PhysicsShapeLoader shapeLoader(m_pOwnerMgr->GetLogger());
+		
+		// store shape
+		if(FWG_FAILED(result = shapeLoader.StoreShape(pNewNode, m_pColObject->getCollisionShape())))
+		{
+			FWGLOG_ERROR_FORMAT(wxT("Store collision shape failed: 0x%08x"), m_pOwnerMgr->GetLogger(), result, FWGLOG_ENDVAL);
+			return result;
+		}
+	}
+	
+	pParentNode->AddChild(apNewNode.release());
+	
+	return FWG_NO_ERROR;
 }

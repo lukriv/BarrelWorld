@@ -48,3 +48,12 @@ LogicTerrainDecal::~LogicTerrainDecal()
 {
 }
 
+GameErrorCode LogicTerrainDecal::Load(wxXmlNode* pNode)
+{
+	return FWG_NO_ERROR;
+}
+
+GameErrorCode LogicTerrainDecal::Store(wxXmlNode* pParentNode)
+{
+	return FWG_NO_ERROR;
+}

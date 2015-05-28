@@ -9,44 +9,45 @@ GameEntityManager::~GameEntityManager()
 	DestroyAllEntities();
 }
 
-GameEntity* GameEntityManager::GetEntity(const wxString& entityName)
+GameEntity* GameEntityManager::GetEntity(wxDword entityId)
 {
-	return m_entityMap.FindValue(entityName);
+	return m_entityMap.GetItem(entityId);
 }
 
-GameErrorCode GameEntityManager::CreateEntity(const wxString& entityName, GameEntity*& pNewEntity)
+GameErrorCode GameEntityManager::CreateEntity(GameEntity*& pNewEntity)
 {
-	TEntityMap::Iterator iter;
-	if(FWG_FAILED(m_entityMap.Insert(entityName, GameEntity(), iter)))
+	GameErrorCode result = FWG_NO_ERROR;
+	wxDword entId = 0;
+	if(FWG_FAILED(result = m_entityMap.AllocNewItem(entId)))
 	{
-		return FWG_E_MEMORY_ALLOCATION_ERROR;
+		FWGLOG_ERROR_FORMAT(wxT("Cannot alloc new entity item"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
 	}
-	pNewEntity = &(iter->second);
-	pNewEntity->SetName(entityName);
+	pNewEntity = m_entityMap.GetItem(entId);
+	pNewEntity->SetId(entId);
 	
 	return FWG_NO_ERROR;
 }
 
-void GameEntityManager::DestroyEntity(const wxString& entityName)
+void GameEntityManager::DestroyEntity(wxDword entityId)
 {
-	m_entityMap.Remove(entityName);
+	//m_entityMap.Remove(entityName);
+	GameEntity *pEntity = m_entityMap.GetItem(entityId);
+	pEntity->Clear();
+	m_entityMap.FreeItem(entityId);
 }
 
-void GameEntityManager::DestroyEntity(GameEntity* entity)
+void GameEntityManager::DestroyEntity(GameEntity* pEntity)
 {
-	TEntityMap::Iterator iter;
-	
-	iter = m_entityMap.Find(entity->GetName());
-	if(iter != m_entityMap.End())
-	{
-		m_entityMap.Remove(iter);
-	}
+	pEntity->Clear();
+	m_entityMap.FreeItem(pEntity->GetId());
 }
 
 
 void GameEntityManager::DestroyAllEntities()
 {
-	m_entityMap.Clear();
+	//m_entityMap.Clear();
+	m_entityMap.FreeAll();
 }
 
 

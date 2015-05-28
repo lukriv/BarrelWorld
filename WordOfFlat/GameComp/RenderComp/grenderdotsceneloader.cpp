@@ -19,12 +19,9 @@ GameErrorCode RenderDotSceneLoader::ParseDotScene(const wxString& SceneString, O
     // set up shared object values
     m_sceneMgr = yourSceneMgr;
     m_sPrependNode = sPrependNode;
-    staticObjects.clear();
-    dynamicObjects.clear();
  
     wxXmlDocument XMLDoc;
 	wxStringInputStream inputStream(SceneString);
-    wxXmlNode *XMLRoot = nullptr;
  
 	if(!XMLDoc.Load(inputStream)) 
 	{
@@ -685,17 +682,9 @@ GameErrorCode RenderDotSceneLoader::ProcessEntity(wxXmlNode *XMLNode, Ogre::Scen
     wxString id = XMLNode->GetAttribute(wxT("id"));
     wxString meshFile = XMLNode->GetAttribute(wxT("meshFile"));
     wxString materialFile = XMLNode->GetAttribute(wxT("materialFile"));
-    bool isStatic = GetAttribBool(XMLNode, wxT("static"), false);
+    //bool isStatic = GetAttribBool(XMLNode, wxT("static"), false);
     bool castShadows = GetAttribBool(XMLNode, wxT("castShadows"), true);
  
-    // TEMP: Maintain a list of static and dynamic objects
-    if(isStatic)
-	{
-        staticObjects.push_back(name);
-	} else {
-        dynamicObjects.push_back(name);
-	}
-	
 	// Create the entity
 	Ogre::Entity *pEntity = nullptr;
 	try

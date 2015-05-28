@@ -125,4 +125,12 @@ GameErrorCode LogicManualTest::Update()
 	return FWG_NO_ERROR;
 }
 
+GameErrorCode LogicManualTest::Load(wxXmlNode* pNode)
+{
+	return FWG_NO_ERROR;
+}
 
+GameErrorCode LogicManualTest::Store(wxXmlNode* pParentNode)
+{
+	return FWG_NO_ERROR;
+}

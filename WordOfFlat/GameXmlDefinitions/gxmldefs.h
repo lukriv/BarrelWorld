@@ -20,24 +20,33 @@ static const wxChar* FWG_UNUSED(GAME_TAG_COMP_RENDER_CAMERA)		= wxT("renderCamer
 static const wxChar* FWG_UNUSED(GAME_TAG_COMP_LOGIC_FREE_CAMERA)	= wxT("logicFreeCamera");
 
 static const wxChar* FWG_UNUSED(GAME_TAG_COMP_PHYSICS_RIGID_BODY)	= wxT("physicsRigidBody");
-                     
+static const wxChar* FWG_UNUSED(GAME_TAG_COMP_PHYSICS_STATIC_OBJECT)= wxT("physicsStaticObject");
+static const wxChar* FWG_UNUSED(GAME_TAG_COMP_PHYSICS_SHAPE)		= wxT("physicsShape");
+static const wxChar* FWG_UNUSED(GAME_TAG_COMP_PHYSICS_BOX_SHAPE)	= wxT("boxShape");
                      
 static const wxChar* FWG_UNUSED(GAME_TAG_COMP_TERRAIN) 			= wxT("terrain");
 static const wxChar* FWG_UNUSED(GAME_TAG_COMP_TERRAIN_PAGES)	= wxT("terrainpages");
 static const wxChar* FWG_UNUSED(GAME_TAG_COMP_TERRAIN_PAGE)		= wxT("terrainpage");
-                     
-                     
-//                   
+
+//
 static const wxChar* FWG_UNUSED(GAME_TAG_PARAM_POSITION)			= wxT("position");
 static const wxChar* FWG_UNUSED(GAME_TAG_PARAM_SCALE)				= wxT("scale");
 static const wxChar* FWG_UNUSED(GAME_TAG_PARAM_ROTATION)			= wxT("rotation");
+
+static const wxChar* FWG_UNUSED(GAME_PARAM_TERRAIN_MAPSIZE)		= wxT("mapSize");
+static const wxChar* FWG_UNUSED(GAME_PARAM_TERRAIN_WORLDSIZE)	= wxT("worldSize");
+static const wxChar* FWG_UNUSED(GAME_PARAM_FILENAME)			= wxT("filename");
+static const wxChar* FWG_UNUSED(GAME_PARAM_TERRAIN_PAGEX)		= wxT("pageX");
+static const wxChar* FWG_UNUSED(GAME_PARAM_TERRAIN_PAGEY)		= wxT("pageY");
+
 static const wxChar* FWG_UNUSED(GAME_TAG_PARAM_MESH)				= wxT("mesh");
 static const wxChar* FWG_UNUSED(GAME_TAG_PARAM_MATERIAL)			= wxT("material");
 static const wxChar* FWG_UNUSED(GAME_TAG_PARAM_FOV)					= wxT("fov");
 static const wxChar* FWG_UNUSED(GAME_TAG_PARAM_PROJECTION)			= wxT("projection");
 static const wxChar* FWG_UNUSED(GAME_TAG_PARAM_NEAR)				= wxT("near");
 static const wxChar* FWG_UNUSED(GAME_TAG_PARAM_FAR)					= wxT("far");
-                     
+static const wxChar* FWG_UNUSED(GAME_TAG_PARAM_BOX_HALF_SIZE)		= wxT("halfSize");                     
+static const wxChar* FWG_UNUSED(GAME_TAG_PARAM_MASS)				= wxT("mass"); 
                      
                      
                      

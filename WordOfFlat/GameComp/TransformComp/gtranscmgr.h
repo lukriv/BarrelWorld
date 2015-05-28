@@ -5,17 +5,16 @@
 #include <GameSystem/gdefs.h>
 #include <GameSystem/gerror.h>
 #include <GameSystem/refobjectsmptr.h>
-#include <GameResHold/gdeftables.h>
+#include <GameComp/gmanagerbase.h>
 
 
 class TransformComponent;
 class GameEntity;
+class btVector3;
+class btQuaternion;
 
-class TransformCompManager
+class TransformCompManager : public GameManagerBase<TransformComponent>
 {
-private:
-	GameLoggerPtr m_spLogger;
-	
 public:
 	TransformCompManager(GameLogger *pLogger);
 	~TransformCompManager();
@@ -26,12 +25,10 @@ public:
 	
 	/**
 	 * \brief Create transform component from transform component definition
-	 * \param transCompDef
-	 * \param pEntity transform component container
+	 * \param compId component id ( identification of component )
+	 * \param pTransComp New transform component
 	 */
-	GameErrorCode CreateTransformComponent( TransformComponent *&pTransComp, const btVector3& position, const btVector3& scale, const btQuaternion& rotation);
-	
-	GameErrorCode CreateTransformComponent( TransformComponent *&pTransComp );
+	GameErrorCode CreateComponent( wxDword compId, TransformComponent *&pTransComp );
 	
 };
 

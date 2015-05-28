@@ -39,21 +39,6 @@
     <File Name="gsettings.h"/>
     <File Name="gmmstate.h"/>
   </VirtualDirectory>
-  <Dependencies Name="Release">
-    <Project Name="GameSystem"/>
-    <Project Name="GameResHold"/>
-    <Project Name="GameXmlDefinitions"/>
-    <Project Name="GameLoader"/>
-    <Project Name="GameComp"/>
-    <Project Name="WorldCli"/>
-  </Dependencies>
-  <Dependencies Name="Debug">
-    <Project Name="GameSystem"/>
-    <Project Name="GameResHold"/>
-    <Project Name="GameLoader"/>
-    <Project Name="GameXmlDefinitions"/>
-    <Project Name="GameComp"/>
-  </Dependencies>
   <Settings Type="Executable">
     <GlobalSettings>
       <Compiler Options="-Wall;-Wno-unused-local-typedefs;-std=c++11" C_Options="" Assembler="">
@@ -175,4 +160,19 @@
       </Completion>
     </Configuration>
   </Settings>
+  <Dependencies Name="Debug">
+    <Project Name="GameSystem"/>
+    <Project Name="GameResHold"/>
+    <Project Name="GameLoader"/>
+    <Project Name="GameXmlDefinitions"/>
+    <Project Name="GameComp"/>
+  </Dependencies>
+  <Dependencies Name="Release">
+    <Project Name="GameSystem"/>
+    <Project Name="GameResHold"/>
+    <Project Name="GameXmlDefinitions"/>
+    <Project Name="GameLoader"/>
+    <Project Name="GameComp"/>
+    <Project Name="WorldCli"/>
+  </Dependencies>
 </CodeLite_Project>

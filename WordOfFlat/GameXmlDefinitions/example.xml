@@ -33,10 +33,15 @@
 			</renderRigidBody>
 			
 			<physicsRigidBody>
+				<physicsShape>
+					<boxShape>
+						<halfSize>1.0,1.0,1.0</halfSize>
+					</boxShape>
+				</physicsShape>
+				<mass>1.0</mass>
 				<!-- <shape type="box">
 					<boxHalfSize>1.0, 1.0, 1.0</boxHalfSize>
 				</shape>
-				<mass>1.0</mass>
 				<inertia>0.0,0.0,0.0</inertia> -->
 			</physicsRigidBody>
 		</entity>
@@ -62,13 +67,13 @@
 			
 			<logic type="manualTest"></logic>
 			
-			<physicsRigidBody>
+			<physicsStaticObject>
 				<!-- <shape type="box">
 					<boxHalfSize>1.0, 1.0, 1.0</boxHalfSize>
 				</shape>
 				<mass>1.0</mass>
 				<inertia>0.0,0.0,0.0</inertia> -->
-			</physicsRigidBody>
+			</physicsStaticObject>
 		</entity>
 		
 		<entity>

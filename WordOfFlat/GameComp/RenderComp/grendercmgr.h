@@ -9,7 +9,6 @@
 #include <GameSystem/gerror.h>
 #include <GameSystem/refobjectsmptr.h>
 #include <GameSystem/gmap.h>
-#include <GameResHold/gdeftables.h>
 #include <MainWindow/gsettings.h>
 
 
@@ -18,13 +17,12 @@ static const wxChar* FWG_UNUSED(MAIN_CAMERA_NAME) = wxT("MainCamera");
 static const wxChar* FWG_UNUSED(SECONDARY_CAMERA_NAME) = wxT("SecondCamera");
 
 class RenderComponent;
-class RenderObject;
+class RenderCamera;
 class GameEntity;
 
 class RenderCompManager
 {
 private:
-	typedef GameBasMap< wxString, RefObjSmPtr<RenderObject> > TGameCameraMap;
 	typedef wxVector< RenderComponent* > TUpdateQueue;
 private:
 	GameLoggerPtr m_spLogger;
@@ -35,7 +33,6 @@ private:
 	// optional scene manager - probably it will be only one in the project
 	Ogre::SceneManager* m_pSceneManager;
 	Ogre::Camera* m_pMainCamera;
-	TGameCameraMap m_cameraMap;
 	wxCriticalSection m_mgrLock;
 	wxCriticalSection m_processLock;
 	wxCriticalSection m_renderLock;

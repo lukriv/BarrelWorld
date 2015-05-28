@@ -9,6 +9,7 @@ class PhysicsCompManager;
 class btCollisionShape;
 class btRigidBody;
 class TransformComponent;
+class wxXmlNode;
 
 class PhysicsRigidBody : public ComponentBase
 {

@@ -3,15 +3,16 @@
 
 #include "gdefs.h"
 #include <map>
-#include <wx/log.h>
-#include <wx/thread.h>
-#include <wx/vector.h>
 #include <wx/atomic.h>
 #include <wx/ffile.h>
+#include <wx/thread.h>
+#include <wx/log.h>
+
 
 #include "gerror.h"
 #include "refobject.h"
 #include "refobjectsmptr.h"
+
 
 #define FWGLOG_LEVEL_TRACE		5
 #define FWGLOG_LEVEL_DEBUG		4

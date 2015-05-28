@@ -45,12 +45,6 @@ GameErrorCode TransformComponent::ReceiveMessage(TaskMessage& )
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode TransformComponent::Update()
-{
-	// no update is necessary
-	return FWG_NO_ERROR;
-}
-
 void TransformComponent::getWorldTransform(btTransform& worldTrans) const
 {
 	if(m_pTransData)
@@ -70,7 +64,7 @@ void TransformComponent::setWorldTransform(const btTransform& worldTrans)
 	
 	//transform was updated
 	TaskMessage task(GAME_TASK_TRANSFORM_UPDATE);
-	GetParentEntity()->ReceiveMessage(task, (~GAME_COMP_MASK_PHYSICS)); 
+	GetParentEntity()->ReceiveMessage(task); 
 }
 
 GameErrorCode TransformComponent::Store(wxXmlNode* pParentNode)
@@ -152,3 +146,14 @@ GameErrorCode TransformComponent::Load(wxXmlNode* pNode)
 	return FWG_NO_ERROR;
 	
 }
+
+GameErrorCode TransformComponent::Create(const btVector3& position, const btVector3& scale, const btQuaternion& rotation)
+{
+	m_pTransData->m_translate = position;
+	m_pTransData->m_scale = scale;
+	m_pTransData->m_rotation = rotation;
+	
+	return FWG_NO_ERROR;
+}
+
+

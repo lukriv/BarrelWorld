@@ -19,17 +19,15 @@ public:
 	LogicFreeCamera();
 	~LogicFreeCamera();
 	
-	GameErrorCode Initialize(GameEntity *pEntity);
+	GameErrorCode Initialize(TransformComponent *pTransform, InputComponent *pInput);
 	
 	virtual GameErrorCode ReceiveMessage(TaskMessage& msg) override;
-	virtual GameErrorCode ReinitComponent(GameEntity* pNewParentEntity) override;
-	virtual	GameErrorCode Update() override;
 	
+	GameErrorCode Update();
 	
+	GameErrorCode Load(wxXmlNode *pNode);
+	GameErrorCode Store(wxXmlNode *pParentNode);
 
-protected:
-	virtual GameErrorCode UserLogic();
-	
 protected:
 	GameErrorCode ProcessInput();
 };

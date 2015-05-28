@@ -6,7 +6,6 @@
 #include <GameSystem/new.h>
 #include <GameComp/gentity.h>
 #include "grendercomp.h"
-#include "grenderobj.h"
 
 static const char* MAIN_GAME_SCENE_MANAGER = "MainSceneManager";
 
@@ -86,9 +85,6 @@ GameErrorCode RenderCompManager::Initialize(GameEngineSettings& settings)
 
 void RenderCompManager::Uninitialize()
 {
-	m_pMainCamera.Release();
-	m_cameraMap.Clear();
-	
 	if(m_pRenderWindow != nullptr) 
 	{
 		m_pRenderWindow->removeAllListeners();
@@ -127,25 +123,24 @@ void RenderCompManager::StartRendering()
 
 void RenderCompManager::DisableCreating()
 {
-	m_renderLock->Enter();
+	m_renderLock.Enter();
 }
 
 void RenderCompManager::EnableCreating()
 {
-	m_renderLock->Leave();
+	m_renderLock.Leave();
 }
 
-RenderObject* RenderCompManager::GetCamera(const wxString& cameraName)
+Ogre::Camera* RenderCompManager::GetCamera(const wxString& cameraName)
 {
-	TGameCameraMap::Iterator iter;
-	
-	iter = m_cameraMap.Find(cameraName);
-	if(iter != m_cameraMap.End())
-	{
-		return iter->second.In();
+	try {
+		return m_pSceneManager->getCamera(cameraName.ToStdString());
+	} catch (Ogre::Exception &exc) {
+		FWGLOG_ERROR_FORMAT(wxT("OGRE camera not found: '%s'"), m_spLogger
+						, wxString::FromUTF8(exc.getFullDescription().c_str()).GetData().AsInternal()
+						, FWGLOG_ENDVAL );
+		return nullptr;
 	}
-	
-	return nullptr;
 	
 }
 
@@ -219,12 +214,12 @@ GameErrorCode RenderCompManager::SetMainCamera(Ogre::Camera* pCamera)
 
 GameErrorCode RenderCompManager::SetMainCamera(const wxString& cameraName)
 {
-	RefObjSmPtr<RenderObject> spCamera;
+	Ogre::Camera* pCamera = nullptr;
 	
-	spCamera = GetCamera(cameraName);
-	if(!spCamera.IsEmpty())
+	pCamera = GetCamera(cameraName);
+	if(pCamera)
 	{
-		return SetMainCamera(spCamera);
+		return SetMainCamera(pCamera);
 	} else {
 		return FWG_E_OBJECT_NOT_FOUND_ERROR;
 	}

@@ -14,6 +14,11 @@ RenderCamera::RenderCamera(RenderCompManager* pCompManager) : RenderComponent(GA
 
 RenderCamera::~RenderCamera()
 {
+	if(m_pCamera)
+	{
+		m_pOwnerManager->GetOgreSceneManager()->destroyCamera(m_pCamera);
+		m_pCamera = nullptr;
+	}
 }
 
 GameErrorCode RenderCamera::Initialize(RenderMoveable* pRenderMoveable)
@@ -27,10 +32,6 @@ GameErrorCode RenderCamera::Initialize(RenderMoveable* pRenderMoveable)
     }
 
 	return FWG_NO_ERROR;
-}
-
-void RenderCamera::Clear()
-{
 }
 
 GameErrorCode RenderCamera::Create(const wxString& cameraName)

@@ -6,7 +6,7 @@
 #include <GameResHold/gdeftables.h>
 #include "ginputcomp.h"
 #include "gcharinput.h"
-#include "gfreecaminput.h"
+#include "ginputfreecam.h"
 
 
 bool GameInputSystem::keyPressed(const OIS::KeyEvent& arg)

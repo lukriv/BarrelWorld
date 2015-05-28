@@ -37,6 +37,7 @@ public:
 	 * \param item Added item
 	 * \retval FWG_NO_ERROR On success
 	 * \retval FWG_E_MEMORY_ALLOCATION_ERROR If adding failed
+	 * \retval FWG_E_OBJECT_ALREADY_EXISTS_ERROR If key already exists
 	 * \retval errorcode on fail
 	 */
 	inline GameErrorCode Insert(const key& Key, const value& Value)
@@ -121,6 +122,22 @@ public:
 	inline void Clear()
 	{
 		m_innerMap.clear();
+	}
+	
+	inline void Swap(GameBasMap<key,value,compare>& map)
+	{
+		this->m_innerMap.swap(map.m_innerMap);
+	}
+	
+	inline GameBasMap<key,value,compare>& operator=(const GameBasMap<key,value,compare>& map)
+	{
+		m_innerMap = map.m_innerMap;
+		return *this;
+	}
+	
+	inline value& operator[](const key& k)
+	{
+		return m_innerMap[k];
 	}
 	
 

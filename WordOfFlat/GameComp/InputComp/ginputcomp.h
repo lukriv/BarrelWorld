@@ -5,6 +5,7 @@
 #include <OGRE/OgreVector2.h>
 #include <GameSystem/refobject.h>
 #include <GameSystem/refobjectimpl.h>
+#include <GameSystem/gmap.h>
 #include <GameComp/InputComp/ginputsystem.h>
 #include "../gcompbase.h"
 
@@ -182,8 +183,6 @@ public:
     Ogre::Vector2& GetLookDirection2D();
 
     virtual GameErrorCode ReceiveMessage(TaskMessage& msg) override;
-    virtual GameErrorCode ReinitComponent(GameEntity* pNewParentEntity) override;
-    virtual GameErrorCode Update() override;
 	
 	virtual void OnMouseMoved(const OIS::MouseState& arg) override;
     virtual void OnMousePressed(const OIS::MouseState& arg, OIS::MouseButtonID id) override;
@@ -199,6 +198,17 @@ protected:
 			m_ctrlStruct.Release(ctrlFlag);
 		}
     }
+};
+
+
+struct InputDef : public RefObjectImpl<IRefObject> {
+	typedef GameBasMap<wxString, wxInt32 > TInputMap;
+public:
+	TInputMap m_inputMap;
+	
+public:
+	InputDef() {}
+	
 };
 
 #endif //__GAME_INPUT_COMPONENT_H__01__

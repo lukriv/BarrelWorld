@@ -2,7 +2,6 @@
 #include <GameResHold/gdeftables.h>
 #include <GameComp/gentity.h>
 #include <GameComp/TransformComp/gtranscomp.h>
-#include "gphyscomp.h"
 
 btCollisionShape * PhysicsCompManager::CreateCollisionShape(PhysShapeDef &physShapeDef)
 {
@@ -112,82 +111,6 @@ void PhysicsCompManager::Uninitialize()
 		delete m_pSolver;
 		m_pSolver = nullptr;
 	}
-}
-
-GameErrorCode PhysicsCompManager::CreatePhysicsComponent(PhysCompDef& physDef, GameEntity* pEntity)
-{
-	GameErrorCode result = FWG_NO_ERROR;
-	if((pEntity == nullptr)||(pEntity->GetComponent(GAME_COMP_TRANSFORM) == nullptr))
-	{
-		FWGLOG_ERROR(wxT("Entity or its transform component is null"), m_spLogger);
-		return FWG_E_INVALID_PARAMETER_ERROR;
-	}
-	
-	if(physDef.m_shape.IsEmpty())
-	{
-		FWGLOG_ERROR(wxT("Physics definition has empty physics shape"), m_spLogger);
-		return FWG_E_INVALID_PARAMETER_ERROR;
-	}
-	
-	RefObjSmPtr<PhysicsComponent> spPhysComp;
-	FWG_RETURN_FAIL(GameNewChecked(spPhysComp.OutRef(), this));
-	
-	btCollisionShape *pColShape = CreateCollisionShape(*physDef.m_shape);
-	if(pColShape == nullptr)
-	{
-		FWGLOG_ERROR(wxT("Physics definition has empty physics shape"), m_spLogger);
-		return FWG_E_MEMORY_ALLOCATION_ERROR;
-	}
-	
-	TransformComponent *pTrans = reinterpret_cast<TransformComponent*>(pEntity->GetComponent(GAME_COMP_TRANSFORM));
-	switch(physDef.m_physType)
-	{
-		case PhysCompDef::PHYS_TYPE_RIGID:
-		{
-			btScalar mass = physDef.m_mass;
-			btVector3 localInertia(physDef.m_inertiaVector.x, physDef.m_inertiaVector.y, physDef.m_inertiaVector.z);
-			
-			pColShape->calculateLocalInertia(mass, localInertia);
-			
-			btRigidBody::btRigidBodyConstructionInfo info(mass, pTrans, pColShape, localInertia);
-			
-			btRigidBody *body = new btRigidBody(info);
-			
-			if(FWG_FAILED(result = spPhysComp->Initialize(pEntity, body)))
-			{
-				FWGLOG_ERROR_FORMAT(wxT("Physics component initialize (rigidbody) failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
-				return result;		
-			}
-			break;
-		}
-		case PhysCompDef::PHYS_TYPE_COLLISION:
-		{
-			btCollisionObject* pColObj = new btCollisionObject;
-			btTransform transform;
-			pTrans->getWorldTransform(transform);
-			pColObj->setWorldTransform(transform);
-			pColObj->setCollisionShape(pColShape);
-			
-			if(FWG_FAILED(result = spPhysComp->Initialize(pEntity, pColObj)))
-			{
-				FWGLOG_ERROR_FORMAT(wxT("Physics component initialize (collision) failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
-				return result;		
-			}
-						
-			break;
-		}
-		default:
-			break;
-	}
-	
-	if(FWG_FAILED(result = pEntity->AddComponent(spPhysComp)))
-	{
-		FWGLOG_ERROR_FORMAT(wxT("Add physics component to entity failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
-		return result;		
-	}
-
-	return result;
-	
 }
 
 GameErrorCode PhysicsCompManager::ProcessPhysics()

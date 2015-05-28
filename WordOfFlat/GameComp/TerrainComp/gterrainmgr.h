@@ -5,13 +5,15 @@
 #include <wx/scopedarray.h>
 #include <GameSystem/gmap.h>
 #include <GameSystem/glog.h>
-#include <GameResHold/gdeftables.h>
+#include <GameSystem/refobjectsmptr.h>
 
 class RenderCompManager;
 class PhysicsCompManager;
-
+struct TerrainDef;
+struct TerrainPage;
 
 class btRigidBody;
+class wxXmlNode;
 namespace Ogre {
 	class TerrainGlobalOptions;
 	class TerrainGroup;
@@ -86,8 +88,15 @@ public:
 	 * @param terrainDef
 	 */
 	GameErrorCode CreateTerrainGroup (TerrainDef &terrainDef);
+	
+	GameErrorCode Load(wxXmlNode *pNode);
+	GameErrorCode Store(wxXmlNode *pParentNode);
+	
 protected:
 	GameErrorCode PrepareTerrainGlobalOptions();
+	
+	GameErrorCode CreateTerrainDef(wxXmlNode* pNode, RefObjSmPtr<TerrainDef>& spTerrain);
+	GameErrorCode CreateTerrainPageDef(wxXmlNode* pNode, RefObjSmPtr<TerrainPage>& spTerrainPage);
 
 	GameErrorCode LoadTerrainData(const wxString &resource, wxDword terrDataSize, wxScopedArray<float> &retData, float &minHeight, float &maxHeight);
 };

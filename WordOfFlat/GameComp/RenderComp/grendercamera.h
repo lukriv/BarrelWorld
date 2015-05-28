@@ -27,8 +27,6 @@ public:
 	
 	Ogre::Camera* GetOgreCamera();
 	
-	void Clear();	
-	
     GameErrorCode Load(wxXmlNode* XMLNode);
     GameErrorCode Store(wxXmlNode* ParentNode);
 	

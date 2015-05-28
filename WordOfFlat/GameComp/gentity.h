@@ -9,11 +9,11 @@
 #include "gcompbase.h"
 
 class GameEntity {
-	typedef RefObjSmPtr< ComponentBase > TCompSmPtr;
+	typedef GameBasMap< GameComponentType, RefObjSmPtr< ComponentBase > > TCompMap;
 private:
 	wxDword m_id;
 	wxCriticalSection m_entityLock;
-	TCompSmPtr m_componentList[GAME_COMP_COUNT];
+	TCompMap m_componentList;
 
 public:
 
@@ -84,6 +84,11 @@ public:
 	 * @return Errorcode on failture.
 	 */
 	GameErrorCode Update();
+	
+	/**
+	 * @brief Clear entity
+	 */
+	void Clear();
 	
 };
 
