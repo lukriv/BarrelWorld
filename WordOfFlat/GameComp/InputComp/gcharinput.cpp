@@ -1,4 +1,4 @@
-#include "gcharinput.h"
+#include "ginputchar.h"
 
 #include <OIS/OISKeyboard.h>
 #include <GameComp/InputComp/ginputsystem.h>

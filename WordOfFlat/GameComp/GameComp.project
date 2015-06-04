@@ -82,14 +82,10 @@
       <VirtualDirectory Name="include">
         <File Name="InputComp/ginputcomp.h"/>
         <File Name="InputComp/ginputsystem.h"/>
-        <File Name="InputComp/gcharinput.h"/>
-        <File Name="InputComp/gmouseinput.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="src">
         <File Name="InputComp/ginputcomp.cpp"/>
         <File Name="InputComp/ginputsystem.cpp"/>
-        <File Name="InputComp/gcharinput.cpp"/>
-        <File Name="InputComp/gmouseinput.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="logicSystem">
@@ -246,6 +242,16 @@
       <File Name="InputComp/ginputfreecam.cpp"/>
       <File Name="InputComp/ginputfreecammgr.h"/>
       <File Name="InputComp/ginputfreecammgr.cpp"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="inputcharacter">
+      <File Name="InputComp/ginputcharmgr.h"/>
+      <File Name="InputComp/ginputcharmgr.cpp"/>
+      <File Name="InputComp/ginputchar.h"/>
+      <File Name="InputComp/ginputchar.cpp"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="inputmouse">
+      <File Name="InputComp/gmouseinput.h"/>
+      <File Name="InputComp/gmouseinput.cpp"/>
     </VirtualDirectory>
   </VirtualDirectory>
 </CodeLite_Project>

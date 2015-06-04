@@ -8,8 +8,7 @@
 class GameInputSystem;
 
 class CharacterInput : public InputComponent {
-public:
-	static GameErrorCode CreateObject( const InputDef &inputDef, GameInputSystem& inputSystem, InputComponent *&pNewInputComp);
+	
 public:
 	enum StateFlags {
 	INPUT_ACTION_NONE =						0 ,
@@ -27,6 +26,11 @@ public:
     
 };
 public:
+
+	GameErrorCode Initialize(const GameInputSystem *pInputSystem);
+
+	GameErrorCode Create( const InputDef &inputDef);
+
 	void SetMoveUp(bool move)
 	{
 		SetState(move, INPUT_ACTION_UP);
