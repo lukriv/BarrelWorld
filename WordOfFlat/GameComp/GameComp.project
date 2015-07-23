@@ -249,9 +249,5 @@
       <File Name="InputComp/ginputchar.h"/>
       <File Name="InputComp/ginputchar.cpp"/>
     </VirtualDirectory>
-    <VirtualDirectory Name="inputmouse">
-      <File Name="InputComp/gmouseinput.h"/>
-      <File Name="InputComp/gmouseinput.cpp"/>
-    </VirtualDirectory>
   </VirtualDirectory>
 </CodeLite_Project>
