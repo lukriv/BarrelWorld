@@ -5,21 +5,21 @@
 #include <bullet/LinearMath/btScalar.h>
 #include "glogiccomp.h"
 #include "../transformComp/gtranscomp.h"
-#include "../inputComp/ginputcomp.h"
+#include "../inputComp/ginputfreecam.h"
 
 
 
 class LogicFreeCamera : public LogicComponentBase
 {
 	RefObjSmPtr<TransformComponent> m_spTransform;
-	RefObjSmPtr<InputComponent> m_spInput;
+	RefObjSmPtr<FreeCameraInput> m_spInput;
 	btScalar m_angleX;
 	btScalar m_angleY;
 public:
 	LogicFreeCamera();
 	~LogicFreeCamera();
 	
-	GameErrorCode Initialize(TransformComponent *pTransform, InputComponent *pInput);
+	GameErrorCode Initialize(TransformComponent *pTransform, FreeCameraInput *pFreeCamInput);
 	
 	virtual GameErrorCode ReceiveMessage(TaskMessage& msg) override;
 	

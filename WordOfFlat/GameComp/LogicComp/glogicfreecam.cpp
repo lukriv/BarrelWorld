@@ -9,13 +9,8 @@ const btScalar MOVE_STEP_SIZE = 1.0f;
 static const btScalar _2_PI = SIMD_2_PI;
 static const btScalar _HALF_PI = SIMD_HALF_PI;
 
-GameErrorCode LogicFreeCamera::Initialize(TransformComponent *pTransform, InputComponent *pInput)
+GameErrorCode LogicFreeCamera::Initialize(TransformComponent* pTransform, FreeCameraInput* pFreeCamInput)
 {
-	if(pEntity == nullptr)
-	{
-		return FWG_E_INVALID_PARAMETER_ERROR;
-	}
-	
 	m_spTransform = pTransform;
 	m_spInput = pInput;
 		
@@ -114,12 +109,12 @@ GameErrorCode LogicFreeCamera::Update()
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode LogicManualTest::Load(wxXmlNode* pNode)
+GameErrorCode LogicFreeCamera::Load(wxXmlNode* pNode)
 {
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode LogicManualTest::Store(wxXmlNode* pParentNode)
+GameErrorCode LogicFreeCamera::Store(wxXmlNode* pParentNode)
 {
 	return FWG_NO_ERROR;
 }

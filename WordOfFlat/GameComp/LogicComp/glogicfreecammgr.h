@@ -9,8 +9,10 @@
 
 class LogicFreeCameraManager : public GameManagerBase<LogicFreeCamera>
 {
+private:
+	GameInputSystem* m_pInputSystem;
 public:
-	LogicFreeCameraManager(GameLogger *pLogger);
+	LogicFreeCameraManager(GameInputSystem* pInputSystem);
 	~LogicFreeCameraManager();
 	
 	GameErrorCode CreateComponent(wxDword compId, LogicFreeCamera *&pNewComponent);

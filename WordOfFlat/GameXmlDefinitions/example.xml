@@ -15,7 +15,7 @@
 				</terrainpage>
 			</terrainpages>
 		</terrain>
-		<entity>
+		<entity id="1" >
 			<transform>
 				<position>0.0, 15.0, 0.0</position>
 				<scale>1.0, 1.0, 1.0</scale>

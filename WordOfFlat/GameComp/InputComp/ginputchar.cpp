@@ -12,6 +12,10 @@ static const wxChar* FACTORY_INPUT_FORWARD	 = wxT("forward");
 static const wxChar* FACTORY_INPUT_BACKWARD	 = wxT("backward");
 
 
+CharacterInput::CharacterInput() : m_pInputSystem(nullptr)
+{
+}
+
 GameErrorCode CharacterInput::Initialize(const GameInputSystem* pInputSystem)
 {
 	if(pInputSystem == nullptr)
@@ -87,5 +91,4 @@ GameErrorCode CharacterInput::Create(const InputDef& inputDef)
 		
 	return FWG_NO_ERROR;
 }
-
 

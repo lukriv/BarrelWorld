@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CodeLite_Workspace Name="WordOfFlat" Database="./WordOfFlat.tags" SWTLW="No">
+<CodeLite_Workspace Name="WordOfFlat" Database="./WordOfFlat.tags">
   <Project Name="MainWindow" Path="MainWindow/MainWindow.project" Active="No"/>
   <Project Name="GameSystem" Path="GameSystem/GameSystem.project" Active="No"/>
   <Project Name="WorldSrv" Path="WorldSrv/WorldSrv.project" Active="No"/>

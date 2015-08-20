@@ -1,6 +1,9 @@
 #ifndef __GAME_INPUT_CHARACTER_MANAGER_H__
 #define __GAME_INPUT_CHARACTER_MANAGER_H__
 
+#include "ginputchar.h"
+
+
 class InputCharacterManager : public GameManagerBase<CharacterInput>
 {
 private:
