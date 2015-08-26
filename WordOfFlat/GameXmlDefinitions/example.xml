@@ -65,7 +65,7 @@
 				<key action="right" value="key_d" />
 			</inputKeyOnly>
 			
-			<logic type="manualTest"></logic>
+			<logicManualTest></logicManualTest>
 			
 			<physicsStaticObject>
 				<!-- <shape type="box">
