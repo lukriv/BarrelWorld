@@ -25,7 +25,7 @@ protected:
 public:
 
 	// Render component can be created and destroyed only by render component manager
-	LogicComponentBase() : ComponentBase(GAME_COMP_LOGIC)
+	LogicComponentBase(GameComponentType logicCompType) : ComponentBase(logicCompType)
 						, m_pOwnerManager(nullptr)
 						, m_pParent(nullptr) {}
 	virtual ~LogicComponentBase();

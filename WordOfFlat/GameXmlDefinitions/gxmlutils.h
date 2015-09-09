@@ -31,6 +31,7 @@ public:
 	
 	
 	static GameErrorCode GetNodeContent(wxXmlNode *pNode, wxString& content, GameLogger *pLogger = nullptr);
+	static GameErrorCode GetKeyValue(wxXmlNode *pNode, wxString &action, wxInt32 &keyCode, GameLogger *pLogger = nullptr);
 	
 	
 	static void ProcessUnknownTag(wxXmlNode *pNode, GameLogger *pLogger);

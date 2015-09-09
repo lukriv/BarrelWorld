@@ -111,11 +111,23 @@ GameErrorCode LogicFreeCamera::Update()
 
 GameErrorCode LogicFreeCamera::Load(wxXmlNode* pNode)
 {
+	if( pNode->GetName() != GAME_TAG_COMP_LOGIC_FREE_CAMERA )
+	{
+		return FWG_E_XML_INVALID_TAG_ERROR;
+	}
+	
 	return FWG_NO_ERROR;
 }
 
 GameErrorCode LogicFreeCamera::Store(wxXmlNode* pParentNode)
 {
+	wxXmlNode *pNewNode = nullptr;
+	wxString content;
+	FWG_RETURN_FAIL(GameNewChecked(pNewNode, wxXML_ELEMENT_NODE, GAME_TAG_COMP_LOGIC_FREE_CAMERA));
+	wxScopedPtr<wxXmlNode> apNewNode(pNewNode);
+	
+	pParentNode->AddChild(apNewNode.release());
+	
 	return FWG_NO_ERROR;
 }
 
