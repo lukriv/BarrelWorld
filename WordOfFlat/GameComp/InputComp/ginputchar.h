@@ -29,7 +29,7 @@ public:
 public:
 	CharacterInput();
 
-	GameErrorCode Initialize(const GameInputSystem *pInputSystem);
+	GameErrorCode Initialize( GameInputSystem *pInputSystem );
 
 	GameErrorCode Create( const InputDef &inputDef);
 

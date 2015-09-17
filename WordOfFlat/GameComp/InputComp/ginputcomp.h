@@ -9,6 +9,9 @@
 #include <GameComp/InputComp/ginputsystem.h>
 #include "../gcompbase.h"
 
+// forward declaration
+class wxXmlNode;
+
 class ControlStruct
 {
 public:
@@ -153,8 +156,8 @@ class InputComponent : public ComponentBase, public GameInputSystem::InputMouseC
 
 public:
 
-    InputComponent()
-        : ComponentBase(GAME_COMP_INPUT)
+    InputComponent(GameComponentType compType)
+        : ComponentBase(compType)
         , m_inputLock(wxCRITSEC_DEFAULT)
     {
     }
@@ -187,6 +190,9 @@ public:
 	virtual void OnMouseMoved(const OIS::MouseState& arg) override;
     virtual void OnMousePressed(const OIS::MouseState& arg, OIS::MouseButtonID id) override;
     virtual void OnMouseReleased(const OIS::MouseState& arg, OIS::MouseButtonID id) override;
+	
+	static GameErrorCode GetKeyValue(wxXmlNode *pNode, wxString &action, wxInt32 &keyCode, GameLogger *pLogger);
+	static GameErrorCode SetKeyValue(wxXmlNode *pParentNode, wxString &action, wxInt32 &keyCode, GameLogger *pLogger);
 
 protected:
     inline void SetState(bool state, wxDword ctrlFlag)

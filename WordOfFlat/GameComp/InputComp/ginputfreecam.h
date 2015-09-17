@@ -21,7 +21,7 @@ private:
 	GameInputSystem *m_pInputSystem;
 public:
 
-	FreeCameraInput() : m_pInputSystem(nullptr) {}
+	FreeCameraInput() : InputComponent(GAME_COMP_INPUT_FREE_CAMERA), m_pInputSystem(nullptr) {}
 	~FreeCameraInput();
 	
 	GameErrorCode Initialize(GameInputSystem* pInputSystem);

@@ -97,25 +97,6 @@ public:
 
 
 
-struct InputDefOld : public DefBase {
-	typedef GameBasMap<wxString, wxInt32 > TInputMap;
-public:
-	enum InputType {
-		INPUT_TYPE_GENERIC 			= 0,
-		INPUT_TYPE_CHARACTER 		= 1,
-		INPUT_TYPE_FREE_CAMERA 		= 2,
-		INPUT_TYPE_GENERIC_MOUSE	= 3
-	};
-public:
-	InputType m_inputType;
-	TInputMap m_inputMap;
-	
-public:
-	InputDef() : m_inputType(INPUT_TYPE_GENERIC) {}
-	
-};
-
-
 struct LogicDef : public DefBase {
 	wxString m_logicType;
 public:
@@ -171,7 +152,7 @@ public:
 struct EntityDef : public DefBase {
 	RefObjSmPtr<TransformDef> m_transformation;
 	RefObjSmPtr<RenderDef> m_renderDef;
-	RefObjSmPtr<InputDef> m_inputDef;
+	//RefObjSmPtr<InputDef> m_inputDef;
 	RefObjSmPtr<LogicDef> m_logicDef;
 	RefObjSmPtr<PhysCompDef> m_physDef;
 	EntityDef() : DefBase() {}

@@ -5,7 +5,6 @@
 
 #include <GameResHold/gdeftables.h>
 #include "ginputcomp.h"
-#include "gcharinput.h"
 #include "ginputfreecam.h"
 
 

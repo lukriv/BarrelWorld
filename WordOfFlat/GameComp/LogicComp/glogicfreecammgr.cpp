@@ -13,7 +13,6 @@ GameErrorCode LogicFreeCameraManager::CreateComponent(wxDword compId, LogicFreeC
 {
 	RefObjSmPtr<LogicFreeCamera> spLogicComp;
 	FWG_RETURN_FAIL(GameNewChecked(spLogicComp.OutRef()));
-	FWG_RETURN_FAIL(spLogicComp->Initialize(m_pInputSystem));
 	
 	FWG_RETURN_FAIL(InsertToMap(compId, spLogicComp));
 	

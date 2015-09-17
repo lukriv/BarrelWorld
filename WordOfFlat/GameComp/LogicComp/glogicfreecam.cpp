@@ -2,6 +2,9 @@
 #include "glogiccmgr.h"
 #include <GameComp/gentity.h>
 #include <GameComp/inputComp/ginputfreecam.h>
+#include <GameXmlDefinitions/gxmldefs.h>
+#include <wx/xml/xml.h>
+#include <wx/scopedptr.h>
 
 const btScalar STEP_SIZE = 0.02f;
 const btScalar MOVE_STEP_SIZE = 1.0f;
@@ -9,10 +12,10 @@ const btScalar MOVE_STEP_SIZE = 1.0f;
 static const btScalar _2_PI = SIMD_2_PI;
 static const btScalar _HALF_PI = SIMD_HALF_PI;
 
-GameErrorCode LogicFreeCamera::Initialize(TransformComponent* pTransform, FreeCameraInput* pFreeCamInput)
+GameErrorCode LogicFreeCamera::CreateComponent(TransformComponent* pTransform, FreeCameraInput* pFreeCamInput)
 {
 	m_spTransform = pTransform;
-	m_spInput = pInput;
+	m_spInput = pFreeCamInput;
 		
 	if(m_spTransform.IsEmpty() || m_spInput.IsEmpty())
 	{
@@ -22,7 +25,7 @@ GameErrorCode LogicFreeCamera::Initialize(TransformComponent* pTransform, FreeCa
 	return FWG_NO_ERROR;
 }
 
-LogicFreeCamera::LogicFreeCamera() : m_angleX(0.0f), m_angleY(0.0f)
+LogicFreeCamera::LogicFreeCamera() : LogicComponentBase(GAME_COMP_LOGIC_FREE_CAMERA), m_angleX(0.0f), m_angleY(0.0f)
 {
 }
 

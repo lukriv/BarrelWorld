@@ -2,6 +2,7 @@
 #define __GAME_INPUT_CHARACTER_MANAGER_H__
 
 #include "ginputchar.h"
+#include "gmanagerbase.h"
 
 
 class InputCharacterManager : public GameManagerBase<CharacterInput>

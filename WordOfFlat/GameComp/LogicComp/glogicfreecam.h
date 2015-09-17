@@ -2,12 +2,10 @@
 #define __GAME_FREE_CAMERA_LOGIC_TEST_H__
 
  // Base class: LogicComponentBase
-#include <bullet/LinearMath/btScalar.h>
 #include "glogiccomp.h"
+#include <bullet/LinearMath/btScalar.h>
 #include "../transformComp/gtranscomp.h"
 #include "../inputComp/ginputfreecam.h"
-
-
 
 class LogicFreeCamera : public LogicComponentBase
 {
@@ -19,7 +17,7 @@ public:
 	LogicFreeCamera();
 	~LogicFreeCamera();
 	
-	GameErrorCode Initialize(TransformComponent *pTransform, FreeCameraInput *pFreeCamInput);
+	GameErrorCode CreateComponent( TransformComponent *pTransform, FreeCameraInput *pFreeCamInput );
 	
 	virtual GameErrorCode ReceiveMessage(TaskMessage& msg) override;
 	
