@@ -99,7 +99,6 @@
         <File Name="LogicComp/glogiccomp.cpp"/>
         <File Name="LogicComp/glogiccmgr.cpp"/>
         <File Name="LogicComp/glogicman.cpp"/>
-        <File Name="LogicComp/glogiccreator.cpp"/>
         <File Name="LogicComp/glogicterrdecal.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
@@ -248,6 +247,9 @@
       <File Name="InputComp/ginputcharmgr.cpp"/>
       <File Name="InputComp/ginputchar.h"/>
       <File Name="InputComp/ginputchar.cpp"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="logicsimplemove">
+      <File Name="LogicComp/glogicsimplemove.h"/>
     </VirtualDirectory>
   </VirtualDirectory>
 </CodeLite_Project>

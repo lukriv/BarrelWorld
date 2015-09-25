@@ -16,16 +16,6 @@ CharacterInput::CharacterInput() : InputComponent(GAME_COMP_INPUT_CHARACTER), m_
 {
 }
 
-GameErrorCode CharacterInput::Initialize(GameInputSystem* pInputSystem)
-{
-	if(pInputSystem == nullptr)
-	{
-		return FWG_E_INVALID_PARAMETER_ERROR;
-	}
-	m_pInputSystem = pInputSystem;
-	return FWG_NO_ERROR;
-}
-
 GameErrorCode CharacterInput::Create(const InputDef& inputDef)
 {
 	GameErrorCode result = FWG_NO_ERROR;

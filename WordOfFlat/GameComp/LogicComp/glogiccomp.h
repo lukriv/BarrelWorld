@@ -41,9 +41,6 @@ public:
 	GameErrorCode ProcessLogic();
 	
 protected:
-	virtual GameErrorCode UserLogic() = 0;
-
-protected:
 	GameErrorCode PhysicsProcess();
 
 };

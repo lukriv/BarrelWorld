@@ -15,6 +15,7 @@ static const wxChar* FWG_UNUSED(GAME_TAG_DEFS_RENDER_STR)		= wxT("renderdefs");
 // component tags    
 static const wxChar* FWG_UNUSED(GAME_TAG_COMP_TRANSFORM) 			= wxT("transform");
 static const wxChar* FWG_UNUSED(GAME_TAG_COMP_INPUT)	 			= wxT("input");
+
 static const wxChar* FWG_UNUSED(GAME_TAG_COMP_RENDER_RIGID_BODY)	= wxT("renderRigidBody");
 static const wxChar* FWG_UNUSED(GAME_TAG_COMP_RENDER_CAMERA)		= wxT("renderCamera");
 static const wxChar* FWG_UNUSED(GAME_TAG_COMP_LOGIC_FREE_CAMERA)	= wxT("logicFreeCamera");
@@ -47,7 +48,7 @@ static const wxChar* FWG_UNUSED(GAME_TAG_PARAM_NEAR)				= wxT("near");
 static const wxChar* FWG_UNUSED(GAME_TAG_PARAM_FAR)					= wxT("far");
 static const wxChar* FWG_UNUSED(GAME_TAG_PARAM_BOX_HALF_SIZE)		= wxT("halfSize");                     
 static const wxChar* FWG_UNUSED(GAME_TAG_PARAM_MASS)				= wxT("mass"); 
-                     
+static const wxChar* FWG_UNUSED(GAME_TAG_PARAM_INPUT_KEY)	 		= wxT("key");                     
                      
                      
 // component item tags references

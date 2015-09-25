@@ -153,6 +153,7 @@ class InputComponent : public ComponentBase, public GameInputSystem::InputMouseC
 {
     ControlStruct m_ctrlStruct;
     wxCriticalSection m_inputLock;
+	GameInputSystem *m_pInputSystem;
 
 public:
 
@@ -161,6 +162,8 @@ public:
         , m_inputLock(wxCRITSEC_DEFAULT)
     {
     }
+	
+	GameErrorCode Initialize( GameInputSystem *pInputSystem );
 
     /*!
      * \brief Export actual control struct state and reset it
@@ -191,10 +194,14 @@ public:
     virtual void OnMousePressed(const OIS::MouseState& arg, OIS::MouseButtonID id) override;
     virtual void OnMouseReleased(const OIS::MouseState& arg, OIS::MouseButtonID id) override;
 	
-	static GameErrorCode GetKeyValue(wxXmlNode *pNode, wxString &action, wxInt32 &keyCode, GameLogger *pLogger);
-	static GameErrorCode SetKeyValue(wxXmlNode *pParentNode, wxString &action, wxInt32 &keyCode, GameLogger *pLogger);
-
 protected:
+	GameErrorCode CreateInputDef(wxXmlNode *pNode, InputDef &output);
+
+	GameErrorCode GetKeyValue(wxXmlNode *pNode, wxString &action, wxInt32 &keyCode);
+	GameErrorCode SetKeyValue(wxXmlNode *pParentNode, wxString &action, wxInt32 &keyCode);
+	
+	
+
     inline void SetState(bool state, wxDword ctrlFlag)
     {
 		wxCriticalSectionLocker lock(m_inputLock);

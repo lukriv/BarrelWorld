@@ -141,28 +141,6 @@ GameErrorCode GameInputSystem::ProcessInputs()
 }
 
 
-
-
-GameErrorCode GameInputSystem::CreateAndRegisterInputComponent( const InputDef &inputDef, InputComponent *&pNewInputComp)
-{
-	switch (inputDef.m_inputType) {
-		case InputDef::INPUT_TYPE_GENERIC:
-			break;
-		case InputDef::INPUT_TYPE_CHARACTER:
-			return CharacterInput::CreateObject(inputDef, *this, pNewInputComp);
-		case InputDef::INPUT_TYPE_FREE_CAMERA:
-			return FreeCameraInput::CreateObject(inputDef, *this, pNewInputComp);
-		case InputDef::INPUT_TYPE_GENERIC_MOUSE:
-			return GenericMouseInput::CreateObject(inputDef, *this, pNewInputComp);
-		default:
-			FWGLOG_ERROR(wxT("Unknown input component type"), m_spLogger);
-			return FWG_E_INVALID_PARAMETER_ERROR;
-			break;
-	}
-	
-	return FWG_NO_ERROR;
-}
-
 GameErrorCode GameInputSystem::RegisterCallback(InputMouseCallback* pMouseCallback)
 {
 	if(pMouseCallback != nullptr)

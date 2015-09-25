@@ -9,7 +9,7 @@ class GameInputSystem;
 
 class CharacterInput : public InputComponent {
 private:
-	GameInputSystem *m_pInputSystem;
+	
 public:
 	enum StateFlags {
 		INPUT_ACTION_NONE =						0 ,
@@ -29,7 +29,7 @@ public:
 public:
 	CharacterInput();
 
-	GameErrorCode Initialize( GameInputSystem *pInputSystem );
+	
 
 	GameErrorCode Create( const InputDef &inputDef);
 
