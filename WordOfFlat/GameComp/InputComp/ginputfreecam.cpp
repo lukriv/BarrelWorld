@@ -95,3 +95,14 @@ FreeCameraInput::~FreeCameraInput()
 {
 	
 }
+
+GameErrorCode FreeCameraInput::CreateObject(GameInputSystem* pInputSystem, FreeCameraInput &*pNewComponent)
+{
+	RefObjSmPtr<FreeCameraInput> spInputComp;
+	FWG_RETURN_FAIL(GameNewChecked(spInputComp.OutRef()));
+	FWG_RETURN_FAIL(spInputComp->Initialize(m_pInputSystem));
+
+	pNewComponent = spInputComp.Detach();
+	
+	return FWG_NO_ERROR;	
+}

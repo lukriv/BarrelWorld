@@ -80,11 +80,9 @@
     </VirtualDirectory>
     <VirtualDirectory Name="inputSystem">
       <VirtualDirectory Name="include">
-        <File Name="InputComp/ginputcomp.h"/>
         <File Name="InputComp/ginputsystem.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="src">
-        <File Name="InputComp/ginputcomp.cpp"/>
         <File Name="InputComp/ginputsystem.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
@@ -225,10 +223,15 @@
   <Dependencies Name="Release"/>
   <VirtualDirectory Name="components">
     <VirtualDirectory Name="logicfreecam">
-      <File Name="LogicComp/glogicfreecam.h"/>
-      <File Name="LogicComp/glogicfreecam.cpp"/>
-      <File Name="LogicComp/glogicfreecammgr.h"/>
-      <File Name="LogicComp/glogicfreecammgr.cpp"/>
+      <VirtualDirectory Name="include">
+        <File Name="LogicComp/glogicfreecam.h"/>
+        <File Name="LogicComp/glogicfreecammgr.h"/>
+        <File Name="LogicComp/glogicsimplemove.h"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="src">
+        <File Name="LogicComp/glogicfreecam.cpp"/>
+        <File Name="LogicComp/glogicfreecammgr.cpp"/>
+      </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="transform">
       <File Name="TransformComp/gtranscmgr.h"/>
@@ -236,20 +239,19 @@
       <File Name="TransformComp/gtranscmgr.cpp"/>
       <File Name="TransformComp/gtranscomp.cpp"/>
     </VirtualDirectory>
-    <VirtualDirectory Name="inputfreecam">
-      <File Name="InputComp/ginputfreecam.h"/>
-      <File Name="InputComp/ginputfreecam.cpp"/>
-      <File Name="InputComp/ginputfreecammgr.h"/>
-      <File Name="InputComp/ginputfreecammgr.cpp"/>
-    </VirtualDirectory>
-    <VirtualDirectory Name="inputcharacter">
-      <File Name="InputComp/ginputcharmgr.h"/>
-      <File Name="InputComp/ginputcharmgr.cpp"/>
-      <File Name="InputComp/ginputchar.h"/>
-      <File Name="InputComp/ginputchar.cpp"/>
-    </VirtualDirectory>
-    <VirtualDirectory Name="logicsimplemove">
-      <File Name="LogicComp/glogicsimplemove.h"/>
+    <VirtualDirectory Name="inputcomponent">
+      <VirtualDirectory Name="include">
+        <File Name="InputComp/ginputcomp.h"/>
+        <File Name="InputComp/ginputchar.h"/>
+        <File Name="InputComp/ginputcompmgr.h"/>
+        <File Name="InputComp/ginputfreecam.h"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="src">
+        <File Name="InputComp/ginputcomp.cpp"/>
+        <File Name="InputComp/ginputchar.cpp"/>
+        <File Name="InputComp/ginputcompmgr.cpp"/>
+        <File Name="InputComp/ginputfreecam.cpp"/>
+      </VirtualDirectory>
     </VirtualDirectory>
   </VirtualDirectory>
 </CodeLite_Project>

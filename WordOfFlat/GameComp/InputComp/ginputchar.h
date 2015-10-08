@@ -62,6 +62,9 @@ public:
 	{
 		SetState(move, INPUT_ACTION_BACKWARD);
 	}
+	
+public:	
+	static GameErrorCode CreateObject(GameInputSystem *pInputSystem, CharacterInput &*pNewComponent);
 };
 
 

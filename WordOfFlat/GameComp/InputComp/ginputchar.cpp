@@ -82,3 +82,13 @@ GameErrorCode CharacterInput::Create(const InputDef& inputDef)
 	return FWG_NO_ERROR;
 }
 
+
+GameErrorCode CharacterInput::CreateObject(GameInputSystem* pInputSystem, CharacterInput &*pNewComponent)
+{
+	RefObjSmPtr<CharacterInput> spInputComp;
+	FWG_RETURN_FAIL(GameNewChecked(spInputComp.OutRef()));
+	FWG_RETURN_FAIL(spInputComp->Initialize(m_pInputSystem));
+	pInputSystem = spInputComp.Detach();
+	
+	return FWG_NO_ERROR;
+}
