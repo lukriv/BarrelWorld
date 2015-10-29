@@ -1,4 +1,4 @@
-#include "grendermoveable.h"
+#include "grenderposition.h"
 #include "grendercmgr.h"
 #include <OGRE/OgreSceneManager.h>
 

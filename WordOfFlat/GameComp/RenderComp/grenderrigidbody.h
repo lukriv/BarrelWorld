@@ -2,7 +2,7 @@
 #define __GAME_RENDER_RIGID_BODY_H__
 
 #include "grendercomp.h"
-#include "grendermoveable.h"
+#include "grenderposition.h"
 
 /**
  * @class RenderRigidBody

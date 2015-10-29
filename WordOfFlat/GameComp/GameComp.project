@@ -45,7 +45,6 @@
         <File Name="RenderComp/grenderTerrDec.h"/>
         <File Name="RenderComp/grenderrigidbody.h"/>
         <File Name="RenderComp/grendercamera.h"/>
-        <File Name="RenderComp/grendermoveable.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="src">
         <File Name="RenderComp/grendercomp.cpp"/>
@@ -54,7 +53,6 @@
         <File Name="RenderComp/grenderTerrDec.cpp"/>
         <File Name="RenderComp/grenderrigidbody.cpp"/>
         <File Name="RenderComp/grendercamera.cpp"/>
-        <File Name="RenderComp/grendermoveable.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="physSystem">
@@ -251,6 +249,14 @@
         <File Name="InputComp/ginputchar.cpp"/>
         <File Name="InputComp/ginputcompmgr.cpp"/>
         <File Name="InputComp/ginputfreecam.cpp"/>
+      </VirtualDirectory>
+    </VirtualDirectory>
+    <VirtualDirectory Name="renderposition">
+      <VirtualDirectory Name="include">
+        <File Name="RenderComp/grenderposition.h"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="src">
+        <File Name="RenderComp/grenderposition.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
   </VirtualDirectory>

@@ -1,7 +1,7 @@
 #include "grendercamera.h"
 
 #include "grendercmgr.h"
-#include "grendermoveable.h"
+#include "grenderposition.h"
 #include <wx/xml/xml.h>
 #include <wx/scopedptr.h>
 #include <GameXmlDefinitions/gxmldefs.h>
