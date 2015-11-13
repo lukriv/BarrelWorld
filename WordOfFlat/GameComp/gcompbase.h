@@ -55,6 +55,10 @@ public:
 	
 	virtual GameErrorCode ReceiveMessage(TaskMessage &msg) = 0;
 	
+	virtual GameErrorCode Load(wxXmlNode *pNode) = 0;
+	virtual GameErrorCode Store(wxXmlNode *pParentNode) = 0;
+
+	
 };
 
 

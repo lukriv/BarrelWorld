@@ -1,17 +1,17 @@
 #include "glogiccmgr.h"
 
-#include "glogiccomp.h"
+#include "glogicbase.h"
 #include "../gcompmgr.h"
 
-LogicCompManager::LogicCompManager(GameLogger *pLogger) : m_spLogger(pLogger)
+LogicSystem::LogicSystem(GameLogger *pLogger) : m_spLogger(pLogger)
 												, m_pComponentManager(nullptr)
 {
 }
 
-LogicCompManager::~LogicCompManager()
+LogicSystem::~LogicSystem()
 {}
 
-GameErrorCode LogicCompManager::AddLogicComp(LogicComponentBase* pLogicComp)
+GameErrorCode LogicSystem::AddLogicComp(LogicBase* pLogicComp)
 {
 	wxCriticalSectionLocker lock( m_lockMgr );
 	FWG_RETURN_FAIL(m_logicCompList.Insert(pLogicComp));
@@ -19,7 +19,7 @@ GameErrorCode LogicCompManager::AddLogicComp(LogicComponentBase* pLogicComp)
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode LogicCompManager::ProcessLogicStep()
+GameErrorCode LogicSystem::ProcessLogicStep()
 {
 	GameErrorCode result = FWG_NO_ERROR;
 	wxCriticalSectionLocker lock(m_lockMgr);
@@ -34,7 +34,7 @@ GameErrorCode LogicCompManager::ProcessLogicStep()
 	return FWG_NO_ERROR;
 }
 
-void LogicCompManager::RemoveLogicComp(LogicComponentBase* pLogicComp)
+void LogicSystem::RemoveLogicComp(LogicBase* pLogicComp)
 {
 	pLogicComp->SetOwnerManager(nullptr);
 	
@@ -42,7 +42,7 @@ void LogicCompManager::RemoveLogicComp(LogicComponentBase* pLogicComp)
 	m_logicCompList.Remove(pLogicComp);
 }
 
-GameErrorCode LogicCompManager::Initialize()
+GameErrorCode LogicSystem::Initialize()
 {
 	
 	return FWG_NO_ERROR;

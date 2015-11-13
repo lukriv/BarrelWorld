@@ -7,37 +7,30 @@
 #include <GameXmlDefinitions/gxmldefs.h>
 #include <GameXmlDefinitions/gxmlutils.h>
 
-RenderCamera::RenderCamera(RenderCompManager* pCompManager) : RenderComponent(GAME_COMP_RENDER_CAMERA, pCompManager)
+RenderCamera::RenderCamera(RenderCompManager* pCompManager) : RenderObject(pCompManager)
 											, m_pCamera(nullptr)
 {
 }
 
 RenderCamera::~RenderCamera()
 {
-	if(m_pCamera)
-	{
-		m_pOwnerManager->GetOgreSceneManager()->destroyCamera(m_pCamera);
-		m_pCamera = nullptr;
-	}
-}
-
-GameErrorCode RenderCamera::Initialize(RenderMoveable* pRenderMoveable)
-{
-    m_spMoveable = pRenderMoveable;
-    if((m_spMoveable.IsEmpty()||pRenderMoveable->GetSceneNode() == nullptr)) 
-	{
-		// transform component cannot be null - add transform component to entity at first
-		m_spMoveable.Release();
-		return FWG_E_INVALID_PARAMETER_ERROR;
-    }
-
-	return FWG_NO_ERROR;
+	Destroy();
 }
 
 GameErrorCode RenderCamera::Create(const wxString& cameraName)
 {
 	m_pCamera = m_pOwnerManager->GetOgreSceneManager()->createCamera(cameraName.ToStdString());
 	return FWG_NO_ERROR;
+}
+
+
+void RenderCamera::Destroy()
+{
+	if(m_pCamera)
+	{
+		m_pOwnerManager->GetOgreSceneManager()->destroyCamera(m_pCamera);
+		m_pCamera = nullptr;
+	}
 }
 
 Ogre::Camera* RenderCamera::GetOgreCamera()
@@ -51,7 +44,7 @@ GameErrorCode RenderCamera::Load(wxXmlNode* pNode)
 {
 	// todo: refactor this loader
 	
-	if(m_spMoveable.IsEmpty())
+	if(m_spPosition.IsEmpty())
 	{
 		FWGLOG_ERROR(wxT("Object is not initialized"), m_pOwnerManager->GetLogger());
 		return FWG_E_OBJECT_NOT_INITIALIZED_ERROR;
@@ -82,7 +75,7 @@ GameErrorCode RenderCamera::Load(wxXmlNode* pNode)
     m_pCamera = m_pOwnerManager->GetOgreSceneManager()->createCamera(name.ToStdString());
     
 	// attach camera to the node
-	m_spMoveable->GetSceneNode()->attachObject(m_pCamera);
+	m_spPosition->GetSceneNode()->attachObject(m_pCamera);
 
  
     wxXmlNode *pElement = pNode->GetChildren();
@@ -221,5 +214,4 @@ GameErrorCode RenderCamera::Store(wxXmlNode* pParentNode)
 	return FWG_NO_ERROR;	
 	
 }
-
 

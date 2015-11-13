@@ -2,11 +2,11 @@
 #define __GAME_LOGIC_MANUAL_TEST_H__
 
  // Base class: LogicComponentBase
-#include "glogiccomp.h"
+#include "glogicbase.h"
 #include "../transformComp/gtranscomp.h"
 #include "../inputComp/ginputcomp.h"
 
-class LogicManualTest : public LogicComponentBase
+class LogicManualTest : public LogicBase
 {
 	RefObjSmPtr<TransformComponent> m_spTransform;
 	RefObjSmPtr<InputComponent> m_spInput;

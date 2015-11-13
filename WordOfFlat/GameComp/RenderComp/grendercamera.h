@@ -1,19 +1,18 @@
 #ifndef __GAME_RENDER_CAMERA_H__
 #define __GAME_RENDER_CAMERA_H__
 
-#include "grendercomp.h"
+#include "grendercompbase.h"
 
-class RenderMoveable;
+class RenderPosition;
 
 /**
  * \brief Render generic object reads generic dotScene format and display it
  *
  * This object can handle only transforms messages. Due to generic content it does not know what is inside.
  */
-class RenderCamera : public RenderComponent
+class RenderCamera : public RenderObject
 {
 
-    RefObjSmPtr<RenderMoveable> m_spMoveable;
 	Ogre::Camera *m_pCamera;
 	
 public:
@@ -21,9 +20,9 @@ public:
     RenderCamera(RenderCompManager* pCompManager);
     ~RenderCamera();
 
-    GameErrorCode Initialize(RenderMoveable* pRenderMoveable);
-	
 	GameErrorCode Create(const wxString& cameraName);
+	
+	void Destroy();
 	
 	Ogre::Camera* GetOgreCamera();
 	

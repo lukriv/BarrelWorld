@@ -2,11 +2,11 @@
 #define __GAME_RENDER_TERRAIN_DECAL_H__
 
 
-#include "grendercomp.h"
+#include "grendercompbase.h"
 
 
 
-class RenderTerrainDecal : public RenderComponent
+class RenderTerrainDecal : public RenderComponentBase
 {
 	Ogre::ManualObject *m_pManObject;
 	Ogre::RaySceneQuery *m_pRayQuery;

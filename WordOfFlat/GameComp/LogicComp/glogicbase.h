@@ -7,7 +7,7 @@
 #include "../gcompbase.h"
 
 class GameEntity;
-class LogicCompManager;
+class LogicSystem;
 
 /*!
  * \class GameEntity
@@ -16,21 +16,20 @@ class LogicCompManager;
  * \file gentityobj.h
  * \brief Geometric entity with state and transform
  */
-class LogicComponentBase : public ComponentBase
+class LogicBase : public ComponentBase
 {
 protected:
-	LogicCompManager *m_pOwnerManager;
+	LogicSystem *m_pOwnerManager;
 	GameEntity *m_pParent;
 
 public:
 
-	// Render component can be created and destroyed only by render component manager
-	LogicComponentBase(GameComponentType logicCompType) : ComponentBase(logicCompType)
+	LogicBase(GameComponentType logicCompType) : ComponentBase(logicCompType)
 						, m_pOwnerManager(nullptr)
 						, m_pParent(nullptr) {}
-	virtual ~LogicComponentBase();
+	virtual ~LogicBase();
 
-	inline void SetOwnerManager(LogicCompManager *pOwner) {
+	inline void SetOwnerManager(LogicSystem *pOwner) {
 		m_pOwnerManager = pOwner;
 	}
 

@@ -28,31 +28,19 @@
   </Plugins>
   <Description/>
   <Dependencies/>
-  <VirtualDirectory Name="include">
-    <File Name="gentitymgr.h"/>
-    <File Name="gentity.h"/>
-    <File Name="gcompmgr.h"/>
-    <File Name="gcompbase.h"/>
-    <File Name="gcompdefs.h"/>
-    <File Name="gmanagerbase.h"/>
-  </VirtualDirectory>
   <VirtualDirectory Name="systems">
     <VirtualDirectory Name="renderSystem">
       <VirtualDirectory Name="include">
-        <File Name="RenderComp/grendercomp.h"/>
         <File Name="RenderComp/grendercmgr.h"/>
         <File Name="RenderComp/grenderdotsceneloader.h"/>
         <File Name="RenderComp/grenderTerrDec.h"/>
-        <File Name="RenderComp/grenderrigidbody.h"/>
-        <File Name="RenderComp/grendercamera.h"/>
+        <File Name="RenderComp/grendercompbase.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="src">
         <File Name="RenderComp/grendercomp.cpp"/>
         <File Name="RenderComp/grendercmgr.cpp"/>
         <File Name="RenderComp/grenderdotsceneloader.cpp"/>
         <File Name="RenderComp/grenderTerrDec.cpp"/>
-        <File Name="RenderComp/grenderrigidbody.cpp"/>
-        <File Name="RenderComp/grendercamera.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="physSystem">
@@ -72,10 +60,6 @@
         <File Name="PhysicsComp/gphysshapeload.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
-    <VirtualDirectory Name="transformComp">
-      <VirtualDirectory Name="include"/>
-      <VirtualDirectory Name="src"/>
-    </VirtualDirectory>
     <VirtualDirectory Name="inputSystem">
       <VirtualDirectory Name="include">
         <File Name="InputComp/ginputsystem.h"/>
@@ -86,16 +70,16 @@
     </VirtualDirectory>
     <VirtualDirectory Name="logicSystem">
       <VirtualDirectory Name="include">
-        <File Name="LogicComp/glogiccomp.h"/>
         <File Name="LogicComp/glogiccmgr.h"/>
         <File Name="LogicComp/glogicman.h"/>
         <File Name="LogicComp/glogicterrdecal.h"/>
+        <File Name="LogicComp/glogicbase.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="src">
-        <File Name="LogicComp/glogiccomp.cpp"/>
         <File Name="LogicComp/glogiccmgr.cpp"/>
         <File Name="LogicComp/glogicman.cpp"/>
         <File Name="LogicComp/glogicterrdecal.cpp"/>
+        <File Name="LogicComp/glogicbase.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="menuSystem">
@@ -118,11 +102,6 @@
         <File Name="TerrainComp/gterrainmgr.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
-  </VirtualDirectory>
-  <VirtualDirectory Name="src">
-    <File Name="gentitymgr.cpp"/>
-    <File Name="gentity.cpp"/>
-    <File Name="gcompmgr.cpp"/>
   </VirtualDirectory>
   <Settings Type="Static Library">
     <GlobalSettings>
@@ -258,6 +237,33 @@
       <VirtualDirectory Name="src">
         <File Name="RenderComp/grenderposition.cpp"/>
       </VirtualDirectory>
+    </VirtualDirectory>
+    <VirtualDirectory Name="renderobject">
+      <VirtualDirectory Name="include">
+        <File Name="RenderComp/grenderrigidbody.h"/>
+        <File Name="RenderComp/grenderobject.h"/>
+        <File Name="RenderComp/grendercamera.h"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="src">
+        <File Name="RenderComp/grenderrigidbody.cpp"/>
+        <File Name="RenderComp/grenderobject.cpp"/>
+        <File Name="RenderComp/grendercamera.cpp"/>
+      </VirtualDirectory>
+    </VirtualDirectory>
+  </VirtualDirectory>
+  <VirtualDirectory Name="common">
+    <VirtualDirectory Name="include">
+      <File Name="gcompbase.h"/>
+      <File Name="gcompdefs.h"/>
+      <File Name="gentity.h"/>
+      <File Name="gcompmgr.h"/>
+      <File Name="gentitymgr.h"/>
+      <File Name="gmanagerbase.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="src">
+      <File Name="gcompmgr.cpp"/>
+      <File Name="gentity.cpp"/>
+      <File Name="gentitymgr.cpp"/>
     </VirtualDirectory>
   </VirtualDirectory>
 </CodeLite_Project>

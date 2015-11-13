@@ -25,7 +25,7 @@ GameErrorCode LogicFreeCamera::CreateComponent(TransformComponent* pTransform, F
 	return FWG_NO_ERROR;
 }
 
-LogicFreeCamera::LogicFreeCamera() : LogicComponentBase(GAME_COMP_LOGIC_FREE_CAMERA), m_angleX(0.0f), m_angleY(0.0f)
+LogicFreeCamera::LogicFreeCamera() : LogicBase(GAME_COMP_LOGIC_FREE_CAMERA), m_angleX(0.0f), m_angleY(0.0f)
 {
 }
 

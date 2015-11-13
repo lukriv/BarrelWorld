@@ -5,7 +5,7 @@
 #include "grendercmgr.h"
 
 RenderTerrainDecal::RenderTerrainDecal(RenderCompManager *pRenderMgr) : 
-							RenderComponent(GAME_COMP_RENDER_TERRAIN_DECAL, pRenderMgr)
+							RenderComponentBase(GAME_COMP_RENDER_TERRAIN_DECAL, pRenderMgr)
 							, m_pManObject(nullptr)
 							, m_pRayQuery(nullptr)
 {

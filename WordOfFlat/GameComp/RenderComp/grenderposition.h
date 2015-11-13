@@ -1,10 +1,10 @@
 #ifndef __GAME_RENDER_MOVEABLE_H__
 #define __GAME_RENDER_MOVEABLE_H__
 
-#include "grendercomp.h"
+#include "grendercompbase.h"
 
 
-class RenderMoveable : public RenderComponent
+class RenderPosition : public RenderComponentBase
 {
 protected:
     RefObjSmPtr<TransformComponent> m_spTransform;
@@ -12,8 +12,8 @@ protected:
 
 public:
 
-    RenderMoveable(RenderCompManager *pCompMgr);
-    ~RenderMoveable();
+    RenderPosition(RenderCompManager *pCompMgr);
+    ~RenderPosition();
 
     GameErrorCode Initialize(TransformComponent* pTransform);
 

@@ -2,16 +2,16 @@
 #include "grendercmgr.h"
 #include <OGRE/OgreSceneManager.h>
 
-RenderMoveable::RenderMoveable(RenderCompManager *pCompMgr) : RenderComponent(GAME_COMP_RENDER_MOVEABLE, pCompMgr)
+RenderPosition::RenderPosition(RenderCompManager *pCompMgr) : RenderComponentBase(GAME_COMP_RENDER_MOVEABLE, pCompMgr)
 {
 }
 
-RenderMoveable::~RenderMoveable()
+RenderPosition::~RenderPosition()
 {
 	Clear();
 }
 
-GameErrorCode RenderMoveable::Initialize(TransformComponent* pTransform)
+GameErrorCode RenderPosition::Initialize(TransformComponent* pTransform)
 {
 	if(m_pSceneNode != nullptr) {
 		// component was already initialized
@@ -38,7 +38,7 @@ GameErrorCode RenderMoveable::Initialize(TransformComponent* pTransform)
 	return FWG_NO_ERROR;
 }
 
-void RenderMoveable::ProcessUpdate()
+void RenderPosition::ProcessUpdate()
 {
 	wxCriticalSectionLocker lock(m_renderLock);
 
@@ -65,7 +65,7 @@ void RenderMoveable::ProcessUpdate()
     m_alreadyInUpdateQueue = false;
 }
 
-void RenderMoveable::Clear()
+void RenderPosition::Clear()
 {
 	if(m_pSceneNode)
 	{

@@ -2,11 +2,11 @@
 #define __GAME_SIMPLE_MOVE_LOGIC_H__
 
  // Base class: LogicComponentBase
-#include "glogiccomp.h"
+#include "glogicbase.h"
 #include "../transformComp/gtranscomp.h"
 #include "../inputComp/ginputcomp.h"
 
-class LogicSimpleMove : public LogicComponentBase
+class LogicSimpleMove : public LogicBase
 {
 	RefObjSmPtr<TransformComponent> m_spTransform;
 	RefObjSmPtr<FreeCameraInput> m_spInput;

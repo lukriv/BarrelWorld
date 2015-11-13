@@ -1,18 +1,18 @@
 #include "glogicbase.h"
 #include "glogiccmgr.h"
 
-GameErrorCode LogicComponentBase::PhysicsProcess()
+GameErrorCode LogicBase::PhysicsProcess()
 {
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode LogicComponentBase::ProcessLogic()
+GameErrorCode LogicBase::ProcessLogic()
 {
 	FWG_RETURN_FAIL(UserLogic());
 	return FWG_NO_ERROR;
 }
 
-LogicComponentBase::~LogicComponentBase()
+LogicBase::~LogicBase()
 {
 	if(m_pOwnerManager != nullptr)
 	{

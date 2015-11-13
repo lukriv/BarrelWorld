@@ -5,7 +5,7 @@
 #include <OGRE/OgreEntity.h>
 #include <GameSystem/new.h>
 #include <GameComp/gentity.h>
-#include "grendercomp.h"
+#include "grendercompbase.h"
 
 static const char* MAIN_GAME_SCENE_MANAGER = "MainSceneManager";
 
@@ -144,7 +144,7 @@ Ogre::Camera* RenderCompManager::GetCamera(const wxString& cameraName)
 	
 }
 
-GameErrorCode RenderCompManager::AddToUpdateQueue(RenderComponent* pRenderComp)
+GameErrorCode RenderCompManager::AddToUpdateQueue(RenderComponentBase* pRenderComp)
 {
 	wxCriticalSectionLocker lock(m_mgrLock);
 	m_updateQueue[m_actualQueue].push_back(pRenderComp);

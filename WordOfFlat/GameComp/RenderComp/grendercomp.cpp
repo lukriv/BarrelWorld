@@ -1,14 +1,14 @@
-#include "grendercomp.h"
+#include "grendercompbase.h"
 
 #include <OGRE/OgreNode.h>
 #include "grendercmgr.h"
 #include "../gentity.h"
 #include <GameComp/TransformComp/gtranscomp.h>
 
-RenderComponent::~RenderComponent()
+RenderComponentBase::~RenderComponentBase()
 {}
 
-GameErrorCode RenderComponent::ReceiveMessage(TaskMessage& msg)
+GameErrorCode RenderComponentBase::ReceiveMessage(TaskMessage& msg)
 {
 	GameErrorCode result = FWG_NO_ERROR;
 	wxCriticalSectionLocker lock(m_renderLock);

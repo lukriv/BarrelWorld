@@ -3,13 +3,13 @@
 
  // Base class: LogicComponentBase
 #include <bullet/LinearMath/btScalar.h>
-#include "glogiccomp.h"
+#include "glogicbase.h"
 #include "../transformComp/gtranscomp.h"
 #include "../inputComp/ginputcomp.h"
 
 
 
-class LogicTerrainDecal : public LogicComponentBase
+class LogicTerrainDecal : public LogicBase
 {
 	RefObjSmPtr<TransformComponent> m_spTransform;
 	RefObjSmPtr<InputComponent> m_spInput;

@@ -5,7 +5,7 @@
 #include <OGRE/OgreSceneNode.h>
 #include <OGRE/OgreSceneManager.h>
 #include <GameSystem/refobjectsmptr.h>
-#include <GameComp/RenderComp/grendercomp.h>
+#include <GameComp/RenderComp/grendercompbase.h>
 #include <GameComp/RenderComp/grenderobj.h>
 #include <GameComp/InputComp/ginputcomp.h>
 #include <GameComp/LogicComp/glogicman.h>

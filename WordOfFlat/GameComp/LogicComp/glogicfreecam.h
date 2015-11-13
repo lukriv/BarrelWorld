@@ -2,12 +2,12 @@
 #define __GAME_FREE_CAMERA_LOGIC_TEST_H__
 
  // Base class: LogicComponentBase
-#include "glogiccomp.h"
+#include "glogicbase.h"
 #include <bullet/LinearMath/btScalar.h>
 #include "../transformComp/gtranscomp.h"
 #include "../inputComp/ginputfreecam.h"
 
-class LogicFreeCamera : public LogicComponentBase
+class LogicFreeCamera : public LogicBase
 {
 	RefObjSmPtr<TransformComponent> m_spTransform;
 	RefObjSmPtr<FreeCameraInput> m_spInput;

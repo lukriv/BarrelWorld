@@ -1,7 +1,7 @@
 #include "gmmstate.h"
 #include "GameXmlDefinitions/gxmlloader.h"
 #include "GameComp/RenderComp/grenderobj.h"
-#include "GameComp/RenderComp/grendercomp.h"
+#include "GameComp/RenderComp/grendercompbase.h"
 #include <GameComp/PhysicsComp/gphysdbgdraw.h>
 
 static const float LogicStepTime = 1.0f / 60.0f;

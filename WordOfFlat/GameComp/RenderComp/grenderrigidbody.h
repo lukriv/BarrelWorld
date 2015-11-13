@@ -1,7 +1,7 @@
 #ifndef __GAME_RENDER_RIGID_BODY_H__
 #define __GAME_RENDER_RIGID_BODY_H__
 
-#include "grendercomp.h"
+#include "grendercompbase.h"
 #include "grenderposition.h"
 
 /**
@@ -15,10 +15,9 @@
  * Can be combined with physics components
  *
  */
-class RenderRigidBody : public RenderComponent
+class RenderRigidBody : public RenderObject
 {
 
-    RefObjSmPtr<RenderMoveable> m_spMoveable;
 	Ogre::Entity *m_pEntity;
 	
 public:
@@ -26,11 +25,9 @@ public:
     RenderRigidBody(RenderCompManager* pCompManager);
     ~RenderRigidBody();
 
-    GameErrorCode Initialize(RenderMoveable* pRenderMoveable);
-	
 	GameErrorCode Create(const wxString& meshName, const wxString& materialName );
 	
-	void Clear();	
+	void Destroy();	
 	
     GameErrorCode Load(wxXmlNode* XMLNode);
     GameErrorCode Store(wxXmlNode* ParentNode);

@@ -16,14 +16,14 @@
 static const wxChar* FWG_UNUSED(MAIN_CAMERA_NAME) = wxT("MainCamera");
 static const wxChar* FWG_UNUSED(SECONDARY_CAMERA_NAME) = wxT("SecondCamera");
 
-class RenderComponent;
+class RenderComponentBase;
 class RenderCamera;
 class GameEntity;
 
 class RenderCompManager
 {
 private:
-	typedef wxVector< RenderComponent* > TUpdateQueue;
+	typedef wxVector< RenderComponentBase* > TUpdateQueue;
 private:
 	GameLoggerPtr m_spLogger;
 	// ogre base
@@ -93,7 +93,7 @@ public:
 	 * \brief Add component to update queue
 	 * \param pRenderComp Pointer to render component
 	 */
-	GameErrorCode AddToUpdateQueue(RenderComponent *pRenderComp);
+	GameErrorCode AddToUpdateQueue(RenderComponentBase *pRenderComp);
 	
 	/**
 	 * \brief Updates all components in update queue

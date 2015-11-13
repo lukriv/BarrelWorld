@@ -22,7 +22,7 @@ class GameEntity;
  * \file gentityobj.h
  * \brief Geometric entity with state and transform
  */
-class RenderComponent : public ComponentBase, public Ogre::Any {
+class RenderComponentBase : public ComponentBase, public Ogre::Any {
 protected:
 	typedef wxVector<TaskMessage> TMessageList;
 protected:
@@ -31,16 +31,14 @@ protected:
 	
 	TMessageList m_receivedMessages;
 	bool m_alreadyInUpdateQueue;
-protected:
-	GameErrorCode ConnectRenderComponent(Ogre::MovableObject* pObject);
-	void DisconnectRenderComponent(Ogre::MovableObject* pObject);
+
 public:
 
 	// Render component can be created and destroyed only by render component manager
-	RenderComponent(GameComponentType compType, RenderCompManager* pCompManager) : ComponentBase(compType)
+	RenderComponentBase(GameComponentType compType, RenderCompManager* pCompManager) : ComponentBase(compType)
 													, m_pOwnerManager(pCompManager)
 													, m_alreadyInUpdateQueue(false){}
-	~RenderComponent();
+	~RenderComponentBase();
 	
 	/**
 	 * \brief Process update if it is necessary

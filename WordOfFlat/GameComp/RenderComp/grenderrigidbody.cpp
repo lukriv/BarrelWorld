@@ -9,27 +9,14 @@
 #include <GameXmlDefinitions/gxmlutils.h>
 #include "grendercmgr.h"
 
-RenderRigidBody::RenderRigidBody(RenderCompManager* pCompManager) : RenderComponent(GAME_COMP_RENDER_RIGID_BODY, pCompManager)
+RenderRigidBody::RenderRigidBody(RenderCompManager* pCompManager) : RenderObject(pCompManager)
 																, m_pEntity(nullptr)
 {
 }
 
 RenderRigidBody::~RenderRigidBody()
 {
-	Clear();
-}
-
-GameErrorCode RenderRigidBody::Initialize(RenderMoveable* pRenderMoveable)
-{
-    m_spMoveable = pRenderMoveable;
-    if(m_spMoveable.IsEmpty()||(pRenderMoveable->GetSceneNode() == nullptr)) 
-	{
-		// transform component cannot be null - add transform component to entity at first
-		m_spMoveable.Release();
-		return FWG_E_INVALID_PARAMETER_ERROR;
-    }
-
-	return FWG_NO_ERROR;
+	Destroy();
 }
 
 void RenderRigidBody::ProcessUpdate()
@@ -74,14 +61,14 @@ GameErrorCode RenderRigidBody::Create(const wxString& meshName, const wxString& 
 								, m_pOwnerManager->GetLogger());
 	}
 	
-	m_spMoveable->GetSceneNode()->attachObject(m_pEntity);
+	m_spPosition->GetSceneNode()->attachObject(m_pEntity);
 	
 	return FWG_NO_ERROR;
 }
 
 GameErrorCode RenderRigidBody::Load(wxXmlNode* pNode)
 {
-	if(m_spMoveable.IsEmpty())
+	if(m_spPosition.IsEmpty())
 	{
 		FWGLOG_ERROR(wxT("Object is not initialized"), m_pOwnerManager->GetLogger());
 		return FWG_E_OBJECT_NOT_INITIALIZED_ERROR;
@@ -174,11 +161,11 @@ GameErrorCode RenderRigidBody::Store(wxXmlNode* pParentNode)
 }
 
 
-void RenderRigidBody::Clear()
+void RenderRigidBody::Destroy()
 {
 	if(m_pEntity != nullptr)
 	{
-		m_spMoveable->GetSceneNode()->detachObject(m_pEntity);
+		m_spPosition->GetSceneNode()->detachObject(m_pEntity);
 		m_pOwnerManager->GetOgreSceneManager()->destroyEntity(m_pEntity);
 		m_pEntity = nullptr;
 	}
