@@ -1,5 +1,5 @@
 #include "glogicfreecam.h"
-#include "glogiccmgr.h"
+#include "glogicsystem.h"
 #include <GameComp/gentity.h>
 #include <GameComp/inputComp/ginputfreecam.h>
 #include <GameXmlDefinitions/gxmldefs.h>
@@ -84,7 +84,7 @@ GameErrorCode LogicFreeCamera::ProcessInput()
 	TaskMessage task(GAME_TASK_TRANSFORM_UPDATE);
 	if(FWG_FAILED(result = m_pParent->ReceiveMessage(task)))
 	{
-		FWGLOG_ERROR_FORMAT(wxT("Update component failed: 0x%08x"), m_pOwnerManager->GetLogger(), result, FWGLOG_ENDVAL);
+		FWGLOG_ERROR_FORMAT(wxT("Update component failed: 0x%08x"), m_pLogicSystem->GetLogger(), result, FWGLOG_ENDVAL);
 		return result;
 	}
 	

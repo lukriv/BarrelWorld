@@ -31,6 +31,7 @@ public:
 };
 
 class GameEntity; // forward declaration of GameEntity
+class wxXmlNode; // forward declaration
 
 class ComponentBase : public RefObjectImpl<IRefObject> {
 	GameComponentType m_compType;

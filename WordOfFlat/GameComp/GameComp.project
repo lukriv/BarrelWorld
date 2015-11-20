@@ -70,16 +70,14 @@
     </VirtualDirectory>
     <VirtualDirectory Name="logicSystem">
       <VirtualDirectory Name="include">
-        <File Name="LogicComp/glogiccmgr.h"/>
-        <File Name="LogicComp/glogicman.h"/>
         <File Name="LogicComp/glogicterrdecal.h"/>
         <File Name="LogicComp/glogicbase.h"/>
+        <File Name="LogicComp/glogicsystem.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="src">
-        <File Name="LogicComp/glogiccmgr.cpp"/>
-        <File Name="LogicComp/glogicman.cpp"/>
         <File Name="LogicComp/glogicterrdecal.cpp"/>
         <File Name="LogicComp/glogicbase.cpp"/>
+        <File Name="LogicComp/glogicsystem.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="menuSystem">
@@ -199,15 +197,17 @@
   <Dependencies Name="Debug"/>
   <Dependencies Name="Release"/>
   <VirtualDirectory Name="components">
-    <VirtualDirectory Name="logicfreecam">
+    <VirtualDirectory Name="moveable">
       <VirtualDirectory Name="include">
         <File Name="LogicComp/glogicfreecam.h"/>
-        <File Name="LogicComp/glogicfreecammgr.h"/>
-        <File Name="LogicComp/glogicsimplemove.h"/>
+        <File Name="LogicComp/glogicman.h"/>
+        <File Name="LogicComp/gmoveablemgr.h"/>
+        <File Name="LogicComp/gmoveable.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="src">
         <File Name="LogicComp/glogicfreecam.cpp"/>
-        <File Name="LogicComp/glogicfreecammgr.cpp"/>
+        <File Name="LogicComp/glogicman.cpp"/>
+        <File Name="LogicComp/gmoveablemgr.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="transform">
@@ -216,7 +216,7 @@
       <File Name="TransformComp/gtranscmgr.cpp"/>
       <File Name="TransformComp/gtranscomp.cpp"/>
     </VirtualDirectory>
-    <VirtualDirectory Name="inputcomponent">
+    <VirtualDirectory Name="input">
       <VirtualDirectory Name="include">
         <File Name="InputComp/ginputcomp.h"/>
         <File Name="InputComp/ginputchar.h"/>

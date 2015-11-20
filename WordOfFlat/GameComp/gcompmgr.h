@@ -9,7 +9,7 @@
 #include "InputComp/ginputsystem.h"
 #include "MenuComp/gmenumgr.h"
 #include "PhysicsComp/gphyscmgr.h"
-#include "LogicComp/glogiccmgr.h"
+#include "LogicComp/glogicsystem.h"
 #include "TerrainComp/gterrainmgr.h"
 
 

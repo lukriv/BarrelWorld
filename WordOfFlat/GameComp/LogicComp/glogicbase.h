@@ -16,32 +16,22 @@ class LogicSystem;
  * \file gentityobj.h
  * \brief Geometric entity with state and transform
  */
-class LogicBase : public ComponentBase
+class LogicBase
 {
 protected:
-	LogicSystem *m_pOwnerManager;
-	GameEntity *m_pParent;
+	LogicSystem *m_pLogicSystem;
 
 public:
 
-	LogicBase(GameComponentType logicCompType) : ComponentBase(logicCompType)
-						, m_pOwnerManager(nullptr)
-						, m_pParent(nullptr) {}
+	LogicBase(): m_pLogicSystem(nullptr) {}
 	virtual ~LogicBase();
 
-	inline void SetOwnerManager(LogicSystem *pOwner) {
-		m_pOwnerManager = pOwner;
+	inline void SetOwnerManager(LogicSystem *pLogicSystem) {
+		m_pLogicSystem = pLogicSystem;
 	}
 
-	inline GameEntity* GetParent() {
-		return m_pParent;
-	}
-
-	GameErrorCode ProcessLogic();
+	virtual GameErrorCode ProcessLogic() = 0;
 	
-protected:
-	GameErrorCode PhysicsProcess();
-
 };
 
 
