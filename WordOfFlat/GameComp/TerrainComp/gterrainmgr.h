@@ -8,7 +8,7 @@
 #include <GameSystem/refobjectsmptr.h>
 
 class RenderCompManager;
-class PhysicsCompManager;
+class PhysicsSystem;
 struct TerrainDef;
 struct TerrainPage;
 
@@ -49,7 +49,7 @@ private:
 	GameLoggerPtr m_spLogger;
 	
 	RenderCompManager *m_pRenderMgr;
-	PhysicsCompManager *m_pPhysicsMgr;
+	PhysicsSystem *m_pPhysicsMgr;
 	
 	
 	Ogre::TerrainGlobalOptions* m_globalTerrainOptions;
@@ -71,7 +71,7 @@ public:
 	 * @param pPhysMgr
 	 * @return 
 	 */
-	GameErrorCode Initialize(RenderCompManager *pRenderMgr, PhysicsCompManager *pPhysMgr);
+	GameErrorCode Initialize(RenderCompManager *pRenderMgr, PhysicsSystem *pPhysMgr);
 	
 	void Uninitialize();
 	

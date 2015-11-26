@@ -5,28 +5,23 @@
 #include <bullet/LinearMath/btScalar.h>
 #include <GameSystem/refobjectsmptr.h>
 
-class PhysicsCompManager;
+class PhysicsSystem;
 class btCollisionShape;
 class btRigidBody;
 class TransformComponent;
 class wxXmlNode;
 
-class PhysicsRigidBody : public ComponentBase
+class PhysicsRigidBody : public PhysicsBase 
 {
 protected:
-    PhysicsCompManager* m_pOwnerMgr;
+    
     btRigidBody* m_pRigidBody;
 	
-	RefObjSmPtr<TransformComponent> m_spTransform;
-
 public:
 
-    PhysicsRigidBody(PhysicsCompManager* pOwnerMgr);
+    PhysicsRigidBody(PhysicsSystem* pOwnerMgr);
     ~PhysicsRigidBody();
 	
-	GameErrorCode Initialize(TransformComponent *pTransform);
-	    
-
 	GameErrorCode Create(btScalar mass, btCollisionShape *pColShape);
 	
 	GameErrorCode Load(wxXmlNode* XMLNode);

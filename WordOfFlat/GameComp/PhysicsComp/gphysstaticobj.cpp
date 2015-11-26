@@ -7,12 +7,10 @@
 #include <GameXmlDefinitions/gxmlutils.h>
 
 #include "gphysshapeload.h"
-#include "gphyscmgr.h"
+#include "gphyssystem.h"
 #include "../transformComp/gtranscomp.h"
 
-PhysicsStaticObject::PhysicsStaticObject(PhysicsCompManager* pOwnerMgr) : ComponentBase(GAME_COMP_PHYSICS_STATIC_OBJECT)
-				, m_pOwnerMgr(pOwnerMgr)
-				, m_pColObject(nullptr)
+PhysicsStaticObject::PhysicsStaticObject(PhysicsSystem* pPhysSystem) : PhysicsBase(pPhysSystem), m_pColObject(nullptr)
 {}
 
 
@@ -23,23 +21,10 @@ PhysicsStaticObject::~PhysicsStaticObject()
 	if(m_pColObject)
 	{
 		m_pColObject->setUserPointer(nullptr);
-		m_pOwnerMgr->GetDynamicsWorld()->removeCollisionObject(m_pColObject);
+		m_pPhysSystem->GetDynamicsWorld()->removeCollisionObject(m_pColObject);
 		delete m_pColObject;
 		m_pColObject = nullptr;
 	}
-}
-
-
-GameErrorCode PhysicsStaticObject::Initialize(TransformComponent* pTransform)
-{
-	if (pTransform == nullptr)
-	{
-		return FWG_E_INVALID_PARAMETER_ERROR;
-	}
-	
-	m_spTransform = pTransform;
-	
-	return FWG_NO_ERROR;
 }
 
 
@@ -100,10 +85,10 @@ GameErrorCode PhysicsStaticObject::Load(wxXmlNode* pNode)
 	{
 		if(pChild->GetName() == GAME_TAG_COMP_PHYSICS_SHAPE)
 		{
-			PhysicsShapeLoader shapeLoader(m_pOwnerMgr->GetLogger());
+			PhysicsShapeLoader shapeLoader(m_pPhysSystem->GetLogger());
 			FWG_RETURN_FAIL(shapeLoader.LoadShape(pChild, pCollShape));
 		} else {
-			GameXmlUtils::ProcessUnknownTag(pChild, m_pOwnerMgr->GetLogger());
+			GameXmlUtils::ProcessUnknownTag(pChild, m_pPhysSystem->GetLogger());
 		}
 		pChild = pChild->GetNext();
 	}
@@ -127,12 +112,12 @@ GameErrorCode PhysicsStaticObject::Store(wxXmlNode* pParentNode)
 	
 	if(m_pColObject->getCollisionShape())
 	{
-		PhysicsShapeLoader shapeLoader(m_pOwnerMgr->GetLogger());
+		PhysicsShapeLoader shapeLoader(m_pPhysSystem->GetLogger());
 		
 		// store shape
 		if(FWG_FAILED(result = shapeLoader.StoreShape(pNewNode, m_pColObject->getCollisionShape())))
 		{
-			FWGLOG_ERROR_FORMAT(wxT("Store collision shape failed: 0x%08x"), m_pOwnerMgr->GetLogger(), result, FWGLOG_ENDVAL);
+			FWGLOG_ERROR_FORMAT(wxT("Store collision shape failed: 0x%08x"), m_pPhysSystem->GetLogger(), result, FWGLOG_ENDVAL);
 			return result;
 		}
 	}

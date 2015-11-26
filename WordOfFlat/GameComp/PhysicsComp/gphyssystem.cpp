@@ -1,9 +1,9 @@
-#include "gphyscmgr.h"
+#include "gphyssystem.h"
 #include <GameResHold/gdeftables.h>
 #include <GameComp/gentity.h>
 #include <GameComp/TransformComp/gtranscomp.h>
 
-btCollisionShape * PhysicsCompManager::CreateCollisionShape(PhysShapeDef &physShapeDef)
+btCollisionShape * PhysicsSystem::CreateCollisionShape(PhysShapeDef &physShapeDef)
 {
 	btCollisionShape *pColShape = nullptr;
 	switch(physShapeDef.m_shapeType)
@@ -23,7 +23,7 @@ btCollisionShape * PhysicsCompManager::CreateCollisionShape(PhysShapeDef &physSh
 	return pColShape;
 }
 
-PhysicsCompManager::PhysicsCompManager(GameLogger* pLogger) : m_pSolver(nullptr)
+PhysicsSystem::PhysicsSystem(GameLogger* pLogger) : m_pSolver(nullptr)
 									, m_pBroadphase(nullptr)
 									, m_pCollisionConfig(nullptr)
 									, m_pDispatcher(nullptr)
@@ -31,12 +31,12 @@ PhysicsCompManager::PhysicsCompManager(GameLogger* pLogger) : m_pSolver(nullptr)
 									, m_spLogger(pLogger){}
 
 
-PhysicsCompManager::~PhysicsCompManager()
+PhysicsSystem::~PhysicsSystem()
 {
 	Uninitialize();
 }
 
-GameErrorCode PhysicsCompManager::Initialize()
+GameErrorCode PhysicsSystem::Initialize()
 {
 	m_pSolver = new btSequentialImpulseConstraintSolver;
 	if(m_pSolver == nullptr)
@@ -80,7 +80,7 @@ GameErrorCode PhysicsCompManager::Initialize()
 }
 
 
-void PhysicsCompManager::Uninitialize()
+void PhysicsSystem::Uninitialize()
 {
 	if(m_pDynamicsWorld)
 	{
@@ -113,7 +113,7 @@ void PhysicsCompManager::Uninitialize()
 	}
 }
 
-GameErrorCode PhysicsCompManager::ProcessPhysics()
+GameErrorCode PhysicsSystem::ProcessPhysics()
 {
 	m_pDynamicsWorld->stepSimulation(btScalar(1.)/btScalar(60.));
 	return FWG_NO_ERROR;

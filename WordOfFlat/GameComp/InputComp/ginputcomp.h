@@ -11,22 +11,24 @@
 
 // forward declaration
 class wxXmlNode;
+struct InputDef;
 
 class ControlStruct
 {
 public:
-	enum MouseButtonState {
-		MOUSE_BUTTON_NONE 	= 0,
-		MOUSE_BUTTON_LEFT	= 1,
-		MOUSE_BUTTON_RIGHT 	= 2,
-		MOUSE_BUTTON_MIDDLE = 4,
-	};
+    enum MouseButtonState {
+	MOUSE_BUTTON_NONE = 0,
+	MOUSE_BUTTON_LEFT = 1,
+	MOUSE_BUTTON_RIGHT = 2,
+	MOUSE_BUTTON_MIDDLE = 4,
+    };
+
 private:
-    wxDword m_state; // control state vector
+    wxDword m_state;   // control state vector
     wxDword m_clicked; // note thate state was processed yet - reseted by release
-	wxDword m_mouseButtonState;
-	wxDword m_mouseButtonClicked;
-	wxInt32 m_relativeMousePosition[2];
+    wxDword m_mouseButtonState;
+    wxDword m_mouseButtonClicked;
+    wxInt32 m_relativeMousePosition[2];
     wxInt32 m_absoluteMousePosition[2];
     wxInt32 m_mouseWheelDelta;
 
@@ -34,15 +36,16 @@ public:
     ControlStruct()
         : m_state(0)
         , m_clicked(0)
-		, m_mouseButtonState(0)
-		, m_mouseButtonClicked(0)
+        , m_mouseButtonState(0)
+        , m_mouseButtonClicked(0)
         , m_mouseWheelDelta(0)
     {
-		m_relativeMousePosition[0] = 0; 
+		m_relativeMousePosition[0] = 0;
 		m_relativeMousePosition[1] = 0;
 		m_absoluteMousePosition[0] = 0;
 		m_absoluteMousePosition[1] = 0;
     }
+
     ControlStruct(const ControlStruct& control)
     {
 		m_state = control.m_state;
@@ -67,7 +70,7 @@ public:
 		m_absoluteMousePosition[0] = 0;
 		m_absoluteMousePosition[1] = 0;
 		m_mouseWheelDelta = 0;
-	}
+    }
 
     inline void ResetClicked()
     {
@@ -84,22 +87,21 @@ public:
 		m_state |= flag;
     }
 
-    inline void Release(wxDword flag) 
+    inline void Release(wxDword flag)
     {
 		m_state &= ~((wxDword)flag);
     }
-	
-	inline void SetMouseButton(wxDword flag)
-	{
+
+    inline void SetMouseButton(wxDword flag)
+    {
 		m_mouseButtonClicked |= flag;
 		m_mouseButtonState |= flag;
-	}
-	
-	inline void ReleaseMouseButton(wxDword flag)
-	{
-		m_mouseButtonState &= ~((wxDword)flag);
-	}
+    }
 
+    inline void ReleaseMouseButton(wxDword flag)
+    {
+		m_mouseButtonState &= ~((wxDword)flag);
+    }
 
     inline bool IsPressed(wxDword flag) const
     {
@@ -110,8 +112,8 @@ public:
     {
 		return ((m_clicked & flag) != 0);
     }
-	
-	inline bool IsMousePressed(wxDword flag) const
+
+    inline bool IsMousePressed(wxDword flag) const
     {
 		return ((m_mouseButtonState & flag) != 0);
     }
@@ -121,21 +123,34 @@ public:
 		return ((m_mouseButtonClicked & flag) != 0);
     }
 
-    inline wxInt32 GetAbsX() const { return m_absoluteMousePosition[0]; }
-	inline wxInt32 GetAbsY() const { return m_absoluteMousePosition[1]; }
+    inline wxInt32 GetAbsX() const
+    {
+		return m_absoluteMousePosition[0];
+    }
+    inline wxInt32 GetAbsY() const
+    {
+		return m_absoluteMousePosition[1];
+    }
+
+    inline wxInt32 GetRelX() const
+    {
+		return m_relativeMousePosition[0];
+    }
 	
-	inline wxInt32 GetRelX() const { return m_relativeMousePosition[0]; }
-	inline wxInt32 GetRelY() const { return m_relativeMousePosition[1]; }
-	
-    inline void SetAbsoluteMousePosition(wxInt32 x, wxInt32 y) 
-	{
-    	m_absoluteMousePosition[0] = x;
+    inline wxInt32 GetRelY() const
+    {
+		return m_relativeMousePosition[1];
+    }
+
+    inline void SetAbsoluteMousePosition(wxInt32 x, wxInt32 y)
+    {
+		m_absoluteMousePosition[0] = x;
 		m_absoluteMousePosition[1] = y;
     }
-    
-	inline void SetRelativeMousePosition(wxInt32 x, wxInt32 y) 
-	{
-    	m_relativeMousePosition[0] = x;
+
+    inline void SetRelativeMousePosition(wxInt32 x, wxInt32 y)
+    {
+		m_relativeMousePosition[0] = x;
 		m_relativeMousePosition[1] = y;
     }
 
@@ -149,22 +164,38 @@ public:
     }
 };
 
-class InputComponent : public ComponentBase, public GameInputSystem::InputMouseCallback
-{
-    ControlStruct m_ctrlStruct;
-    wxCriticalSection m_inputLock;
-	GameInputSystem *m_pInputSystem;
+struct InputDef : public RefObjectImpl<IRefObject> {
+    typedef GameBasMap<wxString, wxInt32> TInputMap;
 
 public:
+    TInputMap m_inputMap;
 
-    InputComponent(GameComponentType compType)
-        : ComponentBase(compType)
+public:
+    InputDef()
+    {
+    }
+};
+
+class InputComponent : public ComponentBase, public GameInputSystem::InputMouseCallback
+{
+private:
+    ControlStruct m_ctrlStruct;
+    wxCriticalSection m_inputLock;
+	
+
+protected:
+    GameInputSystem* m_pInputSystem;
+	RefObjSmPtr<InputDef> m_spDefinition;
+	
+public:
+    InputComponent()
+        : ComponentBase(GAME_COMP_INPUT)
         , m_inputLock(wxCRITSEC_DEFAULT)
     {
     }
-	
-	GameErrorCode Initialize( GameInputSystem *pInputSystem );
 
+    GameErrorCode Initialize(GameInputSystem* pInputSystem);
+	
     /*!
      * \brief Export actual control struct state and reset it
      * \param actualControls Exported actual controls state
@@ -190,17 +221,24 @@ public:
 
     virtual GameErrorCode ReceiveMessage(TaskMessage& msg) override;
 	
+	virtual GameErrorCode Load(wxXmlNode* pNode);
+    virtual GameErrorCode Store(wxXmlNode* pParentNode);
+
+    
 	virtual void OnMouseMoved(const OIS::MouseState& arg) override;
     virtual void OnMousePressed(const OIS::MouseState& arg, OIS::MouseButtonID id) override;
     virtual void OnMouseReleased(const OIS::MouseState& arg, OIS::MouseButtonID id) override;
 	
+	virtual GameErrorCode Create( InputDef *pInputDef) = 0;
+	
 protected:
-	GameErrorCode CreateInputDef(wxXmlNode *pNode, InputDef &output);
+	void SetDefinition(InputDef *pDef);
+	InputDef* GetDefinition() const;
+	
+    GameErrorCode CreateInputDef(wxXmlNode* pNode, InputDef& output);
 
-	GameErrorCode GetKeyValue(wxXmlNode *pNode, wxString &action, wxInt32 &keyCode);
-	GameErrorCode SetKeyValue(wxXmlNode *pParentNode, wxString &action, wxInt32 &keyCode);
-	
-	
+    GameErrorCode GetKeyValue(wxXmlNode* pNode, wxString& action, wxInt32& keyCode);
+    GameErrorCode SetKeyValue(wxXmlNode* pParentNode, wxString& action, wxInt32& keyCode);
 
     inline void SetState(bool state, wxDword ctrlFlag)
     {
@@ -214,14 +252,5 @@ protected:
 };
 
 
-struct InputDef : public RefObjectImpl<IRefObject> {
-	typedef GameBasMap<wxString, wxInt32 > TInputMap;
-public:
-	TInputMap m_inputMap;
-	
-public:
-	InputDef() {}
-	
-};
 
 #endif //__GAME_INPUT_COMPONENT_H__01__

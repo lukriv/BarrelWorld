@@ -9,25 +9,21 @@ class btCollisionObject;
 class btCollisionShape;
 class wxXmlNode;
 class TransformComponent;
-class PhysicsCompManager;
+class PhysicsSystem;
 
-class PhysicsStaticObject : public ComponentBase
+class PhysicsStaticObject : public PhysicsBase
 {
 protected:
-	PhysicsCompManager *m_pOwnerMgr;
 	btCollisionObject *m_pColObject;
 	
-	RefObjSmPtr<TransformComponent> m_spTransform;
 public:
-	PhysicsStaticObject(PhysicsCompManager* pOwnerMgr);
+	PhysicsStaticObject(PhysicsSystem* pPhysSystem);
 	~PhysicsStaticObject();
-	
-	GameErrorCode Initialize(TransformComponent *pTransform);
 	
 	GameErrorCode Create(btCollisionShape *pColShape);
 	
-    GameErrorCode Load(wxXmlNode* XMLNode);
-    GameErrorCode Store(wxXmlNode* ParentNode);
+    virtual GameErrorCode Load(wxXmlNode* XMLNode);
+    virtual GameErrorCode Store(wxXmlNode* ParentNode);
 	
 	virtual GameErrorCode ReceiveMessage(TaskMessage& msg);
 	virtual GameErrorCode Update();

@@ -17,16 +17,12 @@ public:
 			INPUT_ACTION_FORWARD =				(1<<4),
 			INPUT_ACTION_BACKWARD =				(1<<5),
 		};
-private:
-	GameInputSystem *m_pInputSystem;
 public:
 
-	FreeCameraInput() : InputComponent(GAME_COMP_INPUT_FREE_CAMERA), m_pInputSystem(nullptr) {}
+	FreeCameraInput() : InputComponent() {}
 	~FreeCameraInput();
 	
-	GameErrorCode Initialize(GameInputSystem* pInputSystem);
-	
-	GameErrorCode Create(const InputDef &inputDef);
+	virtual GameErrorCode Create( InputDef *pInputDef);
 
 	void SetMoveUp(bool move)
 	{
@@ -58,8 +54,7 @@ public:
 		SetState(move, INPUT_ACTION_BACKWARD);
 	}
 	
-public:	
-	static GameErrorCode CreateObject(GameInputSystem *pInputSystem, FreeCameraInput &*pNewComponent);
+	
 };
 
 

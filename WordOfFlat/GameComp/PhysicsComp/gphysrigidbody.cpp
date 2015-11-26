@@ -10,13 +10,11 @@
 
 #include "../transformComp/gtranscomp.h"
 #include "gphysshapeload.h"
-#include "gphyscmgr.h"
+#include "gphyssystem.h"
 
 
-PhysicsRigidBody::PhysicsRigidBody(PhysicsCompManager* pOwnerMgr)
-    : ComponentBase(GAME_COMP_PHYSICS_RIGID_BODY)
-    , m_pOwnerMgr(pOwnerMgr)
-    , m_pRigidBody(nullptr)
+PhysicsRigidBody::PhysicsRigidBody(PhysicsSystem* pOwnerMgr)
+    : PhysicsBase(pOwnerMgr), m_pRigidBody(nullptr)
 {
 }
 
@@ -25,23 +23,10 @@ PhysicsRigidBody::~PhysicsRigidBody()
 	if(m_pRigidBody)
 	{
 		m_pRigidBody->setUserPointer(nullptr);
-		m_pOwnerMgr->GetDynamicsWorld()->removeRigidBody(m_pRigidBody);
+		m_pPhysSystem->GetDynamicsWorld()->removeRigidBody(m_pRigidBody);
 		delete m_pRigidBody;
 		m_pRigidBody = nullptr;
 	}
-}
-
-GameErrorCode PhysicsRigidBody::Initialize(TransformComponent* pTransform)
-{
-	if(pTransform == nullptr)
-	{
-		FWGLOG_ERROR(wxT("Transform component is null"), m_pOwnerMgr->GetLogger());
-		return FWG_E_INVALID_PARAMETER_ERROR;
-	}
-	
-	m_spTransform = pTransform;
-	
-	return FWG_NO_ERROR;
 }
 
 GameErrorCode PhysicsRigidBody::ReceiveMessage(TaskMessage& msg)
@@ -74,7 +59,7 @@ GameErrorCode PhysicsRigidBody::Create(btScalar mass, btCollisionShape* pColShap
 		return FWG_E_MEMORY_ALLOCATION_ERROR;
 	}
 	
-	m_pOwnerMgr->GetDynamicsWorld()->addRigidBody(m_pRigidBody);
+	m_pPhysSystem->GetDynamicsWorld()->addRigidBody(m_pRigidBody);
 	
 	// set pointer to this object
 	m_pRigidBody->setUserPointer(static_cast<void*>(this));
@@ -99,13 +84,13 @@ GameErrorCode PhysicsRigidBody::Load(wxXmlNode* pNode)
 	{
 		if(pChild->GetName() == GAME_TAG_COMP_PHYSICS_SHAPE)
 		{
-			PhysicsShapeLoader shapeLoader(m_pOwnerMgr->GetLogger());
+			PhysicsShapeLoader shapeLoader(m_pPhysSystem->GetLogger());
 			FWG_RETURN_FAIL(shapeLoader.LoadShape(pChild, pCollShape));
 		} else if(pChild->GetName() == GAME_TAG_PARAM_MASS) {
-			FWG_RETURN_FAIL(GameXmlUtils::GetNodeContent(pChild, tempContent, m_pOwnerMgr->GetLogger()));
+			FWG_RETURN_FAIL(GameXmlUtils::GetNodeContent(pChild, tempContent, m_pPhysSystem->GetLogger()));
 			FWG_RETURN_FAIL(GameXmlUtils::ConvertToFloat(tempContent, mass));
 		} else {
-			GameXmlUtils::ProcessUnknownTag(pChild, m_pOwnerMgr->GetLogger());
+			GameXmlUtils::ProcessUnknownTag(pChild, m_pPhysSystem->GetLogger());
 		}
 		pChild = pChild->GetNext();
 	}
@@ -129,12 +114,12 @@ GameErrorCode PhysicsRigidBody::Store(wxXmlNode* pParentNode)
 	
 	if(m_pRigidBody->getCollisionShape())
 	{
-		PhysicsShapeLoader shapeLoader(m_pOwnerMgr->GetLogger());
+		PhysicsShapeLoader shapeLoader(m_pPhysSystem->GetLogger());
 		
 		// store shape
 		if(FWG_FAILED(result = shapeLoader.StoreShape(pNewNode, m_pRigidBody->getCollisionShape())))
 		{
-			FWGLOG_ERROR_FORMAT(wxT("Store collision shape failed: 0x%08x"), m_pOwnerMgr->GetLogger(), result, FWGLOG_ENDVAL);
+			FWGLOG_ERROR_FORMAT(wxT("Store collision shape failed: 0x%08x"), m_pPhysSystem->GetLogger(), result, FWGLOG_ENDVAL);
 			return result;
 		}
 	}

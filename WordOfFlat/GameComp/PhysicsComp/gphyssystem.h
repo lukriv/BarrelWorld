@@ -10,7 +10,7 @@
 struct PhysCompDef;
 struct PhysShapeDef;
 
-class PhysicsCompManager {
+class PhysicsSystem {
 	btConstraintSolver *m_pSolver;
 	btBroadphaseInterface	*m_pBroadphase;
 	btCollisionConfiguration *m_pCollisionConfig;
@@ -20,8 +20,8 @@ class PhysicsCompManager {
 	GameLoggerPtr m_spLogger;
 
 public:
-	PhysicsCompManager(GameLogger* pLogger);
-	~PhysicsCompManager();
+	PhysicsSystem(GameLogger* pLogger);
+	~PhysicsSystem();
 	
 	inline btDynamicsWorld* GetDynamicsWorld() { return m_pDynamicsWorld; }
 	inline GameLogger* GetLogger() { return m_spLogger; }

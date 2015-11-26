@@ -45,19 +45,15 @@
     </VirtualDirectory>
     <VirtualDirectory Name="physSystem">
       <VirtualDirectory Name="include">
-        <File Name="PhysicsComp/gphyscmgr.h"/>
         <File Name="PhysicsComp/gogrebulletutils.h"/>
         <File Name="PhysicsComp/gphysdbgdraw.h"/>
-        <File Name="PhysicsComp/gphysrigidbody.h"/>
-        <File Name="PhysicsComp/gphysstaticobj.h"/>
         <File Name="PhysicsComp/gphysshapeload.h"/>
+        <File Name="PhysicsComp/gphyssystem.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="src">
-        <File Name="PhysicsComp/gphyscmgr.cpp"/>
         <File Name="PhysicsComp/gphysdgbdraw.cpp"/>
-        <File Name="PhysicsComp/gphysrigidbody.cpp"/>
-        <File Name="PhysicsComp/gphysstaticobj.cpp"/>
         <File Name="PhysicsComp/gphysshapeload.cpp"/>
+        <File Name="PhysicsComp/gphyssystem.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="inputSystem">
@@ -243,11 +239,25 @@
         <File Name="RenderComp/grenderrigidbody.h"/>
         <File Name="RenderComp/grenderobject.h"/>
         <File Name="RenderComp/grendercamera.h"/>
+        <File Name="RenderComp/grenderobjmgr.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="src">
         <File Name="RenderComp/grenderrigidbody.cpp"/>
         <File Name="RenderComp/grenderobject.cpp"/>
         <File Name="RenderComp/grendercamera.cpp"/>
+        <File Name="RenderComp/grenderobjmgr.cpp"/>
+      </VirtualDirectory>
+    </VirtualDirectory>
+    <VirtualDirectory Name="physics">
+      <VirtualDirectory Name="include">
+        <File Name="PhysicsComp/gphysrigidbody.h"/>
+        <File Name="PhysicsComp/gphysbase.h"/>
+        <File Name="PhysicsComp/gphysstaticobj.h"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="src">
+        <File Name="PhysicsComp/gphysrigidbody.cpp"/>
+        <File Name="PhysicsComp/gphysbase.cpp"/>
+        <File Name="PhysicsComp/gphysstaticobj.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
   </VirtualDirectory>

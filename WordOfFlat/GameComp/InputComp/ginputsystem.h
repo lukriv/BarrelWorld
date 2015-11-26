@@ -142,9 +142,6 @@ public:
 	
 	void UnregisterCallback(InputMouseCallback *pMouseCallback);
 	
-	/// create methods
-	GameErrorCode CreateAndRegisterInputComponent( const InputDef &inputDef, InputComponent *&pNewInputComp);
-	
 	inline GameLogger * GetLogger() { return m_spLogger; }
 	
 	/// virtual methods

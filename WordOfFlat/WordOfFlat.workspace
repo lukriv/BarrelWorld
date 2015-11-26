@@ -8,8 +8,8 @@
   <Project Name="GameMsgSrv" Path="GameMsgSrv/GameMsgSrv.project" Active="No"/>
   <Project Name="GameComm" Path="GameComm/GameComm.project" Active="No"/>
   <Project Name="GameResHold" Path="GameResHold/GameResHold.project" Active="No"/>
-  <Project Name="GameLoader" Path="GameLoader/GameLoader.project" Active="Yes"/>
-  <Project Name="GameComp" Path="GameComp/GameComp.project" Active="No"/>
+  <Project Name="GameLoader" Path="GameLoader/GameLoader.project" Active="No"/>
+  <Project Name="GameComp" Path="GameComp/GameComp.project" Active="Yes"/>
   <Project Name="GameXmlDefinitions" Path="GameXmlDefinitions/GameXmlDefinitions.project" Active="No"/>
   <Environment>
     <![CDATA[]]>

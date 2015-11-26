@@ -7,13 +7,15 @@ static const wxChar* FACTORY_INPUT_RIGHT	 = wxT("right");
 static const wxChar* FACTORY_INPUT_FORWARD	 = wxT("forward");
 static const wxChar* FACTORY_INPUT_BACKWARD	 = wxT("backward");
 
-GameErrorCode FreeCameraInput::Create(const InputDef& inputDef)
+GameErrorCode FreeCameraInput::Create( InputDef *inputDef)
 {
 	
 	GameErrorCode result = FWG_NO_ERROR;
 	
-	for(InputDef::TInputMap::ConstIterator iter = inputDef.m_inputMap.Begin();
-		iter != inputDef.m_inputMap.End();
+	SetDefinition(inputDef);
+	
+	for(InputDef::TInputMap::ConstIterator iter = inputDef->m_inputMap.Begin();
+		iter != inputDef->m_inputMap.End();
 		++iter)
 	{
 	
@@ -81,28 +83,9 @@ GameErrorCode FreeCameraInput::Create(const InputDef& inputDef)
 }
 
 
-GameErrorCode FreeCameraInput::Initialize(GameInputSystem* pInputSystem)
-{
-	if(pInputSystem == nullptr)
-	{
-		return FWG_E_INVALID_PARAMETER_ERROR;
-	}
-	m_pInputSystem = pInputSystem;
-	return FWG_NO_ERROR;
-}
-
 FreeCameraInput::~FreeCameraInput()
 {
-	
+	SetDefinition(nullptr);
 }
 
-GameErrorCode FreeCameraInput::CreateObject(GameInputSystem* pInputSystem, FreeCameraInput &*pNewComponent)
-{
-	RefObjSmPtr<FreeCameraInput> spInputComp;
-	FWG_RETURN_FAIL(GameNewChecked(spInputComp.OutRef()));
-	FWG_RETURN_FAIL(spInputComp->Initialize(m_pInputSystem));
 
-	pNewComponent = spInputComp.Detach();
-	
-	return FWG_NO_ERROR;	
-}

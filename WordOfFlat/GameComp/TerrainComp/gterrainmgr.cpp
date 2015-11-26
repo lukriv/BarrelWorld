@@ -9,7 +9,7 @@
 #include <GameXmlDefinitions/gxmldefs.h>
 #include <GameXmlDefinitions/gxmlutils.h>
 #include "RenderComp/grendercmgr.h"
-#include "PhysicsComp/gphyscmgr.h"
+#include "PhysicsComp/gphyssystem.h"
 
 // chunk size must be 2^n
 static const wxInt32 CHUNK_SHIFT = 6; // n
@@ -40,7 +40,7 @@ GameTerrainManager::~GameTerrainManager()
 	Uninitialize();
 }
 
-GameErrorCode GameTerrainManager::Initialize(RenderCompManager* pRenderMgr, PhysicsCompManager* pPhysMgr)
+GameErrorCode GameTerrainManager::Initialize(RenderCompManager* pRenderMgr, PhysicsSystem* pPhysMgr)
 {
 	m_pRenderMgr = pRenderMgr;
 	m_pPhysicsMgr = pPhysMgr;
