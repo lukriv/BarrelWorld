@@ -7,7 +7,7 @@
 #include <GameXmlDefinitions/gxmldefs.h>
 #include <GameXmlDefinitions/gxmlutils.h>
 
-RenderCamera::RenderCamera(RenderCompManager* pCompManager) : RenderObject(pCompManager)
+RenderCamera::RenderCamera(RenderSystem* pCompManager) : RenderObject(pCompManager)
 											, m_pCamera(nullptr)
 {
 }

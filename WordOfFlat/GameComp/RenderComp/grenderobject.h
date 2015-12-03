@@ -22,7 +22,7 @@ class RenderObject : public RenderComponentBase
 	
 public:
 
-    RenderObject(RenderCompManager* pCompManager);
+    RenderObject(RenderSystem* pCompManager);
     ~RenderObject();
 
     GameErrorCode Initialize(RenderPosition* pRenderMoveable);

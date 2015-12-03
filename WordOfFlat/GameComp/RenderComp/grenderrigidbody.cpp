@@ -9,7 +9,7 @@
 #include <GameXmlDefinitions/gxmlutils.h>
 #include "grendercmgr.h"
 
-RenderRigidBody::RenderRigidBody(RenderCompManager* pCompManager) : RenderObject(pCompManager)
+RenderRigidBody::RenderRigidBody(RenderSystem* pCompManager) : RenderObject(pCompManager)
 																, m_pEntity(nullptr)
 {
 }

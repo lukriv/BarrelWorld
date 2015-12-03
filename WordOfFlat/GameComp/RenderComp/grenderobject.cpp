@@ -1,6 +1,6 @@
 #include "grenderobject.h"
 
-RenderObject::RenderObject(RenderCompManager* pCompManager) : RenderComponentBase(GAME_COMP_RENDER_OBJECT, pCompManager)
+RenderObject::RenderObject(RenderSystem* pCompManager) : RenderComponentBase(GAME_COMP_RENDER_OBJECT, pCompManager)
 {
 }
 

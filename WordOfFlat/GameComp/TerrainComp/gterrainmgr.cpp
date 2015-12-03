@@ -40,7 +40,7 @@ GameTerrainManager::~GameTerrainManager()
 	Uninitialize();
 }
 
-GameErrorCode GameTerrainManager::Initialize(RenderCompManager* pRenderMgr, PhysicsSystem* pPhysMgr)
+GameErrorCode GameTerrainManager::Initialize(RenderSystem* pRenderMgr, PhysicsSystem* pPhysMgr)
 {
 	m_pRenderMgr = pRenderMgr;
 	m_pPhysicsMgr = pPhysMgr;

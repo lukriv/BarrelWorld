@@ -22,7 +22,7 @@ class RenderRigidBody : public RenderObject
 	
 public:
 
-    RenderRigidBody(RenderCompManager* pCompManager);
+    RenderRigidBody(RenderSystem* pCompManager);
     ~RenderRigidBody();
 
 	GameErrorCode Create(const wxString& meshName, const wxString& materialName );

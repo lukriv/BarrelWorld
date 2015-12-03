@@ -12,7 +12,7 @@
 #include "../gcompbase.h"
 #include "../transformComp/gtranscomp.h"
 
-class RenderCompManager;
+class RenderSystem;
 class GameEntity;
 
 /*!
@@ -26,7 +26,7 @@ class RenderComponentBase : public ComponentBase, public Ogre::Any {
 protected:
 	typedef wxVector<TaskMessage> TMessageList;
 protected:
-	RenderCompManager *m_pOwnerManager;
+	RenderSystem *m_pOwnerManager;
 	wxCriticalSection m_renderLock;
 	
 	TMessageList m_receivedMessages;
@@ -35,7 +35,7 @@ protected:
 public:
 
 	// Render component can be created and destroyed only by render component manager
-	RenderComponentBase(GameComponentType compType, RenderCompManager* pCompManager) : ComponentBase(compType)
+	RenderComponentBase(GameComponentType compType, RenderSystem* pCompManager) : ComponentBase(compType)
 													, m_pOwnerManager(pCompManager)
 													, m_alreadyInUpdateQueue(false){}
 	~RenderComponentBase();
@@ -44,9 +44,15 @@ public:
 	 * \brief Process update if it is necessary
 	 */
 	virtual void ProcessUpdate() = 0;
-	// update methods
 	
-	virtual GameErrorCode ReceiveMessage(TaskMessage& msg);
+	/**
+	 * @brief Called in asynchronous component creation
+	 * @param pContext
+	 */
+	virtual void OnCreation(void *pContext) = 0;
+	
+	
+	virtual GameErrorCode ReceiveMessage(TaskMessage& msg) override;
 };
 
 #endif //__GAME_RENDER_COMPONENT_H__

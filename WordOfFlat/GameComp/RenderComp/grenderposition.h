@@ -3,7 +3,6 @@
 
 #include "grendercompbase.h"
 
-
 class RenderPosition : public RenderComponentBase
 {
 protected:
@@ -11,20 +10,25 @@ protected:
     Ogre::SceneNode* m_pSceneNode;
 
 public:
+    
 
-    RenderPosition(RenderCompManager *pCompMgr);
+    RenderPosition(RenderSystem* pCompMgr);
     ~RenderPosition();
 
     GameErrorCode Initialize(TransformComponent* pTransform);
+	
+	GameErrorCode Create();
 
     inline Ogre::SceneNode* GetSceneNode() { return m_pSceneNode; }
+
+    virtual void ProcessUpdate() override;
 	
-	virtual void ProcessUpdate();
-	
-	/*!
-	 * \brief Destroy inner ogre object
-	 */
-	void Clear();
+	virtual void OnCreation(void* pContext) override;
+
+    /*!
+     * \brief Destroy inner ogre object
+     */
+    void Clear();
 };
 
 #endif // __GAME_RENDER_MOVEABLE_H__

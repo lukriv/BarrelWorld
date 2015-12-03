@@ -10,7 +10,7 @@
 static const char* MAIN_GAME_SCENE_MANAGER = "MainSceneManager";
 
 
-RenderCompManager::RenderCompManager(GameLogger* pLogger) : m_spLogger(pLogger)
+RenderSystem::RenderSystem(GameLogger* pLogger) : m_spLogger(pLogger)
 															, m_pRoot(nullptr)
 															, m_pRenderWindow(nullptr)
 															, m_pSceneManager(nullptr)
@@ -19,7 +19,7 @@ RenderCompManager::RenderCompManager(GameLogger* pLogger) : m_spLogger(pLogger)
 														
 {}
 
-GameErrorCode RenderCompManager::Initialize(GameEngineSettings& settings)
+GameErrorCode RenderSystem::Initialize(GameEngineSettings& settings)
 {
 	// is or is not initialized
 	GameErrorCode result = FWG_NO_ERROR;
@@ -83,7 +83,7 @@ GameErrorCode RenderCompManager::Initialize(GameEngineSettings& settings)
 	return result;
 }
 
-void RenderCompManager::Uninitialize()
+void RenderSystem::Uninitialize()
 {
 	if(m_pRenderWindow != nullptr) 
 	{
@@ -109,29 +109,29 @@ void RenderCompManager::Uninitialize()
 	
 }
 
-RenderCompManager::~RenderCompManager()
+RenderSystem::~RenderSystem()
 {
 	Uninitialize();
 }
 
 
-void RenderCompManager::StartRendering()
+void RenderSystem::StartRendering()
 {
 	DisableCreating();
 	m_pRoot->startRendering();
 }
 
-void RenderCompManager::DisableCreating()
+void RenderSystem::DisableCreating()
 {
 	m_renderLock.Enter();
 }
 
-void RenderCompManager::EnableCreating()
+void RenderSystem::EnableCreating()
 {
 	m_renderLock.Leave();
 }
 
-Ogre::Camera* RenderCompManager::GetCamera(const wxString& cameraName)
+Ogre::Camera* RenderSystem::GetCamera(const wxString& cameraName)
 {
 	try {
 		return m_pSceneManager->getCamera(cameraName.ToStdString());
@@ -144,14 +144,14 @@ Ogre::Camera* RenderCompManager::GetCamera(const wxString& cameraName)
 	
 }
 
-GameErrorCode RenderCompManager::AddToUpdateQueue(RenderComponentBase* pRenderComp)
+GameErrorCode RenderSystem::AddToUpdateQueue(RenderComponentBase* pRenderComp)
 {
 	wxCriticalSectionLocker lock(m_mgrLock);
 	m_updateQueue[m_actualQueue].push_back(pRenderComp);
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode RenderCompManager::ProcessAllUpdates()
+GameErrorCode RenderSystem::ProcessAllUpdates()
 {
 	TUpdateQueue *processQueue = nullptr;
 	TUpdateQueue::iterator iter, endIter;
@@ -176,7 +176,7 @@ GameErrorCode RenderCompManager::ProcessAllUpdates()
 	
 }
 
-GameErrorCode RenderCompManager::SetMainCamera(Ogre::Camera* pCamera)
+GameErrorCode RenderSystem::SetMainCamera(Ogre::Camera* pCamera)
 {
 	if (!pCamera)
 	{
@@ -212,7 +212,7 @@ GameErrorCode RenderCompManager::SetMainCamera(Ogre::Camera* pCamera)
 	return FWG_NO_ERROR;	
 }
 
-GameErrorCode RenderCompManager::SetMainCamera(const wxString& cameraName)
+GameErrorCode RenderSystem::SetMainCamera(const wxString& cameraName)
 {
 	Ogre::Camera* pCamera = nullptr;
 	
@@ -225,7 +225,10 @@ GameErrorCode RenderCompManager::SetMainCamera(const wxString& cameraName)
 	}
 }
 
+GameErrorCode RenderSystem::ProcessAllCreation()
+{
+}
 
-
-
-
+GameErrorCode RenderSystem::CreateRenderComponent(RenderComponentBase* pComponent, void* pContext)
+{
+}

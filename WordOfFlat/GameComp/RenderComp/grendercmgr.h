@@ -20,7 +20,7 @@ class RenderComponentBase;
 class RenderCamera;
 class GameEntity;
 
-class RenderCompManager
+class RenderSystem
 {
 private:
 	typedef wxVector< RenderComponentBase* > TUpdateQueue;
@@ -41,8 +41,8 @@ private:
 	wxDword m_actualQueue;
 	
 public:
-	RenderCompManager(GameLogger *pLogger);
-	~RenderCompManager();
+	RenderSystem(GameLogger *pLogger);
+	~RenderSystem();
 	
 	/*!
 	 * \brief Initialize Render Component Manager
@@ -88,6 +88,10 @@ public:
 	void EnableCreating();
 	
 	void DisableCreating();
+	
+	GameErrorCode ProcessAllCreation();
+	
+	GameErrorCode CreateRenderComponent(RenderComponentBase *pComponent, void *pContext);
 	
 	/**
 	 * \brief Add component to update queue

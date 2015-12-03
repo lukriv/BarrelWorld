@@ -17,7 +17,7 @@ class RenderCamera : public RenderObject
 	
 public:
 
-    RenderCamera(RenderCompManager* pCompManager);
+    RenderCamera(RenderSystem* pCompManager);
     ~RenderCamera();
 
 	GameErrorCode Create(const wxString& cameraName);

@@ -16,7 +16,7 @@
 class GameCompManager : public RefObjectImpl<IRefObject> {
 	GameLoggerPtr m_spLogger;
 	TransformCompManager m_tranformMgr;
-	RenderCompManager m_renderMgr;
+	RenderSystem m_renderMgr;
 	GameMenuSystem m_menuMgr;
 	GameInputSystem m_inputSystem;
 	PhysicsSystem m_physicsManager;
@@ -31,7 +31,7 @@ public:
 	void Uninitialize();
 	
 	inline TransformCompManager& GetTransformManager() { return m_tranformMgr; }
-	inline RenderCompManager& GetRenderManager() { return m_renderMgr; }
+	inline RenderSystem& GetRenderManager() { return m_renderMgr; }
 	inline GameMenuSystem& GetMenuSystem() { return m_menuMgr; }
 	inline GameInputSystem&	GetInputSystem() { return m_inputSystem; }
 	inline PhysicsSystem& GetPhysicsManager() { return m_physicsManager; }

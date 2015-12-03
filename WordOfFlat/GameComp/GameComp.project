@@ -37,10 +37,10 @@
         <File Name="RenderComp/grendercompbase.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="src">
-        <File Name="RenderComp/grendercomp.cpp"/>
         <File Name="RenderComp/grendercmgr.cpp"/>
         <File Name="RenderComp/grenderdotsceneloader.cpp"/>
         <File Name="RenderComp/grenderTerrDec.cpp"/>
+        <File Name="RenderComp/grendercompbase.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="physSystem">
@@ -207,10 +207,14 @@
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="transform">
-      <File Name="TransformComp/gtranscmgr.h"/>
-      <File Name="TransformComp/gtranscomp.h"/>
-      <File Name="TransformComp/gtranscmgr.cpp"/>
-      <File Name="TransformComp/gtranscomp.cpp"/>
+      <VirtualDirectory Name="include">
+        <File Name="TransformComp/gtranscmgr.h"/>
+        <File Name="TransformComp/gtranscomp.h"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="src">
+        <File Name="TransformComp/gtranscomp.cpp"/>
+        <File Name="TransformComp/gtranscmgr.cpp"/>
+      </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="input">
       <VirtualDirectory Name="include">

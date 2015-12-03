@@ -4,7 +4,7 @@
 #include <OGRE/OgreManualObject.h>
 #include "grendercmgr.h"
 
-RenderTerrainDecal::RenderTerrainDecal(RenderCompManager *pRenderMgr) : 
+RenderTerrainDecal::RenderTerrainDecal(RenderSystem *pRenderMgr) : 
 							RenderComponentBase(GAME_COMP_RENDER_TERRAIN_DECAL, pRenderMgr)
 							, m_pManObject(nullptr)
 							, m_pRayQuery(nullptr)
