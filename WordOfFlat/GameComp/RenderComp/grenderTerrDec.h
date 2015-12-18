@@ -12,7 +12,7 @@ class RenderTerrainDecal : public RenderComponentBase
 	Ogre::RaySceneQuery *m_pRayQuery;
 
 public:
-	RenderTerrainDecal(RenderSystem *pRenderMgr);
+	RenderTerrainDecal(GameRenderSystem *pRenderMgr);
 	~RenderTerrainDecal();
 	
 	GameErrorCode Initialize();

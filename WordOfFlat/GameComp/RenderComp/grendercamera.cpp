@@ -1,13 +1,13 @@
 #include "grendercamera.h"
 
-#include "grendercmgr.h"
+#include "grendersystem.h"
 #include "grenderposition.h"
 #include <wx/xml/xml.h>
 #include <wx/scopedptr.h>
 #include <GameXmlDefinitions/gxmldefs.h>
 #include <GameXmlDefinitions/gxmlutils.h>
 
-RenderCamera::RenderCamera(RenderSystem* pCompManager) : RenderObject(pCompManager)
+RenderCamera::RenderCamera(GameRenderSystem* pCompManager) : RenderObject(pCompManager)
 											, m_pCamera(nullptr)
 {
 }

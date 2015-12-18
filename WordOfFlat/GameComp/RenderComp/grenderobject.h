@@ -17,12 +17,12 @@
  */
 class RenderObject : public RenderComponentBase
 {
-
+protected:
     RefObjSmPtr<RenderPosition> m_spPosition;
 	
 public:
 
-    RenderObject(RenderSystem* pCompManager);
+    RenderObject(GameRenderSystem* pCompManager);
     ~RenderObject();
 
     GameErrorCode Initialize(RenderPosition* pRenderMoveable);

@@ -12,7 +12,7 @@
 #include "../gcompbase.h"
 #include "../transformComp/gtranscomp.h"
 
-class RenderSystem;
+class GameRenderSystem;
 class GameEntity;
 
 /*!
@@ -26,7 +26,7 @@ class RenderComponentBase : public ComponentBase, public Ogre::Any {
 protected:
 	typedef wxVector<TaskMessage> TMessageList;
 protected:
-	RenderSystem *m_pOwnerManager;
+	GameRenderSystem *m_pOwnerManager;
 	wxCriticalSection m_renderLock;
 	
 	TMessageList m_receivedMessages;
@@ -35,7 +35,7 @@ protected:
 public:
 
 	// Render component can be created and destroyed only by render component manager
-	RenderComponentBase(GameComponentType compType, RenderSystem* pCompManager) : ComponentBase(compType)
+	RenderComponentBase(GameComponentType compType, GameRenderSystem* pCompManager) : ComponentBase(compType)
 													, m_pOwnerManager(pCompManager)
 													, m_alreadyInUpdateQueue(false){}
 	~RenderComponentBase();

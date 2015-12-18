@@ -1,4 +1,4 @@
-#include "grendercmgr.h"
+#include "grendersystem.h"
 
 #include <OGRE/OgreRoot.h>
 #include <OGRE/OgreRenderWindow.h>
@@ -10,7 +10,7 @@
 static const char* MAIN_GAME_SCENE_MANAGER = "MainSceneManager";
 
 
-RenderSystem::RenderSystem(GameLogger* pLogger) : m_spLogger(pLogger)
+GameRenderSystem::GameRenderSystem(GameLogger* pLogger) : m_spLogger(pLogger)
 															, m_pRoot(nullptr)
 															, m_pRenderWindow(nullptr)
 															, m_pSceneManager(nullptr)
@@ -19,7 +19,7 @@ RenderSystem::RenderSystem(GameLogger* pLogger) : m_spLogger(pLogger)
 														
 {}
 
-GameErrorCode RenderSystem::Initialize(GameEngineSettings& settings)
+GameErrorCode GameRenderSystem::Initialize(GameEngineSettings& settings)
 {
 	// is or is not initialized
 	GameErrorCode result = FWG_NO_ERROR;
@@ -36,7 +36,7 @@ GameErrorCode RenderSystem::Initialize(GameEngineSettings& settings)
 		m_pRoot->loadPlugin("RenderSystem_GL");
 		m_pRoot->loadPlugin("Plugin_OctreeSceneManager");
 		Ogre::RenderSystemList::const_iterator it = m_pRoot->getAvailableRenderers().begin();
-		Ogre::RenderSystem *pRenSys = nullptr;
+		Ogre::GameRenderSystem *pRenSys = nullptr;
 
 		if(m_pRoot->getAvailableRenderers().size() == 1) {
 			pRenSys = *it;
@@ -83,7 +83,7 @@ GameErrorCode RenderSystem::Initialize(GameEngineSettings& settings)
 	return result;
 }
 
-void RenderSystem::Uninitialize()
+void GameRenderSystem::Uninitialize()
 {
 	if(m_pRenderWindow != nullptr) 
 	{
@@ -109,29 +109,18 @@ void RenderSystem::Uninitialize()
 	
 }
 
-RenderSystem::~RenderSystem()
+GameRenderSystem::~GameRenderSystem()
 {
 	Uninitialize();
 }
 
 
-void RenderSystem::StartRendering()
+void GameRenderSystem::StartRendering()
 {
-	DisableCreating();
 	m_pRoot->startRendering();
 }
 
-void RenderSystem::DisableCreating()
-{
-	m_renderLock.Enter();
-}
-
-void RenderSystem::EnableCreating()
-{
-	m_renderLock.Leave();
-}
-
-Ogre::Camera* RenderSystem::GetCamera(const wxString& cameraName)
+Ogre::Camera* GameRenderSystem::GetCamera(const wxString& cameraName)
 {
 	try {
 		return m_pSceneManager->getCamera(cameraName.ToStdString());
@@ -144,14 +133,14 @@ Ogre::Camera* RenderSystem::GetCamera(const wxString& cameraName)
 	
 }
 
-GameErrorCode RenderSystem::AddToUpdateQueue(RenderComponentBase* pRenderComp)
+GameErrorCode GameRenderSystem::AddToUpdateQueue(RenderComponentBase* pRenderComp)
 {
 	wxCriticalSectionLocker lock(m_mgrLock);
 	m_updateQueue[m_actualQueue].push_back(pRenderComp);
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode RenderSystem::ProcessAllUpdates()
+GameErrorCode GameRenderSystem::ProcessAllUpdates()
 {
 	TUpdateQueue *processQueue = nullptr;
 	TUpdateQueue::iterator iter, endIter;
@@ -163,7 +152,6 @@ GameErrorCode RenderSystem::ProcessAllUpdates()
 		m_actualQueue = (m_actualQueue + 1) % 2;
 	}
 	// disable render lock
-	wxCriticalSectionLocker renderLock(m_renderLock);
 	endIter = processQueue->end();
 	for(iter = processQueue->begin(); iter != endIter; ++iter)
 	{
@@ -176,7 +164,7 @@ GameErrorCode RenderSystem::ProcessAllUpdates()
 	
 }
 
-GameErrorCode RenderSystem::SetMainCamera(Ogre::Camera* pCamera)
+GameErrorCode GameRenderSystem::SetMainCamera(Ogre::Camera* pCamera)
 {
 	if (!pCamera)
 	{
@@ -188,7 +176,6 @@ GameErrorCode RenderSystem::SetMainCamera(Ogre::Camera* pCamera)
 		return FWG_E_OBJECT_NOT_INITIALIZED_ERROR;
 	}
 	
-	wxCriticalSectionLocker renderLock(m_renderLock);
 	wxCriticalSectionLocker lock(m_mgrLock);
 	
 	Ogre::Viewport *pViewport = nullptr;
@@ -212,7 +199,7 @@ GameErrorCode RenderSystem::SetMainCamera(Ogre::Camera* pCamera)
 	return FWG_NO_ERROR;	
 }
 
-GameErrorCode RenderSystem::SetMainCamera(const wxString& cameraName)
+GameErrorCode GameRenderSystem::SetMainCamera(const wxString& cameraName)
 {
 	Ogre::Camera* pCamera = nullptr;
 	
@@ -225,10 +212,27 @@ GameErrorCode RenderSystem::SetMainCamera(const wxString& cameraName)
 	}
 }
 
-GameErrorCode RenderSystem::ProcessAllCreation()
+GameErrorCode GameRenderSystem::ProcessAllCreation()
 {
+	
+	wxCriticalSectionLocker lock(m_mgrLock);
+
+	for(TCreateQueue::iterator iter = m_createQueue.begin(); iter != m_createQueue.end(); ++iter)
+	{
+		iter->m_pRenderComp->OnCreation(iter->m_pContext);
+	}
+	
+	return FWG_NO_ERROR;
 }
 
-GameErrorCode RenderSystem::CreateRenderComponent(RenderComponentBase* pComponent, void* pContext)
+GameErrorCode GameRenderSystem::CreateRenderComponent(RenderComponentBase* pComponent, void* pContext)
 {
+	CreateRecord newRec;
+	newRec.m_pRenderComp = pComponent;
+	newRec.m_pContext = pContext;
+	
+	wxCriticalSectionLocker lock(m_mgrLock);
+	m_createQueue.push_back(newRec);
+	
+	return FWG_NO_ERROR;
 }

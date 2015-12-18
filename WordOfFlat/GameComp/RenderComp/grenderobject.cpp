@@ -1,6 +1,7 @@
 #include "grenderobject.h"
 
-RenderObject::RenderObject(RenderSystem* pCompManager) : RenderComponentBase(GAME_COMP_RENDER_OBJECT, pCompManager)
+
+RenderObject::RenderObject(GameRenderSystem* pCompManager) : RenderComponentBase(GAME_COMP_RENDER_OBJECT, pCompManager)
 {
 }
 
@@ -8,7 +9,7 @@ RenderObject::~RenderObject()
 {
 }
 
-GameErrorCode RenderObject::Initialize(RenderPosition* pRenderMoveable)
+GameErrorCode RenderObject::Initialize(RenderPosition* pRenderPosition)
 {
 	m_spPosition = pRenderPosition;
     if(m_spPosition.IsEmpty()||(pRenderPosition->GetSceneNode() == nullptr)) 

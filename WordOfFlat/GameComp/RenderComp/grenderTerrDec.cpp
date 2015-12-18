@@ -2,9 +2,9 @@
 
 
 #include <OGRE/OgreManualObject.h>
-#include "grendercmgr.h"
+#include "grendersystem.h"
 
-RenderTerrainDecal::RenderTerrainDecal(RenderSystem *pRenderMgr) : 
+RenderTerrainDecal::RenderTerrainDecal(GameRenderSystem *pRenderMgr) : 
 							RenderComponentBase(GAME_COMP_RENDER_TERRAIN_DECAL, pRenderMgr)
 							, m_pManObject(nullptr)
 							, m_pRayQuery(nullptr)

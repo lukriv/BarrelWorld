@@ -20,10 +20,16 @@ class RenderComponentBase;
 class RenderCamera;
 class GameEntity;
 
-class RenderSystem
+class GameRenderSystem
 {
 private:
+	struct CreateRecord {
+		RenderComponentBase* m_pRenderComp;
+		void* m_pContext;
+	};
+
 	typedef wxVector< RenderComponentBase* > TUpdateQueue;
+	typedef wxVector< CreateRecord > TCreateQueue;
 private:
 	GameLoggerPtr m_spLogger;
 	// ogre base
@@ -35,14 +41,14 @@ private:
 	Ogre::Camera* m_pMainCamera;
 	wxCriticalSection m_mgrLock;
 	wxCriticalSection m_processLock;
-	wxCriticalSection m_renderLock;
 	
 	TUpdateQueue m_updateQueue[2];
+	TCreateQueue m_createQueue;
 	wxDword m_actualQueue;
 	
 public:
-	RenderSystem(GameLogger *pLogger);
-	~RenderSystem();
+	GameRenderSystem(GameLogger *pLogger);
+	~GameRenderSystem();
 	
 	/*!
 	 * \brief Initialize Render Component Manager
@@ -84,10 +90,6 @@ public:
 	 * 
 	 */
 	void StartRendering();
-	
-	void EnableCreating();
-	
-	void DisableCreating();
 	
 	GameErrorCode ProcessAllCreation();
 	

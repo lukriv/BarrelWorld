@@ -5,7 +5,7 @@
 #include <MainWindow/gsettings.h>
 #include "gentitymgr.h"
 #include "TransformComp/gtranscmgr.h"
-#include "RenderComp/grendercmgr.h"
+#include "RenderComp/grendersystem.h"
 #include "InputComp/ginputsystem.h"
 #include "MenuComp/gmenumgr.h"
 #include "PhysicsComp/gphyssystem.h"
@@ -16,7 +16,7 @@
 class GameCompManager : public RefObjectImpl<IRefObject> {
 	GameLoggerPtr m_spLogger;
 	TransformCompManager m_tranformMgr;
-	RenderSystem m_renderMgr;
+	GameRenderSystem m_renderMgr;
 	GameMenuSystem m_menuMgr;
 	GameInputSystem m_inputSystem;
 	PhysicsSystem m_physicsManager;
@@ -31,7 +31,7 @@ public:
 	void Uninitialize();
 	
 	inline TransformCompManager& GetTransformManager() { return m_tranformMgr; }
-	inline RenderSystem& GetRenderManager() { return m_renderMgr; }
+	inline GameRenderSystem& GetRenderManager() { return m_renderMgr; }
 	inline GameMenuSystem& GetMenuSystem() { return m_menuMgr; }
 	inline GameInputSystem&	GetInputSystem() { return m_inputSystem; }
 	inline PhysicsSystem& GetPhysicsManager() { return m_physicsManager; }

@@ -1,7 +1,7 @@
 #include "grendercompbase.h"
 
 #include <OGRE/OgreNode.h>
-#include "grendercmgr.h"
+#include "grendersystem.h"
 #include "../gentity.h"
 #include <GameComp/TransformComp/gtranscomp.h>
 

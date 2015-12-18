@@ -1,9 +1,9 @@
 #include "grenderposition.h"
-#include "grendercmgr.h"
+#include "grendersystem.h"
 #include <OGRE/OgreSceneManager.h>
 
-RenderPosition::RenderPosition(RenderSystem* pCompMgr)
-	: RenderComponentBase(GAME_COMP_RENDER_MOVEABLE, pCompMgr)
+RenderPosition::RenderPosition(GameRenderSystem* pCompMgr)
+	: RenderComponentBase(GAME_COMP_RENDER_POSITION, pCompMgr)
 {
 }
 
@@ -25,18 +25,7 @@ GameErrorCode RenderPosition::Initialize(TransformComponent* pTransform)
 		return FWG_E_INVALID_PARAMETER_ERROR;
 	}
 
-	TransformData* transData = m_spTransform->GetData();
 
-	m_pSceneNode = m_pOwnerManager->GetOgreSceneManager()->getRootSceneNode()->createChildSceneNode(
-	                   Ogre::Vector3(transData->m_translate.getX(), transData->m_translate.getY(), transData->m_translate.getZ()),
-	                   Ogre::Quaternion(transData->m_rotation.getW(),
-	                                    transData->m_rotation.getX(),
-	                                    transData->m_rotation.getY(),
-	                                    transData->m_rotation.getZ()));
-
-	if(m_pSceneNode == nullptr) {
-		return FWG_E_MEMORY_ALLOCATION_ERROR;
-	}
 
 	return FWG_NO_ERROR;
 }
@@ -79,8 +68,31 @@ void RenderPosition::Clear()
 
 GameErrorCode RenderPosition::Create()
 {
+	return m_pOwnerManager->CreateRenderComponent(this, nullptr);
 }
 
-void RenderPosition::OnCreation(void* pContext)
+void RenderPosition::OnCreation(void* )
 {
+	TransformData* transData = m_spTransform->GetData();
+
+	m_pSceneNode = m_pOwnerManager->GetOgreSceneManager()->getRootSceneNode()->createChildSceneNode(
+	                   Ogre::Vector3(transData->m_translate.getX(), transData->m_translate.getY(), transData->m_translate.getZ()),
+	                   Ogre::Quaternion(transData->m_rotation.getW(),
+	                                    transData->m_rotation.getX(),
+	                                    transData->m_rotation.getY(),
+	                                    transData->m_rotation.getZ()));
+
+	if(m_pSceneNode == nullptr) {
+		FWGLOG_ERROR_FORMAT(wxT("Create new scene node failed: 0x%08x"), m_pOwnerManager->GetLogger(), FWG_E_MEMORY_ALLOCATION_ERROR, FWGLOG_ENDVAL);
+	}
+}
+
+GameErrorCode RenderPosition::Load(wxXmlNode* pNode)
+{
+	return FWG_NO_ERROR;
+}
+
+GameErrorCode RenderPosition::Store(wxXmlNode* pParentNode)
+{
+	return FWG_NO_ERROR;
 }

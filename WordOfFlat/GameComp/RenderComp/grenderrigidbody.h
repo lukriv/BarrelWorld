@@ -1,8 +1,8 @@
 #ifndef __GAME_RENDER_RIGID_BODY_H__
 #define __GAME_RENDER_RIGID_BODY_H__
 
-#include "grendercompbase.h"
 #include "grenderposition.h"
+#include "grenderobject.h"
 
 /**
  * @class RenderRigidBody
@@ -15,14 +15,14 @@
  * Can be combined with physics components
  *
  */
-class RenderRigidBody : public RenderObject
+class RenderRigidBody : public RenderObject 
 {
 
 	Ogre::Entity *m_pEntity;
 	
 public:
 
-    RenderRigidBody(RenderSystem* pCompManager);
+    RenderRigidBody(GameRenderSystem* pCompManager);
     ~RenderRigidBody();
 
 	GameErrorCode Create(const wxString& meshName, const wxString& materialName );
@@ -32,7 +32,17 @@ public:
     GameErrorCode Load(wxXmlNode* XMLNode);
     GameErrorCode Store(wxXmlNode* ParentNode);
 	
+	/**
+	 * \brief Process update if it is necessary
+	 */
 	virtual void ProcessUpdate() override;
+	
+	/**
+	 * @brief Called in asynchronous component creation
+	 * @param pContext
+	 */
+	virtual void OnCreation(void *pContext) override;
+	
 };
 
 #endif // __GAME_RENDER_RIGID_BODY_H__

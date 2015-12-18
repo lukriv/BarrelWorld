@@ -7,10 +7,16 @@
 #include <OGRE/OgreSubMesh.h>
 #include <GameXmlDefinitions/gxmldefs.h>
 #include <GameXmlDefinitions/gxmlutils.h>
-#include "grendercmgr.h"
+#include "grendersystem.h"
 
-RenderRigidBody::RenderRigidBody(RenderSystem* pCompManager) : RenderObject(pCompManager)
-																, m_pEntity(nullptr)
+
+struct RenderRigidBodyContext {
+	wxString meshName;
+	wxString materialName;
+};
+
+
+RenderRigidBody::RenderRigidBody(GameRenderSystem* pCompManager) : RenderObject(pCompManager), m_pEntity(nullptr)
 {
 }
 
@@ -47,23 +53,16 @@ GameErrorCode RenderRigidBody::Create(const wxString& meshName, const wxString& 
 		return FWG_E_OBJECT_ALREADY_EXISTS_ERROR;
 	}
 	
-	m_pEntity = m_pOwnerManager->GetOgreSceneManager()->createEntity(meshName.ToStdString());
-	if(m_pEntity == nullptr)
-	{
-		return FWG_E_MEMORY_ALLOCATION_ERROR;
-	}
+	RenderRigidBodyContext *pContext = nullptr;
+	FWG_RETURN_FAIL( GameNewChecked(pContext));
 	
-	if(!materialName.IsEmpty())
-	{
-		m_pEntity->setMaterialName(materialName.ToStdString());
-	} else {
-		FWGLOG_WARNING(wxT("Render rigid body warning: Material should not be empty")
-								, m_pOwnerManager->GetLogger());
-	}
+	pContext->meshName.assign(meshName);
+	pContext->materialName.assign(materialName);
 	
-	m_spPosition->GetSceneNode()->attachObject(m_pEntity);
+	FWG_RETURN_FAIL(m_pOwnerManager->CreateRenderComponent(this, static_cast<void*>(pContext)));
 	
 	return FWG_NO_ERROR;
+
 }
 
 GameErrorCode RenderRigidBody::Load(wxXmlNode* pNode)
@@ -169,4 +168,27 @@ void RenderRigidBody::Destroy()
 		m_pOwnerManager->GetOgreSceneManager()->destroyEntity(m_pEntity);
 		m_pEntity = nullptr;
 	}
+}
+
+void RenderRigidBody::OnCreation(void* pContext)
+{
+	RenderRigidBodyContext *pRBCont = static_cast<RenderRigidBodyContext*>(pContext);
+	m_pEntity = m_pOwnerManager->GetOgreSceneManager()->createEntity(pRBCont->meshName.ToStdString());
+	if(m_pEntity == nullptr)
+	{
+		return;
+	}
+	
+	if(!pRBCont->materialName.IsEmpty())
+	{
+		m_pEntity->setMaterialName(pRBCont->materialName.ToStdString());
+	} else {
+		FWGLOG_WARNING(wxT("Render rigid body warning: Material should not be empty")
+								, m_pOwnerManager->GetLogger());
+	}
+	
+	m_spPosition->GetSceneNode()->attachObject(m_pEntity);
+	
+	delete pRBCont;
+	
 }

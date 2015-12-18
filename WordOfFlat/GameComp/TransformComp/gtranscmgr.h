@@ -9,9 +9,6 @@
 
 
 class TransformComponent;
-class GameEntity;
-class btVector3;
-class btQuaternion;
 
 class TransformCompManager : public GameManagerBase<TransformComponent>
 {

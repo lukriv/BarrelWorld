@@ -31,16 +31,16 @@
   <VirtualDirectory Name="systems">
     <VirtualDirectory Name="renderSystem">
       <VirtualDirectory Name="include">
-        <File Name="RenderComp/grendercmgr.h"/>
         <File Name="RenderComp/grenderdotsceneloader.h"/>
         <File Name="RenderComp/grenderTerrDec.h"/>
         <File Name="RenderComp/grendercompbase.h"/>
+        <File Name="RenderComp/grendersystem.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="src">
-        <File Name="RenderComp/grendercmgr.cpp"/>
         <File Name="RenderComp/grenderdotsceneloader.cpp"/>
         <File Name="RenderComp/grenderTerrDec.cpp"/>
         <File Name="RenderComp/grendercompbase.cpp"/>
+        <File Name="RenderComp/grendersystem.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="physSystem">
@@ -233,9 +233,11 @@
     <VirtualDirectory Name="renderposition">
       <VirtualDirectory Name="include">
         <File Name="RenderComp/grenderposition.h"/>
+        <File Name="RenderComp/grenderpositionmgr.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="src">
         <File Name="RenderComp/grenderposition.cpp"/>
+        <File Name="RenderComp/grenderpositionmgr.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="renderobject">

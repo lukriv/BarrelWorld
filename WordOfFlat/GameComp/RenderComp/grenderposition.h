@@ -12,7 +12,7 @@ protected:
 public:
     
 
-    RenderPosition(RenderSystem* pCompMgr);
+    RenderPosition(GameRenderSystem* pCompMgr);
     ~RenderPosition();
 
     GameErrorCode Initialize(TransformComponent* pTransform);
@@ -24,6 +24,9 @@ public:
     virtual void ProcessUpdate() override;
 	
 	virtual void OnCreation(void* pContext) override;
+	
+	virtual GameErrorCode Load (wxXmlNode *pNode) override;
+	virtual GameErrorCode Store (wxXmlNode *pParentNode) override;
 
     /*!
      * \brief Destroy inner ogre object

@@ -7,7 +7,7 @@
 #include <GameSystem/glog.h>
 #include <GameSystem/refobjectsmptr.h>
 
-class RenderSystem;
+class GameRenderSystem;
 class PhysicsSystem;
 struct TerrainDef;
 struct TerrainPage;
@@ -48,7 +48,7 @@ class GameTerrainManager {
 private:
 	GameLoggerPtr m_spLogger;
 	
-	RenderSystem *m_pRenderMgr;
+	GameRenderSystem *m_pRenderMgr;
 	PhysicsSystem *m_pPhysicsMgr;
 	
 	
@@ -71,7 +71,7 @@ public:
 	 * @param pPhysMgr
 	 * @return 
 	 */
-	GameErrorCode Initialize(RenderSystem *pRenderMgr, PhysicsSystem *pPhysMgr);
+	GameErrorCode Initialize(GameRenderSystem *pRenderMgr, PhysicsSystem *pPhysMgr);
 	
 	void Uninitialize();
 	
