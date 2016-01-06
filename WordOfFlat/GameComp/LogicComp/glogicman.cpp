@@ -4,7 +4,7 @@
 #include <OGRE/OgrePrerequisites.h>
 
 #include "glogicsystem.h"
-#include "../InputComp/gcharinput.h"
+#include "../InputComp/ginputchar.h"
 //#include "../InputComp/ginputcomp.h"
 
 
@@ -18,29 +18,22 @@ LogicManualTest::~LogicManualTest()
 {
 }
 
-GameErrorCode LogicManualTest::Initialize(GameEntity* pEntity)
+GameErrorCode LogicManualTest::Initialize(TransformComponent* pTransform, InputComponent *pInput)
 {
-	if(pEntity == nullptr)
+	if((pTransform == nullptr)||(pInput == nullptr))
 	{
 		return FWG_E_INVALID_PARAMETER_ERROR;
 	}
 	
-	m_spTransform = reinterpret_cast<TransformComponent*>(pEntity->GetComponent(GAME_COMP_TRANSFORM));
-	m_spInput = reinterpret_cast<InputComponent*>(pEntity->GetComponent(GAME_COMP_INPUT));
+	m_spTransform = pTransform;
+	m_spInput = pInput;
 		
-	if(m_spTransform.IsEmpty() || m_spInput.IsEmpty())
-	{
-		return FWG_E_INVALID_PARAMETER_ERROR;
-	}
-	
-	m_pParent = pEntity;
-	
 	return FWG_NO_ERROR;
 }
 
 GameErrorCode LogicManualTest::UserLogic()
 {
-	if(m_pParent == nullptr)
+	if(m_spTransform.IsEmpty())
 	{
 		return FWG_E_OBJECT_NOT_INITIALIZED_ERROR;
 	}
@@ -89,7 +82,7 @@ GameErrorCode LogicManualTest::ProcessInput()
 	
 	// update render component
 	TaskMessage task(GAME_TASK_TRANSFORM_UPDATE);
-	if(FWG_FAILED(result = m_pParent->ReceiveMessage(task)))
+	if(FWG_FAILED(result = GetParentEntity()->ReceiveMessage(task)))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Update component failed: 0x%08x"), m_pLogicSystem->GetLogger(), result, FWGLOG_ENDVAL);
 		return result;
@@ -103,27 +96,6 @@ GameErrorCode LogicManualTest::ReceiveMessage(TaskMessage&)
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode LogicManualTest::ReinitComponent(GameEntity* pNewParentEntity)
-{
-	m_pParent = pNewParentEntity;
-	if(pNewParentEntity)
-	{
-		m_spTransform = reinterpret_cast<TransformComponent*>(pNewParentEntity->GetComponent(GAME_COMP_TRANSFORM));
-		m_spInput = reinterpret_cast<InputComponent*>(pNewParentEntity->GetComponent(GAME_COMP_INPUT));
-		
-		if(m_spTransform.IsEmpty() || m_spInput.IsEmpty())
-		{
-			return FWG_E_INVALID_PARAMETER_ERROR;
-		}
-	}
-	
-	return FWG_NO_ERROR;
-}
-
-GameErrorCode LogicManualTest::Update()
-{
-	return FWG_NO_ERROR;
-}
 
 GameErrorCode LogicManualTest::Load(wxXmlNode* pNode)
 {

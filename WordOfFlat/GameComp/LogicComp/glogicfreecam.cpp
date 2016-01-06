@@ -25,7 +25,7 @@ GameErrorCode LogicFreeCamera::CreateComponent(TransformComponent* pTransform, F
 	return FWG_NO_ERROR;
 }
 
-LogicFreeCamera::LogicFreeCamera() : LogicBase(GAME_COMP_LOGIC_FREE_CAMERA), m_angleX(0.0f), m_angleY(0.0f)
+LogicFreeCamera::LogicFreeCamera() : m_angleX(0.0f), m_angleY(0.0f)
 {
 }
 
@@ -82,7 +82,7 @@ GameErrorCode LogicFreeCamera::ProcessInput()
 	
 	// update render component
 	TaskMessage task(GAME_TASK_TRANSFORM_UPDATE);
-	if(FWG_FAILED(result = m_pParent->ReceiveMessage(task)))
+	if(FWG_FAILED(result = GetParentEntity()->ReceiveMessage(task)))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Update component failed: 0x%08x"), m_pLogicSystem->GetLogger(), result, FWGLOG_ENDVAL);
 		return result;
@@ -99,7 +99,7 @@ GameErrorCode LogicFreeCamera::ReceiveMessage(TaskMessage& msg)
 
 GameErrorCode LogicFreeCamera::Update()
 {
-	if(m_pParent == nullptr)
+	if(m_spTransform.IsEmpty())
 	{
 		return FWG_E_OBJECT_NOT_INITIALIZED_ERROR;
 	}

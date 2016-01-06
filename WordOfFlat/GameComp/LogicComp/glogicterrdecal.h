@@ -3,11 +3,12 @@
 
  // Base class: LogicComponentBase
 #include <bullet/LinearMath/btScalar.h>
+#include <GameSystem/gerror.h>
 #include "glogicbase.h"
 #include "../transformComp/gtranscomp.h"
 #include "../inputComp/ginputcomp.h"
 
-
+class GameTerrainManager;
 
 class LogicTerrainDecal : public LogicBase
 {
@@ -18,11 +19,7 @@ public:
 	LogicTerrainDecal();
 	~LogicTerrainDecal();
 	
-	GameErrorCode Initialize(GameTerrainManager *pTerrainManager, GameEntity *pEntity);
-	
-	virtual GameErrorCode ReceiveMessage(TaskMessage& msg) override;
-	virtual GameErrorCode ReinitComponent(GameEntity* pNewParentEntity) override;
-	virtual	GameErrorCode Update() override;
+	GameErrorCode Initialize(GameTerrainManager *pTerrainManager);
 	
 	GameErrorCode Load(wxXmlNode *pNode);
 	GameErrorCode Store(wxXmlNode *pParentNode);

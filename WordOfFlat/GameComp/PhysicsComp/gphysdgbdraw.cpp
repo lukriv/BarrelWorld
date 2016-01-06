@@ -178,7 +178,7 @@ void CDynamicLineDrawer::FillHardwareBuffers()
 		mRenderOp.vertexData->vertexBufferBinding->getBuffer(1);
 
 	// get rendersystem to pack colours
-	Ogre::GameRenderSystem* RS = Ogre::Root::getSingleton().getRenderSystem();
+	Ogre::RenderSystem* RS = Ogre::Root::getSingleton().getRenderSystem();
 
 	Ogre::Real* VPrPos = static_cast<Ogre::Real*>(VBuf->lock(Ogre::HardwareBuffer::HBL_DISCARD));
 	Ogre::RGBA* CPrPos = static_cast<Ogre::RGBA*>(CBuf->lock(Ogre::HardwareBuffer::HBL_DISCARD));

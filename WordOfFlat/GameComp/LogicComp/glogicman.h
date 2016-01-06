@@ -5,8 +5,9 @@
 #include "glogicbase.h"
 #include "../transformComp/gtranscomp.h"
 #include "../inputComp/ginputcomp.h"
+#include "gmoveable.h"
 
-class LogicManualTest : public LogicBase
+class LogicManualTest : public Moveable
 {
 	RefObjSmPtr<TransformComponent> m_spTransform;
 	RefObjSmPtr<InputComponent> m_spInput;
@@ -14,11 +15,9 @@ public:
 	LogicManualTest();
 	~LogicManualTest();
 	
-	GameErrorCode Initialize(GameEntity *pEntity);
+	GameErrorCode Initialize(TransformComponent* pTransform, InputComponent *pInput);
 	
 	virtual GameErrorCode ReceiveMessage(TaskMessage& msg) override;
-	virtual GameErrorCode ReinitComponent(GameEntity* pNewParentEntity) override;
-	virtual	GameErrorCode Update() override;
 	
 	GameErrorCode Load(wxXmlNode *pNode);
 	GameErrorCode Store(wxXmlNode *pParentNode);

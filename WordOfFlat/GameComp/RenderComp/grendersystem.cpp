@@ -36,7 +36,7 @@ GameErrorCode GameRenderSystem::Initialize(GameEngineSettings& settings)
 		m_pRoot->loadPlugin("RenderSystem_GL");
 		m_pRoot->loadPlugin("Plugin_OctreeSceneManager");
 		Ogre::RenderSystemList::const_iterator it = m_pRoot->getAvailableRenderers().begin();
-		Ogre::GameRenderSystem *pRenSys = nullptr;
+		Ogre::RenderSystem *pRenSys = nullptr;
 
 		if(m_pRoot->getAvailableRenderers().size() == 1) {
 			pRenSys = *it;

@@ -6,8 +6,9 @@
 #include <bullet/LinearMath/btScalar.h>
 #include "../transformComp/gtranscomp.h"
 #include "../inputComp/ginputfreecam.h"
+#include "gmoveable.h"
 
-class LogicFreeCamera : public LogicBase
+class LogicFreeCamera : public Moveable
 {
 	RefObjSmPtr<TransformComponent> m_spTransform;
 	RefObjSmPtr<FreeCameraInput> m_spInput;

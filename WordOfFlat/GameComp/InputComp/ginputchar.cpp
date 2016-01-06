@@ -12,8 +12,7 @@ static const wxChar* FACTORY_INPUT_FORWARD = wxT("forward");
 static const wxChar* FACTORY_INPUT_BACKWARD = wxT("backward");
 
 CharacterInput::CharacterInput()
-    : InputComponent(GAME_COMP_INPUT_CHARACTER)
-    , m_pInputSystem(nullptr)
+    : InputComponent()
 {
 }
 

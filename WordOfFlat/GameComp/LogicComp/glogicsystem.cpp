@@ -4,7 +4,6 @@
 #include "../gcompmgr.h"
 
 LogicSystem::LogicSystem(GameLogger *pLogger) : m_spLogger(pLogger)
-												, m_pComponentManager(nullptr)
 {
 }
 
