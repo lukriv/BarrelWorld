@@ -155,7 +155,7 @@ GameErrorCode GameRenderSystem::ProcessAllUpdates()
 	endIter = processQueue->end();
 	for(iter = processQueue->begin(); iter != endIter; ++iter)
 	{
-		(*iter)->ProcessUpdate();
+		(*iter)->Update();
 	}
 	
 	processQueue->clear();

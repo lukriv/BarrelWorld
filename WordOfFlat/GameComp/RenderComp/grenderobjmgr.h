@@ -2,11 +2,15 @@
 #define __GAME_RENDER_OBJECT_MANAGER_H__
 
 #include "gmanagerbase.h"
+#include "grenderobject.h"
+
+class GameRenderSystem;
 
 class RenderObjectManager : public GameManagerBase<RenderObject>
 {
+	GameRenderSystem *m_pRenderSystem;
 public:
-	RenderObjectManager();
+	RenderObjectManager(GameRenderSystem *pRenderSystem);
 	~RenderObjectManager();
 	
 	template<class T>
@@ -14,17 +18,11 @@ public:
 	{
 		GameErrorCode result = FWG_NO_ERROR;
 		RefObjSmPtr<T> spRenderObj;
-		FWG_RETURN_FAIL( GameNewChecked(spRenderObj.OutRef()) );
-		
-		if(FWG_FAILED(result = spRenderObj->Initialize(m_pInputSystem)))
-		{
-			FWGLOG_ERROR_FORMAT(wxT("Input component initialize failed: 0x%08x"), GetLogger(), result, FWGLOG_ENDVAL);
-			return result;
-		}
+		FWG_RETURN_FAIL( GameNewChecked(spRenderObj.OutRef(), m_pRenderSystem) );
 		
 		FWG_RETURN_FAIL(InsertToMap(compId, spRenderObj));
 		
-		pInputComp = spRenderObj.Detach();
+		pRenderObj = spRenderObj.Detach();
 
 		return result;
 	}

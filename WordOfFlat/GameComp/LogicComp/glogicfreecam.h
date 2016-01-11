@@ -10,8 +10,6 @@
 
 class LogicFreeCamera : public Moveable
 {
-	RefObjSmPtr<TransformComponent> m_spTransform;
-	RefObjSmPtr<FreeCameraInput> m_spInput;
 	btScalar m_angleX;
 	btScalar m_angleY;
 public:
@@ -22,10 +20,10 @@ public:
 	
 	virtual GameErrorCode ReceiveMessage(TaskMessage& msg) override;
 	
-	GameErrorCode Update();
+	virtual GameErrorCode Update() override;
 	
-	GameErrorCode Load(wxXmlNode *pNode);
-	GameErrorCode Store(wxXmlNode *pParentNode);
+	virtual GameErrorCode Load(wxXmlNode *pNode) override;
+	virtual GameErrorCode Store(wxXmlNode *pParentNode) override;
 
 protected:
 	GameErrorCode ProcessInput();

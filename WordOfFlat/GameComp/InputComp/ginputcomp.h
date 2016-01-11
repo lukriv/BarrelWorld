@@ -207,17 +207,17 @@ public:
 		m_ctrlStruct.ResetClicked();
     }
 
-    /*!
-     * \brief
-     * \return Move vector - should be identity vector, if vector is zero, object does not want to move
-     */
-    Ogre::Vector2& GetMoveDirection2D();
-
-    /*!
-     * \brief
-     * \return Look vector - should be identity vector, zero vector is allowed only in first or third person look
-     */
-    Ogre::Vector2& GetLookDirection2D();
+    ///*!
+    // * \brief
+    // * \return Move vector - should be identity vector, if vector is zero, object does not want to move
+    // */
+    //Ogre::Vector2& GetMoveDirection2D();
+    //
+    ///*!
+    // * \brief
+    // * \return Look vector - should be identity vector, zero vector is allowed only in first or third person look
+    // */
+    //Ogre::Vector2& GetLookDirection2D();
 
     virtual GameErrorCode ReceiveMessage(TaskMessage& msg) override;
 	

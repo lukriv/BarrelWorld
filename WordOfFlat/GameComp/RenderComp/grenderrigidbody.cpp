@@ -25,7 +25,7 @@ RenderRigidBody::~RenderRigidBody()
 	Destroy();
 }
 
-void RenderRigidBody::ProcessUpdate()
+void RenderRigidBody::Update()
 {
     wxCriticalSectionLocker lock(m_renderLock);
 

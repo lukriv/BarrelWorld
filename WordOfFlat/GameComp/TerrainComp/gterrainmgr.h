@@ -8,7 +8,7 @@
 #include <GameSystem/refobjectsmptr.h>
 
 class GameRenderSystem;
-class PhysicsSystem;
+class GamePhysicsSystem;
 struct TerrainDef;
 struct TerrainPage;
 
@@ -49,7 +49,7 @@ private:
 	GameLoggerPtr m_spLogger;
 	
 	GameRenderSystem *m_pRenderMgr;
-	PhysicsSystem *m_pPhysicsMgr;
+	GamePhysicsSystem *m_pPhysicsMgr;
 	
 	
 	Ogre::TerrainGlobalOptions* m_globalTerrainOptions;
@@ -71,7 +71,7 @@ public:
 	 * @param pPhysMgr
 	 * @return 
 	 */
-	GameErrorCode Initialize(GameRenderSystem *pRenderMgr, PhysicsSystem *pPhysMgr);
+	GameErrorCode Initialize(GameRenderSystem *pRenderMgr, GamePhysicsSystem *pPhysMgr);
 	
 	void Uninitialize();
 	

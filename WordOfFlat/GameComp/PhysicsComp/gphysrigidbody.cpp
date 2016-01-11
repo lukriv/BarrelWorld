@@ -13,7 +13,7 @@
 #include "gphyssystem.h"
 
 
-PhysicsRigidBody::PhysicsRigidBody(PhysicsSystem* pOwnerMgr)
+PhysicsRigidBody::PhysicsRigidBody(GamePhysicsSystem* pOwnerMgr)
     : PhysicsBase(pOwnerMgr), m_pRigidBody(nullptr)
 {
 }

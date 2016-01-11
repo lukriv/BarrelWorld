@@ -148,7 +148,7 @@ GameErrorCode GameClientEngine::CreateTestingWorld()
 		-sqrt13,-sqrt13,sqrt13,     //7 normal
 	};
 
-	Ogre::GameRenderSystem *pRenSys = m_spCompManager->GetRenderManager().GetOgreRoot()->getRenderSystem();
+	Ogre::GameRenderSystem *pRenSys = m_spCompManager->GetRenderSystem().GetOgreRoot()->getRenderSystem();
 	Ogre::RGBA colours[nVertices];
 	Ogre::RGBA *pColour = colours;
 

@@ -43,7 +43,7 @@ public:
 	/**
 	 * \brief Process update if it is necessary
 	 */
-	virtual void ProcessUpdate() = 0;
+	virtual void Update() = 0;
 	
 	/**
 	 * @brief Called in asynchronous component creation

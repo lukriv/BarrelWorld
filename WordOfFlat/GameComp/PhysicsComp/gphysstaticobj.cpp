@@ -10,7 +10,7 @@
 #include "gphyssystem.h"
 #include "../transformComp/gtranscomp.h"
 
-PhysicsStaticObject::PhysicsStaticObject(PhysicsSystem* pPhysSystem) : PhysicsBase(pPhysSystem), m_pColObject(nullptr)
+PhysicsStaticObject::PhysicsStaticObject(GamePhysicsSystem* pPhysSystem) : PhysicsBase(pPhysSystem), m_pColObject(nullptr)
 {}
 
 

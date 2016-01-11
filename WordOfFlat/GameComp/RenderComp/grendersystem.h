@@ -1,5 +1,5 @@
-#ifndef __GAME_RENDER_COMPONENT_MANAGER_H__
-#define __GAME_RENDER_COMPONENT_MANAGER_H__
+#ifndef __GAME_RENDER_SYSTEM_H__
+#define __GAME_RENDER_SYSTEM_H__
 
 #include <OGRE/OgreSceneManager.h>
 #include <wx/thread.h>
@@ -110,4 +110,4 @@ public:
 	
 };
 
-#endif // __GAME_RENDER_COMPONENT_MANAGER_H__
+#endif // __GAME_RENDER_SYSTEM_H__

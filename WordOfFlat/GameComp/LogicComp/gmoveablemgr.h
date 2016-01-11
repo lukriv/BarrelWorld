@@ -1,22 +1,35 @@
-#ifndef __GAME_LOGIC_FREE_CAMERA_MANAGER_H__
-#define __GAME_LOGIC_FREE_CAMERA_MANAGER_H__
+#ifndef __GAME_LOGIC_MOVEABLE_MANAGER_H__
+#define __GAME_LOGIC_MOVEABLE_MANAGER_H__
 
 
 #include <GameComp/gmanagerbase.h>
+#include "gmoveable.h"
 #include "glogicfreecam.h"
+#include "glogicman.h"
 
 
 
-class LogicFreeCameraManager : public GameManagerBase<LogicFreeCamera>
+class MoveableManager : public GameManagerBase<Moveable>
 {
 private:
-	GameInputSystem* m_pInputSystem;
+	GameLogicSystem* m_pLogicSystem;
 public:
-	LogicFreeCameraManager(GameInputSystem* pInputSystem);
-	~LogicFreeCameraManager();
+	MoveableManager(GameLogicSystem* pLogicSystem);
+	~MoveableManager();
 	
-	GameErrorCode CreateComponent(wxDword compId, LogicFreeCamera *&pNewComponent);
+	template <class T>
+	GameErrorCode CreateComponent(wxDword compId, T *&pNewComponent )
+	{
+		RefObjSmPtr<T> spLogicComp;
+		FWG_RETURN_FAIL(GameNewChecked(spLogicComp.OutRef()));
+		
+		FWG_RETURN_FAIL(InsertToMap(compId, spLogicComp));
+		
+		// todo: insert component to logic system
+		
+		return FWG_NO_ERROR;
+	}
 
 };
 
-#endif // __GAME_LOGIC_FREE_CAMERA_MANAGER_H__
+#endif // __GAME_LOGIC_MOVEABLE_MANAGER_H__

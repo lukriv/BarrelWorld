@@ -1,20 +1,13 @@
 #include "gmoveablemgr.h"
+#include "glogicsystem.h"
 
-LogicFreeCameraManager::LogicFreeCameraManager(GameInputSystem* pInputSystem) : GameManagerBase(pInputSystem->GetLogger())
-																				, m_pInputSystem(pInputSystem)
+MoveableManager::MoveableManager(GameLogicSystem* pLogicSystem) : GameManagerBase(pLogicSystem->GetLogger())
+																				, m_pLogicSystem(pLogicSystem)
 {
 }
 
-LogicFreeCameraManager::~LogicFreeCameraManager()
+MoveableManager::~MoveableManager()
 {
 }
 
-GameErrorCode LogicFreeCameraManager::CreateComponent(wxDword compId, LogicFreeCamera*& pNewComponent)
-{
-	RefObjSmPtr<LogicFreeCamera> spLogicComp;
-	FWG_RETURN_FAIL(GameNewChecked(spLogicComp.OutRef()));
-	
-	FWG_RETURN_FAIL(InsertToMap(compId, spLogicComp));
-	
-	return FWG_NO_ERROR;
-}
+

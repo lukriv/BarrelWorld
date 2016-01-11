@@ -133,7 +133,7 @@ GameErrorCode RenderCamera::Load(wxXmlNode* pNode)
 	return FWG_NO_ERROR;
 }
 
-void RenderCamera::ProcessUpdate()
+void RenderCamera::Update()
 {
 }
 

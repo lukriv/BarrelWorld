@@ -37,7 +37,7 @@ GameErrorCode GameEntityFactory::CreateEntity( EntityDef& entityDef, GameCompMan
 	GameErrorCode result = FWG_NO_ERROR;	
 	FWG_RETURN_FAIL(compMgr.GetEntityManager().CreateEntity(entityDef.GetName(), pEntity));
 	
-	if(compMgr.GetRenderManager().GetOgreSceneManager() != nullptr)
+	if(compMgr.GetRenderSystem().GetOgreSceneManager() != nullptr)
 	{
 		
 		if(!entityDef.m_transformation.IsEmpty())
@@ -52,7 +52,7 @@ GameErrorCode GameEntityFactory::CreateEntity( EntityDef& entityDef, GameCompMan
 
 		if(!entityDef.m_renderDef.IsEmpty())
 		{
-			if(FWG_FAILED(result = compMgr.GetRenderManager().CreateRenderComponent(*entityDef.m_renderDef, pEntity)))
+			if(FWG_FAILED(result = compMgr.GetRenderSystem().CreateRenderComponent(*entityDef.m_renderDef, pEntity)))
 			{
 				FWGLOG_ERROR_FORMAT(wxT("Create Render component failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL );
 				return result;
@@ -61,7 +61,7 @@ GameErrorCode GameEntityFactory::CreateEntity( EntityDef& entityDef, GameCompMan
 		
 		if(!entityDef.m_physDef.IsEmpty())
 		{
-			if(FWG_FAILED(result = compMgr.GetPhysicsManager().CreatePhysicsComponent(*entityDef.m_physDef, pEntity)))
+			if(FWG_FAILED(result = compMgr.GetPhysicsSystem().CreatePhysicsComponent(*entityDef.m_physDef, pEntity)))
 			{
 				FWGLOG_ERROR_FORMAT(wxT("Create physics component failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL );
 				return result;
@@ -88,7 +88,7 @@ GameErrorCode GameEntityFactory::CreateEntity( EntityDef& entityDef, GameCompMan
 		
 		if(!entityDef.m_logicDef.IsEmpty())
 		{
-			if(FWG_FAILED(result = compMgr.GetLogicManager().CreateLogicComp(*entityDef.m_logicDef, pEntity)))
+			if(FWG_FAILED(result = compMgr.GetLogicSystem().CreateLogicComp(*entityDef.m_logicDef, pEntity)))
 			{
 				FWGLOG_ERROR_FORMAT(wxT("Create logic component failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL );
 				return result;

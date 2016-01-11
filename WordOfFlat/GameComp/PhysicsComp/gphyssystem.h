@@ -1,5 +1,5 @@
-#ifndef __GAME_PHYSICS_COMPONENT_MANAGER_H__
-#define __GAME_PHYSICS_COMPONENT_MANAGER_H__
+#ifndef __GAME_PHYSICS_SYSTEM_H__
+#define __GAME_PHYSICS_SYSTEM_H__
 
 #include <bullet/btBulletDynamicsCommon.h>
 #include <GameSystem/gdefs.h>
@@ -10,7 +10,7 @@
 struct PhysCompDef;
 struct PhysShapeDef;
 
-class PhysicsSystem {
+class GamePhysicsSystem {
 	btConstraintSolver *m_pSolver;
 	btBroadphaseInterface	*m_pBroadphase;
 	btCollisionConfiguration *m_pCollisionConfig;
@@ -20,8 +20,8 @@ class PhysicsSystem {
 	GameLoggerPtr m_spLogger;
 
 public:
-	PhysicsSystem(GameLogger* pLogger);
-	~PhysicsSystem();
+	GamePhysicsSystem(GameLogger* pLogger);
+	~GamePhysicsSystem();
 	
 	inline btDynamicsWorld* GetDynamicsWorld() { return m_pDynamicsWorld; }
 	inline GameLogger* GetLogger() { return m_spLogger; }
@@ -38,4 +38,4 @@ protected:
 	
 };
 
-#endif //__GAME_PHYSICS_COMPONENT_MANAGER_H__
+#endif //__GAME_PHYSICS_SYSTEM_H__

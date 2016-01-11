@@ -1,5 +1,5 @@
-#ifndef __GAME_INPUT_COMPONENT_H__
-#define __GAME_INPUT_COMPONENT_H__
+#ifndef __GAME_INPUT_SYSTEM_H__
+#define __GAME_INPUT_SYSTEM_H__
 
 #include <OGRE/OgreRenderWindow.h>
 #include <OIS/OISInputManager.h>
@@ -157,4 +157,4 @@ public:
 };
 
 
-#endif // __GAME_INPUT_COMPONENT_H__
+#endif // __GAME_INPUT_SYSTEM_H__

@@ -12,7 +12,7 @@ class LogicBase;
 class GameEntity;
 struct LogicDef;
 
-class LogicSystem
+class GameLogicSystem
 {
 private:
 	typedef GameBasSet<LogicBase*> TLogicCompList;
@@ -22,8 +22,8 @@ private:
 	
 	wxCriticalSection m_lockMgr;
 public:
-	LogicSystem(GameLogger *pLogger);
-	virtual ~LogicSystem();
+	GameLogicSystem(GameLogger *pLogger);
+	virtual ~GameLogicSystem();
 	
 	inline GameLogger* GetLogger() { return m_spLogger; }
 	

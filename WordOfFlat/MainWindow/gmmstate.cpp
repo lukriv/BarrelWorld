@@ -20,7 +20,7 @@ GameErrorCode GameMainMenuState::ProcessUpdate(float secDiff)
 	if(logicStep < 0)
 	{
 		//FWGLOG_DEBUG(wxT("Start physics steps"), m_pOwner->GetLogger());
-		if(FWG_FAILED(result = m_spCompManager->GetPhysicsManager().ProcessPhysics()))
+		if(FWG_FAILED(result = m_spCompManager->GetPhysicsSystem().ProcessPhysics()))
 		{
 			FWGLOG_ERROR_FORMAT(wxT("Process physics steps failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
 			return result;
@@ -32,7 +32,7 @@ GameErrorCode GameMainMenuState::ProcessUpdate(float secDiff)
 			m_pDebugDraw->Update();
 		}
 
-		if(FWG_FAILED(result = m_spCompManager->GetLogicManager().ProcessLogicStep()))
+		if(FWG_FAILED(result = m_spCompManager->GetLogicSystem().ProcessLogicStep()))
 		{
 			FWGLOG_ERROR_FORMAT(wxT("Process logic steps failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
 			return result;
@@ -43,7 +43,7 @@ GameErrorCode GameMainMenuState::ProcessUpdate(float secDiff)
 		logicStep += LogicStepTime;
 	}
 	
-	if(FWG_FAILED(result = m_spCompManager->GetRenderManager().ProcessAllUpdates()))
+	if(FWG_FAILED(result = m_spCompManager->GetRenderSystem().ProcessAllUpdates()))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Process render updates failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
 		return result;
@@ -51,7 +51,7 @@ GameErrorCode GameMainMenuState::ProcessUpdate(float secDiff)
 	
 	if(m_switchPolyMode)
 	{
-		Ogre::Camera *pCamera = m_spCompManager->GetRenderManager().GetMainCamera()->GetCamera();
+		Ogre::Camera *pCamera = m_spCompManager->GetRenderSystem().GetMainCamera()->GetCamera();
 		Ogre::PolygonMode polyMode = pCamera->getPolygonMode();
 		if(polyMode == Ogre::PM_SOLID)
 		{
@@ -112,7 +112,7 @@ GameErrorCode GameMainMenuState::ProcessState(GameState& nextState, wxString& ne
 
 	FWGLOG_INFO(wxT("All entities created"), m_pOwner->GetLogger());
 	
-	if(FWG_FAILED(result = m_spCompManager->GetRenderManager().SetMainCamera("MainCamera")))
+	if(FWG_FAILED(result = m_spCompManager->GetRenderSystem().SetMainCamera("MainCamera")))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Set main camera failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
 		return result;
@@ -121,7 +121,7 @@ GameErrorCode GameMainMenuState::ProcessState(GameState& nextState, wxString& ne
 	FWGLOG_INFO(wxT("Main camera set"), m_pOwner->GetLogger());
 	
 	// temporary light for menus
-	m_spCompManager->GetRenderManager().GetOgreSceneManager()->setAmbientLight(Ogre::ColourValue(0.5,0.5,0.5));
+	m_spCompManager->GetRenderSystem().GetOgreSceneManager()->setAmbientLight(Ogre::ColourValue(0.5,0.5,0.5));
 	
 	
 	if(m_spMenu.IsEmpty())
@@ -146,12 +146,12 @@ GameErrorCode GameMainMenuState::ProcessState(GameState& nextState, wxString& ne
 	
 	FWG_RETURN_FAIL(m_spMenu->Show());
 	
-	m_spCompManager->GetRenderManager().GetOgreRoot()->addFrameListener(this);
+	m_spCompManager->GetRenderSystem().GetOgreRoot()->addFrameListener(this);
 	
 	// physics debug draw
 	//m_pDebugDraw = new CDebugDraw( m_spCompManager->GetRenderManager().GetOgreSceneManager(), m_spCompManager->GetPhysicsManager().GetDynamicsWorld());
 	
-	m_spCompManager->GetRenderManager().GetOgreRoot()->startRendering();
+	m_spCompManager->GetRenderSystem().GetOgreRoot()->startRendering();
 	
 	if(m_pDebugDraw)
 	{
@@ -159,7 +159,7 @@ GameErrorCode GameMainMenuState::ProcessState(GameState& nextState, wxString& ne
 		m_pDebugDraw = nullptr;
 	}
  	
-	m_spCompManager->GetRenderManager().GetOgreRoot()->removeFrameListener(this);
+	m_spCompManager->GetRenderSystem().GetOgreRoot()->removeFrameListener(this);
 	
 	nextState = m_nextState;
 	nextStateParams = m_nextStateParams;
@@ -215,7 +215,7 @@ void GameMainMenuState::SwitchPhysicsDebug()
 {
 	if(!m_pDebugDraw)
 	{
-		m_pDebugDraw = new CDebugDraw( m_spCompManager->GetRenderManager().GetOgreSceneManager(), m_spCompManager->GetPhysicsManager().GetDynamicsWorld());
+		m_pDebugDraw = new CDebugDraw( m_spCompManager->GetRenderSystem().GetOgreSceneManager(), m_spCompManager->GetPhysicsSystem().GetDynamicsWorld());
 	} else {
 		delete m_pDebugDraw;
 		m_pDebugDraw = nullptr;

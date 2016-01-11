@@ -8,18 +8,16 @@
 
 class Moveable : public LogicBase, public ComponentBase
 {
+protected:
     RefObjSmPtr<TransformComponent> m_spTransform;
     RefObjSmPtr<InputComponent> m_spInput;
-
-
 public:
     
     Moveable();
     ~Moveable();
-
-    GameErrorCode CreateComponent(TransformComponent* pTransform, InputComponent* pFreeCamInput);
-
 	
+	GameErrorCode Initialize(TransformComponent* pTransform, InputComponent* pFreeCamInput);
+
 };
 
 #endif // __GAME_SIMPLE_MOVE_LOGIC_H__

@@ -148,14 +148,17 @@ GameErrorCode InputComponent::GetKeyValue(wxXmlNode* pNode, wxString& action, wx
 
 GameErrorCode InputComponent::SetKeyValue(wxXmlNode* pParentNode, wxString& action, wxInt32& keyCode)
 {
+	return FWG_E_NOT_IMPLEMENTED_ERROR;
 }
 
 GameErrorCode InputComponent::Load(wxXmlNode* pNode)
 {
+	return FWG_E_NOT_IMPLEMENTED_ERROR;
 }
 
 GameErrorCode InputComponent::Store(wxXmlNode* pParentNode)
 {
+	return FWG_E_NOT_IMPLEMENTED_ERROR;
 }
 
 void InputComponent::SetDefinition(InputDef* pDef)
@@ -173,12 +176,4 @@ void InputComponent::SetDefinition(InputDef* pDef)
 InputDef* InputComponent::GetDefinition() const 
 {
 	return m_spDefinition.In();
-}
-
-Ogre::Vector2& InputComponent::GetMoveDirection2D()
-{
-}
-
-Ogre::Vector2& InputComponent::GetLookDirection2D()
-{
 }

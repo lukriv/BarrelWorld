@@ -2,7 +2,7 @@
 
 #include "../gcompdefs.h"
 
-PhysicsBase::PhysicsBase(PhysicsSystem* pPhysSystem) : ComponentBase(GAME_COMP_PHYSICS), m_pPhysSystem(pPhysSystem)
+PhysicsBase::PhysicsBase(GamePhysicsSystem* pPhysSystem) : ComponentBase(GAME_COMP_PHYSICS), m_pPhysSystem(pPhysSystem)
 {}
 
 PhysicsBase::~PhysicsBase()

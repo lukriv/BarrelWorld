@@ -1,5 +1,5 @@
-#ifndef __GAME_RENDER_MOVEABLE_H__
-#define __GAME_RENDER_MOVEABLE_H__
+#ifndef __GAME_RENDER_POSITION_H__
+#define __GAME_RENDER_POSITION_H__
 
 #include "grendercompbase.h"
 
@@ -21,7 +21,7 @@ public:
 
     inline Ogre::SceneNode* GetSceneNode() { return m_pSceneNode; }
 
-    virtual void ProcessUpdate() override;
+    virtual void Update() override;
 	
 	virtual void OnCreation(void* pContext) override;
 	
@@ -34,4 +34,4 @@ public:
     void Clear();
 };
 
-#endif // __GAME_RENDER_MOVEABLE_H__
+#endif // __GAME_RENDER_POSITION_H__

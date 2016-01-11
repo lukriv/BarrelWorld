@@ -7,7 +7,7 @@
 #include "../gcompbase.h"
 
 class GameEntity;
-class LogicSystem;
+class GameLogicSystem;
 
 /*!
  * \class GameEntity
@@ -19,18 +19,18 @@ class LogicSystem;
 class LogicBase
 {
 protected:
-	LogicSystem *m_pLogicSystem;
+	GameLogicSystem *m_pLogicSystem;
 
 public:
 
 	LogicBase(): m_pLogicSystem(nullptr) {}
 	virtual ~LogicBase();
 
-	inline void SetOwnerManager(LogicSystem *pLogicSystem) {
+	inline void SetOwnerManager(GameLogicSystem *pLogicSystem) {
 		m_pLogicSystem = pLogicSystem;
 	}
 
-	virtual GameErrorCode ProcessLogic() = 0;
+	virtual GameErrorCode Update() = 0;
 	
 };
 

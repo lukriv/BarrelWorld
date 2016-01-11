@@ -35,7 +35,7 @@ public:
 	/**
 	 * \brief Process update if it is necessary
 	 */
-	virtual void ProcessUpdate() override;
+	virtual void Update() override;
 	
 	/**
 	 * @brief Called in asynchronous component creation

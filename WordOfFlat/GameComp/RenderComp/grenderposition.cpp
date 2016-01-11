@@ -30,7 +30,7 @@ GameErrorCode RenderPosition::Initialize(TransformComponent* pTransform)
 	return FWG_NO_ERROR;
 }
 
-void RenderPosition::ProcessUpdate()
+void RenderPosition::Update()
 {
 	wxCriticalSectionLocker lock(m_renderLock);
 

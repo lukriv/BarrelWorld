@@ -1,15 +1,16 @@
 #ifndef __GAME_PHYSICS_STATIC_OBJECT_H__
 #define __GAME_PHYSICS_STATIC_OBJECT_H__
 
-#include "gcompbase.h" // Base class: ComponentBase
 #include <GameSystem/refobjectsmptr.h>
+#include "gcompbase.h" // Base class: ComponentBase
+#include "gphysbase.h"
 
 
 class btCollisionObject;
 class btCollisionShape;
 class wxXmlNode;
 class TransformComponent;
-class PhysicsSystem;
+class GamePhysicsSystem;
 
 class PhysicsStaticObject : public PhysicsBase
 {
@@ -17,7 +18,7 @@ protected:
 	btCollisionObject *m_pColObject;
 	
 public:
-	PhysicsStaticObject(PhysicsSystem* pPhysSystem);
+	PhysicsStaticObject(GamePhysicsSystem* pPhysSystem);
 	~PhysicsStaticObject();
 	
 	GameErrorCode Create(btCollisionShape *pColShape);

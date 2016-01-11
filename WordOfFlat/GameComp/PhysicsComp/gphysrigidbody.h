@@ -1,11 +1,13 @@
 #ifndef __GAME_PHYSICS_RIGID_BODY_H__
 #define __GAME_PHYSICS_RIGID_BODY_H__
 
-#include "../gcompbase.h"
+
 #include <bullet/LinearMath/btScalar.h>
 #include <GameSystem/refobjectsmptr.h>
+#include "../gcompbase.h"
+#include "gphysbase.h"
 
-class PhysicsSystem;
+class GamePhysicsSystem;
 class btCollisionShape;
 class btRigidBody;
 class TransformComponent;
@@ -19,7 +21,7 @@ protected:
 	
 public:
 
-    PhysicsRigidBody(PhysicsSystem* pOwnerMgr);
+    PhysicsRigidBody(GamePhysicsSystem* pOwnerMgr);
     ~PhysicsRigidBody();
 	
 	GameErrorCode Create(btScalar mass, btCollisionShape *pColShape);

@@ -204,6 +204,7 @@
         <File Name="LogicComp/glogicfreecam.cpp"/>
         <File Name="LogicComp/glogicman.cpp"/>
         <File Name="LogicComp/gmoveablemgr.cpp"/>
+        <File Name="LogicComp/gmoveable.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="transform">
@@ -259,11 +260,13 @@
         <File Name="PhysicsComp/gphysrigidbody.h"/>
         <File Name="PhysicsComp/gphysbase.h"/>
         <File Name="PhysicsComp/gphysstaticobj.h"/>
+        <File Name="PhysicsComp/gphyscompmgr.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="src">
         <File Name="PhysicsComp/gphysrigidbody.cpp"/>
         <File Name="PhysicsComp/gphysbase.cpp"/>
         <File Name="PhysicsComp/gphysstaticobj.cpp"/>
+        <File Name="PhysicsComp/gphyscompmgr.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
   </VirtualDirectory>

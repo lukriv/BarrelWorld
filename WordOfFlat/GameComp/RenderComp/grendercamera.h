@@ -2,6 +2,7 @@
 #define __GAME_RENDER_CAMERA_H__
 
 #include "grendercompbase.h"
+#include "grenderobject.h"
 
 class RenderPosition;
 
@@ -26,10 +27,12 @@ public:
 	
 	Ogre::Camera* GetOgreCamera();
 	
-    GameErrorCode Load(wxXmlNode* XMLNode);
-    GameErrorCode Store(wxXmlNode* ParentNode);
 	
-	virtual void ProcessUpdate() override;
+	
+    virtual GameErrorCode Load(wxXmlNode* XMLNode) override;
+    virtual GameErrorCode Store(wxXmlNode* ParentNode) override;
+	
+	virtual void Update() override;
 };
 
 #endif // __GAME_RENDER_CAMERA_H__
