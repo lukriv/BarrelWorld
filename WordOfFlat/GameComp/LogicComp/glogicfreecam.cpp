@@ -1,8 +1,9 @@
 #include "glogicfreecam.h"
 #include "glogicsystem.h"
-#include <GameComp/gentity.h>
 #include <GameComp/inputComp/ginputfreecam.h>
+#include <GameComp/gentitymgr.h>
 #include <GameXmlDefinitions/gxmldefs.h>
+#include <GameXmlDefinitions/gxmlutils.h>
 #include <wx/xml/xml.h>
 #include <wx/scopedptr.h>
 
@@ -82,7 +83,8 @@ GameErrorCode LogicFreeCamera::ProcessInput()
 	
 	// update render component
 	TaskMessage task(GAME_TASK_TRANSFORM_UPDATE);
-	if(FWG_FAILED(result = GetParentEntity()->ReceiveMessage(task)))
+	
+	if(FWG_FAILED(result = GetEntityManager()->SendTaskMessage(GetComponentId(), task)))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Update component failed: 0x%08x"), m_pLogicSystem->GetLogger(), result, FWGLOG_ENDVAL);
 		return result;
@@ -114,20 +116,18 @@ GameErrorCode LogicFreeCamera::Update()
 
 GameErrorCode LogicFreeCamera::Load(wxXmlNode* pNode)
 {
-	if( pNode->GetName() != GAME_TAG_COMP_LOGIC_FREE_CAMERA )
-	{
-		return FWG_E_XML_INVALID_TAG_ERROR;
-	}
+	return GameXmlUtils::CheckTagAndType(pNode, GAME_TAG_COMP_MOVEABLE, GAME_TAG_TYPE_MOVEABLE_FREE_CAMERA, m_pLogicSystem->GetLogger());
 	
-	return FWG_NO_ERROR;
 }
 
 GameErrorCode LogicFreeCamera::Store(wxXmlNode* pParentNode)
 {
 	wxXmlNode *pNewNode = nullptr;
 	wxString content;
-	FWG_RETURN_FAIL(GameNewChecked(pNewNode, wxXML_ELEMENT_NODE, GAME_TAG_COMP_LOGIC_FREE_CAMERA));
+	FWG_RETURN_FAIL(GameNewChecked(pNewNode, wxXML_ELEMENT_NODE, GAME_TAG_COMP_MOVEABLE));
 	wxScopedPtr<wxXmlNode> apNewNode(pNewNode);
+	
+	pNewNode->AddAttribute(GAME_TAG_ATTR_TYPE, GAME_TAG_TYPE_MOVEABLE_FREE_CAMERA);
 	
 	pParentNode->AddChild(apNewNode.release());
 	

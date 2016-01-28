@@ -1,7 +1,6 @@
 #include "gmmstate.h"
-#include "GameXmlDefinitions/gxmlloader.h"
-#include "GameComp/RenderComp/grenderobj.h"
-#include "GameComp/RenderComp/grendercompbase.h"
+#include <GameXmlDefinitions/gxmlloader.h>
+
 #include <GameComp/PhysicsComp/gphysdbgdraw.h>
 
 static const float LogicStepTime = 1.0f / 60.0f;
@@ -51,7 +50,7 @@ GameErrorCode GameMainMenuState::ProcessUpdate(float secDiff)
 	
 	if(m_switchPolyMode)
 	{
-		Ogre::Camera *pCamera = m_spCompManager->GetRenderSystem().GetMainCamera()->GetCamera();
+		Ogre::Camera *pCamera = m_spCompManager->GetRenderSystem().GetMainCamera();
 		Ogre::PolygonMode polyMode = pCamera->getPolygonMode();
 		if(polyMode == Ogre::PM_SOLID)
 		{
@@ -78,7 +77,6 @@ GameErrorCode GameMainMenuState::ProcessState(GameState& nextState, wxString& ne
 	
 	GameErrorCode result = FWG_NO_ERROR;
 	GameXmlResourceLoader loader;
-	GameDefinitionHolder defHolder;
 	
 	if(FWG_FAILED(result = loader.Initialize(wxT("example.xml"), wxT("res/"), m_pOwner->GetLogger())))
 	{
@@ -88,7 +86,7 @@ GameErrorCode GameMainMenuState::ProcessState(GameState& nextState, wxString& ne
 	
 	FWGLOG_INFO(wxT("Loader successfully initialized"), m_pOwner->GetLogger());
 	
-	if(FWG_FAILED(result = loader.Load(defHolder)))
+	if(FWG_FAILED(result = loader.Load(*m_spCompManager)))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Load xml failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
 		return result;
@@ -96,22 +94,8 @@ GameErrorCode GameMainMenuState::ProcessState(GameState& nextState, wxString& ne
 
 	FWGLOG_INFO(wxT("Scene loaded"), m_pOwner->GetLogger());
 	
-	if(FWG_FAILED(result = m_pOwner->GetFactory()->CreateTerrain(defHolder, *m_spCompManager)))
-	{
-		FWGLOG_ERROR_FORMAT(wxT("Create entities failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
-		return result;
-	}
-	
-	FWGLOG_INFO(wxT("Terrain created"), m_pOwner->GetLogger());
-	
-	if(FWG_FAILED(result = m_pOwner->GetFactory()->CreateAllEntities(defHolder, *m_spCompManager)))
-	{
-		FWGLOG_ERROR_FORMAT(wxT("Create entities failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
-		return result;
-	}
 
-	FWGLOG_INFO(wxT("All entities created"), m_pOwner->GetLogger());
-	
+
 	if(FWG_FAILED(result = m_spCompManager->GetRenderSystem().SetMainCamera("MainCamera")))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Set main camera failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);

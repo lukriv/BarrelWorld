@@ -15,35 +15,30 @@
 				</terrainpage>
 			</terrainpages>
 		</terrain>
-		<entity id="1" >
+		<entity>
 			<transform>
 				<position>0.0, 15.0, 0.0</position>
 				<scale>1.0, 1.0, 1.0</scale>
 				<rotation>1.0, 0.0, 0.0, 0.0</rotation>				
 			</transform>
 			
-			<renderRigidBody>
+			<rposition>
+			</rposition>
+			
+			<robject type="renderRigidBody">
 				<mesh>TestingCube</mesh>
 				<material>Test/ColourTest</material>
-				<!-- <renderent name="renderEnt1">
-					<meshref value="mesh1" />
-					<materialref value="material1" />
-					<position>0.0;0.0;0.0</position>
-				</renderent> -->
-			</renderRigidBody>
+			</robject>
 			
-			<physicsRigidBody>
+			<physics type="physicsRigidBody">
 				<physicsShape>
 					<boxShape>
 						<halfSize>1.0,1.0,1.0</halfSize>
 					</boxShape>
 				</physicsShape>
 				<mass>1.0</mass>
-				<!-- <shape type="box">
-					<boxHalfSize>1.0, 1.0, 1.0</boxHalfSize>
-				</shape>
-				<inertia>0.0,0.0,0.0</inertia> -->
-			</physicsRigidBody>
+				<!-- <inertia>0.0,0.0,0.0</inertia> -->
+			</physics>
 		</entity>
 		
 		<entity>
@@ -53,27 +48,37 @@
 				<rotation>1.0, 0.0, 0.0, 0.0</rotation>				
 			</transform>
 			
-			<renderRigidBody>
+			<robject type="renderRigidBody">
 				<mesh>TestingCube</mesh>
 				<material>material1</material>
-			</renderRigidBody>
+			</robject>
 			
-			<inputKeysOnly>
+			<input type="characterInput">
 				<key action="up" value="key_w" />
 				<key action="down" value="key_s" />
 				<key action="left" value="key_a" />
 				<key action="right" value="key_d" />
-			</inputKeyOnly>
+			</input>
 			
-			<logicManualTest></logicManualTest>
+			<moveable type="logicManualTest">
+			</moveable>
 			
-			<physicsStaticObject>
-				<!-- <shape type="box">
+			<!-- <physicsStaticObject>
+				<shape type="box">
 					<boxHalfSize>1.0, 1.0, 1.0</boxHalfSize>
 				</shape>
 				<mass>1.0</mass>
-				<inertia>0.0,0.0,0.0</inertia> -->
-			</physicsStaticObject>
+				<inertia>0.0,0.0,0.0</inertia>
+			</physicsStaticObject> -->
+			<physics type="physicsRigidBody">
+				<physicsShape>
+					<boxShape>
+						<halfSize>1.0,1.0,1.0</halfSize>
+					</boxShape>
+				</physicsShape>
+				<mass>1.0</mass>
+				<!-- <inertia>0.0,0.0,0.0</inertia> -->
+			</physics>
 		</entity>
 		
 		<entity>
@@ -83,28 +88,24 @@
 				<rotation>1.0, 0.0, 0.0, 0.0</rotation>				
 			</transform>
 			
-			<renderCamera>
-				<scene>
-					<nodes>
-						<node>
-							<camera projectionType="perspective">
-								<clipping near="0.1" far="50000" />
-							</camera>
-						</node>
-					</nodes>
-				</scene>
-				<!-- <cameraref value="MainCamera" /> -->
-			</renderCamera>
+			<robject type="renderCamera">
+				<name>CameraName</name>
+				<projection>perspective</projection>
+				<fov>45</fov>
+				<near>1</near>
+				<far>50000</far>
+			</robject>
+
 			
-			<inputKeysAndMouse>
+			<input type="freeCameraInput">
 				<key action="forward" value="key_i" />
 				<key action="backward" value="key_k" />
 				<key action="left" value="key_j" />
 				<key action="right" value="key_l" />
-			</inputKeysAndMouse>
+			</input>
 			
 			
-			<logicFreeCamera></logicFreeCamera>
+			<moveable type="logicFreeCamera"></moveable>
 			
 		</entity>
 	</scene>

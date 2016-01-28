@@ -2,7 +2,6 @@
 
 #include <OGRE/OgreNode.h>
 #include "grendersystem.h"
-#include "../gentity.h"
 #include <GameComp/TransformComp/gtranscomp.h>
 
 RenderComponentBase::~RenderComponentBase()

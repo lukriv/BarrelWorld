@@ -11,14 +11,12 @@
 #include <OGRE/OgreVector3.h>
 #include "gogrebulletutils.h"
 
-PhysicsShapeLoader::PhysicsShapeLoader(GameLogger* pLogger) : m_spLogger(pLogger)
-{}
 
 
-GameErrorCode PhysicsShapeLoader::LoadShape(wxXmlNode* pNode, btCollisionShape*& pCollisionShape)
+GameErrorCode PhysicsShapeLoader::LoadShape(wxXmlNode* pNode, btCollisionShape*& pCollisionShape, GameLogger *pLogger)
 {
 	
-	if(pNode->GetName() != GAME_TAG_COMP_PHYSICS_SHAPE)
+	if(pNode->GetName() != GAME_TAG_PARAM_PHYSICS_SHAPE)
 	{
 		return FWG_E_XML_INVALID_TAG_ERROR;
 	}
@@ -27,7 +25,7 @@ GameErrorCode PhysicsShapeLoader::LoadShape(wxXmlNode* pNode, btCollisionShape*&
 	
 	if(pChild)
 	{
-		FWG_RETURN_FAIL(LoadOneShape(pChild, pCollisionShape));
+		FWG_RETURN_FAIL(LoadOneShape(pChild, pCollisionShape, pLogger));
 		pChild = pChild->GetNext();
 	}
 	
@@ -49,22 +47,22 @@ GameErrorCode PhysicsShapeLoader::LoadShape(wxXmlNode* pNode, btCollisionShape*&
 	return FWG_E_NOT_IMPLEMENTED_ERROR;
 }
 
-GameErrorCode PhysicsShapeLoader::LoadOneShape(wxXmlNode* pNode, btCollisionShape*& pCollisionShape)
+GameErrorCode PhysicsShapeLoader::LoadOneShape(wxXmlNode* pNode, btCollisionShape*& pCollisionShape, GameLogger *pLogger)
 {
-	if(pNode->GetName() == GAME_TAG_COMP_PHYSICS_BOX_SHAPE)
+	if(pNode->GetName() == GAME_TAG_PARAM_PHYSICS_BOX_SHAPE)
 	{
 		return LoadBox(pNode, pCollisionShape);
 	} else {
-		GameXmlUtils::ProcessUnknownTag(pNode, m_spLogger);
+		GameXmlUtils::ProcessUnknownTag(pNode, pLogger);
 	}
 	
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode PhysicsShapeLoader::StoreShape(wxXmlNode* pParentNode, btCollisionShape* pCollisionShape)
+GameErrorCode PhysicsShapeLoader::StoreShape(wxXmlNode* pParentNode, btCollisionShape* pCollisionShape, GameLogger *pLogger)
 {
 	wxXmlNode *pNewNode = nullptr;
-	FWG_RETURN_FAIL(GameNewChecked(pNewNode, wxXML_ELEMENT_NODE, GAME_TAG_COMP_PHYSICS_SHAPE));
+	FWG_RETURN_FAIL(GameNewChecked(pNewNode, wxXML_ELEMENT_NODE, GAME_TAG_PARAM_PHYSICS_SHAPE));
 	wxScopedPtr<wxXmlNode> apNewNode(pNewNode);
 	
 	switch(pCollisionShape->getShapeType())
@@ -80,9 +78,9 @@ GameErrorCode PhysicsShapeLoader::StoreShape(wxXmlNode* pParentNode, btCollision
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode PhysicsShapeLoader::LoadBox(wxXmlNode* pNode, btCollisionShape*& pCollisionShape)
+GameErrorCode PhysicsShapeLoader::LoadBox(wxXmlNode* pNode, btCollisionShape*& pCollisionShape, GameLogger *pLogger)
 {
-	if(pNode->GetName() != GAME_TAG_COMP_PHYSICS_BOX_SHAPE)
+	if(pNode->GetName() != GAME_TAG_PARAM_PHYSICS_BOX_SHAPE)
 	{
 		return FWG_E_XML_INVALID_TAG_ERROR;
 	}
@@ -96,10 +94,10 @@ GameErrorCode PhysicsShapeLoader::LoadBox(wxXmlNode* pNode, btCollisionShape*& p
 	{
 		if(pChild->GetName() == GAME_TAG_PARAM_BOX_HALF_SIZE)
 		{
-			FWG_RETURN_FAIL(GameXmlUtils::GetNodeContent(pNode, tempStr, m_spLogger));
+			FWG_RETURN_FAIL(GameXmlUtils::GetNodeContent(pNode, tempStr, pLogger));
 			FWG_RETURN_FAIL(GameXmlUtils::ConvertToVec3(tempStr, boxHalfSize));
 		} else {
-			GameXmlUtils::ProcessUnknownTag(pNode, m_spLogger);
+			GameXmlUtils::ProcessUnknownTag(pNode, pLogger);
 		}
 		pChild = pChild->GetNext();
 	}
@@ -109,12 +107,12 @@ GameErrorCode PhysicsShapeLoader::LoadBox(wxXmlNode* pNode, btCollisionShape*& p
 	return FWG_E_NOT_IMPLEMENTED_ERROR;
 }
 
-GameErrorCode PhysicsShapeLoader::StoreBox(wxXmlNode* pParentNode, btBoxShape* pCollisionShape)
+GameErrorCode PhysicsShapeLoader::StoreBox(wxXmlNode* pParentNode, btBoxShape* pCollisionShape, GameLogger *pLogger)
 {
 	wxXmlNode *pNewNode = nullptr;
 	wxXmlNode *pTempNode = nullptr;
 	wxString content;
-	FWG_RETURN_FAIL(GameNewChecked(pNewNode, wxXML_ELEMENT_NODE, GAME_TAG_COMP_PHYSICS_BOX_SHAPE));
+	FWG_RETURN_FAIL(GameNewChecked(pNewNode, wxXML_ELEMENT_NODE, GAME_TAG_PARAM_PHYSICS_BOX_SHAPE));
 	wxScopedPtr<wxXmlNode> apNewNode(pNewNode);
 	
 	

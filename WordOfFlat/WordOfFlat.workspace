@@ -8,7 +8,6 @@
   <Project Name="GameMsgSrv" Path="GameMsgSrv/GameMsgSrv.project" Active="No"/>
   <Project Name="GameComm" Path="GameComm/GameComm.project" Active="No"/>
   <Project Name="GameResHold" Path="GameResHold/GameResHold.project" Active="No"/>
-  <Project Name="GameLoader" Path="GameLoader/GameLoader.project" Active="No"/>
   <Project Name="GameComp" Path="GameComp/GameComp.project" Active="Yes"/>
   <Project Name="GameXmlDefinitions" Path="GameXmlDefinitions/GameXmlDefinitions.project" Active="No"/>
   <Environment>
@@ -17,9 +16,9 @@
   <Project Name="Extern" Path="Extern/Extern.project" Active="No"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="yes">
+      <Environment/>
       <Project Name="GameComm" ConfigName="Debug"/>
       <Project Name="GameComp" ConfigName="Debug"/>
-      <Project Name="GameLoader" ConfigName="Debug"/>
       <Project Name="GameMsgCli" ConfigName="Debug"/>
       <Project Name="GameMsgSrv" ConfigName="Debug"/>
       <Project Name="GameResHold" ConfigName="Debug"/>
@@ -31,9 +30,9 @@
       <Project Name="Extern" ConfigName="Debug"/>
     </WorkspaceConfiguration>
     <WorkspaceConfiguration Name="Release" Selected="yes">
+      <Environment/>
       <Project Name="GameComm" ConfigName="Release"/>
       <Project Name="GameComp" ConfigName="Release"/>
-      <Project Name="GameLoader" ConfigName="Release"/>
       <Project Name="GameMsgCli" ConfigName="Release"/>
       <Project Name="GameMsgSrv" ConfigName="Release"/>
       <Project Name="GameResHold" ConfigName="Release"/>

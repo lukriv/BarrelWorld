@@ -33,6 +33,15 @@ public:
 	static GameErrorCode GetNodeContent(wxXmlNode *pNode, wxString& content, GameLogger *pLogger = nullptr);
 	static GameErrorCode GetKeyValue(wxXmlNode *pNode, wxString &action, wxInt32 &keyCode, GameLogger *pLogger = nullptr);
 	
+	/**
+	 * @brief Check if tag has correct name and correct type
+	 * @param pNode Node to check
+	 * @param tag Tag name
+	 * @param type Type name
+	 * 
+	 * @return Returns FWG_NO_ERROR if everything is ok, or error if something is wrong
+	 */
+	static GameErrorCode CheckTagAndType(wxXmlNode *pNode, const wxString &tag, const wxString &type, GameLogger* pLogger = nullptr);
 	
 	static void ProcessUnknownTag(wxXmlNode *pNode, GameLogger *pLogger);
 

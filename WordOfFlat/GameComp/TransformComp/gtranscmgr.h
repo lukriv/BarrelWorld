@@ -13,7 +13,7 @@ class TransformComponent;
 class TransformCompManager : public GameManagerBase<TransformComponent>
 {
 public:
-	TransformCompManager(GameLogger *pLogger);
+	TransformCompManager(GameLogger *pLogger, GameEntityManager *pEntityMgr);
 	~TransformCompManager();
 	
 	//////////////

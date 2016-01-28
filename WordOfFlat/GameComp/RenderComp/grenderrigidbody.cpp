@@ -73,10 +73,7 @@ GameErrorCode RenderRigidBody::Load(wxXmlNode* pNode)
 		return FWG_E_OBJECT_NOT_INITIALIZED_ERROR;
 	}
 	
-	if(pNode->GetName() != GAME_TAG_COMP_RENDER_RIGID_BODY)
-	{
-		return FWG_E_XML_INVALID_TAG_ERROR;
-	}
+	FWG_RETURN_FAIL(GameXmlUtils::CheckTagAndType(pNode, GAME_TAG_COMP_RENDER_OBJECT, GAME_TAG_TYPE_RENDER_RIGID_BODY));
 	
 	wxString meshName;
 	wxString materialName;
@@ -121,9 +118,10 @@ GameErrorCode RenderRigidBody::Store(wxXmlNode* pParentNode)
 	wxXmlNode *pTempNode = nullptr;
 	wxString content;
 	Ogre::String contentOgre;
-	FWG_RETURN_FAIL(GameNewChecked(pNewNode, wxXML_ELEMENT_NODE, GAME_TAG_COMP_RENDER_RIGID_BODY));
+	FWG_RETURN_FAIL(GameNewChecked(pNewNode, wxXML_ELEMENT_NODE, GAME_TAG_COMP_RENDER_OBJECT));
 	wxScopedPtr<wxXmlNode> apNewNode(pNewNode);
-	
+
+	pNewNode->AddAttribute(GAME_TAG_ATTR_TYPE, GAME_TAG_TYPE_RENDER_RIGID_BODY);
 	
 	// add mesh
 	contentOgre = m_pEntity->getMesh()->getName();

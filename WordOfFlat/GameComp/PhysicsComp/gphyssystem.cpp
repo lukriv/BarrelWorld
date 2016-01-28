@@ -1,27 +1,6 @@
 #include "gphyssystem.h"
-#include <GameResHold/gdeftables.h>
-#include <GameComp/gentity.h>
 #include <GameComp/TransformComp/gtranscomp.h>
 
-btCollisionShape * GamePhysicsSystem::CreateCollisionShape(PhysShapeDef &physShapeDef)
-{
-	btCollisionShape *pColShape = nullptr;
-	switch(physShapeDef.m_shapeType)
-	{
-		case PhysShapeDef::SHAPE_TYPE_BOX:
-		{
-			pColShape = new btBoxShape(btVector3(physShapeDef.m_boxHalfSize.x
-												, physShapeDef.m_boxHalfSize.y
-												, physShapeDef.m_boxHalfSize.z));
-			break;
-		}
-		default:
-			FWGLOG_ERROR(wxT("Unknown shape type"), m_spLogger);
-			break;
-	}
-	
-	return pColShape;
-}
 
 GamePhysicsSystem::GamePhysicsSystem(GameLogger* pLogger) : m_pSolver(nullptr)
 									, m_pBroadphase(nullptr)

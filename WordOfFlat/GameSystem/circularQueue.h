@@ -50,6 +50,7 @@ public:
 		m_storage[m_back] = value;
 		m_actualSize++;
 		m_back = (m_back + 1) & m_sizeRep;
+		return FWG_NO_ERROR;
 	}
 	
 	void pop() {
@@ -68,6 +69,5 @@ public:
 };
 
 
-#include "circularQueue.inl"
 
 #endif //__CIRCULAR_QUEUE_H__

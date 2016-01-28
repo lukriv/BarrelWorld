@@ -9,8 +9,6 @@
 
 class GameCompManager;
 class LogicBase;
-class GameEntity;
-struct LogicDef;
 
 class GameLogicSystem
 {

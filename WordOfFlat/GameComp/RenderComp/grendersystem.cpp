@@ -4,7 +4,6 @@
 #include <OGRE/OgreRenderWindow.h>
 #include <OGRE/OgreEntity.h>
 #include <GameSystem/new.h>
-#include <GameComp/gentity.h>
 #include "grendercompbase.h"
 
 static const char* MAIN_GAME_SCENE_MANAGER = "MainSceneManager";

@@ -35,8 +35,6 @@
   <VirtualDirectory Name="include">
     <File Name="gscenegen.h"/>
     <File Name="gentityfactory.h"/>
-    <File Name="gdefholder.h"/>
-    <File Name="gdeftables.h"/>
     <File Name="gdefloader.h"/>
     <File Name="gentitycreator.h"/>
   </VirtualDirectory>

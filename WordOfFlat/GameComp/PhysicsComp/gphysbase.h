@@ -9,6 +9,7 @@ class PhysicsBase : public ComponentBase {
 protected:
 	GamePhysicsSystem* m_pPhysSystem;
 	RefObjSmPtr<TransformComponent> m_spTransform;
+	wxString m_definitionFile; //!< Name of physics definition file - for load and store component (empty string = shape definition was used)
 public:
 	PhysicsBase(GamePhysicsSystem* pPhysSystem);
 	virtual ~PhysicsBase();

@@ -26,8 +26,6 @@ public:
 	inline btDynamicsWorld* GetDynamicsWorld() { return m_pDynamicsWorld; }
 	inline GameLogger* GetLogger() { return m_spLogger; }
 	
-	GameErrorCode CreatePhysicsComponent(PhysCompDef &physDef, GameEntity *pEntity);
-	
 	GameErrorCode Initialize();
 	void Uninitialize();
 	

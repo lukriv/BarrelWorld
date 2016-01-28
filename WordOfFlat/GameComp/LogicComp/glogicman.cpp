@@ -1,7 +1,11 @@
 #include "glogicman.h"
 
-#include <GameComp/gentity.h>
+#include <wx/xml/xml.h>
+#include <wx/scopedptr.h>
 #include <OGRE/OgrePrerequisites.h>
+#include <GameComp/gentitymgr.h>
+#include <GameXmlDefinitions/gxmldefs.h>
+#include <GameXmlDefinitions/gxmlutils.h>
 
 #include "glogicsystem.h"
 #include "../InputComp/ginputchar.h"
@@ -70,7 +74,7 @@ GameErrorCode LogicManualTest::ProcessInput()
 	
 	// update render component
 	TaskMessage task(GAME_TASK_TRANSFORM_UPDATE);
-	if(FWG_FAILED(result = GetParentEntity()->ReceiveMessage(task)))
+	if(FWG_FAILED(result = GetEntityManager()->SendTaskMessage(GetComponentId(),task)))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Update component failed: 0x%08x"), m_pLogicSystem->GetLogger(), result, FWGLOG_ENDVAL);
 		return result;
@@ -87,10 +91,19 @@ GameErrorCode LogicManualTest::ReceiveMessage(TaskMessage&)
 
 GameErrorCode LogicManualTest::Load(wxXmlNode* pNode)
 {
-	return FWG_NO_ERROR;
+	return GameXmlUtils::CheckTagAndType(pNode, GAME_TAG_COMP_MOVEABLE, GAME_TAG_TYPE_MOVEABLE_MANUAL_TEST, m_pLogicSystem->GetLogger());
 }
 
 GameErrorCode LogicManualTest::Store(wxXmlNode* pParentNode)
 {
+	wxXmlNode *pNewNode = nullptr;
+	wxString content;
+	FWG_RETURN_FAIL(GameNewChecked(pNewNode, wxXML_ELEMENT_NODE, GAME_TAG_COMP_MOVEABLE));
+	wxScopedPtr<wxXmlNode> apNewNode(pNewNode);
+	
+	pNewNode->AddAttribute(GAME_TAG_ATTR_TYPE, GAME_TAG_TYPE_MOVEABLE_MANUAL_TEST);
+	
+	pParentNode->AddChild(apNewNode.release());
+	
 	return FWG_NO_ERROR;
 }

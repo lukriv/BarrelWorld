@@ -70,10 +70,7 @@ GameErrorCode PhysicsRigidBody::Create(btScalar mass, btCollisionShape* pColShap
 
 GameErrorCode PhysicsRigidBody::Load(wxXmlNode* pNode)
 {
-	if(pNode->GetName() != GAME_TAG_COMP_PHYSICS_RIGID_BODY)
-	{
-		return FWG_E_XML_INVALID_TAG_ERROR;
-	}
+	FWG_RETURN_FAIL(GameXmlUtils::CheckTagAndType(pNode, GAME_TAG_COMP_PHYSICS, GAME_TAG_TYPE_PHYSICS_RIGID_BODY));
 	
 	wxString tempContent;
 	wxXmlNode *pChild = pNode->GetChildren();
@@ -82,10 +79,9 @@ GameErrorCode PhysicsRigidBody::Load(wxXmlNode* pNode)
 	
 	while(pChild)
 	{
-		if(pChild->GetName() == GAME_TAG_COMP_PHYSICS_SHAPE)
+		if(pChild->GetName() == GAME_TAG_PARAM_PHYSICS_SHAPE)
 		{
-			PhysicsShapeLoader shapeLoader(m_pPhysSystem->GetLogger());
-			FWG_RETURN_FAIL(shapeLoader.LoadShape(pChild, pCollShape));
+			FWG_RETURN_FAIL(PhysicsShapeLoader::LoadShape(pChild, pCollShape, m_pPhysSystem->GetLogger()));
 		} else if(pChild->GetName() == GAME_TAG_PARAM_MASS) {
 			FWG_RETURN_FAIL(GameXmlUtils::GetNodeContent(pChild, tempContent, m_pPhysSystem->GetLogger()));
 			FWG_RETURN_FAIL(GameXmlUtils::ConvertToFloat(tempContent, mass));
@@ -109,27 +105,38 @@ GameErrorCode PhysicsRigidBody::Store(wxXmlNode* pParentNode)
 	wxXmlNode *pNewNode = nullptr;
 	wxXmlNode *pTempNode = nullptr;
 	wxString content;
-	FWG_RETURN_FAIL(GameNewChecked(pNewNode, wxXML_ELEMENT_NODE, GAME_TAG_COMP_PHYSICS_RIGID_BODY));
+	FWG_RETURN_FAIL(GameNewChecked(pNewNode, wxXML_ELEMENT_NODE, GAME_TAG_COMP_PHYSICS));
 	wxScopedPtr<wxXmlNode> apNewNode(pNewNode);
 	
-	if(m_pRigidBody->getCollisionShape())
-	{
-		PhysicsShapeLoader shapeLoader(m_pPhysSystem->GetLogger());
-		
-		// store shape
-		if(FWG_FAILED(result = shapeLoader.StoreShape(pNewNode, m_pRigidBody->getCollisionShape())))
-		{
-			FWGLOG_ERROR_FORMAT(wxT("Store collision shape failed: 0x%08x"), m_pPhysSystem->GetLogger(), result, FWGLOG_ENDVAL);
-			return result;
-		}
-	}
+	apNewNode->AddAttribute(GAME_TAG_ATTR_TYPE, GAME_TAG_TYPE_PHYSICS_RIGID_BODY);
 	
-	FWG_RETURN_FAIL(GameXmlUtils::ConvertFromFloat( static_cast<float>(btScalar(1.0) / m_pRigidBody->getInvMass()) ,content));
-	FWG_RETURN_FAIL(GameNewChecked(pTempNode
-									, pNewNode
-									, wxXML_ELEMENT_NODE
-									, GAME_TAG_PARAM_MASS
-									, content));
+	if(!m_definitionFile.IsEmpty())
+	{
+		FWG_RETURN_FAIL(GameNewChecked(pTempNode
+										, apNewNode.get()
+										, wxXML_ELEMENT_NODE
+										, GAME_TAG_PARAM_FILENAME
+										, m_definitionFile));
+	} else {
+	
+		if(m_pRigidBody->getCollisionShape())
+		{
+			// store shape
+			if(FWG_FAILED(result = PhysicsShapeLoader::StoreShape(apNewNode.get(), m_pRigidBody->getCollisionShape())))
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Store collision shape failed: 0x%08x"), m_pPhysSystem->GetLogger(), result, FWGLOG_ENDVAL);
+				return result;
+			}
+		}
+		
+		FWG_RETURN_FAIL(GameXmlUtils::ConvertFromFloat( static_cast<float>(btScalar(1.0) / m_pRigidBody->getInvMass()) ,content));
+		FWG_RETURN_FAIL(GameNewChecked(pTempNode
+										, apNewNode.get()
+										, wxXML_ELEMENT_NODE
+										, GAME_TAG_PARAM_MASS
+										, content));
+									
+	}
 	
 	pParentNode->AddChild(apNewNode.release());
 	

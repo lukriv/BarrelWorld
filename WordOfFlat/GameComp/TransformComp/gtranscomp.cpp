@@ -3,9 +3,9 @@
 #include <wx/xml/xml.h>
 #include <wx/scopedptr.h>
 #include <bullet/LinearMath/btAlignedAllocator.h>
-#include <GameComp/gentity.h>
 #include <GameXmlDefinitions/gxmldefs.h>
 #include <GameXmlDefinitions/gxmlutils.h>
+#include <GameComp/gentitymgr.h>
 
 typedef btAlignedAllocator< TransformData, 16 > TAllocator;
 
@@ -64,7 +64,7 @@ void TransformComponent::setWorldTransform(const btTransform& worldTrans)
 	
 	//transform was updated
 	TaskMessage task(GAME_TASK_TRANSFORM_UPDATE);
-	GetParentEntity()->ReceiveMessage(task); 
+	GetEntityManager()->SendTaskMessage(GetComponentId(), task); 
 }
 
 GameErrorCode TransformComponent::Store(wxXmlNode* pParentNode)

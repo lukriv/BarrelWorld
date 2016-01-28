@@ -10,17 +10,14 @@ class btBoxShape;
 
 class PhysicsShapeLoader
 {
-private:
-	GameLoggerPtr m_spLogger;
 public:
-	PhysicsShapeLoader(GameLogger *pLogger);
-	GameErrorCode LoadShape(wxXmlNode* pNode, btCollisionShape *&pCollisionShape);
-	GameErrorCode StoreShape(wxXmlNode* pParentNode, btCollisionShape *pCollisionShape);
+	static GameErrorCode LoadShape(wxXmlNode* pNode, btCollisionShape *&pCollisionShape, GameLogger *pLogger = nullptr);
+	static GameErrorCode StoreShape(wxXmlNode* pParentNode, btCollisionShape *pCollisionShape, GameLogger *pLogger = nullptr);
 	
 private:
-	GameErrorCode LoadOneShape(wxXmlNode* pNode, btCollisionShape *&pCollisionShape);
-	GameErrorCode LoadBox(wxXmlNode* pNode, btCollisionShape *&pCollisionShape);
-	GameErrorCode StoreBox(wxXmlNode* pParentNode, btBoxShape *pCollisionShape);
+	static GameErrorCode LoadOneShape(wxXmlNode* pNode, btCollisionShape *&pCollisionShape, GameLogger *pLogger = nullptr);
+	static GameErrorCode LoadBox(wxXmlNode* pNode, btCollisionShape *&pCollisionShape, GameLogger *pLogger = nullptr);
+	static GameErrorCode StoreBox(wxXmlNode* pParentNode, btBoxShape *pCollisionShape, GameLogger *pLogger = nullptr);
 
 };
 

@@ -8,10 +8,12 @@
 #include <GameSystem/gmap.h>
 #include <GameComp/InputComp/ginputsystem.h>
 #include "../gcompbase.h"
+#include "ginputdef.h"
+
 
 // forward declaration
 class wxXmlNode;
-struct InputDef;
+
 
 class ControlStruct
 {
@@ -164,17 +166,7 @@ public:
     }
 };
 
-struct InputDef : public RefObjectImpl<IRefObject> {
-    typedef GameBasMap<wxString, wxInt32> TInputMap;
 
-public:
-    TInputMap m_inputMap;
-
-public:
-    InputDef()
-    {
-    }
-};
 
 class InputComponent : public ComponentBase, public GameInputSystem::InputMouseCallback
 {

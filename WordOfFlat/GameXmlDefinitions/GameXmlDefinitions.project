@@ -32,17 +32,15 @@
     <File Name="gxmlloader.h"/>
     <File Name="gxmldefs.h"/>
     <File Name="gxmlkeydefs.h"/>
-    <File Name="gxmlparams.h"/>
     <File Name="gxmlutils.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="src">
-    <File Name="gxmlstore.cpp"/>
-    <File Name="gxmlload.cpp"/>
     <File Name="gxmlutils.cpp"/>
+    <File Name="gxmlloader.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="resource">
-    <File Name="example.xml"/>
     <File Name="definitions.xml"/>
+    <File Name="example.xml"/>
   </VirtualDirectory>
   <Settings Type="Static Library">
     <GlobalSettings>
@@ -50,6 +48,7 @@
         <IncludePath Value="../../extern/include/wx/gcc_dll/mswu"/>
         <IncludePath Value="../../extern/include"/>
         <IncludePath Value="../../extern/include/OGRE"/>
+        <IncludePath Value="../../extern/include/bullet"/>
         <IncludePath Value="../../WordOfFlat"/>
         <Preprocessor Value="UNICODE"/>
       </Compiler>
@@ -90,7 +89,7 @@
         <CustomPostBuild/>
         <CustomPreBuild/>
       </AdditionalRules>
-      <Completion EnableCpp11="no">
+      <Completion EnableCpp11="no" EnableCpp14="no">
         <ClangCmpFlagsC/>
         <ClangCmpFlags/>
         <ClangPP/>
@@ -129,7 +128,7 @@
         <CustomPostBuild/>
         <CustomPreBuild/>
       </AdditionalRules>
-      <Completion EnableCpp11="no">
+      <Completion EnableCpp11="no" EnableCpp14="no">
         <ClangCmpFlagsC/>
         <ClangCmpFlags/>
         <ClangPP/>

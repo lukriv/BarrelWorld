@@ -59,6 +59,7 @@
     <VirtualDirectory Name="inputSystem">
       <VirtualDirectory Name="include">
         <File Name="InputComp/ginputsystem.h"/>
+        <File Name="InputComp/ginputdef.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="src">
         <File Name="InputComp/ginputsystem.cpp"/>
@@ -91,6 +92,7 @@
     <VirtualDirectory Name="terrainSystem">
       <VirtualDirectory Name="include">
         <File Name="TerrainComp/gterrainmgr.h"/>
+        <File Name="TerrainComp/gterraindef.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="src">
         <File Name="TerrainComp/gterrainmgr.cpp"/>
@@ -190,8 +192,6 @@
       </Completion>
     </Configuration>
   </Settings>
-  <Dependencies Name="Debug"/>
-  <Dependencies Name="Release"/>
   <VirtualDirectory Name="components">
     <VirtualDirectory Name="moveable">
       <VirtualDirectory Name="include">
@@ -274,15 +274,15 @@
     <VirtualDirectory Name="include">
       <File Name="gcompbase.h"/>
       <File Name="gcompdefs.h"/>
-      <File Name="gentity.h"/>
       <File Name="gcompmgr.h"/>
       <File Name="gentitymgr.h"/>
       <File Name="gmanagerbase.h"/>
     </VirtualDirectory>
     <VirtualDirectory Name="src">
       <File Name="gcompmgr.cpp"/>
-      <File Name="gentity.cpp"/>
       <File Name="gentitymgr.cpp"/>
     </VirtualDirectory>
   </VirtualDirectory>
+  <Dependencies Name="Debug"/>
+  <Dependencies Name="Release"/>
 </CodeLite_Project>

@@ -1,11 +1,10 @@
 #ifndef __GAME_ENTITY_FACTORY_H__
 #define __GAME_ENTITY_FACTORY_H__
 
-#include <wx/atomic.h>
 #include <GameSystem/refobjectsmptr.h>
 #include <GameSystem/glog.h>
 #include <GameComp/gcompmgr.h>
-#include "gdefholder.h"
+#include <GameComp/TerrainComp/gterraindef.h>
 
 
 
@@ -15,11 +14,7 @@ private:
 public:
 	GameEntityFactory(GameLogger *pLogger) : m_spLogger(pLogger) {}
 	
-	GameErrorCode CreateTerrain(GameDefinitionHolder &defHolder, GameCompManager& compMgr);
-	
-	GameErrorCode CreateAllEntities(GameDefinitionHolder &defHolder, GameCompManager& compMgr);
-	
-	GameErrorCode CreateEntity( EntityDef &entityDef, GameCompManager& compMgr, GameEntity *&pEntity);
+	GameErrorCode CreateFloor(GameCompManager& compMgr);
 	
 };
 

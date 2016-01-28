@@ -8,13 +8,12 @@
 #include "glogicman.h"
 
 
-
 class MoveableManager : public GameManagerBase<Moveable>
 {
 private:
 	GameLogicSystem* m_pLogicSystem;
 public:
-	MoveableManager(GameLogicSystem* pLogicSystem);
+	MoveableManager(GameLogicSystem* pLogicSystem, GameEntityManager *pEntityMgr);
 	~MoveableManager();
 	
 	template <class T>

@@ -1,6 +1,5 @@
 #include "gtranscmgr.h"
 #include <GameSystem/new.h>
-#include <GameComp/gentity.h>
 
 #include <bullet/LinearMath/btQuaternion.h>
 
@@ -9,7 +8,7 @@
 
 
 
-TransformCompManager::TransformCompManager(GameLogger* pLogger) : GameManagerBase(pLogger)
+TransformCompManager::TransformCompManager(GameLogger* pLogger, GameEntityManager *pEntityMgr) : GameManagerBase(pLogger, pEntityMgr)
 {}
 
 TransformCompManager::~TransformCompManager()

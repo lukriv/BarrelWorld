@@ -7,7 +7,7 @@
 #include <GameSystem/new.h>
 
 
-RenderPositionManager::RenderPositionManager(GameRenderSystem *pRenderSystem) : GameManagerBase(pRenderSystem->GetLogger()),
+RenderPositionManager::RenderPositionManager(GameRenderSystem *pRenderSystem, GameEntityManager *pEntityMgr) : GameManagerBase(pRenderSystem->GetLogger(), pEntityMgr),
 	m_pRenderSystem(pRenderSystem)
 {
 }

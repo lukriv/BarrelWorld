@@ -72,7 +72,7 @@ GameErrorCode PhysicsStaticObject::ReceiveMessage(TaskMessage& msg)
 
 GameErrorCode PhysicsStaticObject::Load(wxXmlNode* pNode)
 {
-	if(pNode->GetName() != GAME_TAG_COMP_PHYSICS_STATIC_OBJECT)
+	if(pNode->GetName() != GAME_TAG_TYPE_PHYSICS_STATIC_OBJECT)
 	{
 		return FWG_E_XML_INVALID_TAG_ERROR;
 	}
@@ -83,10 +83,9 @@ GameErrorCode PhysicsStaticObject::Load(wxXmlNode* pNode)
 	
 	while(pChild)
 	{
-		if(pChild->GetName() == GAME_TAG_COMP_PHYSICS_SHAPE)
+		if(pChild->GetName() == GAME_TAG_PARAM_PHYSICS_SHAPE)
 		{
-			PhysicsShapeLoader shapeLoader(m_pPhysSystem->GetLogger());
-			FWG_RETURN_FAIL(shapeLoader.LoadShape(pChild, pCollShape));
+			FWG_RETURN_FAIL(PhysicsShapeLoader::LoadShape(pChild, pCollShape, m_pPhysSystem->GetLogger()));
 		} else {
 			GameXmlUtils::ProcessUnknownTag(pChild, m_pPhysSystem->GetLogger());
 		}
@@ -107,15 +106,13 @@ GameErrorCode PhysicsStaticObject::Store(wxXmlNode* pParentNode)
 	wxXmlNode *pNewNode = nullptr;
 	//wxXmlNode *pTempNode = nullptr;
 	wxString content;
-	FWG_RETURN_FAIL(GameNewChecked(pNewNode, wxXML_ELEMENT_NODE, GAME_TAG_COMP_PHYSICS_STATIC_OBJECT));
+	FWG_RETURN_FAIL(GameNewChecked(pNewNode, wxXML_ELEMENT_NODE, GAME_TAG_TYPE_PHYSICS_STATIC_OBJECT));
 	wxScopedPtr<wxXmlNode> apNewNode(pNewNode);
 	
 	if(m_pColObject->getCollisionShape())
 	{
-		PhysicsShapeLoader shapeLoader(m_pPhysSystem->GetLogger());
-		
 		// store shape
-		if(FWG_FAILED(result = shapeLoader.StoreShape(pNewNode, m_pColObject->getCollisionShape())))
+		if(FWG_FAILED(result = PhysicsShapeLoader::StoreShape(pNewNode, m_pColObject->getCollisionShape(), m_pPhysSystem->GetLogger())))
 		{
 			FWGLOG_ERROR_FORMAT(wxT("Store collision shape failed: 0x%08x"), m_pPhysSystem->GetLogger(), result, FWGLOG_ENDVAL);
 			return result;

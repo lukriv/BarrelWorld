@@ -11,22 +11,13 @@
 #include "RenderComp/grendersystem.h"
 #include "PhysicsComp/gphyssystem.h"
 
+#include "gterraindef.h"
+
 // chunk size must be 2^n
 static const wxInt32 CHUNK_SHIFT = 6; // n
 static const wxInt32 CHUNK_SIZE = 1<<CHUNK_SHIFT;
 static const wxInt32 CHUNK_VERTICES = CHUNK_SIZE + 1;
 
-struct TerrainPage : public RefObjectImpl<IRefObject> {
-	wxString m_filename;
-	wxInt32 m_pageX;
-	wxInt32 m_pageY;
-};
-
-struct TerrainDef : public RefObjectImpl<IRefObject> {
-	wxDword m_mapSize;
-	float m_worldSize;
-	wxVector< RefObjSmPtr<TerrainPage> > m_terrainPages;
-};
 
 GameTerrainManager::GameTerrainManager(GameLogger* pLogger) : m_spLogger(pLogger)
 															, m_pRenderMgr(nullptr)
@@ -540,7 +531,7 @@ GameErrorCode GameTerrainManager::CreateTerrainDef(wxXmlNode* pNode, RefObjSmPtr
 				}
 				pTerrainPages = pTerrainPages->GetNext();
 			}
-		} else if(child->GetName() == GAME_PARAM_TERRAIN_MAPSIZE) {
+		} else if(child->GetName() == GAME_TAG_PARAM_TERRAIN_MAPSIZE) {
 			// mapsize
 			wxInt32 tempInt = 0;
 			FWG_RETURN_FAIL(GameXmlUtils::GetNodeContent(child, tempParam, m_spLogger));
@@ -548,7 +539,7 @@ GameErrorCode GameTerrainManager::CreateTerrainDef(wxXmlNode* pNode, RefObjSmPtr
 			
 			spTerrainTemp->m_mapSize = static_cast<wxDword>(tempInt);
 			
-		} else if(child->GetName() == GAME_PARAM_TERRAIN_WORLDSIZE) {
+		} else if(child->GetName() == GAME_TAG_PARAM_TERRAIN_WORLDSIZE) {
 			// worldsize
 			FWG_RETURN_FAIL(GameXmlUtils::GetNodeContent(child, tempParam, m_spLogger));
 			FWG_RETURN_FAIL(GameXmlUtils::ConvertToFloat(tempParam, spTerrainTemp->m_worldSize));
@@ -578,17 +569,17 @@ GameErrorCode GameTerrainManager::CreateTerrainPageDef(wxXmlNode* pNode, RefObjS
 	wxXmlNode *child = pNode->GetChildren();
 	while (child)
 	{
-		if (child->GetName() == GAME_PARAM_FILENAME) 
+		if (child->GetName() == GAME_TAG_PARAM_FILENAME) 
 		{
 			// filename
 			FWG_RETURN_FAIL(GameXmlUtils::GetNodeContent(child, spTerrainPageTemp->m_filename, m_spLogger));
-		} else if(child->GetName() == GAME_PARAM_TERRAIN_PAGEX) {
+		} else if(child->GetName() == GAME_TAG_PARAM_TERRAIN_PAGEX) {
 			// page x
 			FWG_RETURN_FAIL(GameXmlUtils::GetNodeContent(child, tempParam, m_spLogger));
 			FWG_RETURN_FAIL(GameXmlUtils::ConvertToInt32(tempParam, spTerrainPageTemp->m_pageX));
 			
 			
-		} else if(child->GetName() == GAME_PARAM_TERRAIN_PAGEY) {
+		} else if(child->GetName() == GAME_TAG_PARAM_TERRAIN_PAGEY) {
 			// page y
 			FWG_RETURN_FAIL(GameXmlUtils::GetNodeContent(child, tempParam, m_spLogger));
 			FWG_RETURN_FAIL(GameXmlUtils::ConvertToInt32(tempParam, spTerrainPageTemp->m_pageY));

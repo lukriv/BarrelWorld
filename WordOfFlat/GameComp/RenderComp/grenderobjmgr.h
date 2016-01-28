@@ -1,24 +1,26 @@
 #ifndef __GAME_RENDER_OBJECT_MANAGER_H__
 #define __GAME_RENDER_OBJECT_MANAGER_H__
 
-#include "gmanagerbase.h"
+#include "../gmanagerbase.h"
 #include "grenderobject.h"
 
 class GameRenderSystem;
+class RenderPosition;
 
 class RenderObjectManager : public GameManagerBase<RenderObject>
 {
 	GameRenderSystem *m_pRenderSystem;
 public:
-	RenderObjectManager(GameRenderSystem *pRenderSystem);
+	RenderObjectManager(GameRenderSystem *pRenderSystem, GameEntityManager *pEntityMgr);
 	~RenderObjectManager();
 	
 	template<class T>
-	GameErrorCode CreateComponent(wxDword compId, T*& pRenderObj)
+	GameErrorCode CreateComponent(wxDword compId, RenderPosition *pRenderPosition, T*& pRenderObj)
 	{
 		GameErrorCode result = FWG_NO_ERROR;
 		RefObjSmPtr<T> spRenderObj;
 		FWG_RETURN_FAIL( GameNewChecked(spRenderObj.OutRef(), m_pRenderSystem) );
+		FWG_RETURN_FAIL( spRenderObj->Initialize(pRenderPosition));
 		
 		FWG_RETURN_FAIL(InsertToMap(compId, spRenderObj));
 		

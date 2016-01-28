@@ -7,6 +7,8 @@
 
 #include "gcompdefs.h"
 
+class GameEntityManager;
+
 class TaskMessage {
 	GameTaskMessageType m_taskType;
 public:
@@ -30,16 +32,17 @@ public:
 	}
 };
 
-class GameEntity; // forward declaration of GameEntity
 class wxXmlNode; // forward declaration
 
 class ComponentBase : public RefObjectImpl<IRefObject> {
 	GameComponentType m_compType;
-	GameEntity *m_pParent;
+	GameEntityManager *m_pEntytyMgr;
+	wxDword m_entityID;
 	bool m_enabled;
 public:
 	ComponentBase(GameComponentType compType) : m_compType(compType)
-											, m_pParent(nullptr)
+											, m_pEntytyMgr(nullptr)
+											, m_entityID(0)
 											, m_enabled(true) {}
 	
 	inline GameComponentType GetComponentType() { return m_compType; }
@@ -47,12 +50,19 @@ public:
 	inline void Enable(bool enable) { m_enabled = enable; }
 	inline bool IsEnabled() { return m_enabled; }
 	
-	inline void SetParentEntity(GameEntity *pNewParentEntity) 
+	inline void SetParentEntity(wxDword id) 
 	{
-		m_pParent = pNewParentEntity;
+		m_entityID = id;
 	}
 	
-	inline GameEntity* GetParentEntity() { return m_pParent; }
+	inline wxDword GetComponentId() { return m_entityID; }
+	
+	inline void SetEntityManager(GameEntityManager *pEntityMgr)
+	{
+		m_pEntytyMgr = pEntityMgr;
+	}
+	
+	inline GameEntityManager* GetEntityManager() { return m_pEntytyMgr; }
 	
 	virtual GameErrorCode ReceiveMessage(TaskMessage &msg) = 0;
 	

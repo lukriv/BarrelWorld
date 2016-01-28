@@ -6,7 +6,6 @@
 #include <GameSystem/refobjectsmptr.h>
 #include <GameSystem/refobjectimpl.h>
 #include <GameSystem/glog.h>
-#include "gdeftables.h"
 
 
 class GameCompManager;
@@ -27,7 +26,6 @@ private:
 public:
 	GameEntityCreator(GameLogger *pLogger) : m_spLogger(pLogger) {}
 	
-	GameErrorCode CreateTerrainDecal(EntityDef *&pTerrDecalDef);
 
 };
 

@@ -4,6 +4,7 @@
 #include <GameSystem/glog.h>
 #include <GameSystem/gmap.h>
 
+class GameEntityManager;
 
 template <typename Type>
 class GameManagerBase
@@ -16,6 +17,7 @@ protected:
 protected:
 	GameLoggerPtr m_spLogger;
 	TTypeMap m_compMap;
+	GameEntityManager *m_pEntityMgr;
 	
 protected:
 	inline GameErrorCode InsertToMap(wxDword id, Type* pComp)
@@ -30,11 +32,14 @@ protected:
 			iter->second = pComp;
 		}
 		
+		pComp->SetEntityManager(m_pEntityMgr);
+		pComp->SetParentEntity(id);
+		
 		return FWG_NO_ERROR;
 	}
 	
 public:
-	GameManagerBase(GameLogger *pLogger) : m_spLogger(pLogger) {}
+	GameManagerBase(GameLogger *pLogger, GameEntityManager *pEntityMgr) : m_spLogger(pLogger), m_pEntityMgr(pEntityMgr) {}
 	~GameManagerBase() 
 	{ 
 		m_compMap.Clear();
@@ -50,7 +55,16 @@ public:
 	void DestroyComponent(wxDword compId) { m_compMap.Remove(compId); }
 	void DestroyAllComponents() { m_compMap.Clear(); }
 	
-	Type* GetEntity(wxDword compId) { m_compMap.FindValue(compId); }
+	Type* GetComponent(wxDword compId) 
+	{	
+		TTypeMapIterator iter = m_compMap.Find(compId);
+		if(iter != m_compMap.End())
+		{
+			return iter->second;
+		} else {
+			return nullptr;
+		}
+	}
 
 
 };

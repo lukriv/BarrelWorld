@@ -2,14 +2,14 @@
 #define __GAME_DEFINITIONS_LOADER_H__
 
 
+#include <GameSystem/gerror.h>
 
-#include "gdefholder.h"
-
+class GameCompManager;
 
 class IGameDefLoader {
 public:
 	virtual ~IGameDefLoader() {}
-	virtual GameErrorCode Load(GameDefinitionHolder &defHolder) = 0;
+	virtual GameErrorCode Load(GameCompManager &compMgr) = 0;
 	
 };
 

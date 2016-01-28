@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Project Name="Extern" InternalType="">
+  <Plugins>
+    <Plugin Name="qmake">
+      <![CDATA[00010001N0005Debug000000000000]]>
+    </Plugin>
+  </Plugins>
   <VirtualDirectory Name="wx">
     <VirtualDirectory Name="x11">
       <VirtualDirectory Name="nanox">
@@ -3117,11 +3122,6 @@
     <File Name="../../extern/include/CEGUI/XMLParser.h"/>
     <File Name="../../extern/include/CEGUI/XMLSerializer.h"/>
   </VirtualDirectory>
-  <Plugins>
-    <Plugin Name="qmake">
-      <![CDATA[00010001N0005Debug000000000000]]>
-    </Plugin>
-  </Plugins>
   <Reconciliation>
     <Regexes/>
     <Excludepaths/>

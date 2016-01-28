@@ -2,7 +2,7 @@
 #define __GAME_PHYSICS_STATIC_OBJECT_H__
 
 #include <GameSystem/refobjectsmptr.h>
-#include "gcompbase.h" // Base class: ComponentBase
+#include "../gcompbase.h" // Base class: ComponentBase
 #include "gphysbase.h"
 
 

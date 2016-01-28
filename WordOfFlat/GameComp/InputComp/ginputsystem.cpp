@@ -3,7 +3,6 @@
 #include <OGRE/OgreRenderWindow.h>
 #include <OGRE/OgreStringConverter.h>
 
-#include <GameResHold/gdeftables.h>
 #include "ginputcomp.h"
 #include "ginputfreecam.h"
 

@@ -16,7 +16,7 @@ class RenderPositionManager : public GameManagerBase<RenderPosition>
 {
 	GameRenderSystem *m_pRenderSystem;
 public:
-	RenderPositionManager(GameRenderSystem *pRenderSystem);
+	RenderPositionManager(GameRenderSystem *pRenderSystem, GameEntityManager *pEntityMgr);
 	~RenderPositionManager();
 	
 	//////////////

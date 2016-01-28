@@ -4,7 +4,7 @@
 
 
 
-RenderObjectManager::RenderObjectManager(GameRenderSystem* pRenderSystem) : GameManagerBase(pRenderSystem->GetLogger()), m_pRenderSystem(pRenderSystem)
+RenderObjectManager::RenderObjectManager(GameRenderSystem* pRenderSystem, GameEntityManager *pEntityMgr) : GameManagerBase(pRenderSystem->GetLogger(), pEntityMgr), m_pRenderSystem(pRenderSystem)
 {
 }
 

@@ -13,14 +13,14 @@ class PhysicsCompManager : public GameManagerBase<PhysicsBase>
 private:
 	GamePhysicsSystem* m_pPhysSystem;
 public:
-	PhysicsCompManager(GamePhysicsSystem* pPhysicsSystem);
+	PhysicsCompManager(GamePhysicsSystem* pPhysicsSystem, GameEntityManager *pEntityMgr);
 	~PhysicsCompManager();
 	
 	template <class T>
 	GameErrorCode CreateComponent(wxDword compId, T *&pNewComponent )
 	{
 		RefObjSmPtr<T> spPhysComp;
-		FWG_RETURN_FAIL(GameNewChecked(spPhysComp.OutRef()));
+		FWG_RETURN_FAIL(GameNewChecked(spPhysComp.OutRef(), m_pPhysSystem));
 		
 		FWG_RETURN_FAIL(InsertToMap(compId, spPhysComp));
 		

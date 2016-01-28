@@ -19,8 +19,8 @@ RenderCamera::~RenderCamera()
 
 GameErrorCode RenderCamera::Create(const wxString& cameraName)
 {
-	m_pCamera = m_pOwnerManager->GetOgreSceneManager()->createCamera(cameraName.ToStdString());
-	return FWG_NO_ERROR;
+	wxString *pString = new (std::nothrow) wxString(cameraName);
+	return m_pOwnerManager->CreateRenderComponent(this, pString);
 }
 
 
@@ -50,24 +50,27 @@ GameErrorCode RenderCamera::Load(wxXmlNode* pNode)
 		return FWG_E_OBJECT_NOT_INITIALIZED_ERROR;
 	}
 	
-	if(pNode->GetName() != GAME_TAG_COMP_RENDER_CAMERA)
-	{
-		return FWG_E_XML_INVALID_TAG_ERROR;
-	}
+	FWG_RETURN_FAIL(GameXmlUtils::CheckTagAndType(pNode, GAME_TAG_COMP_RENDER_OBJECT, GAME_TAG_TYPE_RENDER_CAMERA));
 	
 	wxString temp;
 	float tempFloat = 0.0;
 	
 	wxString name;
 	
-	if(!pNode->GetAttribute(GAME_TAG_ATTR_NAME, &name))
+	
+	wxXmlNode *pElement = pNode->GetChildren();
+	
+	// find name tag
+	while(pElement)
 	{
-		FWGLOG_ERROR_FORMAT(wxT("Camera component on line %d does not contain '%s' attribute"), m_pOwnerManager->GetLogger()
-													, pNode->GetLineNumber()
-													, GAME_TAG_ATTR_NAME
-													, FWGLOG_ENDVAL);
-		return FWG_E_XML_ATTR_NOT_FOUND_ERROR;
+		if(pElement->GetName() == GAME_TAG_PARAM_NAME)
+		{
+			FWG_RETURN_FAIL(GameXmlUtils::GetNodeContent(pElement, name, m_pOwnerManager->GetLogger()));
+		}
+		
+		pElement = pElement->GetNext();
 	}
+	
 	
     wxString projectionType = GAME_TAG_VALUE_PERSPECTIVE;
  
@@ -78,7 +81,7 @@ GameErrorCode RenderCamera::Load(wxXmlNode* pNode)
 	m_spPosition->GetSceneNode()->attachObject(m_pCamera);
 
  
-    wxXmlNode *pElement = pNode->GetChildren();
+	pElement = pNode->GetChildren();
  
 	while(pElement)
 	{
@@ -122,7 +125,10 @@ GameErrorCode RenderCamera::Load(wxXmlNode* pNode)
 			m_pCamera->setNearClipDistance(tempFloat);
 	 
 		} else {
-			GameXmlUtils::ProcessUnknownTag(pElement, m_pOwnerManager->GetLogger());
+			if(pElement->GetName() != GAME_TAG_PARAM_NEAR) // skip name tag
+			{
+				GameXmlUtils::ProcessUnknownTag(pElement, m_pOwnerManager->GetLogger());
+			}
 		}
 		
 		pElement = pElement->GetNext();	
@@ -155,13 +161,20 @@ GameErrorCode RenderCamera::Store(wxXmlNode* pParentNode)
 	wxXmlNode *pTempNode = nullptr;
 	wxString content;
 	Ogre::String contentOgre;
-	FWG_RETURN_FAIL(GameNewChecked(pNewNode, wxXML_ELEMENT_NODE, GAME_TAG_COMP_RENDER_CAMERA));
+	FWG_RETURN_FAIL(GameNewChecked(pNewNode, wxXML_ELEMENT_NODE, GAME_TAG_COMP_RENDER_OBJECT));
 	wxScopedPtr<wxXmlNode> apNewNode(pNewNode);
+	
+	pNewNode->AddAttribute(GAME_TAG_ATTR_TYPE, GAME_TAG_TYPE_RENDER_CAMERA);
 	
 	
 	// get camera name
 	contentOgre = m_pCamera->getName();
-	pNewNode->AddAttribute(GAME_TAG_ATTR_NAME, wxString::FromUTF8(contentOgre.c_str()));
+	
+	FWG_RETURN_FAIL(GameNewChecked(pTempNode
+								, pNewNode
+								, wxXML_ELEMENT_NODE
+								, GAME_TAG_PARAM_NAME
+								, contentOgre.c_str()));
 	
 	// fov
 	Ogre::Radian radian = m_pCamera->getFOVy();
@@ -215,3 +228,9 @@ GameErrorCode RenderCamera::Store(wxXmlNode* pParentNode)
 	
 }
 
+void RenderCamera::OnCreation(void* pContext)
+{
+	wxString *pCameraName = reinterpret_cast<wxString*> (pContext);
+	m_pCamera = m_pOwnerManager->GetOgreSceneManager()->createCamera(pCameraName->ToStdString());
+	delete pCameraName;
+}

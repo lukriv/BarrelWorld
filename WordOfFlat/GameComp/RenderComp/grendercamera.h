@@ -27,12 +27,12 @@ public:
 	
 	Ogre::Camera* GetOgreCamera();
 	
-	
-	
-    virtual GameErrorCode Load(wxXmlNode* XMLNode) override;
+	virtual GameErrorCode Load(wxXmlNode* XMLNode) override;
     virtual GameErrorCode Store(wxXmlNode* ParentNode) override;
 	
 	virtual void Update() override;
+	
+	virtual void OnCreation(void *pContext) override;
 };
 
 #endif // __GAME_RENDER_CAMERA_H__

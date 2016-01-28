@@ -1,6 +1,6 @@
 #include "gphyscompmgr.h"
 
-PhysicsCompManager::PhysicsCompManager(GamePhysicsSystem* pPhysicsSystem) : GameManagerBase(pPhysicsSystem->GetLogger())
+PhysicsCompManager::PhysicsCompManager(GamePhysicsSystem* pPhysicsSystem, GameEntityManager *pEntityMgr) : GameManagerBase(pPhysicsSystem->GetLogger(), pEntityMgr)
 																, m_pPhysSystem(pPhysicsSystem)
 {
 }

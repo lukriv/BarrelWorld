@@ -8,6 +8,7 @@
 #include <OGRE/OgreVector3.h>
 #include <OGRE/OgreQuaternion.h>
 #include <GameSystem/glog.h>
+#include <GameXmlDefinitions/gxmldefs.h>
 
 ///////////////////////////////////////////////
 // ConvertTo
@@ -172,3 +173,46 @@ void GameXmlUtils::ProcessUnknownTag(wxXmlNode* pNode, GameLogger* pLogger)
 	}
 }
 
+GameErrorCode GameXmlUtils::CheckTagAndType(wxXmlNode* pNode, const wxString& tag, const wxString& type, GameLogger* pLogger)
+{
+	wxString typeValue;
+	if(pNode->GetName() != tag)
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Invalid tag name '%s' (expected '%s') on line '%d'"), pLogger
+																, pNode->GetName().GetData().AsInternal()
+																, tag.GetData().AsInternal()
+																, pNode->GetLineNumber()
+																, FWGLOG_ENDVAL);
+	
+		return FWG_E_XML_INVALID_TAG_ERROR;
+	}
+	
+	if(pNode->GetAttribute(GAME_TAG_ATTR_TYPE, &typeValue))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Tag '%s' does not contain attribute '%s' on line '%d'"), pLogger
+																, pNode->GetName().GetData().AsInternal()
+																, GAME_TAG_ATTR_TYPE
+																, pNode->GetLineNumber()
+																, FWGLOG_ENDVAL);
+		return FWG_E_XML_ATTR_NOT_FOUND_ERROR;
+	}
+	
+	if(!typeValue.IsSameAs(type))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Unexpected type '%s' (expected '%s') within tag '%s' on line '%d'"), pLogger
+																, typeValue.GetData().AsInternal()
+																, type.GetData().AsInternal()
+																, pNode->GetName().GetData().AsInternal()
+																, pNode->GetLineNumber()
+																, FWGLOG_ENDVAL);
+		return FWG_E_XML_INVALID_ATTR_ERROR;
+	}
+	
+	return FWG_NO_ERROR;
+}
+
+GameErrorCode GameXmlUtils::GetKeyValue(wxXmlNode* pNode, wxString& action, wxInt32& keyCode, GameLogger* pLogger)
+{
+	
+	return FWG_E_NOT_IMPLEMENTED_ERROR;
+}
