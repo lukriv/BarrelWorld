@@ -269,6 +269,14 @@
         <File Name="PhysicsComp/gphyscompmgr.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
+    <VirtualDirectory Name="physcontrol">
+      <VirtualDirectory Name="include">
+        <File Name="PhysicsComp/gphyscontrol.h"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="src">
+        <File Name="PhysicsComp/gphyscontrol.cpp"/>
+      </VirtualDirectory>
+    </VirtualDirectory>
   </VirtualDirectory>
   <VirtualDirectory Name="common">
     <VirtualDirectory Name="include">
@@ -277,6 +285,7 @@
       <File Name="gcompmgr.h"/>
       <File Name="gentitymgr.h"/>
       <File Name="gmanagerbase.h"/>
+      <File Name="gpropery.h"/>
     </VirtualDirectory>
     <VirtualDirectory Name="src">
       <File Name="gcompmgr.cpp"/>

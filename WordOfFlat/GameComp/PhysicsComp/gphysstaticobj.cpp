@@ -41,6 +41,11 @@ GameErrorCode PhysicsStaticObject::Create(btCollisionShape *pColShape)
 	m_pColObject->setWorldTransform(transform);
 	m_pColObject->setCollisionShape(pColShape);
 	
+	m_pPhysSystem->GetDynamicsWorld()->addCollisionObject(m_pColObject);
+	
+	// set pointer to this object
+	m_pColObject->setUserPointer(static_cast<void*>(this));
+	
 	return FWG_NO_ERROR;
 }
 
@@ -72,10 +77,7 @@ GameErrorCode PhysicsStaticObject::ReceiveMessage(TaskMessage& msg)
 
 GameErrorCode PhysicsStaticObject::Load(wxXmlNode* pNode)
 {
-	if(pNode->GetName() != GAME_TAG_TYPE_PHYSICS_STATIC_OBJECT)
-	{
-		return FWG_E_XML_INVALID_TAG_ERROR;
-	}
+	FWG_RETURN_FAIL(GameXmlUtils::CheckTagAndType(pNode, GAME_TAG_COMP_PHYSICS, GAME_TAG_TYPE_PHYSICS_STATIC_OBJECT, m_pPhysSystem->GetLogger()));
 	
 	wxString tempContent;
 	wxXmlNode *pChild = pNode->GetChildren();

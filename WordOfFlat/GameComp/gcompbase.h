@@ -47,7 +47,7 @@ public:
 	
 	inline GameComponentType GetComponentType() { return m_compType; }
 	
-	inline void Enable(bool enable) { m_enabled = enable; }
+	virtual void Enable(bool enable) { m_enabled = enable; }
 	inline bool IsEnabled() { return m_enabled; }
 	
 	inline void SetParentEntity(wxDword id) 

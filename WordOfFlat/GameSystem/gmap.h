@@ -18,6 +18,8 @@ private:
 	
 public:
 	GameBasMap() {}
+	GameBasMap(const GameBasMap& srcMap) : m_innerMap(srcMap.m_innerMap){}
+
 	~GameBasMap() {}
 	
 	/*!

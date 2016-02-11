@@ -73,7 +73,7 @@ GameErrorCode RenderRigidBody::Load(wxXmlNode* pNode)
 		return FWG_E_OBJECT_NOT_INITIALIZED_ERROR;
 	}
 	
-	FWG_RETURN_FAIL(GameXmlUtils::CheckTagAndType(pNode, GAME_TAG_COMP_RENDER_OBJECT, GAME_TAG_TYPE_RENDER_RIGID_BODY));
+	FWG_RETURN_FAIL(GameXmlUtils::CheckTagAndType(pNode, GAME_TAG_COMP_RENDER_OBJECT, GAME_TAG_TYPE_RENDER_RIGID_BODY, m_pOwnerManager->GetLogger()));
 	
 	wxString meshName;
 	wxString materialName;

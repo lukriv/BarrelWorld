@@ -7,7 +7,7 @@
 #include <wx/xml/xml.h>
 #include <wx/scopedptr.h>
 
-const btScalar STEP_SIZE = 0.02f;
+const btScalar STEP_SIZE = 0.5f;
 const btScalar MOVE_STEP_SIZE = 1.0f;
 
 static const btScalar _2_PI = SIMD_2_PI;
@@ -26,15 +26,26 @@ GameErrorCode LogicFreeCamera::CreateComponent(TransformComponent* pTransform, F
 	return FWG_NO_ERROR;
 }
 
-LogicFreeCamera::LogicFreeCamera() : m_angleX(0.0f), m_angleY(0.0f)
+LogicFreeCamera::LogicFreeCamera(GameLogicSystem *pLogicSystem) : Moveable(pLogicSystem), m_angleX(0.0f), m_angleY(0.0f)
 {
 }
 
-GameErrorCode LogicFreeCamera::ProcessInput()
+GameErrorCode LogicFreeCamera::ReceiveMessage(TaskMessage& msg)
+{
+	return FWG_NO_ERROR;
+}
+
+
+GameErrorCode LogicFreeCamera::Update(float timeDiff)
 {
 	GameErrorCode result = FWG_NO_ERROR;
 	ControlStruct actualControls;
 	m_spInput->ExportControlStruct(actualControls);
+	
+	if(timeDiff == 0)
+	{
+		timeDiff = 0.000001f;
+	}
 	
 	if(!m_spTransform.IsEmpty())
 	{
@@ -42,8 +53,8 @@ GameErrorCode LogicFreeCamera::ProcessInput()
 		if(actualControls.IsMousePressed(ControlStruct::MOUSE_BUTTON_RIGHT))
 		{
 			// turn camera around
-			m_angleX += STEP_SIZE * ((btScalar)actualControls.GetRelX());
-			m_angleY += STEP_SIZE * ((btScalar)actualControls.GetRelY());
+			m_angleX -= STEP_SIZE * ((btScalar)actualControls.GetRelX()) * timeDiff;
+			m_angleY -= STEP_SIZE * ((btScalar)actualControls.GetRelY()) * timeDiff;
 			
 			if(m_angleX < 0)
 			{
@@ -59,21 +70,21 @@ GameErrorCode LogicFreeCamera::ProcessInput()
 				m_angleY = -_HALF_PI;
 			}
 			
-			m_spTransform->GetData()->m_rotation.setEuler(-m_angleX, m_angleY, 0.0f);
+			m_spTransform->GetData()->m_rotation.setEuler(m_angleX, m_angleY, 0.0f);
 
 		}
 		
 		if(actualControls.IsPressed(FreeCameraInput::INPUT_ACTION_FORWARD|FreeCameraInput::INPUT_ACTION_BACKWARD)
 				&& !(actualControls.IsPressed(FreeCameraInput::INPUT_ACTION_FORWARD) && actualControls.IsPressed(FreeCameraInput::INPUT_ACTION_BACKWARD)))
 		{
-			btVector3 dirVec(0,0,actualControls.IsPressed(FreeCameraInput::INPUT_ACTION_FORWARD)? MOVE_STEP_SIZE : -MOVE_STEP_SIZE );
+			btVector3 dirVec(0,0,actualControls.IsPressed(FreeCameraInput::INPUT_ACTION_FORWARD)? -MOVE_STEP_SIZE*timeDiff : MOVE_STEP_SIZE*timeDiff );
 			m_spTransform->GetData()->m_translate += dirVec.rotate(m_spTransform->GetData()->m_rotation.getAxis(), m_spTransform->GetData()->m_rotation.getAngle());;
 		}
 		
 		if(actualControls.IsPressed(FreeCameraInput::INPUT_ACTION_LEFT|FreeCameraInput::INPUT_ACTION_RIGHT)
 				&& !(actualControls.IsPressed(FreeCameraInput::INPUT_ACTION_LEFT) && actualControls.IsPressed(FreeCameraInput::INPUT_ACTION_RIGHT)))
 		{
-			btVector3 dirVec( actualControls.IsPressed(FreeCameraInput::INPUT_ACTION_LEFT) ? MOVE_STEP_SIZE : -MOVE_STEP_SIZE, 0, 0);
+			btVector3 dirVec( actualControls.IsPressed(FreeCameraInput::INPUT_ACTION_LEFT) ? -MOVE_STEP_SIZE*timeDiff : MOVE_STEP_SIZE*timeDiff, 0, 0);
 			m_spTransform->GetData()->m_translate += dirVec.rotate(m_spTransform->GetData()->m_rotation.getAxis(), m_spTransform->GetData()->m_rotation.getAngle());;
 		}
 		
@@ -91,25 +102,6 @@ GameErrorCode LogicFreeCamera::ProcessInput()
 	}
 	
 	return FWG_NO_ERROR;
-}
-
-GameErrorCode LogicFreeCamera::ReceiveMessage(TaskMessage& msg)
-{
-	return FWG_NO_ERROR;
-}
-
-
-GameErrorCode LogicFreeCamera::Update()
-{
-	if(m_spTransform.IsEmpty())
-	{
-		return FWG_E_OBJECT_NOT_INITIALIZED_ERROR;
-	}
-	
-	if(!m_spInput.IsEmpty())
-	{
-		FWG_RETURN_FAIL(ProcessInput());
-	}
 	
 	return FWG_NO_ERROR;
 }

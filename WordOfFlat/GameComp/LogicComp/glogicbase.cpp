@@ -10,4 +10,6 @@ LogicBase::~LogicBase()
 	}
 }
 
-
+LogicBase::LogicBase(GameLogicSystem* pLogicSystem) : m_pLogicSystem(pLogicSystem)
+{
+}

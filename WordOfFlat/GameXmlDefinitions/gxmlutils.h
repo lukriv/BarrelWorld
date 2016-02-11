@@ -22,12 +22,15 @@ public:
 	static GameErrorCode ConvertToInt32(const wxString& input, wxInt32& output);
 	static GameErrorCode ConvertToDword(const wxString& input, wxDword& output);
 	static GameErrorCode ConvertToFloat(const wxString& input, float& output);
+	static GameErrorCode ConvertToKeyCode(const wxString& input, wxInt32& output);
 	
 	static GameErrorCode ConvertFromVec3(const Ogre::Vector3& input, wxString& output);
 	static GameErrorCode ConvertFromQuat(const Ogre::Quaternion& input, wxString& output);
 	static GameErrorCode ConvertFromInt32( wxInt32 input, wxString& output);
 	static GameErrorCode ConvertFromDword( wxDword input, wxString& output);
 	static GameErrorCode ConvertFromFloat( float input, wxString& output);
+	static GameErrorCode ConvertFromKeyCode( wxInt32 input, wxString& output);
+	
 	
 	
 	static GameErrorCode GetNodeContent(wxXmlNode *pNode, wxString& content, GameLogger *pLogger = nullptr);

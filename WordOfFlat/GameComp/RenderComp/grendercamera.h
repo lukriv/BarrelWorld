@@ -3,6 +3,7 @@
 
 #include "grendercompbase.h"
 #include "grenderobject.h"
+#include <GameComp/gpropery.h>
 
 class RenderPosition;
 
@@ -21,7 +22,7 @@ public:
     RenderCamera(GameRenderSystem* pCompManager);
     ~RenderCamera();
 
-	GameErrorCode Create(const wxString& cameraName);
+	GameErrorCode Create(const GamePropertyContainer &propMap);
 	
 	void Destroy();
 	

@@ -29,7 +29,7 @@ public:
 	GameErrorCode Initialize();
 	void Uninitialize();
 	
-	GameErrorCode ProcessPhysics();
+	GameErrorCode ProcessPhysics(float timeDiff);
 	
 protected:
 	btCollisionShape * CreateCollisionShape(PhysShapeDef &physShapeDef);

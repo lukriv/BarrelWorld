@@ -17,10 +17,10 @@ RenderCamera::~RenderCamera()
 	Destroy();
 }
 
-GameErrorCode RenderCamera::Create(const wxString& cameraName)
+GameErrorCode RenderCamera::Create(const GamePropertyContainer &propMap)
 {
-	wxString *pString = new (std::nothrow) wxString(cameraName);
-	return m_pOwnerManager->CreateRenderComponent(this, pString);
+	GamePropertyContainer *pPropMap = new (std::nothrow) GamePropertyContainer(propMap);
+	return m_pOwnerManager->CreateRenderComponent(this, pPropMap);
 }
 
 
@@ -52,49 +52,29 @@ GameErrorCode RenderCamera::Load(wxXmlNode* pNode)
 	
 	FWG_RETURN_FAIL(GameXmlUtils::CheckTagAndType(pNode, GAME_TAG_COMP_RENDER_OBJECT, GAME_TAG_TYPE_RENDER_CAMERA));
 	
+	GamePropertyContainer propCont(m_pOwnerManager->GetLogger());
 	wxString temp;
 	float tempFloat = 0.0;
 	
-	wxString name;
-	
-	
+	wxString projectionType = GAME_TAG_VALUE_PERSPECTIVE;
+ 
 	wxXmlNode *pElement = pNode->GetChildren();
-	
-	// find name tag
+ 
 	while(pElement)
 	{
+ 
 		if(pElement->GetName() == GAME_TAG_PARAM_NAME)
 		{
-			FWG_RETURN_FAIL(GameXmlUtils::GetNodeContent(pElement, name, m_pOwnerManager->GetLogger()));
-		}
+			FWG_RETURN_FAIL(GameXmlUtils::GetNodeContent(pElement, temp, m_pOwnerManager->GetLogger()));
+			propCont.SetProperty(GAME_TAG_PARAM_NAME, temp);			
 		
-		pElement = pElement->GetNext();
-	}
-	
-	
-    wxString projectionType = GAME_TAG_VALUE_PERSPECTIVE;
- 
-    // Create the camera
-    m_pCamera = m_pOwnerManager->GetOgreSceneManager()->createCamera(name.ToStdString());
-    
-	// attach camera to the node
-	m_spPosition->GetSceneNode()->attachObject(m_pCamera);
-
- 
-	pElement = pNode->GetChildren();
- 
-	while(pElement)
-	{
- 
-		// Process clipping (?)
-		if(pElement->GetName() == GAME_TAG_PARAM_FOV)
-		{
+		} else if(pElement->GetName() == GAME_TAG_PARAM_FOV) {
 			FWG_RETURN_FAIL(GameXmlUtils::GetNodeContent(pElement, temp, m_pOwnerManager->GetLogger()));
 			FWG_RETURN_FAIL(GameXmlUtils::ConvertToFloat(temp, tempFloat));
+			propCont.SetProperty(GAME_TAG_PARAM_FOV, tempFloat);
 			
 			// Set the field-of-view
 			//! @todo Is this always in degrees?
-			m_pCamera->setFOVy(Ogre::Degree(static_cast<Ogre::Real>(tempFloat)));
 	
 		// Process position (?)
 		} else if(pElement->GetName() == GAME_TAG_PARAM_PROJECTION) {
@@ -102,9 +82,11 @@ GameErrorCode RenderCamera::Load(wxXmlNode* pNode)
 			FWG_RETURN_FAIL(GameXmlUtils::GetNodeContent(pElement, temp, m_pOwnerManager->GetLogger()));
 			if(projectionType == GAME_TAG_VALUE_PERSPECTIVE)
 			{
-				m_pCamera->setProjectionType(Ogre::PT_PERSPECTIVE);
+				propCont.SetProperty(GAME_TAG_PARAM_PROJECTION, static_cast<wxInt32>(Ogre::PT_PERSPECTIVE));
+				//m_pCamera->setProjectionType(Ogre::PT_PERSPECTIVE);
 			} else if(projectionType == GAME_TAG_VALUE_ORTHOGRAPHIC) {
-				m_pCamera->setProjectionType(Ogre::PT_ORTHOGRAPHIC);
+				propCont.SetProperty(GAME_TAG_PARAM_PROJECTION, static_cast<wxInt32>(Ogre::PT_ORTHOGRAPHIC));
+				//m_pCamera->setProjectionType(Ogre::PT_ORTHOGRAPHIC);
 			} else {
 				FWGLOG_WARNING_FORMAT(wxT("Unknown projection type value '%s' on line %d"), m_pOwnerManager->GetLogger()
 													, temp.GetData().AsInternal()
@@ -116,13 +98,14 @@ GameErrorCode RenderCamera::Load(wxXmlNode* pNode)
 		} else if(pElement->GetName() == GAME_TAG_PARAM_FAR) {
 			FWG_RETURN_FAIL(GameXmlUtils::GetNodeContent(pElement, temp, m_pOwnerManager->GetLogger()));
 			FWG_RETURN_FAIL(GameXmlUtils::ConvertToFloat(temp, tempFloat));
-			m_pCamera->setFarClipDistance(tempFloat);
+			propCont.SetProperty(GAME_TAG_PARAM_FAR, tempFloat);
+			//m_pCamera->setFarClipDistance(tempFloat);
 
 		} else if(pElement->GetName() == GAME_TAG_PARAM_NEAR) {
 			FWG_RETURN_FAIL(GameXmlUtils::GetNodeContent(pElement, temp, m_pOwnerManager->GetLogger()));
 			FWG_RETURN_FAIL(GameXmlUtils::ConvertToFloat(temp, tempFloat));
-			
-			m_pCamera->setNearClipDistance(tempFloat);
+			propCont.SetProperty(GAME_TAG_PARAM_NEAR, tempFloat);
+			//m_pCamera->setNearClipDistance(tempFloat);
 	 
 		} else {
 			if(pElement->GetName() != GAME_TAG_PARAM_NEAR) // skip name tag
@@ -134,9 +117,7 @@ GameErrorCode RenderCamera::Load(wxXmlNode* pNode)
 		pElement = pElement->GetNext();	
 	}
 	
-	
-		
-	return FWG_NO_ERROR;
+	return Create(propCont);
 }
 
 void RenderCamera::Update()
@@ -230,7 +211,50 @@ GameErrorCode RenderCamera::Store(wxXmlNode* pParentNode)
 
 void RenderCamera::OnCreation(void* pContext)
 {
-	wxString *pCameraName = reinterpret_cast<wxString*> (pContext);
-	m_pCamera = m_pOwnerManager->GetOgreSceneManager()->createCamera(pCameraName->ToStdString());
-	delete pCameraName;
+	GameErrorCode result = FWG_NO_ERROR;
+	wxString str;
+	float tempFloat;
+	wxInt32 tempInt;
+	
+	GamePropertyContainer *pPropMap = reinterpret_cast<GamePropertyContainer*> (pContext);
+	
+	if(FWG_FAILED(result = pPropMap->GetProperty(GAME_TAG_PARAM_NAME, str)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Camera cannot be initialized - name is missing : 0x%08x"), m_pOwnerManager->GetLogger(), result, FWGLOG_ENDVAL);
+		return;
+	}
+	
+	m_pCamera = m_pOwnerManager->GetOgreSceneManager()->createCamera(str.ToStdString());
+	
+	if(FWG_SUCCEDED(result = pPropMap->GetProperty(GAME_TAG_PARAM_FOV, tempFloat)))
+	{
+		m_pCamera->setFOVy(Ogre::Degree(static_cast<Ogre::Real>(tempFloat)));
+	} else {
+		FWGLOG_WARNING_FORMAT(wxT("Camera parameter '%s' is missing"), m_pOwnerManager->GetLogger(), GAME_TAG_PARAM_FOV, FWGLOG_ENDVAL);
+	}
+	
+	if(FWG_SUCCEDED(result = pPropMap->GetProperty(GAME_TAG_PARAM_PROJECTION, tempInt)))
+	{
+		m_pCamera->setProjectionType(static_cast<Ogre::ProjectionType>(tempInt));
+	} else {
+		FWGLOG_WARNING_FORMAT(wxT("Camera parameter '%s' is missing"), m_pOwnerManager->GetLogger(), GAME_TAG_PARAM_PROJECTION, FWGLOG_ENDVAL);
+	}
+	
+	if(FWG_SUCCEDED(result = pPropMap->GetProperty(GAME_TAG_PARAM_FAR, tempFloat)))
+	{
+		m_pCamera->setFarClipDistance(tempFloat);
+	} else {
+		FWGLOG_WARNING_FORMAT(wxT("Camera parameter '%s' is missing"), m_pOwnerManager->GetLogger(), GAME_TAG_PARAM_FAR, FWGLOG_ENDVAL);
+	}
+	
+	if(FWG_SUCCEDED(result = pPropMap->GetProperty(GAME_TAG_PARAM_NEAR, tempFloat)))
+	{
+		m_pCamera->setNearClipDistance(tempFloat);
+	} else {
+		FWGLOG_WARNING_FORMAT(wxT("Camera parameter '%s' is missing"), m_pOwnerManager->GetLogger(), GAME_TAG_PARAM_NEAR, FWGLOG_ENDVAL);
+	}
+	
+	m_spPosition->GetSceneNode()->attachObject(m_pCamera);
+	
+	delete pPropMap;
 }

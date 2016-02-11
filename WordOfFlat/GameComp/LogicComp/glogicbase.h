@@ -23,14 +23,10 @@ protected:
 
 public:
 
-	LogicBase(): m_pLogicSystem(nullptr) {}
+	LogicBase(GameLogicSystem *pLogicSystem);
 	virtual ~LogicBase();
 
-	inline void SetOwnerManager(GameLogicSystem *pLogicSystem) {
-		m_pLogicSystem = pLogicSystem;
-	}
-
-	virtual GameErrorCode Update() = 0;
+	virtual GameErrorCode Update(float timeDiff) = 0;
 	
 };
 

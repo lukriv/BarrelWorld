@@ -13,10 +13,12 @@ protected:
     RefObjSmPtr<InputComponent> m_spInput;
 public:
     
-    Moveable();
+    Moveable(GameLogicSystem *pLogicSystem);
     ~Moveable();
 	
 	GameErrorCode Initialize(TransformComponent* pTransform, InputComponent* pFreeCamInput);
+	
+	virtual void Enable(bool enable) override;
 
 };
 

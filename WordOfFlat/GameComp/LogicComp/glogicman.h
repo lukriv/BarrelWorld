@@ -11,14 +11,14 @@ class LogicManualTest : public Moveable
 {
 
 public:
-	LogicManualTest();
+	LogicManualTest(GameLogicSystem *pLogicSystem);
 	~LogicManualTest();
 	
 	virtual GameErrorCode ReceiveMessage(TaskMessage& msg) override;
 	
 	
 
-	virtual GameErrorCode Update() override;
+	virtual GameErrorCode Update(float timeDiff) override;
 	
 	virtual GameErrorCode Load(wxXmlNode *pNode) override;
 	virtual GameErrorCode Store(wxXmlNode *pParentNode) override;

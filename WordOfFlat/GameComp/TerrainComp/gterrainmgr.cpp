@@ -377,24 +377,32 @@ GameErrorCode GameTerrainManager::CreateTerrainGroup(TerrainDef& terrainDef)
 GameErrorCode GameTerrainManager::LoadTerrainData( const wxString& resource, wxDword terrDataSize, wxScopedArray<float> &retData, float &minHeight, float &maxHeight)
 {
 	Ogre::Image img;
-	img.load(resource.ToStdString(), Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+	try {
+		img.load(resource.ToStdString(), Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+		
+		if (( img.getHeight() != terrDataSize) || (img.getWidth() != terrDataSize))
+		{
+			FWGLOG_ERROR_FORMAT(wxT("Invalid image size: %u x %u (expected %u x %u)"), m_spLogger
+					, img.getHeight()
+					, img.getWidth()
+					, terrDataSize
+					, terrDataSize
+					, FWGLOG_ENDVAL);
+			return FWG_E_INVALID_DATA_ERROR;
+		} else {
+			FWGLOG_DEBUG_FORMAT(wxT("Image size: %u x %u"), m_spLogger
+					, img.getHeight()
+					, img.getWidth()
+					, FWGLOG_ENDVAL);
+		}
 	
-	if (( img.getHeight() != terrDataSize) || (img.getWidth() != terrDataSize))
-	{
-		FWGLOG_ERROR_FORMAT(wxT("Invalid image size: %u x %u (expected %u x %u)"), m_spLogger
-				, img.getHeight()
-				, img.getWidth()
-				, terrDataSize
-				, terrDataSize
-				, FWGLOG_ENDVAL);
-		return FWG_E_INVALID_DATA_ERROR;
-	} else {
-		FWGLOG_DEBUG_FORMAT(wxT("Image size: %u x %u"), m_spLogger
-				, img.getHeight()
-				, img.getWidth()
-				, FWGLOG_ENDVAL);
+	} catch(Ogre::Exception &exc) {
+		FWGLOG_ERROR_FORMAT(wxT("OGRE error message: '%s'"), m_spLogger
+						, wxString::FromUTF8(exc.getFullDescription().c_str()).GetData().AsInternal()
+						, FWGLOG_ENDVAL );
+		return FWG_E_RENDER_SYSTEM_ERROR;
 	}
-	
+		
 	Ogre::uchar *pImgData = img.getData();
 	
 	wxScopedArray<float> apFloat(new (std::nothrow) float[terrDataSize*terrDataSize]);

@@ -39,7 +39,7 @@ public:
 	/**
 	 * \brief Process all logic components in this manager
 	 */
-	GameErrorCode ProcessLogicStep();
+	GameErrorCode ProcessLogicStep(float timeDiff);
 
 };
 

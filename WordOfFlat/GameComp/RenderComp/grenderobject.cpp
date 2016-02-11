@@ -12,7 +12,7 @@ RenderObject::~RenderObject()
 GameErrorCode RenderObject::Initialize(RenderPosition* pRenderPosition)
 {
 	m_spPosition = pRenderPosition;
-    if(m_spPosition.IsEmpty()||(pRenderPosition->GetSceneNode() == nullptr)) 
+    if(m_spPosition.IsEmpty()) 
 	{
 		// transform component cannot be null - add transform component to entity at first
 		m_spPosition.Release();

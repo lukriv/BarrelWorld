@@ -18,6 +18,8 @@ public:
     GameErrorCode Initialize(TransformComponent* pTransform);
 	
 	GameErrorCode Create();
+	
+	virtual void Enable(bool enable) override;
 
     inline Ogre::SceneNode* GetSceneNode() { return m_pSceneNode; }
 

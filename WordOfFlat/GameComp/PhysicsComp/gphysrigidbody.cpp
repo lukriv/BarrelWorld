@@ -70,7 +70,7 @@ GameErrorCode PhysicsRigidBody::Create(btScalar mass, btCollisionShape* pColShap
 
 GameErrorCode PhysicsRigidBody::Load(wxXmlNode* pNode)
 {
-	FWG_RETURN_FAIL(GameXmlUtils::CheckTagAndType(pNode, GAME_TAG_COMP_PHYSICS, GAME_TAG_TYPE_PHYSICS_RIGID_BODY));
+	FWG_RETURN_FAIL(GameXmlUtils::CheckTagAndType(pNode, GAME_TAG_COMP_PHYSICS, GAME_TAG_TYPE_PHYSICS_RIGID_BODY, m_pPhysSystem->GetLogger()));
 	
 	wxString tempContent;
 	wxXmlNode *pChild = pNode->GetChildren();

@@ -9,6 +9,7 @@
 #include <OGRE/OgreQuaternion.h>
 #include <GameSystem/glog.h>
 #include <GameXmlDefinitions/gxmldefs.h>
+#include "gxmlkeydefs.h"
 
 ///////////////////////////////////////////////
 // ConvertTo
@@ -105,6 +106,21 @@ GameErrorCode GameXmlUtils::ConvertToVec3(const wxString& input, Ogre::Vector3& 
 	return FWG_NO_ERROR;
 }
 
+GameErrorCode GameXmlUtils::ConvertToKeyCode(const wxString& input, wxInt32& output)
+{
+	for(wxDword i = 0; i < WXSIZEOF(KeyTable); ++i)
+	{
+		if(input.IsSameAs(KeyTable[i].m_keyName))
+		{
+			output = KeyTable[i].m_keyCode;
+			return FWG_NO_ERROR;
+		}
+	}
+	
+	return FWG_E_OBJECT_NOT_FOUND_ERROR;	
+}
+
+
 
 ///////////////////////////////////////////////
 // ConvertFrom
@@ -140,6 +156,19 @@ GameErrorCode GameXmlUtils::ConvertFromVec3(const Ogre::Vector3& input, wxString
 	return FWG_NO_ERROR;
 }
 
+GameErrorCode GameXmlUtils::ConvertFromKeyCode(wxInt32 input, wxString& output)
+{
+	for(wxDword i = 0; i < WXSIZEOF(KeyTable); ++i)
+	{
+		if(input == KeyTable[i].m_keyCode)
+		{
+			output = KeyTable[i].m_keyName;
+			return FWG_NO_ERROR;
+		}
+	}
+	
+	return FWG_E_OBJECT_NOT_FOUND_ERROR;
+}
 
 ///////////////////////////////////////////////
 // Other
@@ -187,7 +216,7 @@ GameErrorCode GameXmlUtils::CheckTagAndType(wxXmlNode* pNode, const wxString& ta
 		return FWG_E_XML_INVALID_TAG_ERROR;
 	}
 	
-	if(pNode->GetAttribute(GAME_TAG_ATTR_TYPE, &typeValue))
+	if(!pNode->GetAttribute(GAME_TAG_ATTR_TYPE, &typeValue))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Tag '%s' does not contain attribute '%s' on line '%d'"), pLogger
 																, pNode->GetName().GetData().AsInternal()
@@ -213,6 +242,49 @@ GameErrorCode GameXmlUtils::CheckTagAndType(wxXmlNode* pNode, const wxString& ta
 
 GameErrorCode GameXmlUtils::GetKeyValue(wxXmlNode* pNode, wxString& action, wxInt32& keyCode, GameLogger* pLogger)
 {
+	GameErrorCode result = FWG_NO_ERROR;
+	wxString keyCodeStr;
+	if(!pNode->GetName().IsSameAs(GAME_TAG_PARAM_INPUT_KEY))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Invalid tag name '%s' (expected '%s') on line '%d'"), pLogger
+																, pNode->GetName().GetData().AsInternal()
+																, GAME_TAG_PARAM_INPUT_KEY
+																, pNode->GetLineNumber()
+																, FWGLOG_ENDVAL);
 	
-	return FWG_E_NOT_IMPLEMENTED_ERROR;
+		return FWG_E_XML_INVALID_TAG_ERROR;
+	}
+	
+	if(!pNode->GetAttribute(GAME_TAG_ATTR_ACTION, &action))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Tag '%s' does not contain attribute '%s' on line '%d'"), pLogger
+																, pNode->GetName().GetData().AsInternal()
+																, GAME_TAG_ATTR_ACTION
+																, pNode->GetLineNumber()
+																, FWGLOG_ENDVAL);
+		return FWG_E_XML_ATTR_NOT_FOUND_ERROR;
+	}
+	
+	if(!pNode->GetAttribute(GAME_TAG_ATTR_VALUE, &keyCodeStr))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Tag '%s' does not contain attribute '%s' on line '%d'"), pLogger
+																, pNode->GetName().GetData().AsInternal()
+																, GAME_TAG_ATTR_VALUE
+																, pNode->GetLineNumber()
+																, FWGLOG_ENDVAL);
+		return FWG_E_XML_ATTR_NOT_FOUND_ERROR;
+	}
+	
+	if(FWG_FAILED(result = ConvertToKeyCode(keyCodeStr, keyCode)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Tag '%s' does not contain correct key value on line '%d'"), pLogger
+																, pNode->GetName().GetData().AsInternal()
+																, pNode->GetLineNumber()
+																, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	return result;
 }
+
+

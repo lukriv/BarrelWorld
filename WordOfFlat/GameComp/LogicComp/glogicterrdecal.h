@@ -16,7 +16,7 @@ class LogicTerrainDecal : public LogicBase
 	RefObjSmPtr<InputComponent> m_spInput;
 	GameTerrainManager *m_pTerrainMgr;
 public:
-	LogicTerrainDecal();
+	LogicTerrainDecal(GameLogicSystem *pLogicSystem);
 	~LogicTerrainDecal();
 	
 	GameErrorCode Initialize(GameTerrainManager *pTerrainManager);

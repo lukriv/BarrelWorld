@@ -143,8 +143,12 @@ GameErrorCode GameXmlResourceLoader::ParseScene(wxXmlNode* pNode, GameCompManage
 		if(child->GetName() == GAME_TAG_ENTITY_STR) 
 		{
 			
-
 			// process entity definition
+			if(FWG_FAILED(result = LoadEntity(child, compMgr)))
+			{
+				FWGLOG_ERROR_FORMAT(wxT("Load entity failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+				return result;
+			}
 			
 			
 		} else if(child->GetName() == GAME_TAG_COMP_TERRAIN) {
@@ -295,7 +299,11 @@ GameErrorCode GameXmlResourceLoader::LoadInput(wxXmlNode* pNode, GameCompManager
 		return result;
 	}
 	
-	FWG_RETURN_FAIL(CreateInputDef(pNode, spInputDefinition));
+	if(FWG_FAILED(result = CreateInputDef(pNode, spInputDefinition)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Create input definition failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
 	
 	if(FWG_FAILED(result = spInput->Create(spInputDefinition)))
 	{
@@ -401,6 +409,9 @@ GameErrorCode GameXmlResourceLoader::LoadRender(wxXmlNode* pNode, GameCompManage
 			return result;
 		}
 		spRenderObj = spTemp;	
+	} else {
+		FWGLOG_ERROR_FORMAT(wxT("Unknown robject component type found: %s"), m_spLogger, type.GetData().AsInternal(), FWGLOG_ENDVAL);
+		return FWG_E_INVALID_DATA_ERROR;
 	}
 	
 	if(FWG_FAILED(result = spRenderObj->Load(pNode)))
@@ -419,6 +430,10 @@ GameErrorCode GameXmlResourceLoader::LoadMoveable(wxXmlNode* pNode, GameCompMana
 	
 	wxString type;
 	
+	RefObjSmPtr<TransformComponent> spTransform = compMgr.GetEntityManager().GetTransformManager().GetComponent(entID);
+	
+	RefObjSmPtr<InputComponent> spInput = compMgr.GetEntityManager().GetInputManager().GetComponent(entID);
+	
 	// get type of object
 	if(!pNode->GetAttribute(GAME_TAG_ATTR_TYPE, &type))
 	{
@@ -429,7 +444,7 @@ GameErrorCode GameXmlResourceLoader::LoadMoveable(wxXmlNode* pNode, GameCompMana
 	if(type == GAME_TAG_TYPE_MOVEABLE_MANUAL_TEST)
 	{
 		RefObjSmPtr<LogicManualTest> spTemp;
-		if(FWG_FAILED(result = compMgr.GetEntityManager().GetMoveableManager().CreateComponent<LogicManualTest>(entID, spTemp.OutRef())))
+		if(FWG_FAILED(result = compMgr.GetEntityManager().GetMoveableManager().CreateComponent<LogicManualTest>(entID, spTransform, spInput, spTemp.OutRef())))
 		{
 			FWGLOG_ERROR_FORMAT(wxT("Create character moveable component failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
 			return result;
@@ -437,12 +452,15 @@ GameErrorCode GameXmlResourceLoader::LoadMoveable(wxXmlNode* pNode, GameCompMana
 		spLogic = spTemp;
 	} else if(type == GAME_TAG_TYPE_MOVEABLE_FREE_CAMERA) {
 		RefObjSmPtr<LogicFreeCamera> spTemp;
-		if(FWG_FAILED(result = compMgr.GetEntityManager().GetMoveableManager().CreateComponent<LogicFreeCamera>(entID, spTemp.OutRef())))
+		if(FWG_FAILED(result = compMgr.GetEntityManager().GetMoveableManager().CreateComponent<LogicFreeCamera>(entID, spTransform, spInput, spTemp.OutRef())))
 		{
 			FWGLOG_ERROR_FORMAT(wxT("Create free camera moveable component failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
 			return result;
 		}
 		spLogic = spTemp;	
+	} else {
+		FWGLOG_ERROR_FORMAT(wxT("Unknown moveable component type found: %s"), m_spLogger, type.GetData().AsInternal(), FWGLOG_ENDVAL);
+		return FWG_E_INVALID_DATA_ERROR;
 	}
 	
 	if(FWG_FAILED(result = spLogic->Load(pNode)))
@@ -461,6 +479,8 @@ GameErrorCode GameXmlResourceLoader::LoadPhysics(wxXmlNode* pNode, GameCompManag
 	
 	wxString type;
 	
+	RefObjSmPtr<TransformComponent> spTransform = compMgr.GetEntityManager().GetTransformManager().GetComponent(entID);
+	
 	// get type of object
 	if(!pNode->GetAttribute(GAME_TAG_ATTR_TYPE, &type))
 	{
@@ -471,7 +491,7 @@ GameErrorCode GameXmlResourceLoader::LoadPhysics(wxXmlNode* pNode, GameCompManag
 	if(type == GAME_TAG_TYPE_PHYSICS_RIGID_BODY)
 	{
 		RefObjSmPtr<PhysicsRigidBody> spTemp;
-		if(FWG_FAILED(result = compMgr.GetEntityManager().GetPhysicsManager().CreateComponent<PhysicsRigidBody>(entID, spTemp.OutRef())))
+		if(FWG_FAILED(result = compMgr.GetEntityManager().GetPhysicsManager().CreateComponent<PhysicsRigidBody>(entID, spTransform, spTemp.OutRef())))
 		{
 			FWGLOG_ERROR_FORMAT(wxT("Create physics rigid body component failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
 			return result;
@@ -479,7 +499,7 @@ GameErrorCode GameXmlResourceLoader::LoadPhysics(wxXmlNode* pNode, GameCompManag
 		spPhysics = spTemp;
 	} else if(type == GAME_TAG_TYPE_PHYSICS_STATIC_OBJECT) {
 		RefObjSmPtr<PhysicsStaticObject> spTemp;
-		if(FWG_FAILED(result = compMgr.GetEntityManager().GetPhysicsManager().CreateComponent<PhysicsStaticObject>(entID, spTemp.OutRef())))
+		if(FWG_FAILED(result = compMgr.GetEntityManager().GetPhysicsManager().CreateComponent<PhysicsStaticObject>(entID, spTransform, spTemp.OutRef())))
 		{
 			FWGLOG_ERROR_FORMAT(wxT("Create physics static component failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
 			return result;

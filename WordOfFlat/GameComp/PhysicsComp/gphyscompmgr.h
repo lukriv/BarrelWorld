@@ -17,10 +17,12 @@ public:
 	~PhysicsCompManager();
 	
 	template <class T>
-	GameErrorCode CreateComponent(wxDword compId, T *&pNewComponent )
+	GameErrorCode CreateComponent(wxDword compId, TransformComponent* trans, T *&pNewComponent )
 	{
 		RefObjSmPtr<T> spPhysComp;
 		FWG_RETURN_FAIL(GameNewChecked(spPhysComp.OutRef(), m_pPhysSystem));
+		
+		FWG_RETURN_FAIL(spPhysComp->Initialize(trans));
 		
 		FWG_RETURN_FAIL(InsertToMap(compId, spPhysComp));
 		

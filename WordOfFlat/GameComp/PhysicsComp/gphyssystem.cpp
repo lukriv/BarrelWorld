@@ -92,8 +92,8 @@ void GamePhysicsSystem::Uninitialize()
 	}
 }
 
-GameErrorCode GamePhysicsSystem::ProcessPhysics()
+GameErrorCode GamePhysicsSystem::ProcessPhysics(float timediff)
 {
-	m_pDynamicsWorld->stepSimulation(btScalar(1.)/btScalar(60.));
+	m_pDynamicsWorld->stepSimulation(timediff);
 	return FWG_NO_ERROR;
 }

@@ -3,7 +3,6 @@
 
 #include <GameComp/PhysicsComp/gphysdbgdraw.h>
 
-static const float LogicStepTime = 1.0f / 60.0f;
 
 //m_spInputSystem->RegisterCallback(OIS::KC_ESCAPE, this, &ClientGameLogic::SetExit)))
 
@@ -11,36 +10,29 @@ static const float LogicStepTime = 1.0f / 60.0f;
 
 GameErrorCode GameMainMenuState::ProcessUpdate(float secDiff)
 {
-	static float logicStep = LogicStepTime;
 	
 	GameErrorCode result = FWG_NO_ERROR;
 	
-	logicStep -= secDiff;
-	if(logicStep < 0)
+	//FWGLOG_DEBUG(wxT("Start physics steps"), m_pOwner->GetLogger());
+	if(FWG_FAILED(result = m_spCompManager->GetPhysicsSystem().ProcessPhysics(secDiff)))
 	{
-		//FWGLOG_DEBUG(wxT("Start physics steps"), m_pOwner->GetLogger());
-		if(FWG_FAILED(result = m_spCompManager->GetPhysicsSystem().ProcessPhysics()))
-		{
-			FWGLOG_ERROR_FORMAT(wxT("Process physics steps failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
-			return result;
-		}
+		FWGLOG_ERROR_FORMAT(wxT("Process physics steps failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
+		return result;
+	}
 		//FWGLOG_DEBUG(wxT("Start logic and end physics steps"), m_pOwner->GetLogger());
 		
-		if(m_pDebugDraw)
-		{
-			m_pDebugDraw->Update();
-		}
-
-		if(FWG_FAILED(result = m_spCompManager->GetLogicSystem().ProcessLogicStep()))
-		{
-			FWGLOG_ERROR_FORMAT(wxT("Process logic steps failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
-			return result;
-		}
-		
-		//FWGLOG_DEBUG(wxT("End logic steps"), m_pOwner->GetLogger());
-		
-		logicStep += LogicStepTime;
+	if(m_pDebugDraw)
+	{
+		m_pDebugDraw->Update();
 	}
+
+	if(FWG_FAILED(result = m_spCompManager->GetLogicSystem().ProcessLogicStep(secDiff)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Process logic steps failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
+		return result;
+	}
+		
+		
 	
 	if(FWG_FAILED(result = m_spCompManager->GetRenderSystem().ProcessAllUpdates()))
 	{
@@ -89,6 +81,12 @@ GameErrorCode GameMainMenuState::ProcessState(GameState& nextState, wxString& ne
 	if(FWG_FAILED(result = loader.Load(*m_spCompManager)))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Load xml failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
+		return result;
+	}
+
+	if(FWG_FAILED(result = m_spCompManager->GetRenderSystem().ProcessAllCreation()))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Process all creation failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
 		return result;
 	}
 
@@ -172,6 +170,8 @@ bool GameMainMenuState::frameRenderingQueued(const Ogre::FrameEvent& evt)
 		FWGLOG_ERROR_FORMAT(wxT("Process update failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
 		return false;
 	}
+	
+	FWGLOG_DEBUG_FORMAT(wxT("timeSinceLastFrame: %lf, timeSinceLastEvent: %lf"), m_pOwner->GetLogger(), evt.timeSinceLastFrame, evt.timeSinceLastEvent, FWGLOG_ENDVAL);
 	
 	// exit
 	if(m_exitState)

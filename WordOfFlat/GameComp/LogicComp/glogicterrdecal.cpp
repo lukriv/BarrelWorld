@@ -13,7 +13,7 @@ GameErrorCode LogicTerrainDecal::Initialize(GameTerrainManager* pTerrainManager)
 	return FWG_NO_ERROR;
 }
 
-LogicTerrainDecal::LogicTerrainDecal() : m_pTerrainMgr(nullptr)
+LogicTerrainDecal::LogicTerrainDecal(GameLogicSystem *pLogicSystem) : LogicBase(pLogicSystem), m_pTerrainMgr(nullptr)
 {
 }
 

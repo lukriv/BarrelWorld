@@ -14,7 +14,7 @@
 
 const float STEP_SIZE = 0.1f;
 
-LogicManualTest::LogicManualTest()
+LogicManualTest::LogicManualTest(GameLogicSystem *pLogicSystem) : Moveable(pLogicSystem)
 {
 }
 
@@ -23,54 +23,37 @@ LogicManualTest::~LogicManualTest()
 }
 
 
-GameErrorCode LogicManualTest::Update()
-{
-	if(m_spTransform.IsEmpty())
-	{
-		return FWG_E_OBJECT_NOT_INITIALIZED_ERROR;
-	}
-	
-	if(!m_spInput.IsEmpty())
-	{
-		FWG_RETURN_FAIL(ProcessInput());
-	}
-	
-	return FWG_NO_ERROR;
-}
-
-GameErrorCode LogicManualTest::ProcessInput()
+GameErrorCode LogicManualTest::Update(float timeDiff)
 {
 	GameErrorCode result = FWG_NO_ERROR;
 	ControlStruct actualControls;
 	m_spInput->ExportControlStruct(actualControls);
 	
-	if(!m_spTransform.IsEmpty())
+	float stepSize = STEP_SIZE*timeDiff;
+	
+	btVector3 moveVec = btVector3(0,0,0);
+	if(actualControls.IsPressed(CharacterInput::INPUT_ACTION_UP))
 	{
-		
-		btVector3 moveVec = btVector3(0,0,0);
-		if(actualControls.IsPressed(CharacterInput::INPUT_ACTION_UP))
-		{
-			moveVec.setZ(STEP_SIZE);
-		}
-		
-		if(actualControls.IsPressed(CharacterInput::INPUT_ACTION_DOWN))
-		{
-			moveVec.setZ(-STEP_SIZE);
-		}
-		
-		if(actualControls.IsPressed(CharacterInput::INPUT_ACTION_LEFT))
-		{
-			moveVec.setX(STEP_SIZE);
-		}
-		
-		if(actualControls.IsPressed(CharacterInput::INPUT_ACTION_RIGHT))
-		{
-			moveVec.setX(-STEP_SIZE);
-		}
-		
-		m_spTransform->GetData()->m_translate += moveVec;
-		
+		moveVec.setZ(stepSize);
 	}
+		
+	if(actualControls.IsPressed(CharacterInput::INPUT_ACTION_DOWN))
+	{
+		moveVec.setZ(-stepSize);
+	}
+		
+	if(actualControls.IsPressed(CharacterInput::INPUT_ACTION_LEFT))
+	{
+		moveVec.setX(stepSize);
+	}
+		
+	if(actualControls.IsPressed(CharacterInput::INPUT_ACTION_RIGHT))
+	{
+		moveVec.setX(-stepSize);
+	}
+		
+	m_spTransform->GetData()->m_translate += moveVec;
+		
 	
 	// update render component
 	TaskMessage task(GAME_TASK_TRANSFORM_UPDATE);
@@ -82,6 +65,8 @@ GameErrorCode LogicManualTest::ProcessInput()
 	
 	return FWG_NO_ERROR;
 }
+
+
 
 GameErrorCode LogicManualTest::ReceiveMessage(TaskMessage&)
 {

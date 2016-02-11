@@ -13,20 +13,18 @@ class LogicFreeCamera : public Moveable
 	btScalar m_angleX;
 	btScalar m_angleY;
 public:
-	LogicFreeCamera();
+	LogicFreeCamera(GameLogicSystem *pLogicSystem);
 	~LogicFreeCamera();
 	
 	GameErrorCode CreateComponent( TransformComponent *pTransform, FreeCameraInput *pFreeCamInput );
 	
 	virtual GameErrorCode ReceiveMessage(TaskMessage& msg) override;
 	
-	virtual GameErrorCode Update() override;
+	virtual GameErrorCode Update(float timeDiff) override;
 	
 	virtual GameErrorCode Load(wxXmlNode *pNode) override;
 	virtual GameErrorCode Store(wxXmlNode *pParentNode) override;
 
-protected:
-	GameErrorCode ProcessInput();
 };
 
 #endif // __GAME_FREE_CAMERA_LOGIC_TEST_H__

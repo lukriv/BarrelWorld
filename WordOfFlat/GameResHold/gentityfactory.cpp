@@ -18,4 +18,5 @@
 GameErrorCode GameEntityFactory::CreateFloor(GameCompManager& compMgr)
 {
 	//MeshPtr meshptr = compMgr.GetRenderSystem().GetOgreRoot().getMeshManager().createPlane("floor", ;
+	return FWG_E_NOT_IMPLEMENTED_ERROR;
 }

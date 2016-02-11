@@ -14,17 +14,16 @@ GameErrorCode GameLogicSystem::AddLogicComp(LogicBase* pLogicComp)
 {
 	wxCriticalSectionLocker lock( m_lockMgr );
 	FWG_RETURN_FAIL(m_logicCompList.Insert(pLogicComp));
-	pLogicComp->SetOwnerManager(this);
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode GameLogicSystem::ProcessLogicStep()
+GameErrorCode GameLogicSystem::ProcessLogicStep(float timeDiff)
 {
 	GameErrorCode result = FWG_NO_ERROR;
 	wxCriticalSectionLocker lock(m_lockMgr);
 	for(auto iter = m_logicCompList.Begin(); iter != m_logicCompList.End(); ++iter)
 	{
-		if(FWG_FAILED(result = (*iter)->Update()))
+		if(FWG_FAILED(result = (*iter)->Update(timeDiff)))
 		{
 			FWGLOG_ERROR_FORMAT(wxT("ProcessLogic failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
 		}
@@ -35,8 +34,6 @@ GameErrorCode GameLogicSystem::ProcessLogicStep()
 
 void GameLogicSystem::RemoveLogicComp(LogicBase* pLogicComp)
 {
-	pLogicComp->SetOwnerManager(nullptr);
-	
 	wxCriticalSectionLocker lock(m_lockMgr);
 	m_logicCompList.Remove(pLogicComp);
 }

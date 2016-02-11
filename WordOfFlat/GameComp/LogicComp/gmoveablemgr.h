@@ -3,6 +3,7 @@
 
 
 #include <GameComp/gmanagerbase.h>
+#include <GameComp/LogicComp/glogicsystem.h>
 #include "gmoveable.h"
 #include "glogicfreecam.h"
 #include "glogicman.h"
@@ -17,14 +18,17 @@ public:
 	~MoveableManager();
 	
 	template <class T>
-	GameErrorCode CreateComponent(wxDword compId, T *&pNewComponent )
+	GameErrorCode CreateComponent(wxDword compId, TransformComponent *pTransform, InputComponent *pInput, T *&pNewComponent )
 	{
 		RefObjSmPtr<T> spLogicComp;
-		FWG_RETURN_FAIL(GameNewChecked(spLogicComp.OutRef()));
+		FWG_RETURN_FAIL(GameNewChecked(spLogicComp.OutRef(), m_pLogicSystem));
+		
+		FWG_RETURN_FAIL(spLogicComp->Initialize(pTransform, pInput));
 		
 		FWG_RETURN_FAIL(InsertToMap(compId, spLogicComp));
 		
 		// todo: insert component to logic system
+		pNewComponent = spLogicComp.Detach();
 		
 		return FWG_NO_ERROR;
 	}

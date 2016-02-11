@@ -4,6 +4,7 @@
 
 RenderPosition::RenderPosition(GameRenderSystem* pCompMgr)
 	: RenderComponentBase(GAME_COMP_RENDER_POSITION, pCompMgr)
+	, m_pSceneNode(nullptr)
 {
 }
 
@@ -87,6 +88,23 @@ void RenderPosition::OnCreation(void* )
 	}
 }
 
+void RenderPosition::Enable(bool enable)
+{
+	if(!m_pSceneNode) return; //not initialized yet
+	if(IsEnabled() != enable)
+	{
+		if(enable)
+		{
+			m_pOwnerManager->GetOgreSceneManager()->getRootSceneNode()->addChild(m_pSceneNode);
+		} else {
+			m_pOwnerManager->GetOgreSceneManager()->getRootSceneNode()->removeChild(m_pSceneNode);
+		}
+		
+		ComponentBase::Enable(enable);
+	}
+}
+
+
 GameErrorCode RenderPosition::Load(wxXmlNode* pNode)
 {
 	return FWG_NO_ERROR;
@@ -96,3 +114,4 @@ GameErrorCode RenderPosition::Store(wxXmlNode* pParentNode)
 {
 	return FWG_NO_ERROR;
 }
+

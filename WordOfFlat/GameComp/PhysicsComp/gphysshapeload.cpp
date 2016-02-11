@@ -44,14 +44,14 @@ GameErrorCode PhysicsShapeLoader::LoadShape(wxXmlNode* pNode, btCollisionShape*&
 		pChild = pChild->GetNext();
 	}
 	
-	return FWG_E_NOT_IMPLEMENTED_ERROR;
+	return FWG_NO_ERROR;
 }
 
 GameErrorCode PhysicsShapeLoader::LoadOneShape(wxXmlNode* pNode, btCollisionShape*& pCollisionShape, GameLogger *pLogger)
 {
 	if(pNode->GetName() == GAME_TAG_PARAM_PHYSICS_BOX_SHAPE)
 	{
-		return LoadBox(pNode, pCollisionShape);
+		return LoadBox(pNode, pCollisionShape, pLogger);
 	} else {
 		GameXmlUtils::ProcessUnknownTag(pNode, pLogger);
 	}
@@ -94,17 +94,17 @@ GameErrorCode PhysicsShapeLoader::LoadBox(wxXmlNode* pNode, btCollisionShape*& p
 	{
 		if(pChild->GetName() == GAME_TAG_PARAM_BOX_HALF_SIZE)
 		{
-			FWG_RETURN_FAIL(GameXmlUtils::GetNodeContent(pNode, tempStr, pLogger));
+			FWG_RETURN_FAIL(GameXmlUtils::GetNodeContent(pChild, tempStr, pLogger));
 			FWG_RETURN_FAIL(GameXmlUtils::ConvertToVec3(tempStr, boxHalfSize));
 		} else {
-			GameXmlUtils::ProcessUnknownTag(pNode, pLogger);
+			GameXmlUtils::ProcessUnknownTag(pChild, pLogger);
 		}
 		pChild = pChild->GetNext();
 	}
 	
 	pCollisionShape = new btBoxShape(cvt(boxHalfSize));
 	
-	return FWG_E_NOT_IMPLEMENTED_ERROR;
+	return FWG_NO_ERROR;
 }
 
 GameErrorCode PhysicsShapeLoader::StoreBox(wxXmlNode* pParentNode, btBoxShape* pCollisionShape, GameLogger *pLogger)
