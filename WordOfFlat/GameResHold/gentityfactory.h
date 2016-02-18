@@ -16,6 +16,10 @@ public:
 	
 	GameErrorCode CreateFloor(GameCompManager& compMgr);
 	
+	GameErrorCode CreateMainCamera(GameCompManager& compMgr);
+	
+	
+	
 };
 
 

@@ -42,11 +42,6 @@ GameErrorCode LogicFreeCamera::Update(float timeDiff)
 	ControlStruct actualControls;
 	m_spInput->ExportControlStruct(actualControls);
 	
-	if(timeDiff == 0)
-	{
-		timeDiff = 0.000001f;
-	}
-	
 	if(!m_spTransform.IsEmpty())
 	{
 		

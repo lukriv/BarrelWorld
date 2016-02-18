@@ -132,7 +132,6 @@ GameErrorCode GameMainMenuState::ProcessState(GameState& nextState, wxString& ne
 	
 	// physics debug draw
 	//m_pDebugDraw = new CDebugDraw( m_spCompManager->GetRenderManager().GetOgreSceneManager(), m_spCompManager->GetPhysicsManager().GetDynamicsWorld());
-	
 	m_spCompManager->GetRenderSystem().GetOgreRoot()->startRendering();
 	
 	if(m_pDebugDraw)
@@ -159,19 +158,30 @@ bool GameMainMenuState::frameRenderingQueued(const Ogre::FrameEvent& evt)
 	
 	GameErrorCode result = FWG_NO_ERROR;
 	
+	++m_zeroTimeFrames;
+	
+	m_timeSinceLastAverage += evt.timeSinceLastFrame;
+	
+	if(m_zeroTimeFrames == 5)
+	{
+		m_averageFrameTime = ((m_timeSinceLastAverage / static_cast<float>(m_zeroTimeFrames)) + m_averageFrameTime) * 0.5;
+		m_timeSinceLastAverage = 0.0f;
+		m_zeroTimeFrames = 0;
+	}
+	
 	if(FWG_FAILED(result = m_spCompManager->GetInputSystem().ProcessInputs()))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Process input failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
 		return false;
 	}
 
-	if(FWG_FAILED(result = ProcessUpdate(evt.timeSinceLastFrame)))
+	if(FWG_FAILED(result = ProcessUpdate(m_averageFrameTime)))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Process update failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
 		return false;
 	}
 	
-	FWGLOG_DEBUG_FORMAT(wxT("timeSinceLastFrame: %lf, timeSinceLastEvent: %lf"), m_pOwner->GetLogger(), evt.timeSinceLastFrame, evt.timeSinceLastEvent, FWGLOG_ENDVAL);
+	//FWGLOG_DEBUG_FORMAT(wxT("timeSinceLastFrame: %lf, average: %lf"), m_pOwner->GetLogger(), evt.timeSinceLastFrame,  m_averageFrameTime,  FWGLOG_ENDVAL);
 	
 	// exit
 	if(m_exitState)

@@ -33,6 +33,11 @@ private:
 	bool m_switchPolyMode;
 	CDebugDraw* m_pDebugDraw;
 	
+	wxInt32 m_zeroTimeFrames;
+	float m_timeSinceLastAverage;
+	float m_averageFrameTime;
+	
+	
 public:
 	GameMainMenuState(GameClientEngine *pOwner, GameCompManager *pCompMgr) : m_pOwner(pOwner)
 																		, m_spCompManager(pCompMgr)
@@ -40,7 +45,10 @@ public:
 																		, m_nextState(GAME_STATE_EXIT)
 																		, m_exitState(false)
 																		, m_switchPolyMode(false)
-																		, m_pDebugDraw(nullptr){}
+																		, m_pDebugDraw(nullptr)
+																		, m_zeroTimeFrames(0)
+																		, m_timeSinceLastAverage(0)
+																		, m_averageFrameTime(0){}
 	
 																		
 	GameErrorCode ProcessState(GameState &nextState, wxString &nextStateParams );

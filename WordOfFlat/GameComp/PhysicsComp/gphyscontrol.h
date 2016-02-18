@@ -5,15 +5,15 @@
 #include "../transformComp/gtranscomp.h"
 
 
-class PhysicsControler : public ComponentBase, public btActionInterface
+class PhysicsController : public ComponentBase, public btActionInterface
 {
 protected:
 	GamePhysicsSystem* m_pPhysSystem;
 	RefObjSmPtr<TransformComponent> m_spTransform;
 	wxString m_definitionFile; //!< Name of physics definition file - for load and store component (empty string = shape definition was used)
 public:
-	PhysicsControler(GamePhysicsSystem* pPhysSystem);
-	virtual ~PhysicsControler();
+	PhysicsController(GamePhysicsSystem* pPhysSystem);
+	virtual ~PhysicsController();
 	
 	GameErrorCode Initialize(TransformComponent *pTransform);
 	

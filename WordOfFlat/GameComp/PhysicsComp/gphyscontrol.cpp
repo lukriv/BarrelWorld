@@ -1,14 +1,14 @@
 #include "gphyscontrol.h"
 
-PhysicsControler::PhysicsControler(GamePhysicsSystem* pPhysSystem) : ComponentBase(	GAME_COMP_PHYSICS_CONTROLER )
+PhysicsController::PhysicsController(GamePhysicsSystem* pPhysSystem) : ComponentBase(	GAME_COMP_PHYSICS_CONTROLER )
 {
 }
 
-PhysicsControler::~PhysicsControler()
+PhysicsController::~PhysicsController()
 {
 }
 
-GameErrorCode PhysicsControler::Initialize(TransformComponent* pTransform)
+GameErrorCode PhysicsController::Initialize(TransformComponent* pTransform)
 {
 	if(pTransform == nullptr)
 	{
@@ -20,25 +20,25 @@ GameErrorCode PhysicsControler::Initialize(TransformComponent* pTransform)
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode PhysicsControler::Load(wxXmlNode* pNode)
+GameErrorCode PhysicsController::Load(wxXmlNode* pNode)
 {
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode PhysicsControler::Store(wxXmlNode* pParentNode)
+GameErrorCode PhysicsController::Store(wxXmlNode* pParentNode)
 {
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode PhysicsControler::ReceiveMessage(TaskMessage& msg)
+GameErrorCode PhysicsController::ReceiveMessage(TaskMessage& msg)
 {
 	return FWG_NO_ERROR;
 }
 
-void PhysicsControler::debugDraw(btIDebugDraw* debugDrawer)
+void PhysicsController::debugDraw(btIDebugDraw* debugDrawer)
 {
 }
 
-void PhysicsControler::updateAction(btCollisionWorld* collisionWorld, btScalar deltaTimeStep)
+void PhysicsController::updateAction(btCollisionWorld* collisionWorld, btScalar deltaTimeStep)
 {
 }

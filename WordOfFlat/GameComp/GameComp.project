@@ -272,9 +272,11 @@
     <VirtualDirectory Name="physcontrol">
       <VirtualDirectory Name="include">
         <File Name="PhysicsComp/gphyscontrol.h"/>
+        <File Name="PhysicsComp/gphysicscontrolmgr.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="src">
         <File Name="PhysicsComp/gphyscontrol.cpp"/>
+        <File Name="PhysicsComp/gphysicscontrolmgr.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
   </VirtualDirectory>
