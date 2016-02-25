@@ -47,14 +47,11 @@ GameErrorCode TransformComponent::ReceiveMessage(TaskMessage& )
 
 void TransformComponent::getWorldTransform(btTransform& worldTrans) const
 {
-	if(m_pTransData)
-	{
-		btVector3 transform(m_pTransData->m_translate);
-		btQuaternion rotation(m_pTransData->m_rotation);
+	btVector3 transform(m_pTransData->m_translate);
+	btQuaternion rotation(m_pTransData->m_rotation);
 							
-		worldTrans.setOrigin(transform);
-		worldTrans.setRotation(rotation);
-	}
+	worldTrans.setOrigin(transform);
+	worldTrans.setRotation(rotation);
 }
 
 void TransformComponent::setWorldTransform(const btTransform& worldTrans)

@@ -1,5 +1,5 @@
-#ifndef __GAME_FREE_CAMERA_LOGIC_TEST_H__
-#define __GAME_FREE_CAMERA_LOGIC_TEST_H__
+#ifndef __GAME_CAMERA_LOGIC_H__
+#define __GAME_CAMERA_LOGIC_H__
 
  // Base class: LogicComponentBase
 #include "glogicbase.h"
@@ -8,7 +8,7 @@
 #include "../inputComp/ginputfreecam.h"
 #include "gmoveable.h"
 
-class LogicFreeCamera : public Moveable
+class LogicGameCamera : public Moveable
 {
 	btScalar m_angleX;
 	btScalar m_angleY;
@@ -19,8 +19,8 @@ class LogicFreeCamera : public Moveable
 	btScalar m_diffMoveVertical;
 	btScalar m_diffMoveHorizontal;
 public:
-	LogicFreeCamera(GameLogicSystem *pLogicSystem);
-	~LogicFreeCamera();
+	LogicGameCamera(GameLogicSystem *pLogicSystem);
+	~LogicGameCamera();
 	
 	virtual GameErrorCode ReceiveMessage(TaskMessage& msg) override;
 	
@@ -31,4 +31,4 @@ public:
 
 };
 
-#endif // __GAME_FREE_CAMERA_LOGIC_TEST_H__
+#endif // __GAME_CAMERA_LOGIC_H__

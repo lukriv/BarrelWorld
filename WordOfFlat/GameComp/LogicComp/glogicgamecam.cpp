@@ -1,4 +1,4 @@
-#include "glogicfreecam.h"
+#include "glogicgamecam.h"
 #include "glogicsystem.h"
 #include <GameComp/inputComp/ginputfreecam.h>
 #include <GameComp/gentitymgr.h>
@@ -13,21 +13,23 @@ const btScalar MOVE_STEP_SIZE = 5.0f;
 static const btScalar _2_PI = SIMD_2_PI;
 static const btScalar _HALF_PI = SIMD_HALF_PI;
 
-LogicFreeCamera::LogicFreeCamera(GameLogicSystem *pLogicSystem) : Moveable(pLogicSystem)
+LogicGameCamera::LogicGameCamera(GameLogicSystem *pLogicSystem) : Moveable(pLogicSystem)
 	, m_angleX(0.0f)
 	, m_angleY(0.0f)
 	, m_diffSinceLastFrameX(0.0f)
 	, m_diffSinceLastFrameY(0.0f)
+	, m_diffMoveVertical(0.0f)
+	, m_diffMoveHorizontal(0.0f)
 {
 }
 
-GameErrorCode LogicFreeCamera::ReceiveMessage(TaskMessage& msg)
+GameErrorCode LogicGameCamera::ReceiveMessage(TaskMessage& msg)
 {
 	return FWG_NO_ERROR;
 }
 
 
-GameErrorCode LogicFreeCamera::Update(float timeDiff)
+GameErrorCode LogicGameCamera::Update(float timeDiff)
 {
 	GameErrorCode result = FWG_NO_ERROR;
 	ControlStruct actualControls;
@@ -39,12 +41,12 @@ GameErrorCode LogicFreeCamera::Update(float timeDiff)
 		m_diffSinceLastFrameY += (btScalar)actualControls.GetRelY();
 	}
 	
-	if(actualControls.IsPressed(FreeCameraInput::INPUT_ACTION_FORWARD))
+	if(actualControls.IsPressed(FreeCameraInput::INPUT_ACTION_UP))
 	{
 		m_diffMoveVertical -= MOVE_STEP_SIZE;
 	}
 	
-	if(actualControls.IsPressed(FreeCameraInput::INPUT_ACTION_BACKWARD))
+	if(actualControls.IsPressed(FreeCameraInput::INPUT_ACTION_DOWN))
 	{
 		m_diffMoveVertical += MOVE_STEP_SIZE;
 	}
@@ -67,35 +69,38 @@ GameErrorCode LogicFreeCamera::Update(float timeDiff)
 	if(!m_spTransform.IsEmpty())
 	{
 		
+		
 		// turn camera around
 		m_angleX -= STEP_SIZE * (m_diffSinceLastFrameX) * timeDiff;
 		m_angleY -= STEP_SIZE * (m_diffSinceLastFrameY) * timeDiff;
-		
+			
 		if(m_angleX < 0)
 		{
 			m_angleX += _2_PI;
 		} else if(m_angleX > _2_PI) {
 			m_angleX -= _2_PI;				
 		}
-		
+			
 		if(m_angleY > _HALF_PI)
 		{
 			m_angleY = _HALF_PI;
 		} else if(m_angleY < -_HALF_PI) {
 			m_angleY = -_HALF_PI;
 		}
-		
+			
 		m_spTransform->GetData()->m_rotation.setEuler(m_angleX, m_angleY, 0.0f);
-		
+
 		{
-			btVector3 dirVec(0,0, m_diffMoveVertical*timeDiff );
-			m_spTransform->GetData()->m_translate += dirVec.rotate(m_spTransform->GetData()->m_rotation.getAxis(), m_spTransform->GetData()->m_rotation.getAngle());;
+			btVector3 dirVec(0,0,m_diffMoveVertical*timeDiff );
+			m_spTransform->GetData()->m_translate += dirVec;
 		}
 		
 		{
-			btVector3 dirVec( m_diffMoveHorizontal*timeDiff, 0, 0);
-			m_spTransform->GetData()->m_translate += dirVec.rotate(m_spTransform->GetData()->m_rotation.getAxis(), m_spTransform->GetData()->m_rotation.getAngle());;
+			btVector3 dirVec(  m_diffMoveHorizontal*timeDiff , 0, 0);
+			m_spTransform->GetData()->m_translate += dirVec;
 		}
+
+		
 	}
 	
 	// update render component
@@ -116,13 +121,13 @@ GameErrorCode LogicFreeCamera::Update(float timeDiff)
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode LogicFreeCamera::Load(wxXmlNode* pNode)
+GameErrorCode LogicGameCamera::Load(wxXmlNode* pNode)
 {
 	return GameXmlUtils::CheckTagAndType(pNode, GAME_TAG_COMP_MOVEABLE, GAME_TAG_TYPE_MOVEABLE_FREE_CAMERA, m_pLogicSystem->GetLogger());
 	
 }
 
-GameErrorCode LogicFreeCamera::Store(wxXmlNode* pParentNode)
+GameErrorCode LogicGameCamera::Store(wxXmlNode* pParentNode)
 {
 	wxXmlNode *pNewNode = nullptr;
 	wxString content;
@@ -136,6 +141,6 @@ GameErrorCode LogicFreeCamera::Store(wxXmlNode* pParentNode)
 	return FWG_NO_ERROR;
 }
 
-LogicFreeCamera::~LogicFreeCamera()
+LogicGameCamera::~LogicGameCamera()
 {
 }

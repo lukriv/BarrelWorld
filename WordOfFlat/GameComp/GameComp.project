@@ -199,12 +199,14 @@
         <File Name="LogicComp/glogicman.h"/>
         <File Name="LogicComp/gmoveablemgr.h"/>
         <File Name="LogicComp/gmoveable.h"/>
+        <File Name="LogicComp/glogicgamecam.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="src">
         <File Name="LogicComp/glogicfreecam.cpp"/>
         <File Name="LogicComp/glogicman.cpp"/>
         <File Name="LogicComp/gmoveablemgr.cpp"/>
         <File Name="LogicComp/gmoveable.cpp"/>
+        <File Name="LogicComp/glogicgamecam.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="transform">

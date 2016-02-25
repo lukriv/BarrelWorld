@@ -1,27 +1,34 @@
 #ifndef __GAME_PHYSICS_CONTROLLER_H__
 #define __GAME_PHYSICS_CONTROLLER_H__
 
+#include "../gmanagerbase.h"
+#include "gphyscontrol.h"
+
+
+class TransformComponent;
+class InputComponent;
+
 class PhysicsControllerManager : public GameManagerBase<PhysicsController>
 {
 private:
 	GamePhysicsSystem *m_pPhysicsSystem;
 public:
-	PhysicsControllerManager(m_pPhysicsSystem* pPhysicsSystem, GameEntityManager *pEntityMgr);
+	PhysicsControllerManager(GamePhysicsSystem* pPhysicsSystem, GameEntityManager *pEntityMgr);
 	~PhysicsControllerManager();
 
 	
 	template <class T>
 	GameErrorCode CreateComponent(wxDword compId, TransformComponent *pTransform, InputComponent *pInput, T *&pNewComponent )
 	{
-		RefObjSmPtr<T> spLogicComp;
-		FWG_RETURN_FAIL(GameNewChecked(spLogicComp.OutRef(), m_pLogicSystem));
+		RefObjSmPtr<T> spPhysicsController;
+		FWG_RETURN_FAIL(GameNewChecked(spPhysicsController.OutRef(), m_pPhysicsSystem));
 		
-		FWG_RETURN_FAIL(spLogicComp->Initialize(pTransform, pInput));
+		FWG_RETURN_FAIL(spPhysicsController->Initialize(pTransform));
 		
-		FWG_RETURN_FAIL(InsertToMap(compId, spLogicComp));
+		FWG_RETURN_FAIL(InsertToMap(compId, spPhysicsController));
 		
 		// todo: insert component to logic system
-		pNewComponent = spLogicComp.Detach();
+		pNewComponent = spPhysicsController.Detach();
 		
 		return FWG_NO_ERROR;
 	}

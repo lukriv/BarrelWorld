@@ -17,7 +17,8 @@ public:
 class wxXmlNode;
 
 class TransformComponent : public ComponentBase, public btMotionState {
-	TransformData *m_pTransData;	
+private:
+	TransformData *m_pTransData;
 public:
 	TransformComponent();
 	~TransformComponent();
@@ -28,6 +29,9 @@ public:
 	
 	inline const Ogre::Quaternion GetOgreRotation();
 	inline const Ogre::Vector3 GetOgreTranslate();
+	
+	inline void SetOgreRotation(const Ogre::Quaternion& rot);
+	inline void SetOgreTranslate(const Ogre::Vector3& trans);
 	
 	virtual GameErrorCode ReceiveMessage(TaskMessage& msg);
 	
@@ -50,6 +54,16 @@ const Ogre::Quaternion TransformComponent::GetOgreRotation()
 const Ogre::Vector3 TransformComponent::GetOgreTranslate()
 {
 	return cvt(m_pTransData->m_translate);
+}
+
+void TransformComponent::SetOgreRotation(const Ogre::Quaternion& rot)
+{
+	m_pTransData->m_rotation = cvt(rot);
+}
+
+void TransformComponent::SetOgreTranslate(const Ogre::Vector3& trans)
+{
+	m_pTransData->m_translate = cvt(trans);
 }
 
 

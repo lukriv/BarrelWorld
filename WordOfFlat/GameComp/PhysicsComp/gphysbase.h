@@ -3,7 +3,7 @@
 
 #include "gphyssystem.h"
 #include "../transformComp/gtranscomp.h"
-
+#include <bullet/BulletCollision/CollisionShapes/btCollisionShape.h>
 
 class PhysicsBase : public ComponentBase {
 protected:
@@ -15,6 +15,8 @@ public:
 	virtual ~PhysicsBase();
 	
 	GameErrorCode Initialize(TransformComponent *pTransform);
+	
+	virtual btRigidBody* GetRigidBody() = 0;
 
 };
 

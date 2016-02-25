@@ -38,7 +38,6 @@
     <File Name="gdefloader.h"/>
     <File Name="gentitycreator.h"/>
   </VirtualDirectory>
-  <VirtualDirectory Name="impl"/>
   <Settings Type="Static Library">
     <GlobalSettings>
       <Compiler Options="-Wall;-Wno-unused-local-typedefs;-std=c++11" C_Options="-Wall" Assembler="">

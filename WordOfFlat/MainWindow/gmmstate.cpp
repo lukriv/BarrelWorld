@@ -58,15 +58,8 @@ GameErrorCode GameMainMenuState::ProcessUpdate(float secDiff)
 	
 }
 
-
-
-GameErrorCode GameMainMenuState::ProcessState(GameState& nextState, wxString& nextStateParams)
+GameErrorCode GameMainMenuState::LoadScene()
 {
-	if((!m_pOwner)||(m_spCompManager.IsEmpty()))
-	{
-		return FWG_E_INVALID_PARAMETER_ERROR;
-	}
-	
 	GameErrorCode result = FWG_NO_ERROR;
 	GameXmlResourceLoader loader;
 	
@@ -91,8 +84,29 @@ GameErrorCode GameMainMenuState::ProcessState(GameState& nextState, wxString& ne
 	}
 
 	FWGLOG_INFO(wxT("Scene loaded"), m_pOwner->GetLogger());
-	
+}
 
+GameErrorCode GameMainMenuState::ProcessState(GameState& nextState, wxString& nextStateParams)
+{
+	if((!m_pOwner)||(m_spCompManager.IsEmpty()))
+	{
+		return FWG_E_INVALID_PARAMETER_ERROR;
+	}
+	
+	GameErrorCode result = FWG_NO_ERROR;
+	GameEntityFactory factory(m_pOwner->GetLogger());
+	
+	if(FWG_FAILED(result = factory.CreateFloor(*m_spCompManager)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Create floor failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	if(FWG_FAILED(result = factory.CreateMainCamera(*m_spCompManager)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Create main camera failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
+		return result;
+	}
 
 	if(FWG_FAILED(result = m_spCompManager->GetRenderSystem().SetMainCamera("MainCamera")))
 	{
@@ -158,16 +172,16 @@ bool GameMainMenuState::frameRenderingQueued(const Ogre::FrameEvent& evt)
 	
 	GameErrorCode result = FWG_NO_ERROR;
 	
-	++m_zeroTimeFrames;
-	
-	m_timeSinceLastAverage += evt.timeSinceLastFrame;
-	
-	if(m_zeroTimeFrames == 5)
-	{
-		m_averageFrameTime = ((m_timeSinceLastAverage / static_cast<float>(m_zeroTimeFrames)) + m_averageFrameTime) * 0.5;
-		m_timeSinceLastAverage = 0.0f;
-		m_zeroTimeFrames = 0;
-	}
+	//++m_zeroTimeFrames;
+	//
+	//m_timeSinceLastAverage += evt.timeSinceLastFrame;
+	//
+	//if(m_zeroTimeFrames == 5)
+	//{
+	//	m_averageFrameTime = ((m_timeSinceLastAverage / static_cast<float>(m_zeroTimeFrames)) + m_averageFrameTime) * 0.5;
+	//	m_timeSinceLastAverage = 0.0f;
+	//	m_zeroTimeFrames = 0;
+	//}
 	
 	if(FWG_FAILED(result = m_spCompManager->GetInputSystem().ProcessInputs()))
 	{
@@ -175,7 +189,7 @@ bool GameMainMenuState::frameRenderingQueued(const Ogre::FrameEvent& evt)
 		return false;
 	}
 
-	if(FWG_FAILED(result = ProcessUpdate(m_averageFrameTime)))
+	if(FWG_FAILED(result = ProcessUpdate(evt.timeSinceLastFrame)))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Process update failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
 		return false;
@@ -215,6 +229,8 @@ void GameMainMenuState::SwitchPhysicsDebug()
 		m_pDebugDraw = nullptr;
 	}
 }
+
+
 
 void GameMainMenuState::MenuCallback::OnExitEvent()
 {

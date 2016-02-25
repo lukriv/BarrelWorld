@@ -13,24 +13,27 @@ class btRigidBody;
 class TransformComponent;
 class wxXmlNode;
 
-class PhysicsRigidBody : public PhysicsBase 
+class PhysicsRigidBody : public PhysicsBase
 {
 protected:
-    
-    btRigidBody* m_pRigidBody;
-	
+
+	btRigidBody* m_pRigidBody;
+
 public:
 
-    PhysicsRigidBody(GamePhysicsSystem* pOwnerMgr);
-    ~PhysicsRigidBody();
-	
+	PhysicsRigidBody(GamePhysicsSystem* pOwnerMgr);
+	~PhysicsRigidBody();
+
 	GameErrorCode Create(btScalar mass, btCollisionShape *pColShape);
-	
+
 	GameErrorCode Load(wxXmlNode* XMLNode);
-    GameErrorCode Store(wxXmlNode* ParentNode);
-	
+	GameErrorCode Store(wxXmlNode* ParentNode);
+
 	virtual GameErrorCode ReceiveMessage(TaskMessage& msg);
-    virtual GameErrorCode Update();
+	virtual GameErrorCode Update();
+
+	virtual btRigidBody* GetRigidBody() override;
+
 };
 
 #endif // __GAME_PHYSICS_RIGID_BODY_H__

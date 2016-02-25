@@ -226,12 +226,13 @@ GameErrorCode GameRenderSystem::ProcessAllCreation()
 
 GameErrorCode GameRenderSystem::CreateRenderComponent(RenderComponentBase* pComponent, void* pContext)
 {
-	CreateRecord newRec;
-	newRec.m_pRenderComp = pComponent;
-	newRec.m_pContext = pContext;
-	
-	wxCriticalSectionLocker lock(m_mgrLock);
-	m_createQueue.push_back(newRec);
+	pComponent->OnCreation(pContext);
+	//CreateRecord newRec;
+	//newRec.m_pRenderComp = pComponent;
+	//newRec.m_pContext = pContext;
+	//
+	//wxCriticalSectionLocker lock(m_mgrLock);
+	//m_createQueue.push_back(newRec);
 	
 	return FWG_NO_ERROR;
 }

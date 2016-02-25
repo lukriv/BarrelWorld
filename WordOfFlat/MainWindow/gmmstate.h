@@ -50,6 +50,7 @@ public:
 																		, m_timeSinceLastAverage(0)
 																		, m_averageFrameTime(0){}
 	
+	GameErrorCode LoadScene();
 																		
 	GameErrorCode ProcessState(GameState &nextState, wxString &nextStateParams );
 

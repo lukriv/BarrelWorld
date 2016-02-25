@@ -11,8 +11,10 @@
 class GameEntityFactory : public RefObjectImpl<IRefObject> {
 private:
 	GameLoggerPtr m_spLogger;
+	bool m_groundCreated;
 public:
-	GameEntityFactory(GameLogger *pLogger) : m_spLogger(pLogger) {}
+	GameEntityFactory(GameLogger *pLogger) : m_spLogger(pLogger)
+			, m_groundCreated(false){}
 	
 	GameErrorCode CreateFloor(GameCompManager& compMgr);
 	

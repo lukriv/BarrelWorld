@@ -6,7 +6,6 @@
 #include "gphysbase.h"
 
 
-class btCollisionObject;
 class btCollisionShape;
 class wxXmlNode;
 class TransformComponent;
@@ -15,19 +14,21 @@ class GamePhysicsSystem;
 class PhysicsStaticObject : public PhysicsBase
 {
 protected:
-	btCollisionObject *m_pColObject;
-	
+	btRigidBody *m_pColObject;
+
 public:
 	PhysicsStaticObject(GamePhysicsSystem* pPhysSystem);
 	~PhysicsStaticObject();
-	
+
 	GameErrorCode Create(btCollisionShape *pColShape);
-	
-    virtual GameErrorCode Load(wxXmlNode* XMLNode);
-    virtual GameErrorCode Store(wxXmlNode* ParentNode);
-	
+
+	virtual GameErrorCode Load(wxXmlNode* XMLNode);
+	virtual GameErrorCode Store(wxXmlNode* ParentNode);
+
 	virtual GameErrorCode ReceiveMessage(TaskMessage& msg);
 	virtual GameErrorCode Update();
+
+	virtual	btRigidBody* GetRigidBody();
 
 };
 
