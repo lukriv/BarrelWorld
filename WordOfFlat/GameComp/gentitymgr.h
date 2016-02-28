@@ -7,8 +7,7 @@
 #include <GameSystem/circularQueue.h>
 
 #include "TransformComp/gtranscmgr.h"
-#include "InputComp/ginputcompmgr.h"
-#include "LogicComp/gmoveablemgr.h"
+#include "LogicComp/glogiccontrollermgr.h"
 #include "PhysicsComp/gphyscompmgr.h"
 #include "RenderComp/grenderpositionmgr.h"
 #include "RenderComp/grenderobjmgr.h"
@@ -27,8 +26,7 @@ private:
 	
 	// component managers
 	TransformCompManager m_tranformMgr;
-	InputComponentManager m_inputCompMgr;
-	MoveableManager	m_moveableCompMgr;
+	LogicControllerManager	m_logicControllerMgr;
 	PhysicsCompManager m_physicsCompMgr;
 	RenderPositionManager m_renderPosMgr;
 	RenderObjectManager m_renderObjMgr;
@@ -47,8 +45,7 @@ public:
 	GameErrorCode SendTaskMessage(wxDword receiverID, TaskMessage &msg);
 	
 	inline TransformCompManager& GetTransformManager() 	{ return m_tranformMgr; }
-	inline InputComponentManager& GetInputManager() 	{ return m_inputCompMgr; }
-	inline MoveableManager& GetMoveableManager() 		{ return m_moveableCompMgr; }
+	inline LogicControllerManager& GetLogicControllerManager() 	{ return m_logicControllerMgr; }
 	inline PhysicsCompManager& GetPhysicsManager() 		{ return m_physicsCompMgr; }
 	inline RenderPositionManager& GetRenderPosManager() { return m_renderPosMgr; }
 	inline RenderObjectManager& GetRenderObjManager() 	{ return m_renderObjMgr; }

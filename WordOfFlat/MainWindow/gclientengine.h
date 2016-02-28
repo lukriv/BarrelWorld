@@ -8,7 +8,7 @@
 #include <OIS/OISInputManager.h>
 #include <GameSystem/refobjectsmptr.h>
 #include <GameComp/gcompmgr.h>
-#include <GameResHold/gentityfactory.h>
+#include "factories/gentityfactory.h"
 #include "gsettings.h"
 
 

@@ -1,11 +1,11 @@
 #include "glogicfreecam.h"
-#include "glogicsystem.h"
-#include <GameComp/inputComp/ginputfreecam.h>
+#include <GameComp/logicComp/glogicsystem.h>
 #include <GameComp/gentitymgr.h>
 #include <GameXmlDefinitions/gxmldefs.h>
 #include <GameXmlDefinitions/gxmlutils.h>
 #include <wx/xml/xml.h>
 #include <wx/scopedptr.h>
+#include "ginputfreecam.h"
 
 const btScalar STEP_SIZE = 1.0f;
 const btScalar MOVE_STEP_SIZE = 5.0f;
@@ -13,7 +13,7 @@ const btScalar MOVE_STEP_SIZE = 5.0f;
 static const btScalar _2_PI = SIMD_2_PI;
 static const btScalar _HALF_PI = SIMD_HALF_PI;
 
-LogicFreeCamera::LogicFreeCamera(GameLogicSystem *pLogicSystem) : Moveable(pLogicSystem)
+LogicFreeCamera::LogicFreeCamera() : LogicController()
 	, m_angleX(0.0f)
 	, m_angleY(0.0f)
 	, m_diffSinceLastFrameX(0.0f)
@@ -21,11 +21,19 @@ LogicFreeCamera::LogicFreeCamera(GameLogicSystem *pLogicSystem) : Moveable(pLogi
 {
 }
 
-GameErrorCode LogicFreeCamera::ReceiveMessage(TaskMessage& msg)
+GameErrorCode LogicFreeCamera::Initialize(TransformComponent* pTransform, FreeCameraInput* pInput)
 {
+	
+	if((pTransform == nullptr)||(pInput == nullptr))
+	{
+		return FWG_E_INVALID_PARAMETER_ERROR;
+	}
+	
+	m_spTransform = pTransform;
+	m_spInput = pInput;
+	
 	return FWG_NO_ERROR;
 }
-
 
 GameErrorCode LogicFreeCamera::Update(float timeDiff)
 {
@@ -112,26 +120,6 @@ GameErrorCode LogicFreeCamera::Update(float timeDiff)
 	
 	m_diffMoveVertical = 0.0f;
 	m_diffMoveHorizontal = 0.0f;
-	
-	return FWG_NO_ERROR;
-}
-
-GameErrorCode LogicFreeCamera::Load(wxXmlNode* pNode)
-{
-	return GameXmlUtils::CheckTagAndType(pNode, GAME_TAG_COMP_MOVEABLE, GAME_TAG_TYPE_MOVEABLE_FREE_CAMERA, m_pLogicSystem->GetLogger());
-	
-}
-
-GameErrorCode LogicFreeCamera::Store(wxXmlNode* pParentNode)
-{
-	wxXmlNode *pNewNode = nullptr;
-	wxString content;
-	FWG_RETURN_FAIL(GameNewChecked(pNewNode, wxXML_ELEMENT_NODE, GAME_TAG_COMP_MOVEABLE));
-	wxScopedPtr<wxXmlNode> apNewNode(pNewNode);
-	
-	pNewNode->AddAttribute(GAME_TAG_ATTR_TYPE, GAME_TAG_TYPE_MOVEABLE_FREE_CAMERA);
-	
-	pParentNode->AddChild(apNewNode.release());
 	
 	return FWG_NO_ERROR;
 }

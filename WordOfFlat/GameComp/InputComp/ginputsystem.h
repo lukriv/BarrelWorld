@@ -14,7 +14,7 @@
 #include <GameSystem/gset.h>
 
 class InputDef;
-class InputComponent;
+class InputHandler;
 
 class GameInputSystem : public OIS::KeyListener, public OIS::MouseListener {
 private:

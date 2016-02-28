@@ -2,14 +2,17 @@
 #define __GAME_FREE_CAMERA_LOGIC_TEST_H__
 
  // Base class: LogicComponentBase
-#include "glogicbase.h"
+#include <GameComp/logicComp/glogiccontroller.h>
 #include <bullet/LinearMath/btScalar.h>
-#include "../transformComp/gtranscomp.h"
-#include "../inputComp/ginputfreecam.h"
-#include "gmoveable.h"
+#include <GameComp/transformComp/gtranscomp.h>
+#include "ginputfreecam.h"
 
-class LogicFreeCamera : public Moveable
+
+class LogicFreeCamera : public LogicController
 {
+	RefObjSmPtr<TransformComponent> m_spTransform;
+    RefObjSmPtr<FreeCameraInput> m_spInput;
+	
 	btScalar m_angleX;
 	btScalar m_angleY;
 	
@@ -19,15 +22,12 @@ class LogicFreeCamera : public Moveable
 	btScalar m_diffMoveVertical;
 	btScalar m_diffMoveHorizontal;
 public:
-	LogicFreeCamera(GameLogicSystem *pLogicSystem);
+	LogicFreeCamera();
 	~LogicFreeCamera();
-	
-	virtual GameErrorCode ReceiveMessage(TaskMessage& msg) override;
 	
 	virtual GameErrorCode Update(float timeDiff) override;
 	
-	virtual GameErrorCode Load(wxXmlNode *pNode) override;
-	virtual GameErrorCode Store(wxXmlNode *pParentNode) override;
+	GameErrorCode Initialize(TransformComponent* pTransform, FreeCameraInput* pFreeCamInput);
 
 };
 

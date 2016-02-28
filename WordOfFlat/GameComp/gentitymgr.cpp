@@ -4,8 +4,7 @@
 GameEntityManager::GameEntityManager(GameLogger* pLogger, GameCompManager& compMgr) : m_spLogger(pLogger)
 														, m_nextFreeId(1)
 														, m_tranformMgr(pLogger, this)
-														, m_inputCompMgr(&compMgr.GetInputSystem(), this)
-														, m_moveableCompMgr(&compMgr.GetLogicSystem(), this)
+														, m_logicControllerMgr(&compMgr.GetLogicSystem(), this)
 														, m_physicsCompMgr(&compMgr.GetPhysicsSystem(), this)
 														, m_renderPosMgr(&compMgr.GetRenderSystem(), this)
 														, m_renderObjMgr(&compMgr.GetRenderSystem(), this)
@@ -38,8 +37,7 @@ void GameEntityManager::DestroyEntity(wxDword entityId)
 	wxCriticalSectionLocker lock(m_mgrLock);
 	
 	m_tranformMgr.DestroyComponent(entityId);
-	m_inputCompMgr.DestroyComponent(entityId);
-	m_moveableCompMgr.DestroyComponent(entityId);
+	m_logicControllerMgr.DestroyComponent(entityId);
 	m_physicsCompMgr.DestroyComponent(entityId);
 	m_renderPosMgr.DestroyComponent(entityId);
 	m_renderObjMgr.DestroyComponent(entityId);
@@ -53,8 +51,7 @@ void GameEntityManager::DestroyAllEntities()
 	wxCriticalSectionLocker lock(m_mgrLock);
 	
 	m_tranformMgr.DestroyAllComponents();
-	m_inputCompMgr.DestroyAllComponents();
-	m_moveableCompMgr.DestroyAllComponents();
+	m_logicControllerMgr.DestroyAllComponents();
 	m_physicsCompMgr.DestroyAllComponents();
 	m_renderPosMgr.DestroyAllComponents();
 	m_renderObjMgr.DestroyAllComponents();
@@ -74,10 +71,7 @@ GameErrorCode GameEntityManager::SendTaskMessage(wxDword receiverID, TaskMessage
 	pComp = m_tranformMgr.GetComponent(receiverID);
 	if(pComp) FWG_RETURN_FAIL(pComp->ReceiveMessage(msg));
 	
-	pComp = m_inputCompMgr.GetComponent(receiverID);
-	if(pComp) FWG_RETURN_FAIL(pComp->ReceiveMessage(msg));
-	
-	pComp = m_moveableCompMgr.GetComponent(receiverID);
+	pComp = m_logicControllerMgr.GetComponent(receiverID);
 	if(pComp) FWG_RETURN_FAIL(pComp->ReceiveMessage(msg));
 	
 	pComp = m_physicsCompMgr.GetComponent(receiverID);

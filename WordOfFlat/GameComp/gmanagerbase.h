@@ -47,11 +47,6 @@ public:
 	
 	inline GameLogger * GetLogger() { return m_spLogger; }
 	
-	GameErrorCode AddComponent(wxDword compId, Type* pNewComponent)
-	{
-		FWG_RETURN_FAIL(InsertToMap(compId, pNewComponent));
-		return FWG_NO_ERROR;
-	}
 	void DestroyComponent(wxDword compId) { m_compMap.Remove(compId); }
 	void DestroyAllComponents() { m_compMap.Clear(); }
 	

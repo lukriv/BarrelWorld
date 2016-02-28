@@ -9,17 +9,15 @@
 
 #include <GameSystem/refobjectsmptr.h>
 #include <GameComp/RenderComp/grendercompbase.h>
-#include <GameComp/InputComp/ginputcomp.h>
-#include <GameComp/LogicComp/glogicman.h>
-#include <GameComp/LogicComp/glogicgamecam.h>
+#include <GameComp/InputComp/ginputhandler.h>
 #include <GameComp/RenderComp/grenderrigidbody.h>
 #include <GameComp/PhysicsComp/gphysstaticobj.h>
+#include <GameComp/PhysicsComp/gphysrigidbody.h>
 #include <GameComp/RenderComp/grendercamera.h>
 #include <GameComp/gpropery.h>
 #include <GameSystem/new.h>
 
-
-
+#include "../controllers/glogicgamecam.h"
 
 
 
@@ -27,7 +25,7 @@
 GameErrorCode GameEntityFactory::CreateFloor(GameCompManager& compMgr)
 {
 	GameErrorCode result = FWG_NO_ERROR;
-	if(!m_groundCreated)
+	if(!compMgr.GetRenderSystem().GetOgreRoot()->getMeshManager()->resourceExists("ground"))
 	{
 		Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);
 		Ogre::MeshPtr meshptr = compMgr.GetRenderSystem().GetOgreRoot()->getMeshManager()->createPlane(
@@ -115,9 +113,8 @@ GameErrorCode GameEntityFactory::CreateMainCamera(GameCompManager& compMgr)
 		return result;
 	}
 	
-	spTransform->GetData()->m_translate = btVector3(10,40,0);
-	spTransform->GetData()->m_rotation.setEuler(0, 0, SIMD_PI/8);
-	
+	spTransform->GetData()->m_translate = btVector3(0,40,10);
+		
 	// render position
 	if(FWG_FAILED(result = compMgr.GetEntityManager().GetRenderPosManager().CreateComponent(entityId, spTransform, spRenderPosition.OutRef())))
 	{
@@ -144,14 +141,9 @@ GameErrorCode GameEntityFactory::CreateMainCamera(GameCompManager& compMgr)
 		FWGLOG_ERROR_FORMAT(wxT("Create camera failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
 		return result;
 	}
-	
-	spRenderObject->GetOgreCamera()->lookAt(0,0,0);
-	
-	if(FWG_FAILED(result = compMgr.GetEntityManager().GetInputManager().CreateComponent(entityId, spInput.OutRef())))
-	{
-		FWGLOG_ERROR_FORMAT(wxT("Create input failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
-		return result;
-	}
+
+	FWG_RETURN_FAIL(GameNewChecked(spInput.OutRef()));
+	FWG_RETURN_FAIL(spInput->Initialize(&compMgr.GetInputSystem()))
 	
 	//<input type="freeCameraInput">
 	//			<key action="forward" value="key_i" />
@@ -170,12 +162,76 @@ GameErrorCode GameEntityFactory::CreateMainCamera(GameCompManager& compMgr)
 	
 	FWG_RETURN_FAIL(spInput->Create(spInputDefinition));
 	
-	if(FWG_FAILED(result = compMgr.GetEntityManager().GetMoveableManager().CreateComponent(entityId, spTransform, spInput, spController.OutRef())))
+	FWG_RETURN_FAIL(GameNewChecked(spController.OutRef()));
+	FWG_RETURN_FAIL(spController->Initialize(spTransform, spInput, &compMgr));
+	
+	if(FWG_FAILED(result = compMgr.GetEntityManager().GetLogicControllerManager().AddLogicController(entityId, spController)))
 	{
-		FWGLOG_ERROR_FORMAT(wxT("Create logic controller failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		FWGLOG_ERROR_FORMAT(wxT("Add logic controller failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
 		return result;
 	}
 	
 	return FWG_NO_ERROR;
 		
+}
+
+GameErrorCode GameEntityFactory::CreateBox(GameCompManager& compMgr, const btVector3& place)
+{
+	GameErrorCode result = FWG_NO_ERROR;
+	
+	wxDword entityId = compMgr.GetEntityManager().GetNewId();
+	
+	RefObjSmPtr<TransformComponent>	spTransform;
+	RefObjSmPtr<RenderPosition> spRenderPosition;
+	RefObjSmPtr<RenderRigidBody> spRenderObject;
+	RefObjSmPtr<PhysicsRigidBody> spPhysicsComp;
+	
+	if(FWG_FAILED(result = compMgr.GetEntityManager().GetTransformManager().CreateComponent(entityId, spTransform.OutRef())))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Create transform component failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	spTransform->GetData()->m_translate = place;
+	
+	// render position
+	if(FWG_FAILED(result = compMgr.GetEntityManager().GetRenderPosManager().CreateComponent(entityId, spTransform, spRenderPosition.OutRef())))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Create render position component failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	FWG_RETURN_FAIL( spRenderPosition->Create() );
+	
+	
+	
+	if(FWG_FAILED(result = compMgr.GetEntityManager().GetRenderObjManager().CreateComponent<RenderRigidBody>(entityId, spRenderPosition, spRenderObject.OutRef())))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Create render object component failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	
+	if(FWG_FAILED(result = spRenderObject->Create(wxT("TestingCube"), wxT("Test/ColourTest"))))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Create floor failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	
+	if(FWG_FAILED(result = compMgr.GetEntityManager().GetPhysicsManager().CreateComponent<PhysicsRigidBody>(entityId, spTransform, spPhysicsComp.OutRef())))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Create physics component failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	btCollisionShape *pColShape = new btBoxShape(btVector3(1.0f,1.0f,1.0f));	  
+	
+	if(FWG_FAILED(result = spPhysicsComp->Create(1.0f, pColShape)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Create floor physics failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	return FWG_NO_ERROR;
 }

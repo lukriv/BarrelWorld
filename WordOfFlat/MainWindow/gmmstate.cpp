@@ -84,6 +84,8 @@ GameErrorCode GameMainMenuState::LoadScene()
 	}
 
 	FWGLOG_INFO(wxT("Scene loaded"), m_pOwner->GetLogger());
+	
+	return FWG_NO_ERROR;
 }
 
 GameErrorCode GameMainMenuState::ProcessState(GameState& nextState, wxString& nextStateParams)
@@ -105,6 +107,12 @@ GameErrorCode GameMainMenuState::ProcessState(GameState& nextState, wxString& ne
 	if(FWG_FAILED(result = factory.CreateMainCamera(*m_spCompManager)))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Create main camera failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	if(FWG_FAILED(result = factory.CreateBox(*m_spCompManager)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Create test box failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
 		return result;
 	}
 

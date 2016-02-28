@@ -1,14 +1,12 @@
 #ifndef __GAME_CHARACTER_INPUT_COMPONENT_H__01__
 #define __GAME_CHARACTER_INPUT_COMPONENT_H__01__
 
-#include "ginputcomp.h"
-//#include <GameResHold/gdeftables.h>
+#include <GameComp/inputComp/ginputhandler.h>
 #include <GameSystem/glog.h>
 
 class GameInputSystem;
 
-class CharacterInput : public InputComponent
-{
+class CharacterInput : public InputHandler, public RefObjectImpl<IRefObject>{
 private:
 public:
     

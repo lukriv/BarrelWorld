@@ -168,7 +168,7 @@ public:
 
 
 
-class InputComponent : public ComponentBase, public GameInputSystem::InputMouseCallback
+class InputHandler : public GameInputSystem::InputMouseCallback
 {
 private:
     ControlStruct m_ctrlStruct;
@@ -180,9 +180,8 @@ protected:
 	RefObjSmPtr<InputDef> m_spDefinition;
 	
 public:
-    InputComponent()
-        : ComponentBase(GAME_COMP_INPUT)
-        , m_inputLock(wxCRITSEC_DEFAULT)
+    InputHandler()
+        : m_inputLock(wxCRITSEC_DEFAULT)
     {
     }
 
@@ -211,12 +210,6 @@ public:
     // */
     //Ogre::Vector2& GetLookDirection2D();
 
-    virtual GameErrorCode ReceiveMessage(TaskMessage& msg) override;
-	
-	virtual GameErrorCode Load(wxXmlNode* pNode);
-    virtual GameErrorCode Store(wxXmlNode* pParentNode);
-
-    
 	virtual void OnMouseMoved(const OIS::MouseState& arg) override;
     virtual void OnMousePressed(const OIS::MouseState& arg, OIS::MouseButtonID id) override;
     virtual void OnMouseReleased(const OIS::MouseState& arg, OIS::MouseButtonID id) override;
@@ -226,11 +219,6 @@ public:
 protected:
 	void SetDefinition(InputDef *pDef);
 	InputDef* GetDefinition() const;
-	
-    GameErrorCode CreateInputDef(wxXmlNode* pNode, InputDef& output);
-
-    GameErrorCode GetKeyValue(wxXmlNode* pNode, wxString& action, wxInt32& keyCode);
-    GameErrorCode SetKeyValue(wxXmlNode* pParentNode, wxString& action, wxInt32& keyCode);
 
     inline void SetState(bool state, wxDword ctrlFlag)
     {

@@ -23,10 +23,15 @@ protected:
 
 public:
 
-	LogicBase(GameLogicSystem *pLogicSystem);
+	LogicBase();
 	virtual ~LogicBase();
 
 	virtual GameErrorCode Update(float timeDiff) = 0;
+	
+	inline void SetLogicSystem(GameLogicSystem *pLogicSystem)
+	{
+		m_pLogicSystem = pLogicSystem;
+	}
 	
 };
 

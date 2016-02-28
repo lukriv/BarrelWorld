@@ -27,9 +27,9 @@
 	<!-- <inertia>0.0,0.0,0.0</inertia> -->
 </physics>
 
-<!-- moveable types -->
-<moveable type="manualTest"></moveable>
-<moveable type="freeCamera"></moveable>
+<!-- control types -->
+<control type="logicManualTest"></control>
+<control type="logicFreeCamera"></control>
 
 <!-- input types -->
 <input type="characterInput">

@@ -60,19 +60,19 @@
       <VirtualDirectory Name="include">
         <File Name="InputComp/ginputsystem.h"/>
         <File Name="InputComp/ginputdef.h"/>
+        <File Name="InputComp/ginputhandler.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="src">
         <File Name="InputComp/ginputsystem.cpp"/>
+        <File Name="InputComp/ginputhandler.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="logicSystem">
       <VirtualDirectory Name="include">
-        <File Name="LogicComp/glogicterrdecal.h"/>
         <File Name="LogicComp/glogicbase.h"/>
         <File Name="LogicComp/glogicsystem.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="src">
-        <File Name="LogicComp/glogicterrdecal.cpp"/>
         <File Name="LogicComp/glogicbase.cpp"/>
         <File Name="LogicComp/glogicsystem.cpp"/>
       </VirtualDirectory>
@@ -193,20 +193,14 @@
     </Configuration>
   </Settings>
   <VirtualDirectory Name="components">
-    <VirtualDirectory Name="moveable">
+    <VirtualDirectory Name="logiccontroller">
       <VirtualDirectory Name="include">
-        <File Name="LogicComp/glogicfreecam.h"/>
-        <File Name="LogicComp/glogicman.h"/>
-        <File Name="LogicComp/gmoveablemgr.h"/>
-        <File Name="LogicComp/gmoveable.h"/>
-        <File Name="LogicComp/glogicgamecam.h"/>
+        <File Name="LogicComp/glogiccontroller.h"/>
+        <File Name="LogicComp/glogiccontrollermgr.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="src">
-        <File Name="LogicComp/glogicfreecam.cpp"/>
-        <File Name="LogicComp/glogicman.cpp"/>
-        <File Name="LogicComp/gmoveablemgr.cpp"/>
-        <File Name="LogicComp/gmoveable.cpp"/>
-        <File Name="LogicComp/glogicgamecam.cpp"/>
+        <File Name="LogicComp/glogiccontroller.cpp"/>
+        <File Name="LogicComp/glogiccontrollermgr.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="transform">
@@ -217,20 +211,6 @@
       <VirtualDirectory Name="src">
         <File Name="TransformComp/gtranscomp.cpp"/>
         <File Name="TransformComp/gtranscmgr.cpp"/>
-      </VirtualDirectory>
-    </VirtualDirectory>
-    <VirtualDirectory Name="input">
-      <VirtualDirectory Name="include">
-        <File Name="InputComp/ginputcomp.h"/>
-        <File Name="InputComp/ginputchar.h"/>
-        <File Name="InputComp/ginputcompmgr.h"/>
-        <File Name="InputComp/ginputfreecam.h"/>
-      </VirtualDirectory>
-      <VirtualDirectory Name="src">
-        <File Name="InputComp/ginputcomp.cpp"/>
-        <File Name="InputComp/ginputchar.cpp"/>
-        <File Name="InputComp/ginputcompmgr.cpp"/>
-        <File Name="InputComp/ginputfreecam.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="renderposition">

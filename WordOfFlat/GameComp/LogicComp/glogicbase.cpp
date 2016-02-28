@@ -10,6 +10,6 @@ LogicBase::~LogicBase()
 	}
 }
 
-LogicBase::LogicBase(GameLogicSystem* pLogicSystem) : m_pLogicSystem(pLogicSystem)
+LogicBase::LogicBase() : m_pLogicSystem(nullptr)
 {
 }

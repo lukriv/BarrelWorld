@@ -14,6 +14,7 @@ GameErrorCode GameLogicSystem::AddLogicComp(LogicBase* pLogicComp)
 {
 	wxCriticalSectionLocker lock( m_lockMgr );
 	FWG_RETURN_FAIL(m_logicCompList.Insert(pLogicComp));
+	pLogicComp->SetLogicSystem(this);
 	return FWG_NO_ERROR;
 }
 

@@ -3,8 +3,7 @@
 #include <OGRE/OgreRenderWindow.h>
 #include <OGRE/OgreStringConverter.h>
 
-#include "ginputcomp.h"
-#include "ginputfreecam.h"
+#include "ginputhandler.h"
 
 
 bool GameInputSystem::keyPressed(const OIS::KeyEvent& arg)

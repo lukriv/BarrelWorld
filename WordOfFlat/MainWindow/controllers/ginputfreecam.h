@@ -1,12 +1,12 @@
 #ifndef __GAME_FREE_CAMERA_INPUT_COMPONENT_H__01__
 #define __GAME_FREE_CAMERA_INPUT_COMPONENT_H__01__
 
-#include "ginputcomp.h"
+#include <GameComp/inputComp/ginputhandler.h>
 #include <GameSystem/glog.h>
 
 class GameInputSystem;
 
-class FreeCameraInput : public InputComponent {
+class FreeCameraInput : public InputHandler , public RefObjectImpl<IRefObject> {
 public:
 	enum StateFlags {
 			INPUT_ACTION_NONE =						0 ,
@@ -19,7 +19,7 @@ public:
 		};
 public:
 
-	FreeCameraInput() : InputComponent() {}
+	FreeCameraInput() : InputHandler() {}
 	~FreeCameraInput();
 	
 	virtual GameErrorCode Create( InputDef *pInputDef);

@@ -7,16 +7,13 @@
 #include <GameXmlDefinitions/gxmldefs.h>
 #include <GameXmlDefinitions/gxmlutils.h>
 
-#include "glogicsystem.h"
-#include "../InputComp/ginputchar.h"
-//#include "../InputComp/ginputcomp.h"
+#include <GameComp/LogicComp/glogicsystem.h>
+#include "ginputchar.h"
 
 
 const float STEP_SIZE = 0.1f;
 
-LogicManualTest::LogicManualTest(GameLogicSystem *pLogicSystem) : Moveable(pLogicSystem)
-{
-}
+LogicManualTest::LogicManualTest(){}
 
 LogicManualTest::~LogicManualTest()
 {
@@ -68,27 +65,15 @@ GameErrorCode LogicManualTest::Update(float timeDiff)
 
 
 
-GameErrorCode LogicManualTest::ReceiveMessage(TaskMessage&)
+GameErrorCode LogicManualTest::Initialize(TransformComponent* pTransform, CharacterInput* pInput)
 {
-	return FWG_NO_ERROR;
-}
-
-
-GameErrorCode LogicManualTest::Load(wxXmlNode* pNode)
-{
-	return GameXmlUtils::CheckTagAndType(pNode, GAME_TAG_COMP_MOVEABLE, GAME_TAG_TYPE_MOVEABLE_MANUAL_TEST, m_pLogicSystem->GetLogger());
-}
-
-GameErrorCode LogicManualTest::Store(wxXmlNode* pParentNode)
-{
-	wxXmlNode *pNewNode = nullptr;
-	wxString content;
-	FWG_RETURN_FAIL(GameNewChecked(pNewNode, wxXML_ELEMENT_NODE, GAME_TAG_COMP_MOVEABLE));
-	wxScopedPtr<wxXmlNode> apNewNode(pNewNode);
+	if((pTransform == nullptr)||(pInput == nullptr))
+	{
+		return FWG_E_INVALID_PARAMETER_ERROR;
+	}
 	
-	pNewNode->AddAttribute(GAME_TAG_ATTR_TYPE, GAME_TAG_TYPE_MOVEABLE_MANUAL_TEST);
-	
-	pParentNode->AddChild(apNewNode.release());
+	m_spTransform = pTransform;
+	m_spInput = pInput;
 	
 	return FWG_NO_ERROR;
 }

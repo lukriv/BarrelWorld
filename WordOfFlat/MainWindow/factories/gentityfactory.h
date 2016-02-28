@@ -11,14 +11,14 @@
 class GameEntityFactory : public RefObjectImpl<IRefObject> {
 private:
 	GameLoggerPtr m_spLogger;
-	bool m_groundCreated;
 public:
-	GameEntityFactory(GameLogger *pLogger) : m_spLogger(pLogger)
-			, m_groundCreated(false){}
+	GameEntityFactory(GameLogger *pLogger) : m_spLogger(pLogger) {}
 	
 	GameErrorCode CreateFloor(GameCompManager& compMgr);
 	
 	GameErrorCode CreateMainCamera(GameCompManager& compMgr);
+	
+	GameErrorCode CreateBox(GameCompManager& compMgr, const btVector3& place = btVector3(0,10,0));
 	
 	
 	

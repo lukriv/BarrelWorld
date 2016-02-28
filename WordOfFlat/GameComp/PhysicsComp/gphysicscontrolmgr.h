@@ -6,7 +6,7 @@
 
 
 class TransformComponent;
-class InputComponent;
+class InputHandler;
 
 class PhysicsControllerManager : public GameManagerBase<PhysicsController>
 {
@@ -18,7 +18,7 @@ public:
 
 	
 	template <class T>
-	GameErrorCode CreateComponent(wxDword compId, TransformComponent *pTransform, InputComponent *pInput, T *&pNewComponent )
+	GameErrorCode CreateComponent(wxDword compId, TransformComponent *pTransform, InputHandler *pInput, T *&pNewComponent )
 	{
 		RefObjSmPtr<T> spPhysicsController;
 		FWG_RETURN_FAIL(GameNewChecked(spPhysicsController.OutRef(), m_pPhysicsSystem));

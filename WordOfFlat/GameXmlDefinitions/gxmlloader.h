@@ -24,14 +24,9 @@ private:
 
 	GameErrorCode LoadEntity(wxXmlNode* pNode, GameCompManager& compMgr);
 	GameErrorCode LoadTransform(wxXmlNode* pNode, GameCompManager& compMgr, wxDword entID);
-	GameErrorCode LoadInput(wxXmlNode* pNode, GameCompManager& compMgr, wxDword entID);
 	GameErrorCode LoadRender(wxXmlNode* pNode, GameCompManager& compMgr, wxDword entID);
-	GameErrorCode LoadMoveable(wxXmlNode* pNode, GameCompManager& compMgr, wxDword entID);
 	GameErrorCode LoadPhysics(wxXmlNode* pNode, GameCompManager& compMgr, wxDword entID);
 	
-	GameErrorCode CreateInputDef(wxXmlNode* pNode, RefObjSmPtr<InputDef> &spInputDef);
-
-
 	/**
 	 * \brief Get and parse param tag and its attributes
 	 * @param pNode Param tag node
@@ -44,8 +39,6 @@ private:
 	GameErrorCode ParametersValidate(GameBasSet<wxString> &foundedParams, const ParamDefinition* pDefTable, wxInt32 tableSize );
 	
 	
-	GameErrorCode GetAttrValue(wxXmlNode *pNode, wxString &value);
-	GameErrorCode GetKeyValue(wxXmlNode *pNode, wxString &action, wxInt32 &keyCode);
 
 
 public:

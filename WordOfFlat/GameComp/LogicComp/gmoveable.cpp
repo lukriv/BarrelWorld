@@ -1,4 +1,4 @@
-#include "gmoveable.h"
+#include "glogiccontroller.h"
 #include <GameComp/LogicComp/glogicsystem.h>
 
 

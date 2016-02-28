@@ -1,7 +1,7 @@
 #include "gphysicscontrolmgr.h"
 
 #include <GameComp/transformComp/gtranscomp.h>
-#include <GameComp/inputComp/ginputcomp.h>
+#include <GameComp/inputComp/ginputhandler.h>
 
 PhysicsControllerManager::PhysicsControllerManager(GamePhysicsSystem* pPhysicsSystem, GameEntityManager* pEntityMgr) :
 	GameManagerBase(pPhysicsSystem->GetLogger(), pEntityMgr),

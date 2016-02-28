@@ -60,8 +60,8 @@
 				<key action="right" value="key_d" />
 			</input>
 			
-			<moveable type="logicManualTest">
-			</moveable>
+			<control type="logicManualTest">
+			</control>
 			
 			<!-- <physicsStaticObject>
 				<shape type="box">
@@ -105,7 +105,7 @@
 			</input>
 			
 			
-			<moveable type="logicFreeCamera"></moveable>
+			<control type="logicFreeCamera"></control>
 			
 		</entity>
 	</scene>

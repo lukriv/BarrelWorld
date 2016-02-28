@@ -29,12 +29,10 @@
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="src">
-    <File Name="gentityfactory.cpp"/>
     <File Name="gentitycreator.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="gscenegen.h"/>
-    <File Name="gentityfactory.h"/>
     <File Name="gdefloader.h"/>
     <File Name="gentitycreator.h"/>
   </VirtualDirectory>
