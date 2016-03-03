@@ -91,10 +91,7 @@ public:
 	 */
 	void StartRendering();
 	
-	GameErrorCode ProcessAllCreation();
-	
-	GameErrorCode CreateRenderComponent(RenderComponentBase *pComponent, void *pContext);
-	
+
 	/**
 	 * \brief Add component to update queue
 	 * \param pRenderComp Pointer to render component

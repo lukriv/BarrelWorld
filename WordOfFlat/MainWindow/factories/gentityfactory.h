@@ -20,6 +20,8 @@ public:
 	
 	GameErrorCode CreateBox(GameCompManager& compMgr, const btVector3& place = btVector3(0,10,0));
 	
+	GameErrorCode CreateAvatar(GameCompManager& compMgr, const btVector3& place = btVector3(0,2.0f,0));
+	
 	
 	
 };

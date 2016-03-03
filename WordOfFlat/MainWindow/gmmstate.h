@@ -31,6 +31,7 @@ private:
 	wxString m_nextStateParams;
 	bool m_exitState;
 	bool m_switchPolyMode;
+	bool m_mainMenu;
 	CDebugDraw* m_pDebugDraw;
 	
 	wxInt32 m_zeroTimeFrames;
@@ -45,6 +46,7 @@ public:
 																		, m_nextState(GAME_STATE_EXIT)
 																		, m_exitState(false)
 																		, m_switchPolyMode(false)
+																		, m_mainMenu(true)
 																		, m_pDebugDraw(nullptr)
 																		, m_zeroTimeFrames(0)
 																		, m_timeSinceLastAverage(0)
@@ -68,6 +70,9 @@ public:
 	
 	
 	GameErrorCode ProcessUpdate( float secDiff);
+	
+private:
+	GameErrorCode CreateScene();
 
 };
 

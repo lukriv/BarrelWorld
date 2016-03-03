@@ -45,13 +45,6 @@ public:
 	 */
 	virtual void Update() = 0;
 	
-	/**
-	 * @brief Called in asynchronous component creation
-	 * @param pContext
-	 */
-	virtual void OnCreation(void *pContext) = 0;
-	
-	
 	virtual GameErrorCode ReceiveMessage(TaskMessage& msg) override;
 };
 

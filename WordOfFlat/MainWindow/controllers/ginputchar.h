@@ -28,36 +28,36 @@ public:
 public:
     CharacterInput();
 
-	virtual GameErrorCode Create(InputDef* pInputDef) override;
+	virtual GameErrorCode Create(const InputDef& inputDef) override;
 
     void SetMoveUp(bool move)
     {
-	SetState(move, INPUT_ACTION_UP);
+		SetState(move, INPUT_ACTION_UP);
     }
 
     void SetMoveDown(bool move)
     {
-	SetState(move, INPUT_ACTION_DOWN);
+		SetState(move, INPUT_ACTION_DOWN);
     }
 
     void SetMoveLeft(bool move)
     {
-	SetState(move, INPUT_ACTION_LEFT);
+		SetState(move, INPUT_ACTION_LEFT);
     }
 
     void SetMoveRight(bool move)
     {
-	SetState(move, INPUT_ACTION_RIGHT);
+		SetState(move, INPUT_ACTION_RIGHT);
     }
 
     void SetMoveForward(bool move)
     {
-	SetState(move, INPUT_ACTION_FORWARD);
+		SetState(move, INPUT_ACTION_FORWARD);
     }
 
     void SetMoveBackward(bool move)
     {
-	SetState(move, INPUT_ACTION_BACKWARD);
+		SetState(move, INPUT_ACTION_BACKWARD);
     }
 
 };

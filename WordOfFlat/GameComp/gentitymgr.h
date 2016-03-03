@@ -9,6 +9,7 @@
 #include "TransformComp/gtranscmgr.h"
 #include "LogicComp/glogiccontrollermgr.h"
 #include "PhysicsComp/gphyscompmgr.h"
+#include "PhysicsComp/gphysicscontrolmgr.h"
 #include "RenderComp/grenderpositionmgr.h"
 #include "RenderComp/grenderobjmgr.h"
 
@@ -27,7 +28,8 @@ private:
 	// component managers
 	TransformCompManager m_tranformMgr;
 	LogicControllerManager	m_logicControllerMgr;
-	PhysicsCompManager m_physicsCompMgr;
+	PhysicsCompManager m_physicsMgr;
+	PhysicsControllerManager m_physicsControllerMgr;
 	RenderPositionManager m_renderPosMgr;
 	RenderObjectManager m_renderObjMgr;
 	
@@ -46,7 +48,8 @@ public:
 	
 	inline TransformCompManager& GetTransformManager() 	{ return m_tranformMgr; }
 	inline LogicControllerManager& GetLogicControllerManager() 	{ return m_logicControllerMgr; }
-	inline PhysicsCompManager& GetPhysicsManager() 		{ return m_physicsCompMgr; }
+	inline PhysicsCompManager& GetPhysicsManager() 		{ return m_physicsMgr; }
+	inline PhysicsControllerManager& GetPhysicsControllerManager() { return m_physicsControllerMgr; }
 	inline RenderPositionManager& GetRenderPosManager() { return m_renderPosMgr; }
 	inline RenderObjectManager& GetRenderObjManager() 	{ return m_renderObjMgr; }
 	

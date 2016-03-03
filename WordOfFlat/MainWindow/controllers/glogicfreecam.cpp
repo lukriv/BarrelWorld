@@ -18,6 +18,7 @@ LogicFreeCamera::LogicFreeCamera() : LogicController()
 	, m_angleY(0.0f)
 	, m_diffSinceLastFrameX(0.0f)
 	, m_diffSinceLastFrameY(0.0f)
+	, m_diffWheel(0.0f)
 {
 }
 
@@ -120,6 +121,7 @@ GameErrorCode LogicFreeCamera::Update(float timeDiff)
 	
 	m_diffMoveVertical = 0.0f;
 	m_diffMoveHorizontal = 0.0f;
+	m_diffWheel = 0.0f;
 	
 	return FWG_NO_ERROR;
 }

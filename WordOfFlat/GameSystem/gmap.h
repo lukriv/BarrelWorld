@@ -100,9 +100,25 @@ public:
 		return static_cast<Iterator>(m_innerMap.find(Key));
 	}
 	
+	inline ConstIterator Find(const key& Key) const
+	{
+		return static_cast<ConstIterator>(m_innerMap.find(Key));
+	}
+	
 	inline value* FindValue(const key& Key)
 	{
 		typename TInternalMap::iterator iter = m_innerMap.find(Key);
+		if(iter == m_innerMap.end())
+		{
+			return NULL;
+		}
+		
+		return &(iter->second);	
+	}
+	
+	inline const value* FindValue(const key& Key) const
+	{
+		typename TInternalMap::const_iterator iter = m_innerMap.find(Key);
 		if(iter == m_innerMap.end())
 		{
 			return NULL;

@@ -178,3 +178,17 @@ void GameMenu::OnMouseReleased(const OIS::MouseState& arg, OIS::MouseButtonID id
 {
 	CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseButtonUp(ConvertMouseButtonId(id));
 }
+
+void GameMenu::ShowMenuButtons(bool show)
+{
+	if(show)
+	{
+		m_pButtonExit->show();
+		m_pButtonSwitch->show();
+		m_pButtonDebug->show();
+	} else {
+		m_pButtonExit->hide();
+		m_pButtonSwitch->hide();
+		m_pButtonDebug->hide();
+	}
+}

@@ -23,6 +23,7 @@ LogicGameCamera::LogicGameCamera() : m_pCompMgr(nullptr)
 	, m_diffSinceLastFrameY(0.0f)
 	, m_diffMoveVertical(0.0f)
 	, m_diffMoveHorizontal(0.0f)
+	, m_diffWheel(0.0f)
 {
 }
 
@@ -36,11 +37,11 @@ GameErrorCode LogicGameCamera::Update(float timeDiff)
 		FWG_RETURN_FAIL(CreateBox());
 	}
 	
-	if(actualControls.IsMousePressed(ControlStruct::MOUSE_BUTTON_RIGHT))
-	{
-		m_diffSinceLastFrameX += (btScalar)actualControls.GetRelX();
-		m_diffSinceLastFrameY += (btScalar)actualControls.GetRelY();
-	}
+	//if(actualControls.IsMousePressed(ControlStruct::MOUSE_BUTTON_RIGHT))
+	//{
+	//	m_diffSinceLastFrameX += (btScalar)actualControls.GetRelX();
+	//	m_diffSinceLastFrameY += (btScalar)actualControls.GetRelY();
+	//}
 	
 	if(actualControls.IsPressed(FreeCameraInput::INPUT_ACTION_UP))
 	{
@@ -61,6 +62,8 @@ GameErrorCode LogicGameCamera::Update(float timeDiff)
 	{
 		m_diffMoveHorizontal += MOVE_STEP_SIZE;
 	}
+	
+	m_diffWheel += (btScalar) actualControls.GetMouseWheelDelta();
 	
 	if(timeDiff == 0.0f)
 	{
@@ -86,6 +89,11 @@ GameErrorCode LogicGameCamera::Update(float timeDiff)
 			btVector3 dirVec(  m_diffMoveHorizontal*timeDiff , 0, 0);
 			m_spTransform->GetData()->m_translate += dirVec;
 		}
+		
+		{
+			btVector3 dirVec( 0, m_diffWheel*MOVE_STEP_SIZE*timeDiff, 0);
+			m_spTransform->GetData()->m_translate += dirVec;
+		}
 
 		
 	}
@@ -98,6 +106,7 @@ GameErrorCode LogicGameCamera::Update(float timeDiff)
 	
 	m_diffMoveVertical = 0.0f;
 	m_diffMoveHorizontal = 0.0f;
+	m_diffWheel = 0.0f;
 	
 	return FWG_NO_ERROR;
 }
@@ -142,11 +151,10 @@ GameErrorCode LogicGameCamera::SendUpdateMessage()
 GameErrorCode LogicGameCamera::CreateBox()
 {
 	GameEntityFactory factory(GetEntityManager()->GetLogger());
+	Ogre::Vector2 vec2;
+	m_pCompMgr->GetMenuSystem().GetPointerPosition(vec2);
 	
-	Ogre::Real xPos = m_pCompMgr->GetMenuSystem().GetGuiSystem()->getDefaultGUIContext().getMouseCursor().getPosition().d_x / (Ogre::Real) m_pCompMgr->GetRenderSystem().GetOgreRenderWindow()->getWidth();
-	Ogre::Real yPos = m_pCompMgr->GetMenuSystem().GetGuiSystem()->getDefaultGUIContext().getMouseCursor().getPosition().d_y / (Ogre::Real) m_pCompMgr->GetRenderSystem().GetOgreRenderWindow()->getHeight();
-	
-	Ogre::Ray ray = m_pCompMgr->GetRenderSystem().GetMainCamera()->getCameraToViewportRay( xPos, yPos );
+	Ogre::Ray ray = m_pCompMgr->GetRenderSystem().GetMainCamera()->getCameraToViewportRay( vec2.x, vec2.y );
 	
 	Ogre::RaySceneQuery *rayQuery = m_pCompMgr->GetRenderSystem().GetOgreSceneManager()->createRayQuery(ray);
 	rayQuery->setQueryTypeMask( Ogre::SceneManager::ENTITY_TYPE_MASK);

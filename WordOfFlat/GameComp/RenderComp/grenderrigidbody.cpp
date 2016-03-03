@@ -53,13 +53,33 @@ GameErrorCode RenderRigidBody::Create(const wxString& meshName, const wxString& 
 		return FWG_E_OBJECT_ALREADY_EXISTS_ERROR;
 	}
 	
-	RenderRigidBodyContext *pContext = nullptr;
-	FWG_RETURN_FAIL( GameNewChecked(pContext));
-	
-	pContext->meshName.assign(meshName);
-	pContext->materialName.assign(materialName);
-	
-	FWG_RETURN_FAIL(m_pOwnerManager->CreateRenderComponent(this, static_cast<void*>(pContext)));
+	try 
+	{
+		
+		m_pEntity = m_pOwnerManager->GetOgreSceneManager()->createEntity(meshName.ToStdString());
+		if(m_pEntity == nullptr)
+		{
+			return FWG_E_MEMORY_ALLOCATION_ERROR;
+		}
+		
+		if(!materialName.IsEmpty())
+		{
+			m_pEntity->setMaterialName(materialName.ToStdString());
+		} else {
+			FWGLOG_WARNING(wxT("Render rigid body warning: Material should not be empty")
+									, m_pOwnerManager->GetLogger());
+		}
+		
+		m_spPosition->GetSceneNode()->attachObject(m_pEntity);
+		
+	} catch (Ogre::Exception &exc) {
+		
+		FWGLOG_ERROR_FORMAT(wxT("%s"), m_pOwnerManager->GetLogger()
+			, wxString::FromUTF8(exc.getFullDescription().c_str()).GetData().AsInternal()
+			, FWGLOG_ENDVAL );
+			
+		return FWG_E_INVALID_DATA_ERROR;
+	}
 	
 	return FWG_NO_ERROR;
 
@@ -168,25 +188,3 @@ void RenderRigidBody::Destroy()
 	}
 }
 
-void RenderRigidBody::OnCreation(void* pContext)
-{
-	RenderRigidBodyContext *pRBCont = static_cast<RenderRigidBodyContext*>(pContext);
-	m_pEntity = m_pOwnerManager->GetOgreSceneManager()->createEntity(pRBCont->meshName.ToStdString());
-	if(m_pEntity == nullptr)
-	{
-		return;
-	}
-	
-	if(!pRBCont->materialName.IsEmpty())
-	{
-		m_pEntity->setMaterialName(pRBCont->materialName.ToStdString());
-	} else {
-		FWGLOG_WARNING(wxT("Render rigid body warning: Material should not be empty")
-								, m_pOwnerManager->GetLogger());
-	}
-	
-	m_spPosition->GetSceneNode()->attachObject(m_pEntity);
-	
-	delete pRBCont;
-	
-}

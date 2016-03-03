@@ -179,6 +179,7 @@
       <File Name="controllers/glogicfreecam.h"/>
       <File Name="controllers/glogicgamecam.h"/>
       <File Name="controllers/glogicman.h"/>
+      <File Name="controllers/charControl.h"/>
     </VirtualDirectory>
     <VirtualDirectory Name="src">
       <File Name="controllers/ginputfreecam.cpp"/>
@@ -186,6 +187,7 @@
       <File Name="controllers/glogicfreecam.cpp"/>
       <File Name="controllers/glogicgamecam.cpp"/>
       <File Name="controllers/glogicman.cpp"/>
+      <File Name="controllers/charControl.cpp"/>
     </VirtualDirectory>
   </VirtualDirectory>
   <VirtualDirectory Name="factories">

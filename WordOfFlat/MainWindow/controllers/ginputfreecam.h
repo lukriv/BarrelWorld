@@ -20,9 +20,8 @@ public:
 public:
 
 	FreeCameraInput() : InputHandler() {}
-	~FreeCameraInput();
 	
-	virtual GameErrorCode Create( InputDef *pInputDef);
+	virtual GameErrorCode Create( const InputDef& inputDef);
 
 	void SetMoveUp(bool move)
 	{

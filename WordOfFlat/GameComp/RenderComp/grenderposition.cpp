@@ -69,11 +69,6 @@ void RenderPosition::Clear()
 
 GameErrorCode RenderPosition::Create()
 {
-	return m_pOwnerManager->CreateRenderComponent(this, nullptr);
-}
-
-void RenderPosition::OnCreation(void* )
-{
 	TransformData* transData = m_spTransform->GetData();
 
 	m_pSceneNode = m_pOwnerManager->GetOgreSceneManager()->getRootSceneNode()->createChildSceneNode(
@@ -86,6 +81,8 @@ void RenderPosition::OnCreation(void* )
 	if(m_pSceneNode == nullptr) {
 		FWGLOG_ERROR_FORMAT(wxT("Create new scene node failed: 0x%08x"), m_pOwnerManager->GetLogger(), FWG_E_MEMORY_ALLOCATION_ERROR, FWGLOG_ENDVAL);
 	}
+	
+	return FWG_NO_ERROR;
 }
 
 void RenderPosition::Enable(bool enable)

@@ -82,11 +82,13 @@
         <File Name="MenuComp/gmenu.h"/>
         <File Name="MenuComp/gmenumgr.h"/>
         <File Name="MenuComp/gmenubase.h"/>
+        <File Name="MenuComp/ggamegui.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="src">
         <File Name="MenuComp/gmenu.cpp"/>
         <File Name="MenuComp/gmenumgr.cpp"/>
         <File Name="MenuComp/gmenubase.cpp"/>
+        <File Name="MenuComp/ggamegui.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="terrainSystem">
@@ -239,15 +241,11 @@
     </VirtualDirectory>
     <VirtualDirectory Name="physics">
       <VirtualDirectory Name="include">
-        <File Name="PhysicsComp/gphysrigidbody.h"/>
         <File Name="PhysicsComp/gphysbase.h"/>
-        <File Name="PhysicsComp/gphysstaticobj.h"/>
         <File Name="PhysicsComp/gphyscompmgr.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="src">
-        <File Name="PhysicsComp/gphysrigidbody.cpp"/>
         <File Name="PhysicsComp/gphysbase.cpp"/>
-        <File Name="PhysicsComp/gphysstaticobj.cpp"/>
         <File Name="PhysicsComp/gphyscompmgr.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>

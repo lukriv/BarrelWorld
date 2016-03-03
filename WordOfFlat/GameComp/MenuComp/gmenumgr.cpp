@@ -57,3 +57,8 @@ void GameMenuSystem::Uninitialize()
 	
 }
 
+void GameMenuSystem::GetPointerPosition(Ogre::Vector2 &output)
+{
+	output.x = m_pGuiSystem->getDefaultGUIContext().getMouseCursor().getPosition().d_x / m_pGuiSystem->getDefaultGUIContext().getRenderTarget().getArea().getSize().d_width;
+	output.y = m_pGuiSystem->getDefaultGUIContext().getMouseCursor().getPosition().d_y / m_pGuiSystem->getDefaultGUIContext().getRenderTarget().getArea().getSize().d_height;
+}

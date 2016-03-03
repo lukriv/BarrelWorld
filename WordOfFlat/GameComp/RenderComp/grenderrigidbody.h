@@ -37,12 +37,6 @@ public:
 	 */
 	virtual void Update() override;
 	
-	/**
-	 * @brief Called in asynchronous component creation
-	 * @param pContext
-	 */
-	virtual void OnCreation(void *pContext) override;
-	
 };
 
 #endif // __GAME_RENDER_RIGID_BODY_H__

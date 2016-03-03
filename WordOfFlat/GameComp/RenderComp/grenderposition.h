@@ -25,8 +25,6 @@ public:
 
     virtual void Update() override;
 	
-	virtual void OnCreation(void* pContext) override;
-	
 	virtual GameErrorCode Load (wxXmlNode *pNode) override;
 	virtual GameErrorCode Store (wxXmlNode *pParentNode) override;
 

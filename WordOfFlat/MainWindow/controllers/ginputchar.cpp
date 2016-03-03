@@ -15,13 +15,13 @@ CharacterInput::CharacterInput()
 {
 }
 
-GameErrorCode CharacterInput::Create(InputDef *pInputDef)
+GameErrorCode CharacterInput::Create(const InputDef& inputDef)
 {
     GameErrorCode result = FWG_NO_ERROR;
 	
-	SetDefinition(pInputDef);
+	SetDefinition(inputDef);
 
-    for(InputDef::TInputMap::ConstIterator iter = pInputDef->m_inputMap.Begin(); iter != pInputDef->m_inputMap.End(); ++iter) {
+    for(InputDef::TInputMap::ConstIterator iter = inputDef.m_inputMap.Begin(); iter != inputDef.m_inputMap.End(); ++iter) {
 
 		if(iter->first.Cmp(FACTORY_INPUT_UP) == 0) {
 			if(FWG_FAILED(result = m_pInputSystem->RegisterCallback(
@@ -84,6 +84,12 @@ GameErrorCode CharacterInput::Create(InputDef *pInputDef)
 								  FWGLOG_ENDVAL);
 		}
     }
+	
+	if(FWG_FAILED(result = m_pInputSystem->RegisterCallback(this)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Register mouse callback failed: 0x%08x"), m_pInputSystem->GetLogger(), result, FWGLOG_ENDVAL);
+		return result;
+	}
 
     return FWG_NO_ERROR;
 }

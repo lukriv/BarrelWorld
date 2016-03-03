@@ -30,6 +30,8 @@ public:
 	
 	inline CEGUI::System *GetGuiSystem() { return m_pGuiSystem; }
 	
+	void GetPointerPosition(Ogre::Vector2 &output);
+	
 };
 
 

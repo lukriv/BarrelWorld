@@ -10,6 +10,9 @@ class LogicManualTest : public LogicController
 {
 	RefObjSmPtr<TransformComponent> m_spTransform;
     RefObjSmPtr<CharacterInput> m_spInput;
+	
+	btScalar m_diffForwardBackward;
+	btScalar m_diffLeftRight;
 public:
 	LogicManualTest();
 	~LogicManualTest();

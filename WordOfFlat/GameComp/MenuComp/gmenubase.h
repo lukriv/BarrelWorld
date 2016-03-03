@@ -32,7 +32,6 @@ public:
 	 */
 	virtual GameErrorCode Show() = 0;
 	
-	
 	// input mouse callback virtual methods
 	virtual void OnMouseMoved(const OIS::MouseState& arg) override;
 	virtual void OnMousePressed(const OIS::MouseState& arg, OIS::MouseButtonID id) override;

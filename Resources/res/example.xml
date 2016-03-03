@@ -17,7 +17,7 @@
 		</terrain>
 		<entity>
 			<transform>
-				<position>0.0, 15.0, 0.0</position>
+				<position>0.0, 120.0, 0.0</position>
 				<scale>1.0, 1.0, 1.0</scale>
 				<rotation>1.0, 0.0, 0.0, 0.0</rotation>				
 			</transform>
@@ -43,7 +43,7 @@
 		
 		<entity>
 			<transform>
-				<position>1.0, 10.0, 0.0</position>
+				<position>1.0, 100.0, 0.0</position>
 				<scale>1.0, 1.0, 1.0</scale>
 				<rotation>1.0, 0.0, 0.0, 0.0</rotation>				
 			</transform>
@@ -70,7 +70,7 @@
 				<mass>1.0</mass>
 				<inertia>0.0,0.0,0.0</inertia>
 			</physicsStaticObject> -->
-			<physics type="physicsRigidBody">
+			<physics type="physicsStaticObject">
 				<physicsShape>
 					<boxShape>
 						<halfSize>1.0,1.0,1.0</halfSize>
@@ -83,7 +83,7 @@
 		
 		<entity>
 			<transform>
-				<position>0.0, 10.0, 0.0</position>
+				<position>0.0, 100.0, 10.0</position>
 				<scale>1.0, 1.0, 1.0</scale>
 				<rotation>1.0, 0.0, 0.0, 0.0</rotation>				
 			</transform>

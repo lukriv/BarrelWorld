@@ -211,28 +211,5 @@ GameErrorCode GameRenderSystem::SetMainCamera(const wxString& cameraName)
 	}
 }
 
-GameErrorCode GameRenderSystem::ProcessAllCreation()
-{
-	
-	wxCriticalSectionLocker lock(m_mgrLock);
 
-	for(TCreateQueue::iterator iter = m_createQueue.begin(); iter != m_createQueue.end(); ++iter)
-	{
-		iter->m_pRenderComp->OnCreation(iter->m_pContext);
-	}
-	
-	return FWG_NO_ERROR;
-}
 
-GameErrorCode GameRenderSystem::CreateRenderComponent(RenderComponentBase* pComponent, void* pContext)
-{
-	pComponent->OnCreation(pContext);
-	//CreateRecord newRec;
-	//newRec.m_pRenderComp = pComponent;
-	//newRec.m_pContext = pContext;
-	//
-	//wxCriticalSectionLocker lock(m_mgrLock);
-	//m_createQueue.push_back(newRec);
-	
-	return FWG_NO_ERROR;
-}

@@ -17,18 +17,12 @@ public:
 	~PhysicsControllerManager();
 
 	
-	template <class T>
-	GameErrorCode CreateComponent(wxDword compId, TransformComponent *pTransform, InputHandler *pInput, T *&pNewComponent )
+	GameErrorCode AddPhysicsController(wxDword compId, PhysicsController *pController )
 	{
-		RefObjSmPtr<T> spPhysicsController;
-		FWG_RETURN_FAIL(GameNewChecked(spPhysicsController.OutRef(), m_pPhysicsSystem));
 		
-		FWG_RETURN_FAIL(spPhysicsController->Initialize(pTransform));
+		FWG_RETURN_FAIL(InsertToMap(compId, pController));
 		
-		FWG_RETURN_FAIL(InsertToMap(compId, spPhysicsController));
-		
-		// todo: insert component to logic system
-		pNewComponent = spPhysicsController.Detach();
+		FWG_RETURN_FAIL(pController->_initialize(m_pPhysicsSystem));
 		
 		return FWG_NO_ERROR;
 	}

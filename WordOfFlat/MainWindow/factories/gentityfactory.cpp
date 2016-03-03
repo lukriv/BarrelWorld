@@ -11,13 +11,13 @@
 #include <GameComp/RenderComp/grendercompbase.h>
 #include <GameComp/InputComp/ginputhandler.h>
 #include <GameComp/RenderComp/grenderrigidbody.h>
-#include <GameComp/PhysicsComp/gphysstaticobj.h>
-#include <GameComp/PhysicsComp/gphysrigidbody.h>
+#include <GameComp/PhysicsComp/gphysbase.h>
 #include <GameComp/RenderComp/grendercamera.h>
 #include <GameComp/gpropery.h>
 #include <GameSystem/new.h>
 
 #include "../controllers/glogicgamecam.h"
+#include "../controllers/charControl.h"
 
 
 
@@ -45,7 +45,7 @@ GameErrorCode GameEntityFactory::CreateFloor(GameCompManager& compMgr)
 	RefObjSmPtr<TransformComponent>	spTransform;
 	RefObjSmPtr<RenderPosition> spRenderPosition;
 	RefObjSmPtr<RenderRigidBody> spRenderObject;
-	RefObjSmPtr<PhysicsStaticObject> spPhysicsComp;
+	RefObjSmPtr<PhysicsBase> spPhysicsComp;
 	
 	if(FWG_FAILED(result = compMgr.GetEntityManager().GetTransformManager().CreateComponent(entityId, spTransform.OutRef())))
 	{
@@ -78,15 +78,15 @@ GameErrorCode GameEntityFactory::CreateFloor(GameCompManager& compMgr)
 	}
 	
 	
-	if(FWG_FAILED(result = compMgr.GetEntityManager().GetPhysicsManager().CreateComponent<PhysicsStaticObject>(entityId, spTransform, spPhysicsComp.OutRef())))
+	if(FWG_FAILED(result = compMgr.GetEntityManager().GetPhysicsManager().CreateComponent(entityId, spTransform, spPhysicsComp.OutRef())))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Create physics component failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
 		return result;
 	}
 	
-	btStaticPlaneShape *pPlane = new btStaticPlaneShape( btVector3(0, 1.0f, 0), 0);	  
+	btStaticPlaneShape *pPlane = new btStaticPlaneShape( btVector3(0, 1.0f, 0), 0);
 	
-	if(FWG_FAILED(result = spPhysicsComp->Create(pPlane)))
+	if(FWG_FAILED(result = spPhysicsComp->Create(0, pPlane)))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Create floor physics failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
 		return result;
@@ -152,15 +152,13 @@ GameErrorCode GameEntityFactory::CreateMainCamera(GameCompManager& compMgr)
 	//			<key action="right" value="key_l" />
 	//		</input>
 	
-	RefObjSmPtr<InputDef> spInputDefinition;
-	FWG_RETURN_FAIL(GameNewChecked(spInputDefinition.OutRef()));
+	InputDef inputDefinition;
+	FWG_RETURN_FAIL(inputDefinition.m_inputMap.Insert(wxT("up"), OIS::KC_I));
+	FWG_RETURN_FAIL(inputDefinition.m_inputMap.Insert(wxT("down"), OIS::KC_K));
+	FWG_RETURN_FAIL(inputDefinition.m_inputMap.Insert(wxT("left"), OIS::KC_J));
+	FWG_RETURN_FAIL(inputDefinition.m_inputMap.Insert(wxT("right"), OIS::KC_L));
 	
-	FWG_RETURN_FAIL(spInputDefinition->m_inputMap.Insert(wxT("up"), OIS::KC_I));
-	FWG_RETURN_FAIL(spInputDefinition->m_inputMap.Insert(wxT("down"), OIS::KC_K));
-	FWG_RETURN_FAIL(spInputDefinition->m_inputMap.Insert(wxT("left"), OIS::KC_J));
-	FWG_RETURN_FAIL(spInputDefinition->m_inputMap.Insert(wxT("right"), OIS::KC_L));
-	
-	FWG_RETURN_FAIL(spInput->Create(spInputDefinition));
+	FWG_RETURN_FAIL(spInput->Create(inputDefinition));
 	
 	FWG_RETURN_FAIL(GameNewChecked(spController.OutRef()));
 	FWG_RETURN_FAIL(spController->Initialize(spTransform, spInput, &compMgr));
@@ -184,7 +182,7 @@ GameErrorCode GameEntityFactory::CreateBox(GameCompManager& compMgr, const btVec
 	RefObjSmPtr<TransformComponent>	spTransform;
 	RefObjSmPtr<RenderPosition> spRenderPosition;
 	RefObjSmPtr<RenderRigidBody> spRenderObject;
-	RefObjSmPtr<PhysicsRigidBody> spPhysicsComp;
+	RefObjSmPtr<PhysicsBase> spPhysicsComp;
 	
 	if(FWG_FAILED(result = compMgr.GetEntityManager().GetTransformManager().CreateComponent(entityId, spTransform.OutRef())))
 	{
@@ -219,7 +217,7 @@ GameErrorCode GameEntityFactory::CreateBox(GameCompManager& compMgr, const btVec
 	}
 	
 	
-	if(FWG_FAILED(result = compMgr.GetEntityManager().GetPhysicsManager().CreateComponent<PhysicsRigidBody>(entityId, spTransform, spPhysicsComp.OutRef())))
+	if(FWG_FAILED(result = compMgr.GetEntityManager().GetPhysicsManager().CreateComponent(entityId, spTransform, spPhysicsComp.OutRef())))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Create physics component failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
 		return result;
@@ -230,6 +228,94 @@ GameErrorCode GameEntityFactory::CreateBox(GameCompManager& compMgr, const btVec
 	if(FWG_FAILED(result = spPhysicsComp->Create(1.0f, pColShape)))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Create floor physics failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	return FWG_NO_ERROR;
+}
+
+GameErrorCode GameEntityFactory::CreateAvatar(GameCompManager& compMgr, const btVector3& place)
+{
+	GameErrorCode result = FWG_NO_ERROR;
+	
+	wxDword entityId = compMgr.GetEntityManager().GetNewId();
+	
+	RefObjSmPtr<TransformComponent>	spTransform;
+	RefObjSmPtr<RenderPosition> spRenderPosition;
+	RefObjSmPtr<RenderRigidBody> spRenderObject;
+	RefObjSmPtr<PhysicsBase> spPhysicsComp;
+	RefObjSmPtr<CharacterController> spCharControl;
+	RefObjSmPtr<CharacterInput> spCharInput;
+	
+	if(FWG_FAILED(result = compMgr.GetEntityManager().GetTransformManager().CreateComponent(entityId, spTransform.OutRef())))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Create transform component failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	spTransform->GetData()->m_translate = place;
+	
+	// render position
+	if(FWG_FAILED(result = compMgr.GetEntityManager().GetRenderPosManager().CreateComponent(entityId, spTransform, spRenderPosition.OutRef())))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Create render position component failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	FWG_RETURN_FAIL( spRenderPosition->Create() );
+	
+	
+	
+	if(FWG_FAILED(result = compMgr.GetEntityManager().GetRenderObjManager().CreateComponent<RenderRigidBody>(entityId, spRenderPosition, spRenderObject.OutRef())))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Create render object component failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	
+	if(FWG_FAILED(result = spRenderObject->Create(wxT("Cube.mesh"), wxT("Material"))))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Create floor failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	
+	if(FWG_FAILED(result = compMgr.GetEntityManager().GetPhysicsManager().CreateComponent(entityId, spTransform, spPhysicsComp.OutRef())))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Create physics component failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	btCollisionShape *pColShape = new btBoxShape(btVector3(0.5f,1.0f,0.5f));	  
+	
+	if(FWG_FAILED(result = spPhysicsComp->Create(0, pColShape)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Create floor physics failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	FWG_RETURN_FAIL(GameNewChecked(spCharInput.OutRef()));
+	FWG_RETURN_FAIL(spCharInput->Initialize(&compMgr.GetInputSystem()));
+	
+	InputDef inputDefinition;
+	FWG_RETURN_FAIL(inputDefinition.m_inputMap.Insert(wxT("forward"), OIS::KC_W));
+	FWG_RETURN_FAIL(inputDefinition.m_inputMap.Insert(wxT("backward"), OIS::KC_S));
+	FWG_RETURN_FAIL(inputDefinition.m_inputMap.Insert(wxT("left"), OIS::KC_A));
+	FWG_RETURN_FAIL(inputDefinition.m_inputMap.Insert(wxT("right"), OIS::KC_D));
+	
+	FWG_RETURN_FAIL(spCharInput->Create(inputDefinition));
+	
+	FWG_RETURN_FAIL(GameNewChecked(spCharControl.OutRef(), spCharInput));
+	
+	if(FWG_FAILED(result = spCharControl->Initialize(spTransform, spPhysicsComp)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Initialize physics controller failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	if(FWG_FAILED(result = compMgr.GetEntityManager().GetPhysicsControllerManager().AddPhysicsController(entityId, spCharControl)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Create physics component failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
 		return result;
 	}
 	

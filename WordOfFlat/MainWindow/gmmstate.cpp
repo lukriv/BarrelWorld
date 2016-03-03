@@ -77,12 +77,6 @@ GameErrorCode GameMainMenuState::LoadScene()
 		return result;
 	}
 
-	if(FWG_FAILED(result = m_spCompManager->GetRenderSystem().ProcessAllCreation()))
-	{
-		FWGLOG_ERROR_FORMAT(wxT("Process all creation failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
-		return result;
-	}
-
 	FWGLOG_INFO(wxT("Scene loaded"), m_pOwner->GetLogger());
 	
 	return FWG_NO_ERROR;
@@ -96,26 +90,9 @@ GameErrorCode GameMainMenuState::ProcessState(GameState& nextState, wxString& ne
 	}
 	
 	GameErrorCode result = FWG_NO_ERROR;
-	GameEntityFactory factory(m_pOwner->GetLogger());
-	
-	if(FWG_FAILED(result = factory.CreateFloor(*m_spCompManager)))
-	{
-		FWGLOG_ERROR_FORMAT(wxT("Create floor failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
-		return result;
-	}
-	
-	if(FWG_FAILED(result = factory.CreateMainCamera(*m_spCompManager)))
-	{
-		FWGLOG_ERROR_FORMAT(wxT("Create main camera failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
-		return result;
-	}
-	
-	if(FWG_FAILED(result = factory.CreateBox(*m_spCompManager)))
-	{
-		FWGLOG_ERROR_FORMAT(wxT("Create test box failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
-		return result;
-	}
 
+	FWG_RETURN_FAIL(CreateScene());
+	
 	if(FWG_FAILED(result = m_spCompManager->GetRenderSystem().SetMainCamera("MainCamera")))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Set main camera failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
@@ -180,17 +157,6 @@ bool GameMainMenuState::frameRenderingQueued(const Ogre::FrameEvent& evt)
 	
 	GameErrorCode result = FWG_NO_ERROR;
 	
-	//++m_zeroTimeFrames;
-	//
-	//m_timeSinceLastAverage += evt.timeSinceLastFrame;
-	//
-	//if(m_zeroTimeFrames == 5)
-	//{
-	//	m_averageFrameTime = ((m_timeSinceLastAverage / static_cast<float>(m_zeroTimeFrames)) + m_averageFrameTime) * 0.5;
-	//	m_timeSinceLastAverage = 0.0f;
-	//	m_zeroTimeFrames = 0;
-	//}
-	
 	if(FWG_FAILED(result = m_spCompManager->GetInputSystem().ProcessInputs()))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Process input failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
@@ -202,8 +168,6 @@ bool GameMainMenuState::frameRenderingQueued(const Ogre::FrameEvent& evt)
 		FWGLOG_ERROR_FORMAT(wxT("Process update failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
 		return false;
 	}
-	
-	//FWGLOG_DEBUG_FORMAT(wxT("timeSinceLastFrame: %lf, average: %lf"), m_pOwner->GetLogger(), evt.timeSinceLastFrame,  m_averageFrameTime,  FWGLOG_ENDVAL);
 	
 	// exit
 	if(m_exitState)
@@ -220,11 +184,14 @@ bool GameMainMenuState::frameStarted(const Ogre::FrameEvent& )
 }
 
 
-void GameMainMenuState::SetExitInputClbk(bool)
+void GameMainMenuState::SetExitInputClbk(bool pressed)
 {
 	//callbacks
-	m_nextState = GAME_STATE_EXIT;
-	m_exitState = true;
+	if(pressed)
+	{
+		m_mainMenu = !m_mainMenu;
+		m_spMenu->ShowMenuButtons(m_mainMenu);
+	}
 }
 
 void GameMainMenuState::SwitchPhysicsDebug()
@@ -236,6 +203,38 @@ void GameMainMenuState::SwitchPhysicsDebug()
 		delete m_pDebugDraw;
 		m_pDebugDraw = nullptr;
 	}
+}
+
+GameErrorCode GameMainMenuState::CreateScene()
+{
+	GameErrorCode result = FWG_NO_ERROR;
+	GameEntityFactory factory(m_pOwner->GetLogger());
+	
+	if(FWG_FAILED(result = factory.CreateFloor(*m_spCompManager)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Create floor failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	if(FWG_FAILED(result = factory.CreateMainCamera(*m_spCompManager)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Create main camera failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	if(FWG_FAILED(result = factory.CreateBox(*m_spCompManager)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Create test box failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	if(FWG_FAILED(result = factory.CreateAvatar(*m_spCompManager)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Create avatar failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	return result;
 }
 
 

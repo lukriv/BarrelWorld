@@ -22,7 +22,7 @@ public:
     RenderCamera(GameRenderSystem* pCompManager);
     ~RenderCamera();
 
-	GameErrorCode Create(const GamePropertyContainer &propMap);
+	GameErrorCode Create(GamePropertyContainer &propMap);
 	
 	void Destroy();
 	
@@ -33,7 +33,6 @@ public:
 	
 	virtual void Update() override;
 	
-	virtual void OnCreation(void *pContext) override;
 };
 
 #endif // __GAME_RENDER_CAMERA_H__

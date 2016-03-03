@@ -9,9 +9,8 @@
 #include <GameComp/InputComp/ginputdef.h>
 #include <GameComp/RenderComp/grenderrigidbody.h>
 #include <GameComp/RenderComp/grendercamera.h>
-#include <GameComp/PhysicsComp/gphysrigidbody.h>
 #include "gxmlutils.h"
-#include <GameComp/PhysicsComp/gphysstaticobj.h>
+#include <GameComp/PhysicsComp/gphysbase.h>
 
 
 typedef GameBasMap<wxString, wxXmlNode*> TComponentMap;
@@ -321,23 +320,10 @@ GameErrorCode GameXmlResourceLoader::LoadPhysics(wxXmlNode* pNode, GameCompManag
 	}
 	
 	// create logic
-	if(type == GAME_TAG_TYPE_PHYSICS_RIGID_BODY)
+	if(FWG_FAILED(result = compMgr.GetEntityManager().GetPhysicsManager().CreateComponent(entID, spTransform, spPhysics.OutRef())))
 	{
-		RefObjSmPtr<PhysicsRigidBody> spTemp;
-		if(FWG_FAILED(result = compMgr.GetEntityManager().GetPhysicsManager().CreateComponent<PhysicsRigidBody>(entID, spTransform, spTemp.OutRef())))
-		{
-			FWGLOG_ERROR_FORMAT(wxT("Create physics rigid body component failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
-			return result;
-		}
-		spPhysics = spTemp;
-	} else if(type == GAME_TAG_TYPE_PHYSICS_STATIC_OBJECT) {
-		RefObjSmPtr<PhysicsStaticObject> spTemp;
-		if(FWG_FAILED(result = compMgr.GetEntityManager().GetPhysicsManager().CreateComponent<PhysicsStaticObject>(entID, spTransform, spTemp.OutRef())))
-		{
-			FWGLOG_ERROR_FORMAT(wxT("Create physics static component failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
-			return result;
-		}
-		spPhysics = spTemp;	
+		FWGLOG_ERROR_FORMAT(wxT("Create physics rigid body component failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
 	}
 	
 	if(FWG_FAILED(result = spPhysics->Load(pNode)))

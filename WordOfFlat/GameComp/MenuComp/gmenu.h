@@ -33,6 +33,8 @@ public:
 	
 	GameErrorCode Initialize(GameMenuCallback*);
 	
+	void ShowMenuButtons(bool show);
+	
 	// menu events
 	bool ExitEvent(const CEGUI::EventArgs& /*e*/);
 	bool SwitchEvent(const CEGUI::EventArgs& /*e*/);

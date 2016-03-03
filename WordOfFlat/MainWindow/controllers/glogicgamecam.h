@@ -24,6 +24,7 @@ class LogicGameCamera : public LogicController
 	
 	btScalar m_diffMoveVertical;
 	btScalar m_diffMoveHorizontal;
+	btScalar m_diffWheel;
 public:
 	LogicGameCamera();
 	~LogicGameCamera();

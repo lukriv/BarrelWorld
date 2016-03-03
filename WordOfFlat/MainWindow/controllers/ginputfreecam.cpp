@@ -7,15 +7,15 @@ static const wxChar* FACTORY_INPUT_RIGHT	 = wxT("right");
 static const wxChar* FACTORY_INPUT_FORWARD	 = wxT("forward");
 static const wxChar* FACTORY_INPUT_BACKWARD	 = wxT("backward");
 
-GameErrorCode FreeCameraInput::Create( InputDef *inputDef)
+GameErrorCode FreeCameraInput::Create(const InputDef& inputDef)
 {
 	
 	GameErrorCode result = FWG_NO_ERROR;
 	
 	SetDefinition(inputDef);
 	
-	for(InputDef::TInputMap::ConstIterator iter = inputDef->m_inputMap.Begin();
-		iter != inputDef->m_inputMap.End();
+	for(InputDef::TInputMap::ConstIterator iter = inputDef.m_inputMap.Begin();
+		iter != inputDef.m_inputMap.End();
 		++iter)
 	{
 	
@@ -83,9 +83,5 @@ GameErrorCode FreeCameraInput::Create( InputDef *inputDef)
 }
 
 
-FreeCameraInput::~FreeCameraInput()
-{
-	SetDefinition(nullptr);
-}
 
 

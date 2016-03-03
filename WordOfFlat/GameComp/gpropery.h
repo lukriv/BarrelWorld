@@ -98,7 +98,7 @@ public:
 		}
 	}
 	
-	GameErrorCode GetValue (Ogre::Vector3 &vec3)
+	GameErrorCode GetValue (Ogre::Vector3 &vec3) const
 	{
 		if((m_type == FWG_PROP_VECTOR3)&&(m_pContent))
 		{
@@ -121,7 +121,7 @@ public:
 		}
 	}
 	
-	GameErrorCode GetValue (wxString &str)
+	GameErrorCode GetValue (wxString &str) const
 	{
 		if((m_type == FWG_PROP_STRING)&&(m_pContent))
 		{

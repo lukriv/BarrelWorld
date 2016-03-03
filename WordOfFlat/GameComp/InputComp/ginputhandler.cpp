@@ -31,6 +31,7 @@ void InputHandler::OnMouseMoved(const OIS::MouseState& arg)
 {
     m_ctrlStruct.SetRelativeMousePosition(arg.X.rel, arg.Y.rel);
     m_ctrlStruct.SetAbsoluteMousePosition(arg.X.abs, arg.Y.abs);
+	m_ctrlStruct.SetMouseWheelDelta(arg.Z.rel);
 }
 
 void InputHandler::OnMousePressed(const OIS::MouseState& arg, OIS::MouseButtonID id)
@@ -43,19 +44,12 @@ void InputHandler::OnMouseReleased(const OIS::MouseState& arg, OIS::MouseButtonI
     m_ctrlStruct.ReleaseMouseButton(ConvertMouseButtonId(id));
 }
 
-void InputHandler::SetDefinition(InputDef* pDef)
+void InputHandler::SetDefinition(const InputDef& def)
 {
-	if(!m_spDefinition.IsEmpty())
-	{
-		// input component was already registered - unregister it
-		m_pInputSystem->UnregisterCallback(this);
-		m_pInputSystem->UnregisterCallbackClass(this);
-	}
-	
-	m_spDefinition = pDef;
+	m_definition = def;
 }
 
-InputDef* InputHandler::GetDefinition() const 
+const InputDef& InputHandler::GetDefinition() const 
 {
-	return m_spDefinition.In();
+	return m_definition;
 }

@@ -177,13 +177,23 @@ private:
 
 protected:
     GameInputSystem* m_pInputSystem;
-	RefObjSmPtr<InputDef> m_spDefinition;
+	InputDef m_definition;
 	
 public:
     InputHandler()
         : m_inputLock(wxCRITSEC_DEFAULT)
     {
     }
+	
+	virtual ~InputHandler() 
+	{
+		if(m_pInputSystem)
+		{
+			m_pInputSystem->UnregisterCallback(this);
+			m_pInputSystem->UnregisterCallbackClass(this);
+			m_pInputSystem = nullptr;
+		}
+	}
 
     GameErrorCode Initialize(GameInputSystem* pInputSystem);
 	
@@ -214,11 +224,11 @@ public:
     virtual void OnMousePressed(const OIS::MouseState& arg, OIS::MouseButtonID id) override;
     virtual void OnMouseReleased(const OIS::MouseState& arg, OIS::MouseButtonID id) override;
 	
-	virtual GameErrorCode Create( InputDef *pInputDef) = 0;
+	virtual GameErrorCode Create( const InputDef& inputDef ) = 0;
 	
 protected:
-	void SetDefinition(InputDef *pDef);
-	InputDef* GetDefinition() const;
+	void SetDefinition(const InputDef &def);
+	const InputDef& GetDefinition() const;
 
     inline void SetState(bool state, wxDword ctrlFlag)
     {
