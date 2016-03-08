@@ -1,12 +1,13 @@
 #include "charControl.h"
 
+#include <GameComp/gcompmgr.h>
 #include <GameComp/gentitymgr.h>
 
 const float MOVE_STEP_SIZE = 4.0f;
 
-CharacterController::CharacterController(CharacterInput *pInput) : m_spCharInput(pInput)
-	, m_diffForwardBackward(0)
-	, m_diffLeftRight(0)
+CharacterController::CharacterController(GameCompManager *pCompMgr, CharacterInput *pInput) : m_pCompMgr(pCompMgr)
+	, m_spCharInput(pInput)
+	, m_diffVector(0,0,0)
 {
 }
 
@@ -23,25 +24,32 @@ void CharacterController::updateAction(btCollisionWorld* collisionWorld, btScala
 	GameErrorCode result = FWG_NO_ERROR;
 	ControlStruct actualControls;
 	m_spCharInput->ExportControlStruct(actualControls);
+	btVector3 move(0,0,0);
 	
 	if(actualControls.IsPressed(CharacterInput::INPUT_ACTION_FORWARD))
 	{
-		m_diffForwardBackward -= MOVE_STEP_SIZE;
+		move.setZ(-1.0f);
 	}
 	
 	if(actualControls.IsPressed(CharacterInput::INPUT_ACTION_BACKWARD))
 	{
-		m_diffForwardBackward += MOVE_STEP_SIZE;
+		move.setZ(move.getZ() + 1.0f);
 	}
 	
 	if(actualControls.IsPressed(CharacterInput::INPUT_ACTION_LEFT))
 	{
-		m_diffLeftRight -= MOVE_STEP_SIZE;
+		move.setX(-1.0f);
 	}
 	
 	if(actualControls.IsPressed(CharacterInput::INPUT_ACTION_RIGHT))
 	{
-		m_diffLeftRight += MOVE_STEP_SIZE;
+		move.setX(move.getX() + 1.0f);
+	}
+	
+	if(!move.isZero())
+	{
+		move.normalize();
+		m_diffVector += move;
 	}
 	
 	if(deltaTimeStep == 0.0f)
@@ -49,8 +57,12 @@ void CharacterController::updateAction(btCollisionWorld* collisionWorld, btScala
 		return;
 	}
 	
-	btVector3 divVec(m_diffLeftRight*deltaTimeStep,0,m_diffForwardBackward*deltaTimeStep);
-	m_spTransform->GetData()->m_translate += divVec;
+	m_diffVector *= (MOVE_STEP_SIZE*deltaTimeStep);
+	m_spTransform->GetData()->m_rotation.setRotation(btVector3(0,1,0), GetActualAngle());
+	
+	m_spTransform->GetData()->m_translate += quatRotate(m_spTransform->GetData()->m_rotation,m_diffVector);
+	
+	
 	
 	
 	// update render component
@@ -61,8 +73,36 @@ void CharacterController::updateAction(btCollisionWorld* collisionWorld, btScala
 		FWGLOG_ERROR_FORMAT(wxT("Update component failed: 0x%08x"), GetEntityManager()->GetLogger(), result, FWGLOG_ENDVAL);
 	}
 		
-	m_diffForwardBackward = 0.0f;
-	m_diffLeftRight = 0.0f;
+	m_diffVector.setValue(0,0,0);
+}
+
+btScalar CharacterController::GetActualAngle()
+{
+	btVector3 lookPoint;
+	GetLookVector(lookPoint);
+	
+	lookPoint -= m_spTransform->GetData()->m_translate;
+	
+	return btAtan2Fast( -lookPoint.getX(), -lookPoint.getZ() );
+}
+
+void CharacterController::GetLookVector(btVector3 &lookPoint)
+{
+	Ogre::Vector2 vec2;
+	m_pCompMgr->GetMenuSystem().GetPointerPosition(vec2);
+	Ogre::Plane plane( Ogre::Vector3(0,1,0), 0);
+	
+	Ogre::Ray ray = m_pCompMgr->GetRenderSystem().GetMainCamera()->getCameraToViewportRay( vec2.x, vec2.y );
+	
+	std::pair< bool, Ogre::Real > rayResult = ray.intersects(plane);
+	
+	if(!rayResult.first)
+	{
+		return;
+	}
+	
+	lookPoint = cvt(ray.getPoint(rayResult.second));
+	
 }
 
 

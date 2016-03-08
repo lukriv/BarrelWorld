@@ -305,7 +305,7 @@ GameErrorCode GameEntityFactory::CreateAvatar(GameCompManager& compMgr, const bt
 	
 	FWG_RETURN_FAIL(spCharInput->Create(inputDefinition));
 	
-	FWG_RETURN_FAIL(GameNewChecked(spCharControl.OutRef(), spCharInput));
+	FWG_RETURN_FAIL(GameNewChecked(spCharControl.OutRef(), &compMgr, spCharInput));
 	
 	if(FWG_FAILED(result = spCharControl->Initialize(spTransform, spPhysicsComp)))
 	{
