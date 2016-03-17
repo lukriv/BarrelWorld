@@ -45,7 +45,7 @@ void RenderRigidBody::Update()
     m_alreadyInUpdateQueue = false;
 }
 
-GameErrorCode RenderRigidBody::Create(const wxString& meshName, const wxString& materialName)
+GameErrorCode RenderRigidBody::Create(GamePropertyContainer &propMap)
 {
 	if(m_pEntity)
 	{
@@ -53,21 +53,41 @@ GameErrorCode RenderRigidBody::Create(const wxString& meshName, const wxString& 
 		return FWG_E_OBJECT_ALREADY_EXISTS_ERROR;
 	}
 	
+	GameErrorCode result = FWG_NO_ERROR;
+	wxString str;
+	bool tempBool = false;
+	
 	try 
 	{
-		
-		m_pEntity = m_pOwnerManager->GetOgreSceneManager()->createEntity(meshName.ToStdString());
+
+		if(FWG_FAILED(result = propMap.GetProperty(GAME_TAG_PARAM_MESH, str)))
+		{
+			FWGLOG_ERROR_FORMAT(wxT("Mesh is missing : 0x%08x"), m_pOwnerManager->GetLogger(), result, FWGLOG_ENDVAL);
+			return result;
+		}
+
+		m_pEntity = m_pOwnerManager->GetOgreSceneManager()->createEntity(str.ToStdString());
 		if(m_pEntity == nullptr)
 		{
 			return FWG_E_MEMORY_ALLOCATION_ERROR;
 		}
 		
-		if(!materialName.IsEmpty())
+		// material
+		if(FWG_FAILED(result = propMap.GetProperty(GAME_TAG_PARAM_MATERIAL, str)))
 		{
-			m_pEntity->setMaterialName(materialName.ToStdString());
+			FWGLOG_WARNING_FORMAT(wxT("Material is missing : 0x%08x"), m_pOwnerManager->GetLogger(), result, FWGLOG_ENDVAL);
+			return result;
 		} else {
-			FWGLOG_WARNING(wxT("Render rigid body warning: Material should not be empty")
-									, m_pOwnerManager->GetLogger());
+			m_pEntity->setMaterialName(str.ToStdString());
+		}
+		
+		// shadows
+		if(FWG_FAILED(result = propMap.GetProperty(GAME_TAG_PARAM_SHADOWS, tempBool)))
+		{
+			FWGLOG_WARNING_FORMAT(wxT("Shadows property is missing : 0x%08x"), m_pOwnerManager->GetLogger(), result, FWGLOG_ENDVAL);
+			return result;
+		} else {
+			m_pEntity->setCastShadows(tempBool);
 		}
 		
 		m_spPosition->GetSceneNode()->attachObject(m_pEntity);
@@ -129,7 +149,8 @@ GameErrorCode RenderRigidBody::Load(wxXmlNode* pNode)
 								, FWGLOG_ENDVAL);
 	}
 	
-	return Create(meshName, materialName);
+	//return Create(meshName, materialName);
+	return FWG_E_NOT_IMPLEMENTED_ERROR;
 }
 
 GameErrorCode RenderRigidBody::Store(wxXmlNode* pParentNode)

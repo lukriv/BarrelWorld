@@ -229,8 +229,8 @@
       <VirtualDirectory Name="include">
         <File Name="RenderComp/grenderrigidbody.h"/>
         <File Name="RenderComp/grenderobject.h"/>
-        <File Name="RenderComp/grendercamera.h"/>
         <File Name="RenderComp/grenderobjmgr.h"/>
+        <File Name="RenderComp/grendercamera.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="src">
         <File Name="RenderComp/grenderrigidbody.cpp"/>

@@ -67,6 +67,8 @@ GameErrorCode GameRenderSystem::Initialize(GameEngineSettings& settings)
 			return result;
 		}
 		
+		m_pSceneManager->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
+		
 		// initialize Ogre resources
 		Ogre::ResourceGroupManager::getSingleton().addResourceLocation("res", "FileSystem", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, false);
 

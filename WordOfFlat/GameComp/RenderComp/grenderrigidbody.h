@@ -3,6 +3,7 @@
 
 #include "grenderposition.h"
 #include "grenderobject.h"
+#include <GameComp/gpropery.h>
 
 /**
  * @class RenderRigidBody
@@ -25,7 +26,7 @@ public:
     RenderRigidBody(GameRenderSystem* pCompManager);
     ~RenderRigidBody();
 
-	GameErrorCode Create(const wxString& meshName, const wxString& materialName );
+	GameErrorCode Create(GamePropertyContainer &propMap );
 	
 	void Destroy();	
 	

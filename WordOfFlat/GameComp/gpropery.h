@@ -8,6 +8,7 @@
 
 enum GamePropertyType {
 	FWG_PROP_UNKNOWN = 0,
+	FWG_PROP_BOOL,
 	FWG_PROP_DWORD,
 	FWG_PROP_INT32,
 	FWG_PROP_FLOAT,
@@ -33,6 +34,7 @@ private:
 		case FWG_PROP_FLOAT:
 		case FWG_PROP_INT32:
 		case FWG_PROP_DWORD:
+		case FWG_PROP_BOOL:
 		default:
 			break;
 		}
@@ -47,6 +49,7 @@ private:
 		case FWG_PROP_FLOAT:
 		case FWG_PROP_INT32:
 		case FWG_PROP_DWORD:
+		case FWG_PROP_BOOL:
 			m_pContent = orig.m_pContent;
 			m_type = orig.m_type;
 			break;
@@ -107,6 +110,11 @@ public:
 		}
 		
 		return FWG_E_INVALID_DATA_ERROR;
+	}
+	
+	void SetValue(const wxChar *str)
+	{
+		SetValue(wxString(str));
 	}
 	
 	void SetValue(const wxString &str)
@@ -195,6 +203,29 @@ public:
 		if(m_type == FWG_PROP_FLOAT)
 		{
 			fl = reinterpret_cast<float&>(m_pContent);
+			return FWG_NO_ERROR;
+		}
+		
+		return FWG_E_INVALID_DATA_ERROR;
+	}
+	
+	void SetValue(bool var)
+	{
+		if(m_type == FWG_PROP_BOOL)
+		{
+			m_pContent = reinterpret_cast<void*&>(var);
+		} else {
+			ReleaseContent(m_type);
+			m_pContent = reinterpret_cast<void*&>(var);
+			m_type = FWG_PROP_BOOL;
+		}
+	}
+	
+	GameErrorCode GetValue (bool &var)
+	{
+		if(m_type == FWG_PROP_BOOL)
+		{
+			var = reinterpret_cast<bool&>(m_pContent);
 			return FWG_NO_ERROR;
 		}
 		

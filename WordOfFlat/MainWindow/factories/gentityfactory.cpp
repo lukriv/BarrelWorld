@@ -70,8 +70,12 @@ GameErrorCode GameEntityFactory::CreateFloor(GameCompManager& compMgr)
 		return result;
 	}
 	
+	GamePropertyContainer propCont(m_spLogger);
+	propCont.SetProperty(wxT("mesh"), wxT("ground"));
+	propCont.SetProperty(wxT("material"), wxT("Test/Floor"));
+	propCont.SetProperty(wxT("shadows"), false);
 	
-	if(FWG_FAILED(result = spRenderObject->Create(wxT("ground"), wxT("Test/Floor"))))
+	if(FWG_FAILED(result = spRenderObject->Create(propCont)))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Create floor failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
 		return result;
@@ -209,8 +213,12 @@ GameErrorCode GameEntityFactory::CreateBox(GameCompManager& compMgr, const btVec
 		return result;
 	}
 	
+	GamePropertyContainer propCont(m_spLogger);
+	propCont.SetProperty(wxT("mesh"), wxT("TestingCube"));
+	propCont.SetProperty(wxT("material"), wxT("Test/ColourTest"));
+	propCont.SetProperty(wxT("shadows"), true);
 	
-	if(FWG_FAILED(result = spRenderObject->Create(wxT("TestingCube"), wxT("Test/ColourTest"))))
+	if(FWG_FAILED(result = spRenderObject->Create(propCont)))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Create floor failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
 		return result;
@@ -272,8 +280,12 @@ GameErrorCode GameEntityFactory::CreateAvatar(GameCompManager& compMgr, const bt
 		return result;
 	}
 	
+	GamePropertyContainer propCont(m_spLogger);
+	propCont.SetProperty(wxT("mesh"), wxT("Cube.mesh"));
+	propCont.SetProperty(wxT("material"), wxT("Material"));
+	propCont.SetProperty(wxT("shadows"), true);
 	
-	if(FWG_FAILED(result = spRenderObject->Create(wxT("Cube.mesh"), wxT("Material"))))
+	if(FWG_FAILED(result = spRenderObject->Create(propCont)))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Create floor failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
 		return result;

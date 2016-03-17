@@ -61,6 +61,7 @@ static const wxChar* FWG_UNUSED(GAME_TAG_PARAM_TERRAIN_PAGEY)		= wxT("pageY");
 static const wxChar* FWG_UNUSED(GAME_TAG_PARAM_NAME)				= wxT("name");
 static const wxChar* FWG_UNUSED(GAME_TAG_PARAM_MESH)				= wxT("mesh");
 static const wxChar* FWG_UNUSED(GAME_TAG_PARAM_MATERIAL)			= wxT("material");
+static const wxChar* FWG_UNUSED(GAME_TAG_PARAM_SHADOWS)				= wxT("shadows");
 static const wxChar* FWG_UNUSED(GAME_TAG_PARAM_FOV)					= wxT("fov");
 static const wxChar* FWG_UNUSED(GAME_TAG_PARAM_PROJECTION)			= wxT("projection");
 static const wxChar* FWG_UNUSED(GAME_TAG_PARAM_NEAR)				= wxT("near");
