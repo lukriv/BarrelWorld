@@ -216,21 +216,28 @@ GameErrorCode GameMainMenuState::CreateScene()
 		return result;
 	}
 	
-	if(FWG_FAILED(result = factory.CreateMainCamera(*m_spCompManager)))
+	if(FWG_FAILED(result = factory.CreateMainCamera(*m_spCompManager, m_cameraId)))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Create main camera failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
 		return result;
 	}
-	
-	if(FWG_FAILED(result = factory.CreateBox(*m_spCompManager)))
+	wxDword boxId;
+	if(FWG_FAILED(result = factory.CreateBox(*m_spCompManager, boxId)))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Create test box failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
 		return result;
 	}
 	
-	if(FWG_FAILED(result = factory.CreateAvatar(*m_spCompManager)))
+	if(FWG_FAILED(result = factory.CreateAvatar(*m_spCompManager, m_avatarId)))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Create avatar failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	TaskMessage msg(GAME_TASK_FOLLOW_OBJECT, reinterpret_cast<void*>(m_avatarId));
+	if(FWG_FAILED(result = m_spCompManager->GetEntityManager().SendTaskMessage(m_cameraId, msg)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Send message to camera failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
 		return result;
 	}
 	

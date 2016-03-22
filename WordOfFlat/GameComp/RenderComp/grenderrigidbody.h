@@ -3,7 +3,7 @@
 
 #include "grenderposition.h"
 #include "grenderobject.h"
-#include <GameComp/gpropery.h>
+#include <GameSystem/gpropery.h>
 
 /**
  * @class RenderRigidBody

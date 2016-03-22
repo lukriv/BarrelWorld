@@ -267,7 +267,6 @@
       <File Name="gcompmgr.h"/>
       <File Name="gentitymgr.h"/>
       <File Name="gmanagerbase.h"/>
-      <File Name="gpropery.h"/>
     </VirtualDirectory>
     <VirtualDirectory Name="src">
       <File Name="gcompmgr.cpp"/>

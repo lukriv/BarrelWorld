@@ -13,7 +13,7 @@
 #include <GameComp/RenderComp/grenderrigidbody.h>
 #include <GameComp/PhysicsComp/gphysbase.h>
 #include <GameComp/RenderComp/grendercamera.h>
-#include <GameComp/gpropery.h>
+#include <GameSystem/gpropery.h>
 #include <GameSystem/new.h>
 
 #include "../controllers/glogicgamecam.h"
@@ -99,11 +99,12 @@ GameErrorCode GameEntityFactory::CreateFloor(GameCompManager& compMgr)
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode GameEntityFactory::CreateMainCamera(GameCompManager& compMgr)
+GameErrorCode GameEntityFactory::CreateMainCamera(GameCompManager& compMgr, wxDword &mainCamIndex)
 {
 	GameErrorCode result = FWG_NO_ERROR;
 	GamePropertyContainer propCont(m_spLogger);
 	wxDword entityId = compMgr.GetEntityManager().GetNewId();
+	mainCamIndex = entityId;
 	
 	RefObjSmPtr<TransformComponent>	spTransform = nullptr;
 	RefObjSmPtr<RenderPosition> spRenderPosition;
@@ -177,11 +178,12 @@ GameErrorCode GameEntityFactory::CreateMainCamera(GameCompManager& compMgr)
 		
 }
 
-GameErrorCode GameEntityFactory::CreateBox(GameCompManager& compMgr, const btVector3& place)
+GameErrorCode GameEntityFactory::CreateBox(GameCompManager& compMgr, wxDword &boxid, const btVector3& place)
 {
 	GameErrorCode result = FWG_NO_ERROR;
 	
 	wxDword entityId = compMgr.GetEntityManager().GetNewId();
+	boxid = entityId;
 	
 	RefObjSmPtr<TransformComponent>	spTransform;
 	RefObjSmPtr<RenderPosition> spRenderPosition;
@@ -242,11 +244,12 @@ GameErrorCode GameEntityFactory::CreateBox(GameCompManager& compMgr, const btVec
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode GameEntityFactory::CreateAvatar(GameCompManager& compMgr, const btVector3& place)
+GameErrorCode GameEntityFactory::CreateAvatar(GameCompManager& compMgr, wxDword &avatarIndex, const btVector3& place)
 {
 	GameErrorCode result = FWG_NO_ERROR;
 	
 	wxDword entityId = compMgr.GetEntityManager().GetNewId();
+	avatarIndex = entityId;
 	
 	RefObjSmPtr<TransformComponent>	spTransform;
 	RefObjSmPtr<RenderPosition> spRenderPosition;

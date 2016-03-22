@@ -17,7 +17,8 @@ enum GameComponentType {
 
 enum GameTaskMessageType {
 	GAME_TASK_UNKNOWN				= 0,
-	GAME_TASK_TRANSFORM_UPDATE		= 1
+	GAME_TASK_TRANSFORM_UPDATE		= 1,
+	GAME_TASK_FOLLOW_OBJECT			= 2
 };
 
 

@@ -16,11 +16,11 @@ public:
 	
 	GameErrorCode CreateFloor(GameCompManager& compMgr);
 	
-	GameErrorCode CreateMainCamera(GameCompManager& compMgr);
+	GameErrorCode CreateMainCamera(GameCompManager& compMgr, wxDword &mainCamIndex);
 	
-	GameErrorCode CreateBox(GameCompManager& compMgr, const btVector3& place = btVector3(0,10,0));
+	GameErrorCode CreateBox(GameCompManager& compMgr, wxDword &boxid, const btVector3& place = btVector3(0,10,0));
 	
-	GameErrorCode CreateAvatar(GameCompManager& compMgr, const btVector3& place = btVector3(0,2.0f,0));
+	GameErrorCode CreateAvatar(GameCompManager& compMgr, wxDword &avatarIndex, const btVector3& place = btVector3(0,2.0f,0));
 	
 	
 	

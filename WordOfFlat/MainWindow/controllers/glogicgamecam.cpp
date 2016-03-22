@@ -21,6 +21,7 @@ LogicGameCamera::LogicGameCamera() : m_pCompMgr(nullptr)
 	, m_angleY(-3*SIMD_PI/8)
 	, m_diffSinceLastFrameX(0.0f)
 	, m_diffSinceLastFrameY(0.0f)
+	, m_lastVector(0,0,0)
 	, m_diffMoveVertical(0.0f)
 	, m_diffMoveHorizontal(0.0f)
 	, m_diffWheel(0.0f)
@@ -43,24 +44,28 @@ GameErrorCode LogicGameCamera::Update(float timeDiff)
 	//	m_diffSinceLastFrameY += (btScalar)actualControls.GetRelY();
 	//}
 	
-	if(actualControls.IsPressed(FreeCameraInput::INPUT_ACTION_UP))
-	{
-		m_diffMoveVertical -= MOVE_STEP_SIZE;
-	}
 	
-	if(actualControls.IsPressed(FreeCameraInput::INPUT_ACTION_DOWN))
+	if(m_spFollowedObject.IsEmpty())
 	{
-		m_diffMoveVertical += MOVE_STEP_SIZE;
-	}
-	
-	if(actualControls.IsPressed(FreeCameraInput::INPUT_ACTION_LEFT))
-	{
-		m_diffMoveHorizontal -= MOVE_STEP_SIZE;
-	}
-	
-	if(actualControls.IsPressed(FreeCameraInput::INPUT_ACTION_RIGHT))
-	{
-		m_diffMoveHorizontal += MOVE_STEP_SIZE;
+		if(actualControls.IsPressed(FreeCameraInput::INPUT_ACTION_UP))
+		{
+			m_diffMoveVertical -= MOVE_STEP_SIZE;
+		}
+		
+		if(actualControls.IsPressed(FreeCameraInput::INPUT_ACTION_DOWN))
+		{
+			m_diffMoveVertical += MOVE_STEP_SIZE;
+		}
+		
+		if(actualControls.IsPressed(FreeCameraInput::INPUT_ACTION_LEFT))
+		{
+			m_diffMoveHorizontal -= MOVE_STEP_SIZE;
+		}
+		
+		if(actualControls.IsPressed(FreeCameraInput::INPUT_ACTION_RIGHT))
+		{
+			m_diffMoveHorizontal += MOVE_STEP_SIZE;
+		}
 	}
 	
 	m_diffWheel += (btScalar) actualControls.GetMouseWheelDelta();
@@ -70,34 +75,32 @@ GameErrorCode LogicGameCamera::Update(float timeDiff)
 		return FWG_NO_ERROR;
 	}
 	
-	if(!m_spTransform.IsEmpty())
-	{
-		
-		
-		// turn camera around
-		m_angleX -= STEP_SIZE * (m_diffSinceLastFrameX) * timeDiff;
-		m_angleY -= STEP_SIZE * (m_diffSinceLastFrameY) * timeDiff;
+	// turn camera around
+	m_angleX -= STEP_SIZE * (m_diffSinceLastFrameX) * timeDiff;
+	m_angleY -= STEP_SIZE * (m_diffSinceLastFrameY) * timeDiff;
 			
-		UpdateCameraAngle();
+	UpdateCameraAngle();
 
+	if(m_spFollowedObject.IsEmpty())
+	{
 		{
-			btVector3 dirVec(0,0,m_diffMoveVertical*timeDiff );
+			btVector3 dirVec(m_diffMoveHorizontal*timeDiff,0,m_diffMoveVertical*timeDiff );
 			m_spTransform->GetData()->m_translate += dirVec;
 		}
-		
-		{
-			btVector3 dirVec(  m_diffMoveHorizontal*timeDiff , 0, 0);
-			m_spTransform->GetData()->m_translate += dirVec;
-		}
-		
-		{
-			btVector3 dirVec( 0, m_diffWheel*MOVE_STEP_SIZE*timeDiff, 0);
-			m_spTransform->GetData()->m_translate += dirVec;
-		}
-
-		
+			
+	} else {
+		btVector3 dirVec(  m_spFollowedObject->GetData()->m_translate - m_lastVector );
+		m_lastVector = m_spFollowedObject->GetData()->m_translate;
+		dirVec.setY(0);
+		m_spTransform->GetData()->m_translate += dirVec;
 	}
-	
+		
+	{
+		btVector3 dirVec( 0, m_diffWheel*MOVE_STEP_SIZE*timeDiff, 0);
+		m_spTransform->GetData()->m_translate += dirVec;
+	}
+
+		
 	// update render component
 	FWG_RETURN_FAIL(SendUpdateMessage());
 	
@@ -175,8 +178,8 @@ GameErrorCode LogicGameCamera::CreateBox()
 	point.setY(point.getY() + 10.0f);
 	
 	m_pCompMgr->GetRenderSystem().GetOgreSceneManager()->destroyQuery(rayQuery);
-	
-	FWG_RETURN_FAIL(factory.CreateBox(*m_pCompMgr, point));
+	wxDword index;
+	FWG_RETURN_FAIL(factory.CreateBox(*m_pCompMgr, index, point));
 	return FWG_NO_ERROR;
 }
 
@@ -193,5 +196,36 @@ GameErrorCode LogicGameCamera::Initialize(TransformComponent* pTransform, FreeCa
 	
 	return FWG_NO_ERROR;
 }
+
+void LogicGameCamera::SetFollowedObject(TransformComponent* pFollowedObject)
+{
+}
+
+GameErrorCode LogicGameCamera::ReceiveMessage(TaskMessage& msg)
+{
+	switch (msg.GetTaskType())
+	{
+		case GAME_TASK_FOLLOW_OBJECT:
+			{
+				wxDword index;
+				index = reinterpret_cast<wxDword>(msg.GetContext());
+				if(index != 0)
+				{
+					m_spFollowedObject = GetEntityManager()->GetTransformManager().GetComponent(index);
+				} else {
+					m_spFollowedObject = nullptr;
+				}
+				FWGLOG_INFO_FORMAT(wxT("Set followed object to %u"), GetEntityManager()->GetLogger(), index, FWGLOG_ENDVAL);
+				
+			}
+			break;
+		default:
+			break;
+	}
+	
+	return FWG_NO_ERROR;
+}
+
+
 
 

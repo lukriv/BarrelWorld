@@ -45,6 +45,7 @@
       <File Name="memalloccont.h"/>
       <File Name="gmap.h"/>
       <File Name="gset.h"/>
+      <File Name="gpropery.h"/>
     </VirtualDirectory>
     <VirtualDirectory Name="Threading">
       <File Name="gthread.h"/>

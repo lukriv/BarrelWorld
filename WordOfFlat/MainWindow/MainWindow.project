@@ -186,8 +186,8 @@
       <File Name="controllers/ginputchar.cpp"/>
       <File Name="controllers/glogicfreecam.cpp"/>
       <File Name="controllers/glogicgamecam.cpp"/>
-      <File Name="controllers/glogicman.cpp"/>
       <File Name="controllers/charControl.cpp"/>
+      <File Name="controllers/glogicman.cpp"/>
     </VirtualDirectory>
   </VirtualDirectory>
   <VirtualDirectory Name="factories">

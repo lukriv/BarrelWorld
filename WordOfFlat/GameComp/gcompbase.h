@@ -11,21 +11,28 @@ class GameEntityManager;
 
 class TaskMessage {
 	GameTaskMessageType m_taskType;
+	void *m_context;
 public:
-	TaskMessage() : m_taskType(GAME_TASK_UNKNOWN) {}
-	TaskMessage(GameTaskMessageType taskType) : m_taskType(taskType) {}
+	TaskMessage() : m_taskType(GAME_TASK_UNKNOWN), m_context( nullptr ) {}
+	TaskMessage(GameTaskMessageType taskType) : m_taskType(taskType), m_context( nullptr ) {}
+	TaskMessage(GameTaskMessageType taskType, void *context) : m_taskType(taskType), m_context( context ) {}
 	TaskMessage( const TaskMessage& that)
 	{
 		m_taskType = that.m_taskType;
+		m_context = that.m_context;
 	}
 	
+	inline void SetContext(void* context) { m_context = context; }
+	
 	inline GameTaskMessageType GetTaskType() { return m_taskType; }
+	inline void* GetContext() { return m_context; }
 	
 	TaskMessage &operator=(const TaskMessage& taskmsg)
 	{
 		if(&taskmsg != this)
 		{
 			m_taskType = taskmsg.m_taskType;
+			m_context = taskmsg.m_context;
 		}
 		
 		return *this;

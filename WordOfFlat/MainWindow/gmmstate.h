@@ -38,6 +38,9 @@ private:
 	float m_timeSinceLastAverage;
 	float m_averageFrameTime;
 	
+	wxDword m_cameraId;
+	wxDword m_avatarId;
+	
 	
 public:
 	GameMainMenuState(GameClientEngine *pOwner, GameCompManager *pCompMgr) : m_pOwner(pOwner)
@@ -50,7 +53,9 @@ public:
 																		, m_pDebugDraw(nullptr)
 																		, m_zeroTimeFrames(0)
 																		, m_timeSinceLastAverage(0)
-																		, m_averageFrameTime(0){}
+																		, m_averageFrameTime(0)
+																		, m_cameraId(0)
+																		, m_avatarId(0){}
 	
 	GameErrorCode LoadScene();
 																		
