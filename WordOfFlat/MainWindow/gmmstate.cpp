@@ -228,6 +228,12 @@ GameErrorCode GameMainMenuState::CreateScene()
 		return result;
 	}
 	
+	if(FWG_FAILED(result = factory.CreateStaticBox(*m_spCompManager, boxId)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Create test box failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
 	if(FWG_FAILED(result = factory.CreateAvatar(*m_spCompManager, m_avatarId)))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Create avatar failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
