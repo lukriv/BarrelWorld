@@ -5,6 +5,7 @@
 #include <bullet/LinearMath/btScalar.h>
 #include <GameComp/transformComp/gtranscomp.h>
 #include <GameComp/PhysicsComp/gphyscontrol.h>
+#include <GameComp/PropertiesComp/gpropertycomp.h>
 #include "ginputfreecam.h"
 #include "ginputchar.h"
 
@@ -15,11 +16,12 @@ class CharacterController : public PhysicsController
 {
 	GameCompManager *m_pCompMgr;
 	RefObjSmPtr<CharacterInput> m_spCharInput;
+	RefObjSmPtr<PropertyComponent> m_spPropComp;
 	btVector3 m_diffVector;
 	btScalar m_angle;
 	
 public:
-	CharacterController(GameCompManager *pCompMgr, CharacterInput *pInput);
+	CharacterController(GameCompManager *pCompMgr, CharacterInput *pInput, PropertyComponent *pPropComp);
 	~CharacterController();
 
 	virtual	void debugDraw(btIDebugDraw* debugDrawer);

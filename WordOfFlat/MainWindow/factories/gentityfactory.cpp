@@ -257,6 +257,7 @@ GameErrorCode GameEntityFactory::CreateAvatar(GameCompManager& compMgr, wxDword 
 	RefObjSmPtr<PhysicsBase> spPhysicsComp;
 	RefObjSmPtr<CharacterController> spCharControl;
 	RefObjSmPtr<CharacterInput> spCharInput;
+	RefObjSmPtr<PropertyComponent> spProperty;
 	
 	if(FWG_FAILED(result = compMgr.GetEntityManager().GetTransformManager().CreateComponent(entityId, spTransform.OutRef())))
 	{
@@ -312,6 +313,7 @@ GameErrorCode GameEntityFactory::CreateAvatar(GameCompManager& compMgr, wxDword 
 	FWG_RETURN_FAIL(GameNewChecked(spCharInput.OutRef()));
 	FWG_RETURN_FAIL(spCharInput->Initialize(&compMgr.GetInputSystem()));
 	
+	// prepare input
 	InputDef inputDefinition;
 	FWG_RETURN_FAIL(inputDefinition.m_inputMap.Insert(wxT("forward"), OIS::KC_W));
 	FWG_RETURN_FAIL(inputDefinition.m_inputMap.Insert(wxT("backward"), OIS::KC_S));
@@ -320,7 +322,24 @@ GameErrorCode GameEntityFactory::CreateAvatar(GameCompManager& compMgr, wxDword 
 	
 	FWG_RETURN_FAIL(spCharInput->Create(inputDefinition));
 	
-	FWG_RETURN_FAIL(GameNewChecked(spCharControl.OutRef(), &compMgr, spCharInput));
+	// reuse property container
+	propCont.RemoveAllProperties();
+	propCont.SetProperty(wxT("velocity"), btVector3(0,0,0));
+	
+	if(FWG_FAILED(result = compMgr.GetEntityManager().GetPropertyManager().CreateComponent(entityId, spProperty.OutRef())))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Create property component failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	if(FWG_FAILED( result = spProperty->Create(propCont)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Create property failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	// prepare character component
+	FWG_RETURN_FAIL(GameNewChecked(spCharControl.OutRef(), &compMgr, spCharInput, spProperty));
 	
 	if(FWG_FAILED(result = spCharControl->Initialize(spTransform, spPhysicsComp)))
 	{
@@ -333,6 +352,8 @@ GameErrorCode GameEntityFactory::CreateAvatar(GameCompManager& compMgr, wxDword 
 		FWGLOG_ERROR_FORMAT(wxT("Create physics component failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
 		return result;
 	}
+	
+
 	
 	return FWG_NO_ERROR;
 }

@@ -1,6 +1,6 @@
 #include "gphyscontrol.h"
 
-PhysicsController::PhysicsController() : ComponentBase(	GAME_COMP_PHYSICS_CONTROLER )
+PhysicsController::PhysicsController() : ComponentBase(	GAME_COMP_PHYSICS_CONTROLLER )
 {
 }
 

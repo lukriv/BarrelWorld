@@ -2,11 +2,14 @@
 
 #include <GameComp/gcompmgr.h>
 #include <GameComp/gentitymgr.h>
+#include <GameComp/PhysicsComp/gphysutils.h>
 
 const float MOVE_STEP_SIZE = 4.0f;
+const float FALL_STEP_SIZE = 1.0f;
 
-CharacterController::CharacterController(GameCompManager *pCompMgr, CharacterInput *pInput) : m_pCompMgr(pCompMgr)
+CharacterController::CharacterController(GameCompManager *pCompMgr, CharacterInput *pInput, PropertyComponent *pPropComp) : m_pCompMgr(pCompMgr)
 	, m_spCharInput(pInput)
+	, m_spPropComp(pPropComp)
 	, m_diffVector(0,0,0)
 {
 }
@@ -57,11 +60,17 @@ void CharacterController::updateAction(btCollisionWorld* collisionWorld, btScala
 		return;
 	}
 	
+	btScalar distance = GamePhysicsUtils::ComputeGroundDistance(*m_pPhysSystem, *m_spKinematic);
+	FWGLOG_INFO_FORMAT(wxT("distance from ground %.2f"), m_pPhysSystem->GetLogger(), distance, FWGLOG_ENDVAL);
+	if(distance > 0.05f)
+	{
+		m_diffVector.setY(-FALL_STEP_SIZE);
+	}
+	
 	m_diffVector *= (MOVE_STEP_SIZE*deltaTimeStep);
 	m_spTransform->GetData()->m_rotation.setRotation(btVector3(0,1,0), GetActualAngle());
 	
 	m_spTransform->GetData()->m_translate += quatRotate(m_spTransform->GetData()->m_rotation,m_diffVector);
-	
 	
 	
 	

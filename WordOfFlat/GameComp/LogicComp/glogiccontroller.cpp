@@ -3,7 +3,7 @@
 
 
 
-LogicController::LogicController() : ComponentBase(GAME_COMP_MOVEABLE)
+LogicController::LogicController() : ComponentBase(GAME_COMP_LOGIC_CONTROLLER)
 {}
 
 LogicController::~LogicController()

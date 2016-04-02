@@ -4,6 +4,8 @@
 
 #include <GameSystem/glog.h>
 #include <GameSystem/gmap.h>
+#include <Ogre/OgreVector3.h>
+#include <bullet/LinearMath/btVector3.h>
 
 
 enum GamePropertyType {
@@ -13,7 +15,8 @@ enum GamePropertyType {
 	FWG_PROP_INT32,
 	FWG_PROP_FLOAT,
 	FWG_PROP_STRING,
-	FWG_PROP_VECTOR3
+	FWG_PROP_OGRE_VECTOR3,
+	FWG_PROP_BT_VECTOR3
 };
 
 
@@ -28,8 +31,11 @@ private:
 		case FWG_PROP_STRING:
 			delete static_cast<wxString*>(m_pContent);
 			break;
-		case FWG_PROP_VECTOR3:
+		case FWG_PROP_OGRE_VECTOR3:
 			delete static_cast<Ogre::Vector3*>(m_pContent);
+			break;
+		case FWG_PROP_BT_VECTOR3:
+			delete static_cast<btVector3*>(m_pContent);
 			break;
 		case FWG_PROP_FLOAT:
 		case FWG_PROP_INT32:
@@ -56,8 +62,11 @@ private:
 		case FWG_PROP_STRING:
 			SetValue(* static_cast<wxString*>(orig.m_pContent));
 			break;
-		case FWG_PROP_VECTOR3:
+		case FWG_PROP_OGRE_VECTOR3:
 			SetValue(* static_cast<Ogre::Vector3*>(orig.m_pContent));
+			break;
+		case FWG_PROP_BT_VECTOR3:
+			SetValue(* static_cast<btVector3*>(orig.m_pContent));
 			break;
 		default:
 			break;
@@ -91,21 +100,44 @@ public:
 	
 	void SetValue(const Ogre::Vector3 &vec3)
 	{
-		if((m_type == FWG_PROP_VECTOR3)&&(m_pContent))
+		if((m_type == FWG_PROP_OGRE_VECTOR3)&&(m_pContent))
 		{
 			* static_cast<Ogre::Vector3*>(m_pContent) = vec3;
 		} else {
 			ReleaseContent(m_type);
 			m_pContent = new (std::nothrow) Ogre::Vector3(vec3);
-			m_type = FWG_PROP_VECTOR3;
+			m_type = FWG_PROP_OGRE_VECTOR3;
 		}
 	}
 	
 	GameErrorCode GetValue (Ogre::Vector3 &vec3) const
 	{
-		if((m_type == FWG_PROP_VECTOR3)&&(m_pContent))
+		if((m_type == FWG_PROP_OGRE_VECTOR3)&&(m_pContent))
 		{
 			vec3 = * static_cast<Ogre::Vector3*>(m_pContent);
+			return FWG_NO_ERROR;
+		}
+		
+		return FWG_E_INVALID_DATA_ERROR;
+	}
+	
+	void SetValue(const btVector3 &vec3)
+	{
+		if((m_type == FWG_PROP_BT_VECTOR3)&&(m_pContent))
+		{
+			* static_cast<btVector3*>(m_pContent) = vec3;
+		} else {
+			ReleaseContent(m_type);
+			m_pContent = new btVector3(vec3);
+			m_type = FWG_PROP_BT_VECTOR3;
+		}
+	}
+	
+	GameErrorCode GetValue (btVector3 &vec3) const
+	{
+		if((m_type == FWG_PROP_BT_VECTOR3)&&(m_pContent))
+		{
+			vec3 = * static_cast<btVector3*>(m_pContent);
 			return FWG_NO_ERROR;
 		}
 		
@@ -245,7 +277,16 @@ public:
 	GamePropertyContainer(GameLogger *pLogger) : m_spLogger(pLogger) {}
 	GamePropertyContainer(const GamePropertyContainer &orig) : m_container(orig.m_container), m_spLogger(orig.m_spLogger) {}
 	
-	
+	GamePropertyContainer& operator=(const GamePropertyContainer& orig)
+	{
+		if(&orig != this)
+		{
+			m_container = orig.m_container;
+			m_spLogger = orig.m_spLogger;
+		}
+		
+		return *this;
+	}
 	
 	template<class T>
 	void SetProperty(const wxString& name, const T& value )
@@ -282,6 +323,16 @@ public:
 		}
 		
 		return result;
+	}
+	
+	void RemoveProperty(const wxString& name)
+	{
+		m_container.Remove(name);
+	}
+	
+	void RemoveAllProperties()
+	{
+		m_container.Clear();
 	}
 	
 };

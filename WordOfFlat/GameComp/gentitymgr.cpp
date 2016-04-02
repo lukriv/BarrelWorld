@@ -1,5 +1,6 @@
 #include "gentitymgr.h"
 #include "gcompmgr.h"
+#include "PropertiesComp/gpropertycomp.h"
 
 GameEntityManager::GameEntityManager(GameLogger* pLogger, GameCompManager& compMgr) : m_spLogger(pLogger)
 														, m_nextFreeId(1)
@@ -9,6 +10,7 @@ GameEntityManager::GameEntityManager(GameLogger* pLogger, GameCompManager& compM
 														, m_physicsControllerMgr(&compMgr.GetPhysicsSystem(), this)
 														, m_renderPosMgr(&compMgr.GetRenderSystem(), this)
 														, m_renderObjMgr(&compMgr.GetRenderSystem(), this)
+														, m_propertyMgr(pLogger, this)
 {
 }
 
@@ -40,8 +42,10 @@ void GameEntityManager::DestroyEntity(wxDword entityId)
 	m_tranformMgr.DestroyComponent(entityId);
 	m_logicControllerMgr.DestroyComponent(entityId);
 	m_physicsMgr.DestroyComponent(entityId);
+	m_physicsControllerMgr.DestroyComponent(entityId);
 	m_renderPosMgr.DestroyComponent(entityId);
 	m_renderObjMgr.DestroyComponent(entityId);
+	m_propertyMgr.DestroyComponent(entityId);
 	
 	m_freeIds.push(entityId);
 	
@@ -57,6 +61,7 @@ void GameEntityManager::DestroyAllEntities()
 	m_physicsControllerMgr.DestroyAllComponents();
 	m_renderPosMgr.DestroyAllComponents();
 	m_renderObjMgr.DestroyAllComponents();
+	m_propertyMgr.DestroyAllComponents();
 	
 	m_nextFreeId = 1;
 	while(!m_freeIds.isEmpty())
@@ -76,6 +81,9 @@ GameErrorCode GameEntityManager::SendTaskMessage(wxDword receiverID, TaskMessage
 	pComp = m_logicControllerMgr.GetComponent(receiverID);
 	if(pComp) FWG_RETURN_FAIL(pComp->ReceiveMessage(msg));
 	
+	pComp = m_physicsControllerMgr.GetComponent(receiverID);
+	if(pComp) FWG_RETURN_FAIL(pComp->ReceiveMessage(msg));
+	
 	pComp = m_physicsMgr.GetComponent(receiverID);
 	if(pComp) FWG_RETURN_FAIL(pComp->ReceiveMessage(msg));
 	
@@ -84,6 +92,11 @@ GameErrorCode GameEntityManager::SendTaskMessage(wxDword receiverID, TaskMessage
 	
 	pComp = m_renderObjMgr.GetComponent(receiverID); 
 	if(pComp) FWG_RETURN_FAIL(pComp->ReceiveMessage(msg));
+	
+	pComp = m_propertyMgr.GetComponent(receiverID);
+	if(pComp) FWG_RETURN_FAIL(pComp->ReceiveMessage(msg));
+	
+	
 	
 	return FWG_NO_ERROR;
 	

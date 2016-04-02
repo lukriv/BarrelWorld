@@ -49,11 +49,13 @@
         <File Name="PhysicsComp/gphysdbgdraw.h"/>
         <File Name="PhysicsComp/gphysshapeload.h"/>
         <File Name="PhysicsComp/gphyssystem.h"/>
+        <File Name="PhysicsComp/gphysutils.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="src">
         <File Name="PhysicsComp/gphysdgbdraw.cpp"/>
         <File Name="PhysicsComp/gphysshapeload.cpp"/>
         <File Name="PhysicsComp/gphyssystem.cpp"/>
+        <File Name="PhysicsComp/gphysutils.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="inputSystem">
@@ -257,6 +259,16 @@
       <VirtualDirectory Name="src">
         <File Name="PhysicsComp/gphyscontrol.cpp"/>
         <File Name="PhysicsComp/gphysicscontrolmgr.cpp"/>
+      </VirtualDirectory>
+    </VirtualDirectory>
+    <VirtualDirectory Name="properties">
+      <VirtualDirectory Name="include">
+        <File Name="PropertiesComp/gpropertycomp.h"/>
+        <File Name="PropertiesComp/gpropertymgr.h"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="src">
+        <File Name="PropertiesComp/gpropertycomp.cpp"/>
+        <File Name="PropertiesComp/gpropertymgr.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
   </VirtualDirectory>

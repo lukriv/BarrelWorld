@@ -12,6 +12,7 @@
 #include "PhysicsComp/gphysicscontrolmgr.h"
 #include "RenderComp/grenderpositionmgr.h"
 #include "RenderComp/grenderobjmgr.h"
+#include "PropertiesComp/gpropertymgr.h"
 
 // forward declaration
 class GameCompManager;
@@ -32,6 +33,7 @@ private:
 	PhysicsControllerManager m_physicsControllerMgr;
 	RenderPositionManager m_renderPosMgr;
 	RenderObjectManager m_renderObjMgr;
+	PropertyCompManager m_propertyMgr;
 	
 public:
 	GameEntityManager(GameLogger *pLogger, GameCompManager& compMgr);
@@ -52,6 +54,7 @@ public:
 	inline PhysicsControllerManager& GetPhysicsControllerManager() { return m_physicsControllerMgr; }
 	inline RenderPositionManager& GetRenderPosManager() { return m_renderPosMgr; }
 	inline RenderObjectManager& GetRenderObjManager() 	{ return m_renderObjMgr; }
+	inline PropertyCompManager& GetPropertyManager() {return m_propertyMgr; }
 	
 	
 };
