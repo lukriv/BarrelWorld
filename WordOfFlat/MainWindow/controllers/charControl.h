@@ -17,7 +17,6 @@ class CharacterController : public PhysicsController
 	GameCompManager *m_pCompMgr;
 	RefObjSmPtr<CharacterInput> m_spCharInput;
 	RefObjSmPtr<PropertyComponent> m_spPropComp;
-	btVector3 m_diffVector;
 	btScalar m_angle;
 	
 public:
@@ -29,7 +28,6 @@ public:
 
 private:
 	btScalar GetActualAngle();
-	void GetLookVector(btVector3 &lookPoint);
 };
 
 #endif // __CHARACTER_PHYSICS_CONTROL_H__

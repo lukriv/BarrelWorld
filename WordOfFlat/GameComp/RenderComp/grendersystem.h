@@ -2,7 +2,7 @@
 #define __GAME_RENDER_SYSTEM_H__
 
 #include <OGRE/OgreSceneManager.h>
-#include <wx/thread.h>
+
 
 #include <GameSystem/glog.h>
 #include <GameSystem/gdefs.h>
@@ -19,6 +19,7 @@ static const wxChar* FWG_UNUSED(SECONDARY_CAMERA_NAME) = wxT("SecondCamera");
 class RenderComponentBase;
 class RenderCamera;
 class GameEntity;
+class wxCriticalSection;
 
 class GameRenderSystem
 {

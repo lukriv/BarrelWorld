@@ -41,7 +41,10 @@
   <VirtualDirectory Name="resource">
     <File Name="definitions.xml"/>
     <File Name="example.xml"/>
+    <File Name="terrain.xml"/>
   </VirtualDirectory>
+  <Dependencies Name="Debug"/>
+  <Dependencies Name="Release"/>
   <Settings Type="Static Library">
     <GlobalSettings>
       <Compiler Options="-Wall;-Wno-unused-local-typedefs;-Wno-invalid-offsetof;-std=c++11" C_Options="" Assembler="">
@@ -51,6 +54,7 @@
         <IncludePath Value="../../extern/include/bullet"/>
         <IncludePath Value="../../WordOfFlat"/>
         <Preprocessor Value="UNICODE"/>
+        <Preprocessor Value="BOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN"/>
       </Compiler>
       <Linker Options=""/>
       <ResourceCompiler Options=""/>
@@ -97,10 +101,12 @@
       </Completion>
     </Configuration>
     <Configuration Name="Release" CompilerType="MinGW ( MinGW )" DebuggerType="GNU gdb debugger" Type="Static Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
-      <Compiler Options="-O3" C_Options="-O3" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0"/>
-      <Linker Options="-O0" Required="yes">
+      <Compiler Options="-O3" C_Options="-O3" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
+        <IncludePath Value="."/>
+      </Compiler>
+      <Linker Options="" Required="yes">
         <LibraryPath Value="."/>
-        <LibraryPath Value="Debug"/>
+        <LibraryPath Value="Release"/>
       </Linker>
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="$(IntermediateDirectory)/lib$(ProjectName).a" IntermediateDirectory="./Release" Command="" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="./Release" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
@@ -136,6 +142,4 @@
       </Completion>
     </Configuration>
   </Settings>
-  <Dependencies Name="Debug"/>
-  <Dependencies Name="Release"/>
 </CodeLite_Project>

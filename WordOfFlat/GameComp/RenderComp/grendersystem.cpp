@@ -1,9 +1,11 @@
 #include "grendersystem.h"
 
+#include <wx/thread.h>
 #include <OGRE/OgreRoot.h>
 #include <OGRE/OgreRenderWindow.h>
 #include <OGRE/OgreEntity.h>
 #include <GameSystem/new.h>
+
 #include "grendercompbase.h"
 
 static const char* MAIN_GAME_SCENE_MANAGER = "MainSceneManager";
@@ -32,7 +34,8 @@ GameErrorCode GameRenderSystem::Initialize(GameEngineSettings& settings)
 			return result;
 		}
 
-		m_pRoot->loadPlugin("RenderSystem_GL");
+		m_pRoot->loadPlugin("RenderSystem_Direct3D9");
+		//m_pRoot->loadPlugin("RenderSystem_GL");
 		m_pRoot->loadPlugin("Plugin_OctreeSceneManager");
 		Ogre::RenderSystemList::const_iterator it = m_pRoot->getAvailableRenderers().begin();
 		Ogre::RenderSystem *pRenSys = nullptr;
@@ -67,7 +70,13 @@ GameErrorCode GameRenderSystem::Initialize(GameEngineSettings& settings)
 			return result;
 		}
 		
-		m_pSceneManager->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
+		//m_pSceneManager->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
+		//m_pSceneManager->setShadowTechnique(Ogre::SHADOWTYPE_TEXTURE_MODULATIVE);
+		m_pSceneManager->setShadowTechnique(Ogre::SHADOWTYPE_TEXTURE_ADDITIVE);
+		//m_pSceneManager->setShadowTechnique(Ogre::SHADOWTYPE_TEXTURE_ADDITIVE_INTEGRATED);
+		
+		m_pSceneManager->setShadowTextureSize(1024);
+		
 		
 		// initialize Ogre resources
 		Ogre::ResourceGroupManager::getSingleton().addResourceLocation("res", "FileSystem", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, false);

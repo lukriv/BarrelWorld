@@ -2,15 +2,19 @@
 
 #include <GameComp/gcompmgr.h>
 #include <GameComp/gentitymgr.h>
+#include <GameComp/gutils.h>
 #include <GameComp/PhysicsComp/gphysutils.h>
 
 const float MOVE_STEP_SIZE = 4.0f;
 const float FALL_STEP_SIZE = 1.0f;
+const float GROUND_TOLERANCE = 0.005f;
+
+static const wxChar *FALLVELOCITY = wxT("fallVelocity");
+static const wxChar *ONGROUND = wxT("onGround");
 
 CharacterController::CharacterController(GameCompManager *pCompMgr, CharacterInput *pInput, PropertyComponent *pPropComp) : m_pCompMgr(pCompMgr)
 	, m_spCharInput(pInput)
 	, m_spPropComp(pPropComp)
-	, m_diffVector(0,0,0)
 {
 }
 
@@ -24,6 +28,11 @@ void CharacterController::debugDraw(btIDebugDraw* debugDrawer)
 
 void CharacterController::updateAction(btCollisionWorld* collisionWorld, btScalar deltaTimeStep)
 {
+	if(deltaTimeStep == 0.0f)
+	{
+		return;
+	}
+	
 	GameErrorCode result = FWG_NO_ERROR;
 	ControlStruct actualControls;
 	m_spCharInput->ExportControlStruct(actualControls);
@@ -52,25 +61,63 @@ void CharacterController::updateAction(btCollisionWorld* collisionWorld, btScala
 	if(!move.isZero())
 	{
 		move.normalize();
-		m_diffVector += move;
+		move *= MOVE_STEP_SIZE;
 	}
 	
-	if(deltaTimeStep == 0.0f)
-	{
-		return;
-	}
+
 	
 	btScalar distance = GamePhysicsUtils::ComputeGroundDistance(*m_pPhysSystem, *m_spKinematic);
-	FWGLOG_INFO_FORMAT(wxT("distance from ground %.2f"), m_pPhysSystem->GetLogger(), distance, FWGLOG_ENDVAL);
-	if(distance > 0.05f)
+
+	bool onGround = true;
+	if(FWG_FAILED(result = m_spPropComp.In()->GetProperty(ONGROUND, onGround)))
 	{
-		m_diffVector.setY(-FALL_STEP_SIZE);
+		FWGLOG_ERROR_FORMAT(wxT("%s property value does not exist: 0x%08x"), GetEntityManager()->GetLogger(), ONGROUND, result, FWGLOG_ENDVAL);
 	}
 	
-	m_diffVector *= (MOVE_STEP_SIZE*deltaTimeStep);
+	if(onGround)
+	{
+		move *= deltaTimeStep;
+		if(distance < -GROUND_TOLERANCE)
+		{
+			move.setY(distance);
+		}
+		
+		if(distance > GROUND_TOLERANCE)
+		{
+			m_spPropComp.In()->SetProperty(ONGROUND, false);
+		}
+		
+		//FWGLOG_INFO_FORMAT(wxT("On ground - distance %.3f"), GetEntityManager()->GetLogger(), distance, result, FWGLOG_ENDVAL);
+
+	} else {
+		btVector3 fallVelocity(0,0,0);
+		move.setZero();
+		if(FWG_FAILED(result = m_spPropComp.In()->GetProperty(FALLVELOCITY, fallVelocity)))
+		{
+			FWGLOG_ERROR_FORMAT(wxT("%s property value does not exist: 0x%08x"), GetEntityManager()->GetLogger(), FALLVELOCITY, result, FWGLOG_ENDVAL);
+		}
+
+		if((distance < GROUND_TOLERANCE)&&(distance > -GROUND_TOLERANCE))
+		{
+			fallVelocity.setZero();
+			m_spPropComp.In()->SetProperty(ONGROUND, true);
+			m_spPropComp.In()->SetProperty(FALLVELOCITY, fallVelocity);
+		} else if(distance > GROUND_TOLERANCE){
+			
+			move = (fallVelocity + m_pPhysSystem->GetDynamicsWorld()->getGravity()*(0.5*deltaTimeStep))*deltaTimeStep;
+			fallVelocity += m_pPhysSystem->GetDynamicsWorld()->getGravity() * deltaTimeStep;
+			m_spPropComp.In()->SetProperty(FALLVELOCITY, fallVelocity);
+		} else {
+			move.setY(-distance);
+		}
+	}
+	
+
+
+	
 	m_spTransform->GetData()->m_rotation.setRotation(btVector3(0,1,0), GetActualAngle());
 	
-	m_spTransform->GetData()->m_translate += quatRotate(m_spTransform->GetData()->m_rotation,m_diffVector);
+	m_spTransform->GetData()->m_translate += quatRotate(m_spTransform->GetData()->m_rotation, move);
 	
 	
 	
@@ -82,36 +129,19 @@ void CharacterController::updateAction(btCollisionWorld* collisionWorld, btScala
 		FWGLOG_ERROR_FORMAT(wxT("Update component failed: 0x%08x"), GetEntityManager()->GetLogger(), result, FWGLOG_ENDVAL);
 	}
 		
-	m_diffVector.setValue(0,0,0);
 }
 
 btScalar CharacterController::GetActualAngle()
 {
 	btVector3 lookPoint;
-	GetLookVector(lookPoint);
+	
+	GameUtils::GetLookPoint(m_pCompMgr->GetRenderSystem(), m_pCompMgr->GetMenuSystem(), *m_spTransform, lookPoint);
 	
 	lookPoint -= m_spTransform->GetData()->m_translate;
 	
 	return btAtan2Fast( -lookPoint.getX(), -lookPoint.getZ() );
 }
 
-void CharacterController::GetLookVector(btVector3 &lookPoint)
-{
-	Ogre::Vector2 vec2;
-	m_pCompMgr->GetMenuSystem().GetPointerPosition(vec2);
-	Ogre::Plane plane( Ogre::Vector3(0,1,0), 0);
-	
-	Ogre::Ray ray = m_pCompMgr->GetRenderSystem().GetMainCamera()->getCameraToViewportRay( vec2.x, vec2.y );
-	
-	std::pair< bool, Ogre::Real > rayResult = ray.intersects(plane);
-	
-	if(!rayResult.first)
-	{
-		return;
-	}
-	
-	lookPoint = cvt(ray.getPoint(rayResult.second));
-	
-}
+
 
 

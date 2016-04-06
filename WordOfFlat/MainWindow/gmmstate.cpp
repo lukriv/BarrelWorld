@@ -63,7 +63,7 @@ GameErrorCode GameMainMenuState::LoadScene()
 	GameErrorCode result = FWG_NO_ERROR;
 	GameXmlResourceLoader loader;
 	
-	if(FWG_FAILED(result = loader.Initialize(wxT("example.xml"), wxT("res/"), m_pOwner->GetLogger())))
+	if(FWG_FAILED(result = loader.Initialize(wxT("terrain.xml"), wxT("res/"), m_pOwner->GetLogger())))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Xml loader initialize failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
 		return result;
@@ -210,6 +210,12 @@ GameErrorCode GameMainMenuState::CreateScene()
 	GameErrorCode result = FWG_NO_ERROR;
 	GameEntityFactory factory(m_pOwner->GetLogger());
 	
+	//if(FWG_FAILED(result = LoadScene()))
+	//{
+	//	FWGLOG_ERROR_FORMAT(wxT("Load terrain failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
+	//	return result;
+	//}
+	
 	if(FWG_FAILED(result = factory.CreateFloor(*m_spCompManager)))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Create floor failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
@@ -222,7 +228,7 @@ GameErrorCode GameMainMenuState::CreateScene()
 		return result;
 	}
 	wxDword boxId;
-	if(FWG_FAILED(result = factory.CreateBox(*m_spCompManager, boxId)))
+	if(FWG_FAILED(result = factory.CreateBox(*m_spCompManager, boxId, btVector3(0,120,0))))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Create test box failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
 		return result;
@@ -234,7 +240,7 @@ GameErrorCode GameMainMenuState::CreateScene()
 		return result;
 	}
 	
-	if(FWG_FAILED(result = factory.CreateAvatar(*m_spCompManager, m_avatarId)))
+	if(FWG_FAILED(result = factory.CreateAvatar(*m_spCompManager, m_avatarId, btVector3(0, 100, 0))))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Create avatar failed: 0x%08x"), m_pOwner->GetLogger(), result, FWGLOG_ENDVAL);
 		return result;

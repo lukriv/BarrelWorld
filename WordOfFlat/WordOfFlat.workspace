@@ -15,7 +15,7 @@
   </Environment>
   <Project Name="Extern" Path="Extern/Extern.project" Active="No"/>
   <BuildMatrix>
-    <WorkspaceConfiguration Name="Debug" Selected="yes">
+    <WorkspaceConfiguration Name="Debug" Selected="no">
       <Environment/>
       <Project Name="GameComm" ConfigName="Debug"/>
       <Project Name="GameComp" ConfigName="Debug"/>

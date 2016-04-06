@@ -52,6 +52,32 @@
     <Project Name="GameComp"/>
     <Project Name="WorldCli"/>
   </Dependencies>
+  <VirtualDirectory Name="controllers">
+    <VirtualDirectory Name="include">
+      <File Name="controllers/ginputchar.h"/>
+      <File Name="controllers/ginputfreecam.h"/>
+      <File Name="controllers/glogicfreecam.h"/>
+      <File Name="controllers/glogicgamecam.h"/>
+      <File Name="controllers/glogicman.h"/>
+      <File Name="controllers/charControl.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="src">
+      <File Name="controllers/ginputfreecam.cpp"/>
+      <File Name="controllers/ginputchar.cpp"/>
+      <File Name="controllers/glogicfreecam.cpp"/>
+      <File Name="controllers/glogicgamecam.cpp"/>
+      <File Name="controllers/charControl.cpp"/>
+      <File Name="controllers/glogicman.cpp"/>
+    </VirtualDirectory>
+  </VirtualDirectory>
+  <VirtualDirectory Name="factories">
+    <VirtualDirectory Name="include">
+      <File Name="factories/gentityfactory.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="src">
+      <File Name="factories/gentityfactory.cpp"/>
+    </VirtualDirectory>
+  </VirtualDirectory>
   <Settings Type="Executable">
     <GlobalSettings>
       <Compiler Options="-Wall;-Wno-unused-local-typedefs;-std=c++11" C_Options="" Assembler="">
@@ -78,6 +104,7 @@
         <Library Value="libOgreTerrain.dll.a"/>
         <Library Value="libOgreMain.dll.a"/>
         <Library Value="libRenderSystem_GL.dll.a"/>
+        <Library Value="libRenderSystem_Direct3D9.dll.a"/>
         <Library Value="BulletDynamics"/>
         <Library Value="BulletCollision"/>
         <Library Value="libLinearMath.a"/>
@@ -172,30 +199,4 @@
       </Completion>
     </Configuration>
   </Settings>
-  <VirtualDirectory Name="controllers">
-    <VirtualDirectory Name="include">
-      <File Name="controllers/ginputchar.h"/>
-      <File Name="controllers/ginputfreecam.h"/>
-      <File Name="controllers/glogicfreecam.h"/>
-      <File Name="controllers/glogicgamecam.h"/>
-      <File Name="controllers/glogicman.h"/>
-      <File Name="controllers/charControl.h"/>
-    </VirtualDirectory>
-    <VirtualDirectory Name="src">
-      <File Name="controllers/ginputfreecam.cpp"/>
-      <File Name="controllers/ginputchar.cpp"/>
-      <File Name="controllers/glogicfreecam.cpp"/>
-      <File Name="controllers/glogicgamecam.cpp"/>
-      <File Name="controllers/charControl.cpp"/>
-      <File Name="controllers/glogicman.cpp"/>
-    </VirtualDirectory>
-  </VirtualDirectory>
-  <VirtualDirectory Name="factories">
-    <VirtualDirectory Name="include">
-      <File Name="factories/gentityfactory.h"/>
-    </VirtualDirectory>
-    <VirtualDirectory Name="src">
-      <File Name="factories/gentityfactory.cpp"/>
-    </VirtualDirectory>
-  </VirtualDirectory>
 </CodeLite_Project>

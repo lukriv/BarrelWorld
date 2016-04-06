@@ -324,7 +324,8 @@ GameErrorCode GameEntityFactory::CreateAvatar(GameCompManager& compMgr, wxDword 
 	
 	// reuse property container
 	propCont.RemoveAllProperties();
-	propCont.SetProperty(wxT("velocity"), btVector3(0,0,0));
+	propCont.SetProperty(wxT("fallVelocity"), btVector3(0,0,0));
+	propCont.SetProperty(wxT("onGround"), false);
 	
 	if(FWG_FAILED(result = compMgr.GetEntityManager().GetPropertyManager().CreateComponent(entityId, spProperty.OutRef())))
 	{

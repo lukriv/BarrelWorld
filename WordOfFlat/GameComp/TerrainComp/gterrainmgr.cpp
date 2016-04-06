@@ -449,7 +449,7 @@ GameErrorCode GameTerrainManager::PrepareTerrainGlobalOptions()
 	m_globalTerrainOptions = OGRE_NEW Ogre::TerrainGlobalOptions();
 	
 	
-	Ogre::Vector3 lightdir(0.55, -0.3, 0.75);
+	Ogre::Vector3 lightdir(0.55, -0.8, 0.75);
 	lightdir.normalise();
     
     
