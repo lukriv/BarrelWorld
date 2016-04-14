@@ -20,6 +20,15 @@ public:
 	 */
 	static void GetLookPoint(GameRenderSystem& renderSystem, GameMenuSystem& menuSystem, TransformComponent& transComp, btVector3 &output);
 	
+	/**
+	 * @brief Compute nearest hit point with object or ground from camera point of view
+	 * @param renderSystem
+	 * @param menuSystem
+	 * @param hitObjectId 
+	 * @param output
+	 */
+	static void GetSelectPoint(GameRenderSystem& renderSystem, GameMenuSystem& menuSystem, wxDword &hitObjectId, btVector3 &output);
+	
 
 
 };
