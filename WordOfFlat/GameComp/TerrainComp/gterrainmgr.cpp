@@ -18,6 +18,7 @@ static const wxInt32 CHUNK_SHIFT = 6; // n
 static const wxInt32 CHUNK_SIZE = 1<<CHUNK_SHIFT;
 static const wxInt32 CHUNK_VERTICES = CHUNK_SIZE + 1;
 
+template<> Ogre::TerrainGlobalOptions * Ogre::Singleton< Ogre::TerrainGlobalOptions >::msSingleton = 0;
 
 GameTerrainManager::GameTerrainManager(GameLogger* pLogger) : m_spLogger(pLogger)
 															, m_pRenderMgr(nullptr)
