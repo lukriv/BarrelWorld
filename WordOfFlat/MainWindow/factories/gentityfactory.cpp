@@ -15,12 +15,12 @@
 #include <GameComp/RenderComp/grendercamera.h>
 #include <GameSystem/gpropery.h>
 #include <GameSystem/new.h>
+#include <GameXmlDefinitions/gxmldefs.h>
 
 #include "../controllers/glogicgamecam.h"
 #include "../controllers/charControl.h"
 
-
-
+#include "../gglobdefs.h"
 
 GameErrorCode GameEntityFactory::CreateFloor(GameCompManager& compMgr)
 {
@@ -90,7 +90,13 @@ GameErrorCode GameEntityFactory::CreateFloor(GameCompManager& compMgr)
 	
 	btStaticPlaneShape *pPlane = new btStaticPlaneShape( btVector3(0, 1.0f, 0), 0);
 	
-	if(FWG_FAILED(result = spPhysicsComp->Create(0, pPlane)))
+	propCont.RemoveAllProperties();
+	propCont.SetProperty(GAME_TAG_PARAM_PHYSICS_SHAPE, static_cast<void*>(pPlane));
+	propCont.SetProperty(GAME_TAG_PARAM_MASS, 0.0f);
+	propCont.SetProperty(GAME_TAG_PARAM_GROUP, GROUP_STATICS);
+	propCont.SetProperty(GAME_TAG_PARAM_GROUP_MASK, COLLIDE_STATICS);
+	
+	if(FWG_FAILED(result = spPhysicsComp->Create(propCont)))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Create floor physics failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
 		return result;
@@ -235,7 +241,13 @@ GameErrorCode GameEntityFactory::CreateBox(GameCompManager& compMgr, wxDword &bo
 	
 	btCollisionShape *pColShape = new btBoxShape(btVector3(1.0f,1.0f,1.0f));	  
 	
-	if(FWG_FAILED(result = spPhysicsComp->Create(1.0f, pColShape)))
+	propCont.RemoveAllProperties();
+	propCont.SetProperty(GAME_TAG_PARAM_PHYSICS_SHAPE, static_cast<void*>(pColShape));
+	propCont.SetProperty(GAME_TAG_PARAM_MASS, 1.0f);
+	propCont.SetProperty(GAME_TAG_PARAM_GROUP, GROUP_OBJECTS);
+	propCont.SetProperty(GAME_TAG_PARAM_GROUP_MASK, COLLIDE_OBJECTS);
+	
+	if(FWG_FAILED(result = spPhysicsComp->Create(propCont)))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Create floor physics failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
 		return result;
@@ -304,7 +316,13 @@ GameErrorCode GameEntityFactory::CreateAvatar(GameCompManager& compMgr, wxDword 
 	
 	btCollisionShape *pColShape = new btBoxShape(btVector3(0.5f,1.0f,0.5f));	  
 	
-	if(FWG_FAILED(result = spPhysicsComp->Create(0, pColShape)))
+	propCont.RemoveAllProperties();
+	propCont.SetProperty(GAME_TAG_PARAM_PHYSICS_SHAPE, static_cast<void*>(pColShape));
+	propCont.SetProperty(GAME_TAG_PARAM_MASS, 0.0f);
+	propCont.SetProperty(GAME_TAG_PARAM_GROUP, GROUP_AVATARS);
+	propCont.SetProperty(GAME_TAG_PARAM_GROUP_MASK, COLLIDE_AVATARS);
+	
+	if(FWG_FAILED(result = spPhysicsComp->Create(propCont)))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Create floor physics failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
 		return result;
@@ -416,7 +434,13 @@ GameErrorCode GameEntityFactory::CreateStaticBox(GameCompManager& compMgr, wxDwo
 	
 	btCollisionShape *pColShape = new btBoxShape(btVector3(1.0f,1.0f,1.0f));	  
 	
-	if(FWG_FAILED(result = spPhysicsComp->Create(0.0f, pColShape)))
+	propCont.RemoveAllProperties();
+	propCont.SetProperty(GAME_TAG_PARAM_PHYSICS_SHAPE, static_cast<void*>(pColShape));
+	propCont.SetProperty(GAME_TAG_PARAM_MASS, 0.0f);
+	propCont.SetProperty(GAME_TAG_PARAM_GROUP, GROUP_STATICS);
+	propCont.SetProperty(GAME_TAG_PARAM_GROUP_MASK, COLLIDE_STATICS);
+	
+	if(FWG_FAILED(result = spPhysicsComp->Create(propCont)))
 	{
 		FWGLOG_ERROR_FORMAT(wxT("Create floor physics failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
 		return result;

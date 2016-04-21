@@ -24,10 +24,9 @@ public:
 	 * @brief Compute nearest hit point with object or ground from camera point of view
 	 * @param renderSystem
 	 * @param menuSystem
-	 * @param hitObjectId 
 	 * @param output
 	 */
-	static void GetSelectPoint(GameRenderSystem& renderSystem, GameMenuSystem& menuSystem, wxDword &hitObjectId, btVector3 &output);
+	static void GetCherryPickVector(GameRenderSystem& renderSystem, GameMenuSystem& menuSystem, btVector3& output);
 	
 
 

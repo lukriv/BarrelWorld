@@ -17,6 +17,18 @@ public:
 	 * @return How far is object above ground ( or another object )
 	 */
 	static btScalar ComputeGroundDistance(GamePhysicsSystem &physSystem, PhysicsBase &physComponent);
+	
+	
+	/**
+	 * @brief Compute hit point with given ray
+	 * @param physSystem
+	 * @param origin Begining of ray
+	 * @param point Ray pointing point
+	 * @param hitPoint Return hit point
+	 * 
+	 * @return Returns zero if no object is affected ( ground hit returns also 0 ) or hitted object
+	 */
+	static wxDword ComputeTargetPoint(GamePhysicsSystem &physSystem, btVector3& origin, btVector3& point, btVector3& hitPoint);
 
 };
 

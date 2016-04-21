@@ -28,14 +28,22 @@ void CharacterController::debugDraw(btIDebugDraw* debugDrawer)
 
 void CharacterController::updateAction(btCollisionWorld* collisionWorld, btScalar deltaTimeStep)
 {
+
+	ControlStruct actualControls;
+	m_spCharInput->ExportControlStruct(actualControls);
+
+	if(actualControls.WasMouseClicked(ControlStruct::MOUSE_BUTTON_LEFT))
+	{
+		// do action
+	}
+
 	if(deltaTimeStep == 0.0f)
 	{
 		return;
 	}
 	
 	GameErrorCode result = FWG_NO_ERROR;
-	ControlStruct actualControls;
-	m_spCharInput->ExportControlStruct(actualControls);
+
 	btVector3 move(0,0,0);
 	
 	if(actualControls.IsPressed(CharacterInput::INPUT_ACTION_FORWARD))

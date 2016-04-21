@@ -22,3 +22,19 @@ btScalar GamePhysicsUtils::ComputeGroundDistance(GamePhysicsSystem& physSystem, 
 		
 	return 0.0f;
 }
+
+wxDword GamePhysicsUtils::ComputeTargetPoint(GamePhysicsSystem& physSystem, btVector3& origin, btVector3& point, btVector3& hitPoint)
+{
+	btCollisionWorld::ClosestRayResultCallback callback(origin, point);
+	
+	physSystem.GetDynamicsWorld()->rayTest(origin, point, callback);
+	
+	if(callback.hasHit())
+	{
+		hitPoint = callback.m_hitPointWorld;
+		return static_cast<wxDword>(callback.m_collisionObject->getUserIndex());
+	}
+	
+	return 0;
+	
+}

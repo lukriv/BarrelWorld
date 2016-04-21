@@ -69,8 +69,9 @@ static const wxChar* FWG_UNUSED(GAME_TAG_PARAM_FAR)					= wxT("far");
 static const wxChar* FWG_UNUSED(GAME_TAG_PARAM_BOX_HALF_SIZE)		= wxT("halfSize");                     
 static const wxChar* FWG_UNUSED(GAME_TAG_PARAM_MASS)				= wxT("mass"); 
 static const wxChar* FWG_UNUSED(GAME_TAG_PARAM_INPUT_KEY)	 		= wxT("key");
-static const wxChar* FWG_UNUSED(GAME_TAG_PARAM_FILENAME)			= wxT("filename");                  
-                     
+static const wxChar* FWG_UNUSED(GAME_TAG_PARAM_FILENAME)			= wxT("filename");
+static const wxChar* FWG_UNUSED(GAME_TAG_PARAM_GROUP)				= wxT("group");
+static const wxChar* FWG_UNUSED(GAME_TAG_PARAM_GROUP_MASK)			= wxT("mask");                     
                      
 // component item tags references
 static const wxChar* FWG_UNUSED(GAME_TAG_ITEM_RENDER_REF)			= wxT("renderref");

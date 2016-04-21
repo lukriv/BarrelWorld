@@ -19,3 +19,11 @@ void GameUtils::GetLookPoint(GameRenderSystem& renderSystem, GameMenuSystem& men
 	output = cvt(ray.getPoint(rayResult.second));
 	
 }
+
+void GameUtils::GetCherryPickVector(GameRenderSystem& renderSystem, GameMenuSystem& menuSystem, btVector3& output)
+{
+	Ogre::Vector2 vec2;
+	menuSystem.GetPointerPosition(vec2);
+	Ogre::Ray ray = renderSystem.GetMainCamera()->getCameraToViewportRay( vec2.x, vec2.y );
+	output = cvt(ray.getDirection());
+}

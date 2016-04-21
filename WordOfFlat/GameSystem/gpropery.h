@@ -10,7 +10,9 @@
 
 enum GamePropertyType {
 	FWG_PROP_UNKNOWN = 0,
+	FWG_PROP_POINTER, // void pointer
 	FWG_PROP_BOOL,
+	FWG_PROP_WORD,
 	FWG_PROP_DWORD,
 	FWG_PROP_INT32,
 	FWG_PROP_FLOAT,
@@ -37,10 +39,6 @@ private:
 		case FWG_PROP_BT_VECTOR3:
 			delete static_cast<btVector3*>(m_pContent);
 			break;
-		case FWG_PROP_FLOAT:
-		case FWG_PROP_INT32:
-		case FWG_PROP_DWORD:
-		case FWG_PROP_BOOL:
 		default:
 			break;
 		}
@@ -52,13 +50,6 @@ private:
 	{
 		switch(orig.m_type)
 		{
-		case FWG_PROP_FLOAT:
-		case FWG_PROP_INT32:
-		case FWG_PROP_DWORD:
-		case FWG_PROP_BOOL:
-			m_pContent = orig.m_pContent;
-			m_type = orig.m_type;
-			break;
 		case FWG_PROP_STRING:
 			SetValue(* static_cast<wxString*>(orig.m_pContent));
 			break;
@@ -69,6 +60,8 @@ private:
 			SetValue(* static_cast<btVector3*>(orig.m_pContent));
 			break;
 		default:
+			m_pContent = orig.m_pContent;
+			m_type = orig.m_type;
 			break;
 		}
 	}
@@ -258,6 +251,48 @@ public:
 		if(m_type == FWG_PROP_BOOL)
 		{
 			var = reinterpret_cast<bool&>(m_pContent);
+			return FWG_NO_ERROR;
+		}
+		
+		return FWG_E_INVALID_DATA_ERROR;
+	}
+	
+	void SetValue(void* var)
+	{
+		if(m_type != FWG_PROP_POINTER)
+		{
+			ReleaseContent(m_type);
+			m_type = FWG_PROP_POINTER;
+		} 			
+		m_pContent = var;
+	}
+	
+	GameErrorCode GetValue (void* &var)
+	{
+		if(m_type == FWG_PROP_POINTER)
+		{
+			var = m_pContent;
+			return FWG_NO_ERROR;
+		}
+		
+		return FWG_E_INVALID_DATA_ERROR;
+	}
+	
+	void SetValue(wxWord word)
+	{
+		if(m_type != FWG_PROP_WORD)
+		{
+			ReleaseContent(m_type);
+			m_type = FWG_PROP_WORD;
+		}
+		m_pContent = reinterpret_cast<void*&>(word);
+	}
+	
+	GameErrorCode GetValue (wxWord &word)
+	{
+		if((m_type == FWG_PROP_WORD)&&(m_pContent))
+		{
+			word = reinterpret_cast<wxWord&>(m_pContent);
 			return FWG_NO_ERROR;
 		}
 		

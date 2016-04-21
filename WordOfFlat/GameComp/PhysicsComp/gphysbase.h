@@ -4,6 +4,7 @@
 #include "gphyssystem.h"
 #include "../transformComp/gtranscomp.h"
 #include <bullet/BulletCollision/CollisionShapes/btCollisionShape.h>
+#include <GameSystem/gpropery.h>
 
 class PhysicsBase : public ComponentBase
 {
@@ -19,7 +20,7 @@ public:
 
 	GameErrorCode Initialize(TransformComponent *pTransform);
 
-	GameErrorCode Create(btScalar mass, btCollisionShape *pColShape);
+	GameErrorCode Create(GamePropertyContainer &propMap);
 	
 	btRigidBody* GetRigidBody();
 	

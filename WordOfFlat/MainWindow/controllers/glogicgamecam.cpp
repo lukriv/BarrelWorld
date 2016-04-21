@@ -33,10 +33,10 @@ GameErrorCode LogicGameCamera::Update(float timeDiff)
 	ControlStruct actualControls;
 	m_spInput->ExportControlStruct(actualControls);
 	
-	if(actualControls.WasMouseClicked(ControlStruct::MOUSE_BUTTON_LEFT))
-	{
-		FWG_RETURN_FAIL(CreateBox());
-	}
+	//if(actualControls.WasMouseClicked(ControlStruct::MOUSE_BUTTON_LEFT))
+	//{
+	//	FWG_RETURN_FAIL(CreateBox());
+	//}
 	
 	//if(actualControls.IsMousePressed(ControlStruct::MOUSE_BUTTON_RIGHT))
 	//{

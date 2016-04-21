@@ -35,13 +35,49 @@ GameErrorCode PhysicsBase::Initialize(TransformComponent* pTransform)
 	return FWG_NO_ERROR;
 }
 
-GameErrorCode PhysicsBase::Create(btScalar mass, btCollisionShape* pColShape)
+GameErrorCode PhysicsBase::Create(GamePropertyContainer& propMap)
 {
 	if(m_spTransform.IsEmpty()) {
 		return FWG_E_OBJECT_NOT_INITIALIZED_ERROR;
 	}
-
-	if(mass > 0) {
+	
+	GameErrorCode result = FWG_NO_ERROR;
+	
+	btScalar mass = 0;
+	btCollisionShape* pColShape = nullptr;
+	wxWord group = 1;
+	wxWord mask = 0xffff;
+	
+	void * tempPtr = nullptr;
+	if(FWG_FAILED(result = propMap.GetProperty(GAME_TAG_PARAM_PHYSICS_SHAPE, tempPtr)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Physics shape property '%s' was not found"), m_pPhysSystem->GetLogger()
+			, GAME_TAG_PARAM_PHYSICS_SHAPE, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	pColShape = static_cast<btCollisionShape*>(tempPtr);
+	
+	if(FWG_FAILED(result = propMap.GetProperty(GAME_TAG_PARAM_MASS, static_cast<float&>(mass))))
+	{
+		FWGLOG_WARNING_FORMAT(wxT("Physics shape property '%s' was not found"), m_pPhysSystem->GetLogger()
+			, GAME_TAG_PARAM_MASS, FWGLOG_ENDVAL);
+	}
+	
+	if(FWG_FAILED(result = propMap.GetProperty(GAME_TAG_PARAM_GROUP, group)))
+	{
+		FWGLOG_INFO_FORMAT(wxT("Physics shape property '%s' was not found"), m_pPhysSystem->GetLogger()
+			, GAME_TAG_PARAM_GROUP, FWGLOG_ENDVAL);
+	}
+	
+	if(FWG_FAILED(result = propMap.GetProperty(GAME_TAG_PARAM_GROUP_MASK, mask)))
+	{
+		FWGLOG_INFO_FORMAT(wxT("Physics shape property '%s' was not found"), m_pPhysSystem->GetLogger()
+			, GAME_TAG_PARAM_GROUP_MASK, FWGLOG_ENDVAL);
+	}
+	
+	if(mass > 0) 
+	{
 		btVector3 localInertia;
 		localInertia.setZero();
 
@@ -56,16 +92,20 @@ GameErrorCode PhysicsBase::Create(btScalar mass, btCollisionShape* pColShape)
 		m_pRigidBody = new btRigidBody(info);
 	}
 
-	if(m_pRigidBody == nullptr) {
+	if(m_pRigidBody == nullptr) 
+	{
 		return FWG_E_MEMORY_ALLOCATION_ERROR;
 	}
 
-	m_pPhysSystem->GetDynamicsWorld()->addRigidBody(m_pRigidBody);
+	m_pPhysSystem->GetDynamicsWorld()->addRigidBody(m_pRigidBody, group, mask);
 
 	// set pointer to this object
 	m_pRigidBody->setUserPointer(static_cast<void*>(this));
+	m_pRigidBody->setUserIndex(static_cast<int>(GetComponentId()));
 
 	return FWG_NO_ERROR;
+	
+	
 }
 
 GameErrorCode PhysicsBase::Load(wxXmlNode* pNode)
@@ -87,7 +127,9 @@ GameErrorCode PhysicsBase::Load(wxXmlNode* pNode)
 		pChild = pChild->GetNext();
 	}
 
-	return Create(static_cast<btScalar>(mass), pCollShape);
+	//return Create(static_cast<btScalar>(mass), pCollShape);
+	
+	return FWG_E_NOT_IMPLEMENTED_ERROR;
 }
 
 GameErrorCode PhysicsBase::Store(wxXmlNode* pParentNode)
@@ -144,3 +186,5 @@ GameErrorCode PhysicsBase::ReceiveMessage(TaskMessage& msg)
 {
 	return FWG_NO_ERROR;
 }
+
+

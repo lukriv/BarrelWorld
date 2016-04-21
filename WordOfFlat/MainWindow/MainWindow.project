@@ -38,6 +38,7 @@
     <File Name="gmainlogic.h"/>
     <File Name="gsettings.h"/>
     <File Name="gmmstate.h"/>
+    <File Name="gglobdefs.h"/>
   </VirtualDirectory>
   <Dependencies Name="Debug">
     <Project Name="GameSystem"/>
