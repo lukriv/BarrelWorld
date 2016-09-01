@@ -4,6 +4,7 @@
 #include <GameComp/gentitymgr.h>
 #include <GameComp/gutils.h>
 #include <GameComp/PhysicsComp/gphysutils.h>
+#include "../gglobdefs.h"
 
 const float MOVE_STEP_SIZE = 4.0f;
 const float FALL_STEP_SIZE = 1.0f;
@@ -74,7 +75,7 @@ void CharacterController::updateAction(btCollisionWorld* collisionWorld, btScala
 	
 
 	
-	btScalar distance = GamePhysicsUtils::ComputeGroundDistance(*m_pPhysSystem, *m_spKinematic);
+btScalar distance = GamePhysicsUtils::ComputeGroundDistance(*m_pPhysSystem, *m_spKinematic, GROUP_OBJECTS | GROUP_AVATARS | GROUP_STATICS, 0xffff);
 
 	bool onGround = true;
 	if(FWG_FAILED(result = m_spPropComp.In()->GetProperty(ONGROUND, onGround)))
@@ -151,5 +152,6 @@ btScalar CharacterController::GetActualAngle()
 }
 
 
-
-
+void CharacterController::ClickAction()
+{
+}

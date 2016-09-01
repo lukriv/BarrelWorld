@@ -28,6 +28,7 @@ public:
 
 private:
 	btScalar GetActualAngle();
+	void ClickAction();
 };
 
 #endif // __CHARACTER_PHYSICS_CONTROL_H__

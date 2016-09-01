@@ -448,3 +448,75 @@ GameErrorCode GameEntityFactory::CreateStaticBox(GameCompManager& compMgr, wxDwo
 	
 	return FWG_NO_ERROR;
 }
+
+GameErrorCode GameEntityFactory::CreateBullet(GameCompManager& compMgr, wxDword& bulletid, const btVector3& place)
+{
+	GameErrorCode result = FWG_NO_ERROR;
+	
+	wxDword entityId = compMgr.GetEntityManager().GetNewId();
+	boxid = entityId;
+	
+	RefObjSmPtr<TransformComponent>	spTransform;
+	RefObjSmPtr<RenderPosition> spRenderPosition;
+	RefObjSmPtr<RenderRigidBody> spRenderObject;
+	RefObjSmPtr<PhysicsBase> spPhysicsComp;
+	
+	if(FWG_FAILED(result = compMgr.GetEntityManager().GetTransformManager().CreateComponent(entityId, spTransform.OutRef())))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Create transform component failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	spTransform->GetData()->m_translate = place;
+	
+	// render position
+	if(FWG_FAILED(result = compMgr.GetEntityManager().GetRenderPosManager().CreateComponent(entityId, spTransform, spRenderPosition.OutRef())))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Create render position component failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	FWG_RETURN_FAIL( spRenderPosition->Create() );
+	
+	
+	
+	if(FWG_FAILED(result = compMgr.GetEntityManager().GetRenderObjManager().CreateComponent<RenderRigidBody>(entityId, spRenderPosition, spRenderObject.OutRef())))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Create render object component failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	GamePropertyContainer propCont(m_spLogger);
+	propCont.SetProperty(wxT("mesh"), wxT("TestingCube"));
+	propCont.SetProperty(wxT("material"), wxT("Test/ColourTest"));
+	propCont.SetProperty(wxT("shadows"), true);
+	
+	if(FWG_FAILED(result = spRenderObject->Create(propCont)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Create floor failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	
+	if(FWG_FAILED(result = compMgr.GetEntityManager().GetPhysicsManager().CreateComponent(entityId, spTransform, spPhysicsComp.OutRef())))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Create physics component failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	btCollisionShape *pColShape = new btBoxShape(btVector3(1.0f,1.0f,1.0f));	  
+	
+	propCont.RemoveAllProperties();
+	propCont.SetProperty(GAME_TAG_PARAM_PHYSICS_SHAPE, static_cast<void*>(pColShape));
+	propCont.SetProperty(GAME_TAG_PARAM_MASS, 1.0f);
+	propCont.SetProperty(GAME_TAG_PARAM_GROUP, GROUP_OBJECTS);
+	propCont.SetProperty(GAME_TAG_PARAM_GROUP_MASK, COLLIDE_OBJECTS);
+	
+	if(FWG_FAILED(result = spPhysicsComp->Create(propCont)))
+	{
+		FWGLOG_ERROR_FORMAT(wxT("Create floor physics failed: 0x%08x"), m_spLogger, result, FWGLOG_ENDVAL);
+		return result;
+	}
+	
+	return FWG_NO_ERROR;
+}

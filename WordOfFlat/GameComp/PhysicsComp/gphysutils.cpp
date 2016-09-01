@@ -3,13 +3,15 @@
 
 static const btScalar VECTOR_SIZE = 3000;
 
-btScalar GamePhysicsUtils::ComputeGroundDistance(GamePhysicsSystem& physSystem, PhysicsBase& physComponent)
+btScalar GamePhysicsUtils::ComputeGroundDistance(GamePhysicsSystem& physSystem, PhysicsBase& physComponent, wxWord groupFilter, wxWord maskFilter)
 {
 	btVector3 origin(physComponent.GetRigidBody()->getWorldTransform().getOrigin());
 	btVector3 end(origin.getX(), -VECTOR_SIZE, origin.getZ());
 	btVector3 min;
 	
 	btCollisionWorld::ClosestRayResultCallback callback(origin, end);
+	callback.m_collisionFilterGroup = groupFilter;
+	callback.m_collisionFilterMask = maskFilter;
 	
 	physSystem.GetDynamicsWorld()->rayTest(origin, end, callback);
 	

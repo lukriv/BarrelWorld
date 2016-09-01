@@ -24,7 +24,7 @@ public:
 	
 	GameErrorCode CreateAvatar(GameCompManager& compMgr, wxDword &avatarIndex, const btVector3& place = btVector3(0,2.0f,0));
 	
-	
+	GameErrorCode CreateBullet(GameCompManager& compMgr, wxDword &bulletid, const btVector3& place = btVector3(0,2.0f,0));
 	
 };
 

@@ -1,11 +1,10 @@
 #ifndef __GAME_GLOBAL_DEFINITIONS__H__
 #define __GAME_GLOBAL_DEFINITIONS__H__
 
-
-const static wxWord GROUP_STATICS = 1<<0;
-const static wxWord GROUP_AVATARS = 1<<1;
-const static wxWord GROUP_OBJECTS = 1<<2;
-const static wxWord GROUP_BULLETS = 1<<3;
+const static wxWord GROUP_STATICS = 1<<1;
+const static wxWord GROUP_AVATARS = 1<<2;
+const static wxWord GROUP_OBJECTS = 1<<3;
+const static wxWord GROUP_BULLETS = 1<<4;
 
 const static wxWord COLLIDE_STATICS = GROUP_AVATARS | GROUP_OBJECTS | GROUP_BULLETS;
 const static wxWord COLLIDE_AVATARS = GROUP_OBJECTS | GROUP_BULLETS | GROUP_STATICS;

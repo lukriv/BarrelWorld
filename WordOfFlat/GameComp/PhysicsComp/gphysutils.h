@@ -16,7 +16,7 @@ public:
 	 * 
 	 * @return How far is object above ground ( or another object )
 	 */
-	static btScalar ComputeGroundDistance(GamePhysicsSystem &physSystem, PhysicsBase &physComponent);
+	static btScalar ComputeGroundDistance(GamePhysicsSystem &physSystem, PhysicsBase &physComponent, wxWord groupFilter, wxWord maskFilter);
 	
 	
 	/**
