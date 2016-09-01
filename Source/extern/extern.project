@@ -1,0 +1,1072 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeLite_Project Name="extern" InternalType="">
+  <VirtualDirectory Name="vectorlib2">
+    <VirtualDirectory Name="altivec">
+      <File Name="../../extern/include/vectorlib2/altivec/load_vec_float4.h"/>
+      <File Name="../../extern/include/vectorlib2/altivec/load_vec_int4.h"/>
+      <File Name="../../extern/include/vectorlib2/altivec/load_vec_uint4.h"/>
+      <File Name="../../extern/include/vectorlib2/altivec/load_vec_unaligned.h"/>
+      <File Name="../../extern/include/vectorlib2/altivec/sqrtf_vec.h"/>
+      <File Name="../../extern/include/vectorlib2/altivec/store_vec_unaligned.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="nonvector">
+      <File Name="../../extern/include/vectorlib2/nonvector/load_vector.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/store_vector.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_add.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_all_eq.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_all_ge.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_all_gt.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_all_le.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_all_lt.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_and.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_andnot.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_any_eq.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_any_ge.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_any_gt.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_any_le.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_any_lt.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_any_ne.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_cmpeq.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_cmpge.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_cmpgt.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_cmple.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_cmplt.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_cvt.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_div.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_extract.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_insert.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_madd.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_max.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_min.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_mul.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_nmsub.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_nor.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_or.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_re.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_rsqrt.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_sel.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_shifts.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_splat.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_splats.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_sqrt.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_struct.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_sub.h"/>
+      <File Name="../../extern/include/vectorlib2/nonvector/vector_xor.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="sse">
+      <File Name="../../extern/include/vectorlib2/sse/vector_extract.h"/>
+      <File Name="../../extern/include/vectorlib2/sse/vector_insert.h"/>
+      <File Name="../../extern/include/vectorlib2/sse/vector_sse_max.h"/>
+      <File Name="../../extern/include/vectorlib2/sse/vector_sse_min.h"/>
+      <File Name="../../extern/include/vectorlib2/sse/vector_sse_splat.h"/>
+    </VirtualDirectory>
+    <File Name="../../extern/include/vectorlib2/vectoraritc.h"/>
+    <File Name="../../extern/include/vectorlib2/vectoraritf.h"/>
+    <File Name="../../extern/include/vectorlib2/vectoraritsi.h"/>
+    <File Name="../../extern/include/vectorlib2/vectoraritui.h"/>
+    <File Name="../../extern/include/vectorlib2/vectorcmpc.h"/>
+    <File Name="../../extern/include/vectorlib2/vectorcmpf.h"/>
+    <File Name="../../extern/include/vectorlib2/vectorcmpsi.h"/>
+    <File Name="../../extern/include/vectorlib2/vectorcmpui.h"/>
+    <File Name="../../extern/include/vectorlib2/vectorlib.h"/>
+    <File Name="../../extern/include/vectorlib2/vectorloadc.h"/>
+    <File Name="../../extern/include/vectorlib2/vectorloadf.h"/>
+    <File Name="../../extern/include/vectorlib2/vectorloadsi.h"/>
+    <File Name="../../extern/include/vectorlib2/vectorloadui.h"/>
+    <File Name="../../extern/include/vectorlib2/vectorlogicc.h"/>
+    <File Name="../../extern/include/vectorlib2/vectorlogicf.h"/>
+    <File Name="../../extern/include/vectorlib2/vectorlogicsi.h"/>
+    <File Name="../../extern/include/vectorlib2/vectorlogicui.h"/>
+    <File Name="../../extern/include/vectorlib2/vectormisc.h"/>
+    <File Name="../../extern/include/vectorlib2/vectorstruct.h"/>
+  </VirtualDirectory>
+  <VirtualDirectory Name="Urho3D">
+    <VirtualDirectory Name="ThirdParty">
+      <VirtualDirectory Name="SDL">
+        <VirtualDirectory Name="generated">
+          <File Name="../../extern/include/Urho3D/ThirdParty/SDL/generated/SDL_config.h"/>
+        </VirtualDirectory>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/begin_code.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/close_code.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_assert.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_atomic.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_audio.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_bits.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_blendmode.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_clipboard.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_config.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_config_android.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_config_iphoneos.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_config_macosx.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_config_minimal.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_config_pandora.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_config_psp.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_config_windows.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_config_winrt.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_config_wiz.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_copying.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_cpuinfo.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_egl.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_endian.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_error.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_events.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_filesystem.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_gamecontroller.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_gesture.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_haptic.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_hints.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_joystick.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_keyboard.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_keycode.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_loadso.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_log.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_main.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_messagebox.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_mouse.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_mutex.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_name.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_opengl.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_opengles.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_opengles2.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_opengles2_gl2.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_opengles2_gl2ext.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_opengles2_gl2platform.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_opengles2_khrplatform.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_opengl_glext.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_pixels.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_platform.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_power.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_quit.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_rect.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_render.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_revision.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_rwops.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_scancode.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_shape.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_stdinc.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_surface.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_system.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_syswm.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_thread.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_timer.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_touch.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_types.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_version.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SDL/SDL_video.h"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="kNet">
+        <VirtualDirectory Name="win32">
+          <File Name="../../extern/include/Urho3D/ThirdParty/kNet/win32/WS2Include.h"/>
+        </VirtualDirectory>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/64BitAllocDebugger.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/Alignment.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/Allocator.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/Array.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/Atomics.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/BasicSerializedDataTypes.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/BitOps.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/Clock.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/DataDeserializer.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/Datagram.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/DataSerializer.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/DebugMemoryLeakCheck.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/EndPoint.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/Event.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/EventArray.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/FragmentedTransferManager.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/IMessageHandler.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/INetworkServerListener.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/kNet.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/kNetBuildConfig.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/kNetFwd.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/Lockable.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/LockFreePoolAllocator.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/MaxHeap.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/MessageConnection.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/MessageListParser.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/NetException.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/Network.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/NetworkLogging.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/NetworkMessage.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/NetworkServer.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/NetworkSimulator.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/NetworkWorkerThread.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/OrderedHashTable.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/PolledTimer.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/RingBuffer.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/SequentialIntegerSet.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/SerializationStructCompiler.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/SerializedDataIterator.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/SharedPtr.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/Socket.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/Sort.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/SortCmp.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/StatsEventHierarchy.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/StdCMallocHeap.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/TCPMessageConnection.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/Thread.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/Types.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/UDPMessageConnection.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/VLEPacker.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/kNet/WaitFreeQueue.h"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="Bullet">
+        <VirtualDirectory Name="BulletDynamics">
+          <VirtualDirectory Name="Character">
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/Character/btCharacterControllerInterface.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/Character/btKinematicCharacterController.h"/>
+          </VirtualDirectory>
+          <VirtualDirectory Name="ConstraintSolver">
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/ConstraintSolver/btConeTwistConstraint.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/ConstraintSolver/btConstraintSolver.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/ConstraintSolver/btContactConstraint.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/ConstraintSolver/btContactSolverInfo.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/ConstraintSolver/btFixedConstraint.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/ConstraintSolver/btGearConstraint.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/ConstraintSolver/btGeneric6DofSpring2Constraint.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/ConstraintSolver/btGeneric6DofSpringConstraint.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/ConstraintSolver/btHinge2Constraint.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/ConstraintSolver/btHingeConstraint.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/ConstraintSolver/btJacobianEntry.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/ConstraintSolver/btNNCGConstraintSolver.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/ConstraintSolver/btPoint2PointConstraint.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/ConstraintSolver/btSliderConstraint.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/ConstraintSolver/btSolve2LinearConstraint.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/ConstraintSolver/btSolverBody.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/ConstraintSolver/btSolverConstraint.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/ConstraintSolver/btTypedConstraint.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/ConstraintSolver/btUniversalConstraint.h"/>
+          </VirtualDirectory>
+          <VirtualDirectory Name="Dynamics">
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/Dynamics/btActionInterface.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/Dynamics/btDynamicsWorld.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/Dynamics/btRigidBody.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/Dynamics/btSimpleDynamicsWorld.h"/>
+          </VirtualDirectory>
+          <VirtualDirectory Name="Featherstone">
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/Featherstone/btMultiBody.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/Featherstone/btMultiBodyConstraint.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/Featherstone/btMultiBodyConstraintSolver.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/Featherstone/btMultiBodyDynamicsWorld.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/Featherstone/btMultiBodyJointFeedback.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/Featherstone/btMultiBodyJointLimitConstraint.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/Featherstone/btMultiBodyJointMotor.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/Featherstone/btMultiBodyLink.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/Featherstone/btMultiBodyLinkCollider.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/Featherstone/btMultiBodyPoint2Point.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/Featherstone/btMultiBodySolverConstraint.h"/>
+          </VirtualDirectory>
+          <VirtualDirectory Name="MLCPSolvers">
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/MLCPSolvers/btDantzigLCP.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/MLCPSolvers/btDantzigSolver.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/MLCPSolvers/btLemkeAlgorithm.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/MLCPSolvers/btLemkeSolver.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/MLCPSolvers/btMLCPSolver.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/MLCPSolvers/btMLCPSolverInterface.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/MLCPSolvers/btPATHSolver.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/MLCPSolvers/btSolveProjectedGaussSeidel.h"/>
+          </VirtualDirectory>
+          <VirtualDirectory Name="Vehicle">
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/Vehicle/btRaycastVehicle.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/Vehicle/btVehicleRaycaster.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/Vehicle/btWheelInfo.h"/>
+          </VirtualDirectory>
+        </VirtualDirectory>
+        <VirtualDirectory Name="BulletCollision">
+          <VirtualDirectory Name="BroadphaseCollision">
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/BroadphaseCollision/btAxisSweep3.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/BroadphaseCollision/btBroadphaseInterface.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/BroadphaseCollision/btBroadphaseProxy.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/BroadphaseCollision/btCollisionAlgorithm.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/BroadphaseCollision/btDbvt.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/BroadphaseCollision/btDbvtBroadphase.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/BroadphaseCollision/btDispatcher.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/BroadphaseCollision/btMultiSapBroadphase.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/BroadphaseCollision/btOverlappingPairCache.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/BroadphaseCollision/btOverlappingPairCallback.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/BroadphaseCollision/btQuantizedBvh.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/BroadphaseCollision/btSimpleBroadphase.h"/>
+          </VirtualDirectory>
+          <VirtualDirectory Name="CollisionDispatch">
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionDispatch/btActivatingCollisionAlgorithm.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionDispatch/btBox2dBox2dCollisionAlgorithm.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionDispatch/btBoxBoxCollisionAlgorithm.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionDispatch/btBoxBoxDetector.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionDispatch/btCollisionConfiguration.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionDispatch/btCollisionCreateFunc.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionDispatch/btCollisionDispatcher.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionDispatch/btCollisionObject.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionDispatch/btCollisionObjectWrapper.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionDispatch/btCollisionWorld.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionDispatch/btCollisionWorldImporter.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionDispatch/btCompoundCollisionAlgorithm.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionDispatch/btCompoundCompoundCollisionAlgorithm.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionDispatch/btConvex2dConvex2dAlgorithm.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionDispatch/btConvexConcaveCollisionAlgorithm.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionDispatch/btConvexConvexAlgorithm.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionDispatch/btConvexPlaneCollisionAlgorithm.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionDispatch/btDefaultCollisionConfiguration.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionDispatch/btEmptyCollisionAlgorithm.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionDispatch/btGhostObject.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionDispatch/btHashedSimplePairCache.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionDispatch/btInternalEdgeUtility.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionDispatch/btManifoldResult.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionDispatch/btSimulationIslandManager.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionDispatch/btSphereBoxCollisionAlgorithm.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionDispatch/btSphereSphereCollisionAlgorithm.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionDispatch/btSphereTriangleCollisionAlgorithm.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionDispatch/btUnionFind.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionDispatch/SphereTriangleDetector.h"/>
+          </VirtualDirectory>
+          <VirtualDirectory Name="CollisionShapes">
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionShapes/btBox2dShape.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionShapes/btBoxShape.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionShapes/btBvhTriangleMeshShape.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionShapes/btCapsuleShape.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionShapes/btCollisionMargin.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionShapes/btCollisionShape.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionShapes/btCompoundShape.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionShapes/btConcaveShape.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionShapes/btConeShape.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionShapes/btConvex2dShape.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionShapes/btConvexHullShape.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionShapes/btConvexInternalShape.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionShapes/btConvexPointCloudShape.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionShapes/btConvexPolyhedron.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionShapes/btConvexShape.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionShapes/btConvexTriangleMeshShape.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionShapes/btCylinderShape.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionShapes/btEmptyShape.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionShapes/btMaterial.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionShapes/btMinkowskiSumShape.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionShapes/btMultimaterialTriangleMeshShape.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionShapes/btMultiSphereShape.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionShapes/btOptimizedBvh.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionShapes/btPolyhedralConvexShape.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionShapes/btScaledBvhTriangleMeshShape.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionShapes/btShapeHull.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionShapes/btSphereShape.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionShapes/btStaticPlaneShape.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionShapes/btStridingMeshInterface.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionShapes/btTetrahedronShape.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionShapes/btTriangleBuffer.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionShapes/btTriangleCallback.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionShapes/btTriangleIndexVertexArray.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionShapes/btTriangleIndexVertexMaterialArray.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionShapes/btTriangleInfoMap.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionShapes/btTriangleMesh.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionShapes/btTriangleMeshShape.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionShapes/btTriangleShape.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/CollisionShapes/btUniformScalingShape.h"/>
+          </VirtualDirectory>
+          <VirtualDirectory Name="Gimpact">
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/Gimpact/btBoxCollision.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/Gimpact/btClipPolygon.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/Gimpact/btCompoundFromGimpact.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/Gimpact/btContactProcessing.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/Gimpact/btGenericPoolAllocator.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/Gimpact/btGeometryOperations.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/Gimpact/btGImpactBvh.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/Gimpact/btGImpactCollisionAlgorithm.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/Gimpact/btGImpactMassUtil.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/Gimpact/btGImpactQuantizedBvh.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/Gimpact/btGImpactShape.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/Gimpact/btQuantization.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/Gimpact/btTriangleShapeEx.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/Gimpact/gim_array.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/Gimpact/gim_basic_geometry_operations.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/Gimpact/gim_bitset.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/Gimpact/gim_box_collision.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/Gimpact/gim_box_set.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/Gimpact/gim_clip_polygon.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/Gimpact/gim_contact.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/Gimpact/gim_geometry.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/Gimpact/gim_geom_types.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/Gimpact/gim_hash_table.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/Gimpact/gim_linear_math.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/Gimpact/gim_math.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/Gimpact/gim_memory.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/Gimpact/gim_radixsort.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/Gimpact/gim_tri_collision.h"/>
+          </VirtualDirectory>
+          <VirtualDirectory Name="NarrowPhaseCollision">
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/NarrowPhaseCollision/btComputeGjkEpaPenetration.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/NarrowPhaseCollision/btContinuousConvexCollision.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/NarrowPhaseCollision/btConvexCast.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/NarrowPhaseCollision/btConvexPenetrationDepthSolver.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/NarrowPhaseCollision/btDiscreteCollisionDetectorInterface.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/NarrowPhaseCollision/btGjkCollisionDescription.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/NarrowPhaseCollision/btGjkConvexCast.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/NarrowPhaseCollision/btGjkEpa2.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/NarrowPhaseCollision/btGjkEpa3.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/NarrowPhaseCollision/btGjkEpaPenetrationDepthSolver.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/NarrowPhaseCollision/btGjkPairDetector.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/NarrowPhaseCollision/btManifoldPoint.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/NarrowPhaseCollision/btMinkowskiPenetrationDepthSolver.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/NarrowPhaseCollision/btMprPenetration.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/NarrowPhaseCollision/btPersistentManifold.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/NarrowPhaseCollision/btPointCollector.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/NarrowPhaseCollision/btPolyhedralContactClipping.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/NarrowPhaseCollision/btRaycastCallback.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/NarrowPhaseCollision/btSimplexSolverInterface.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/NarrowPhaseCollision/btSubSimplexConvexCast.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/NarrowPhaseCollision/btVoronoiSimplexSolver.h"/>
+          </VirtualDirectory>
+        </VirtualDirectory>
+        <VirtualDirectory Name="BulletSoftBody">
+          <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletSoftBody/btDefaultSoftBodySolver.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletSoftBody/btSoftBody.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletSoftBody/btSoftBodyConcaveCollisionAlgorithm.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletSoftBody/btSoftBodyData.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletSoftBody/btSoftBodyHelpers.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletSoftBody/btSoftBodyInternals.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletSoftBody/btSoftBodyRigidBodyCollisionConfiguration.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletSoftBody/btSoftBodySolvers.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletSoftBody/btSoftBodySolverVertexBuffer.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletSoftBody/btSoftRigidCollisionAlgorithm.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletSoftBody/btSoftRigidDynamicsWorld.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletSoftBody/btSoftSoftCollisionAlgorithm.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletSoftBody/btSparseSDF.h"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="LinearMath">
+          <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/LinearMath/btAabbUtil2.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/LinearMath/btAlignedAllocator.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/LinearMath/btAlignedObjectArray.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/LinearMath/btConvexHull.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/LinearMath/btConvexHullComputer.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/LinearMath/btCpuFeatureUtility.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/LinearMath/btDefaultMotionState.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/LinearMath/btGeometryUtil.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/LinearMath/btGrahamScan2dConvexHull.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/LinearMath/btHashMap.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/LinearMath/btIDebugDraw.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/LinearMath/btList.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/LinearMath/btMatrix3x3.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/LinearMath/btMatrixX.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/LinearMath/btMinMax.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/LinearMath/btMotionState.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/LinearMath/btPolarDecomposition.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/LinearMath/btPoolAllocator.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/LinearMath/btQuadWord.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/LinearMath/btQuaternion.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/LinearMath/btQuickprof.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/LinearMath/btRandom.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/LinearMath/btScalar.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/LinearMath/btSerializer.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/LinearMath/btSpatialAlgebra.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/LinearMath/btStackAlloc.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/LinearMath/btTransform.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/LinearMath/btTransformUtil.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/LinearMath/btVector3.h"/>
+        </VirtualDirectory>
+        <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/btBulletCollisionCommon.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/btBulletDynamicsCommon.h"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="Box2D">
+        <VirtualDirectory Name="Dynamics">
+          <VirtualDirectory Name="Contacts">
+            <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Dynamics/Contacts/b2ChainAndCircleContact.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Dynamics/Contacts/b2ChainAndPolygonContact.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Dynamics/Contacts/b2CircleContact.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Dynamics/Contacts/b2Contact.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Dynamics/Contacts/b2ContactSolver.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Dynamics/Contacts/b2EdgeAndCircleContact.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Dynamics/Contacts/b2EdgeAndPolygonContact.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Dynamics/Contacts/b2PolygonAndCircleContact.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Dynamics/Contacts/b2PolygonContact.h"/>
+          </VirtualDirectory>
+          <VirtualDirectory Name="Joints">
+            <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Dynamics/Joints/b2DistanceJoint.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Dynamics/Joints/b2FrictionJoint.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Dynamics/Joints/b2GearJoint.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Dynamics/Joints/b2Joint.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Dynamics/Joints/b2MotorJoint.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Dynamics/Joints/b2MouseJoint.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Dynamics/Joints/b2PrismaticJoint.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Dynamics/Joints/b2PulleyJoint.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Dynamics/Joints/b2RevoluteJoint.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Dynamics/Joints/b2RopeJoint.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Dynamics/Joints/b2WeldJoint.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Dynamics/Joints/b2WheelJoint.h"/>
+          </VirtualDirectory>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Dynamics/b2Body.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Dynamics/b2ContactManager.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Dynamics/b2Fixture.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Dynamics/b2Island.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Dynamics/b2TimeStep.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Dynamics/b2World.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Dynamics/b2WorldCallbacks.h"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="Collision">
+          <VirtualDirectory Name="Shapes">
+            <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Collision/Shapes/b2ChainShape.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Collision/Shapes/b2CircleShape.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Collision/Shapes/b2EdgeShape.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Collision/Shapes/b2PolygonShape.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Collision/Shapes/b2Shape.h"/>
+          </VirtualDirectory>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Collision/b2BroadPhase.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Collision/b2Collision.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Collision/b2Distance.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Collision/b2DynamicTree.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Collision/b2TimeOfImpact.h"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="Common">
+          <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Common/b2BlockAllocator.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Common/b2Draw.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Common/b2GrowableStack.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Common/b2Math.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Common/b2Settings.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Common/b2StackAllocator.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Common/b2Timer.h"/>
+        </VirtualDirectory>
+        <VirtualDirectory Name="Rope">
+          <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Rope/b2Rope.h"/>
+        </VirtualDirectory>
+        <File Name="../../extern/include/Urho3D/ThirdParty/Box2D/Box2D.h"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="AngelScript">
+        <File Name="../../extern/include/Urho3D/ThirdParty/AngelScript/angelscript.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/AngelScript/wrap.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/AngelScript/wrap16.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/AngelScript/wrapmacros.h"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="Lua">
+        <File Name="../../extern/include/Urho3D/ThirdParty/Lua/lapi.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/Lua/lauxlib.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/Lua/lcode.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/Lua/ldebug.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/Lua/ldo.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/Lua/lfunc.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/Lua/lgc.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/Lua/llex.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/Lua/llimits.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/Lua/lmem.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/Lua/lobject.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/Lua/lopcodes.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/Lua/lparser.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/Lua/lstate.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/Lua/lstring.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/Lua/ltable.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/Lua/ltm.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/Lua/lua.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/Lua/luaconf.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/Lua/lualib.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/Lua/lundump.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/Lua/lvm.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/Lua/lzio.h"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="SQLite">
+        <File Name="../../extern/include/Urho3D/ThirdParty/SQLite/sqlite3.h"/>
+        <File Name="../../extern/include/Urho3D/ThirdParty/SQLite/sqlite3ext.h"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="toluapp">
+        <File Name="../../extern/include/Urho3D/ThirdParty/toluapp/tolua++.h"/>
+      </VirtualDirectory>
+    </VirtualDirectory>
+    <VirtualDirectory Name="Graphics">
+      <VirtualDirectory Name="Direct3D11">
+        <File Name="../../extern/include/Urho3D/Graphics/Direct3D11/D3D11GraphicsImpl.h"/>
+        <File Name="../../extern/include/Urho3D/Graphics/Direct3D11/D3D11ShaderProgram.h"/>
+        <File Name="../../extern/include/Urho3D/Graphics/Direct3D11/D3D11VertexDeclaration.h"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="Direct3D9">
+        <File Name="../../extern/include/Urho3D/Graphics/Direct3D9/D3D9GraphicsImpl.h"/>
+        <File Name="../../extern/include/Urho3D/Graphics/Direct3D9/D3D9ShaderProgram.h"/>
+        <File Name="../../extern/include/Urho3D/Graphics/Direct3D9/D3D9VertexDeclaration.h"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="OpenGL">
+        <File Name="../../extern/include/Urho3D/Graphics/OpenGL/OGLGraphicsImpl.h"/>
+        <File Name="../../extern/include/Urho3D/Graphics/OpenGL/OGLShaderProgram.h"/>
+      </VirtualDirectory>
+      <File Name="../../extern/include/Urho3D/Graphics/AnimatedModel.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/Animation.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/AnimationController.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/AnimationState.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/Batch.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/BillboardSet.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/Camera.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/ConstantBuffer.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/CustomGeometry.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/DebugRenderer.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/DecalSet.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/Drawable.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/DrawableEvents.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/Geometry.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/GPUObject.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/Graphics.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/GraphicsDefs.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/GraphicsEvents.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/GraphicsImpl.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/IndexBuffer.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/Light.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/Material.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/Model.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/OcclusionBuffer.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/Octree.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/OctreeQuery.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/ParticleEffect.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/ParticleEmitter.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/Renderer.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/RenderPath.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/RenderSurface.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/RibbonTrail.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/Shader.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/ShaderPrecache.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/ShaderProgram.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/ShaderVariation.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/Skeleton.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/Skybox.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/StaticModel.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/StaticModelGroup.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/Tangent.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/Technique.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/Terrain.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/TerrainPatch.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/Texture.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/Texture2D.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/Texture2DArray.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/Texture3D.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/TextureCube.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/VertexBuffer.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/VertexDeclaration.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/View.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/Viewport.h"/>
+      <File Name="../../extern/include/Urho3D/Graphics/Zone.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="Database">
+      <VirtualDirectory Name="ODBC">
+        <File Name="../../extern/include/Urho3D/Database/ODBC/ODBCConnection.h"/>
+        <File Name="../../extern/include/Urho3D/Database/ODBC/ODBCResult.h"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="SQLite">
+        <File Name="../../extern/include/Urho3D/Database/SQLite/SQLiteConnection.h"/>
+        <File Name="../../extern/include/Urho3D/Database/SQLite/SQLiteResult.h"/>
+      </VirtualDirectory>
+      <File Name="../../extern/include/Urho3D/Database/Database.h"/>
+      <File Name="../../extern/include/Urho3D/Database/DatabaseEvents.h"/>
+      <File Name="../../extern/include/Urho3D/Database/DbConnection.h"/>
+      <File Name="../../extern/include/Urho3D/Database/DbResult.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="AngelScript">
+      <File Name="../../extern/include/Urho3D/AngelScript/Addons.h"/>
+      <File Name="../../extern/include/Urho3D/AngelScript/APITemplates.h"/>
+      <File Name="../../extern/include/Urho3D/AngelScript/Script.h"/>
+      <File Name="../../extern/include/Urho3D/AngelScript/ScriptAPI.h"/>
+      <File Name="../../extern/include/Urho3D/AngelScript/ScriptEventListener.h"/>
+      <File Name="../../extern/include/Urho3D/AngelScript/ScriptFile.h"/>
+      <File Name="../../extern/include/Urho3D/AngelScript/ScriptInstance.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="Audio">
+      <File Name="../../extern/include/Urho3D/Audio/Audio.h"/>
+      <File Name="../../extern/include/Urho3D/Audio/AudioDefs.h"/>
+      <File Name="../../extern/include/Urho3D/Audio/AudioEvents.h"/>
+      <File Name="../../extern/include/Urho3D/Audio/BufferedSoundStream.h"/>
+      <File Name="../../extern/include/Urho3D/Audio/OggVorbisSoundStream.h"/>
+      <File Name="../../extern/include/Urho3D/Audio/Sound.h"/>
+      <File Name="../../extern/include/Urho3D/Audio/SoundListener.h"/>
+      <File Name="../../extern/include/Urho3D/Audio/SoundSource.h"/>
+      <File Name="../../extern/include/Urho3D/Audio/SoundSource3D.h"/>
+      <File Name="../../extern/include/Urho3D/Audio/SoundStream.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="Container">
+      <File Name="../../extern/include/Urho3D/Container/Allocator.h"/>
+      <File Name="../../extern/include/Urho3D/Container/ArrayPtr.h"/>
+      <File Name="../../extern/include/Urho3D/Container/ForEach.h"/>
+      <File Name="../../extern/include/Urho3D/Container/Hash.h"/>
+      <File Name="../../extern/include/Urho3D/Container/HashBase.h"/>
+      <File Name="../../extern/include/Urho3D/Container/HashMap.h"/>
+      <File Name="../../extern/include/Urho3D/Container/HashSet.h"/>
+      <File Name="../../extern/include/Urho3D/Container/LinkedList.h"/>
+      <File Name="../../extern/include/Urho3D/Container/List.h"/>
+      <File Name="../../extern/include/Urho3D/Container/ListBase.h"/>
+      <File Name="../../extern/include/Urho3D/Container/Pair.h"/>
+      <File Name="../../extern/include/Urho3D/Container/Ptr.h"/>
+      <File Name="../../extern/include/Urho3D/Container/RefCounted.h"/>
+      <File Name="../../extern/include/Urho3D/Container/Sort.h"/>
+      <File Name="../../extern/include/Urho3D/Container/Str.h"/>
+      <File Name="../../extern/include/Urho3D/Container/Swap.h"/>
+      <File Name="../../extern/include/Urho3D/Container/Vector.h"/>
+      <File Name="../../extern/include/Urho3D/Container/VectorBase.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="Core">
+      <File Name="../../extern/include/Urho3D/Core/Attribute.h"/>
+      <File Name="../../extern/include/Urho3D/Core/Condition.h"/>
+      <File Name="../../extern/include/Urho3D/Core/Context.h"/>
+      <File Name="../../extern/include/Urho3D/Core/CoreEvents.h"/>
+      <File Name="../../extern/include/Urho3D/Core/EventProfiler.h"/>
+      <File Name="../../extern/include/Urho3D/Core/Main.h"/>
+      <File Name="../../extern/include/Urho3D/Core/MiniDump.h"/>
+      <File Name="../../extern/include/Urho3D/Core/Mutex.h"/>
+      <File Name="../../extern/include/Urho3D/Core/Object.h"/>
+      <File Name="../../extern/include/Urho3D/Core/ProcessUtils.h"/>
+      <File Name="../../extern/include/Urho3D/Core/Profiler.h"/>
+      <File Name="../../extern/include/Urho3D/Core/Spline.h"/>
+      <File Name="../../extern/include/Urho3D/Core/StringUtils.h"/>
+      <File Name="../../extern/include/Urho3D/Core/Thread.h"/>
+      <File Name="../../extern/include/Urho3D/Core/Timer.h"/>
+      <File Name="../../extern/include/Urho3D/Core/Variant.h"/>
+      <File Name="../../extern/include/Urho3D/Core/WorkQueue.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="Engine">
+      <File Name="../../extern/include/Urho3D/Engine/Application.h"/>
+      <File Name="../../extern/include/Urho3D/Engine/Console.h"/>
+      <File Name="../../extern/include/Urho3D/Engine/DebugHud.h"/>
+      <File Name="../../extern/include/Urho3D/Engine/Engine.h"/>
+      <File Name="../../extern/include/Urho3D/Engine/EngineEvents.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="Input">
+      <File Name="../../extern/include/Urho3D/Input/Controls.h"/>
+      <File Name="../../extern/include/Urho3D/Input/Input.h"/>
+      <File Name="../../extern/include/Urho3D/Input/InputEvents.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="IO">
+      <File Name="../../extern/include/Urho3D/IO/Compression.h"/>
+      <File Name="../../extern/include/Urho3D/IO/Deserializer.h"/>
+      <File Name="../../extern/include/Urho3D/IO/File.h"/>
+      <File Name="../../extern/include/Urho3D/IO/FileSystem.h"/>
+      <File Name="../../extern/include/Urho3D/IO/FileWatcher.h"/>
+      <File Name="../../extern/include/Urho3D/IO/IOEvents.h"/>
+      <File Name="../../extern/include/Urho3D/IO/Log.h"/>
+      <File Name="../../extern/include/Urho3D/IO/MacFileWatcher.h"/>
+      <File Name="../../extern/include/Urho3D/IO/MemoryBuffer.h"/>
+      <File Name="../../extern/include/Urho3D/IO/NamedPipe.h"/>
+      <File Name="../../extern/include/Urho3D/IO/PackageFile.h"/>
+      <File Name="../../extern/include/Urho3D/IO/RWOpsWrapper.h"/>
+      <File Name="../../extern/include/Urho3D/IO/Serializer.h"/>
+      <File Name="../../extern/include/Urho3D/IO/VectorBuffer.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="LuaScript">
+      <File Name="../../extern/include/Urho3D/LuaScript/LuaFile.h"/>
+      <File Name="../../extern/include/Urho3D/LuaScript/LuaFunction.h"/>
+      <File Name="../../extern/include/Urho3D/LuaScript/LuaScript.h"/>
+      <File Name="../../extern/include/Urho3D/LuaScript/LuaScriptEventInvoker.h"/>
+      <File Name="../../extern/include/Urho3D/LuaScript/LuaScriptEventListener.h"/>
+      <File Name="../../extern/include/Urho3D/LuaScript/LuaScriptInstance.h"/>
+      <File Name="../../extern/include/Urho3D/LuaScript/ToluaUtils.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="Math">
+      <File Name="../../extern/include/Urho3D/Math/AreaAllocator.h"/>
+      <File Name="../../extern/include/Urho3D/Math/BoundingBox.h"/>
+      <File Name="../../extern/include/Urho3D/Math/Color.h"/>
+      <File Name="../../extern/include/Urho3D/Math/Frustum.h"/>
+      <File Name="../../extern/include/Urho3D/Math/MathDefs.h"/>
+      <File Name="../../extern/include/Urho3D/Math/Matrix2.h"/>
+      <File Name="../../extern/include/Urho3D/Math/Matrix3.h"/>
+      <File Name="../../extern/include/Urho3D/Math/Matrix3x4.h"/>
+      <File Name="../../extern/include/Urho3D/Math/Matrix4.h"/>
+      <File Name="../../extern/include/Urho3D/Math/Plane.h"/>
+      <File Name="../../extern/include/Urho3D/Math/Polyhedron.h"/>
+      <File Name="../../extern/include/Urho3D/Math/Quaternion.h"/>
+      <File Name="../../extern/include/Urho3D/Math/Random.h"/>
+      <File Name="../../extern/include/Urho3D/Math/Ray.h"/>
+      <File Name="../../extern/include/Urho3D/Math/Rect.h"/>
+      <File Name="../../extern/include/Urho3D/Math/Sphere.h"/>
+      <File Name="../../extern/include/Urho3D/Math/StringHash.h"/>
+      <File Name="../../extern/include/Urho3D/Math/Vector2.h"/>
+      <File Name="../../extern/include/Urho3D/Math/Vector3.h"/>
+      <File Name="../../extern/include/Urho3D/Math/Vector4.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="Navigation">
+      <File Name="../../extern/include/Urho3D/Navigation/CrowdAgent.h"/>
+      <File Name="../../extern/include/Urho3D/Navigation/CrowdManager.h"/>
+      <File Name="../../extern/include/Urho3D/Navigation/DynamicNavigationMesh.h"/>
+      <File Name="../../extern/include/Urho3D/Navigation/NavArea.h"/>
+      <File Name="../../extern/include/Urho3D/Navigation/NavBuildData.h"/>
+      <File Name="../../extern/include/Urho3D/Navigation/Navigable.h"/>
+      <File Name="../../extern/include/Urho3D/Navigation/NavigationEvents.h"/>
+      <File Name="../../extern/include/Urho3D/Navigation/NavigationMesh.h"/>
+      <File Name="../../extern/include/Urho3D/Navigation/Obstacle.h"/>
+      <File Name="../../extern/include/Urho3D/Navigation/OffMeshConnection.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="Network">
+      <File Name="../../extern/include/Urho3D/Network/Connection.h"/>
+      <File Name="../../extern/include/Urho3D/Network/HttpRequest.h"/>
+      <File Name="../../extern/include/Urho3D/Network/Network.h"/>
+      <File Name="../../extern/include/Urho3D/Network/NetworkEvents.h"/>
+      <File Name="../../extern/include/Urho3D/Network/NetworkPriority.h"/>
+      <File Name="../../extern/include/Urho3D/Network/Protocol.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="Physics">
+      <File Name="../../extern/include/Urho3D/Physics/CollisionShape.h"/>
+      <File Name="../../extern/include/Urho3D/Physics/Constraint.h"/>
+      <File Name="../../extern/include/Urho3D/Physics/PhysicsEvents.h"/>
+      <File Name="../../extern/include/Urho3D/Physics/PhysicsUtils.h"/>
+      <File Name="../../extern/include/Urho3D/Physics/PhysicsWorld.h"/>
+      <File Name="../../extern/include/Urho3D/Physics/RigidBody.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="Resource">
+      <File Name="../../extern/include/Urho3D/Resource/BackgroundLoader.h"/>
+      <File Name="../../extern/include/Urho3D/Resource/Decompress.h"/>
+      <File Name="../../extern/include/Urho3D/Resource/Image.h"/>
+      <File Name="../../extern/include/Urho3D/Resource/JSONFile.h"/>
+      <File Name="../../extern/include/Urho3D/Resource/JSONValue.h"/>
+      <File Name="../../extern/include/Urho3D/Resource/Localization.h"/>
+      <File Name="../../extern/include/Urho3D/Resource/PListFile.h"/>
+      <File Name="../../extern/include/Urho3D/Resource/Resource.h"/>
+      <File Name="../../extern/include/Urho3D/Resource/ResourceCache.h"/>
+      <File Name="../../extern/include/Urho3D/Resource/ResourceEvents.h"/>
+      <File Name="../../extern/include/Urho3D/Resource/XMLElement.h"/>
+      <File Name="../../extern/include/Urho3D/Resource/XMLFile.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="Scene">
+      <File Name="../../extern/include/Urho3D/Scene/Animatable.h"/>
+      <File Name="../../extern/include/Urho3D/Scene/AnimationDefs.h"/>
+      <File Name="../../extern/include/Urho3D/Scene/Component.h"/>
+      <File Name="../../extern/include/Urho3D/Scene/LogicComponent.h"/>
+      <File Name="../../extern/include/Urho3D/Scene/Node.h"/>
+      <File Name="../../extern/include/Urho3D/Scene/ObjectAnimation.h"/>
+      <File Name="../../extern/include/Urho3D/Scene/ReplicationState.h"/>
+      <File Name="../../extern/include/Urho3D/Scene/Scene.h"/>
+      <File Name="../../extern/include/Urho3D/Scene/SceneEvents.h"/>
+      <File Name="../../extern/include/Urho3D/Scene/SceneResolver.h"/>
+      <File Name="../../extern/include/Urho3D/Scene/Serializable.h"/>
+      <File Name="../../extern/include/Urho3D/Scene/SmoothedTransform.h"/>
+      <File Name="../../extern/include/Urho3D/Scene/SplinePath.h"/>
+      <File Name="../../extern/include/Urho3D/Scene/UnknownComponent.h"/>
+      <File Name="../../extern/include/Urho3D/Scene/ValueAnimation.h"/>
+      <File Name="../../extern/include/Urho3D/Scene/ValueAnimationInfo.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="UI">
+      <File Name="../../extern/include/Urho3D/UI/BorderImage.h"/>
+      <File Name="../../extern/include/Urho3D/UI/Button.h"/>
+      <File Name="../../extern/include/Urho3D/UI/CheckBox.h"/>
+      <File Name="../../extern/include/Urho3D/UI/Cursor.h"/>
+      <File Name="../../extern/include/Urho3D/UI/DropDownList.h"/>
+      <File Name="../../extern/include/Urho3D/UI/FileSelector.h"/>
+      <File Name="../../extern/include/Urho3D/UI/Font.h"/>
+      <File Name="../../extern/include/Urho3D/UI/FontFace.h"/>
+      <File Name="../../extern/include/Urho3D/UI/FontFaceBitmap.h"/>
+      <File Name="../../extern/include/Urho3D/UI/FontFaceFreeType.h"/>
+      <File Name="../../extern/include/Urho3D/UI/LineEdit.h"/>
+      <File Name="../../extern/include/Urho3D/UI/ListView.h"/>
+      <File Name="../../extern/include/Urho3D/UI/Menu.h"/>
+      <File Name="../../extern/include/Urho3D/UI/MessageBox.h"/>
+      <File Name="../../extern/include/Urho3D/UI/ScrollBar.h"/>
+      <File Name="../../extern/include/Urho3D/UI/ScrollView.h"/>
+      <File Name="../../extern/include/Urho3D/UI/Slider.h"/>
+      <File Name="../../extern/include/Urho3D/UI/Sprite.h"/>
+      <File Name="../../extern/include/Urho3D/UI/Text.h"/>
+      <File Name="../../extern/include/Urho3D/UI/Text3D.h"/>
+      <File Name="../../extern/include/Urho3D/UI/ToolTip.h"/>
+      <File Name="../../extern/include/Urho3D/UI/UI.h"/>
+      <File Name="../../extern/include/Urho3D/UI/UIBatch.h"/>
+      <File Name="../../extern/include/Urho3D/UI/UIElement.h"/>
+      <File Name="../../extern/include/Urho3D/UI/UIEvents.h"/>
+      <File Name="../../extern/include/Urho3D/UI/View3D.h"/>
+      <File Name="../../extern/include/Urho3D/UI/Window.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="Urho2D">
+      <File Name="../../extern/include/Urho3D/Urho2D/AnimatedSprite2D.h"/>
+      <File Name="../../extern/include/Urho3D/Urho2D/AnimationSet2D.h"/>
+      <File Name="../../extern/include/Urho3D/Urho2D/CollisionBox2D.h"/>
+      <File Name="../../extern/include/Urho3D/Urho2D/CollisionChain2D.h"/>
+      <File Name="../../extern/include/Urho3D/Urho2D/CollisionCircle2D.h"/>
+      <File Name="../../extern/include/Urho3D/Urho2D/CollisionEdge2D.h"/>
+      <File Name="../../extern/include/Urho3D/Urho2D/CollisionPolygon2D.h"/>
+      <File Name="../../extern/include/Urho3D/Urho2D/CollisionShape2D.h"/>
+      <File Name="../../extern/include/Urho3D/Urho2D/Constraint2D.h"/>
+      <File Name="../../extern/include/Urho3D/Urho2D/ConstraintDistance2D.h"/>
+      <File Name="../../extern/include/Urho3D/Urho2D/ConstraintFriction2D.h"/>
+      <File Name="../../extern/include/Urho3D/Urho2D/ConstraintGear2D.h"/>
+      <File Name="../../extern/include/Urho3D/Urho2D/ConstraintMotor2D.h"/>
+      <File Name="../../extern/include/Urho3D/Urho2D/ConstraintMouse2D.h"/>
+      <File Name="../../extern/include/Urho3D/Urho2D/ConstraintPrismatic2D.h"/>
+      <File Name="../../extern/include/Urho3D/Urho2D/ConstraintPulley2D.h"/>
+      <File Name="../../extern/include/Urho3D/Urho2D/ConstraintRevolute2D.h"/>
+      <File Name="../../extern/include/Urho3D/Urho2D/ConstraintRope2D.h"/>
+      <File Name="../../extern/include/Urho3D/Urho2D/ConstraintWeld2D.h"/>
+      <File Name="../../extern/include/Urho3D/Urho2D/ConstraintWheel2D.h"/>
+      <File Name="../../extern/include/Urho3D/Urho2D/Drawable2D.h"/>
+      <File Name="../../extern/include/Urho3D/Urho2D/ParticleEffect2D.h"/>
+      <File Name="../../extern/include/Urho3D/Urho2D/ParticleEmitter2D.h"/>
+      <File Name="../../extern/include/Urho3D/Urho2D/PhysicsEvents2D.h"/>
+      <File Name="../../extern/include/Urho3D/Urho2D/PhysicsUtils2D.h"/>
+      <File Name="../../extern/include/Urho3D/Urho2D/PhysicsWorld2D.h"/>
+      <File Name="../../extern/include/Urho3D/Urho2D/Renderer2D.h"/>
+      <File Name="../../extern/include/Urho3D/Urho2D/RigidBody2D.h"/>
+      <File Name="../../extern/include/Urho3D/Urho2D/Sprite2D.h"/>
+      <File Name="../../extern/include/Urho3D/Urho2D/SpriterData2D.h"/>
+      <File Name="../../extern/include/Urho3D/Urho2D/SpriterInstance2D.h"/>
+      <File Name="../../extern/include/Urho3D/Urho2D/SpriteSheet2D.h"/>
+      <File Name="../../extern/include/Urho3D/Urho2D/StaticSprite2D.h"/>
+      <File Name="../../extern/include/Urho3D/Urho2D/TileMap2D.h"/>
+      <File Name="../../extern/include/Urho3D/Urho2D/TileMapDefs2D.h"/>
+      <File Name="../../extern/include/Urho3D/Urho2D/TileMapLayer2D.h"/>
+      <File Name="../../extern/include/Urho3D/Urho2D/TmxFile2D.h"/>
+      <File Name="../../extern/include/Urho3D/Urho2D/Urho2D.h"/>
+    </VirtualDirectory>
+    <File Name="../../extern/include/Urho3D/DebugNew.h"/>
+    <File Name="../../extern/include/Urho3D/LibraryInfo.h"/>
+    <File Name="../../extern/include/Urho3D/librevision.h"/>
+    <File Name="../../extern/include/Urho3D/Precompiled.h"/>
+    <File Name="../../extern/include/Urho3D/Urho3D.h"/>
+    <File Name="../../extern/include/Urho3D/Urho3DAll.h"/>
+  </VirtualDirectory>
+  <VirtualDirectory Name="UnitTest++">
+    <VirtualDirectory Name="Win32">
+      <File Name="../../extern/include/UnitTest++/Win32/TimeHelpers.h"/>
+    </VirtualDirectory>
+    <File Name="../../extern/include/UnitTest++/AssertException.h"/>
+    <File Name="../../extern/include/UnitTest++/CheckMacros.h"/>
+    <File Name="../../extern/include/UnitTest++/Checks.h"/>
+    <File Name="../../extern/include/UnitTest++/CompositeTestReporter.h"/>
+    <File Name="../../extern/include/UnitTest++/Config.h"/>
+    <File Name="../../extern/include/UnitTest++/CurrentTest.h"/>
+    <File Name="../../extern/include/UnitTest++/DeferredTestReporter.h"/>
+    <File Name="../../extern/include/UnitTest++/DeferredTestResult.h"/>
+    <File Name="../../extern/include/UnitTest++/ExceptionMacros.h"/>
+    <File Name="../../extern/include/UnitTest++/ExecuteTest.h"/>
+    <File Name="../../extern/include/UnitTest++/HelperMacros.h"/>
+    <File Name="../../extern/include/UnitTest++/MemoryOutStream.h"/>
+    <File Name="../../extern/include/UnitTest++/ReportAssert.h"/>
+    <File Name="../../extern/include/UnitTest++/ReportAssertImpl.h"/>
+    <File Name="../../extern/include/UnitTest++/Test.h"/>
+    <File Name="../../extern/include/UnitTest++/TestDetails.h"/>
+    <File Name="../../extern/include/UnitTest++/TestList.h"/>
+    <File Name="../../extern/include/UnitTest++/TestMacros.h"/>
+    <File Name="../../extern/include/UnitTest++/TestReporter.h"/>
+    <File Name="../../extern/include/UnitTest++/TestReporterStdout.h"/>
+    <File Name="../../extern/include/UnitTest++/TestResults.h"/>
+    <File Name="../../extern/include/UnitTest++/TestRunner.h"/>
+    <File Name="../../extern/include/UnitTest++/TestSuite.h"/>
+    <File Name="../../extern/include/UnitTest++/TimeConstraint.h"/>
+    <File Name="../../extern/include/UnitTest++/TimeHelpers.h"/>
+    <File Name="../../extern/include/UnitTest++/UnitTest++.h"/>
+    <File Name="../../extern/include/UnitTest++/UnitTestPP.h"/>
+    <File Name="../../extern/include/UnitTest++/XmlTestReporter.h"/>
+  </VirtualDirectory>
+  <VirtualDirectory Name="SDL">
+    <VirtualDirectory Name="generated">
+      <File Name="../../extern/include/SDL/generated/SDL_config.h"/>
+    </VirtualDirectory>
+    <File Name="../../extern/include/SDL/begin_code.h"/>
+    <File Name="../../extern/include/SDL/close_code.h"/>
+    <File Name="../../extern/include/SDL/SDL.h"/>
+    <File Name="../../extern/include/SDL/SDL_assert.h"/>
+    <File Name="../../extern/include/SDL/SDL_atomic.h"/>
+    <File Name="../../extern/include/SDL/SDL_audio.h"/>
+    <File Name="../../extern/include/SDL/SDL_bits.h"/>
+    <File Name="../../extern/include/SDL/SDL_blendmode.h"/>
+    <File Name="../../extern/include/SDL/SDL_clipboard.h"/>
+    <File Name="../../extern/include/SDL/SDL_config.h"/>
+    <File Name="../../extern/include/SDL/SDL_config_android.h"/>
+    <File Name="../../extern/include/SDL/SDL_config_iphoneos.h"/>
+    <File Name="../../extern/include/SDL/SDL_config_macosx.h"/>
+    <File Name="../../extern/include/SDL/SDL_config_minimal.h"/>
+    <File Name="../../extern/include/SDL/SDL_config_pandora.h"/>
+    <File Name="../../extern/include/SDL/SDL_config_psp.h"/>
+    <File Name="../../extern/include/SDL/SDL_config_windows.h"/>
+    <File Name="../../extern/include/SDL/SDL_config_winrt.h"/>
+    <File Name="../../extern/include/SDL/SDL_config_wiz.h"/>
+    <File Name="../../extern/include/SDL/SDL_copying.h"/>
+    <File Name="../../extern/include/SDL/SDL_cpuinfo.h"/>
+    <File Name="../../extern/include/SDL/SDL_egl.h"/>
+    <File Name="../../extern/include/SDL/SDL_endian.h"/>
+    <File Name="../../extern/include/SDL/SDL_error.h"/>
+    <File Name="../../extern/include/SDL/SDL_events.h"/>
+    <File Name="../../extern/include/SDL/SDL_filesystem.h"/>
+    <File Name="../../extern/include/SDL/SDL_gamecontroller.h"/>
+    <File Name="../../extern/include/SDL/SDL_gesture.h"/>
+    <File Name="../../extern/include/SDL/SDL_haptic.h"/>
+    <File Name="../../extern/include/SDL/SDL_hints.h"/>
+    <File Name="../../extern/include/SDL/SDL_joystick.h"/>
+    <File Name="../../extern/include/SDL/SDL_keyboard.h"/>
+    <File Name="../../extern/include/SDL/SDL_keycode.h"/>
+    <File Name="../../extern/include/SDL/SDL_loadso.h"/>
+    <File Name="../../extern/include/SDL/SDL_log.h"/>
+    <File Name="../../extern/include/SDL/SDL_main.h"/>
+    <File Name="../../extern/include/SDL/SDL_messagebox.h"/>
+    <File Name="../../extern/include/SDL/SDL_mouse.h"/>
+    <File Name="../../extern/include/SDL/SDL_mutex.h"/>
+    <File Name="../../extern/include/SDL/SDL_name.h"/>
+    <File Name="../../extern/include/SDL/SDL_opengl.h"/>
+    <File Name="../../extern/include/SDL/SDL_opengles.h"/>
+    <File Name="../../extern/include/SDL/SDL_opengles2.h"/>
+    <File Name="../../extern/include/SDL/SDL_opengles2_gl2.h"/>
+    <File Name="../../extern/include/SDL/SDL_opengles2_gl2ext.h"/>
+    <File Name="../../extern/include/SDL/SDL_opengles2_gl2platform.h"/>
+    <File Name="../../extern/include/SDL/SDL_opengles2_khrplatform.h"/>
+    <File Name="../../extern/include/SDL/SDL_opengl_glext.h"/>
+    <File Name="../../extern/include/SDL/SDL_pixels.h"/>
+    <File Name="../../extern/include/SDL/SDL_platform.h"/>
+    <File Name="../../extern/include/SDL/SDL_power.h"/>
+    <File Name="../../extern/include/SDL/SDL_quit.h"/>
+    <File Name="../../extern/include/SDL/SDL_rect.h"/>
+    <File Name="../../extern/include/SDL/SDL_render.h"/>
+    <File Name="../../extern/include/SDL/SDL_revision.h"/>
+    <File Name="../../extern/include/SDL/SDL_rwops.h"/>
+    <File Name="../../extern/include/SDL/SDL_scancode.h"/>
+    <File Name="../../extern/include/SDL/SDL_shape.h"/>
+    <File Name="../../extern/include/SDL/SDL_stdinc.h"/>
+    <File Name="../../extern/include/SDL/SDL_surface.h"/>
+    <File Name="../../extern/include/SDL/SDL_system.h"/>
+    <File Name="../../extern/include/SDL/SDL_syswm.h"/>
+    <File Name="../../extern/include/SDL/SDL_thread.h"/>
+    <File Name="../../extern/include/SDL/SDL_timer.h"/>
+    <File Name="../../extern/include/SDL/SDL_touch.h"/>
+    <File Name="../../extern/include/SDL/SDL_types.h"/>
+    <File Name="../../extern/include/SDL/SDL_version.h"/>
+    <File Name="../../extern/include/SDL/SDL_video.h"/>
+  </VirtualDirectory>
+  <Description/>
+  <Dependencies/>
+  <Settings Type="Executable">
+    <GlobalSettings>
+      <Compiler Options="" C_Options="" Assembler="">
+        <IncludePath Value="."/>
+      </Compiler>
+      <Linker Options="">
+        <LibraryPath Value="."/>
+      </Linker>
+      <ResourceCompiler Options=""/>
+    </GlobalSettings>
+    <Configuration Name="Debug" CompilerType="MinGW ( TDM-GCC-32 )" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <Compiler Options="-g -Wall" C_Options="" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
+        <IncludePath Value="."/>
+      </Compiler>
+      <Linker Options="-O0" Required="yes">
+        <LibraryPath Value="."/>
+        <LibraryPath Value="Debug"/>
+      </Linker>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="./Debug" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="./Debug" PauseExecWhenProcTerminates="no" IsGUIProgram="no" IsEnabled="yes"/>
+      <BuildSystem Name="Default"/>
+      <Environment EnvVarSetName="&lt;Use Workspace Settings&gt;" DbgSetName="&lt;Use Global Settings&gt;">
+        <![CDATA[]]>
+      </Environment>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="" IsExtended="no">
+        <DebuggerSearchPaths/>
+        <PostConnectCommands/>
+        <StartupCommands/>
+      </Debugger>
+      <PreBuild/>
+      <PostBuild/>
+      <CustomBuild Enabled="no">
+        <RebuildCommand/>
+        <CleanCommand/>
+        <BuildCommand/>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
+        <ThirdPartyToolName/>
+        <WorkingDirectory/>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
+      </AdditionalRules>
+      <Completion EnableCpp11="no" EnableCpp14="no">
+        <ClangCmpFlagsC/>
+        <ClangCmpFlags/>
+        <ClangPP/>
+        <SearchPaths/>
+      </Completion>
+    </Configuration>
+  </Settings>
+</CodeLite_Project>

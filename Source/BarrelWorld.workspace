@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeLite_Workspace Name="BarrelWorld" Database="">
+  <Project Name="BarrelWorld" Path="BarrelWorld/BarrelWorld.project" Active="Yes"/>
+  <Project Name="extern" Path="extern/extern.project" Active="No"/>
+  <BuildMatrix>
+    <WorkspaceConfiguration Name="Debug" Selected="yes">
+      <Environment/>
+      <Project Name="BarrelWorld" ConfigName="Debug"/>
+      <Project Name="extern" ConfigName="Debug"/>
+    </WorkspaceConfiguration>
+    <WorkspaceConfiguration Name="Release" Selected="yes">
+      <Environment/>
+      <Project Name="BarrelWorld" ConfigName="Release"/>
+      <Project Name="extern" ConfigName="Debug"/>
+    </WorkspaceConfiguration>
+  </BuildMatrix>
+</CodeLite_Workspace>
