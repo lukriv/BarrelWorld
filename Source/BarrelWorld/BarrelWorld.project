@@ -9,6 +9,8 @@
   <Dependencies/>
   <VirtualDirectory Name="src">
     <File Name="main.cpp"/>
+    <File Name="mainmenu.h"/>
+    <File Name="mainmenu.cpp"/>
   </VirtualDirectory>
   <Settings Type="Executable">
     <GlobalSettings>

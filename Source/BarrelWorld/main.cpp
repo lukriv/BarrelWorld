@@ -143,7 +143,7 @@ public:
         // Let the scene have an Octree component!
         scene_->CreateComponent<Octree>();
         // Let's add an additional scene component for fun.
-        scene_->CreateComponent<DebugRenderer>();
+        //scene_->CreateComponent<DebugRenderer>();
  
         // Let's put some sky in there.
         // Again, if the engine can't find these resources you need to check
