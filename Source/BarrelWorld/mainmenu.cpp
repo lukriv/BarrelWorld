@@ -1,10 +1,18 @@
 #include "mainmenu.h"
 
-MainMenu::MainMenu()
+
+BW::MainMenu::MainMenu(Context* context) : m_pContext(context)
 {
 }
 
-MainMenu::~MainMenu()
+BW::MainMenu::~MainMenu()
 {
 }
 
+void BW::MainMenu::Visible(bool visible)
+{
+}
+
+bool BW::MainMenu::IsVisible()
+{
+}
