@@ -9,12 +9,14 @@
   <Dependencies/>
   <VirtualDirectory Name="src">
     <File Name="main.cpp"/>
-    <File Name="mainmenu.h"/>
     <File Name="mainmenu.cpp"/>
+    <File Name="subsystemmanager.cpp"/>
   </VirtualDirectory>
+  <Dependencies Name="Debug"/>
+  <Dependencies Name="Release"/>
   <Settings Type="Executable">
     <GlobalSettings>
-      <Compiler Options="" C_Options="" Assembler="">
+      <Compiler Options="-std=c++11" C_Options="" Assembler="">
         <IncludePath Value="."/>
         <IncludePath Value="../../extern/include"/>
       </Compiler>
@@ -41,7 +43,9 @@
         <StartupCommands/>
       </Debugger>
       <PreBuild/>
-      <PostBuild/>
+      <PostBuild>
+        <Command Enabled="yes">copy ..\..\extern\bin\Urho3D.dll .\Debug</Command>
+      </PostBuild>
       <CustomBuild Enabled="no">
         <RebuildCommand/>
         <CleanCommand/>
@@ -104,6 +108,8 @@
       </Completion>
     </Configuration>
   </Settings>
-  <Dependencies Name="Debug"/>
-  <Dependencies Name="Release"/>
+  <VirtualDirectory Name="include">
+    <File Name="mainmenu.h"/>
+    <File Name="subsystemmanager.h"/>
+  </VirtualDirectory>
 </CodeLite_Project>
