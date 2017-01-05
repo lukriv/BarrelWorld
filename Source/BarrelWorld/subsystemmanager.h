@@ -1,6 +1,8 @@
 #ifndef __BARREL_WORLD_SUBSYSTEM_MANAGER__H__
 #define __BARREL_WORLD_SUBSYSTEM_MANAGER__H__
 
+#include <Urho3D/Engine/Application.h>
+
 namespace BW
 {
 

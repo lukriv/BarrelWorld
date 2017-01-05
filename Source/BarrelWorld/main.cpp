@@ -43,6 +43,7 @@
 #include <Urho3D/Graphics/StaticModel.h>
 #include <Urho3D/Graphics/Material.h>
 #include <Urho3D/Graphics/Skybox.h>
+#include "mainmenu.h"
  
 using namespace Urho3D;
 /**
@@ -56,10 +57,10 @@ class MyApp : public Application
 public:
     int framecount_;
     float time_;
-    SharedPtr<Text> text_;
     SharedPtr<Scene> scene_;
     SharedPtr<Node> boxNode_;
     Node* cameraNode_;
+	Urho3D::SharedPtr<BW::MainMenu> m_spMainmenu;
  
     /**
     * This happens before the engine has been initialized
@@ -113,30 +114,10 @@ public:
  
         // Let's use the default style that comes with Urho3D.
         GetSubsystem<UI>()->GetRoot()->SetDefaultStyle(cache->GetResource<XMLFile>("UI/DefaultStyle.xml"));
-        // Let's create some text to display.
-        text_=new Text(context_);
-        // Text will be updated later in the E_UPDATE handler. Keep readin'.
-        text_->SetText("Keys: tab = toggle mouse, AWSD = move camera, Shift = fast mode, Esc = quit.\nWait a bit to see FPS.");
-        // If the engine cannot find the font, it comes with Urho3D.
-        // Set the environment variables URHO3D_HOME, URHO3D_PREFIX_PATH or
-        // change the engine parameter "ResourcePrefixPath" in the Setup method.
-        text_->SetFont(cache->GetResource<Font>("Fonts/Anonymous Pro.ttf"),20);
-        text_->SetColor(Color(.3,0,.3));
-        text_->SetHorizontalAlignment(HA_CENTER);
-        text_->SetVerticalAlignment(VA_TOP);
-        GetSubsystem<UI>()->GetRoot()->AddChild(text_);
-        // Add a button, just as an interactive UI sample.
-        Button* button=new Button(context_);
-        // Note, must be part of the UI system before SetSize calls!
-        GetSubsystem<UI>()->GetRoot()->AddChild(button);
-        button->SetName("Button Quit");
-        button->SetStyle("Button");
-        button->SetSize(32,32);
-        button->SetPosition(16,16);
- 
-        // Now we can change the mouse mode.
-        GetSubsystem<Input>()->SetMouseVisible(false);
-        GetSubsystem<Input>()->SetMouseGrabbed(true);
+
+        // Add main menu
+		m_spMainmenu = new BW::MainMenu(this, engineParameters_["WindowWidth"].GetInt(), engineParameters_["WindowHeight"].GetInt());
+
  
         // Let's setup a scene to render.
         scene_=new Scene(context_);
@@ -145,15 +126,6 @@ public:
         // Let's add an additional scene component for fun.
         //scene_->CreateComponent<DebugRenderer>();
  
-        // Let's put some sky in there.
-        // Again, if the engine can't find these resources you need to check
-        // the "ResourcePrefixPath". These files come with Urho3D.
-        Node* skyNode=scene_->CreateChild("Sky");
-        skyNode->SetScale(500.0f); // The scale actually does not matter
-        Skybox* skybox=skyNode->CreateComponent<Skybox>();
-        skybox->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
-        skybox->SetMaterial(cache->GetResource<Material>("Materials/Skybox.xml"));
- 
         // Let's put a box in there.
         boxNode_=scene_->CreateChild("Box");
         boxNode_->SetPosition(Vector3(0,0,5));
@@ -161,17 +133,6 @@ public:
         boxObject->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
         boxObject->SetMaterial(cache->GetResource<Material>("Materials/Stone.xml"));
  
-        // Create a plane out of 900 boxes.
-        for(int x=-30;x<30;x+=3)
-            for(int y=0;y<60;y+=3)
-            {
-                Node* boxNode_=scene_->CreateChild("Box");
-                boxNode_->SetPosition(Vector3(x,-3,y));
-                StaticModel* boxObject=boxNode_->CreateComponent<StaticModel>();
-                boxObject->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
-                boxObject->SetMaterial(cache->GetResource<Material>("Materials/Stone.xml"));
-                boxObject->SetCastShadows(true);
-            }
  
         // We need a camera from which the viewport can render.
         cameraNode_=scene_->CreateChild("Camera");
@@ -198,14 +159,6 @@ public:
             light->SetBrightness(1.2);
             light->SetColor(Color(.5,.8,1,1));
             light->SetCastShadows(true);
-        }
-        // add one to the camera node as well
-        {
-            Light* light=cameraNode_->CreateComponent<Light>();
-            light->SetLightType(LIGHT_POINT);
-            light->SetRange(10);
-            light->SetBrightness(2.0);
-            light->SetColor(Color(.8,1,.8,1.0));
         }
  
         // Now we setup the viewport. Ofcourse, you can have more than one!
@@ -238,6 +191,7 @@ public:
     */
     virtual void Stop()
     {
+		m_spMainmenu.Reset();
     }
  
     /**
@@ -275,8 +229,12 @@ public:
         // Query the clicked UI element.
         UIElement* clicked=static_cast<UIElement*>(eventData[UIMouseClick::P_ELEMENT].GetPtr());
         if(clicked)
-            if(clicked->GetName()=="Button Quit")   // check if the quit button was clicked
+		{
+            if(clicked->GetName()=="Exit")   // check if the quit button was clicked
+			{
                 engine_->Exit();
+			}
+		}
     }
     /**
     * Your non-rendering logic should be handled here.
@@ -294,33 +252,6 @@ public:
  
         if(time_ >=1)
         {
-            std::string str;
-            str.append("Keys: tab = toggle mouse, AWSD = move camera, Shift = fast mode, Esc = quit.\n");
-            {
-                std::ostringstream ss;
-                ss<<framecount_;
-                std::string s(ss.str());
-                str.append(s.substr(0,6));
-            }
-            str.append(" frames in ");
-            {
-                std::ostringstream ss;
-                ss<<time_;
-                std::string s(ss.str());
-                str.append(s.substr(0,6));
-            }
-            str.append(" seconds = ");
-            {
-                std::ostringstream ss;
-                ss<<(float)framecount_/time_;
-                std::string s(ss.str());
-                str.append(s.substr(0,6));
-            }
-            str.append(" fps");
-            String s(str.c_str(),str.size());
-            text_->SetText(s);
-            URHO3D_LOGINFO(s);     // this show how to put stuff into the log
-            framecount_=0;
             time_=0;
         }
  

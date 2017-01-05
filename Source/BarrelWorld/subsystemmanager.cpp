@@ -19,6 +19,5 @@ BW::SubsystemManager& BW::SubsystemManager::GetSubsystemMgr()
 
 void BW::SubsystemManager::Release()
 {
-	delete g_pResMgr;
 	g_pResMgr = nullptr;
 }
