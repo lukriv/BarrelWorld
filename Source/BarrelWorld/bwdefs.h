@@ -1,0 +1,11 @@
+#ifndef __BARREL_WORLD_DEFINITIONS__H__
+#define __BARREL_WORLD_DEFINITIONS__H__
+
+
+enum EBarrelWorldStates {
+	BW_STATE_UNDEFINED = 0,
+	BW_STATE_MAIN_MENU = 1
+};
+
+
+#endif // __BARREL_WORLD_DEFINITIONS__H__
