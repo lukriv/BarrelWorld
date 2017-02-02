@@ -13,6 +13,7 @@
     <File Name="subsystemmanager.cpp"/>
     <File Name="statemainmenu.cpp"/>
     <File Name="state.cpp"/>
+    <File Name="MainApp.cpp"/>
   </VirtualDirectory>
   <Dependencies Name="Debug"/>
   <Dependencies Name="Release"/>
@@ -116,5 +117,6 @@
     <File Name="statemainmenu.h"/>
     <File Name="state.h"/>
     <File Name="bwdefs.h"/>
+    <File Name="MainApp.h"/>
   </VirtualDirectory>
 </CodeLite_Project>

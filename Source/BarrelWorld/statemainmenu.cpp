@@ -1,5 +1,6 @@
 #include "statemainmenu.h"
 #include "bwdefs.h"
+#include <Urho3D/Graphics/Graphics.h>
 
 using namespace Urho3D;
 
@@ -13,8 +14,10 @@ BW::StateMainMenu::~StateMainMenu()
 
 bool BW::StateMainMenu::Start()
 {
-	m_pApp->GetEventDataMap()
-	m_spMainmenu = new BW::MainMenu(this, engineParameters_["WindowWidth"].GetInt(), engineParameters_["WindowHeight"].GetInt());
+	Graphics* pGraphics = m_pApp->GetSubsystem<Graphics>();
+	
+	
+	m_spMainmenu = new BW::MainMenu(m_pApp, pGraphics->GetWidth(), pGraphics->GetHeight());
 
 
 	// Let's setup a scene to render.
