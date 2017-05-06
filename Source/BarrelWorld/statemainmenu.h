@@ -1,7 +1,7 @@
 #ifndef __BARREL_WORLD_MAIN_MENU_STATE__H__
 #define __BARREL_WORLD_MAIN_MENU_STATE__H__
 
-#include "state.h"
+//#include "state.h"
 
 #include <Urho3D/Core/CoreEvents.h>
 #include <Urho3D/Engine/Engine.h>
