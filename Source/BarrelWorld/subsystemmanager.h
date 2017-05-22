@@ -6,26 +6,26 @@
 namespace BW
 {
 
-class SubsystemManager
-{
-private:
-	Urho3D::Application* m_app;
-private:
-	SubsystemManager();
-	~SubsystemManager();
+	class SubsystemManager
+	{
+	private:
+		Urho3D::Application* m_app;
+	private:
+		SubsystemManager();
+		~SubsystemManager();
 
-public:
-	Urho3D::Application& GetApp();
-	
-private:
-	static SubsystemManager* g_pResMgr;
-public:
-	static SubsystemManager& GetSubsystemMgr();
-	
-	static void Create(Urho3D::Application *pApp);
-	static void Release();
-	
-};
+	public:
+		Urho3D::Application& GetApp();
+		
+	private:
+		static SubsystemManager* g_pResMgr;
+	public:
+		static SubsystemManager& GetSubsystemMgr();
+		
+		static void Create(Urho3D::Application *pApp);
+		static void Release();
+		
+	};
 
 }
 

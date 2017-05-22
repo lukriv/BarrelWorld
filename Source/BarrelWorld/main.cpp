@@ -44,6 +44,7 @@
 #include <Urho3D/Graphics/Material.h>
 #include <Urho3D/Graphics/Skybox.h>
 #include "mainmenu.h"
+#include "WorldManager.h"
  
 using namespace Urho3D;
 /**
@@ -58,9 +59,9 @@ public:
     int framecount_;
     float time_;
     SharedPtr<Scene> scene_;
-    SharedPtr<Node> boxNode_;
-    Node* cameraNode_;
+    
 	Urho3D::SharedPtr<BW::MainMenu> m_spMainmenu;
+	Urho3D::SharedPtr<BW::WorldManager> m_spWorldMgr;
  
     /**
     * This happens before the engine has been initialized
@@ -126,44 +127,16 @@ public:
         // Let's add an additional scene component for fun.
         //scene_->CreateComponent<DebugRenderer>();
  
-        // Let's put a box in there.
-        boxNode_=scene_->CreateChild("Box");
-        boxNode_->SetPosition(Vector3(0,0,5));
-        StaticModel* boxObject=boxNode_->CreateComponent<StaticModel>();
-        boxObject->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
-        boxObject->SetMaterial(cache->GetResource<Material>("Materials/Stone.xml"));
+
  
+		m_spWorldMgr = new BW::WorldManager(this,scene_);
+
  
-        // We need a camera from which the viewport can render.
-        cameraNode_=scene_->CreateChild("Camera");
-        Camera* camera=cameraNode_->CreateComponent<Camera>();
-        camera->SetFarClip(2000);
- 
-        // Create two lights
-        {
-            Node* lightNode=scene_->CreateChild("Light");
-            lightNode->SetPosition(Vector3(-5,0,10));
-            Light* light=lightNode->CreateComponent<Light>();
-            light->SetLightType(LIGHT_POINT);
-            light->SetRange(50);
-            light->SetBrightness(1.2);
-            light->SetColor(Color(1,.5,.8,1));
-            light->SetCastShadows(true);
-        }
-        {
-            Node* lightNode=scene_->CreateChild("Light");
-            lightNode->SetPosition(Vector3(5,0,10));
-            Light* light=lightNode->CreateComponent<Light>();
-            light->SetLightType(LIGHT_POINT);
-            light->SetRange(50);
-            light->SetBrightness(1.2);
-            light->SetColor(Color(.5,.8,1,1));
-            light->SetCastShadows(true);
-        }
+
  
         // Now we setup the viewport. Ofcourse, you can have more than one!
         Renderer* renderer=GetSubsystem<Renderer>();
-        SharedPtr<Viewport> viewport(new Viewport(context_,scene_,cameraNode_->GetComponent<Camera>()));
+        SharedPtr<Viewport> viewport(new Viewport(context_,scene_,m_spWorldMgr->GetCamera()));
         renderer->SetViewport(0,viewport);
  
         // We subscribe to the events we'd like to handle.
@@ -254,15 +227,10 @@ public:
         {
             time_=0;
         }
+		
+		m_spWorldMgr->Update(timeStep);
  
-        // Rotate the box thingy.
-        // A much nicer way of doing this would be with a LogicComponent.
-        // With LogicComponents it is easy to control things like movement
-        // and animation from some IDE, console or just in game.
-        // Alas, it is out of the scope for our simple example.
-        boxNode_->Rotate(Quaternion(8*timeStep,16*timeStep,0));
- 
-        Input* input=GetSubsystem<Input>();
+        /*Input* input=GetSubsystem<Input>();
         if(input->GetQualifierDown(1))  // 1 is shift, 2 is ctrl, 4 is alt
             MOVE_SPEED*=10;
         if(input->GetKeyDown('W'))
@@ -291,7 +259,7 @@ public:
                 cameraNode_->Yaw(yaw_);
                 cameraNode_->Pitch(pitch_);
             }
-        }
+        }*/
     }
     /**
     * Anything in the non-rendering logic that requires a second pass,

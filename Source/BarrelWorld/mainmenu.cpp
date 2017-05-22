@@ -25,7 +25,6 @@ BW::MainMenu::MainMenu( Application *pApp, int32_t width, int32_t height ) : m_p
 	, m_visible(true)
 {
 	ResourceCache* cache = pApp->GetSubsystem<ResourceCache>();
-	
 	SharedPtr< Window > spWindow(new Window(pApp->GetContext()));
 	
 	int32_t positionY = MENU_ITEM_HEIGHT + MENU_ITEM_BORDER;

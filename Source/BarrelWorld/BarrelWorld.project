@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CodeLite_Project Name="BarrelWorld" InternalType="Console">
+<CodeLite_Project Name="BarrelWorld" InternalType="Console" Version="10.0.0">
   <Plugins>
     <Plugin Name="qmake">
-      <![CDATA[00010001N0005Debug000000000000]]>
+      <![CDATA[00020001N0005Debug0000000000000001N0007Release000000000000]]>
     </Plugin>
   </Plugins>
   <Description/>
@@ -11,9 +11,15 @@
     <File Name="main.cpp"/>
     <File Name="mainmenu.cpp"/>
     <File Name="subsystemmanager.cpp"/>
+    <File Name="WorldManager.cpp"/>
   </VirtualDirectory>
   <Dependencies Name="Debug"/>
   <Dependencies Name="Release"/>
+  <VirtualDirectory Name="include">
+    <File Name="mainmenu.h"/>
+    <File Name="subsystemmanager.h"/>
+    <File Name="WorldManager.h"/>
+  </VirtualDirectory>
   <Settings Type="Executable">
     <GlobalSettings>
       <Compiler Options="-std=c++11" C_Options="" Assembler="">
@@ -32,7 +38,7 @@
       </Compiler>
       <Linker Options="" Required="yes"/>
       <ResourceCompiler Options="" Required="no"/>
-      <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="./Debug" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
+      <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="Debug" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
       <BuildSystem Name="Default"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
         <![CDATA[]]>
@@ -45,6 +51,10 @@
       <PreBuild/>
       <PostBuild>
         <Command Enabled="yes">copy ..\..\extern\bin\Urho3D.dll .\Debug</Command>
+        <Command Enabled="yes">copy "C:\Program Files (x86)\mingw-w64\i686-5.4.0-posix-sjlj-rt_v5-rev0\mingw32\bin\libgcc_s_sjlj-1.dll" $(IntermediateDirectory)</Command>
+        <Command Enabled="yes">copy "C:\Program Files (x86)\mingw-w64\i686-5.4.0-posix-sjlj-rt_v5-rev0\mingw32\bin\libstdc++-6.dll" $(IntermediateDirectory)</Command>
+        <Command Enabled="yes">copy "C:\Program Files (x86)\mingw-w64\i686-5.4.0-posix-sjlj-rt_v5-rev0\mingw32\bin\libwinpthread-1.dll" $(IntermediateDirectory)</Command>
+        <Command Enabled="yes"/>
       </PostBuild>
       <CustomBuild Enabled="no">
         <RebuildCommand/>
@@ -85,7 +95,11 @@
         <StartupCommands/>
       </Debugger>
       <PreBuild/>
-      <PostBuild/>
+      <PostBuild>
+        <Command Enabled="yes">copy "C:\Program Files (x86)\mingw-w64\i686-5.4.0-posix-sjlj-rt_v5-rev0\mingw32\bin\libgcc_s_sjlj-1.dll" $(IntermediateDirectory)</Command>
+        <Command Enabled="yes">copy "C:\Program Files (x86)\mingw-w64\i686-5.4.0-posix-sjlj-rt_v5-rev0\mingw32\bin\libstdc++-6.dll" $(IntermediateDirectory)</Command>
+        <Command Enabled="yes">copy "C:\Program Files (x86)\mingw-w64\i686-5.4.0-posix-sjlj-rt_v5-rev0\mingw32\bin\libwinpthread-1.dll" $(IntermediateDirectory)</Command>
+      </PostBuild>
       <CustomBuild Enabled="no">
         <RebuildCommand/>
         <CleanCommand/>
@@ -108,8 +122,4 @@
       </Completion>
     </Configuration>
   </Settings>
-  <VirtualDirectory Name="include">
-    <File Name="mainmenu.h"/>
-    <File Name="subsystemmanager.h"/>
-  </VirtualDirectory>
 </CodeLite_Project>
