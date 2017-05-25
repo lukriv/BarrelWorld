@@ -33,6 +33,9 @@ namespace BW
 		
 		
 		void Update(float timeStep);
+		
+		
+		void NewGame();
 
 	};
 

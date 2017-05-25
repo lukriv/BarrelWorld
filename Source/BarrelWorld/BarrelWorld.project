@@ -12,6 +12,12 @@
     <File Name="mainmenu.cpp"/>
     <File Name="subsystemmanager.cpp"/>
     <File Name="WorldManager.cpp"/>
+    <VirtualDirectory Name="Entities">
+      <File Name="Rotator.cpp"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="EntitiesHeaders">
+      <File Name="Rotator.h"/>
+    </VirtualDirectory>
   </VirtualDirectory>
   <Dependencies Name="Debug"/>
   <Dependencies Name="Release"/>

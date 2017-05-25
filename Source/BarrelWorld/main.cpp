@@ -45,6 +45,7 @@
 #include <Urho3D/Graphics/Skybox.h>
 #include "mainmenu.h"
 #include "WorldManager.h"
+#include "Rotator.h"
  
 using namespace Urho3D;
 /**
@@ -71,6 +72,7 @@ public:
     */
     MyApp(Context * context) : Application(context),framecount_(0),time_(0)
     {
+		context->RegisterFactory<BW::Rotator>();
     }
  
     /**
@@ -203,9 +205,13 @@ public:
         UIElement* clicked=static_cast<UIElement*>(eventData[UIMouseClick::P_ELEMENT].GetPtr());
         if(clicked)
 		{
-            if(clicked->GetName()=="Exit")   // check if the quit button was clicked
+            if(clicked->GetName()=="exit")   // check if the quit button was clicked
 			{
                 engine_->Exit();
+			}
+			if(clicked->GetName()=="new")
+			{
+				m_spWorldMgr->NewGame();
 			}
 		}
     }

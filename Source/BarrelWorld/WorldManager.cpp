@@ -5,6 +5,7 @@
 #include <Urho3D/Graphics/Camera.h>
 #include <Urho3D/Graphics/Model.h>
 #include <Urho3D/Graphics/Material.h>
+#include "Rotator.h"
 
 using namespace Urho3D;
 
@@ -19,6 +20,7 @@ BW::WorldManager::WorldManager(Urho3D::Application *pApp, Urho3D::SharedPtr<Urho
     StaticModel* boxObject=m_spBoxNode->CreateComponent<StaticModel>();
     boxObject->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
     boxObject->SetMaterial(cache->GetResource<Material>("Materials/Stone.xml"));
+	m_spBoxNode->CreateComponent<Rotator>();
 	
 	// Create two lights
     {
@@ -62,10 +64,8 @@ Urho3D::Camera* BW::WorldManager::GetCamera()
 
 void BW::WorldManager::Update(float timeStep)
 {
-	// Rotate the box thingy.
-    // A much nicer way of doing this would be with a LogicComponent.
-    // With LogicComponents it is easy to control things like movement
-    // and animation from some IDE, console or just in game.
-    // Alas, it is out of the scope for our simple example.
-	m_spBoxNode->Rotate(Quaternion(8*timeStep,16*timeStep,0));
+}
+
+void BW::WorldManager::NewGame()
+{
 }

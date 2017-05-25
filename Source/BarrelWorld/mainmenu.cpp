@@ -17,7 +17,13 @@ static const int32_t MENU_ITEM_FONT_SIZE = 20;
 static const int32_t MENU_ITEM_BORDER = 5;
 static const int32_t MENU_BORDER = 10;
 
-static const String MenuItems[] = { "New Game", "Exit" };
+struct MenuItemStruct {
+	String name;
+	String label;
+};
+
+static const MenuItemStruct MenuItems[] = { { "new", "New Game"},
+											{ "exit", "Exit" } };
 
 BW::MainMenu::MainMenu( Application *pApp, int32_t width, int32_t height ) : m_pApp( pApp )
 	, m_width(width)
@@ -52,14 +58,14 @@ BW::MainMenu::MainMenu( Application *pApp, int32_t width, int32_t height ) : m_p
 		SharedPtr< Button > spButton(new Button(pApp->GetContext()));
 		SharedPtr< Text > spText(new Text(pApp->GetContext()));
 		
-		spButton->SetName(MenuItems[i]);
+		spButton->SetName(MenuItems[i].name);
 		spButton->SetStyle("Button");
 		spButton->SetSize( MENU_ITEM_WIDTH, MENU_ITEM_HEIGHT );
 		spButton->SetPosition( MENU_BORDER , positionY );
 		
 		positionY += MENU_ITEM_HEIGHT + MENU_ITEM_BORDER;
 		
-		spText->SetText(MenuItems[i]);
+		spText->SetText(MenuItems[i].label);
 		
 		spButton.Get()->AddChild(spText.Get());
 		
