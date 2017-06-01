@@ -158,6 +158,12 @@ public:
         SubscribeToEvent(E_ENDFRAME,URHO3D_HANDLER(MyApp,HandleEndFrame));
     }
  
+	void SetViewport()
+	{
+		Renderer* renderer=GetSubsystem<Renderer>();
+		renderer->GetViewport(0)->SetCamera(m_spWorldMgr->GetCamera());
+	}
+	
     /**
     * Good place to get rid of any system resources that requires the
     * engine still initialized. You could do the rest in the destructor,
@@ -187,7 +193,9 @@ public:
         using namespace KeyDown;
         int key=eventData[P_KEY].GetInt();
         if(key==KEY_ESCAPE)
-            engine_->Exit();
+		{
+			m_spMainmenu->Visible(!m_spMainmenu->IsVisible());
+		}
  
         if(key==KEY_TAB)
         {
@@ -208,10 +216,12 @@ public:
             if(clicked->GetName()=="exit")   // check if the quit button was clicked
 			{
                 engine_->Exit();
-			}
-			if(clicked->GetName()=="new")
-			{
+			} else if(clicked->GetName()=="new") {
 				m_spWorldMgr->NewGame();
+				SetViewport();
+				m_spMainmenu->Visible(false);
+			} else if(clicked->GetName()=="store") {
+				m_spWorldMgr->StoreGame();
 			}
 		}
     }

@@ -36,6 +36,11 @@ namespace BW
 		
 		
 		void NewGame();
+		
+		void StoreGame();
+		
+	protected:
+		void CreateCamera();
 
 	};
 

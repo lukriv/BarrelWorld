@@ -9,6 +9,7 @@
 #include <Urho3D/UI/Button.h>
 #include <Urho3D/UI/UI.h>
 #include <Urho3D/UI/Text.h>
+#include <Urho3D/UI/Window.h>
 
 
 namespace BW
@@ -20,10 +21,11 @@ namespace BW
 	private:
 		Urho3D::Application *m_pApp;
 		Urho3D::SharedPtr<Urho3D::Text> m_spText;
+		Urho3D::SharedPtr< Urho3D::Window > m_spWindow;
 		TMenuList m_menuButtons;
 		int32_t m_width;
 		int32_t m_height;
-		bool m_visible;
+		
 	public:
 		MainMenu( Urho3D::Application *pApp, int32_t width, int32_t height );
 		~MainMenu();
