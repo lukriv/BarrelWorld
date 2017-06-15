@@ -18,6 +18,7 @@
     <VirtualDirectory Name="EntitiesHeaders">
       <File Name="Rotator.h"/>
     </VirtualDirectory>
+    <File Name="TerrainManager.cpp"/>
   </VirtualDirectory>
   <Dependencies Name="Debug"/>
   <Dependencies Name="Release"/>
@@ -25,6 +26,7 @@
     <File Name="mainmenu.h"/>
     <File Name="subsystemmanager.h"/>
     <File Name="WorldManager.h"/>
+    <File Name="TerrainManager.h"/>
   </VirtualDirectory>
   <Settings Type="Executable">
     <GlobalSettings>
