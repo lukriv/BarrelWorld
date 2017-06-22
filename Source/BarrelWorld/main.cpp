@@ -110,6 +110,8 @@ public:
         // All the resources used in this example comes with Urho3D.
         // If the engine can't find them, check the ResourcePrefixPath.
         ResourceCache* cache=GetSubsystem<ResourceCache>();
+		
+		cache->AddResourceDir(String("BarrelData"));
  
         // Seems like the mouse must be in cursor mode before creating the UI or it won't work.
         GetSubsystem<Input>()->SetMouseVisible(true);

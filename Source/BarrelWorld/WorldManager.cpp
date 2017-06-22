@@ -5,6 +5,7 @@
 #include <Urho3D/Graphics/Camera.h>
 #include <Urho3D/Graphics/Model.h>
 #include <Urho3D/Graphics/Material.h>
+#include <Urho3D/IO/Log.h>
 #include "Rotator.h"
 
 using namespace Urho3D;
@@ -69,6 +70,9 @@ void BW::WorldManager::NewGame()
 {
 	m_spMainScene->RemoveAllChildren();
 	CreateCamera();
+	m_spTerrainMgr = new TerrainManager(m_pApp, m_spMainScene);
+	m_spTerrainMgr->GenerateTerrain();
+	Log::Write(LOG_INFO, String("Terrain was generated"));
 }
 
 void BW::WorldManager::StoreGame()

@@ -4,6 +4,7 @@
 #include <Urho3D/Engine/Application.h>
 #include <Urho3D/Scene/Scene.h>
 #include <Urho3D/Container/RefCounted.h>
+#include "TerrainManager.h"
 
 
 namespace Urho3D {
@@ -21,6 +22,8 @@ namespace BW
 		
 		Urho3D::SharedPtr<Urho3D::Node> m_spBoxNode;
 		Urho3D::SharedPtr<Urho3D::Node> m_spCameraNode;
+		
+		Urho3D::SharedPtr<TerrainManager> m_spTerrainMgr;
 	public:
 		WorldManager(Urho3D::Application *pApp, Urho3D::SharedPtr<Urho3D::Scene> spMainScene);
 		~WorldManager();
