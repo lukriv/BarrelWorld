@@ -33,14 +33,15 @@
       <Compiler Options="-std=c++11" C_Options="" Assembler="">
         <IncludePath Value="."/>
         <IncludePath Value="../../extern/include"/>
+        <IncludePath Value="../../extern/include/Urho3D/ThirdParty"/>
       </Compiler>
       <Linker Options="">
-        <LibraryPath Value="../../extern/lib"/>
+        <LibraryPath Value="../../extern/lib/win32"/>
         <Library Value="Urho3D.dll"/>
       </Linker>
       <ResourceCompiler Options=""/>
     </GlobalSettings>
-    <Configuration Name="Debug" CompilerType="MinGW ( TDM-GCC-32 )" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+    <Configuration Name="Debug" CompilerType="gcc.exe (i686-posix-sjlj-rev0) 7.2.0" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="-g;-O0;-Wall" C_Options="-g;-O0;-Wall" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
         <IncludePath Value="."/>
       </Compiler>
@@ -58,10 +59,10 @@
       </Debugger>
       <PreBuild/>
       <PostBuild>
-        <Command Enabled="yes">copy ..\..\extern\bin\Urho3D.dll .\Debug</Command>
-        <Command Enabled="yes">copy "C:\Program Files (x86)\mingw-w64\i686-5.4.0-posix-sjlj-rt_v5-rev0\mingw32\bin\libgcc_s_sjlj-1.dll" $(IntermediateDirectory)</Command>
-        <Command Enabled="yes">copy "C:\Program Files (x86)\mingw-w64\i686-5.4.0-posix-sjlj-rt_v5-rev0\mingw32\bin\libstdc++-6.dll" $(IntermediateDirectory)</Command>
-        <Command Enabled="yes">copy "C:\Program Files (x86)\mingw-w64\i686-5.4.0-posix-sjlj-rt_v5-rev0\mingw32\bin\libwinpthread-1.dll" $(IntermediateDirectory)</Command>
+        <Command Enabled="yes">copy ..\..\extern\bin\win32\Urho3D.dll .\Debug</Command>
+        <Command Enabled="yes">copy "C:\Program Files (x86)\mingw-w64\i686-7.2.0-posix-sjlj-rt_v5-rev0\mingw32\bin\libgcc_s_sjlj-1.dll" $(IntermediateDirectory)</Command>
+        <Command Enabled="yes">copy "C:\Program Files (x86)\mingw-w64\i686-7.2.0-posix-sjlj-rt_v5-rev0\mingw32\bin\libstdc++-6.dll" $(IntermediateDirectory)</Command>
+        <Command Enabled="yes">copy "C:\Program Files (x86)\mingw-w64\i686-7.2.0-posix-sjlj-rt_v5-rev0\mingw32\bin\libwinpthread-1.dll" $(IntermediateDirectory)</Command>
         <Command Enabled="yes"/>
       </PostBuild>
       <CustomBuild Enabled="no">
@@ -85,14 +86,14 @@
         <SearchPaths/>
       </Completion>
     </Configuration>
-    <Configuration Name="Release" CompilerType="MinGW ( TDM-GCC-32 )" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+    <Configuration Name="Release" CompilerType="gcc.exe (i686-posix-sjlj-rev0) 7.2.0" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="-O2;-Wall" C_Options="-O2;-Wall" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
         <IncludePath Value="."/>
         <Preprocessor Value="NDEBUG"/>
       </Compiler>
       <Linker Options="" Required="yes"/>
       <ResourceCompiler Options="" Required="no"/>
-      <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="./Release" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
+      <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="Release" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
       <BuildSystem Name="Default"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
         <![CDATA[]]>
@@ -104,9 +105,10 @@
       </Debugger>
       <PreBuild/>
       <PostBuild>
-        <Command Enabled="yes">copy "C:\Program Files (x86)\mingw-w64\i686-5.4.0-posix-sjlj-rt_v5-rev0\mingw32\bin\libgcc_s_sjlj-1.dll" $(IntermediateDirectory)</Command>
-        <Command Enabled="yes">copy "C:\Program Files (x86)\mingw-w64\i686-5.4.0-posix-sjlj-rt_v5-rev0\mingw32\bin\libstdc++-6.dll" $(IntermediateDirectory)</Command>
-        <Command Enabled="yes">copy "C:\Program Files (x86)\mingw-w64\i686-5.4.0-posix-sjlj-rt_v5-rev0\mingw32\bin\libwinpthread-1.dll" $(IntermediateDirectory)</Command>
+        <Command Enabled="yes">copy ..\..\extern\bin\win32\Urho3D.dll .\Release</Command>
+        <Command Enabled="yes">copy "C:\Program Files (x86)\mingw-w64\i686-7.2.0-posix-sjlj-rt_v5-rev0\mingw32\bin\libgcc_s_sjlj-1.dll" $(IntermediateDirectory)</Command>
+        <Command Enabled="yes">copy "C:\Program Files (x86)\mingw-w64\i686-7.2.0-posix-sjlj-rt_v5-rev0\mingw32\bin\libstdc++-6.dll" $(IntermediateDirectory)</Command>
+        <Command Enabled="yes">copy "C:\Program Files (x86)\mingw-w64\i686-7.2.0-posix-sjlj-rt_v5-rev0\mingw32\bin\libwinpthread-1.dll" $(IntermediateDirectory)</Command>
       </PostBuild>
       <CustomBuild Enabled="no">
         <RebuildCommand/>

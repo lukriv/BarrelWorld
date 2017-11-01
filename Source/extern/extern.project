@@ -1,5 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CodeLite_Project Name="extern" InternalType="">
+<CodeLite_Project Name="extern" InternalType="" Version="10.0.0">
+  <VirtualDirectory Name="UnitTest++">
+    <VirtualDirectory Name="Win32">
+      <File Name="../../extern/include/UnitTest++/Win32/TimeHelpers.h"/>
+    </VirtualDirectory>
+    <File Name="../../extern/include/UnitTest++/AssertException.h"/>
+    <File Name="../../extern/include/UnitTest++/CheckMacros.h"/>
+    <File Name="../../extern/include/UnitTest++/Checks.h"/>
+    <File Name="../../extern/include/UnitTest++/CompositeTestReporter.h"/>
+    <File Name="../../extern/include/UnitTest++/Config.h"/>
+    <File Name="../../extern/include/UnitTest++/CurrentTest.h"/>
+    <File Name="../../extern/include/UnitTest++/DeferredTestReporter.h"/>
+    <File Name="../../extern/include/UnitTest++/DeferredTestResult.h"/>
+    <File Name="../../extern/include/UnitTest++/ExceptionMacros.h"/>
+    <File Name="../../extern/include/UnitTest++/ExecuteTest.h"/>
+    <File Name="../../extern/include/UnitTest++/HelperMacros.h"/>
+    <File Name="../../extern/include/UnitTest++/MemoryOutStream.h"/>
+    <File Name="../../extern/include/UnitTest++/ReportAssert.h"/>
+    <File Name="../../extern/include/UnitTest++/ReportAssertImpl.h"/>
+    <File Name="../../extern/include/UnitTest++/Test.h"/>
+    <File Name="../../extern/include/UnitTest++/TestDetails.h"/>
+    <File Name="../../extern/include/UnitTest++/TestList.h"/>
+    <File Name="../../extern/include/UnitTest++/TestMacros.h"/>
+    <File Name="../../extern/include/UnitTest++/TestReporter.h"/>
+    <File Name="../../extern/include/UnitTest++/TestReporterStdout.h"/>
+    <File Name="../../extern/include/UnitTest++/TestResults.h"/>
+    <File Name="../../extern/include/UnitTest++/TestRunner.h"/>
+    <File Name="../../extern/include/UnitTest++/TestSuite.h"/>
+    <File Name="../../extern/include/UnitTest++/TimeConstraint.h"/>
+    <File Name="../../extern/include/UnitTest++/TimeHelpers.h"/>
+    <File Name="../../extern/include/UnitTest++/UnitTest++.h"/>
+    <File Name="../../extern/include/UnitTest++/UnitTestPP.h"/>
+    <File Name="../../extern/include/UnitTest++/XmlTestReporter.h"/>
+  </VirtualDirectory>
   <VirtualDirectory Name="vectorlib2">
     <VirtualDirectory Name="altivec">
       <File Name="../../extern/include/vectorlib2/altivec/load_vec_float4.h"/>
@@ -243,21 +276,25 @@
           <VirtualDirectory Name="Dynamics">
             <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/Dynamics/btActionInterface.h"/>
             <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/Dynamics/btDiscreteDynamicsWorldMt.h"/>
             <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/Dynamics/btDynamicsWorld.h"/>
             <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/Dynamics/btRigidBody.h"/>
             <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/Dynamics/btSimpleDynamicsWorld.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/Dynamics/btSimulationIslandManagerMt.h"/>
           </VirtualDirectory>
           <VirtualDirectory Name="Featherstone">
             <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/Featherstone/btMultiBody.h"/>
             <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/Featherstone/btMultiBodyConstraint.h"/>
             <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/Featherstone/btMultiBodyConstraintSolver.h"/>
             <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/Featherstone/btMultiBodyDynamicsWorld.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/Featherstone/btMultiBodyFixedConstraint.h"/>
             <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/Featherstone/btMultiBodyJointFeedback.h"/>
             <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/Featherstone/btMultiBodyJointLimitConstraint.h"/>
             <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/Featherstone/btMultiBodyJointMotor.h"/>
             <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/Featherstone/btMultiBodyLink.h"/>
             <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/Featherstone/btMultiBodyLinkCollider.h"/>
             <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/Featherstone/btMultiBodyPoint2Point.h"/>
+            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/Featherstone/btMultiBodySliderConstraint.h"/>
             <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletDynamics/Featherstone/btMultiBodySolverConstraint.h"/>
           </VirtualDirectory>
           <VirtualDirectory Name="MLCPSolvers">
@@ -285,7 +322,6 @@
             <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/BroadphaseCollision/btDbvt.h"/>
             <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/BroadphaseCollision/btDbvtBroadphase.h"/>
             <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/BroadphaseCollision/btDispatcher.h"/>
-            <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/BroadphaseCollision/btMultiSapBroadphase.h"/>
             <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/BroadphaseCollision/btOverlappingPairCache.h"/>
             <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/BroadphaseCollision/btOverlappingPairCallback.h"/>
             <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletCollision/BroadphaseCollision/btQuantizedBvh.h"/>
@@ -428,6 +464,7 @@
           <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletSoftBody/btSoftBodyRigidBodyCollisionConfiguration.h"/>
           <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletSoftBody/btSoftBodySolvers.h"/>
           <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletSoftBody/btSoftBodySolverVertexBuffer.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletSoftBody/btSoftMultiBodyDynamicsWorld.h"/>
           <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletSoftBody/btSoftRigidCollisionAlgorithm.h"/>
           <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletSoftBody/btSoftRigidDynamicsWorld.h"/>
           <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/BulletSoftBody/btSoftSoftCollisionAlgorithm.h"/>
@@ -460,6 +497,7 @@
           <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/LinearMath/btSerializer.h"/>
           <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/LinearMath/btSpatialAlgebra.h"/>
           <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/LinearMath/btStackAlloc.h"/>
+          <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/LinearMath/btThreads.h"/>
           <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/LinearMath/btTransform.h"/>
           <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/LinearMath/btTransformUtil.h"/>
           <File Name="../../extern/include/Urho3D/ThirdParty/Bullet/LinearMath/btVector3.h"/>
@@ -718,7 +756,16 @@
       <File Name="../../extern/include/Urho3D/Engine/Console.h"/>
       <File Name="../../extern/include/Urho3D/Engine/DebugHud.h"/>
       <File Name="../../extern/include/Urho3D/Engine/Engine.h"/>
+      <File Name="../../extern/include/Urho3D/Engine/EngineDefs.h"/>
       <File Name="../../extern/include/Urho3D/Engine/EngineEvents.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="IK">
+      <File Name="../../extern/include/Urho3D/IK/IK.h"/>
+      <File Name="../../extern/include/Urho3D/IK/IKConstraint.h"/>
+      <File Name="../../extern/include/Urho3D/IK/IKConverters.h"/>
+      <File Name="../../extern/include/Urho3D/IK/IKEffector.h"/>
+      <File Name="../../extern/include/Urho3D/IK/IKEvents.h"/>
+      <File Name="../../extern/include/Urho3D/IK/IKSolver.h"/>
     </VirtualDirectory>
     <VirtualDirectory Name="Input">
       <File Name="../../extern/include/Urho3D/Input/Controls.h"/>
@@ -726,6 +773,7 @@
       <File Name="../../extern/include/Urho3D/Input/InputEvents.h"/>
     </VirtualDirectory>
     <VirtualDirectory Name="IO">
+      <File Name="../../extern/include/Urho3D/IO/AbstractFile.h"/>
       <File Name="../../extern/include/Urho3D/IO/Compression.h"/>
       <File Name="../../extern/include/Urho3D/IO/Deserializer.h"/>
       <File Name="../../extern/include/Urho3D/IO/File.h"/>
@@ -798,6 +846,7 @@
       <File Name="../../extern/include/Urho3D/Physics/PhysicsEvents.h"/>
       <File Name="../../extern/include/Urho3D/Physics/PhysicsUtils.h"/>
       <File Name="../../extern/include/Urho3D/Physics/PhysicsWorld.h"/>
+      <File Name="../../extern/include/Urho3D/Physics/RaycastVehicle.h"/>
       <File Name="../../extern/include/Urho3D/Physics/RigidBody.h"/>
     </VirtualDirectory>
     <VirtualDirectory Name="Resource">
@@ -847,6 +896,7 @@
       <File Name="../../extern/include/Urho3D/UI/ListView.h"/>
       <File Name="../../extern/include/Urho3D/UI/Menu.h"/>
       <File Name="../../extern/include/Urho3D/UI/MessageBox.h"/>
+      <File Name="../../extern/include/Urho3D/UI/ProgressBar.h"/>
       <File Name="../../extern/include/Urho3D/UI/ScrollBar.h"/>
       <File Name="../../extern/include/Urho3D/UI/ScrollView.h"/>
       <File Name="../../extern/include/Urho3D/UI/Slider.h"/>
@@ -900,6 +950,7 @@
       <File Name="../../extern/include/Urho3D/Urho2D/TileMapLayer2D.h"/>
       <File Name="../../extern/include/Urho3D/Urho2D/TmxFile2D.h"/>
       <File Name="../../extern/include/Urho3D/Urho2D/Urho2D.h"/>
+      <File Name="../../extern/include/Urho3D/Urho2D/Urho2DEvents.h"/>
     </VirtualDirectory>
     <File Name="../../extern/include/Urho3D/DebugNew.h"/>
     <File Name="../../extern/include/Urho3D/LibraryInfo.h"/>
@@ -908,112 +959,20 @@
     <File Name="../../extern/include/Urho3D/Urho3D.h"/>
     <File Name="../../extern/include/Urho3D/Urho3DAll.h"/>
   </VirtualDirectory>
-  <VirtualDirectory Name="UnitTest++">
-    <VirtualDirectory Name="Win32">
-      <File Name="../../extern/include/UnitTest++/Win32/TimeHelpers.h"/>
-    </VirtualDirectory>
-    <File Name="../../extern/include/UnitTest++/AssertException.h"/>
-    <File Name="../../extern/include/UnitTest++/CheckMacros.h"/>
-    <File Name="../../extern/include/UnitTest++/Checks.h"/>
-    <File Name="../../extern/include/UnitTest++/CompositeTestReporter.h"/>
-    <File Name="../../extern/include/UnitTest++/Config.h"/>
-    <File Name="../../extern/include/UnitTest++/CurrentTest.h"/>
-    <File Name="../../extern/include/UnitTest++/DeferredTestReporter.h"/>
-    <File Name="../../extern/include/UnitTest++/DeferredTestResult.h"/>
-    <File Name="../../extern/include/UnitTest++/ExceptionMacros.h"/>
-    <File Name="../../extern/include/UnitTest++/ExecuteTest.h"/>
-    <File Name="../../extern/include/UnitTest++/HelperMacros.h"/>
-    <File Name="../../extern/include/UnitTest++/MemoryOutStream.h"/>
-    <File Name="../../extern/include/UnitTest++/ReportAssert.h"/>
-    <File Name="../../extern/include/UnitTest++/ReportAssertImpl.h"/>
-    <File Name="../../extern/include/UnitTest++/Test.h"/>
-    <File Name="../../extern/include/UnitTest++/TestDetails.h"/>
-    <File Name="../../extern/include/UnitTest++/TestList.h"/>
-    <File Name="../../extern/include/UnitTest++/TestMacros.h"/>
-    <File Name="../../extern/include/UnitTest++/TestReporter.h"/>
-    <File Name="../../extern/include/UnitTest++/TestReporterStdout.h"/>
-    <File Name="../../extern/include/UnitTest++/TestResults.h"/>
-    <File Name="../../extern/include/UnitTest++/TestRunner.h"/>
-    <File Name="../../extern/include/UnitTest++/TestSuite.h"/>
-    <File Name="../../extern/include/UnitTest++/TimeConstraint.h"/>
-    <File Name="../../extern/include/UnitTest++/TimeHelpers.h"/>
-    <File Name="../../extern/include/UnitTest++/UnitTest++.h"/>
-    <File Name="../../extern/include/UnitTest++/UnitTestPP.h"/>
-    <File Name="../../extern/include/UnitTest++/XmlTestReporter.h"/>
-  </VirtualDirectory>
-  <VirtualDirectory Name="SDL">
-    <VirtualDirectory Name="generated">
-      <File Name="../../extern/include/SDL/generated/SDL_config.h"/>
-    </VirtualDirectory>
-    <File Name="../../extern/include/SDL/begin_code.h"/>
-    <File Name="../../extern/include/SDL/close_code.h"/>
-    <File Name="../../extern/include/SDL/SDL.h"/>
-    <File Name="../../extern/include/SDL/SDL_assert.h"/>
-    <File Name="../../extern/include/SDL/SDL_atomic.h"/>
-    <File Name="../../extern/include/SDL/SDL_audio.h"/>
-    <File Name="../../extern/include/SDL/SDL_bits.h"/>
-    <File Name="../../extern/include/SDL/SDL_blendmode.h"/>
-    <File Name="../../extern/include/SDL/SDL_clipboard.h"/>
-    <File Name="../../extern/include/SDL/SDL_config.h"/>
-    <File Name="../../extern/include/SDL/SDL_config_android.h"/>
-    <File Name="../../extern/include/SDL/SDL_config_iphoneos.h"/>
-    <File Name="../../extern/include/SDL/SDL_config_macosx.h"/>
-    <File Name="../../extern/include/SDL/SDL_config_minimal.h"/>
-    <File Name="../../extern/include/SDL/SDL_config_pandora.h"/>
-    <File Name="../../extern/include/SDL/SDL_config_psp.h"/>
-    <File Name="../../extern/include/SDL/SDL_config_windows.h"/>
-    <File Name="../../extern/include/SDL/SDL_config_winrt.h"/>
-    <File Name="../../extern/include/SDL/SDL_config_wiz.h"/>
-    <File Name="../../extern/include/SDL/SDL_copying.h"/>
-    <File Name="../../extern/include/SDL/SDL_cpuinfo.h"/>
-    <File Name="../../extern/include/SDL/SDL_egl.h"/>
-    <File Name="../../extern/include/SDL/SDL_endian.h"/>
-    <File Name="../../extern/include/SDL/SDL_error.h"/>
-    <File Name="../../extern/include/SDL/SDL_events.h"/>
-    <File Name="../../extern/include/SDL/SDL_filesystem.h"/>
-    <File Name="../../extern/include/SDL/SDL_gamecontroller.h"/>
-    <File Name="../../extern/include/SDL/SDL_gesture.h"/>
-    <File Name="../../extern/include/SDL/SDL_haptic.h"/>
-    <File Name="../../extern/include/SDL/SDL_hints.h"/>
-    <File Name="../../extern/include/SDL/SDL_joystick.h"/>
-    <File Name="../../extern/include/SDL/SDL_keyboard.h"/>
-    <File Name="../../extern/include/SDL/SDL_keycode.h"/>
-    <File Name="../../extern/include/SDL/SDL_loadso.h"/>
-    <File Name="../../extern/include/SDL/SDL_log.h"/>
-    <File Name="../../extern/include/SDL/SDL_main.h"/>
-    <File Name="../../extern/include/SDL/SDL_messagebox.h"/>
-    <File Name="../../extern/include/SDL/SDL_mouse.h"/>
-    <File Name="../../extern/include/SDL/SDL_mutex.h"/>
-    <File Name="../../extern/include/SDL/SDL_name.h"/>
-    <File Name="../../extern/include/SDL/SDL_opengl.h"/>
-    <File Name="../../extern/include/SDL/SDL_opengles.h"/>
-    <File Name="../../extern/include/SDL/SDL_opengles2.h"/>
-    <File Name="../../extern/include/SDL/SDL_opengles2_gl2.h"/>
-    <File Name="../../extern/include/SDL/SDL_opengles2_gl2ext.h"/>
-    <File Name="../../extern/include/SDL/SDL_opengles2_gl2platform.h"/>
-    <File Name="../../extern/include/SDL/SDL_opengles2_khrplatform.h"/>
-    <File Name="../../extern/include/SDL/SDL_opengl_glext.h"/>
-    <File Name="../../extern/include/SDL/SDL_pixels.h"/>
-    <File Name="../../extern/include/SDL/SDL_platform.h"/>
-    <File Name="../../extern/include/SDL/SDL_power.h"/>
-    <File Name="../../extern/include/SDL/SDL_quit.h"/>
-    <File Name="../../extern/include/SDL/SDL_rect.h"/>
-    <File Name="../../extern/include/SDL/SDL_render.h"/>
-    <File Name="../../extern/include/SDL/SDL_revision.h"/>
-    <File Name="../../extern/include/SDL/SDL_rwops.h"/>
-    <File Name="../../extern/include/SDL/SDL_scancode.h"/>
-    <File Name="../../extern/include/SDL/SDL_shape.h"/>
-    <File Name="../../extern/include/SDL/SDL_stdinc.h"/>
-    <File Name="../../extern/include/SDL/SDL_surface.h"/>
-    <File Name="../../extern/include/SDL/SDL_system.h"/>
-    <File Name="../../extern/include/SDL/SDL_syswm.h"/>
-    <File Name="../../extern/include/SDL/SDL_thread.h"/>
-    <File Name="../../extern/include/SDL/SDL_timer.h"/>
-    <File Name="../../extern/include/SDL/SDL_touch.h"/>
-    <File Name="../../extern/include/SDL/SDL_types.h"/>
-    <File Name="../../extern/include/SDL/SDL_version.h"/>
-    <File Name="../../extern/include/SDL/SDL_video.h"/>
-  </VirtualDirectory>
+  <Reconciliation>
+    <Regexes/>
+    <Excludepaths/>
+    <Ignorefiles/>
+    <Extensions>
+      <![CDATA[cpp;c;h;hpp;xrc;wxcp;fbp]]>
+    </Extensions>
+    <Topleveldir>../../extern/include/Urho3D</Topleveldir>
+  </Reconciliation>
+  <Plugins>
+    <Plugin Name="qmake">
+      <![CDATA[00010001N0005Debug000000000000]]>
+    </Plugin>
+  </Plugins>
   <Description/>
   <Dependencies/>
   <Settings Type="Executable">
@@ -1026,7 +985,7 @@
       </Linker>
       <ResourceCompiler Options=""/>
     </GlobalSettings>
-    <Configuration Name="Debug" CompilerType="MinGW ( TDM-GCC-32 )" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+    <Configuration Name="Debug" CompilerType="gcc.exe (i686-posix-sjlj-rev0) 7.2.0" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="-g -Wall" C_Options="" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
         <IncludePath Value="."/>
       </Compiler>
@@ -1037,7 +996,7 @@
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="./Debug" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="./Debug" PauseExecWhenProcTerminates="no" IsGUIProgram="no" IsEnabled="yes"/>
       <BuildSystem Name="Default"/>
-      <Environment EnvVarSetName="&lt;Use Workspace Settings&gt;" DbgSetName="&lt;Use Global Settings&gt;">
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
         <![CDATA[]]>
       </Environment>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="" IsExtended="no">

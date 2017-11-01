@@ -3,14 +3,24 @@
   <Project Name="BarrelWorld" Path="BarrelWorld/BarrelWorld.project" Active="Yes"/>
   <Project Name="extern" Path="extern/extern.project" Active="No"/>
   <BuildMatrix>
-    <WorkspaceConfiguration Name="Debug" Selected="yes">
+    <WorkspaceConfiguration Name="Debug" Selected="no">
       <Environment/>
       <Project Name="BarrelWorld" ConfigName="Debug"/>
       <Project Name="extern" ConfigName="Debug"/>
     </WorkspaceConfiguration>
-    <WorkspaceConfiguration Name="Release" Selected="no">
+    <WorkspaceConfiguration Name="Release" Selected="yes">
       <Environment/>
       <Project Name="BarrelWorld" ConfigName="Release"/>
+      <Project Name="extern" ConfigName="Debug"/>
+    </WorkspaceConfiguration>
+    <WorkspaceConfiguration Name="Debug x64" Selected="no">
+      <Environment/>
+      <Project Name="BarrelWorld" ConfigName="Debug"/>
+      <Project Name="extern" ConfigName="Debug"/>
+    </WorkspaceConfiguration>
+    <WorkspaceConfiguration Name="Release x64" Selected="no">
+      <Environment/>
+      <Project Name="BarrelWorld" ConfigName="Debug"/>
       <Project Name="extern" ConfigName="Debug"/>
     </WorkspaceConfiguration>
   </BuildMatrix>

@@ -16,4 +16,5 @@ cscope_file.list
 LoneWolf/Makefile
 Source/Makefile
 Source/BarrelWorld/Debug
+Source/BarrelWorld/Release
 Source/BarrelWorld/BarrelWorld.txt
