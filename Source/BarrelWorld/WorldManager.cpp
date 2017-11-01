@@ -70,9 +70,27 @@ void BW::WorldManager::NewGame()
 {
 	m_spMainScene->RemoveAllChildren();
 	CreateCamera();
+	
+	CreateLights();
+	
 	m_spTerrainMgr = new TerrainManager(m_pApp, m_spMainScene);
 	m_spTerrainMgr->GenerateTerrain();
+	
 	Log::Write(LOG_INFO, String("Terrain was generated"));
+	
+	Vector3 vec = m_spTerrainMgr->GetTerrainNode()->GetPosition();
+	Vector3 trans = vec + Vector3(0,10,0);
+	
+	String str;
+	str.AppendWithFormat("Terrain position: %f, %f, %f", vec.x_, vec.y_, vec.z_);
+	Log::Write(LOG_INFO, str);
+	
+	m_spCameraNode->Translate(trans);
+	
+	m_spCameraNode->LookAt(vec);
+	
+	
+	
 }
 
 void BW::WorldManager::StoreGame()
@@ -85,5 +103,18 @@ void BW::WorldManager::CreateCamera()
 {
 	m_spCameraNode=m_spMainScene->CreateChild("Camera");
     Camera* camera=m_spCameraNode->CreateComponent<Camera>();
-    camera->SetFarClip(2000);
+    camera->SetFarClip(20000);
+}
+
+
+void BW::WorldManager::CreateLights()
+{
+	Node* lightNode=m_spMainScene->CreateChild("Light");
+    lightNode->SetPosition(Vector3(50,0,10));
+    Light* light=lightNode->CreateComponent<Light>();
+    light->SetLightType(LIGHT_POINT);
+    light->SetRange(500);
+    light->SetBrightness(1.2);
+    light->SetColor(Color(1,1,1,1));
+    light->SetCastShadows(true);
 }

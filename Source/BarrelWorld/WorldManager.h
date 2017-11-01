@@ -44,6 +44,7 @@ namespace BW
 		
 	protected:
 		void CreateCamera();
+		void CreateLights();
 
 	};
 

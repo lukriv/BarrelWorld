@@ -20,11 +20,14 @@ namespace BW
 	{
 		Urho3D::Application *m_pApp;
 		Urho3D::SharedPtr<Urho3D::Scene> m_spMainScene;
+		Urho3D::SharedPtr<Urho3D::Node> m_spTerrainNode;
 	public:
 		TerrainManager(Urho3D::Application *pApp, Urho3D::SharedPtr<Urho3D::Scene> spMainScene);
 		~TerrainManager();
 		
 		void GenerateTerrain();
+		
+		Urho3D::Node * GetTerrainNode();
 		
 	private:
 		void GenerateTerrainHeightAndMat(Urho3D::SharedPtr<Urho3D::Image> &spImage, Urho3D::SharedPtr<Urho3D::Material> &spMaterial);
