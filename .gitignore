@@ -17,4 +17,6 @@ LoneWolf/Makefile
 Source/Makefile
 Source/BarrelWorld/Debug
 Source/BarrelWorld/Release
+Source/BarrelWorld/Debug64
+Source/BarrelWorld/Release64
 Source/BarrelWorld/BarrelWorld.txt

@@ -29,13 +29,12 @@ void BW::TerrainManager::GenerateTerrain()
     Terrain* terrain = m_spTerrainNode->CreateComponent<Terrain>();
     terrain->SetPatchSize(64);
     terrain->SetSpacing(Vector3(2.0f, 0.1f, 2.0f)); // Spacing between vertices and vertical resolution of the height map
-    terrain->SetSmoothing(true);
-    terrain->SetHeightMap(cache->GetResource<Image>("Textures/KrucHeightMap.png"));
+    terrain->SetSmoothing(false);
+    terrain->SetHeightMap(cache->GetResource<Image>("Textures/HeightMap.png"));
     terrain->SetMaterial(cache->GetResource<Material>("Materials/Terrain.xml"));
     // The terrain consists of large triangles, which fits well for occlusion rendering, as a hill can occlude all
     // terrain patches and other objects behind it
-    terrain->SetOccluder(true);
-
+    terrain->SetOccluder(false);
 	
 }
 
