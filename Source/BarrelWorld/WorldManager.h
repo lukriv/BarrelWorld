@@ -32,6 +32,7 @@ namespace BW
 		Urho3D::Scene* GetMainScene() { return m_spMainScene; }
 		
 		Urho3D::Camera* GetCamera();
+		Urho3D::Node* GetCameraNode() { return m_spCameraNode; }
 		
 		
 		

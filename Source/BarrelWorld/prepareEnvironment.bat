@@ -17,6 +17,51 @@ if [%externSubDir%] EQU [x64] set mingwList=libgcc_s_seh-1.dll libstdc++-6.dll l
 
 for %%g in (%mingwList%) do (if not exist .\%dest%\%%g copy "%mingwDir%\%%g" .\%dest%)
 
-if not exist .\%dest%\Autoload  xcopy ..\..\Resources\urho3d .\%dest% /S /Y /Q
+if not exist .\%dest%\CoreData  (
+	mkdir .\%dest%\CoreData
+	xcopy ..\..\Resources\urho3d\CoreData .\%dest%\CoreData /S /Y /Q 
+ )
+
+set source=..\..\Resources\urho3d
+
+
+if not exist .\%dest%\Data mkdir .\%dest%\Data
+
+set fileList="Anonymous Pro.ttf"
+set destSubdir=Fonts
+
+if not exist .\%dest%\Data\%destSubdir% (
+	mkdir .\%dest%\Data\%destSubdir%
+	for %%g in (%fileList%) do (if not exist .\%dest%\Data\%destSubdir%\%%g copy %source%\Data\%destSubdir%\%%g .\%dest%\Data\%destSubdir%)
+)
+
+set destSubdir=Textures
+set fileList=UI.png StoneDiffuse.dds StoneNormal.dds TerrainWeights.dds TerrainDetail2.dds TerrainDetail3.dds	
+if not exist .\%dest%\Data\%destSubdir% (
+	mkdir .\%dest%\Data\%destSubdir%
+	for %%g in (%fileList%) do (if not exist .\%dest%\Data\%destSubdir%\%%g copy %source%\Data\%destSubdir%\%%g .\%dest%\Data\%destSubdir%)
+)
+
+set destSubdir=Models
+set fileList=Box.mdl	
+if not exist .\%dest%\Data\%destSubdir% (
+	mkdir .\%dest%\Data\%destSubdir%
+	for %%g in (%fileList%) do (if not exist .\%dest%\Data\%destSubdir%\%%g copy %source%\Data\%destSubdir%\%%g .\%dest%\Data\%destSubdir%)
+)	
+
+set destSubdir=Materials
+set fileList=Stone.xml	
+if not exist .\%dest%\Data\%destSubdir% (
+	mkdir .\%dest%\Data\%destSubdir%
+	for %%g in (%fileList%) do (if not exist .\%dest%\Data\%destSubdir%\%%g copy %source%\Data\%destSubdir%\%%g .\%dest%\Data\%destSubdir%)
+)
+
+set destSubdir=UI
+set fileList=DefaultStyle.xml	
+if not exist .\%dest%\Data\%destSubdir% (
+	mkdir .\%dest%\Data\%destSubdir%
+	for %%g in (%fileList%) do (if not exist .\%dest%\Data\%destSubdir%\%%g copy %source%\Data\%destSubdir%\%%g .\%dest%\Data\%destSubdir%)
+)
+
 ::xcopy ..\..\Resources\urho3d\coredata .\%dest% /S /T
 ::xcopy ..\..\Resources\urho3d\data .\%dest% /S /T

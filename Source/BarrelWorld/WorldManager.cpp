@@ -5,6 +5,7 @@
 #include <Urho3D/Graphics/Camera.h>
 #include <Urho3D/Graphics/Model.h>
 #include <Urho3D/Graphics/Material.h>
+#include <Urho3D/Input/Input.h>
 #include <Urho3D/IO/Log.h>
 #include "Rotator.h"
 
@@ -64,6 +65,38 @@ Urho3D::Camera* BW::WorldManager::GetCamera()
 
 void BW::WorldManager::Update(float timeStep)
 {
+	static const float MOUSE_SENSITIVITY=0.1f;
+	float MOVE_SPEED=10.0f;
+	Input* input=m_pApp->GetSubsystem<Input>();
+    if(input->GetQualifierDown(1))  // 1 is shift, 2 is ctrl, 4 is alt
+        MOVE_SPEED*=10;
+    if(input->GetKeyDown('W'))
+        m_spCameraNode->Translate(Vector3(0,0, 1)*MOVE_SPEED*timeStep);
+    if(input->GetKeyDown('S'))
+        m_spCameraNode->Translate(Vector3(0,0,-1)*MOVE_SPEED*timeStep);
+    if(input->GetKeyDown('A'))
+        m_spCameraNode->Translate(Vector3(-1,0,0)*MOVE_SPEED*timeStep);
+    if(input->GetKeyDown('D'))
+        m_spCameraNode->Translate(Vector3( 1,0,0)*MOVE_SPEED*timeStep);
+ 
+    if(input->GetMouseButtonDown(MOUSEB_RIGHT))
+    {
+        // Use this frame's mouse motion to adjust camera node yaw and pitch. Clamp the pitch between -90 and 90 degrees
+        IntVector2 mouseMove=input->GetMouseMove();
+        // avoid the weird extrem values before moving the mouse
+        if(mouseMove.x_>-2000000000&&mouseMove.y_>-2000000000)
+        {
+            static float yaw_=0;
+            static float pitch_=0;
+            yaw_+=MOUSE_SENSITIVITY*mouseMove.x_;
+            pitch_+=MOUSE_SENSITIVITY*mouseMove.y_;
+            pitch_=Clamp(pitch_,-90.0f,90.0f);
+            // Reset rotation and set yaw and pitch again
+            m_spCameraNode->SetDirection(Vector3::FORWARD);
+            m_spCameraNode->Yaw(yaw_);
+            m_spCameraNode->Pitch(pitch_);
+        }
+    }
 }
 
 void BW::WorldManager::NewGame()
@@ -79,7 +112,7 @@ void BW::WorldManager::NewGame()
 	Log::Write(LOG_INFO, String("Terrain was generated"));
 	
 	Vector3 vec = m_spTerrainMgr->GetTerrainNode()->GetPosition();
-	Vector3 trans = vec + Vector3(0,10,0);
+	Vector3 trans = vec + Vector3(0,500,0);
 	
 	String str;
 	str.AppendWithFormat("Terrain position: %f, %f, %f", vec.x_, vec.y_, vec.z_);
@@ -110,9 +143,10 @@ void BW::WorldManager::CreateCamera()
 void BW::WorldManager::CreateLights()
 {
 	Node* lightNode=m_spMainScene->CreateChild("Light");
-    lightNode->SetPosition(Vector3(50,0,10));
+	lightNode->SetDirection(Vector3(50,-50,10));
+    lightNode->SetPosition(Vector3(50,50,10));
     Light* light=lightNode->CreateComponent<Light>();
-    light->SetLightType(LIGHT_POINT);
+    light->SetLightType(LIGHT_DIRECTIONAL);
     light->SetRange(500);
     light->SetBrightness(1.2);
     light->SetColor(Color(1,1,1,1));
