@@ -101,6 +101,8 @@ void BW::WorldManager::Update(float timeStep)
 
 void BW::WorldManager::NewGame()
 {
+	ResourceCache* cache=m_pApp->GetSubsystem<ResourceCache>();
+	
 	m_spMainScene->RemoveAllChildren();
 	CreateCamera();
 	
@@ -112,7 +114,13 @@ void BW::WorldManager::NewGame()
 	Log::Write(LOG_INFO, String("Terrain was generated"));
 	
 	Vector3 vec = m_spTerrainMgr->GetTerrainNode()->GetPosition();
-	Vector3 trans = vec + Vector3(0,500,0);
+	Vector3 trans = vec + Vector3(0,25,0);
+	
+	m_spAvatarNode=m_spMainScene->CreateChild("Avatar");
+    m_spAvatarNode->SetPosition(vec + Vector3(0,1,0));
+    StaticModel* pAvatarObject=m_spAvatarNode->CreateComponent<StaticModel>();
+    pAvatarObject->SetModel(cache->GetResource<Model>("Models/Avatar.mdl"));
+    pAvatarObject->SetMaterial(cache->GetResource<Material>("Materials/AvatarMaterial.xml"));
 	
 	String str;
 	str.AppendWithFormat("Terrain position: %f, %f, %f", vec.x_, vec.y_, vec.z_);

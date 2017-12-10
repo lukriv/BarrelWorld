@@ -20,6 +20,7 @@ namespace BW
 		
 		Urho3D::SharedPtr<Urho3D::Scene> m_spMainScene;
 		
+		Urho3D::SharedPtr<Urho3D::Node> m_spAvatarNode;
 		Urho3D::SharedPtr<Urho3D::Node> m_spBoxNode;
 		Urho3D::SharedPtr<Urho3D::Node> m_spCameraNode;
 		
