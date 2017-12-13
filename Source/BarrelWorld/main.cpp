@@ -43,6 +43,7 @@
 #include <Urho3D/Graphics/StaticModel.h>
 #include <Urho3D/Graphics/Material.h>
 #include <Urho3D/Graphics/Skybox.h>
+#include <Urho3D/Physics/PhysicsWorld.h>
 #include "mainmenu.h"
 #include "WorldManager.h"
 #include "Rotator.h"
@@ -72,7 +73,7 @@ public:
     */
     MyApp(Context * context) : Application(context),framecount_(0),time_(0)
     {
-		context->RegisterFactory<BW::Rotator>();
+		BW::Rotator::RegisterObject(context);
     }
  
     /**
@@ -128,6 +129,7 @@ public:
         scene_=new Scene(context_);
         // Let the scene have an Octree component!
         scene_->CreateComponent<Octree>();
+		scene_->CreateComponent<PhysicsWorld>();
         // Let's add an additional scene component for fun.
         //scene_->CreateComponent<DebugRenderer>();
  

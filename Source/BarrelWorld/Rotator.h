@@ -10,7 +10,9 @@ namespace BW
 	{
 		URHO3D_OBJECT(Rotator, Urho3D::LogicComponent);
 	public:
-
+		static void RegisterObject(Urho3D::Context *pContext);
+	
+	public:
 		Rotator(Urho3D::Context *pContext);
 		~Rotator();
 

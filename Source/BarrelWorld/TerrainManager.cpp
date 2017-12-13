@@ -3,6 +3,8 @@
 #include <Urho3D/Resource/Image.h>
 #include <Urho3D/Graphics/Terrain.h>
 #include <Urho3D/IO/Log.h>
+#include <Urho3D/Physics/RigidBody.h>
+#include <Urho3D/Physics/CollisionShape.h>
 
 
 using namespace Urho3D;
@@ -39,6 +41,12 @@ void BW::TerrainManager::GenerateTerrain()
     // The terrain consists of large triangles, which fits well for occlusion rendering, as a hill can occlude all
     // terrain patches and other objects behind it
     terrain->SetOccluder(false);
+	
+	// physics
+	RigidBody* pBody = m_spTerrainNode->CreateComponent<RigidBody>();
+    pBody->SetCollisionLayer(2); // Use layer bitmask 2 for static geometry
+    CollisionShape* pShape = m_spTerrainNode->CreateComponent<CollisionShape>();
+    pShape->SetTerrain();
 	
 }
 

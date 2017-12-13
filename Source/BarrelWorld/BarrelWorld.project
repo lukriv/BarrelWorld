@@ -8,14 +8,17 @@
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="src">
+    <File Name="EntityCreator.cpp"/>
     <File Name="main.cpp"/>
     <File Name="mainmenu.cpp"/>
     <File Name="subsystemmanager.cpp"/>
     <File Name="WorldManager.cpp"/>
     <VirtualDirectory Name="Entities">
+      <File Name="Character.cpp"/>
       <File Name="Rotator.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="EntitiesHeaders">
+      <File Name="Character.h"/>
       <File Name="Rotator.h"/>
     </VirtualDirectory>
     <File Name="TerrainManager.cpp"/>
@@ -23,6 +26,7 @@
   <Dependencies Name="Debug"/>
   <Dependencies Name="Release"/>
   <VirtualDirectory Name="include">
+    <File Name="EntityCreator.h"/>
     <File Name="mainmenu.h"/>
     <File Name="subsystemmanager.h"/>
     <File Name="WorldManager.h"/>

@@ -8,6 +8,7 @@
 #include <Urho3D/Input/Input.h>
 #include <Urho3D/IO/Log.h>
 #include "Rotator.h"
+#include "EntityCreator.h"
 
 using namespace Urho3D;
 
@@ -101,8 +102,7 @@ void BW::WorldManager::Update(float timeStep)
 
 void BW::WorldManager::NewGame()
 {
-	ResourceCache* cache=m_pApp->GetSubsystem<ResourceCache>();
-	
+
 	m_spMainScene->RemoveAllChildren();
 	CreateCamera();
 	
@@ -116,11 +116,9 @@ void BW::WorldManager::NewGame()
 	Vector3 vec = m_spTerrainMgr->GetTerrainNode()->GetPosition();
 	Vector3 trans = vec + Vector3(0,25,0);
 	
-	m_spAvatarNode=m_spMainScene->CreateChild("Avatar");
-    m_spAvatarNode->SetPosition(vec + Vector3(0,1,0));
-    StaticModel* pAvatarObject=m_spAvatarNode->CreateComponent<StaticModel>();
-    pAvatarObject->SetModel(cache->GetResource<Model>("Models/Avatar.mdl"));
-    pAvatarObject->SetMaterial(cache->GetResource<Material>("Materials/AvatarMaterial.xml"));
+	m_spAvatarNode = EntityCreator::CreateAvatar("Avatar", m_pApp, m_spMainScene);
+	
+	m_spAvatarNode->SetPosition(vec + Vector3(0,2,0));
 	
 	String str;
 	str.AppendWithFormat("Terrain position: %f, %f, %f", vec.x_, vec.y_, vec.z_);
@@ -151,8 +149,8 @@ void BW::WorldManager::CreateCamera()
 void BW::WorldManager::CreateLights()
 {
 	Node* lightNode=m_spMainScene->CreateChild("Light");
-	lightNode->SetDirection(Vector3(50,-50,10));
-    lightNode->SetPosition(Vector3(50,50,10));
+	lightNode->SetDirection(Vector3(50,-50,50));
+    lightNode->SetPosition(Vector3(50,50,50));
     Light* light=lightNode->CreateComponent<Light>();
     light->SetLightType(LIGHT_DIRECTIONAL);
     light->SetRange(500);
