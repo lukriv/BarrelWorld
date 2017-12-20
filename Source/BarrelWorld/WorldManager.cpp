@@ -12,10 +12,20 @@
 
 using namespace Urho3D;
 
-BW::WorldManager::WorldManager(Urho3D::Application *pApp, Urho3D::SharedPtr<Urho3D::Scene> spMainScene) : m_pApp(pApp), m_spMainScene(spMainScene)
+
+static const float DEFAULT_CAMERA_DISTANCE = 40;
+static const float DEFAULT_CAMERA_YAW = 0;
+static const float DEFAULT_CAMERA_PITCH = 70;
+
+
+BW::WorldManager::WorldManager(Urho3D::Application *pApp, Urho3D::SharedPtr<Urho3D::Scene> spMainScene) : m_pApp(pApp)
+	, m_spMainScene(spMainScene)
+	, m_characterMode(true)
 {
 	ResourceCache* cache=pApp->GetSubsystem<ResourceCache>();
 	
+	m_cameraYaw = 0;
+	m_cameraPitch = 0;
 	
 	// Let's put a box in there.
     m_spBoxNode=m_spMainScene->CreateChild("Box");
@@ -67,37 +77,54 @@ Urho3D::Camera* BW::WorldManager::GetCamera()
 void BW::WorldManager::Update(float timeStep)
 {
 	static const float MOUSE_SENSITIVITY=0.1f;
+	
 	float MOVE_SPEED=10.0f;
 	Input* input=m_pApp->GetSubsystem<Input>();
-    if(input->GetQualifierDown(1))  // 1 is shift, 2 is ctrl, 4 is alt
-        MOVE_SPEED*=10;
-    if(input->GetKeyDown('W'))
-        m_spCameraNode->Translate(Vector3(0,0, 1)*MOVE_SPEED*timeStep);
-    if(input->GetKeyDown('S'))
-        m_spCameraNode->Translate(Vector3(0,0,-1)*MOVE_SPEED*timeStep);
-    if(input->GetKeyDown('A'))
-        m_spCameraNode->Translate(Vector3(-1,0,0)*MOVE_SPEED*timeStep);
-    if(input->GetKeyDown('D'))
-        m_spCameraNode->Translate(Vector3( 1,0,0)*MOVE_SPEED*timeStep);
- 
-    if(input->GetMouseButtonDown(MOUSEB_RIGHT))
-    {
-        // Use this frame's mouse motion to adjust camera node yaw and pitch. Clamp the pitch between -90 and 90 degrees
-        IntVector2 mouseMove=input->GetMouseMove();
-        // avoid the weird extrem values before moving the mouse
-        if(mouseMove.x_>-2000000000&&mouseMove.y_>-2000000000)
-        {
-            static float yaw_=0;
-            static float pitch_=0;
-            yaw_+=MOUSE_SENSITIVITY*mouseMove.x_;
-            pitch_+=MOUSE_SENSITIVITY*mouseMove.y_;
-            pitch_=Clamp(pitch_,-90.0f,90.0f);
-            // Reset rotation and set yaw and pitch again
-            m_spCameraNode->SetDirection(Vector3::FORWARD);
-            m_spCameraNode->Yaw(yaw_);
-            m_spCameraNode->Pitch(pitch_);
-        }
-    }
+	
+	// switch camera mode - free and character
+	if(input->GetKeyPress('O'))
+	{
+		m_characterMode = !m_characterMode;
+		if(m_characterMode)
+		{
+			SwitchCameraToCharacterMode();
+		}
+	}
+	
+	if(m_characterMode && m_spAvatarNode.NotNull())
+	{
+		m_spCameraNode->SetPosition( m_spAvatarNode->GetPosition() + m_cameraDistance);
+	} else {
+	
+		if(input->GetQualifierDown(1))  // 1 is shift, 2 is ctrl, 4 is alt
+			MOVE_SPEED*=10;
+		if(input->GetKeyDown('W'))
+			m_spCameraNode->Translate(Vector3(0,0, 1)*MOVE_SPEED*timeStep);
+		if(input->GetKeyDown('S'))
+			m_spCameraNode->Translate(Vector3(0,0,-1)*MOVE_SPEED*timeStep);
+		if(input->GetKeyDown('A'))
+			m_spCameraNode->Translate(Vector3(-1,0,0)*MOVE_SPEED*timeStep);
+		if(input->GetKeyDown('D'))
+			m_spCameraNode->Translate(Vector3( 1,0,0)*MOVE_SPEED*timeStep);
+	 
+		if(input->GetMouseButtonDown(MOUSEB_RIGHT))
+		{
+			// Use this frame's mouse motion to adjust camera node yaw and pitch. Clamp the pitch between -90 and 90 degrees
+			IntVector2 mouseMove=input->GetMouseMove();
+			// avoid the weird extrem values before moving the mouse
+			if(mouseMove.x_>-2000000000&&mouseMove.y_>-2000000000)
+			{
+				m_cameraYaw+=MOUSE_SENSITIVITY*mouseMove.x_;
+				m_cameraPitch+=MOUSE_SENSITIVITY*mouseMove.y_;
+				m_cameraPitch=Clamp(m_cameraPitch,-90.0f,90.0f);
+				// Reset rotation and set yaw and pitch again
+				m_spCameraNode->SetDirection(Vector3::FORWARD);
+				m_spCameraNode->Yaw(m_cameraYaw);
+				m_spCameraNode->Pitch(m_cameraPitch);
+			}
+		}
+	
+	}
 }
 
 void BW::WorldManager::NewGame()
@@ -126,9 +153,10 @@ void BW::WorldManager::NewGame()
 	
 	m_spCameraNode->Translate(trans);
 	
-	m_spCameraNode->LookAt(vec);
-	
-	
+	if(m_characterMode)
+	{
+		SwitchCameraToCharacterMode();
+	}
 	
 }
 
@@ -143,6 +171,10 @@ void BW::WorldManager::CreateCamera()
 	m_spCameraNode=m_spMainScene->CreateChild("Camera");
     Camera* camera=m_spCameraNode->CreateComponent<Camera>();
     camera->SetFarClip(20000);
+	//camera->SetOrthographic(true);
+	m_spCameraNode->SetDirection(Vector3::FORWARD);
+	m_spCameraNode->Yaw(m_cameraYaw);
+	m_spCameraNode->Pitch(m_cameraPitch);
 }
 
 
@@ -157,4 +189,18 @@ void BW::WorldManager::CreateLights()
     light->SetBrightness(1.2);
     light->SetColor(Color(1,1,1,1));
     light->SetCastShadows(true);
+}
+
+void BW::WorldManager::SwitchCameraToCharacterMode()
+{
+	// z = y / tan pitch
+	m_cameraDistance.x_ = 0;
+	m_cameraDistance.y_ = DEFAULT_CAMERA_DISTANCE;
+	m_cameraDistance.z_ = - (DEFAULT_CAMERA_DISTANCE / Tan(DEFAULT_CAMERA_PITCH));
+	m_spCameraNode->SetPosition( m_spAvatarNode->GetPosition() + m_cameraDistance);
+	m_cameraPitch = DEFAULT_CAMERA_PITCH;
+	m_cameraYaw = DEFAULT_CAMERA_YAW;
+	m_spCameraNode->SetDirection(Vector3::FORWARD);
+	m_spCameraNode->Yaw(m_cameraYaw);
+	m_spCameraNode->Pitch(m_cameraPitch);
 }

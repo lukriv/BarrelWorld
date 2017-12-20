@@ -40,18 +40,18 @@ namespace BW
 		virtual void FixedUpdate(float timeStep);
 		
 		/// Movement controls. Assigned by the main program each frame.
-		Urho3D::Controls controls_;
+		Urho3D::Controls m_controls;
 		
 	private:
 		/// Handle physics collision event.
 		void HandleNodeCollision(StringHash eventType, VariantMap& eventData);
 		
 		/// Grounded flag for movement.
-		bool onGround_;
+		bool m_onGround;
 		/// Jump flag.
-		bool okToJump_;
+		bool m_okToJump;
 		/// In air timer. Due to possible physics inaccuracy, character can be off ground for max. 1/10 second and still be allowed to move.
-		float inAirTimer_;
+		float m_inAirTimer;
 	};
 
 }

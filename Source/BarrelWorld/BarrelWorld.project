@@ -89,6 +89,7 @@
     <Configuration Name="Debug x64" CompilerType="gcc.exe (x86_64-posix-seh-rev0) 7.2.0" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="-g;-O0;-Wall" C_Options="-g;-O0;-Wall" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
         <IncludePath Value="."/>
+        <Preprocessor Value="_DEBUG_"/>
       </Compiler>
       <Linker Options="" Required="yes">
         <LibraryPath Value="../../extern/lib/x64"/>

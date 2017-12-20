@@ -25,18 +25,18 @@ Node* BW::EntityCreator::CreateAvatar(const String &name, Application* pApp, Sce
 	// Create rigidbody, and set non-zero mass so that the body becomes dynamic
     RigidBody* body = pAvatarNode->CreateComponent<RigidBody>();
     body->SetCollisionLayer(1);
-    body->SetMass(1.0f);
+    body->SetMass(70.0f);
 
     // Set zero angular factor so that physics doesn't turn the character on its own.
     // Instead we will control the character yaw manually
-    //body->SetAngularFactor(Vector3::ZERO);
+    body->SetAngularFactor(Vector3::ZERO);
 
     // Set the rigidbody to signal collision also when in rest, so that we get ground collisions properly
     body->SetCollisionEventMode(COLLISION_ALWAYS);
 
     // Set a capsule shape for collision
     CollisionShape* shape = pAvatarNode->CreateComponent<CollisionShape>();
-    shape->SetCapsule(0.7f, 1.8f, Vector3(0.0f, 0.9f, 0.0f));
+    shape->SetCapsule(1.0f, 2.0f, Vector3(0.0f, 0.0f, 0.0f));
 	
 	return pAvatarNode;
 }

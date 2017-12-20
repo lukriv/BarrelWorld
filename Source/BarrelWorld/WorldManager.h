@@ -25,6 +25,13 @@ namespace BW
 		Urho3D::SharedPtr<Urho3D::Node> m_spCameraNode;
 		
 		Urho3D::SharedPtr<TerrainManager> m_spTerrainMgr;
+		
+		
+		bool m_characterMode;
+		float m_cameraYaw;
+		float m_cameraPitch;
+		Urho3D::Vector3 m_cameraDistance;
+		
 	public:
 		WorldManager(Urho3D::Application *pApp, Urho3D::SharedPtr<Urho3D::Scene> spMainScene);
 		~WorldManager();
@@ -47,6 +54,8 @@ namespace BW
 	protected:
 		void CreateCamera();
 		void CreateLights();
+		
+		void SwitchCameraToCharacterMode();
 
 	};
 

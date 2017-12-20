@@ -65,8 +65,8 @@ void BW::TerrainManager::GenerateTerrainHeightAndMat(Urho3D::SharedPtr<Urho3D::I
 	
 	std::memset( spHeightMap->GetData(), 1, 257*257 );
 	
-	std::memset( spHeightMap->GetData() + 120*257, 0, 257+257 );
-		
+	std::memset( spHeightMap->GetData() + 126*257, 0, 257+257 );
+	std::memset( spHeightMap->GetData() + 129*257, 2, 3*257 );	
 	
 	spHeightMap->SaveBMP(String("test.bmp"));
 	

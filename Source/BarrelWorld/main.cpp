@@ -58,8 +58,11 @@ using namespace Urho3D;
 class MyApp : public Application
 {
 public:
-    int framecount_;
+	int framecount_;
     float time_;
+#ifdef _DEBUG_	
+	bool debugMode_;
+#endif //_DEBUG_
     SharedPtr<Scene> scene_;
     
 	Urho3D::SharedPtr<BW::MainMenu> m_spMainmenu;
@@ -71,7 +74,12 @@ public:
     * whatever instance variables you have.
     * You can also do this in the Setup method.
     */
-    MyApp(Context * context) : Application(context),framecount_(0),time_(0)
+    MyApp(Context * context) : Application(context)
+		,framecount_(0)
+		,time_(0)
+	#ifdef _DEBUG_
+		, debugMode_(false)
+	#endif //_DEBUG_
     {
 		BW::Rotator::RegisterObject(context);
     }
@@ -89,7 +97,7 @@ public:
         // for a more complete list.
         engineParameters_["FullScreen"]=false;
         engineParameters_["WindowWidth"]=1280;
-        engineParameters_["WindowHeight"]=720;
+        engineParameters_["WindowHeight"]=960;
         engineParameters_["WindowResizable"]=true;
         // Override the resource prefix path to use. "If not specified then the
         // default prefix path is set to URHO3D_PREFIX_PATH environment
@@ -131,8 +139,9 @@ public:
         scene_->CreateComponent<Octree>();
 		scene_->CreateComponent<PhysicsWorld>();
         // Let's add an additional scene component for fun.
-        //scene_->CreateComponent<DebugRenderer>();
- 
+	#ifdef _DEBUG_
+        scene_->CreateComponent<DebugRenderer>();
+	#endif //_DEBUG_
 
  
 		m_spWorldMgr = new BW::WorldManager(this,scene_);
@@ -244,6 +253,12 @@ public:
             time_=0;
         }
 		
+	#ifdef _DEBUG_
+		if(GetSubsystem<Input>()->GetKeyPress('P'))
+		{
+			debugMode_ = !debugMode_;
+		}
+	#endif //_DEBUG_	
 		m_spWorldMgr->Update(timeStep);
 
     }
@@ -276,7 +291,13 @@ public:
     void HandlePostRenderUpdate(StringHash eventType, VariantMap & eventData)
     {
         // We could draw some debuggy looking thing for the octree.
-        // scene_->GetComponent<Octree>()->DrawDebugGeometry(true);
+	#ifdef _DEBUG_
+		if(debugMode_)
+		{
+			//scene_->GetComponent<Octree>()->DrawDebugGeometry(true);
+			scene_->GetComponent<PhysicsWorld>()->DrawDebugGeometry(true);
+		}
+	#endif //_DEBUG_
     }
     /**
     * All good things must come to an end.
