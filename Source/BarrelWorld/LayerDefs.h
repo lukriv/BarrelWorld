@@ -1,0 +1,11 @@
+#ifndef __BARRELWORLD_LAYER_DEFINITIONS__H__
+#define __BARRELWORLD_LAYER_DEFINITIONS__H__
+
+namespace BW {
+	enum LayerIds {
+		LAYER_AVATARS = 1,
+		LAYER_TERRAIN = 2
+	};
+}
+
+#endif //__BARRELWORLD_LAYER_DEFINITIONS__H__

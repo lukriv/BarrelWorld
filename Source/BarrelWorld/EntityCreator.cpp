@@ -8,6 +8,8 @@
 #include <Urho3D/Graphics/Material.h>
 #include <Urho3D/Physics/RigidBody.h>
 #include <Urho3D/Physics/CollisionShape.h>
+#include "Character.h"
+#include "LayerDefs.h"
 
 using namespace Urho3D;
 
@@ -24,7 +26,7 @@ Node* BW::EntityCreator::CreateAvatar(const String &name, Application* pApp, Sce
 	
 	// Create rigidbody, and set non-zero mass so that the body becomes dynamic
     RigidBody* body = pAvatarNode->CreateComponent<RigidBody>();
-    body->SetCollisionLayer(1);
+    body->SetCollisionLayer(BW::LAYER_AVATARS);
     body->SetMass(70.0f);
 
     // Set zero angular factor so that physics doesn't turn the character on its own.
@@ -37,6 +39,8 @@ Node* BW::EntityCreator::CreateAvatar(const String &name, Application* pApp, Sce
     // Set a capsule shape for collision
     CollisionShape* shape = pAvatarNode->CreateComponent<CollisionShape>();
     shape->SetCapsule(1.0f, 2.0f, Vector3(0.0f, 0.0f, 0.0f));
+	
+	pAvatarNode->CreateComponent<BW::Character>();
 	
 	return pAvatarNode;
 }

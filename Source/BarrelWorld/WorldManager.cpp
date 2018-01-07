@@ -5,9 +5,12 @@
 #include <Urho3D/Graphics/Camera.h>
 #include <Urho3D/Graphics/Model.h>
 #include <Urho3D/Graphics/Material.h>
+#include <Urho3D/Graphics/Renderer.h>
+#include <Urho3D/Physics/PhysicsWorld.h>
 #include <Urho3D/Input/Input.h>
 #include <Urho3D/IO/Log.h>
 #include "Rotator.h"
+#include "Character.h"
 #include "EntityCreator.h"
 
 using namespace Urho3D;
@@ -23,6 +26,7 @@ BW::WorldManager::WorldManager(Urho3D::Application *pApp, Urho3D::SharedPtr<Urho
 	, m_characterMode(true)
 {
 	ResourceCache* cache=pApp->GetSubsystem<ResourceCache>();
+	
 	
 	m_cameraYaw = 0;
 	m_cameraPitch = 0;
@@ -66,8 +70,10 @@ BW::WorldManager::~WorldManager()
 {
 }
 
-
-
+void BW::WorldManager::SetViewport(Urho3D::Viewport* pViewport)
+{
+	m_spViewport = pViewport;
+}
 
 Urho3D::Camera* BW::WorldManager::GetCamera()
 {
@@ -94,6 +100,29 @@ void BW::WorldManager::Update(float timeStep)
 	if(m_characterMode && m_spAvatarNode.NotNull())
 	{
 		m_spCameraNode->SetPosition( m_spAvatarNode->GetPosition() + m_cameraDistance);
+		
+		BW::Character* m_controls = m_spAvatarNode->GetComponent<BW::Character>();
+
+		m_controls->m_controls.Set(BW::CTRL_FORWARD | BW::CTRL_BACK | BW::CTRL_LEFT | BW::CTRL_RIGHT | BW::CTRL_JUMP, false);
+		// character move
+		if(input->GetKeyDown('W'))
+			m_controls->m_controls.Set(BW::CTRL_FORWARD, true);
+		if(input->GetKeyDown('S'))
+			m_controls->m_controls.Set(BW::CTRL_BACK, true);
+		if(input->GetKeyDown('A'))
+			m_controls->m_controls.Set(BW::CTRL_LEFT, true);
+		if(input->GetKeyDown('D'))
+			m_controls->m_controls.Set(BW::CTRL_RIGHT, true);
+			
+			
+		// get intersection between pointer and terrain
+		//first get mouse pointer position
+		IntVector2 mousePos = input->GetMousePosition();
+		m_controls->m_controls.yaw_ = GetAvatarYaw( mousePos.x_, mousePos.y_);
+
+		
+	 
+		
 	} else {
 	
 		if(input->GetQualifierDown(1))  // 1 is shift, 2 is ctrl, 4 is alt
@@ -132,6 +161,8 @@ void BW::WorldManager::NewGame()
 
 	m_spMainScene->RemoveAllChildren();
 	CreateCamera();
+	// set new camera to viewport
+	m_spViewport->SetCamera(GetCamera());
 	
 	CreateLights();
 	
@@ -204,3 +235,53 @@ void BW::WorldManager::SwitchCameraToCharacterMode()
 	m_spCameraNode->Yaw(m_cameraYaw);
 	m_spCameraNode->Pitch(m_cameraPitch);
 }
+
+float BW::WorldManager::GetAvatarYaw( int32_t x, int32_t y)
+{
+	//static int32_t calls = 0;
+	
+	Vector3 origin = m_spAvatarNode->GetPosition();
+	
+	Plane plane(Vector3(0,1,0), origin);
+	
+	Ray ray = m_spViewport->GetScreenRay(x, y);
+	
+	Vector3 resultVec = ((ray.direction_ * ray.HitDistance(plane)) + ray.origin_) - origin;
+	
+	float yaw = resultVec.Angle(Vector3(0,0,1));
+	
+	yaw = (resultVec.x_ > 0) ? yaw : -yaw; 
+	
+//	if(calls > 100)
+//	{
+//		String str;
+//		str.AppendWithFormat("Yaw: %f; x=%f", yaw, resultVec.x_);
+//		Log::Write(LOG_INFO, str);
+//		calls = 0;
+//	} else {
+//		++calls;
+//	}
+	
+	
+	return yaw;
+	
+//	PhysicsRaycastResult result;
+//	
+//	PhysicsWorld *pPhysicsWorld = m_spMainScene->GetComponent<PhysicsWorld>();
+//	
+//	pPhysicsWorld->RaycastSingleSegmented (result, ray, 20000, 100);
+	
+//	if(calls > 100)
+//	{
+//		String str;
+//		str.AppendWithFormat("Ray intersection: distance (%f), bodyAddr(0x%x), intersection( %f, %f, %f)"
+//			, result.distance_, (int64_t) result.body_, result.position_.x_, result.position_.y_, result.position_.z_);
+//		Log::Write(LOG_INFO, str);
+//		calls = 0;
+//	} else {
+//		++calls;
+//	}
+	
+	
+}
+

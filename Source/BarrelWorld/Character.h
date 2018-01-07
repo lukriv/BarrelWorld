@@ -2,6 +2,7 @@
 #define __BARREL_WORLD_CHARACTER_LOGIC__H__
 
 #include <Urho3D/Scene/LogicComponent.h>
+#include <Urho3D/Input/Controls.h>
 
 namespace BW
 {
@@ -12,14 +13,14 @@ namespace BW
 		CTRL_LEFT = 4,
 		CTRL_RIGHT = 8,
 		CTRL_JUMP = 16
-	}
+	};
 
-	const float MOVE_FORCE = 0.8f;
-	const float INAIR_MOVE_FORCE = 0.02f;
-	const float BRAKE_FORCE = 0.2f;
-	const float JUMP_FORCE = 7.0f;
-	const float YAW_SENSITIVITY = 0.1f;
-	const float INAIR_THRESHOLD_TIME = 0.1f;
+	extern const float MOVE_FORCE;
+	extern const float INAIR_MOVE_FORCE;
+	extern const float BRAKE_FORCE;
+	extern const float JUMP_FORCE;
+	extern const float YAW_SENSITIVITY;
+	extern const float INAIR_THRESHOLD_TIME;
 	
 	/// Character component, responsible for physical movement according to controls
 	class Character : public Urho3D::LogicComponent
@@ -44,7 +45,7 @@ namespace BW
 		
 	private:
 		/// Handle physics collision event.
-		void HandleNodeCollision(StringHash eventType, VariantMap& eventData);
+		void HandleNodeCollision(Urho3D::StringHash eventType, Urho3D::VariantMap& eventData);
 		
 		/// Grounded flag for movement.
 		bool m_onGround;

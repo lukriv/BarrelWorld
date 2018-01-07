@@ -26,6 +26,7 @@
   <Dependencies Name="Debug"/>
   <Dependencies Name="Release"/>
   <VirtualDirectory Name="include">
+    <File Name="LayerDefs.h"/>
     <File Name="EntityCreator.h"/>
     <File Name="mainmenu.h"/>
     <File Name="subsystemmanager.h"/>

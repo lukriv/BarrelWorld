@@ -47,6 +47,7 @@
 #include "mainmenu.h"
 #include "WorldManager.h"
 #include "Rotator.h"
+#include "Character.h"
  
 using namespace Urho3D;
 /**
@@ -82,6 +83,7 @@ public:
 	#endif //_DEBUG_
     {
 		BW::Rotator::RegisterObject(context);
+		BW::Character::RegisterObject(context);
     }
  
     /**
@@ -143,16 +145,14 @@ public:
         scene_->CreateComponent<DebugRenderer>();
 	#endif //_DEBUG_
 
- 
 		m_spWorldMgr = new BW::WorldManager(this,scene_);
-
  
-
- 
-        // Now we setup the viewport. Ofcourse, you can have more than one!
+		// Now we setup the viewport. Ofcourse, you can have more than one!
         Renderer* renderer=GetSubsystem<Renderer>();
         SharedPtr<Viewport> viewport(new Viewport(context_,scene_,m_spWorldMgr->GetCamera()));
         renderer->SetViewport(0,viewport);
+		
+		m_spWorldMgr->SetViewport(viewport);
  
         // We subscribe to the events we'd like to handle.
         // In this example we will be showing what most of them do,
@@ -171,12 +171,6 @@ public:
         SubscribeToEvent(E_ENDFRAME,URHO3D_HANDLER(MyApp,HandleEndFrame));
     }
  
-	void SetViewport()
-	{
-		Renderer* renderer=GetSubsystem<Renderer>();
-		renderer->GetViewport(0)->SetCamera(m_spWorldMgr->GetCamera());
-	}
-	
     /**
     * Good place to get rid of any system resources that requires the
     * engine still initialized. You could do the rest in the destructor,
@@ -231,7 +225,6 @@ public:
                 engine_->Exit();
 			} else if(clicked->GetName()=="new") {
 				m_spWorldMgr->NewGame();
-				SetViewport();
 				m_spMainmenu->Visible(false);
 			} else if(clicked->GetName()=="store") {
 				m_spWorldMgr->StoreGame();

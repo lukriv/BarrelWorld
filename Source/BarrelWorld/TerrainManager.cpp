@@ -6,6 +6,8 @@
 #include <Urho3D/Physics/RigidBody.h>
 #include <Urho3D/Physics/CollisionShape.h>
 
+#include "LayerDefs.h"
+
 
 using namespace Urho3D;
 
@@ -44,7 +46,7 @@ void BW::TerrainManager::GenerateTerrain()
 	
 	// physics
 	RigidBody* pBody = m_spTerrainNode->CreateComponent<RigidBody>();
-    pBody->SetCollisionLayer(2); // Use layer bitmask 2 for static geometry
+    pBody->SetCollisionLayer(BW::LAYER_TERRAIN); // Use layer bitmask 2 for static geometry
     CollisionShape* pShape = m_spTerrainNode->CreateComponent<CollisionShape>();
     pShape->SetTerrain();
 	
