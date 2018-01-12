@@ -51,13 +51,13 @@ set source=..\..\Resources
 set barrelData=BarrelData
 if not exist .\%dest%\%barrelData% mkdir .\%dest%\%barrelData%
 
-set fileList=AvatarMaterial.xml TerrainX.xml
+set fileList=AvatarMaterial.xml TerrainX.xml BaseMat.xml HandMat.xml LegMat.xml
 call :CopyList %dest% %barrelData% Materials %fileList%
 
-set fileList=Avatar.mdl
+set fileList=Avatar.mdl Skeleton.mdl BodyClear.mdl idle.ani run.ani LeftHand.mdl RightHand.mdl
 call :CopyList %dest% %barrelData% Models %fileList%
 
-set fileList=barrelTexPrep.png webGrass.dds
+set fileList=barrelTexPrep.png webGrass.dds avatarFull2.png avatarFull2LeftHand.png
 call :CopyList %dest% %barrelData% Textures %fileList%
 
  
