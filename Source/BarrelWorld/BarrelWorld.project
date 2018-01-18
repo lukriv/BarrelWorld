@@ -8,6 +8,7 @@
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="src">
+    <File Name="DebugTools.cpp"/>
     <File Name="EntityCreator.cpp"/>
     <File Name="main.cpp"/>
     <File Name="mainmenu.cpp"/>
@@ -26,6 +27,7 @@
   <Dependencies Name="Debug"/>
   <Dependencies Name="Release"/>
   <VirtualDirectory Name="include">
+    <File Name="DebugTools.h"/>
     <File Name="LayerDefs.h"/>
     <File Name="EntityCreator.h"/>
     <File Name="mainmenu.h"/>

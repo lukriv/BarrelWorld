@@ -1,6 +1,7 @@
 #ifndef __BARRELWORLD_TERRAIN_MANAGER__H__
 #define __BARRELWORLD_TERRAIN_MANAGER__H__
 
+#include <cstdint>
 #include <Urho3D/Container/RefCounted.h>
 #include <Urho3D/Core/Context.h>
 #include <Urho3D/Scene/Scene.h>
@@ -15,7 +16,15 @@ namespace Urho3D {
 
 namespace BW
 {
-
+	
+	struct TerrainParams {
+		uint8_t m_maxAlt;
+		uint8_t m_minAlt;
+		
+		uint8_t m_hills; // hills top count
+		uint8_t m_maxDifference; //max difference between neighbouring point
+	};
+	
 	class TerrainManager : public Urho3D::RefCounted
 	{
 		Urho3D::Application *m_pApp;
@@ -30,7 +39,7 @@ namespace BW
 		Urho3D::Node * GetTerrainNode();
 		
 	private:
-		void GenerateTerrainHeightAndMat(Urho3D::SharedPtr<Urho3D::Image> &spImage, Urho3D::SharedPtr<Urho3D::Material> &spMaterial);
+		void GenerateTerrainHeightAndMat(const TerrainParams &params, Urho3D::SharedPtr<Urho3D::Image> &spImage, Urho3D::SharedPtr<Urho3D::Material> &spMaterial);
 		
 	};
 

@@ -174,7 +174,7 @@ void BW::WorldManager::NewGame()
 	Vector3 vec = m_spTerrainMgr->GetTerrainNode()->GetPosition();
 	Vector3 trans = vec + Vector3(0,25,0);
 	
-	m_spAvatarNode = EntityCreator::CreateAvatar2("Avatar", m_pApp, m_spMainScene);
+	m_spAvatarNode = EntityCreator::CreateAvatar("Avatar", m_pApp, m_spMainScene);
 	
 	m_spAvatarNode->SetPosition(vec + Vector3(0,2,0));
 	

@@ -50,7 +50,7 @@ void BW::Character::FixedUpdate(float timeStep)
 {
 	/// \todo Could cache the components for faster access instead of finding them each frame
     RigidBody* body = GetComponent<RigidBody>();
-    AnimationController* animCtrl = node_->GetComponent<AnimationController>(true);
+//  AnimationController* animCtrl = node_->GetComponent<AnimationController>(true);
 
     // Update the in air timer. Reset if grounded
     if (!m_onGround)
@@ -118,24 +118,24 @@ void BW::Character::FixedUpdate(float timeStep)
 //		}
     }
 
-    if ( m_onGround )
-    {
+//    if ( m_onGround )
+//    {
 //        animCtrl->PlayExclusive("Models/Mutant/Mutant_Jump1.ani", 0, false, 0.2f);
 //    }
 //    else
 //    {
         // Play walk animation if moving on ground, otherwise fade it out
-        if (softGrounded && !moveDir.Equals(Vector3::ZERO))
-		{
-            animCtrl->PlayExclusive("Models/run.ani", 0, true, 0.2f);
-		}
-        else {
-            animCtrl->PlayExclusive("Models/idle.ani", 0, true, 0.2f);
-		}
-
-        // Set walk animation speed proportional to velocity
-        animCtrl->SetSpeed("Models/run.ani", planeVelocity.Length() * 0.3f);
-    }
+//       if (softGrounded && !moveDir.Equals(Vector3::ZERO))
+//		{
+//           animCtrl->PlayExclusive("Models/run.ani", 0, true, 0.2f);
+//		}
+//       else {
+//           animCtrl->PlayExclusive("Models/idle.ani", 0, true, 0.2f);
+//		}
+//
+//       // Set walk animation speed proportional to velocity
+//       animCtrl->SetSpeed("Models/run.ani", planeVelocity.Length() * 0.3f);
+//   }
 
     // Reset grounded flag for next frame
     m_onGround = false;

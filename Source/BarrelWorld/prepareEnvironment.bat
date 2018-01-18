@@ -51,19 +51,46 @@ set source=..\..\Resources
 set barrelData=BarrelData
 if not exist .\%dest%\%barrelData% mkdir .\%dest%\%barrelData%
 
-set fileList=AvatarMaterial.xml TerrainX.xml BaseMat.xml HandMat.xml LegMat.xml
-call :CopyList %dest% %barrelData% Materials %fileList%
+::set fileList=AvatarMaterial.xml TerrainX.xml BaseMat.xml HandMat.xml LegMat.xml
+::call :CopyList %dest% %barrelData% Materials %fileList%
 
-set fileList=Avatar.mdl Skeleton.mdl BodyClear.mdl idle.ani run.ani LeftHand.mdl RightHand.mdl
-call :CopyList %dest% %barrelData% Models %fileList%
+::set fileList=Avatar.mdl Skeleton.mdl BodyClear.mdl idle.ani run.ani LeftHand.mdl RightHand.mdl
+::call :CopyList %dest% %barrelData% Models %fileList%
 
-set fileList=barrelTexPrep.png webGrass.dds avatarFull2.png avatarFull2LeftHand.png
-call :CopyList %dest% %barrelData% Textures %fileList%
+::set fileList=barrelTexPrep.png webGrass.dds avatarFull2.png avatarFull2LeftHand.png
+::call :CopyList %dest% %barrelData% Textures %fileList%
 
+xcopy ..\..\Resources\BarrelData .\%dest%\%barrelData% /S /Y
  
 goto :EOF
 
 :CopyList
+setlocal
+set dest=%1
+shift
+set resourceDest=%1
+shift
+set destSubdir=%1
+shift 
+set fileList=%1
+shift
+:CopyListLoop
+if not [%1]==[] (
+	set fileList=%fileList% %1
+	shift
+	goto :CopyListLoop
+)
+
+if not exist .\%dest%\%resourceDest%\%destSubdir% (
+	mkdir .\%dest%\%resourceDest%\%destSubdir% 
+)
+
+for %%g in (%fileList%) do ( call :CopyFile %source%\%resourceDest%\%destSubdir% .\%dest%\%resourceDest%\%destSubdir% %%g )
+
+endlocal
+EXIT /B 0
+
+:CopyFolder
 setlocal
 set dest=%1
 shift

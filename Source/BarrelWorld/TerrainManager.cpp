@@ -5,8 +5,11 @@
 #include <Urho3D/IO/Log.h>
 #include <Urho3D/Physics/RigidBody.h>
 #include <Urho3D/Physics/CollisionShape.h>
+#include <Urho3D/Graphics/Technique.h>
+#include <Urho3D/Graphics/Texture2D.h>
 
 #include "LayerDefs.h"
+#include "DebugTools.h"
 
 
 using namespace Urho3D;
@@ -25,9 +28,15 @@ void BW::TerrainManager::GenerateTerrain()
 {
 	Urho3D::SharedPtr<Urho3D::Image> spHeightMap;
 	Urho3D::SharedPtr<Urho3D::Material> spMaterial;
-	ResourceCache* cache=m_pApp->GetSubsystem<ResourceCache>();
+	//ResourceCache* cache=m_pApp->GetSubsystem<ResourceCache>();
+	TerrainParams params;
+	//set parameters
+	params.m_hills = 5;
+	params.m_maxAlt = 20;
+	params.m_maxDifference = 1;
+	params.m_minAlt = 0;
 	
-	GenerateTerrainHeightAndMat(spHeightMap, spMaterial);
+	GenerateTerrainHeightAndMat(params, spHeightMap, spMaterial);
 	//Create heightmap terrain with collision
     m_spTerrainNode = m_spMainScene->CreateChild("Terrain");
     m_spTerrainNode->SetPosition(Vector3::ZERO);
@@ -39,7 +48,7 @@ void BW::TerrainManager::GenerateTerrain()
 	{
 		Log::Write(LOG_ERROR, "Load heightmap failed");
 	}
-    terrain->SetMaterial(cache->GetResource<Material>("Materials/TerrainX.xml"));
+    terrain->SetMaterial(spMaterial);
     // The terrain consists of large triangles, which fits well for occlusion rendering, as a hill can occlude all
     // terrain patches and other objects behind it
     terrain->SetOccluder(false);
@@ -52,7 +61,7 @@ void BW::TerrainManager::GenerateTerrain()
 	
 }
 
-void BW::TerrainManager::GenerateTerrainHeightAndMat(Urho3D::SharedPtr<Urho3D::Image>& spHeightMap, Urho3D::SharedPtr<Urho3D::Material>& spMaterial)
+void BW::TerrainManager::GenerateTerrainHeightAndMat(const TerrainParams &params, Urho3D::SharedPtr<Urho3D::Image>& spHeightMap, Urho3D::SharedPtr<Urho3D::Material>& spMaterial)
 {
 	//std::default_random_engine generator;
 	//std::uniform_int_distribution<int> distribution(0,255);
@@ -60,22 +69,33 @@ void BW::TerrainManager::GenerateTerrainHeightAndMat(Urho3D::SharedPtr<Urho3D::I
 	//auto dice = std::bind ( distribution, generator );
 	//int wisdom = dice()+dice()+dice();
 	
+	ResourceCache* cache=m_pApp->GetSubsystem<ResourceCache>();
+	
 	//Create Image as height map
 	spHeightMap = new Image(m_pApp->GetContext());
 	
 	spHeightMap->SetSize(257,257,1);
 	
-	std::memset( spHeightMap->GetData(), 1, 257*257 );
+	std::memset( spHeightMap->GetData(), params.m_minAlt, 257*257 );
 	
 	std::memset( spHeightMap->GetData() + 126*257, 0, 257+257 );
 	std::memset( spHeightMap->GetData() + 129*257, 2, 3*257 );	
 	
 	spHeightMap->SaveBMP(String("test.bmp"));
 	
-	
 	//prepare Material
 	spMaterial = new Material(m_pApp->GetContext());
+	spMaterial->SetTechnique(0, cache->GetResource<Technique>("Techniques/TerrainBlend.xml"));
 	
+	spMaterial->SetTexture(TU_DIFFUSE, (Texture*)cache->GetResource<Texture2D>("Textures/TerrainWeights.dds"));
+	spMaterial->SetTexture(TU_NORMAL, (Texture*)cache->GetResource<Texture2D>("Textures/webGrass.dds"));
+	spMaterial->SetTexture(TU_SPECULAR, (Texture*)cache->GetResource<Texture2D>("Textures/stone.dds"));
+	spMaterial->SetTexture(TU_EMISSIVE, (Texture*)cache->GetResource<Texture2D>("Textures/TerrainDetail3.dds"));
+	
+	spMaterial->SetShaderParameter ("MatSpecColor", Variant(Vector4(0.5, 0.5, 0.5, 16)));
+	spMaterial->SetShaderParameter ("DetailTiling", Variant(Vector2(32, 32)));
+	
+		
 }
 
 Urho3D::Node* BW::TerrainManager::GetTerrainNode()
