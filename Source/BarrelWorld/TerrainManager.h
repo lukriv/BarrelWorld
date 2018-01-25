@@ -2,6 +2,7 @@
 #define __BARRELWORLD_TERRAIN_MANAGER__H__
 
 #include <cstdint>
+#include <vector>
 #include <Urho3D/Container/RefCounted.h>
 #include <Urho3D/Core/Context.h>
 #include <Urho3D/Scene/Scene.h>
@@ -39,6 +40,7 @@ namespace BW
 		Urho3D::Node * GetTerrainNode();
 		
 	private:
+		void GetTerrainCircle(const Urho3D::IntVector2& center, int32_t radius, std::vector<Urho3D::IntVector2> &v1, std::vector<Urho3D::IntVector2> &v2);
 		void GenerateTerrainHeightAndMat(const TerrainParams &params, Urho3D::SharedPtr<Urho3D::Image> &spImage, Urho3D::SharedPtr<Urho3D::Material> &spMaterial);
 		
 	};

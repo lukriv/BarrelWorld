@@ -172,11 +172,11 @@ void BW::WorldManager::NewGame()
 	Log::Write(LOG_INFO, String("Terrain was generated"));
 	
 	Vector3 vec = m_spTerrainMgr->GetTerrainNode()->GetPosition();
-	Vector3 trans = vec + Vector3(0,25,0);
+	Vector3 trans = vec + Vector3(0,50,0);
 	
 	m_spAvatarNode = EntityCreator::CreateAvatar("Avatar", m_pApp, m_spMainScene);
 	
-	m_spAvatarNode->SetPosition(vec + Vector3(0,2,0));
+	m_spAvatarNode->SetPosition(vec + Vector3(0,25,0));
 	
 	String str;
 	str.AppendWithFormat("Terrain position: %f, %f, %f", vec.x_, vec.y_, vec.z_);

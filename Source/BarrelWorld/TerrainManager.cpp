@@ -11,6 +11,11 @@
 #include "LayerDefs.h"
 #include "DebugTools.h"
 
+#include <random>
+#include <functional>
+#include <algorithm>
+#include <queue>
+#include <chrono>
 
 using namespace Urho3D;
 
@@ -31,7 +36,7 @@ void BW::TerrainManager::GenerateTerrain()
 	//ResourceCache* cache=m_pApp->GetSubsystem<ResourceCache>();
 	TerrainParams params;
 	//set parameters
-	params.m_hills = 5;
+	params.m_hills = 9;
 	params.m_maxAlt = 20;
 	params.m_maxDifference = 1;
 	params.m_minAlt = 0;
@@ -61,11 +66,16 @@ void BW::TerrainManager::GenerateTerrain()
 	
 }
 
+
+
 void BW::TerrainManager::GenerateTerrainHeightAndMat(const TerrainParams &params, Urho3D::SharedPtr<Urho3D::Image>& spHeightMap, Urho3D::SharedPtr<Urho3D::Material>& spMaterial)
 {
-	//std::default_random_engine generator;
-	//std::uniform_int_distribution<int> distribution(0,255);
+	std::default_random_engine generator(std::chrono::system_clock::now().time_since_epoch().count());
+	std::uniform_int_distribution<int8_t> altDist(params.m_minAlt,params.m_maxAlt);
+	std::uniform_int_distribution<int32_t> wideDist(0,256);
 
+	auto altGen = std::bind(altDist, generator);
+	auto wideGen = std::bind(wideDist, generator);
 	//auto dice = std::bind ( distribution, generator );
 	//int wisdom = dice()+dice()+dice();
 	
@@ -74,12 +84,79 @@ void BW::TerrainManager::GenerateTerrainHeightAndMat(const TerrainParams &params
 	//Create Image as height map
 	spHeightMap = new Image(m_pApp->GetContext());
 	
-	spHeightMap->SetSize(257,257,1);
+	const int32_t MAP_SIZE = 257;
 	
-	std::memset( spHeightMap->GetData(), params.m_minAlt, 257*257 );
+	spHeightMap->SetSize(MAP_SIZE,MAP_SIZE,1);
 	
-	std::memset( spHeightMap->GetData() + 126*257, 0, 257+257 );
-	std::memset( spHeightMap->GetData() + 129*257, 2, 3*257 );	
+	std::memset( spHeightMap->GetData(), params.m_minAlt, MAP_SIZE*MAP_SIZE );
+	
+	{
+		struct StackItem {
+			int8_t m_alt;
+			IntVector2 m_position;
+			
+			StackItem(int8_t alt, const IntVector2 &pos) : m_alt(alt), m_position(pos) {}
+		};
+
+		struct mycomparison
+		{
+		  bool operator() (const StackItem& lhs, const StackItem&rhs) const
+		  {
+			return (lhs.m_alt < rhs.m_alt);
+		  }
+		};
+		std::priority_queue<StackItem, std::vector<StackItem>, mycomparison > myQueue;
+
+		// generate hills
+		for (int32_t i = 0; i < params.m_hills; ++i)
+		{
+			myQueue.push(StackItem(altGen(), IntVector2(wideGen(), wideGen())));
+		}
+		
+		unsigned char* data = spHeightMap->GetData();
+		unsigned char* point = nullptr;
+		
+		while(!myQueue.empty())
+		{
+			const StackItem &item = myQueue.top();
+			
+			if((item.m_position.y_ >= MAP_SIZE)||
+				(item.m_position.x_ >= MAP_SIZE)||
+				(item.m_position.x_ < 0)||
+				(item.m_position.x_ < 0))
+			{
+				myQueue.pop();
+				continue;
+			}
+			
+			
+			point = data +  item.m_position.y_ * MAP_SIZE + item.m_position.x_;
+			// set altitude
+			if(( *(point) == params.m_minAlt) && (item.m_alt > params.m_minAlt))
+			{
+				*(point) = item.m_alt;
+			} else {
+				myQueue.pop();
+				continue;
+			}
+			
+			
+			
+			myQueue.push(StackItem(item.m_alt - 1, IntVector2(item.m_position.x_ + 1, item.m_position.y_ + 1)));
+			myQueue.push(StackItem(item.m_alt - 1, IntVector2(item.m_position.x_, item.m_position.y_ + 1)));
+			myQueue.push(StackItem(item.m_alt - 1, IntVector2(item.m_position.x_ - 1, item.m_position.y_ + 1)));
+			myQueue.push(StackItem(item.m_alt - 1, IntVector2(item.m_position.x_ - 1, item.m_position.y_)));
+			myQueue.push(StackItem(item.m_alt - 1, IntVector2(item.m_position.x_ - 1, item.m_position.y_ - 1)));
+			myQueue.push(StackItem(item.m_alt - 1, IntVector2(item.m_position.x_, item.m_position.y_ - 1)));
+			myQueue.push(StackItem(item.m_alt - 1, IntVector2(item.m_position.x_ + 1, item.m_position.y_ - 1)));
+			myQueue.push(StackItem(item.m_alt - 1, IntVector2(item.m_position.x_ + 1, item.m_position.y_)));
+			
+			myQueue.pop();
+			
+		}
+		
+				
+	}
 	
 	spHeightMap->SaveBMP(String("test.bmp"));
 	
@@ -101,4 +178,40 @@ void BW::TerrainManager::GenerateTerrainHeightAndMat(const TerrainParams &params
 Urho3D::Node* BW::TerrainManager::GetTerrainNode()
 {
 	return m_spTerrainNode;
+}
+
+void BW::TerrainManager::GetTerrainCircle(const IntVector2& center, int32_t radius, std::vector<IntVector2> &v1, std::vector<IntVector2> &v2)
+{
+	int32_t x0 = center.x_;
+	int32_t y0 = center.y_;
+    int32_t x = radius - 1;
+    int32_t y = 0;
+    int32_t dx = 1;
+    int32_t dy = 1;
+    int32_t err = dx - (radius << 1);
+
+    while (x >= y)
+    {
+		v1.push_back(IntVector2(x0 - x, y0 + y));
+		v2.push_back(IntVector2(x0 + x, y0 + y));
+		v1.push_back(IntVector2(x0 - y, y0 + x));
+		v2.push_back(IntVector2(x0 + y, y0 + x));
+		v1.push_back(IntVector2(x0 - x, y0 - y));
+		v2.push_back(IntVector2(x0 + x, y0 - y));
+		v1.push_back(IntVector2(x0 - y, y0 - x));
+		v2.push_back(IntVector2(x0 + y, y0 - x));
+		
+        if (err <= 0)
+        {
+            y++;
+            err += dy;
+            dy += 2;
+        }
+        else
+        {
+            x--;
+            dx += 2;
+            err += dx - (radius << 1);
+        }
+    }
 }
