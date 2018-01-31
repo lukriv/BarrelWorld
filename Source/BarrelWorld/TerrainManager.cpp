@@ -36,10 +36,10 @@ void BW::TerrainManager::GenerateTerrain()
 	//ResourceCache* cache=m_pApp->GetSubsystem<ResourceCache>();
 	TerrainParams params;
 	//set parameters
-	params.m_hills = 9;
-	params.m_maxAlt = 20;
-	params.m_maxDifference = 1;
-	params.m_minAlt = 0;
+	params.m_hills = 10;
+	params.m_maxAlt = 30;
+	params.m_maxDifference = 3;
+	params.m_minAlt = 3;
 	
 	GenerateTerrainHeightAndMat(params, spHeightMap, spMaterial);
 	//Create heightmap terrain with collision
@@ -71,11 +71,13 @@ void BW::TerrainManager::GenerateTerrain()
 void BW::TerrainManager::GenerateTerrainHeightAndMat(const TerrainParams &params, Urho3D::SharedPtr<Urho3D::Image>& spHeightMap, Urho3D::SharedPtr<Urho3D::Material>& spMaterial)
 {
 	std::default_random_engine generator(std::chrono::system_clock::now().time_since_epoch().count());
-	std::uniform_int_distribution<int8_t> altDist(params.m_minAlt,params.m_maxAlt);
-	std::uniform_int_distribution<int32_t> wideDist(0,256);
+	std::uniform_int_distribution<int8_t> altDist(params.m_minAlt,params.m_maxAlt/params.m_maxDifference);
+	std::uniform_int_distribution<int32_t> wideDist(0,255);
+	std::uniform_int_distribution<int32_t> topDist(-params.m_maxDifference, params.m_maxDifference);
 
 	auto altGen = std::bind(altDist, generator);
 	auto wideGen = std::bind(wideDist, generator);
+	auto topGen = std::bind(topDist, generator);
 	//auto dice = std::bind ( distribution, generator );
 	//int wisdom = dice()+dice()+dice();
 	
@@ -110,47 +112,71 @@ void BW::TerrainManager::GenerateTerrainHeightAndMat(const TerrainParams &params
 		// generate hills
 		for (int32_t i = 0; i < params.m_hills; ++i)
 		{
-			myQueue.push(StackItem(altGen(), IntVector2(wideGen(), wideGen())));
+			myQueue.push(StackItem(altGen() * params.m_maxDifference, IntVector2(wideGen(), wideGen())));
 		}
 		
+		std::vector<IntVector2> midpointLine;
+		std::vector<IntVector2> v1;
+		
 		unsigned char* data = spHeightMap->GetData();
-		unsigned char* point = nullptr;
+		//unsigned char* point = nullptr;
 		
 		while(!myQueue.empty())
 		{
 			const StackItem &item = myQueue.top();
 			
-			if((item.m_position.y_ >= MAP_SIZE)||
-				(item.m_position.x_ >= MAP_SIZE)||
-				(item.m_position.x_ < 0)||
-				(item.m_position.x_ < 0))
+			IntVector2 downPoint(topGen(), topGen());
+			
+			downPoint = item.m_position + downPoint;
+			
+			GetTerrainLine(item.m_position, downPoint, midpointLine);
+			
+			int8_t radius = params.m_minAlt;
+						
+			for (auto &mPoint : midpointLine)
 			{
-				myQueue.pop();
-				continue;
+			
+				GetTerrainCircle(mPoint, radius, v1);
+				
+				std::sort(v1.begin(), v1.end(), [](const IntVector2& lhs, const IntVector2 &rhs) { return (lhs.y_ < rhs.y_);});
+				
+				int32_t y = -1;
+				uint32_t i = 0;
+				while( i < v1.size())
+				{
+					y = v1[i].y_;
+					
+					int32_t x1 = MAP_SIZE - 1;
+					int32_t x2 = 0;					
+					
+					// find min max
+					while((y == v1[i].y_)&&( i < v1.size()))
+					{
+						if(x1 > v1[i].x_) x1 = v1[i].x_;
+						if(x2 < v1[i].x_) x2 = v1[i].x_;
+						++i;
+					}
+					
+					x1 = (x1 >= 0)? x1 : 0;
+					x2 = (x2 < MAP_SIZE) ? x2 : MAP_SIZE - 1;
+					
+					for (auto iter = data + y*MAP_SIZE + x1; iter < data + ((y)*MAP_SIZE) + (x2); ++iter)
+					{
+						if(*iter == params.m_minAlt)
+						{
+							(*iter) = item.m_alt - radius;
+						}
+					}
+						
+				}
+				
+				v1.clear();
+				
+				radius += params.m_maxDifference;
+			
 			}
 			
-			
-			point = data +  item.m_position.y_ * MAP_SIZE + item.m_position.x_;
-			// set altitude
-			if(( *(point) == params.m_minAlt) && (item.m_alt > params.m_minAlt))
-			{
-				*(point) = item.m_alt;
-			} else {
-				myQueue.pop();
-				continue;
-			}
-			
-			
-			
-			myQueue.push(StackItem(item.m_alt - 1, IntVector2(item.m_position.x_ + 1, item.m_position.y_ + 1)));
-			myQueue.push(StackItem(item.m_alt - 1, IntVector2(item.m_position.x_, item.m_position.y_ + 1)));
-			myQueue.push(StackItem(item.m_alt - 1, IntVector2(item.m_position.x_ - 1, item.m_position.y_ + 1)));
-			myQueue.push(StackItem(item.m_alt - 1, IntVector2(item.m_position.x_ - 1, item.m_position.y_)));
-			myQueue.push(StackItem(item.m_alt - 1, IntVector2(item.m_position.x_ - 1, item.m_position.y_ - 1)));
-			myQueue.push(StackItem(item.m_alt - 1, IntVector2(item.m_position.x_, item.m_position.y_ - 1)));
-			myQueue.push(StackItem(item.m_alt - 1, IntVector2(item.m_position.x_ + 1, item.m_position.y_ - 1)));
-			myQueue.push(StackItem(item.m_alt - 1, IntVector2(item.m_position.x_ + 1, item.m_position.y_)));
-			
+			midpointLine.clear();
 			myQueue.pop();
 			
 		}
@@ -180,7 +206,7 @@ Urho3D::Node* BW::TerrainManager::GetTerrainNode()
 	return m_spTerrainNode;
 }
 
-void BW::TerrainManager::GetTerrainCircle(const IntVector2& center, int32_t radius, std::vector<IntVector2> &v1, std::vector<IntVector2> &v2)
+void BW::TerrainManager::GetTerrainCircle(const IntVector2& center, int32_t radius, std::vector<IntVector2> &output)
 {
 	int32_t x0 = center.x_;
 	int32_t y0 = center.y_;
@@ -192,14 +218,14 @@ void BW::TerrainManager::GetTerrainCircle(const IntVector2& center, int32_t radi
 
     while (x >= y)
     {
-		v1.push_back(IntVector2(x0 - x, y0 + y));
-		v2.push_back(IntVector2(x0 + x, y0 + y));
-		v1.push_back(IntVector2(x0 - y, y0 + x));
-		v2.push_back(IntVector2(x0 + y, y0 + x));
-		v1.push_back(IntVector2(x0 - x, y0 - y));
-		v2.push_back(IntVector2(x0 + x, y0 - y));
-		v1.push_back(IntVector2(x0 - y, y0 - x));
-		v2.push_back(IntVector2(x0 + y, y0 - x));
+		output.push_back(IntVector2(x0 - x, y0 + y));
+		output.push_back(IntVector2(x0 + x, y0 + y));
+		output.push_back(IntVector2(x0 - y, y0 + x));
+		output.push_back(IntVector2(x0 + y, y0 + x));
+		output.push_back(IntVector2(x0 - x, y0 - y));
+		output.push_back(IntVector2(x0 + x, y0 - y));
+		output.push_back(IntVector2(x0 - y, y0 - x));
+		output.push_back(IntVector2(x0 + y, y0 - x));
 		
         if (err <= 0)
         {
@@ -214,4 +240,21 @@ void BW::TerrainManager::GetTerrainCircle(const IntVector2& center, int32_t radi
             err += dx - (radius << 1);
         }
     }
+}
+
+void BW::TerrainManager::GetTerrainLine(const Urho3D::IntVector2& p0, const Urho3D::IntVector2& p1, std::vector<Urho3D::IntVector2> &output)
+{
+	int32_t x0 = p0.x_, y0 = p0.y_, x1 = p1.x_, y1 = p1.y_;
+	int32_t dx = std::abs(x1-x0), sx = x0<x1 ? 1 : -1;
+	int32_t dy = std::abs(y1-y0), sy = y0<y1 ? 1 : -1; 
+	int32_t err = (dx>dy ? dx : -dy)/2, e2;
+ 
+	for(;;)
+	{
+		output.push_back(IntVector2(x0,y0));
+		if (x0==x1 && y0==y1) break;
+		e2 = err;
+		if (e2 >-dx) { err -= dy; x0 += sx; }
+		if (e2 < dy) { err += dx; y0 += sy; }
+	}
 }
