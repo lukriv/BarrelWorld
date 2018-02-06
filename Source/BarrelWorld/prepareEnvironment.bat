@@ -31,12 +31,13 @@ set source=..\..\Resources\urho3d
 
 if not exist .\%dest%\Data mkdir .\%dest%\Data
 
-set fileList="Anonymous Pro.ttf"
-call :CopyList %dest% Data Fonts %fileList%
 ::@echo on
 set fileList=UI.png StoneDiffuse.dds StoneNormal.dds TerrainWeights.dds TerrainDetail2.dds TerrainDetail3.dds
 call :CopyList %dest% Data Textures %fileList%
 ::@echo off
+
+set fileList="Anonymous Pro.ttf"
+call :CopyList %dest% Data Fonts %fileList%
 
 set fileList=Box.mdl
 call :CopyList %dest% Data Models %fileList%

@@ -115,7 +115,7 @@ void BW::TerrainManager::GenerateTerrainHeightAndMat(const TerrainParams &params
 			myQueue.push(StackItem(altGen() * params.m_maxDifference, IntVector2(wideGen(), wideGen())));
 		}
 		
-		std::vector<IntVector2> midpointLine;
+		std::vector<IntVector3> midpointLine;
 		std::vector<IntVector2> v1;
 		
 		unsigned char* data = spHeightMap->GetData();
@@ -125,18 +125,43 @@ void BW::TerrainManager::GenerateTerrainHeightAndMat(const TerrainParams &params
 		{
 			const StackItem &item = myQueue.top();
 			
+			// skip hills with min altitude
+			if(item.m_alt == params.m_minAlt)
+			{
+				myQueue.pop();
+				continue;
+			}
+			
 			IntVector2 downPoint(topGen(), topGen());
 			
 			downPoint = item.m_position + downPoint;
+			GetTerrainLine3d(IntVector3(item.m_position.x_, item.m_position.y_, params.m_minAlt), 
+					IntVector3(downPoint.x_, downPoint.y_, item.m_alt/params.m_maxDifference), midpointLine);
 			
-			GetTerrainLine(item.m_position, downPoint, midpointLine);
+			int8_t radius = params.m_maxDifference;
 			
-			int8_t radius = params.m_minAlt;
-						
+			int32_t last_alt = params.m_maxAlt;
+	
+			Log::Write(LOG_INFO, "New hill");
 			for (auto &mPoint : midpointLine)
 			{
-			
-				GetTerrainCircle(mPoint, radius, v1);
+				String str;
+				
+				str.AppendWithFormat("Midpoint: %d, %d, %d", mPoint.x_, mPoint.y_, mPoint.z_);
+				
+				
+				if(mPoint.z_ == last_alt)
+				{
+					str.Append(" skipped");
+					Log::Write(LOG_INFO, str);
+					continue;
+				} else {
+					last_alt = mPoint.z_;
+				}
+				
+				Log::Write(LOG_INFO, str);
+				
+				GetTerrainCircle(IntVector2(mPoint.x_, mPoint.y_), radius, v1);
 				
 				std::sort(v1.begin(), v1.end(), [](const IntVector2& lhs, const IntVector2 &rhs) { return (lhs.y_ < rhs.y_);});
 				
@@ -256,5 +281,24 @@ void BW::TerrainManager::GetTerrainLine(const Urho3D::IntVector2& p0, const Urho
 		e2 = err;
 		if (e2 >-dx) { err -= dy; x0 += sx; }
 		if (e2 < dy) { err += dx; y0 += sy; }
+	}
+}
+
+void BW::TerrainManager::GetTerrainLine3d(const Urho3D::IntVector3& p0, const Urho3D::IntVector3& p1, std::vector<Urho3D::IntVector3>& output)
+{
+	int32_t x0 = p0.x_, y0 = p0.y_, z0 = p0.z_, x1 = p1.x_, y1 = p1.y_, z1 = p1.z_;
+	int32_t dx = std::abs(x1-x0), sx = x0<x1 ? 1 : -1;
+	int32_t dy = std::abs(y1-y0), sy = y0<y1 ? 1 : -1; 
+	int32_t dz = std::abs(z1-z0), sz = z0<z1 ? 1 : -1; 
+	int32_t dm = std::max(dx,std::max(dy,dz)), i = dm; /* maximum difference */
+	x1 = y1 = z1 = dm/2; /* error offset */
+	
+	for(;;) {  /* loop */
+		//setPixel(x0,y0,z0);
+		output.push_back(IntVector3(x0, y0, z0));
+		if (i-- == 0) break;
+		x1 -= dx; if (x1 < 0) { x1 += dm; x0 += sx; } 
+		y1 -= dy; if (y1 < 0) { y1 += dm; y0 += sy; } 
+		z1 -= dz; if (z1 < 0) { z1 += dm; z0 += sz; } 
 	}
 }
