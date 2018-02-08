@@ -21,7 +21,7 @@ namespace BW
 	{
 		Urho3D::Application *m_pApp;
 		
-		Urho3D::SharedPtr<Urho3D::Scene> m_spMainScene;
+		Urho3D::WeakPtr<Urho3D::Scene> m_spMainScene;
 		
 		Urho3D::WeakPtr<Urho3D::Node> m_spAvatarNode;
 		Urho3D::WeakPtr<Urho3D::Node> m_spBoxNode;
@@ -29,7 +29,7 @@ namespace BW
 		
 		Urho3D::SharedPtr<TerrainManager> m_spTerrainMgr;
 		
-		Urho3D::SharedPtr<Urho3D::Viewport> m_spViewport;
+		Urho3D::WeakPtr<Urho3D::Viewport> m_spViewport;
 		
 		
 		bool m_characterMode;
@@ -38,7 +38,7 @@ namespace BW
 		Urho3D::Vector3 m_cameraDistance;
 		
 	public:
-		WorldManager(Urho3D::Application *pApp, Urho3D::SharedPtr<Urho3D::Scene> spMainScene);
+		WorldManager(Urho3D::Application *pApp, Urho3D::WeakPtr<Urho3D::Scene> spMainScene);
 		~WorldManager();
 		
 		void SetViewport(Urho3D::Viewport *pViewport);

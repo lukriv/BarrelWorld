@@ -4,14 +4,16 @@ bin/
 .build-release/
 .clang/
 .codelite/
+.vs/
 *.mk
 *.lukas
 *.session
 *.tags
+*.user
 compilation.db
 cscope.out
 cscope_file.list
-
+Urho3D.log
 
 LoneWolf/Makefile
 Source/Makefile
@@ -20,3 +22,7 @@ Source/BarrelWorld/Release
 Source/BarrelWorld/Debug64
 Source/BarrelWorld/Release64
 Source/BarrelWorld/BarrelWorld.txt
+
+Source/BarrelWorld/x64
+Source/x64
+

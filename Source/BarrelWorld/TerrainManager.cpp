@@ -7,9 +7,15 @@
 #include <Urho3D/Physics/CollisionShape.h>
 #include <Urho3D/Graphics/Technique.h>
 #include <Urho3D/Graphics/Texture2D.h>
+#include <Urho3D/Graphics/Graphics.h>
+
 
 #include "LayerDefs.h"
 #include "DebugTools.h"
+
+#ifdef max
+#undef max
+#endif
 
 #include <random>
 #include <functional>
@@ -19,21 +25,28 @@
 
 using namespace Urho3D;
 
-BW::TerrainManager::TerrainManager(Urho3D::Application *pApp, Urho3D::SharedPtr<Urho3D::Scene> spMainScene) : 
-	m_pApp(pApp), m_spMainScene(spMainScene)
+#define ENABLE_LOGS 1
+
+static const int32_t CONST_WEIGHTS_SIZE = 1024;
+static const int32_t WEIGHTS_COMPONENT = 4;
+
+static const int32_t CONST_MAP_SIZE = 257;
+
+static const char* TERRAIN_WEIGHTS_RESOURCE = "Manual/TerrainWeights";
+
+BW::TerrainManager::TerrainManager(Urho3D::Application *pApp, Urho3D::Scene *pMainScene) : 
+	m_pApp(pApp), m_spMainScene(pMainScene)
 {
 }
 
 BW::TerrainManager::~TerrainManager()
 {
+	
 }
 
 
 void BW::TerrainManager::GenerateTerrain()
 {
-	Urho3D::SharedPtr<Urho3D::Image> spHeightMap;
-	Urho3D::SharedPtr<Urho3D::Material> spMaterial;
-	//ResourceCache* cache=m_pApp->GetSubsystem<ResourceCache>();
 	TerrainParams params;
 	//set parameters
 	params.m_hills = 10;
@@ -41,7 +54,10 @@ void BW::TerrainManager::GenerateTerrain()
 	params.m_maxDifference = 3;
 	params.m_minAlt = 3;
 	
-	GenerateTerrainHeightAndMat(params, spHeightMap, spMaterial);
+	params.m_snowAlt = 17;
+	params.m_rockAlt = 9;
+	
+	GenerateTerrainHeightAndMat(params);
 	//Create heightmap terrain with collision
     m_spTerrainNode = m_spMainScene->CreateChild("Terrain");
     m_spTerrainNode->SetPosition(Vector3::ZERO);
@@ -49,11 +65,11 @@ void BW::TerrainManager::GenerateTerrain()
     terrain->SetPatchSize(64);
     terrain->SetSpacing(Vector3(2.0f, 1.0f, 2.0f)); // Spacing between vertices and vertical resolution of the height map
     terrain->SetSmoothing(false);
-    if(!terrain->SetHeightMap(spHeightMap))
+    if(!terrain->SetHeightMap(m_spHeightMap))
 	{
 		Log::Write(LOG_ERROR, "Load heightmap failed");
 	}
-    terrain->SetMaterial(spMaterial);
+    terrain->SetMaterial(m_spMaterial);
     // The terrain consists of large triangles, which fits well for occlusion rendering, as a hill can occlude all
     // terrain patches and other objects behind it
     terrain->SetOccluder(false);
@@ -68,160 +84,23 @@ void BW::TerrainManager::GenerateTerrain()
 
 
 
-void BW::TerrainManager::GenerateTerrainHeightAndMat(const TerrainParams &params, Urho3D::SharedPtr<Urho3D::Image>& spHeightMap, Urho3D::SharedPtr<Urho3D::Material>& spMaterial)
+void BW::TerrainManager::GenerateTerrainHeightAndMat(const TerrainParams &params)
 {
-	std::default_random_engine generator(std::chrono::system_clock::now().time_since_epoch().count());
-	std::uniform_int_distribution<int8_t> altDist(params.m_minAlt,params.m_maxAlt/params.m_maxDifference);
-	std::uniform_int_distribution<int32_t> wideDist(0,255);
-	std::uniform_int_distribution<int32_t> topDist(-params.m_maxDifference, params.m_maxDifference);
-
-	auto altGen = std::bind(altDist, generator);
-	auto wideGen = std::bind(wideDist, generator);
-	auto topGen = std::bind(topDist, generator);
 	//auto dice = std::bind ( distribution, generator );
 	//int wisdom = dice()+dice()+dice();
 	
-	ResourceCache* cache=m_pApp->GetSubsystem<ResourceCache>();
+	ResetMapImages(params);
 	
-	//Create Image as height map
-	spHeightMap = new Image(m_pApp->GetContext());
+	unsigned char* data = m_spHeightMap->GetData();
 	
-	const int32_t MAP_SIZE = 257;
+	GenerateHills(data, CONST_MAP_SIZE, params);
 	
-	spHeightMap->SetSize(MAP_SIZE,MAP_SIZE,1);
+	GenerateAltWeights(m_spWeightMap->GetData(), CONST_WEIGHTS_SIZE, m_spHeightMap->GetData(), CONST_MAP_SIZE, params);
 	
-	std::memset( spHeightMap->GetData(), params.m_minAlt, MAP_SIZE*MAP_SIZE );
+	m_spHeightMap->SavePNG(String("test.png"));
+	m_spWeightMap->SavePNG(String("weights.png"));
 	
-	{
-		struct StackItem {
-			int8_t m_alt;
-			IntVector2 m_position;
-			
-			StackItem(int8_t alt, const IntVector2 &pos) : m_alt(alt), m_position(pos) {}
-		};
-
-		struct mycomparison
-		{
-		  bool operator() (const StackItem& lhs, const StackItem&rhs) const
-		  {
-			return (lhs.m_alt < rhs.m_alt);
-		  }
-		};
-		std::priority_queue<StackItem, std::vector<StackItem>, mycomparison > myQueue;
-
-		// generate hills
-		for (int32_t i = 0; i < params.m_hills; ++i)
-		{
-			myQueue.push(StackItem(altGen() * params.m_maxDifference, IntVector2(wideGen(), wideGen())));
-		}
-		
-		std::vector<IntVector3> midpointLine;
-		std::vector<IntVector2> v1;
-		
-		unsigned char* data = spHeightMap->GetData();
-		//unsigned char* point = nullptr;
-		
-		while(!myQueue.empty())
-		{
-			const StackItem &item = myQueue.top();
-			
-			// skip hills with min altitude
-			if(item.m_alt == params.m_minAlt)
-			{
-				myQueue.pop();
-				continue;
-			}
-			
-			IntVector2 downPoint(topGen(), topGen());
-			
-			downPoint = item.m_position + downPoint;
-			GetTerrainLine3d(IntVector3(item.m_position.x_, item.m_position.y_, params.m_minAlt), 
-					IntVector3(downPoint.x_, downPoint.y_, item.m_alt/params.m_maxDifference), midpointLine);
-			
-			int8_t radius = params.m_maxDifference;
-			
-			int32_t last_alt = params.m_maxAlt;
-	
-			Log::Write(LOG_INFO, "New hill");
-			for (auto &mPoint : midpointLine)
-			{
-				String str;
-				
-				str.AppendWithFormat("Midpoint: %d, %d, %d", mPoint.x_, mPoint.y_, mPoint.z_);
-				
-				
-				if(mPoint.z_ == last_alt)
-				{
-					str.Append(" skipped");
-					Log::Write(LOG_INFO, str);
-					continue;
-				} else {
-					last_alt = mPoint.z_;
-				}
-				
-				Log::Write(LOG_INFO, str);
-				
-				GetTerrainCircle(IntVector2(mPoint.x_, mPoint.y_), radius, v1);
-				
-				std::sort(v1.begin(), v1.end(), [](const IntVector2& lhs, const IntVector2 &rhs) { return (lhs.y_ < rhs.y_);});
-				
-				int32_t y = -1;
-				uint32_t i = 0;
-				while( i < v1.size())
-				{
-					y = v1[i].y_;
-					
-					int32_t x1 = MAP_SIZE - 1;
-					int32_t x2 = 0;					
-					
-					// find min max
-					while((y == v1[i].y_)&&( i < v1.size()))
-					{
-						if(x1 > v1[i].x_) x1 = v1[i].x_;
-						if(x2 < v1[i].x_) x2 = v1[i].x_;
-						++i;
-					}
-					
-					x1 = (x1 >= 0)? x1 : 0;
-					x2 = (x2 < MAP_SIZE) ? x2 : MAP_SIZE - 1;
-					
-					for (auto iter = data + y*MAP_SIZE + x1; iter < data + ((y)*MAP_SIZE) + (x2); ++iter)
-					{
-						if(*iter == params.m_minAlt)
-						{
-							(*iter) = item.m_alt - radius;
-						}
-					}
-						
-				}
-				
-				v1.clear();
-				
-				radius += params.m_maxDifference;
-			
-			}
-			
-			midpointLine.clear();
-			myQueue.pop();
-			
-		}
-		
-				
-	}
-	
-	spHeightMap->SaveBMP(String("test.bmp"));
-	
-	//prepare Material
-	spMaterial = new Material(m_pApp->GetContext());
-	spMaterial->SetTechnique(0, cache->GetResource<Technique>("Techniques/TerrainBlend.xml"));
-	
-	spMaterial->SetTexture(TU_DIFFUSE, (Texture*)cache->GetResource<Texture2D>("Textures/TerrainWeights.dds"));
-	spMaterial->SetTexture(TU_NORMAL, (Texture*)cache->GetResource<Texture2D>("Textures/webGrass.dds"));
-	spMaterial->SetTexture(TU_SPECULAR, (Texture*)cache->GetResource<Texture2D>("Textures/stone.dds"));
-	spMaterial->SetTexture(TU_EMISSIVE, (Texture*)cache->GetResource<Texture2D>("Textures/TerrainDetail3.dds"));
-	
-	spMaterial->SetShaderParameter ("MatSpecColor", Variant(Vector4(0.5, 0.5, 0.5, 16)));
-	spMaterial->SetShaderParameter ("DetailTiling", Variant(Vector2(32, 32)));
+	PrepareMapMaterial(params);
 	
 		
 }
@@ -301,4 +180,262 @@ void BW::TerrainManager::GetTerrainLine3d(const Urho3D::IntVector3& p0, const Ur
 		y1 -= dy; if (y1 < 0) { y1 += dm; y0 += sy; } 
 		z1 -= dz; if (z1 < 0) { z1 += dm; z0 += sz; } 
 	}
+}
+
+void BW::TerrainManager::GenerateHills(unsigned char* data, int32_t MAP_SIZE, const TerrainParams& params)
+{ // hills
+	struct StackItem {
+		int8_t m_alt;
+		IntVector2 m_position;
+		
+		StackItem(int8_t alt, const IntVector2 &pos) : m_alt(alt), m_position(pos) {}
+	};
+
+	struct mycomparison
+	{
+	  bool operator() (const StackItem& lhs, const StackItem&rhs) const
+	  {
+		return (lhs.m_alt < rhs.m_alt);
+	  }
+	};
+	std::priority_queue<StackItem, std::vector<StackItem>, mycomparison > myQueue;
+	
+	std::default_random_engine generator(std::chrono::system_clock::now().time_since_epoch().count());
+	std::uniform_int_distribution<int32_t> altDist(params.m_minAlt,params.m_maxAlt/params.m_maxDifference);
+	std::uniform_int_distribution<int32_t> wideDist(0,255);
+	std::uniform_int_distribution<int32_t> topDist(-params.m_maxDifference, params.m_maxDifference);
+
+	auto altGen = std::bind(altDist, generator);
+	auto wideGen = std::bind(wideDist, generator);
+	auto topGen = std::bind(topDist, generator);
+
+	// generate hills
+	for (int32_t i = 0; i < params.m_hills; ++i)
+	{
+		myQueue.push(StackItem(altGen() * params.m_maxDifference, IntVector2(wideGen(), wideGen())));
+	}
+	
+	std::vector<IntVector3> midpointLine;
+	std::vector<IntVector2> v1;
+	
+	//unsigned char* point = nullptr;
+	
+	while(!myQueue.empty())
+	{
+		const StackItem &item = myQueue.top();
+		
+		// skip hills with min altitude
+		if(item.m_alt == params.m_minAlt)
+		{
+			myQueue.pop();
+			continue;
+		}
+		
+		IntVector2 downPoint(topGen(), topGen());
+		
+		downPoint = item.m_position + downPoint;
+		GetTerrainLine3d(IntVector3(item.m_position.x_, item.m_position.y_, params.m_minAlt), 
+				IntVector3(downPoint.x_, downPoint.y_, item.m_alt/params.m_maxDifference), midpointLine);
+		
+		int8_t radius = params.m_maxDifference;
+		
+		int32_t last_alt = params.m_maxAlt;
+#ifdef ENABLE_LOGS
+		Log::Write(LOG_INFO, "New hill");
+#endif
+		for (auto &mPoint : midpointLine)
+		{
+			String str;
+#ifdef ENABLE_LOGS
+			str.AppendWithFormat("Midpoint: %d, %d, %d", mPoint.x_, mPoint.y_, mPoint.z_);
+#endif
+			
+			if(mPoint.z_ == last_alt)
+			{
+#ifdef ENABLE_LOGS
+				str.Append(" skipped");
+				Log::Write(LOG_INFO, str);
+#endif
+				continue;
+			} else {
+				last_alt = mPoint.z_;
+			}
+#ifdef ENABLE_LOGS			
+			Log::Write(LOG_INFO, str);
+#endif
+			
+			GetTerrainCircle(IntVector2(mPoint.x_, mPoint.y_), radius, v1);
+			
+			std::sort(v1.begin(), v1.end(), [](const IntVector2& lhs, const IntVector2 &rhs) { return (lhs.y_ < rhs.y_);});
+			
+			int32_t y = -1;
+			uint32_t i = 0;
+			while( i < v1.size())
+			{
+				y = v1[i].y_;
+
+				if ((y < 0) || (y > MAP_SIZE))
+				{
+					++i;
+					continue;
+				}
+				
+				int32_t x1 = MAP_SIZE - 1;
+				int32_t x2 = 0;					
+				
+				// find min max
+				while((i < v1.size())&&(y == v1[i].y_))
+				{
+					if(x1 > v1[i].x_) x1 = v1[i].x_;
+					if(x2 < v1[i].x_) x2 = v1[i].x_;
+					++i;
+				}
+				
+				x1 = (x1 >= 0)? x1 : 0;
+				x2 = (x2 < MAP_SIZE) ? x2 : MAP_SIZE - 1;
+				
+				for (auto iter = data + y*MAP_SIZE + x1; iter < data + ((y)*MAP_SIZE) + (x2); ++iter)
+				{
+					if(*iter < (item.m_alt - radius))
+					{
+						(*iter) = item.m_alt - radius;
+					}
+				}
+					
+			}
+			
+			v1.clear();
+			
+			radius += params.m_maxDifference;
+		
+		}
+		
+		midpointLine.clear();
+		myQueue.pop();
+		
+	}
+	
+			
+}
+
+void BW::TerrainManager::GenerateAltWeights(unsigned char* weightData, int32_t WEIGHTS_SIZE, const unsigned char* data, int32_t MAP_SIZE, const TerrainParams& params)
+{
+	static const unsigned char hiMem = 240;
+	static const unsigned char loMem = 15;
+	
+	enum TerrainTexMeaning {
+		TERR_UNDEFINED = 0,
+		TERR_GRASS = 1,
+		TERR_ROCK = 2,
+		TERR_SNOW = 3,
+		TERR_SAND = 4,
+		TERR_DIRT = 5
+	};
+	
+	TerrainTexMeaning terrTex = TERR_GRASS;
+	
+	unsigned char* wBasePoint = nullptr;
+	unsigned char altitude = 0;
+	
+	for(int32_t y = 0; y < WEIGHTS_SIZE; ++y)
+	{
+		for(int32_t x = 0; x < WEIGHTS_SIZE; ++x)
+		{
+			int32_t mx = (x*MAP_SIZE) / WEIGHTS_SIZE;
+			int32_t my = (y*MAP_SIZE) / WEIGHTS_SIZE;
+			
+			wBasePoint = weightData + y*WEIGHTS_SIZE*WEIGHTS_COMPONENT + x*WEIGHTS_COMPONENT;
+			altitude = *(data + my*MAP_SIZE + mx);
+			
+			if( altitude > params.m_snowAlt )
+			{
+				terrTex = TERR_SNOW;
+			} else if ( altitude > params.m_rockAlt ) {
+				terrTex = TERR_ROCK;
+			} else if ( altitude > 4 ){
+				terrTex = TERR_DIRT;
+			} else {
+				terrTex = TERR_GRASS;
+			}
+			
+			switch(terrTex)
+			{
+				case TERR_GRASS:
+					*(wBasePoint) = 255; // yellow
+					*(wBasePoint + 1) = 255; // yellow
+					break;
+				case TERR_ROCK :
+					*(wBasePoint + 1) = 255; // green
+					break;
+				case TERR_SNOW :
+					*(wBasePoint + 1) = 255; //cyan
+					*(wBasePoint + 2) = 255;
+					break;
+				case TERR_SAND :
+					*(wBasePoint) = 255; //red
+					break;
+				case TERR_DIRT :
+					*(wBasePoint + 2) = 255; // blue
+					break;
+				default:
+					break;
+			}
+			
+		}
+	}
+}
+
+void BW::TerrainManager::ResetMapImages(const TerrainParams &params)
+{
+	//Create Image as height map
+	if(m_spWeightMap.Null())
+	{
+		m_spWeightMap = new Image(m_pApp->GetContext());
+		m_spWeightMap->SetSize(CONST_WEIGHTS_SIZE, CONST_WEIGHTS_SIZE, WEIGHTS_COMPONENT);
+	}
+	
+	if(m_spHeightMap.Null())
+	{
+		m_spHeightMap = new Image(m_pApp->GetContext());
+		m_spHeightMap->SetSize(CONST_MAP_SIZE,CONST_MAP_SIZE,1);
+	}
+	
+	std::memset( m_spWeightMap->GetData(), 0, CONST_WEIGHTS_SIZE*CONST_WEIGHTS_SIZE*WEIGHTS_COMPONENT );
+	std::memset( m_spHeightMap->GetData(), params.m_minAlt, CONST_MAP_SIZE*CONST_MAP_SIZE );
+}
+
+void BW::TerrainManager::PrepareMapMaterial(const TerrainParams& params)
+{
+	ResourceCache* cache=m_pApp->GetSubsystem<ResourceCache>();
+	//prepare Material
+	if(m_spMaterial.Null())
+	{
+		m_spMaterial = new Material(m_pApp->GetContext());
+		m_spMaterial->SetTechnique(0, cache->GetResource<Technique>("Techniques/TerrainBlend6.xml"));
+	}
+	
+	//m_spMaterial->SetTexture(TU_DIFFUSE, (Texture*)cache->GetResource<Texture2D>("Textures/TerrainWeights.dds"));
+	if(!cache->Exists(TERRAIN_WEIGHTS_RESOURCE))
+	{
+		SharedPtr<Texture2D> spWTex(new Texture2D(m_pApp->GetContext()));
+		spWTex->SetSize(CONST_WEIGHTS_SIZE, CONST_WEIGHTS_SIZE, Urho3D::Graphics::GetRGBAFormat(), TEXTURE_DYNAMIC);
+		spWTex->SetName(TERRAIN_WEIGHTS_RESOURCE);
+		if(!cache->AddManualResource(spWTex))
+		{
+			Log::Write(LOG_ERROR, "Adding terrain weights texture failed");
+		}
+	}
+	Texture2D *pTex = cache->GetResource<Texture2D>(TERRAIN_WEIGHTS_RESOURCE);
+	pTex->SetData(m_spWeightMap, false);
+	
+	m_spMaterial->SetTexture(TU_DIFFUSE, pTex);
+	m_spMaterial->SetTexture(TU_NORMAL, (Texture*)cache->GetResource<Texture2D>("Textures/webSand.dds"));
+	m_spMaterial->SetTexture(TU_SPECULAR, (Texture*)cache->GetResource<Texture2D>("Textures/webGrass.dds"));
+	m_spMaterial->SetTexture(TU_EMISSIVE, (Texture*)cache->GetResource<Texture2D>("Textures/webStone.dds"));
+	m_spMaterial->SetTexture(TU_ENVIRONMENT, (Texture*)cache->GetResource<Texture2D>("Textures/webSnow.dds"));
+	m_spMaterial->SetTexture(TU_VOLUMEMAP, (Texture*)cache->GetResource<Texture2D>("Textures/webDirt.dds"));
+	m_spMaterial->SetTexture(TU_CUSTOM1, (Texture*)cache->GetResource<Texture2D>("Textures/TerrainDetail1.dds"));
+	
+	m_spMaterial->SetShaderParameter ("MatSpecColor", Variant(Vector4(0.5, 0.5, 0.5, 16)));
+	m_spMaterial->SetShaderParameter ("DetailTiling", Variant(Vector2(32, 32)));
 }

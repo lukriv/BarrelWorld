@@ -24,15 +24,23 @@ namespace BW
 		
 		uint8_t m_hills; // hills top count
 		uint8_t m_maxDifference; //max difference between neighbouring point
+		
+		uint8_t m_snowAlt;
+		uint8_t m_rockAlt;
+		
 	};
 	
 	class TerrainManager : public Urho3D::RefCounted
 	{
 		Urho3D::Application *m_pApp;
-		Urho3D::SharedPtr<Urho3D::Scene> m_spMainScene;
-		Urho3D::SharedPtr<Urho3D::Node> m_spTerrainNode;
+		Urho3D::WeakPtr<Urho3D::Scene> m_spMainScene;
+		Urho3D::WeakPtr<Urho3D::Node> m_spTerrainNode;
+		
+		Urho3D::SharedPtr<Urho3D::Image> m_spWeightMap;
+		Urho3D::SharedPtr<Urho3D::Image> m_spHeightMap;
+		Urho3D::SharedPtr<Urho3D::Material> m_spMaterial;
 	public:
-		TerrainManager(Urho3D::Application *pApp, Urho3D::SharedPtr<Urho3D::Scene> spMainScene);
+		TerrainManager(Urho3D::Application *pApp, Urho3D::Scene *pMainScene);
 		~TerrainManager();
 		
 		void GenerateTerrain();
@@ -44,7 +52,14 @@ namespace BW
 		static void GetTerrainLine(const Urho3D::IntVector2& p0, const Urho3D::IntVector2& p1, std::vector<Urho3D::IntVector2> &output);
 		static void GetTerrainLine3d(const Urho3D::IntVector3& p0, const Urho3D::IntVector3& p1, std::vector<Urho3D::IntVector3> &output);
 		
-		void GenerateTerrainHeightAndMat(const TerrainParams &params, Urho3D::SharedPtr<Urho3D::Image> &spImage, Urho3D::SharedPtr<Urho3D::Material> &spMaterial);
+		static void GenerateHills(unsigned char* data, int32_t MAX_SIZE, const TerrainParams& params);
+		static void GenerateAltWeights(unsigned char* weightData, int32_t WEIGHTS_SIZE, const unsigned char* data, int32_t MAP_SIZE, const TerrainParams& params);
+		
+		
+		void ResetMapImages(const TerrainParams &params);
+		void PrepareMapMaterial(const TerrainParams &params);
+		
+		void GenerateTerrainHeightAndMat(const TerrainParams &params);
 		
 	};
 

@@ -21,7 +21,7 @@ static const float DEFAULT_CAMERA_YAW = 0;
 static const float DEFAULT_CAMERA_PITCH = 70;
 
 
-BW::WorldManager::WorldManager(Urho3D::Application *pApp, Urho3D::SharedPtr<Urho3D::Scene> spMainScene) : m_pApp(pApp)
+BW::WorldManager::WorldManager(Urho3D::Application *pApp, Urho3D::WeakPtr<Urho3D::Scene> spMainScene) : m_pApp(pApp)
 	, m_spMainScene(spMainScene)
 	, m_characterMode(true)
 {
@@ -68,6 +68,7 @@ BW::WorldManager::WorldManager(Urho3D::Application *pApp, Urho3D::SharedPtr<Urho
 
 BW::WorldManager::~WorldManager()
 {
+	
 }
 
 void BW::WorldManager::SetViewport(Urho3D::Viewport* pViewport)
@@ -166,7 +167,10 @@ void BW::WorldManager::NewGame()
 	
 	CreateLights();
 	
-	m_spTerrainMgr = new TerrainManager(m_pApp, m_spMainScene);
+	if(m_spTerrainMgr.Null())
+	{
+		m_spTerrainMgr = new TerrainManager(m_pApp, m_spMainScene);
+	}
 	m_spTerrainMgr->GenerateTerrain();
 	
 	Log::Write(LOG_INFO, String("Terrain was generated"));
