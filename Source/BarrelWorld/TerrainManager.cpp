@@ -32,7 +32,7 @@ static const int32_t WEIGHTS_COMPONENT = 4;
 
 static const int32_t CONST_MAP_SIZE = 257;
 
-static const char* TERRAIN_WEIGHTS_RESOURCE = "Manual/TerrainWeights";
+static const char* TERRAIN_WEIGHTS_RESOURCE = "Manual/TerrainWeights.dds";
 
 BW::TerrainManager::TerrainManager(Urho3D::Application *pApp, Urho3D::Scene *pMainScene) : 
 	m_pApp(pApp), m_spMainScene(pMainScene)
@@ -97,8 +97,8 @@ void BW::TerrainManager::GenerateTerrainHeightAndMat(const TerrainParams &params
 	
 	GenerateAltWeights(m_spWeightMap->GetData(), CONST_WEIGHTS_SIZE, m_spHeightMap->GetData(), CONST_MAP_SIZE, params);
 	
-	m_spHeightMap->SavePNG(String("test.png"));
-	m_spWeightMap->SavePNG(String("weights.png"));
+	//m_spHeightMap->SavePNG(String("test.png"));
+	//m_spWeightMap->SavePNG(String("weights.png"));
 	
 	PrepareMapMaterial(params);
 	
@@ -415,20 +415,15 @@ void BW::TerrainManager::PrepareMapMaterial(const TerrainParams& params)
 	}
 	
 	//m_spMaterial->SetTexture(TU_DIFFUSE, (Texture*)cache->GetResource<Texture2D>("Textures/TerrainWeights.dds"));
-	if(!cache->Exists(TERRAIN_WEIGHTS_RESOURCE))
+	if(m_spWeightTex.Null())
 	{
-		SharedPtr<Texture2D> spWTex(new Texture2D(m_pApp->GetContext()));
-		spWTex->SetSize(CONST_WEIGHTS_SIZE, CONST_WEIGHTS_SIZE, Urho3D::Graphics::GetRGBAFormat(), TEXTURE_DYNAMIC);
-		spWTex->SetName(TERRAIN_WEIGHTS_RESOURCE);
-		if(!cache->AddManualResource(spWTex))
-		{
-			Log::Write(LOG_ERROR, "Adding terrain weights texture failed");
-		}
+		m_spWeightTex = new Texture2D(m_pApp->GetContext());
+		m_spWeightTex->SetSize(CONST_WEIGHTS_SIZE, CONST_WEIGHTS_SIZE, Urho3D::Graphics::GetRGBAFormat(), TEXTURE_DYNAMIC);
+		m_spWeightTex->SetName(TERRAIN_WEIGHTS_RESOURCE);
 	}
-	Texture2D *pTex = cache->GetResource<Texture2D>(TERRAIN_WEIGHTS_RESOURCE);
-	pTex->SetData(m_spWeightMap, false);
+	m_spWeightTex->SetData(m_spWeightMap, false);
 	
-	m_spMaterial->SetTexture(TU_DIFFUSE, pTex);
+	m_spMaterial->SetTexture(TU_DIFFUSE, m_spWeightTex);
 	m_spMaterial->SetTexture(TU_NORMAL, (Texture*)cache->GetResource<Texture2D>("Textures/webSand.dds"));
 	m_spMaterial->SetTexture(TU_SPECULAR, (Texture*)cache->GetResource<Texture2D>("Textures/webGrass.dds"));
 	m_spMaterial->SetTexture(TU_EMISSIVE, (Texture*)cache->GetResource<Texture2D>("Textures/webStone.dds"));

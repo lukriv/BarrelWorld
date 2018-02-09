@@ -39,6 +39,8 @@ namespace BW
 		Urho3D::SharedPtr<Urho3D::Image> m_spWeightMap;
 		Urho3D::SharedPtr<Urho3D::Image> m_spHeightMap;
 		Urho3D::SharedPtr<Urho3D::Material> m_spMaterial;
+
+		Urho3D::SharedPtr<Urho3D::Texture2D> m_spWeightTex;
 	public:
 		TerrainManager(Urho3D::Application *pApp, Urho3D::Scene *pMainScene);
 		~TerrainManager();
