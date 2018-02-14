@@ -32,7 +32,24 @@ static const int32_t WEIGHTS_COMPONENT = 4;
 
 static const int32_t CONST_MAP_SIZE = 257;
 
-static const char* TERRAIN_WEIGHTS_RESOURCE = "Manual/TerrainWeights.dds";
+//terrain texture table row
+struct TerrainTexTableRow {
+	BW::ETerrainType m_texType;
+	const char * m_pTextureName;
+};
+
+// standard texture table
+TerrainTexTableRow MODERATE_BELT[] = {
+	{BW::TERR_GRASS, "Textures/webGrass.dds"},
+	{BW::TERR_ROCK, "Textures/webStone.dds"	},
+	{BW::TERR_SNOW, "Textures/webSnow.dds"	},
+	{BW::TERR_SAND, "Textures/webSand.dds" 	},
+	{BW::TERR_DIRT, "Textures/webDirt.dds"	},
+	{BW::TERR_BLACK, "Textures/black.dds"	}
+	
+};
+
+//static const char* TERRAIN_WEIGHTS_RESOURCE = "Manual/TerrainWeights.dds";
 
 BW::TerrainManager::TerrainManager(Urho3D::Application *pApp, Urho3D::Scene *pMainScene) : 
 	m_pApp(pApp), m_spMainScene(pMainScene)
@@ -95,7 +112,7 @@ void BW::TerrainManager::GenerateTerrainHeightAndMat(const TerrainParams &params
 	
 	GenerateHills(data, CONST_MAP_SIZE, params);
 	
-	GenerateAltWeights(m_spWeightMap->GetData(), CONST_WEIGHTS_SIZE, m_spHeightMap->GetData(), CONST_MAP_SIZE, params);
+	GenerateAltWeights(m_spWeightMap->GetData(), m_spWeightMap2->GetData(), CONST_WEIGHTS_SIZE, m_spHeightMap->GetData(), CONST_MAP_SIZE, params);
 	
 	//m_spHeightMap->SavePNG(String("test.png"));
 	//m_spWeightMap->SavePNG(String("weights.png"));
@@ -318,23 +335,15 @@ void BW::TerrainManager::GenerateHills(unsigned char* data, int32_t MAP_SIZE, co
 			
 }
 
-void BW::TerrainManager::GenerateAltWeights(unsigned char* weightData, int32_t WEIGHTS_SIZE, const unsigned char* data, int32_t MAP_SIZE, const TerrainParams& params)
+void BW::TerrainManager::GenerateAltWeights(unsigned char* weightData, unsigned char* weightData2, int32_t WEIGHTS_SIZE, const unsigned char* data, int32_t MAP_SIZE, const TerrainParams& params)
 {
-	static const unsigned char hiMem = 240;
-	static const unsigned char loMem = 15;
 	
-	enum TerrainTexMeaning {
-		TERR_UNDEFINED = 0,
-		TERR_GRASS = 1,
-		TERR_ROCK = 2,
-		TERR_SNOW = 3,
-		TERR_SAND = 4,
-		TERR_DIRT = 5
-	};
+
 	
-	TerrainTexMeaning terrTex = TERR_GRASS;
+	ETerrainType terrTex = TERR_GRASS;
 	
 	unsigned char* wBasePoint = nullptr;
+	unsigned char* wBasePoint2 = nullptr;
 	unsigned char altitude = 0;
 	
 	for(int32_t y = 0; y < WEIGHTS_SIZE; ++y)
@@ -345,6 +354,8 @@ void BW::TerrainManager::GenerateAltWeights(unsigned char* weightData, int32_t W
 			int32_t my = (y*MAP_SIZE) / WEIGHTS_SIZE;
 			
 			wBasePoint = weightData + y*WEIGHTS_SIZE*WEIGHTS_COMPONENT + x*WEIGHTS_COMPONENT;
+			wBasePoint2 = weightData2 + y*WEIGHTS_SIZE*WEIGHTS_COMPONENT + x*WEIGHTS_COMPONENT;
+			
 			altitude = *(data + my*MAP_SIZE + mx);
 			
 			if( altitude > params.m_snowAlt )
@@ -361,21 +372,19 @@ void BW::TerrainManager::GenerateAltWeights(unsigned char* weightData, int32_t W
 			switch(terrTex)
 			{
 				case TERR_GRASS:
-					*(wBasePoint) = 255; // yellow
-					*(wBasePoint + 1) = 255; // yellow
+					*(wBasePoint + 1) = 255; //red
 					break;
 				case TERR_ROCK :
-					*(wBasePoint + 1) = 255; // green
+					*(wBasePoint + 2) = 255; // green
 					break;
 				case TERR_SNOW :
-					*(wBasePoint + 1) = 255; //cyan
-					*(wBasePoint + 2) = 255;
+					*(wBasePoint2) = 255;
 					break;
 				case TERR_SAND :
 					*(wBasePoint) = 255; //red
 					break;
 				case TERR_DIRT :
-					*(wBasePoint + 2) = 255; // blue
+					*(wBasePoint2 + 1) = 255; // blue
 					break;
 				default:
 					break;
@@ -394,6 +403,12 @@ void BW::TerrainManager::ResetMapImages(const TerrainParams &params)
 		m_spWeightMap->SetSize(CONST_WEIGHTS_SIZE, CONST_WEIGHTS_SIZE, WEIGHTS_COMPONENT);
 	}
 	
+	if(m_spWeightMap2.Null())
+	{
+		m_spWeightMap2 = new Image(m_pApp->GetContext());
+		m_spWeightMap2->SetSize(CONST_WEIGHTS_SIZE, CONST_WEIGHTS_SIZE, WEIGHTS_COMPONENT);
+	}
+	
 	if(m_spHeightMap.Null())
 	{
 		m_spHeightMap = new Image(m_pApp->GetContext());
@@ -401,6 +416,7 @@ void BW::TerrainManager::ResetMapImages(const TerrainParams &params)
 	}
 	
 	std::memset( m_spWeightMap->GetData(), 0, CONST_WEIGHTS_SIZE*CONST_WEIGHTS_SIZE*WEIGHTS_COMPONENT );
+	std::memset( m_spWeightMap2->GetData(), 0, CONST_WEIGHTS_SIZE*CONST_WEIGHTS_SIZE*WEIGHTS_COMPONENT );
 	std::memset( m_spHeightMap->GetData(), params.m_minAlt, CONST_MAP_SIZE*CONST_MAP_SIZE );
 }
 
@@ -419,17 +435,27 @@ void BW::TerrainManager::PrepareMapMaterial(const TerrainParams& params)
 	{
 		m_spWeightTex = new Texture2D(m_pApp->GetContext());
 		m_spWeightTex->SetSize(CONST_WEIGHTS_SIZE, CONST_WEIGHTS_SIZE, Urho3D::Graphics::GetRGBAFormat(), TEXTURE_DYNAMIC);
-		m_spWeightTex->SetName(TERRAIN_WEIGHTS_RESOURCE);
 	}
+	
+	if(m_spWeightTex2.Null())
+	{
+		m_spWeightTex2 = new Texture2D(m_pApp->GetContext());
+		m_spWeightTex2->SetSize(CONST_WEIGHTS_SIZE, CONST_WEIGHTS_SIZE, Urho3D::Graphics::GetRGBAFormat(), TEXTURE_DYNAMIC);
+	}
+
 	m_spWeightTex->SetData(m_spWeightMap, false);
+	m_spWeightTex2->SetData(m_spWeightMap2, false);
+	
+	
 	
 	m_spMaterial->SetTexture(TU_DIFFUSE, m_spWeightTex);
-	m_spMaterial->SetTexture(TU_NORMAL, (Texture*)cache->GetResource<Texture2D>("Textures/webSand.dds"));
-	m_spMaterial->SetTexture(TU_SPECULAR, (Texture*)cache->GetResource<Texture2D>("Textures/webGrass.dds"));
-	m_spMaterial->SetTexture(TU_EMISSIVE, (Texture*)cache->GetResource<Texture2D>("Textures/webStone.dds"));
-	m_spMaterial->SetTexture(TU_ENVIRONMENT, (Texture*)cache->GetResource<Texture2D>("Textures/webSnow.dds"));
-	m_spMaterial->SetTexture(TU_VOLUMEMAP, (Texture*)cache->GetResource<Texture2D>("Textures/webDirt.dds"));
-	m_spMaterial->SetTexture(TU_CUSTOM1, (Texture*)cache->GetResource<Texture2D>("Textures/TerrainDetail1.dds"));
+	m_spMaterial->SetTexture(TU_NORMAL, m_spWeightTex2);
+	m_spMaterial->SetTexture(TU_SPECULAR, (Texture*)cache->GetResource<Texture2D>("Textures/webSand.dds"));
+	m_spMaterial->SetTexture(TU_EMISSIVE, (Texture*)cache->GetResource<Texture2D>("Textures/webGrass.dds"));
+	m_spMaterial->SetTexture(TU_ENVIRONMENT, (Texture*)cache->GetResource<Texture2D>("Textures/webStone.dds"));
+	m_spMaterial->SetTexture(TU_VOLUMEMAP, (Texture*)cache->GetResource<Texture2D>("Textures/webSnow.dds"));
+	m_spMaterial->SetTexture(TU_CUSTOM1, (Texture*)cache->GetResource<Texture2D>("Textures/webDirt.dds"));
+	m_spMaterial->SetTexture(TU_CUSTOM2, (Texture*)cache->GetResource<Texture2D>("Textures/TerrainDetail1.dds"));
 	
 	m_spMaterial->SetShaderParameter ("MatSpecColor", Variant(Vector4(0.5, 0.5, 0.5, 16)));
 	m_spMaterial->SetShaderParameter ("DetailTiling", Variant(Vector2(32, 32)));

@@ -41,12 +41,14 @@ varying vec4 vWorldPos;
 #endif
 
 uniform sampler2D sWeightMap0;
-uniform sampler2D sDetailMap1;
+uniform sampler2D sWeightMap1;
 uniform sampler2D sDetailMap2;
 uniform sampler2D sDetailMap3;
-uniform sampler2D sDetailMap4; // exteded
-uniform sampler2D sDetailMap5;
+uniform sampler2D sDetailMap4;
+uniform sampler2D sDetailMap5; // exteded
 uniform sampler2D sDetailMap6;
+uniform sampler2D sDetailMap7;
+
 
 #ifndef GL_ES
 uniform vec2 cDetailTiling;
@@ -109,25 +111,22 @@ void VS()
 void PS()
 {
     // Get material diffuse albedo
-    vec3 colors = texture2D(sWeightMap0,vTexCoord).rgb;   // I added a second vec3 called weights_ycm to get six weights in total
-    vec3 weights_rgb = colors;
-    vec3 weights_ycm = colors;
-
-    weights_rgb.r=clamp(colors.r-(colors.g+colors.b),0.0,1.0);   // it took a while to figure out how to separate the six colors
-    weights_rgb.g=clamp(colors.g-(colors.b+colors.r),0.0,1.0);   // it's basically using each RGB colors difference to the other two.
-    weights_rgb.b=clamp(colors.b-(colors.r+colors.g),0.0,1.0);
-    weights_ycm.r=clamp(colors.r*colors.g,0.0,1.0);       // yellow
-    weights_ycm.g=clamp(colors.g*colors.b,0.0,1.0);       // cyan
-    weights_ycm.b=clamp(colors.b*colors.r,0.0,1.0);       // magenta
-                                                          // the "sumWeights" stuff is gone
+    vec3 weights = texture2D(sWeightMap0, vTexCoord).rgb;
+	vec3 weights2 = texture2D(sWeightMap1, vTexCoord).rgb;
+	
+    float sumWeights = weights.r + weights.g + weights.b + weights2.r + weights2.g + weights2.b;
+    weights /= sumWeights;
+	weights2 /= sumWeights;
+	
     vec4 diffColor = cMatDiffColor * (
-        weights_rgb.r * texture2D(sDetailMap1, vDetailTexCoord) +  // red
-        weights_ycm.r * texture2D(sDetailMap2, vDetailTexCoord) +  // yellow
-        weights_rgb.g * texture2D(sDetailMap3, vDetailTexCoord) +  // green
-        weights_ycm.g * texture2D(sDetailMap4, vDetailTexCoord) +  // cyan
-        weights_rgb.b * texture2D(sDetailMap5, vDetailTexCoord) +  // blue
-        weights_ycm.b * texture2D(sDetailMap6, vDetailTexCoord)    // magenta
+        weights.r * texture2D(sDetailMap2, vDetailTexCoord) +
+        weights.g * texture2D(sDetailMap3, vDetailTexCoord) + 
+        weights.b * texture2D(sDetailMap4, vDetailTexCoord) +
+		weights2.r * texture2D(sDetailMap5, vDetailTexCoord) +
+        weights2.g * texture2D(sDetailMap6, vDetailTexCoord) + 
+        weights2.b * texture2D(sDetailMap7, vDetailTexCoord)
     );
+
 
     // Get material specular albedo
     vec3 specColor = cMatSpecColor.rgb;

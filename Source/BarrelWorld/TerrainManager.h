@@ -18,6 +18,22 @@ namespace Urho3D {
 namespace BW
 {
 	
+	enum ETerrainType {
+		TERR_UNDEFINED = 0,
+		TERR_GRASS = 1,
+		TERR_ROCK = 2,
+		TERR_SNOW = 3,
+		TERR_SAND = 4,
+		TERR_DIRT = 5,
+		TERR_BLACK = 6
+	};
+	
+	struct TerrainTypeAltitude {
+		uint8_t m_altFrom;
+		uint8_t m_altTo;
+		ETerrainType m_type;
+	};
+	
 	struct TerrainParams {
 		uint8_t m_maxAlt;
 		uint8_t m_minAlt;
@@ -28,6 +44,8 @@ namespace BW
 		uint8_t m_snowAlt;
 		uint8_t m_rockAlt;
 		
+		std::vector<TerrainTypeAltitude> m_terrTypeList;
+		
 	};
 	
 	class TerrainManager : public Urho3D::RefCounted
@@ -37,10 +55,13 @@ namespace BW
 		Urho3D::WeakPtr<Urho3D::Node> m_spTerrainNode;
 		
 		Urho3D::SharedPtr<Urho3D::Image> m_spWeightMap;
+		Urho3D::SharedPtr<Urho3D::Image> m_spWeightMap2;
 		Urho3D::SharedPtr<Urho3D::Image> m_spHeightMap;
+		
 		Urho3D::SharedPtr<Urho3D::Material> m_spMaterial;
 
 		Urho3D::SharedPtr<Urho3D::Texture2D> m_spWeightTex;
+		Urho3D::SharedPtr<Urho3D::Texture2D> m_spWeightTex2;
 	public:
 		TerrainManager(Urho3D::Application *pApp, Urho3D::Scene *pMainScene);
 		~TerrainManager();
@@ -55,7 +76,7 @@ namespace BW
 		static void GetTerrainLine3d(const Urho3D::IntVector3& p0, const Urho3D::IntVector3& p1, std::vector<Urho3D::IntVector3> &output);
 		
 		static void GenerateHills(unsigned char* data, int32_t MAX_SIZE, const TerrainParams& params);
-		static void GenerateAltWeights(unsigned char* weightData, int32_t WEIGHTS_SIZE, const unsigned char* data, int32_t MAP_SIZE, const TerrainParams& params);
+		static void GenerateAltWeights(unsigned char* weightData, unsigned char* weightData2, int32_t WEIGHTS_SIZE, const unsigned char* data, int32_t MAP_SIZE, const TerrainParams& params);
 		
 		
 		void ResetMapImages(const TerrainParams &params);
