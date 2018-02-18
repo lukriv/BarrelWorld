@@ -346,6 +346,8 @@ void BW::TerrainManager::GenerateAltWeights(unsigned char* weightData, unsigned 
 	unsigned char* wBasePoint2 = nullptr;
 	unsigned char altitude = 0;
 	
+	float corners[4];
+	IntVector2 normPos;
 	for(int32_t y = 0; y < WEIGHTS_SIZE; ++y)
 	{
 		for(int32_t x = 0; x < WEIGHTS_SIZE; ++x)
@@ -355,6 +357,14 @@ void BW::TerrainManager::GenerateAltWeights(unsigned char* weightData, unsigned 
 			
 			wBasePoint = weightData + y*WEIGHTS_SIZE*WEIGHTS_COMPONENT + x*WEIGHTS_COMPONENT;
 			wBasePoint2 = weightData2 + y*WEIGHTS_SIZE*WEIGHTS_COMPONENT + x*WEIGHTS_COMPONENT;
+			
+			corners[0] = *(data + my*MAP_SIZE + mx);
+			corners[1] = *(data + my*MAP_SIZE + std::min(mx + 1, MAP_SIZE - 1));
+			corners[2] = *(data + std::min(my + 1, MAP_SIZE - 1)*MAP_SIZE + mx);
+			corners[3] = *(data + std::min(my + 1, MAP_SIZE - 1)*MAP_SIZE + std::min(mx + 1, MAP_SIZE - 1));
+			
+			normPos.x_ = (static_cast<float>(x) * static_cast<float>(MAP_SIZE)) / static_cast<float>(WEIGHTS_SIZE) - static_cast<float>(mx);
+			normPos.y_ = (static_cast<float>(y) * static_cast<float>(MAP_SIZE)) / static_cast<float>(WEIGHTS_SIZE) - static_cast<float>(my);
 			
 			altitude = *(data + my*MAP_SIZE + mx);
 			
@@ -459,4 +469,12 @@ void BW::TerrainManager::PrepareMapMaterial(const TerrainParams& params)
 	
 	m_spMaterial->SetShaderParameter ("MatSpecColor", Variant(Vector4(0.5, 0.5, 0.5, 16)));
 	m_spMaterial->SetShaderParameter ("DetailTiling", Variant(Vector2(32, 32)));
+}
+
+float BW::TerrainManager::GetSlopeAngle(const Urho3D::IntVector2& normPos, float cornersAltitude[4])
+{
+}
+
+float BW::TerrainManager::GetAltitude(const Urho3D::IntVector2& normPos, float cornersAltitude[4])
+{
 }

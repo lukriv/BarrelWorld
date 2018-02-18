@@ -75,6 +75,24 @@ namespace BW
 		static void GetTerrainLine(const Urho3D::IntVector2& p0, const Urho3D::IntVector2& p1, std::vector<Urho3D::IntVector2> &output);
 		static void GetTerrainLine3d(const Urho3D::IntVector3& p0, const Urho3D::IntVector3& p1, std::vector<Urho3D::IntVector3> &output);
 		
+		// compute slope angle
+		// normPos - normalized position between 4 corners - x_ and y_ must be between 0 and 1
+		// cornersAltitude altitude of four corners 
+		// 0---1
+		// |   |
+		// 2---3
+		// retval in degrees
+		static float GetSlopeAngle(const Urho3D::IntVector2& normPos, float cornersAltitude[4]);
+		
+		// compute point altitude
+		// normPos - normalized position between 4 corners - x_ and y_ must be between 0 and 1
+		// cornersAltitude altitude of four corners 
+		// 0---1
+		// |   |
+		// 2---3
+		// retval altitude
+		static float GetAltitude(const Urho3D::IntVector2& normPos, float cornersAltitude[4]);
+		
 		static void GenerateHills(unsigned char* data, int32_t MAX_SIZE, const TerrainParams& params);
 		static void GenerateAltWeights(unsigned char* weightData, unsigned char* weightData2, int32_t WEIGHTS_SIZE, const unsigned char* data, int32_t MAP_SIZE, const TerrainParams& params);
 		
