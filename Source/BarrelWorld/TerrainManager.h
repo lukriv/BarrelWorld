@@ -28,23 +28,51 @@ namespace BW
 		TERR_BLACK = 6
 	};
 	
-	struct TerrainTypeAltitude {
-		uint8_t m_altFrom;
-		uint8_t m_altTo;
-		ETerrainType m_type;
+	enum ETerrainSide {
+		TERR_SIDE_UNDEFINED = 0,
+		TERR_SIDE_NORTH = 1,
+		TERR_SIDE_WEST = 2,
+		TERR_SIDE_SOUTH = 4,
+		TERR_SIDE_EAST = 8
+	};
+	
+	struct RiverParams {
+		ETerrainSide m_from;
+		ETerrainSide m_to;
+		int8_t m_width;
+		int8_t m_meanders;
+		int8_t m_meanderDeep;
+	};
+	
+	struct HillParams {
+		uint8_t m_maxHeight; // max hill altitude
+		uint8_t m_minHeight;
+		uint8_t m_maxTopSize;
+		uint8_t m_minTopSize;
+		uint8_t m_count; // random hills top count
 	};
 	
 	struct TerrainParams {
-		uint8_t m_maxAlt;
-		uint8_t m_minAlt;
+		uint8_t m_baseAlt; 
 		
-		uint8_t m_hills; // hills top count
+		uint8_t m_seaLevelAlt; // 0 means no sea
+		
+		HillParams m_hills;
+		
 		uint8_t m_maxDifference; //max difference between neighbouring point
 		
-		uint8_t m_snowAlt;
-		uint8_t m_rockAlt;
+		ETerrainType m_defaultType; // default type under all - e.g. rock 
+		float m_slope; // angle under where is default type only
 		
-		std::vector<TerrainTypeAltitude> m_terrTypeList;
+		uint8_t m_minSnowAlt; // snow begins
+		uint8_t m_fullSnowAlt; // altitude from which is snow only - except
+		ETerrainType m_snowType;
+				
+		uint8_t m_maxGrassAlt;
+		uint8_t m_fullGrassAlt;
+		ETerrainType m_grassType;
+		
+		std::vector<RiverParams> m_rivers;
 		
 	};
 	
@@ -82,7 +110,7 @@ namespace BW
 		// |   |
 		// 2---3
 		// retval in degrees
-		static float GetSlopeAngle(const Urho3D::IntVector2& normPos, float cornersAltitude[4]);
+		static float GetSlopeAngle(const Urho3D::Vector2& normPos, uint8_t cornersAltitude[4]);
 		
 		// compute point altitude
 		// normPos - normalized position between 4 corners - x_ and y_ must be between 0 and 1
@@ -91,10 +119,30 @@ namespace BW
 		// |   |
 		// 2---3
 		// retval altitude
-		static float GetAltitude(const Urho3D::IntVector2& normPos, float cornersAltitude[4]);
+		static float GetAltitude(const Urho3D::Vector2& normPos, uint8_t cornersAltitude[4]);
+		
+		/**
+		 * @brief Compute linear weight between 0 and 1
+		 * @param pos x position
+		 * @param begin beginning of linear part
+		 * @param end end of linear part
+		 */
+		static float GetLinearWeight(float pos, float begin, float end);
+		
+		/**
+		 * @brief Compute linear weight between 0 and 255 (integer)
+		 * @param pos x position
+		 * @param begin beginning of linear part
+		 * @param end end of linear part
+		 */
+		static uint8_t GetLinearWeight255(float pos, float begin, float end);
+		
+		static void AddTerrainType(unsigned char* weightData, unsigned char* weightData2, ETerrainType terrType, uint8_t weight);
 		
 		static void GenerateHills(unsigned char* data, int32_t MAX_SIZE, const TerrainParams& params);
 		static void GenerateAltWeights(unsigned char* weightData, unsigned char* weightData2, int32_t WEIGHTS_SIZE, const unsigned char* data, int32_t MAP_SIZE, const TerrainParams& params);
+		
+		
 		
 		
 		void ResetMapImages(const TerrainParams &params);

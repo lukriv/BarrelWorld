@@ -32,6 +32,9 @@ static const int32_t WEIGHTS_COMPONENT = 4;
 
 static const int32_t CONST_MAP_SIZE = 257;
 
+static const float VERTICAL_SPACING = 1.0f;
+static const float HORIZONTAL_SPACING = 2.0f;
+
 //terrain texture table row
 struct TerrainTexTableRow {
 	BW::ETerrainType m_texType;
@@ -66,13 +69,29 @@ void BW::TerrainManager::GenerateTerrain()
 {
 	TerrainParams params;
 	//set parameters
-	params.m_hills = 10;
-	params.m_maxAlt = 30;
-	params.m_maxDifference = 3;
-	params.m_minAlt = 3;
+	params.m_hills.m_count = 10;
+	params.m_hills.m_maxHeight = 18;
+	params.m_hills.m_minHeight = 6;
+	params.m_hills.m_minTopSize = 3;
+	params.m_hills.m_maxTopSize = 9;
 	
-	params.m_snowAlt = 17;
-	params.m_rockAlt = 9;
+	params.m_maxDifference = 3;
+	
+	params.m_baseAlt = 15;
+	
+	// default 
+	params.m_defaultType = BW::TERR_ROCK;
+	params.m_slope = 45;
+	
+	// snow
+	params.m_minSnowAlt = 29;
+	params.m_fullSnowAlt = 32;
+	params.m_snowType = BW::TERR_SNOW;
+	
+	// grass
+	params.m_maxGrassAlt = 26;
+	params.m_fullGrassAlt = 24;
+	params.m_grassType = BW::TERR_GRASS;
 	
 	GenerateTerrainHeightAndMat(params);
 	//Create heightmap terrain with collision
@@ -80,7 +99,7 @@ void BW::TerrainManager::GenerateTerrain()
     m_spTerrainNode->SetPosition(Vector3::ZERO);
     Terrain* terrain = m_spTerrainNode->CreateComponent<Terrain>();
     terrain->SetPatchSize(64);
-    terrain->SetSpacing(Vector3(2.0f, 1.0f, 2.0f)); // Spacing between vertices and vertical resolution of the height map
+    terrain->SetSpacing(Vector3(HORIZONTAL_SPACING, VERTICAL_SPACING, HORIZONTAL_SPACING)); // Spacing between vertices and vertical resolution of the height map
     terrain->SetSmoothing(false);
     if(!terrain->SetHeightMap(m_spHeightMap))
 	{
@@ -218,16 +237,18 @@ void BW::TerrainManager::GenerateHills(unsigned char* data, int32_t MAP_SIZE, co
 	std::priority_queue<StackItem, std::vector<StackItem>, mycomparison > myQueue;
 	
 	std::default_random_engine generator(std::chrono::system_clock::now().time_since_epoch().count());
-	std::uniform_int_distribution<int32_t> altDist(params.m_minAlt,params.m_maxAlt/params.m_maxDifference);
-	std::uniform_int_distribution<int32_t> wideDist(0,255);
+	std::uniform_int_distribution<int32_t> altDist(params.m_hills.m_minHeight/params.m_maxDifference,params.m_hills.m_maxHeight/params.m_maxDifference);
+	std::uniform_int_distribution<int32_t> wideDist(0,CONST_MAP_SIZE - 1);
 	std::uniform_int_distribution<int32_t> topDist(-params.m_maxDifference, params.m_maxDifference);
+	std::uniform_int_distribution<int32_t> topSize(params.m_hills.m_minTopSize, params.m_hills.m_maxTopSize);
 
 	auto altGen = std::bind(altDist, generator);
 	auto wideGen = std::bind(wideDist, generator);
 	auto topGen = std::bind(topDist, generator);
+	auto topSizeGen = std::bind(topSize, generator);
 
 	// generate hills
-	for (int32_t i = 0; i < params.m_hills; ++i)
+	for (int32_t i = 0; i < params.m_hills.m_count; ++i)
 	{
 		myQueue.push(StackItem(altGen() * params.m_maxDifference, IntVector2(wideGen(), wideGen())));
 	}
@@ -241,8 +262,10 @@ void BW::TerrainManager::GenerateHills(unsigned char* data, int32_t MAP_SIZE, co
 	{
 		const StackItem &item = myQueue.top();
 		
+		uint8_t alt = item.m_alt + params.m_baseAlt;
+		
 		// skip hills with min altitude
-		if(item.m_alt == params.m_minAlt)
+		if(alt <= params.m_baseAlt)
 		{
 			myQueue.pop();
 			continue;
@@ -251,12 +274,12 @@ void BW::TerrainManager::GenerateHills(unsigned char* data, int32_t MAP_SIZE, co
 		IntVector2 downPoint(topGen(), topGen());
 		
 		downPoint = item.m_position + downPoint;
-		GetTerrainLine3d(IntVector3(item.m_position.x_, item.m_position.y_, params.m_minAlt), 
-				IntVector3(downPoint.x_, downPoint.y_, item.m_alt/params.m_maxDifference), midpointLine);
+		GetTerrainLine3d(IntVector3(item.m_position.x_, item.m_position.y_, params.m_baseAlt/params.m_maxDifference), 
+				IntVector3(downPoint.x_, downPoint.y_, alt/params.m_maxDifference), midpointLine);
 		
-		int8_t radius = params.m_maxDifference;
+		int8_t radius = topSizeGen();
 		
-		int32_t last_alt = params.m_maxAlt;
+		int32_t last_alt = 255;
 #ifdef ENABLE_LOGS
 		Log::Write(LOG_INFO, "New hill");
 #endif
@@ -291,7 +314,7 @@ void BW::TerrainManager::GenerateHills(unsigned char* data, int32_t MAP_SIZE, co
 			{
 				y = v1[i].y_;
 
-				if ((y < 0) || (y > MAP_SIZE))
+				if ((y < 0) || (y >= MAP_SIZE))
 				{
 					++i;
 					continue;
@@ -311,18 +334,26 @@ void BW::TerrainManager::GenerateHills(unsigned char* data, int32_t MAP_SIZE, co
 				x1 = (x1 >= 0)? x1 : 0;
 				x2 = (x2 < MAP_SIZE) ? x2 : MAP_SIZE - 1;
 				
+				
+				//if((x1 < 0)||(x1 >= MAP_SIZE)||(x2 < 0)||(x2 >= MAP_SIZE)||(y < 0)||(y >= MAP_SIZE))
+				//{
+				//	String str;
+				//	str.AppendWithFormat("Danger: x1 = %d, x2 = %d, y = %d", x1, x2, y);
+				//	Log::Write(LOG_WARNING, str);
+				//}
+				
 				for (auto iter = data + y*MAP_SIZE + x1; iter < data + ((y)*MAP_SIZE) + (x2); ++iter)
 				{
-					if(*iter < (item.m_alt - radius))
+					if(*iter < alt)
 					{
-						(*iter) = item.m_alt - radius;
+						(*iter) = alt;
 					}
 				}
 					
 			}
 			
 			v1.clear();
-			
+			alt -= params.m_maxDifference;
 			radius += params.m_maxDifference;
 		
 		}
@@ -335,28 +366,67 @@ void BW::TerrainManager::GenerateHills(unsigned char* data, int32_t MAP_SIZE, co
 			
 }
 
+
+void BW::TerrainManager::AddTerrainType(unsigned char* wBasePoint, unsigned char* wBasePoint2, ETerrainType terrType, uint8_t weight)
+{
+	switch(terrType)
+	{
+		case TERR_GRASS:
+			*(wBasePoint + 1) = weight; //red
+			break;
+		case TERR_ROCK :
+			*(wBasePoint + 2) = weight; // green
+			break;
+		case TERR_SNOW :
+			*(wBasePoint2) = weight;
+			break;
+		case TERR_SAND :
+			*(wBasePoint) = weight; //red
+			break;
+		case TERR_DIRT :
+			*(wBasePoint2 + 1) = weight; // blue
+			break;
+		default:
+			break;
+	}
+}
+
+
+
 void BW::TerrainManager::GenerateAltWeights(unsigned char* weightData, unsigned char* weightData2, int32_t WEIGHTS_SIZE, const unsigned char* data, int32_t MAP_SIZE, const TerrainParams& params)
 {
-	
-
-	
-	ETerrainType terrTex = TERR_GRASS;
 	
 	unsigned char* wBasePoint = nullptr;
 	unsigned char* wBasePoint2 = nullptr;
 	unsigned char altitude = 0;
 	
-	float corners[4];
-	IntVector2 normPos;
+	uint8_t corners[4];
+	Vector2 normPos;
+	float slope = 0.0;
+	bool colorAdded;
 	for(int32_t y = 0; y < WEIGHTS_SIZE; ++y)
 	{
 		for(int32_t x = 0; x < WEIGHTS_SIZE; ++x)
 		{
-			int32_t mx = (x*MAP_SIZE) / WEIGHTS_SIZE;
-			int32_t my = (y*MAP_SIZE) / WEIGHTS_SIZE;
+			colorAdded = false;
+			
+			int32_t mx = (x*(MAP_SIZE-1)) / WEIGHTS_SIZE;
+			int32_t my = (y*(MAP_SIZE-1)) / WEIGHTS_SIZE;
 			
 			wBasePoint = weightData + y*WEIGHTS_SIZE*WEIGHTS_COMPONENT + x*WEIGHTS_COMPONENT;
 			wBasePoint2 = weightData2 + y*WEIGHTS_SIZE*WEIGHTS_COMPONENT + x*WEIGHTS_COMPONENT;
+			
+			if((mx == 0) && (my == 0))
+			{
+				AddTerrainType(wBasePoint, wBasePoint2, TERR_SAND, 255);
+				continue;
+			}
+			
+			if((mx == (MAP_SIZE - 1)) && (my == (MAP_SIZE - 1)))
+			{
+				AddTerrainType(wBasePoint, wBasePoint2, TERR_DIRT, 255);
+				continue;
+			}			
 			
 			corners[0] = *(data + my*MAP_SIZE + mx);
 			corners[1] = *(data + my*MAP_SIZE + std::min(mx + 1, MAP_SIZE - 1));
@@ -368,36 +438,37 @@ void BW::TerrainManager::GenerateAltWeights(unsigned char* weightData, unsigned 
 			
 			altitude = *(data + my*MAP_SIZE + mx);
 			
-			if( altitude > params.m_snowAlt )
+			slope = GetSlopeAngle(normPos, corners);
+			
+			if(slope > params.m_slope)
 			{
-				terrTex = TERR_SNOW;
-			} else if ( altitude > params.m_rockAlt ) {
-				terrTex = TERR_ROCK;
-			} else if ( altitude > 4 ){
-				terrTex = TERR_DIRT;
+				AddTerrainType(wBasePoint, wBasePoint2, params.m_defaultType, 255);
+				colorAdded = true;
 			} else {
-				terrTex = TERR_GRASS;
+				if (altitude <= params.m_fullGrassAlt)
+				{
+					AddTerrainType(wBasePoint, wBasePoint2, params.m_grassType, 255);
+					colorAdded = true;
+				}
+				
+				if (altitude >= params.m_fullSnowAlt)
+				{
+					AddTerrainType(wBasePoint, wBasePoint2, params.m_snowType, 255);
+					colorAdded = true;
+				}
+				
+				if ((altitude < params.m_fullSnowAlt) && (altitude > params.m_fullGrassAlt))
+				{
+					AddTerrainType(wBasePoint, wBasePoint2, params.m_defaultType, 255);
+					colorAdded = true;
+				}
 			}
 			
-			switch(terrTex)
+			if(!colorAdded)
 			{
-				case TERR_GRASS:
-					*(wBasePoint + 1) = 255; //red
-					break;
-				case TERR_ROCK :
-					*(wBasePoint + 2) = 255; // green
-					break;
-				case TERR_SNOW :
-					*(wBasePoint2) = 255;
-					break;
-				case TERR_SAND :
-					*(wBasePoint) = 255; //red
-					break;
-				case TERR_DIRT :
-					*(wBasePoint2 + 1) = 255; // blue
-					break;
-				default:
-					break;
+				String str;
+				str.AppendWithFormat("[%d,%d], slope: %f, alt: %d, terrPos: [%d,%d]",x,y,slope,altitude, mx,my);
+				Log::Write(LOG_WARNING, str);
 			}
 			
 		}
@@ -427,7 +498,7 @@ void BW::TerrainManager::ResetMapImages(const TerrainParams &params)
 	
 	std::memset( m_spWeightMap->GetData(), 0, CONST_WEIGHTS_SIZE*CONST_WEIGHTS_SIZE*WEIGHTS_COMPONENT );
 	std::memset( m_spWeightMap2->GetData(), 0, CONST_WEIGHTS_SIZE*CONST_WEIGHTS_SIZE*WEIGHTS_COMPONENT );
-	std::memset( m_spHeightMap->GetData(), params.m_minAlt, CONST_MAP_SIZE*CONST_MAP_SIZE );
+	std::memset( m_spHeightMap->GetData(), params.m_baseAlt, CONST_MAP_SIZE*CONST_MAP_SIZE );
 }
 
 void BW::TerrainManager::PrepareMapMaterial(const TerrainParams& params)
@@ -471,10 +542,126 @@ void BW::TerrainManager::PrepareMapMaterial(const TerrainParams& params)
 	m_spMaterial->SetShaderParameter ("DetailTiling", Variant(Vector2(32, 32)));
 }
 
-float BW::TerrainManager::GetSlopeAngle(const Urho3D::IntVector2& normPos, float cornersAltitude[4])
+float BW::TerrainManager::GetSlopeAngle(const Urho3D::Vector2& normPos, uint8_t cornersAltitude[4])
 {
+	if( (cornersAltitude[0] == cornersAltitude[1]) &&
+		(cornersAltitude[1] == cornersAltitude[2]) &&
+		(cornersAltitude[2] == cornersAltitude[3]))
+	{
+		return 0.0;
+	}
+	//String str;
+	Vector3 normalVec;
+	std::vector<int32_t> validIndex;
+	
+	if((cornersAltitude[0] == cornersAltitude[1]) && (cornersAltitude[2] == cornersAltitude[3]))
+	{
+		normalVec.x_ = 0.0;
+		normalVec.y_ = HORIZONTAL_SPACING;
+		normalVec.z_ = std::abs(static_cast<float>(cornersAltitude[2] - cornersAltitude[0]))*VERTICAL_SPACING;
+		//str.Append("line y,");
+	}
+	
+	if((cornersAltitude[0] == cornersAltitude[2]) && (cornersAltitude[1] == cornersAltitude[3]))
+	{
+		normalVec.x_ = std::abs(static_cast<float>(cornersAltitude[1] - cornersAltitude[0]))*VERTICAL_SPACING;
+		normalVec.y_ = HORIZONTAL_SPACING;
+		normalVec.z_ = 0.0;	
+		//str.Append("line x,");
+	}
+	
+	
+	// diagonal check
+	if(cornersAltitude[0] == cornersAltitude[3])
+	{
+		
+		Vector3 v1,v2;
+		if(normPos.x_ > normPos.y_)
+		{
+			v1 = Vector3(HORIZONTAL_SPACING, 0.0, HORIZONTAL_SPACING);
+			v2 = Vector3(HORIZONTAL_SPACING, std::abs(static_cast<float>(cornersAltitude[1] - cornersAltitude[0])), 0.0);
+			//str.Append("triangle 0-3-2,");
+		} else {
+			v1 = Vector3(0.0, std::abs(static_cast<float>(cornersAltitude[2] - cornersAltitude[0])), HORIZONTAL_SPACING);
+			v2 = Vector3(HORIZONTAL_SPACING, 0.0, HORIZONTAL_SPACING);
+			//str.Append("triangle 0-1-3,");
+		}
+		
+		v1.Normalize();
+		v2.Normalize();
+			
+		normalVec = v1.CrossProduct(v2);
+	}
+	
+	if( cornersAltitude[1] == cornersAltitude[2])
+	{
+		Vector3 v1,v2;
+		if((normPos.x_ + normPos.y_) < 1)
+		{
+			v1 = Vector3(-HORIZONTAL_SPACING, std::abs(static_cast<float>(cornersAltitude[0] - cornersAltitude[1])), 0.0);
+			v2 = Vector3(-HORIZONTAL_SPACING, 0.0, HORIZONTAL_SPACING);
+			//str.Append("triangle 1-0-2,");
+		} else {
+			v1 = Vector3(-HORIZONTAL_SPACING, 0.0, HORIZONTAL_SPACING);
+			v2 = Vector3(0.0, std::abs(static_cast<float>(cornersAltitude[3] - cornersAltitude[1])), HORIZONTAL_SPACING);
+			//str.Append("triangle 1-2-3,");
+		}
+		
+		v1.Normalize();
+		v2.Normalize();
+			
+		normalVec = v1.CrossProduct(v2);
+	}
+	
+	// check diagonals
+	normalVec.Normalize();
+	//float angle = normalVec.Angle(Vector3(0.0, 1.0, 0.0));
+	//
+	//if(angle >0.1)
+	//{
+	//	str.AppendWithFormat("normal: %f %f %f, angle: %f", normalVec.x_, normalVec.y_, normalVec.z_, angle);
+	//	Log::Write(LOG_INFO, str);
+	//}
+	
+	return normalVec.Angle(Vector3(0.0, 1.0, 0.0));
 }
 
-float BW::TerrainManager::GetAltitude(const Urho3D::IntVector2& normPos, float cornersAltitude[4])
+float BW::TerrainManager::GetAltitude(const Urho3D::Vector2& normPos, uint8_t cornersAltitude[4])
 {
+	if( (cornersAltitude[0] == cornersAltitude[1]) &&
+		(cornersAltitude[1] == cornersAltitude[2]) &&
+		(cornersAltitude[2] == cornersAltitude[3]))
+	{
+		return static_cast<float>(cornersAltitude[0]);
+	}
+	
+		
+	
+	return static_cast<float>(cornersAltitude[0]);
 }
+
+float BW::TerrainManager::GetLinearWeight(float pos, float begin, float end)
+{
+	if(begin > end)
+	{
+		std::swap(begin, end);
+	}
+	
+	if (pos < begin)
+	{
+		return 0.0;
+	}
+	
+	if (pos > end)
+	{
+		return 1.0;
+	}
+	
+	return ((pos - begin) / (end - begin));
+}
+
+uint8_t BW::TerrainManager::GetLinearWeight255(float pos, float begin, float end)
+{
+	return static_cast<uint8_t>(GetLinearWeight(pos, begin, end)*255.0);
+}
+
