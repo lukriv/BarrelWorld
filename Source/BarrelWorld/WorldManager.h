@@ -7,7 +7,7 @@
 #include <Urho3D/Scene/Scene.h>
 #include <Urho3D/Container/RefCounted.h>
 #include <Urho3D/Graphics/Viewport.h>
-#include "TerrainManager.h"
+#include "TerrainTile.h"
 
 
 namespace Urho3D {
@@ -27,7 +27,7 @@ namespace BW
 		Urho3D::WeakPtr<Urho3D::Node> m_spBoxNode;
 		Urho3D::WeakPtr<Urho3D::Node> m_spCameraNode;
 		
-		Urho3D::SharedPtr<TerrainManager> m_spTerrainMgr;
+		Urho3D::SharedPtr<TerrainTile> m_spTerrainMgr;
 		
 		Urho3D::WeakPtr<Urho3D::Viewport> m_spViewport;
 		

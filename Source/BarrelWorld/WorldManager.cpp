@@ -169,7 +169,7 @@ void BW::WorldManager::NewGame()
 	
 	if(m_spTerrainMgr.Null())
 	{
-		m_spTerrainMgr = new TerrainManager(m_pApp, m_spMainScene);
+		m_spTerrainMgr = new TerrainTile(m_pApp, m_spMainScene);
 	}
 	m_spTerrainMgr->GenerateTerrain();
 	

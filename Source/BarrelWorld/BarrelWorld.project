@@ -8,6 +8,8 @@
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="src">
+    <File Name="TerrainTile.cpp"/>
+    <File Name="TerrainDef.cpp"/>
     <File Name="DebugTools.cpp"/>
     <File Name="EntityCreator.cpp"/>
     <File Name="main.cpp"/>
@@ -22,18 +24,21 @@
       <File Name="Character.h"/>
       <File Name="Rotator.h"/>
     </VirtualDirectory>
-    <File Name="TerrainManager.cpp"/>
   </VirtualDirectory>
   <Dependencies Name="Debug"/>
   <Dependencies Name="Release"/>
   <VirtualDirectory Name="include">
+    <File Name="TerrainTile.h"/>
+    <VirtualDirectory Name="utils">
+      <File Name="PerlinNoise.h"/>
+    </VirtualDirectory>
+    <File Name="TerrainDef.h"/>
     <File Name="DebugTools.h"/>
     <File Name="LayerDefs.h"/>
     <File Name="EntityCreator.h"/>
     <File Name="mainmenu.h"/>
     <File Name="subsystemmanager.h"/>
     <File Name="WorldManager.h"/>
-    <File Name="TerrainManager.h"/>
   </VirtualDirectory>
   <Settings Type="Executable">
     <GlobalSettings>

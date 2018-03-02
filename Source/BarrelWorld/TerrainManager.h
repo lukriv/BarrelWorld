@@ -1,5 +1,5 @@
-#ifndef __BARRELWORLD_TERRAIN_MANAGER__H__
-#define __BARRELWORLD_TERRAIN_MANAGER__H__
+#ifndef __BARRELWORLD_TERRAIN_TILE__H__
+#define __BARRELWORLD_TERRAIN_TILE__H__
 
 #include <cstdint>
 #include <vector>
@@ -10,6 +10,8 @@
 #include <Urho3D/Graphics/Material.h>
 #include <Urho3D/Engine/Application.h>
 
+#include "TerrainDef.h"
+
 // forward declaration
 namespace Urho3D {
 	class Image;
@@ -18,15 +20,7 @@ namespace Urho3D {
 namespace BW
 {
 	
-	enum ETerrainType {
-		TERR_UNDEFINED = 0,
-		TERR_GRASS = 1,
-		TERR_ROCK = 2,
-		TERR_SNOW = 3,
-		TERR_SAND = 4,
-		TERR_DIRT = 5,
-		TERR_BLACK = 6
-	};
+
 	
 	enum ETerrainSide {
 		TERR_SIDE_UNDEFINED = 0,
@@ -42,6 +36,13 @@ namespace BW
 		int8_t m_width;
 		int8_t m_meanders;
 		int8_t m_meanderDeep;
+		
+		RiverParams() : m_from(TERR_SIDE_UNDEFINED)
+			, m_to(TERR_SIDE_UNDEFINED)
+			, m_width(0)
+			, m_meanders(0)
+			, m_meanderDeep(0) {}
+			
 	};
 	
 	struct HillParams {
@@ -49,34 +50,49 @@ namespace BW
 		uint8_t m_minHeight;
 		uint8_t m_maxTopSize;
 		uint8_t m_minTopSize;
+		uint8_t m_maxDifference; //max difference between neighbouring point - 1 means hills, 3 means mountains
+		uint8_t m_dispersion; // top hill dispersion
 		uint8_t m_count; // random hills top count
+		int32_t m_terrainSides; // hills layout - ETerrainSide 
 	};
 	
-	struct TerrainParams {
+	struct WeatherParams {
+		int32_t m_temperature; // average temperature in celsius degrees at altitude 0
+		int32_t m_maxTemperature; // maximal temperature during the year 
+		int32_t m_terrainSides; // north or south
+		WeatherParams() : m_temperature(0)
+			, m_maxTemperature(0)
+			, m_terrainSides(TERR_SIDE_UNDEFINED){}
+	};
+	
+	struct GroundParams {
 		uint8_t m_baseAlt; 
+		int32_t m_terrainSides;
+		uint8_t m_maxDifference; //max difference between neighbouring point - 1 means hills, 3 means mountains
 		
-		uint8_t m_seaLevelAlt; // 0 means no sea
-		
-		HillParams m_hills;
-		
-		uint8_t m_maxDifference; //max difference between neighbouring point
-		
-		ETerrainType m_defaultType; // default type under all - e.g. rock 
+		GroundParams() : m_baseAlt(0)
+			, m_terrainSides(TERR_SIDE_UNDEFINED)
+			, m_maxDifference(0){} //max difference between neighbouring point - 1 means hills, 3 means mountains
+	};	
+	
+	struct TerrainParams {
+		uint8_t m_baseAlt;
 		float m_slope; // angle under where is default type only
+		ETerrainType m_defaultType; // default type under all - e.g. rock 
+
+		const TerrainIndexTableRow *m_terrainTexTable;
 		
-		uint8_t m_minSnowAlt; // snow begins
-		uint8_t m_fullSnowAlt; // altitude from which is snow only - except
-		ETerrainType m_snowType;
-				
-		uint8_t m_maxGrassAlt;
-		uint8_t m_fullGrassAlt;
-		ETerrainType m_grassType;
+		std::vector<GroundParams> m_ground;
+		
+		std::vector<HillParams> m_hills;
+		
+		std::vector<WeatherParams> m_weather;
 		
 		std::vector<RiverParams> m_rivers;
 		
 	};
 	
-	class TerrainManager : public Urho3D::RefCounted
+	class TerrainTile : public Urho3D::RefCounted
 	{
 		Urho3D::Application *m_pApp;
 		Urho3D::WeakPtr<Urho3D::Scene> m_spMainScene;
@@ -91,17 +107,20 @@ namespace BW
 		Urho3D::SharedPtr<Urho3D::Texture2D> m_spWeightTex;
 		Urho3D::SharedPtr<Urho3D::Texture2D> m_spWeightTex2;
 	public:
-		TerrainManager(Urho3D::Application *pApp, Urho3D::Scene *pMainScene);
-		~TerrainManager();
+		TerrainTile(Urho3D::Application *pApp, Urho3D::Scene *pMainScene);
+		~TerrainTile();
 		
 		void GenerateTerrain();
 		
 		Urho3D::Node * GetTerrainNode();
 		
 	private:
+	// static utils
 		static void GetTerrainCircle(const Urho3D::IntVector2& center, int32_t radius, std::vector<Urho3D::IntVector2> &output);
 		static void GetTerrainLine(const Urho3D::IntVector2& p0, const Urho3D::IntVector2& p1, std::vector<Urho3D::IntVector2> &output);
 		static void GetTerrainLine3d(const Urho3D::IntVector3& p0, const Urho3D::IntVector3& p1, std::vector<Urho3D::IntVector3> &output);
+		
+		static void FillCircle(const Urho3D::IntVector2& center, int32_t radius, uint8_t altitude, unsigned char* data, int32_t MAX_SIZE);
 		
 		// compute slope angle
 		// normPos - normalized position between 4 corners - x_ and y_ must be between 0 and 1
@@ -137,21 +156,32 @@ namespace BW
 		 */
 		static uint8_t GetLinearWeight255(float pos, float begin, float end);
 		
-		static void AddTerrainType(unsigned char* weightData, unsigned char* weightData2, ETerrainType terrType, uint8_t weight);
+		static const WeatherParams& GetWeatherParams(const Urho3D::IntVector2& pos, const TerrainParams& params);
 		
+		static int32_t GetTemperature(uint8_t altitude, const WeatherParams &weatherParams);
+		
+		static bool AddTerrainType(unsigned char* weightData, unsigned char* weightData2, ETerrainType terrType, const TerrainIndexTableRow* table, uint8_t weight);
+		
+		static void GenerateGrounds(unsigned char* data, int32_t MAX_SIZE, const TerrainParams& params);
 		static void GenerateHills(unsigned char* data, int32_t MAX_SIZE, const TerrainParams& params);
 		static void GenerateAltWeights(unsigned char* weightData, unsigned char* weightData2, int32_t WEIGHTS_SIZE, const unsigned char* data, int32_t MAP_SIZE, const TerrainParams& params);
 		
+		static const char* GetTextureName(ETerrainType terrType);
 		
-		
-		
+	private:	
 		void ResetMapImages(const TerrainParams &params);
 		void PrepareMapMaterial(const TerrainParams &params);
 		
 		void GenerateTerrainHeightAndMat(const TerrainParams &params);
 		
+		
+	private:
+		void GenerateTerrainParameters(TerrainParams &params);
+		
+		
+		
 	};
 
 }
 
-#endif // __BARRELWORLD_TERRAIN_MANAGER__H__
+#endif // __BARRELWORLD_TERRAIN_TILE__H__
