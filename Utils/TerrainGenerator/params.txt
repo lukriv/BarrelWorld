@@ -1,0 +1,81 @@
+BASE = 1
+MAPSIZEX = 512
+MAPSIZEY = 256
+CONT_PARAM
+waterLevel = 10
+groundPercentage = 31
+jitterPercentage = 50
+jitterStrong = 3
+chunkSizeMin = 500
+chunkSizeMax = 5000
+compactGround = 2
+highRiseProb = 15
+sinkProb = 20
+minElev = 0 
+maxElev = 30
+xBorder = 75
+yBorder = 30
+addMode = 1
+END
+BREAK
+CELL_PARAM
+growsOn = 0
+lifeForm = 1
+initialPercentage = 0
+bornFrom = 6
+bornTo = 8
+aliveFrom = 4
+aliveTo = 8
+iterations = 10
+END
+BREAK
+CELL_PARAM
+growsOn = 1
+lifeForm = 2
+initialPercentage = 0
+bornFrom = 6
+bornTo = 8
+aliveFrom = 4
+aliveTo = 8
+iterations = 1
+END
+CELL_PARAM
+growsOn = 2
+lifeForm = 3
+initialPercentage = 0
+bornFrom = 6
+bornTo = 8
+aliveFrom = 4
+aliveTo = 8
+iterations = 1
+END
+CELL_PARAM
+growsOn = 3
+lifeForm = 4
+initialPercentage = 0
+bornFrom = 6
+bornTo = 8
+aliveFrom = 4
+aliveTo = 8
+iterations = 1
+END
+CELL_PARAM
+growsOn = 4
+lifeForm = 5
+initialPercentage = 0
+bornFrom = 6
+bornTo = 8
+aliveFrom = 4
+aliveTo = 8
+iterations = 1
+END
+CELL_PARAM
+growsOn = 5
+lifeForm = 6
+initialPercentage = 0
+bornFrom = 6
+bornTo = 8
+aliveFrom = 4
+aliveTo = 8
+iterations = 1
+END

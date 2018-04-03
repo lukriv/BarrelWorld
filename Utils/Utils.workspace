@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeLite_Workspace Name="Utils" Database="" Version="10.0.0">
+  <Project Name="TerrainGenerator" Path="TerrainGenerator/TerrainGenerator.project" Active="Yes"/>
+  <BuildMatrix>
+    <WorkspaceConfiguration Name="Debug" Selected="yes">
+      <Environment/>
+      <Project Name="TerrainGenerator" ConfigName="Debug"/>
+      <Project Name="TerrainGenerator" ConfigName="Debug"/>
+    </WorkspaceConfiguration>
+    <WorkspaceConfiguration Name="Release" Selected="yes">
+      <Environment/>
+      <Project Name="TerrainGenerator" ConfigName="Release"/>
+      <Project Name="TerrainGenerator" ConfigName="Release"/>
+    </WorkspaceConfiguration>
+  </BuildMatrix>
+</CodeLite_Workspace>

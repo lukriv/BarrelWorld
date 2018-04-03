@@ -26,3 +26,9 @@ Source/BarrelWorld/BarrelWorld.txt
 Source/BarrelWorld/x64
 Source/x64
 
+Utils/Makefile
+Utils/TerrainGenerator/Debug
+Utils/TerrainGenerator/Release
+Utils/TerrainGenerator/Debug64
+Utils/TerrainGenerator/Release64
+Utils/TerrainGenerator/TerrainGenerator.txt
