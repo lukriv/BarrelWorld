@@ -8,6 +8,10 @@
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="src">
+    <File Name="ClimateGenerator.cpp"/>
+    <File Name="ClimateGenerator.h"/>
+    <File Name="ClimateCell.cpp"/>
+    <File Name="ClimateCell.h"/>
     <File Name="MapContainer.h"/>
     <File Name="debugConsole.cpp"/>
     <File Name="debugConsole.h"/>

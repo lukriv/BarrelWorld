@@ -1,8 +1,9 @@
 BASE = 1
 MAPSIZEX = 512
 MAPSIZEY = 256
+MULTIPLIER = 3
 CONT_PARAM
-waterLevel = 10
+waterLevel = 40
 groundPercentage = 31
 jitterPercentage = 50
 jitterStrong = 3
@@ -12,9 +13,11 @@ compactGround = 2
 highRiseProb = 15
 sinkProb = 20
 minElev = 0 
-maxElev = 30
-xBorder = 75
+maxElev = 120
+regions = 1
+xBorder = 30
 yBorder = 30
+erosion = 0
 addMode = 1
 END
 BREAK

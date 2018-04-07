@@ -21,11 +21,13 @@ private:
 	//The surface contained by the window 
 	SDL_Surface* mScreenSurface = nullptr; 
 	
+	int32_t mMultiplier;
+	
 public:
-	SDLutils(int32_t SCREEN_WIDTH, int32_t SCREEN_HEIGHT);
+	SDLutils(int32_t SCREEN_WIDTH, int32_t SCREEN_HEIGHT, int32_t multiplier = 1);
 	~SDLutils();
 	
-	void writeMap(const int8_t *map, int32_t mapSizeX, int32_t mapSizeY, int32_t waterLevel);
+	void writeMap(const uint8_t *map, int32_t mapSizeX, int32_t mapSizeY, int32_t waterLevel);
 	
 	ACTION waitForAction();
 

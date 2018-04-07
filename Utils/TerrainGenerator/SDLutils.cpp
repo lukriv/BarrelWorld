@@ -2,9 +2,7 @@
 
 #include <iostream>
 
-static const int32_t MULTIPLIER = 1;
-
-SDLutils::SDLutils(int32_t SCREEN_WIDTH, int32_t SCREEN_HEIGHT)
+SDLutils::SDLutils(int32_t SCREEN_WIDTH, int32_t SCREEN_HEIGHT, int32_t multiplier) : mMultiplier(multiplier)
 {
 	//Initialize SDL 
 	if( SDL_Init( SDL_INIT_VIDEO ) < 0 ) 
@@ -13,7 +11,7 @@ SDLutils::SDLutils(int32_t SCREEN_WIDTH, int32_t SCREEN_HEIGHT)
 		return;
 	} 
 	
-	mWindow = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH*MULTIPLIER, SCREEN_HEIGHT*MULTIPLIER, SDL_WINDOW_SHOWN );
+	mWindow = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH*mMultiplier, SCREEN_HEIGHT*mMultiplier, SDL_WINDOW_SHOWN );
 	if( mWindow == nullptr ) 
 	{
 		std::cout << "Window could not be created! SDL_Error: " << SDL_GetError() << std::endl; 
@@ -49,7 +47,7 @@ static int32_t parabola(int32_t x, int32_t p, int32_t vx, int32_t vy)
 	return (exp2(x-vx) / (2*p)) + vy;
 }
 
-void SDLutils::writeMap(const int8_t* map, int32_t mapSizeX, int32_t mapSizeY, int32_t waterLevel)
+void SDLutils::writeMap(const uint8_t* map, int32_t mapSizeX, int32_t mapSizeY, int32_t waterLevel)
 {
 	
 	uint32_t actual = 0;
@@ -75,9 +73,10 @@ void SDLutils::writeMap(const int8_t* map, int32_t mapSizeX, int32_t mapSizeY, i
 
 
 	const bool predefEnabled = false;
+	const int32_t groundMul = 2;
 	int32_t r = 0,g = 0,b = 0;
 	int32_t index = 0;
-	SDL_Rect rect = {0,0,MULTIPLIER,MULTIPLIER};
+	SDL_Rect rect = {0,0,mMultiplier,mMultiplier};
 	for (int32_t y = 0; y < mapSizeY; ++y)
 	{
 		for (int32_t x = 0; x < mapSizeX; ++x)
@@ -93,9 +92,9 @@ void SDLutils::writeMap(const int8_t* map, int32_t mapSizeX, int32_t mapSizeY, i
 				} else {
 				// set color
 				//r =  ((0x80 - index*3) > 0) ? (0x80 - index*3) : 0;
-					r = parabola(index * 5, -10, 60, 225);
+					r = parabola(index * groundMul, -10, 60, 225);
 					r = restrict(r);
-					g = parabola(index * 5, -10, 15, 200); 
+					g = parabola(index * groundMul, -10, 15, 200); 
 					g = restrict(g);
 					b = - index + 0x22;
 					b = restrict(b);
@@ -118,8 +117,8 @@ void SDLutils::writeMap(const int8_t* map, int32_t mapSizeX, int32_t mapSizeY, i
 					actual = SDL_MapRGB(mScreenSurface->format, r, g, b);
 				}
 			}
-			rect.x = x*MULTIPLIER;
-			rect.y = y*MULTIPLIER;
+			rect.x = x*mMultiplier;
+			rect.y = y*mMultiplier;
 			SDL_FillRect(mScreenSurface, &rect, actual);
 		}
 	}

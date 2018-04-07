@@ -174,7 +174,7 @@ bool readParam(std::istream &input, ContinentMapGenerator::Params &params)
 }
 
 
-bool readParams(int8_t &initialValue, int32_t &mapSizeX, int32_t &mapSizeY, std::vector<UniversalParam> &paramList)
+bool readParams(int8_t &initialValue, int32_t &mapSizeX, int32_t &mapSizeY, int32_t &multiplier, std::vector<UniversalParam> &paramList)
 {
 	char line[LINE_SIZE];
 	std::ifstream ifile("params.txt");
@@ -226,6 +226,8 @@ bool readParams(int8_t &initialValue, int32_t &mapSizeX, int32_t &mapSizeY, std:
 			mapSizeX = value;
 		} else if(name.compare("MAPSIZEY") == 0) {
 			mapSizeY = value;
+		} else if(name.compare("MULTIPLIER") == 0) {
+			multiplier = value;
 		} else {
 			*gErrOut << "ERROR: reading params.txt failed" << std::endl;
 			*gErrOut << "Failed parameter: '" << name << "'" << std::endl;
@@ -246,7 +248,7 @@ SDLutils *gSDL = nullptr;
 int WinMain(int argc, char **argv)
 {
 	std::vector<UniversalParam> paramsList;
-	MapContainer<int8_t, SphereMapCoords> map;
+	MapContainer<uint8_t, SphereMapCoords> map;
 	
 	std::ofstream file("output.txt");
 	InitializeDebugConsole();
@@ -255,13 +257,14 @@ int WinMain(int argc, char **argv)
 	int8_t initialVal = 0;
 	int32_t mapSizeX = MAP_SIZE*2;
 	int32_t mapSizeY = MAP_SIZE;
-	if(!readParams(initialVal, mapSizeX, mapSizeY, paramsList))
+	int32_t multiplier = 1;
+	if(!readParams(initialVal, mapSizeX, mapSizeY, multiplier, paramsList))
 	{
 		*gErrOut << "Read params failed" << std::endl;
 		return -1;
 	}
 	gErrOut = &std::cout;
-	gSDL = new SDLutils(mapSizeX, mapSizeY);
+	gSDL = new SDLutils(mapSizeX, mapSizeY, multiplier);
 	
 	map.Initialize(mapSizeX, mapSizeY);
 	
@@ -344,7 +347,7 @@ int WinMain(int argc, char **argv)
 		if(!quit)
 		{
 			paramsList.clear();
-			if(!readParams(initialVal, mapx, mapy, paramsList))
+			if(!readParams(initialVal, mapx, mapy, multiplier, paramsList))
 			{
 				*gErrOut << "Read params failed" << std::endl;
 				return -1;

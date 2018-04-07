@@ -24,13 +24,15 @@ void writeMap(std::ostream& out, const int8_t* map, int32_t mapSizeX, int32_t ma
 	}
 }
 
-void writeMapStatistics(std::ostream& out, const int8_t* map, int32_t mapSizeX, int32_t mapSizeY, int32_t waterLevel)
+void writeMapStatistics(std::ostream& out, const uint8_t* map, int32_t mapSizeX, int32_t mapSizeY, int32_t waterLevel)
 {
 	
 	int32_t groundCount = 0;
 	int32_t underwaterCount = 0;
 	int32_t maxH = -1;
 	int32_t minH = 256;
+	int32_t avAltitude = 0;
+	int32_t avSeaDepth = 0;
 	
 	for (int32_t y = 0; y < mapSizeY; ++y)
 	{
@@ -39,8 +41,10 @@ void writeMapStatistics(std::ostream& out, const int8_t* map, int32_t mapSizeX, 
 			auto height = map[y*mapSizeX + x];
 			if(height > waterLevel)
 			{
+				avAltitude += (height - waterLevel);
 				++groundCount;
 			} else {
+				avSeaDepth += (waterLevel - height);
 				++underwaterCount;
 			}
 			
@@ -61,7 +65,10 @@ void writeMapStatistics(std::ostream& out, const int8_t* map, int32_t mapSizeX, 
 	out << "Water: " << (underwaterCount*100)/(mapSizeX*mapSizeY) << "%" << std::endl;
 
 	out << "Max mountain height: " << maxH - waterLevel << std::endl;
+	out << "Average mountain height: " << avAltitude / groundCount << std::endl;
+	
 	out << "Max water depth: " << waterLevel - minH << std::endl;
+	out << "Average water depth: " << avSeaDepth / underwaterCount << std::endl;
 	
 	out << "Max height: " << maxH << std::endl;
 	out << "Min height: " << minH << std::endl;

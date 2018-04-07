@@ -37,7 +37,7 @@ public:
 		
 	};
 
-	static void GenerateMap(MapContainer<int8_t, SphereMapCoords> &map, const Params& params);
+	static void GenerateMap(MapContainer<uint8_t, SphereMapCoords> &map, const Params& params);
 };
 
 #endif //__CELLULAR_AUTOMATON_MAP_GENERATOR_H__

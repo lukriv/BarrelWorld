@@ -120,8 +120,10 @@ public:
 			return false;
 		}
 		
-		std::memset(m_pMap, value, m_totalSize * sizeof(TCellValue));
-		
+		for (int32_t i = 0; i < m_totalSize; ++i)
+		{
+			m_pMap[i] = value;
+		}
 		
 		return true;
 	}

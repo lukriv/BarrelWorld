@@ -55,9 +55,9 @@ public:
 	};
 
 
-	static void GenerateMap(MapContainer<int8_t, SphereMapCoords>& map, const Params& params);
+	static void GenerateMap(MapContainer<uint8_t, SphereMapCoords>& map, const Params& params);
 	
-	static void ErodeMap(MapContainer<int8_t, SphereMapCoords>& map, const Params& params);
+	static void ErodeMap(MapContainer<uint8_t, SphereMapCoords>& map, const Params& params);
 	
 };
 

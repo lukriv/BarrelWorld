@@ -43,16 +43,16 @@ std::ostream& operator<< (std::ostream& os, const Region& reg)
 	return os;
 }
 
-bool IsErodible(MapContainer<int8_t, SphereMapCoords>& map, int32_t ix, int32_t iy)
+bool IsErodible(MapContainer<uint8_t, SphereMapCoords>& map, int32_t ix, int32_t iy)
 {
 	int32_t nx, ny;
-	int8_t cElev = map.GetCellValue(ix, iy);
+	uint8_t cElev = map.GetCellValue(ix, iy);
 	for (int32_t dir = static_cast<int32_t>(MapContainerDIR::N); dir <= static_cast<int32_t>(MapContainerDIR::NE); ++dir) 
 	{
 		map.GetNeightbourCoords(static_cast<MapContainerDIR>(dir), ix, iy, nx, ny);
 		
 		
-		int8_t nElev = map.GetCellValue(nx, ny);
+		uint8_t nElev = map.GetCellValue(nx, ny);
 		
 		if ( (cElev - nElev) > 1 )
 		{
@@ -63,10 +63,10 @@ bool IsErodible(MapContainer<int8_t, SphereMapCoords>& map, int32_t ix, int32_t 
 	return false;
 }
 
-void ContinentMapGenerator::GenerateMap(MapContainer<int8_t, SphereMapCoords>& map, const ContinentMapGenerator::Params& params)
+void ContinentMapGenerator::GenerateMap(MapContainer<uint8_t, SphereMapCoords>& map, const ContinentMapGenerator::Params& params)
 {
 	int32_t totalMapSize = map.GetSizeX()*map.GetSizeY();
-	MapContainer<int8_t, SphereMapCoords> searchMap;
+	MapContainer<uint8_t, SphereMapCoords> searchMap;
 	searchMap.Initialize(map.GetSizeX(), map.GetSizeY());
 	
 	map.FillMap(0);
@@ -339,14 +339,17 @@ void ContinentMapGenerator::GenerateMap(MapContainer<int8_t, SphereMapCoords>& m
 	
 }
 
-void ContinentMapGenerator::ErodeMap(MapContainer<int8_t, SphereMapCoords>& map, const Params& params)
+void ContinentMapGenerator::ErodeMap(MapContainer<uint8_t, SphereMapCoords>& map, const Params& params)
 {
+	// skip erosion if it is not desired
+	if(params.m_erosion == 0) return;
+	
 	std::default_random_engine generator(std::chrono::system_clock::now().time_since_epoch().count());
 	std::uniform_real_distribution<float> fdist(0.0f,1.0f);
 	
 	// erosion
 	// find erodable cells 
-	MapContainer<int8_t, SphereMapCoords> searchMap;
+	MapContainer<uint8_t, SphereMapCoords> searchMap;
 	searchMap.Initialize(map.GetSizeX(), map.GetSizeY());
 	std::queue<MapNode> erodibleCells;
 	

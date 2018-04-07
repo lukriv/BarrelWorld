@@ -10,7 +10,7 @@
 //#include "utils.h"
 
 
-void CellularAutomatonMapGenerator::GenerateMap(MapContainer<int8_t, SphereMapCoords> &map, const CellularAutomatonMapGenerator::Params& params)
+void CellularAutomatonMapGenerator::GenerateMap(MapContainer<uint8_t, SphereMapCoords> &map, const CellularAutomatonMapGenerator::Params& params)
 {
 	std::default_random_engine generator(std::chrono::system_clock::now().time_since_epoch().count());
 	std::uniform_int_distribution<int32_t> distribution(0,99);
@@ -24,7 +24,7 @@ void CellularAutomatonMapGenerator::GenerateMap(MapContainer<int8_t, SphereMapCo
 	// initialize
 	if(params.m_initialPercentage > 0)
 	{
-		for(int8_t *pPointer = map.GetData(); pPointer < (map.GetData() + dataSize); ++pPointer)
+		for(uint8_t *pPointer = map.GetData(); pPointer < (map.GetData() + dataSize); ++pPointer)
 		{
 			if((*pPointer == params.m_growsOn)&&(distribution(generator) < params.m_initialPercentage))
 			{
