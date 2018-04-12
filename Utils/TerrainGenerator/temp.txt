@@ -1,3 +1,14 @@
+Úbytek teploty
+-0.5 stupňů Celsia na 100m nadmořské výšky
+
+cca 100m nadmořské výšky na jeden dílek
+
+
+Hustota vzduchu aproximace
+y = -0,0047 * x + 1,32
+
+cca 20% vzduchu v prvním kilometru vs druhá vrstva
+
 Vlhkost
 
 -50	   0,06
@@ -59,3 +70,14 @@ Hustota fce
 80	971,790
 90	965,300
 100	958,350
+
+y=-0,3663*x^2 + 1,6315*x + 998,52
+
+998.52 .... 0g
+1026.52 ... 35g
+
+// koeficient
+y = (28/35) * x + 998.52
+
+
+

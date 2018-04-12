@@ -11,18 +11,31 @@ SDLutils::SDLutils(int32_t SCREEN_WIDTH, int32_t SCREEN_HEIGHT, int32_t multipli
 		return;
 	} 
 	
-	mWindow = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH*mMultiplier, SCREEN_HEIGHT*mMultiplier, SDL_WINDOW_SHOWN );
-	if( mWindow == nullptr ) 
+	if(SDL_CreateWindowAndRenderer(SCREEN_WIDTH*mMultiplier, SCREEN_HEIGHT*mMultiplier, SDL_WINDOW_SHOWN, &mWindow, &mRenderer) != 0)
 	{
 		std::cout << "Window could not be created! SDL_Error: " << SDL_GetError() << std::endl; 
 		return;
 	}
+	
+	
+	//mWindow = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH*mMultiplier, SCREEN_HEIGHT*mMultiplier, SDL_WINDOW_SHOWN );
+	//if( mWindow == nullptr ) 
+	//{
+	//	std::cout << "Window could not be created! SDL_Error: " << SDL_GetError() << std::endl; 
+	//	return;
+	//}
 	
 	mScreenSurface = SDL_GetWindowSurface( mWindow );
 }
 
 SDLutils::~SDLutils()
 {
+	if(mRenderer)
+	{
+		SDL_DestroyRenderer(mRenderer);
+		mRenderer = nullptr;
+	}
+	
 	if(mWindow)
 	{
 		SDL_DestroyWindow(mWindow);
@@ -50,29 +63,6 @@ static int32_t parabola(int32_t x, int32_t p, int32_t vx, int32_t vy)
 void SDLutils::writeMap(const uint8_t* map, int32_t mapSizeX, int32_t mapSizeY, int32_t waterLevel)
 {
 	
-	uint32_t actual = 0;
-	//87CEFA
-	
-	uint32_t water[5], land[10];
-	water [0] = SDL_MapRGB( mScreenSurface->format, 0x87,0xCE,0xFA );
-	water [1] = SDL_MapRGB( mScreenSurface->format, 0x1E,0x90,0xFF );
-	water [2] = SDL_MapRGB( mScreenSurface->format, 0x41,0x69,0xE1 );
-	water [3] = SDL_MapRGB( mScreenSurface->format, 0x00,0x00,0xCD );
-	water [4] = SDL_MapRGB( mScreenSurface->format, 0x00,0x00,0x80 );
-	
-	land[0] = SDL_MapRGB( mScreenSurface->format, 0x22,0x8B,0x22);
-	land[1] = SDL_MapRGB( mScreenSurface->format, 0x32,0xCD,0x32);
-	land[2] = SDL_MapRGB( mScreenSurface->format, 0x7C,0xFC,0x00);
-	land[3] = SDL_MapRGB( mScreenSurface->format, 0xAD,0xFF,0x2F);
-	land[4] = SDL_MapRGB( mScreenSurface->format, 0xFF,0xFF,0x66);
-	land[5] = SDL_MapRGB( mScreenSurface->format, 0xFF,0xFF,0x00);
-	land[6] = SDL_MapRGB( mScreenSurface->format, 0xDA,0xA5,0x20);
-	land[7] = SDL_MapRGB( mScreenSurface->format, 0xD2,0x69,0x1E);
-	land[8] = SDL_MapRGB( mScreenSurface->format, 0x8B,0x45,0x13);
-	land[9] = SDL_MapRGB( mScreenSurface->format, 0x80,0x00,0x00);
-
-
-	const bool predefEnabled = false;
 	const int32_t groundMul = 2;
 	int32_t r = 0,g = 0,b = 0;
 	int32_t index = 0;
@@ -86,10 +76,7 @@ void SDLutils::writeMap(const uint8_t* map, int32_t mapSizeX, int32_t mapSizeY, 
 			{
 				index = height - waterLevel - 1;
 				
-				if ((index < 10)&&predefEnabled)
 				{
-					actual = land[index];
-				} else {
 				// set color
 				//r =  ((0x80 - index*3) > 0) ? (0x80 - index*3) : 0;
 					r = parabola(index * groundMul, -10, 60, 225);
@@ -98,34 +85,266 @@ void SDLutils::writeMap(const uint8_t* map, int32_t mapSizeX, int32_t mapSizeY, 
 					g = restrict(g);
 					b = - index + 0x22;
 					b = restrict(b);
-					actual = SDL_MapRGB(mScreenSurface->format, r, g, b);
 				}
 				
 				
 			} else {
 				index = waterLevel - height;
-				if((index < 5)&&predefEnabled)
 				{
-					actual = water[index];
-				} else {
 					r = 0x87 - index*10;
 					r = restrict(r);
 					g = 0xCE - index*8;
 					g = restrict(g);
 					b = 256 - index*6;
 					b = restrict(b);
-					actual = SDL_MapRGB(mScreenSurface->format, r, g, b);
 				}
 			}
 			rect.x = x*mMultiplier;
 			rect.y = y*mMultiplier;
-			SDL_FillRect(mScreenSurface, &rect, actual);
+			//SDL_FillRect(mScreenSurface, &rect, actual);
+			SDL_SetRenderDrawColor(mRenderer, r, g, b, SDL_ALPHA_OPAQUE);
+			SDL_RenderFillRect(mRenderer,&rect);
+		}
+	}
+
+	//Update the surface 
+	SDL_RenderPresent(mRenderer);
+	//SDL_UpdateWindowSurface( mWindow ); 
+	
+}
+
+void SDLutils::writeMove(Urho3D::Vector2 &streamDir, int32_t xPos, int32_t yPos, int32_t flags)
+{
+	if(mMultiplier <= 2) return;
+	
+	float speed = 0.0f;
+	
+	float angle = 0.0f;
+	
+	speed = streamDir.Length();
+	angle = streamDir.Angle(Urho3D::Vector2(0.0, 0.0));
+	
+	SDL_SetRenderDrawColor(mRenderer, restrict((int32_t)((speed/200.0)*255.0)), restrict((int32_t)(-(speed/200.0)*255.0) + 200), 0, SDL_ALPHA_OPAQUE);
+	
+	int32_t xBegin = xPos + (mMultiplier / 2), yBegin = yPos + (mMultiplier / 2);
+	if(speed <= 0.0)
+	{
+		SDL_RenderDrawPoint(mRenderer, xBegin, yBegin);
+		return;
+	}
+	
+	// end line
+	int32_t xEnd, yEnd;
+	if(angle > 0)
+	{
+		if(angle < 22.5)
+		{
+			xEnd = xBegin;
+			yEnd = yBegin - (mMultiplier / 2);
+		} else if (angle < 67.5) {
+			xEnd = xBegin + (mMultiplier / 2);
+			yEnd = yBegin - (mMultiplier / 2);
+		} else if (angle < 112.5) {
+			xEnd = xBegin + (mMultiplier / 2);
+			yEnd = yBegin;			
+		} else if (angle < 157.5) {
+			xEnd = xBegin + (mMultiplier / 2);
+			yEnd = yBegin + (mMultiplier / 2);
+		} else {
+			xEnd = xBegin;
+			yEnd = yBegin + (mMultiplier / 2);
+		}
+	} else {
+		if(angle > -22.5)
+		{
+			xEnd = xBegin;
+			yEnd = yBegin - (mMultiplier / 2);
+		} else if (angle > -67.5) {
+			xEnd = xBegin - (mMultiplier / 2);
+			yEnd = yBegin - (mMultiplier / 2);
+		} else if (angle > 112.5) {
+			xEnd = xBegin - (mMultiplier / 2);
+			yEnd = yBegin;			
+		} else if (angle > 157.5) {
+			xEnd = xBegin - (mMultiplier / 2);
+			yEnd = yBegin + (mMultiplier / 2);
+		} else {
+			xEnd = xBegin;
+			yEnd = yBegin + (mMultiplier / 2);
+		}
+	}
+	
+	SDL_RenderDrawLine(mRenderer, xBegin, yBegin, xEnd , yEnd);
+}
+
+void SDLutils::writeMove(CellContent* cont, int32_t xPos, int32_t yPos, int32_t flags)
+{
+	if(cont == nullptr) return;
+	switch(cont->GetContentType())
+	{
+		case CellContent::AIR:
+			{
+				AirContent *pAir = reinterpret_cast<AirContent*>(cont);
+				if((flags & HIGH_AIR) != 0)				{
+					writeMove(pAir->m_highDir, xPos, yPos, flags);
+				} else {
+					writeMove(pAir->m_lowDir, xPos, yPos, flags);
+				}
+			}
+			break;
+		case CellContent::WATER:
+			{
+				WaterContent *pWater = reinterpret_cast<WaterContent*>(cont);
+				writeMove(pWater->m_streamDir, xPos, yPos, flags);
+			}
+			break;
+		default:
+			return;
+	}
+}
+
+void SDLutils::writeType(CellContent* cont, int32_t xPos, int32_t yPos, int32_t flags)
+{
+	int32_t r = 0,g = 0,b = 0;
+	SDL_Rect rect = {xPos,yPos,mMultiplier,mMultiplier};
+	if(cont == nullptr)
+	{
+		r = 0,g = 0,b = 0;
+	} else {
+		switch(cont->GetContentType())
+		{
+			case CellContent::WATER:
+			{
+				WaterContent* pWater = reinterpret_cast<WaterContent*>(cont);
+				float ice = pWater->m_iceMass / (pWater->m_iceMass + pWater->m_waterMass);
+				b = 200;
+				g = r = (int32_t)(200.0f * ice);
+			}
+			break;
+			case CellContent::GROUND:
+			{
+				GroundContent* pGround = reinterpret_cast<GroundContent*>(cont);
+				
+				b = (int32_t)(pGround->m_waterMass / pGround->m_maxWaterCapacity * 255.0f);
+				g = r = 150;
+			}
+			break;
+			case CellContent::AIR:
+			{
+				AirContent* pAir = reinterpret_cast<AirContent*>(cont);
+				b = 255;
+				g = r = 220;
+			}
+			break;
+			default:
+				r = 0,g = 0,b = 0;
+			break;
+		}
+	}
+
+	SDL_SetRenderDrawColor(mRenderer, r, g, b, SDL_ALPHA_OPAQUE);
+	SDL_RenderFillRect(mRenderer,&rect);
+}
+
+void SDLutils::writeTemperature(CellContent* cont, int32_t xPos, int32_t yPos, int32_t flags)
+{
+	int32_t r = 0,g = 0,b = 0;
+	SDL_Rect rect = {xPos,yPos,mMultiplier,mMultiplier};
+	
+	bool undef = false;
+	float temp = CLIMATE_MIN_TEMPERATURE;
+	
+	if(cont != nullptr)
+	{
+		switch(cont->GetContentType())
+		{
+			case CellContent::WATER:
+			{
+				WaterContent* pWater = reinterpret_cast<WaterContent*>(cont);
+				temp = pWater->m_temperature - 273;
+			}
+			break;
+			case CellContent::GROUND:
+			{
+				GroundContent* pGround = reinterpret_cast<GroundContent*>(cont);
+				temp = pGround->m_temperature - 273;
+			}
+			break;
+			case CellContent::AIR:
+			{
+				AirContent* pAir = reinterpret_cast<AirContent*>(cont);
+				temp = pAir->m_temperature - 273;
+			}
+			break;
+			default:
+				undef = true;
+			break;
+		}
+	} else {
+		undef = true;
+	}
+	
+	if(undef)
+	{
+		SDL_SetRenderDrawColor(mRenderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
+	} else {
+		b = restrict((int32_t)(-(255.0/50.0) * temp));
+		g = restrict(parabola((int32_t)temp, -10, 0, 150));
+		r = restrict((int32_t)((255.0/50.0) * temp));
+	}
+
+	SDL_SetRenderDrawColor(mRenderer, r, g, b, SDL_ALPHA_OPAQUE);
+	SDL_RenderFillRect(mRenderer,&rect);
+}
+
+void SDLutils::writeClimateMap(const ClimateCell* map, int32_t mapSizeX, int32_t mapSizeY, int32_t level, int32_t flags)
+{
+	
+	int32_t climateLevel;
+	int32_t moveFlags = 0;
+	switch(level)
+	{
+		case 0:
+			climateLevel = 0;
+			moveFlags = HIGH_AIR;
+			break;
+		case 1:
+		case 2:
+		case 3:
+			climateLevel = level - 1;
+			break;
+		default:
+			return;
+	}
+	
+	
+	
+	for (int32_t y = 0; y < mapSizeY; ++y)
+	{
+		for (int32_t x = 0; x < mapSizeX; ++x)
+		{
+			const ClimateCell& climate = map[y*mapSizeX + x];
+			
+			CellContent* cont = climate.GetContent(climateLevel);
+			
+			if((flags & TEMPERATURE) != 0)
+			{
+				writeTemperature(cont, x*mMultiplier, y*mMultiplier);
+			} else {
+				writeType(cont, x*mMultiplier, y*mMultiplier);
+			}
+			
+			if((flags & MOVE) != 0)
+			{
+				writeMove(cont, x*mMultiplier, y*mMultiplier, moveFlags);
+			}
 		}
 	}
 	
 	//Update the surface 
-	SDL_UpdateWindowSurface( mWindow ); 
-	
+	SDL_RenderPresent(mRenderer);
+
+	//SDL_UpdateWindowSurface( mWindow ); 
 }
 
 SDLutils::ACTION SDLutils::waitForAction()
@@ -155,6 +374,22 @@ SDLutils::ACTION SDLutils::waitForAction()
 						return ACTION::RELOAD;
 					case SDLK_n: 
 						return ACTION::NEXT;
+					case SDLK_0:
+						return ACTION::HEIGHT_MAP;
+					case SDLK_1:
+						return ACTION::CLIMATE_LEVEL_1;
+					case SDLK_2:
+						return ACTION::CLIMATE_LEVEL_2;
+					case SDLK_3:
+						return ACTION::CLIMATE_LEVEL_3;
+					case SDLK_4:
+						return ACTION::CLIMATE_LEVEL_4;
+					case SDLK_t:
+						return ACTION::CLIMATE_TEMPERATURE;
+					case SDLK_m:
+						return ACTION::CLIMATE_MOVE;
+					case SDLK_s:
+						return ACTION::CLIMATE_STEP;
 					default:
 						break;
 				}
@@ -162,3 +397,4 @@ SDLutils::ACTION SDLutils::waitForAction()
 		}
 	}
 }
+

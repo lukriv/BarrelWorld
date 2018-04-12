@@ -12,6 +12,8 @@
 #include "SDLutils.h"
 #include "global.h"
 #include "debugConsole.h"
+#include "ClimateCell.h"
+#include "ClimateGenerator.h"
 
 #define LINE_SIZE 256
 
@@ -249,6 +251,7 @@ int WinMain(int argc, char **argv)
 {
 	std::vector<UniversalParam> paramsList;
 	MapContainer<uint8_t, SphereMapCoords> map;
+	MapContainer<ClimateCell, SphereMapCoords> climateMap;
 	
 	std::ofstream file("output.txt");
 	InitializeDebugConsole();
@@ -313,9 +316,9 @@ int WinMain(int argc, char **argv)
 					waterLevel = par.m_contParams.m_waterLevel;
 					
 					ContinentMapGenerator::GenerateMap(map, par.m_contParams);
-					gSDL->writeMap( map.GetData(), map.GetSizeX(), map.GetSizeY(), waterLevel);
-					gSDL->waitForAction();
-					ContinentMapGenerator::ErodeMap(map, par.m_contParams);
+					//gSDL->writeMap( map.GetData(), map.GetSizeX(), map.GetSizeY(), waterLevel);
+					//gSDL->waitForAction();
+					//ContinentMapGenerator::ErodeMap(map, par.m_contParams);
 					
 					break;
 				case UniversalParam::UNDEF :
@@ -323,13 +326,70 @@ int WinMain(int argc, char **argv)
 					return -1;
 			}
 			
+			ClimateGenerator climate(map, climateMap, waterLevel);
 			
 			gSDL->writeMap( map.GetData(), map.GetSizeX(), map.GetSizeY(), waterLevel);
 			
-			
-			writeMapStatistics(*gErrOut, map.GetData(), map.GetSizeX(), map.GetSizeY(), waterLevel);
+			writeMapStatistics(*gErrOut, map.GetData(), map.GetSizeX(), map.GetSizeY(), waterLevel);		
 		
 			SDLutils::ACTION act = gSDL->waitForAction();
+			
+			int32_t climateLevel = -1;
+			bool climateMove = false;
+			bool climateTemp = false;
+			
+			while((act == SDLutils::ACTION::HEIGHT_MAP)
+				||(act == SDLutils::ACTION::CLIMATE_LEVEL_1)
+				||(act == SDLutils::ACTION::CLIMATE_LEVEL_2)
+				||(act == SDLutils::ACTION::CLIMATE_LEVEL_3)
+				||(act == SDLutils::ACTION::CLIMATE_LEVEL_4)
+				||(act == SDLutils::ACTION::CLIMATE_TEMPERATURE)
+				||(act == SDLutils::ACTION::CLIMATE_MOVE)
+				||(act == SDLutils::ACTION::CLIMATE_STEP))
+			{
+				switch(act)
+				{
+					case SDLutils::ACTION::HEIGHT_MAP:
+						climateLevel = -1;
+						break;
+					case SDLutils::ACTION::CLIMATE_LEVEL_1:
+						climateLevel = 0;
+						break;
+					case SDLutils::ACTION::CLIMATE_LEVEL_2:
+						climateLevel = 1;
+						break;
+					case SDLutils::ACTION::CLIMATE_LEVEL_3:
+						climateLevel = 2;
+						break;
+					case SDLutils::ACTION::CLIMATE_LEVEL_4:
+						climateLevel = 3;
+						break;
+					case SDLutils::ACTION::CLIMATE_TEMPERATURE:
+						climateTemp = !climateTemp;
+						break;
+					case SDLutils::ACTION::CLIMATE_MOVE:
+						climateMove = !climateMove;
+						break;
+					case SDLutils::ACTION::CLIMATE_STEP:
+						for(int32_t r = 0; r < 1; ++r)
+							climate.SimulateClimateStep();
+						std::cout << " -- Climate simulation End --" << std::endl;
+						writeClimateStatistics(*gErrOut, climateMap, waterLevel);
+						break;
+					default:
+						break;
+				}
+				if(climateLevel < 0 )
+				{
+					gSDL->writeMap( map.GetData(), map.GetSizeX(), map.GetSizeY(), waterLevel);
+				} else {
+					int32_t flags = 0;
+					flags |= (climateTemp)? SDLutils::TEMPERATURE : 0;
+					flags |= (climateMove)? SDLutils::MOVE : 0;
+					gSDL->writeClimateMap(climateMap.GetData(), climateMap.GetSizeX(), climateMap.GetSizeY(), climateLevel, flags);
+				}
+				act = gSDL->waitForAction();
+			}
 			
 			if(act == SDLutils::ACTION::RELOAD)
 			{
@@ -341,6 +401,8 @@ int WinMain(int argc, char **argv)
 				quit = true;
 				break;
 			}
+			
+			
 			
 		}
 		

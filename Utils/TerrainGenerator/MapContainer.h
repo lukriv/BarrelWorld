@@ -152,7 +152,7 @@ public:
 		*(m_pMap + y*m_sizeX + x) = value;
 	}
 	
-	TCellValue GetCellValue(int32_t x, int32_t y)
+	TCellValue& GetCellValue(int32_t x, int32_t y)
 	{
 		FnMapCoords(m_sizeX, m_sizeY, x, y);
 		return *(m_pMap + y*m_sizeX + x);
