@@ -47,7 +47,7 @@ class AirContent : public CellContent {
 public:
 	float m_baseAltitude;
 	float m_temperatureDiff; // temperature difference from the last step
-	float m_airPressure; // 
+	float m_airPressure; // air pressure at altitude 0
 	float m_airPressureDiff; // 
 	float m_waterMass; // kilogram of water as vapour
 	Urho3D::Vector2 m_highDir; // hor. dir. of wind in heght

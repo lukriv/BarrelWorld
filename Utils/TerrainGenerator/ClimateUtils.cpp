@@ -216,6 +216,24 @@ float ClimateUtils::GetMaxAirHumidity(int32_t temperature)
 	return AirHumidityTable[temperature];
 }
 
+float ClimateUtils::GetDewPointTemperature(float relHum)
+{
+	int32_t chunkSize = 100;
+	int32_t temp = 100;
+	while(chunkSize > 1)
+	{
+		if(relHum > AirHumidityTable[temp])
+		{
+			temp += temp/2;
+		} else {
+			temp -= temp/2;
+		}
+		chunkSize = chunkSize/2;
+	}
+	
+	return (float)temp;
+}
+
 float ClimateUtils::GetWaterDensity(int32_t temperature, float salinity)
 {
 	if(temperature < 273) temperature = 273;
@@ -249,6 +267,8 @@ float ClimateUtils::GetSpecificHeat(CellContent::ContentType contType)
 			return 2093.4;
 		case CellContent::GROUND:
 			return 940.0;
+		default:
+			return 0.0;
 	}
 }
 
@@ -264,6 +284,8 @@ float ClimateUtils::GetThermalConductivity(CellContent::ContentType contType)
 			return 2.3;
 		case CellContent::GROUND:
 			return 0.950;
+		default:
+			return 0.0;
 	}
 }
 
@@ -271,6 +293,7 @@ float ClimateUtils::GetGroundDensity()
 {
 	return 1700.0;
 }
+
 
 
 

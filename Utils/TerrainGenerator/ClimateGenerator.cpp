@@ -122,7 +122,7 @@ void ClimateGenerator::InitializeClimate()
 				// low air
 				pAir = new AirContent();
 				pAir->m_baseAltitude = (height - m_waterLevel) * GROUND_HEIGHT_TO_METERS;
-				pAir->m_airPressure = ClimateUtils::GetPressureInHeight(pAir->m_baseAltitude, AIR_BASE_PRESSURE);
+				pAir->m_airPressure = AIR_BASE_PRESSURE;
 				pAir->m_temperature = ClimateUtils::CompRealAirTemp(BASE_TEMPERATURE, pAir->m_baseAltitude);
 				cell.AddContent(0, pAir);
 
@@ -363,15 +363,20 @@ void ClimateGenerator::Evaporation(AirContent& air, WaterContent& water)
 {
 	// bad - too much computing...:) 
 	float airMass = CompAirMass(air);
-	float maxHum = ClimateUtils::GetMaxAirHumidity(air.m_temperature)/(ClimateUtils::GetAirDensity(air.m_temperature) * air.m_airPressure/AIR_BASE_PRESSURE);
-	float waterMassEvap = (25.0 + 19.0*air.m_lowDir.Length())*(maxHum - air.m_waterMass/airMass);
+	float maxHum = ClimateUtils::CompMaxAirHumidity((float)air.m_temperature, air.m_airPressure);
+	
+	float actHum = air.m_waterMass/airMass;
+	float waterMassEvap = (25.0 + 19.0*air.m_lowDir.Length())*(maxHum - actHum);
 	float heat = HEAT_OF_VAPORIZATION_OF_WATER * waterMassEvap;
+	
+	float dewPointTemp = ClimateUtils::CompDewPointTemperature(actHum, air.m_airPressure);
+	
+	float altitude = ClimateUtils::CompAltFromTemp(air.m_temperature,air.m_baseAltitude,dewPointTemp);
 	
 	water.m_waterMass -= waterMassEvap;
 	air.m_waterMass += waterMassEvap;
 	
 	
-	air.m_temperature += heat/(airMass*ClimateUtils::GetSpecificHeat(CellContent::AIR));
 	water.m_temperature -= heat/(CompWaterMass(water)*GetWaterSpecificHeat(water));
 	
 }
