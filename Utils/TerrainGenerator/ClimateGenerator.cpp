@@ -33,7 +33,7 @@ const float BASE_TEMPERATURE = 15 + 273;
 const float ATHMOSPHERIC_ABSORBTION =  	0.175; // 
 
 const float CLOUDS_SCATTERED =  0.145; // 
-const float SUN_POWER = 100; // power [W] per square meter
+const float SUN_POWER = 1000; // power [W] per square meter
 
 const float HEAT_OF_VAPORIZATION_OF_WATER = 2300000; // [ J/kg ]
 
@@ -47,9 +47,12 @@ const float RAIN_HEIGHT = 1000; //
 float CompAirMass(AirContent& cont, float baseAlt)
 {
 	// (1 / 2) * (1 / 11000) == 0.00004545
-	float height = 11000 - baseAlt;
-	float relPressure = ClimateUtils::GetPressureInHeight(baseAlt, cont.m_airPressure) / AIR_BASE_PRESSURE;
-	return (ClimateUtils::GetAirDensity(cont.m_temperature) * relPressure * 0.00004545 * height * height );
+	//float height = 11000 - baseAlt;
+	//float relPressure = ClimateUtils::GetPressureInHeight(baseAlt, cont.m_airPressure) / AIR_BASE_PRESSURE;
+	//return (ClimateUtils::GetAirDensity(cont.m_temperature) * relPressure * 0.00004545 * height * height );
+	
+	// F/S = p, S==1m^2, F=m*g => m=p/g; g==10
+	return ClimateUtils::GetPressureInHeight(baseAlt, cont.m_airPressure) / 10;
 }
 
 float CompAirMass(AirContent& cont)
@@ -528,7 +531,50 @@ void ClimateGenerator::AirMoveChange(AirContent& air, int32_t x, int32_t y)
 
 void ClimateGenerator::AirWind(AirContent& air, int32_t x, int32_t y)
 {
+	int32_t nx, ny;
+	// get receiver
+	float speed = 0.0f;
+	speed = air.m_lowDir.Length();
+	if(speed > 0.0)
+	{
+		m_climateMap.GetNeightbourCoords(GetWindDest(air.m_lowDir), nx, ny);
+		AirContent &nAir = m_climateMap.GetCellValue(nx, ny);
+		
+	}
+}
+
+MapContainerDIR ClimateGenerator::GetWindDest(Urho3D::Vector2& windVec)
+{
+	float angle = windVec.Angle(Urho3D::Vector2(0.0, 1.0));
 	
+	if(angle > 0)
+	{
+		if(angle < 22.5)
+		{
+			return MapContainerDIR::N;
+		} else if (angle < 67.5) {
+			return MapContainerDIR::NE;
+		} else if (angle < 112.5) {
+			return MapContainerDIR::E;
+		} else if (angle < 157.5) {
+			return MapContainerDIR::SE;
+		} else {
+			return MapContainerDIR::S;		
+		}
+	} else {
+		if(angle > -22.5)
+		{
+			return MapContainerDIR::N;
+		} else if (angle > -67.5) {
+			return MapContainerDIR::NW;
+		} else if (angle > 112.5) {
+			return MapContainerDIR::W;
+		} else if (angle > 157.5) {
+			return MapContainerDIR::SW;
+		} else {
+			return MapContainerDIR::S;
+		}
+	}
 }
 
 

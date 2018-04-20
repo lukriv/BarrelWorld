@@ -30,10 +30,13 @@ private:
 	void AddTempToIncMap(int32_t x, int32_t y, int32_t level, float deltaTemp);
 	void AddHeatIncToClimate();
 	
+	MapContainerDIR GetWindDest(Urho3D::Vector2 &windVec);
+	
 	void AirPressureChange(AirContent & air);
 	void Evaporation(AirContent &air, WaterContent &water);
 	void AirMoveChange(AirContent &air, int32_t x, int32_t y);
 	void AirWind(AirContent &air, int32_t x, int32_t y);
+	
 	
 	void SunHeatingStep();
 	void CoolingStep();
