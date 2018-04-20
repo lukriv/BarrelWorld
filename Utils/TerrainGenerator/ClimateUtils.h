@@ -19,7 +19,9 @@ public:
 
 	static float GetAirDensity(int32_t temperature);
 	
-	static float GetGroundDensity();
+	inline static float GetIceDensity() { return 917.0; }
+	
+	inline static float GetGroundDensity() { return 1700.0; }
 	
 	// J/(kg*K)
 	static float GetSpecificHeat(CellContent::ContentType contType);

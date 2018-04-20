@@ -1,6 +1,7 @@
 #include "SDLutils.h"
 
 #include <iostream>
+#include "ClimateGenerator.h"
 
 SDLutils::SDLutils(int32_t SCREEN_WIDTH, int32_t SCREEN_HEIGHT, int32_t multiplier) : mMultiplier(multiplier)
 {
@@ -16,6 +17,8 @@ SDLutils::SDLutils(int32_t SCREEN_WIDTH, int32_t SCREEN_HEIGHT, int32_t multipli
 		std::cout << "Window could not be created! SDL_Error: " << SDL_GetError() << std::endl; 
 		return;
 	}
+	
+	SDL_SetRenderDrawBlendMode(mRenderer, SDL_BLENDMODE_BLEND);
 	
 	
 	//mWindow = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH*mMultiplier, SCREEN_HEIGHT*mMultiplier, SDL_WINDOW_SHOWN );
@@ -122,7 +125,7 @@ void SDLutils::writeMove(Urho3D::Vector2 &streamDir, int32_t xPos, int32_t yPos,
 	float angle = 0.0f;
 	
 	speed = streamDir.Length();
-	angle = streamDir.Angle(Urho3D::Vector2(0.0, 0.0));
+	angle = streamDir.Angle(Urho3D::Vector2(0.0, 1.0));
 	
 	SDL_SetRenderDrawColor(mRenderer, restrict((int32_t)((speed/200.0)*255.0)), restrict((int32_t)(-(speed/200.0)*255.0) + 200), 0, SDL_ALPHA_OPAQUE);
 	
@@ -231,9 +234,10 @@ void SDLutils::writeType(CellContent* cont, int32_t xPos, int32_t yPos, int32_t 
 			break;
 			case CellContent::AIR:
 			{
-				AirContent* pAir = reinterpret_cast<AirContent*>(cont);
-				b = 255;
-				g = r = 220;
+				//AirContent* pAir = reinterpret_cast<AirContent*>(cont);
+				r = 0;
+				g = 141;
+				b = 205;
 			}
 			break;
 			default:
@@ -297,6 +301,28 @@ void SDLutils::writeTemperature(CellContent* cont, int32_t xPos, int32_t yPos, i
 	SDL_RenderFillRect(mRenderer,&rect);
 }
 
+void SDLutils::writeClouds(AirContent* cont, int32_t xPos, int32_t yPos, int32_t flags)
+{
+	int32_t r = 240,g = 240,b = 240, alpha = 0;
+	SDL_Rect rect = {xPos,yPos,mMultiplier,mMultiplier};
+	if(cont != nullptr)
+	{
+		
+		float height = ClimateGenerator::CompCloudsHeight(*cont);
+		
+		alpha = static_cast<int32_t>((-0.0001*height + 1.1)*255.0);
+		
+		if(alpha <= 0) return; // no clouds
+		
+		alpha = restrict(alpha);
+				
+		SDL_SetRenderDrawColor(mRenderer, r, g, b, alpha);
+		SDL_RenderFillRect(mRenderer,&rect);
+		
+	}
+
+}
+
 void SDLutils::writeClimateMap(const ClimateCell* map, int32_t mapSizeX, int32_t mapSizeY, int32_t level, int32_t flags)
 {
 	
@@ -326,12 +352,19 @@ void SDLutils::writeClimateMap(const ClimateCell* map, int32_t mapSizeX, int32_t
 			const ClimateCell& climate = map[y*mapSizeX + x];
 			
 			CellContent* cont = climate.GetContent(climateLevel);
+
 			
 			if((flags & TEMPERATURE) != 0)
 			{
 				writeTemperature(cont, x*mMultiplier, y*mMultiplier);
 			} else {
 				writeType(cont, x*mMultiplier, y*mMultiplier);
+			}
+			
+			// write clouds
+			if((flags & CLOUDS)&&(cont != nullptr)&&(cont->GetContentType() == CellContent::AIR))
+			{
+				writeClouds(reinterpret_cast<AirContent*>(cont), x*mMultiplier, y*mMultiplier);
 			}
 			
 			if((flags & MOVE) != 0)
@@ -388,8 +421,12 @@ SDLutils::ACTION SDLutils::waitForAction()
 						return ACTION::CLIMATE_TEMPERATURE;
 					case SDLK_m:
 						return ACTION::CLIMATE_MOVE;
+					case SDLK_c:
+						return ACTION::CLIMATE_CLOUDS;
 					case SDLK_s:
 						return ACTION::CLIMATE_STEP;
+					case SDLK_f:
+						return ACTION::CLIMATE_FAST_STEP;
 					default:
 						break;
 				}
@@ -397,4 +434,6 @@ SDLutils::ACTION SDLutils::waitForAction()
 		}
 	}
 }
+
+
 

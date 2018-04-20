@@ -337,6 +337,7 @@ int WinMain(int argc, char **argv)
 			int32_t climateLevel = -1;
 			bool climateMove = false;
 			bool climateTemp = false;
+			bool climateClouds = false;
 			
 			while((act == SDLutils::ACTION::HEIGHT_MAP)
 				||(act == SDLutils::ACTION::CLIMATE_LEVEL_1)
@@ -345,7 +346,9 @@ int WinMain(int argc, char **argv)
 				||(act == SDLutils::ACTION::CLIMATE_LEVEL_4)
 				||(act == SDLutils::ACTION::CLIMATE_TEMPERATURE)
 				||(act == SDLutils::ACTION::CLIMATE_MOVE)
-				||(act == SDLutils::ACTION::CLIMATE_STEP))
+				||(act == SDLutils::ACTION::CLIMATE_CLOUDS)
+				||(act == SDLutils::ACTION::CLIMATE_STEP)
+				||(act == SDLutils::ACTION::CLIMATE_FAST_STEP))
 			{
 				switch(act)
 				{
@@ -370,9 +373,15 @@ int WinMain(int argc, char **argv)
 					case SDLutils::ACTION::CLIMATE_MOVE:
 						climateMove = !climateMove;
 						break;
-					case SDLutils::ACTION::CLIMATE_STEP:
-						for(int32_t r = 0; r < 1; ++r)
+					case SDLutils::ACTION::CLIMATE_CLOUDS:
+						climateClouds = !climateClouds;
+						break;
+					
+					case SDLutils::ACTION::CLIMATE_FAST_STEP:
+						for(int32_t r = 0; r < 100; ++r)
 							climate.SimulateClimateStep();
+					case SDLutils::ACTION::CLIMATE_STEP:
+						climate.SimulateClimateStep();
 						std::cout << " -- Climate simulation End --" << std::endl;
 						writeClimateStatistics(*gErrOut, climateMap, waterLevel);
 						break;
@@ -386,6 +395,7 @@ int WinMain(int argc, char **argv)
 					int32_t flags = 0;
 					flags |= (climateTemp)? SDLutils::TEMPERATURE : 0;
 					flags |= (climateMove)? SDLutils::MOVE : 0;
+					flags |= (climateClouds)? SDLutils::CLOUDS : 0;
 					gSDL->writeClimateMap(climateMap.GetData(), climateMap.GetSizeX(), climateMap.GetSizeY(), climateLevel, flags);
 				}
 				act = gSDL->waitForAction();

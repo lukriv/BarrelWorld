@@ -21,6 +21,10 @@ public:
 	
 	void SimulateClimateStep();
 
+public:
+	// help functions
+	static float CompCloudsHeight(AirContent& cont);
+
 private:
 		
 	void AddTempToIncMap(int32_t x, int32_t y, int32_t level, float deltaTemp);
@@ -28,10 +32,13 @@ private:
 	
 	void AirPressureChange(AirContent & air);
 	void Evaporation(AirContent &air, WaterContent &water);
+	void AirMoveChange(AirContent &air, int32_t x, int32_t y);
+	void AirWind(AirContent &air, int32_t x, int32_t y);
 	
 	void SunHeatingStep();
 	void CoolingStep();
 	void AirPressureDiffStep();
+	void AirMoveStep();
 	
 	float GetSalinity(WaterContent &water);
 	

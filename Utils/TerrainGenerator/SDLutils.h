@@ -20,14 +20,17 @@ public:
 		CLIMATE_LEVEL_4,
 		CLIMATE_MOVE,
 		CLIMATE_TEMPERATURE,
+		CLIMATE_CLOUDS,
 		CLIMATE_STEP,
+		CLIMATE_FAST_STEP,
 		QUIT
 	};
 	
 	enum ClimateFlag {
 		NONE = 0,
 		TEMPERATURE = 1,
-		MOVE = 2
+		MOVE = 2,
+		CLOUDS = 4,
 	};
 	
 	enum MoveFlag {
@@ -57,6 +60,7 @@ private:
 	void writeMove(CellContent* cont, int32_t xPos, int32_t yPos, int32_t flags = 0);
 	void writeType(CellContent* cont, int32_t xPos, int32_t yPos, int32_t flags = 0);
 	void writeTemperature(CellContent* cont, int32_t xPos, int32_t yPos, int32_t flags = 0);
+	void writeClouds(AirContent* cont, int32_t xPos, int32_t yPos, int32_t flags = 0);
 };
 
 #endif // __SDL_UTILITIES_H__

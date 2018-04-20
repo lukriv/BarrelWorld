@@ -22,7 +22,7 @@ public:
 private:
 	ContentType m_type;
 public:
-	float m_temperature;
+	float m_temperature; // temperature [K]
 public:
 	CellContent(ContentType type) : m_type(type), m_temperature(15) {}
 	ContentType GetContentType() const { return m_type; }
@@ -46,19 +46,30 @@ public:
 class AirContent : public CellContent {
 public:
 	float m_baseAltitude;
+	float m_airPressure; // air pressure at altitude 0 [Pa]
+	float m_waterMass; // kilogram of water as vapour [kg]
+	
+	// updatable
+	float m_airMass; // air mass (can be computed from pressure ) [kg]
+	float m_actHum; // actual air humidity [kg/kg]
+	
+	// helper
 	float m_temperatureDiff; // temperature difference from the last step
-	float m_airPressure; // air pressure at altitude 0
 	float m_airPressureDiff; // 
-	float m_waterMass; // kilogram of water as vapour
+	float m_waterMassDiff;
+	
 	Urho3D::Vector2 m_highDir; // hor. dir. of wind in heght
 	Urho3D::Vector2 m_lowDir; // horizontal direction of wind at ground level
 	
 	AirContent() : CellContent(CellContent::AIR)
 		, m_baseAltitude(0)
-		, m_temperatureDiff(0)
 		, m_airPressure(100000.0) // air pressure
-		, m_airPressureDiff(0.0)
 		, m_waterMass(0)
+		, m_airMass(0)
+		, m_actHum(0)
+		, m_temperatureDiff(0)
+		, m_airPressureDiff(0.0)
+		, m_waterMassDiff(0)
 	{}
 };
 

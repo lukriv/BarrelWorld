@@ -289,10 +289,6 @@ float ClimateUtils::GetThermalConductivity(CellContent::ContentType contType)
 	}
 }
 
-float ClimateUtils::GetGroundDensity()
-{
-	return 1700.0;
-}
 
 
 

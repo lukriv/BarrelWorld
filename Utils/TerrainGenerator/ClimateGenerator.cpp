@@ -1,5 +1,7 @@
 #include "ClimateGenerator.h"
 
+#include <iostream>
+
 #include <cmath>
 #include "ClimateUtils.h"
 
@@ -37,12 +39,32 @@ const float HEAT_OF_VAPORIZATION_OF_WATER = 2300000; // [ J/kg ]
 
 const float ENTHALPY_OF_FUSION_OF_WATER = 335000; // [ J/kg ]
 
+const float WATER_FREEZING = 273; // freeze temperature [ K ]
+
+const float RAIN_HEIGHT = 1000; // 
+
+
+float CompAirMass(AirContent& cont, float baseAlt)
+{
+	// (1 / 2) * (1 / 11000) == 0.00004545
+	float height = 11000 - baseAlt;
+	float relPressure = ClimateUtils::GetPressureInHeight(baseAlt, cont.m_airPressure) / AIR_BASE_PRESSURE;
+	return (ClimateUtils::GetAirDensity(cont.m_temperature) * relPressure * 0.00004545 * height * height );
+}
 
 float CompAirMass(AirContent& cont)
 {
+	return CompAirMass(cont, cont.m_baseAltitude);
+}
+
+
+
+float ClimateGenerator::CompCloudsHeight(AirContent& cont)
+{
 	// (1 / 2) * (1 / 11000) == 0.00004545
-	float height = 11000 - cont.m_baseAltitude;
-	return (ClimateUtils::GetAirDensity(cont.m_temperature) * (cont.m_airPressure / AIR_BASE_PRESSURE) * 0.00004545 * height * height );
+	float dewPointTemp = ClimateUtils::CompDewPointTemperature(cont.m_actHum, cont.m_airPressure);
+	
+	return ClimateUtils::CompAltFromTemp(cont.m_temperature,cont.m_baseAltitude,dewPointTemp);
 }
 
 float CompGroundMass(GroundContent& cont)
@@ -57,15 +79,87 @@ float CompWaterSalinity(WaterContent &cont)
 
 float CompWaterMass(WaterContent& cont)
 {
-	
-	return (cont.m_iceMass > 0) ? cont.m_iceMass : cont.m_waterMass + cont.m_saltMass;
+	return  cont.m_iceMass + cont.m_waterMass + cont.m_saltMass;
 }
 
-float GetWaterSpecificHeat(WaterContent& cont)
+void AddHeat(WaterContent &cont, float heat)
 {
-	return (cont.m_iceMass > 0) ? ClimateUtils::GetSpecificHeat(CellContent::ICE) : ClimateUtils::GetSpecificHeat(CellContent::WATER);
+	if(std::isnan(heat))
+	{
+		std::cout << "Error: Heat is nan" << std::endl;
+		return;
+	}
+	
+	if(heat > 0)
+	{
+		if(cont.m_iceMass == 0.0)
+		{
+			cont.m_temperature += heat / (CompWaterMass(cont) * ClimateUtils::GetSpecificHeat(CellContent::WATER));
+		} else {
+			if(cont.m_temperature >= WATER_FREEZING)
+			{
+				float iceMassDiff = -(heat / ENTHALPY_OF_FUSION_OF_WATER);
+				if(cont.m_iceMass > iceMassDiff)
+				{
+					cont.m_waterMass -= iceMassDiff;
+					cont.m_iceMass += iceMassDiff;
+				} else {
+					heat = heat - (cont.m_iceMass*ENTHALPY_OF_FUSION_OF_WATER);
+					cont.m_waterMass += cont.m_iceMass; // add water
+					cont.m_iceMass = 0.0; // no ice 
+					cont.m_temperature += heat / (CompWaterMass(cont) * ClimateUtils::GetSpecificHeat(CellContent::WATER)); // add rest of heat to temperature
+				}
+			} else {
+				cont.m_temperature += heat / (CompWaterMass(cont) * ClimateUtils::GetSpecificHeat(CellContent::ICE));
+			}
+		}
+	} else {
+		if(cont.m_waterMass > 0.0)
+		{
+			if(cont.m_temperature > WATER_FREEZING)
+			{
+				cont.m_temperature += heat / (CompWaterMass(cont) * ClimateUtils::GetSpecificHeat(CellContent::WATER));
+			} else {
+				float iceMassDiff = -(heat / ENTHALPY_OF_FUSION_OF_WATER);
+				if(cont.m_waterMass > iceMassDiff)
+				{
+					cont.m_waterMass -= iceMassDiff;
+					cont.m_iceMass += iceMassDiff;
+				} else {
+					heat = heat + (cont.m_waterMass*ENTHALPY_OF_FUSION_OF_WATER);
+					cont.m_iceMass += cont.m_waterMass;
+					cont.m_waterMass = 0.0;
+					cont.m_temperature += heat / (CompWaterMass(cont) * ClimateUtils::GetSpecificHeat(CellContent::ICE)); // 
+				}
+			}
+			
+		} else {
+			cont.m_temperature += heat / (CompWaterMass(cont) * ClimateUtils::GetSpecificHeat(CellContent::ICE));
+		}
+	}
+	
 }
 
+void AddHeat(AirContent &cont, float heat)
+{
+	float temp = heat / (cont.m_airMass * ClimateUtils::GetSpecificHeat(CellContent::AIR));
+	cont.m_temperature += temp;
+	cont.m_temperatureDiff += temp;
+}
+
+void AddHeat(GroundContent &cont, float heat)
+{
+	cont.m_temperature += heat / (CompGroundMass(cont) * ClimateUtils::GetSpecificHeat(CellContent::GROUND));
+}
+
+void UpdateAirContent(AirContent &cont)
+{
+	cont.m_airPressure += cont.m_airPressureDiff;
+	cont.m_airPressureDiff = 0.0;
+	
+	cont.m_airMass = CompAirMass(cont);
+	cont.m_actHum = cont.m_waterMass/cont.m_airMass;
+}
 
 
 ClimateGenerator::~ClimateGenerator()
@@ -133,6 +227,11 @@ void ClimateGenerator::InitializeClimate()
 				cell.AddContent(1, pGround);
 			}
 			
+			if(pAir)
+			{
+				UpdateAirContent(*pAir);
+			}
+			
 
 		}
 	}
@@ -158,6 +257,8 @@ void ClimateGenerator::SimulateClimateStep()
 	CoolingStep();
 		
 	AirPressureDiffStep();
+	
+	AirMoveStep();
 		
 	//AddHeatIncToClimate();
 	
@@ -174,10 +275,8 @@ void ClimateGenerator::SunHeatingStep()
 	float degreeY = - (PI / 2);
 	float cosY;
 	
-	float mass = 0;
 	float totalEnergy = 0;
 	float totalEnergyGround = 0;
-	float temp = 0;
 	
 	int32_t level = 0;
 	
@@ -195,22 +294,14 @@ void ClimateGenerator::SunHeatingStep()
 			if(cell.IsCheckContent(level, CellContent::AIR))
 			{
 				AirContent &air = *cell.GetAirContent(level);
-				mass = CompAirMass(air);
-				temp = (totalEnergy * ATHMOSPHERIC_ABSORBTION) / (mass * ClimateUtils::GetSpecificHeat(CellContent::AIR));
-				
-				air.m_temperature += temp;
-				
-				// set diff
-				air.m_temperatureDiff = temp;
+				AddHeat(air, (totalEnergy * ATHMOSPHERIC_ABSORBTION));
 				
 				// is clouds
-				if((air.m_waterMass / mass) > ClimateUtils::GetMaxAirHumidity(air.m_temperature))
+				if(CompCloudsHeight(air) < 10000)
 				{
 					totalEnergyGround -= (totalEnergy * CLOUDS_SCATTERED);
 				}
 			}
-			
-			
 			
 			// air absortion
 			totalEnergyGround -= (totalEnergy * ATHMOSPHERIC_ABSORBTION);
@@ -218,20 +309,12 @@ void ClimateGenerator::SunHeatingStep()
 			level = 1;
 			if(cell.IsCheckContent(level, CellContent::GROUND))
 			{
-				GroundContent &ground = *cell.GetGroundContent(level);
-				mass = CompGroundMass(ground);
-				temp = totalEnergyGround / (mass * ClimateUtils::GetSpecificHeat(CellContent::GROUND));
-				ground.m_temperature += temp;
+				AddHeat(*cell.GetGroundContent(level), totalEnergyGround);
 			}
 			
 			if(cell.IsCheckContent(level, CellContent::WATER))
 			{
-				WaterContent &water = *cell.GetWaterContent(level);
-				mass = CompWaterMass(water);
-				
-				float specHeat = (water.m_iceMass > 0) ? ClimateUtils::GetSpecificHeat(CellContent::ICE) : ClimateUtils::GetSpecificHeat(CellContent::WATER);
-				temp = totalEnergyGround / (mass * specHeat);
-				water.m_temperature += temp;
+				AddHeat(*cell.GetWaterContent(level), totalEnergyGround);
 			}
 			degreeX += degreeStep;
 		}
@@ -242,10 +325,6 @@ void ClimateGenerator::SunHeatingStep()
 void ClimateGenerator::CoolingStep()
 {
 	float energyLoss = 0.0;
-	float massAir = 0.0;
-	float massLevel2 = 0.0;
-	float massLevel3 = 0.0;
-	float temp = 0.0;
 	AirContent *pAir = nullptr;
 	GroundContent *pGround = nullptr;
 	WaterContent *pLowWater = nullptr;
@@ -263,13 +342,8 @@ void ClimateGenerator::CoolingStep()
 				
 				energyLoss = ClimateUtils::GetThermalConductivity(CellContent::AIR) 
 						* ( 173 - ClimateUtils::CompRealAirTemp(pAir->m_temperature, pAir->m_baseAltitude, 11000)) * 3600; // 
-						
-				massAir = CompAirMass(*pAir);
 				
-				temp = energyLoss / (massAir * ClimateUtils::GetSpecificHeat(CellContent::AIR));
-				
-				pAir->m_temperature += temp;
-				pAir->m_temperatureDiff += temp;
+				AddHeat(*pAir, energyLoss);
 			}
 			
 			if(cell.IsCheckContent(1, CellContent::GROUND))
@@ -278,13 +352,9 @@ void ClimateGenerator::CoolingStep()
 				
 				energyLoss = ClimateUtils::GetThermalConductivity(CellContent::GROUND) * ( pAir->m_temperature - pGround->m_temperature ) * 3600;
 
-				massLevel2 = CompGroundMass(*pGround);
+				AddHeat(*pAir, -energyLoss);
+				AddHeat(*pGround, energyLoss);
 				
-				temp = (-energyLoss) / (massAir * ClimateUtils::GetSpecificHeat(CellContent::AIR));
-				pAir->m_temperature += temp;
-				pAir->m_temperatureDiff += temp;
-				
-				pGround->m_temperature += energyLoss / (massLevel2 * ClimateUtils::GetSpecificHeat(CellContent::GROUND));
 			}
 			
 			if(cell.IsCheckContent(1, CellContent::WATER))
@@ -293,14 +363,9 @@ void ClimateGenerator::CoolingStep()
 				
 				energyLoss = ClimateUtils::GetThermalConductivity(CellContent::WATER) * ( pAir->m_temperature - pLowWater->m_temperature ) * 3600;
 
-				float specHeat = (pLowWater->m_iceMass > 0) ? ClimateUtils::GetSpecificHeat(CellContent::ICE) : ClimateUtils::GetSpecificHeat(CellContent::WATER);
-						
-				massLevel2 = CompWaterMass(*pLowWater);
-
-				temp = (-energyLoss) / (massAir * ClimateUtils::GetSpecificHeat(CellContent::AIR));
-				pAir->m_temperature += temp;
-				pAir->m_temperatureDiff += temp;
-				pLowWater->m_temperature += energyLoss / (massLevel2 * specHeat);
+				AddHeat(*pAir, -energyLoss);
+				AddHeat(*pLowWater, energyLoss);
+				
 			}
 			
 			if(cell.IsCheckContent(2, CellContent::WATER))
@@ -309,15 +374,8 @@ void ClimateGenerator::CoolingStep()
 				
 				energyLoss = ClimateUtils::GetThermalConductivity(CellContent::WATER) * ( pLowWater->m_temperature - pDeepWater->m_temperature ) * 3600;
 
-				float specHeat = (pLowWater->m_iceMass > 0) ? ClimateUtils::GetSpecificHeat(CellContent::ICE) : ClimateUtils::GetSpecificHeat(CellContent::WATER);
-						
-				massLevel3 = CompWaterMass(*pDeepWater);
-						
-				pLowWater->m_temperature += (-energyLoss) / (massLevel2 * specHeat);
-				
-				specHeat = (pDeepWater->m_iceMass > 0) ? ClimateUtils::GetSpecificHeat(CellContent::ICE) : ClimateUtils::GetSpecificHeat(CellContent::WATER);
-				
-				pDeepWater->m_temperature += energyLoss / (massLevel3 * specHeat);
+				AddHeat(*pLowWater, -energyLoss);
+				AddHeat(*pDeepWater, energyLoss);
 			}
 		}
 	}
@@ -325,24 +383,22 @@ void ClimateGenerator::CoolingStep()
 
 void ClimateGenerator::AirPressureDiffStep()
 {
-
 	for(int32_t y = 0; y < m_map.GetSizeY(); ++y)
 	{
 		for(int32_t x = 0; x < m_map.GetSizeX(); ++x)
 		{
-			ClimateCell &cell = m_climateMap.GetCellValue(x,y);
 			
-			AirPressureChange(*cell.GetAirContent(0));
+			ClimateCell &cell = m_climateMap.GetCellValue(x,y);
+			AirContent &air = *cell.GetAirContent(0);
+			
+			AirPressureChange(air);
 			
 			if(cell.IsCheckContent(1, CellContent::WATER))
 			{
-				Evaporation(*cell.GetAirContent(0), *cell.GetWaterContent(1));
+				Evaporation(air, *cell.GetWaterContent(1));
 			}
-	
-			//massAir0 = CompHighAirMass(*pAir0);
-			//massAir1 = CompLowAirMass(*pAir1);
 			
-
+			UpdateAirContent(air);
 			
 		}
 	}
@@ -362,25 +418,118 @@ void ClimateGenerator::AirPressureChange(AirContent& air)
 void ClimateGenerator::Evaporation(AirContent& air, WaterContent& water)
 {
 	// bad - too much computing...:) 
-	float airMass = CompAirMass(air);
+	
+	if(water.m_temperature < WATER_FREEZING)
+	{
+		return;
+	}
+	
 	float maxHum = ClimateUtils::CompMaxAirHumidity((float)air.m_temperature, air.m_airPressure);
 	
-	float actHum = air.m_waterMass/airMass;
-	float waterMassEvap = (25.0 + 19.0*air.m_lowDir.Length())*(maxHum - actHum);
+	float lenght = air.m_lowDir.Length();
+	float waterMassEvap = (25.0 + 19.0*lenght)*(maxHum - air.m_actHum);
 	float heat = HEAT_OF_VAPORIZATION_OF_WATER * waterMassEvap;
-	
-	float dewPointTemp = ClimateUtils::CompDewPointTemperature(actHum, air.m_airPressure);
-	
-	float altitude = ClimateUtils::CompAltFromTemp(air.m_temperature,air.m_baseAltitude,dewPointTemp);
 	
 	water.m_waterMass -= waterMassEvap;
 	air.m_waterMass += waterMassEvap;
 	
-	
-	water.m_temperature -= heat/(CompWaterMass(water)*GetWaterSpecificHeat(water));
+	AddHeat(water, -heat);
 	
 }
 
+void ClimateGenerator::AirMoveStep()
+{
+	for(int32_t y = 0; y < m_map.GetSizeY(); ++y)
+	{
+		for(int32_t x = 0; x < m_map.GetSizeX(); ++x)
+		{
+			
+			ClimateCell &cell = m_climateMap.GetCellValue(x,y);
+			AirContent &air = *cell.GetAirContent(0);
+			
+			AirMoveChange(air, x,y);
+
+			
+		}
+	}
+}
+
+void ClimateGenerator::AirMoveChange(AirContent& air, int32_t x, int32_t y)
+{
+	int32_t nx, ny;
+	Urho3D::Vector2 topDiff;
+	Urho3D::Vector2 lowDiff;
+	int32_t topCount = 0;
+	int32_t lowCount = 0;
+				
+	for (int32_t dir = static_cast<int32_t>(MapContainerDIR::N); dir <= static_cast<int32_t>(MapContainerDIR::NE); ++dir) 
+	{
+		
+		m_climateMap.GetNeightbourCoords(static_cast<MapContainerDIR>(dir), x, y, nx, ny);
+		
+		AirContent &nAir = *m_climateMap.GetCellValue(nx,ny).GetAirContent(0);
+		
+		
+		if(air.m_airPressure > nAir.m_airPressure)
+		{
+			float dp = (air.m_airPressure - nAir.m_airPressure) / 2;
+			float dv = dp*std::sqrt(2/(ClimateUtils::GetAirDensity(air.m_temperature)*(air.m_airPressure - dp)));
+			
+			Urho3D::Vector2 vec;
+			switch(static_cast<MapContainerDIR>(dir))
+			{
+			case MapContainerDIR::N:
+				vec.x_ = 0; vec.y_ = -1; break;
+			case MapContainerDIR::NW:
+				vec.x_ = -0.7071; vec.y_ = -0.7071; break;
+			case MapContainerDIR::W:
+				vec.x_ = -1; vec.y_ = 0; break;
+			case MapContainerDIR::SW:
+				vec.x_ = -0.7071; vec.y_ = 0.7071; break;
+			case MapContainerDIR::S:
+				vec.x_ = 0; vec.y_ = 1; break;
+			case MapContainerDIR::SE:
+				vec.x_ = 0.7071; vec.y_ = 0.7071; break;
+			case MapContainerDIR::E:
+				vec.x_ = 1; vec.y_ = 0; break;
+			case MapContainerDIR::NE:
+				vec.x_ = 0.7071; vec.y_ = -0.7071; break;
+			}
+			
+			vec = vec*dv;
+			
+			if(air.m_temperature >= nAir.m_temperature)
+			{
+				++topCount;
+				topDiff += vec;
+			} else {
+				++lowCount;
+				lowDiff += vec;
+			}
+
+		}
+		
+	}
+	
+	topDiff = (topCount > 0) ? topDiff / ((float)topCount) : Urho3D::Vector2::ZERO;
+	lowDiff = (lowCount > 0) ? lowDiff / ((float)lowCount) : Urho3D::Vector2::ZERO;
+	
+	//if(std::isnan(topDiff.x_)
+	//	||std::isnan(topDiff.y_)
+	//	||std::isnan(lowDiff.x_)
+	//	||std::isnan(lowDiff.y_))
+	//{
+	//	std::cout << "Error vole" << std::endl;
+	//}
+	
+	air.m_highDir += topDiff;
+	air.m_lowDir += lowDiff;
+}
+
+void ClimateGenerator::AirWind(AirContent& air, int32_t x, int32_t y)
+{
+	
+}
 
 
 
