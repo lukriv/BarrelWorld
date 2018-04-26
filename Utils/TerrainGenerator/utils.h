@@ -14,5 +14,6 @@ void writeMapStatistics(std::ostream &out, const uint8_t *map, int32_t mapSizeX,
 
 void writeClimateStatistics(std::ostream &out, MapContainer<ClimateCell, SphereMapCoords> &map, int32_t waterLevel);
 
+void writeCellStats(std::ostream &out, MapContainer<ClimateCell, SphereMapCoords> &map, int32_t x, int32_t y, int32_t level);
 
 #endif //__UTILS_H__

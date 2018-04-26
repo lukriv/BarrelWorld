@@ -21,8 +21,10 @@ public:
 		CLIMATE_MOVE,
 		CLIMATE_TEMPERATURE,
 		CLIMATE_CLOUDS,
+		CLIMATE_PRESSURE,
 		CLIMATE_STEP,
 		CLIMATE_FAST_STEP,
+		MOUSE_CLICK,
 		QUIT
 	};
 	
@@ -31,6 +33,7 @@ public:
 		TEMPERATURE = 1,
 		MOVE = 2,
 		CLOUDS = 4,
+		PRESSURE = 8
 	};
 	
 	enum MoveFlag {
@@ -46,6 +49,8 @@ private:
 	SDL_Surface* mScreenSurface = nullptr; 
 	
 	int32_t mMultiplier;
+	int32_t mLastX;
+	int32_t mLastY;
 	
 public:
 	SDLutils(int32_t SCREEN_WIDTH, int32_t SCREEN_HEIGHT, int32_t multiplier = 1);
@@ -54,12 +59,15 @@ public:
 	void writeMap(const uint8_t *map, int32_t mapSizeX, int32_t mapSizeY, int32_t waterLevel);
 	void writeClimateMap(const ClimateCell *map, int32_t mapSizeX, int32_t mapSizeY, int32_t level, int32_t flags );
 	
+	void getLastMousePos(int32_t &x, int32_t &y) { x = mLastX/mMultiplier; y = mLastY/mMultiplier; }
+	
 	ACTION waitForAction();
 private:
 	void writeMove(Urho3D::Vector2 &streamDir, int32_t xPos, int32_t yPos, int32_t flags = 0);
 	void writeMove(CellContent* cont, int32_t xPos, int32_t yPos, int32_t flags = 0);
 	void writeType(CellContent* cont, int32_t xPos, int32_t yPos, int32_t flags = 0);
 	void writeTemperature(CellContent* cont, int32_t xPos, int32_t yPos, int32_t flags = 0);
+	void writePressure(CellContent* cont, int32_t xPos, int32_t yPos, int32_t flags = 0);
 	void writeClouds(AirContent* cont, int32_t xPos, int32_t yPos, int32_t flags = 0);
 };
 

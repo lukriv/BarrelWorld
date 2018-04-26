@@ -277,13 +277,13 @@ float ClimateUtils::GetThermalConductivity(CellContent::ContentType contType)
 	switch(contType)
 	{
 		case CellContent::AIR:
-			return 0.026;
+			return 0.26; // *10
 		case CellContent::WATER:
-			return 0.6;
+			return 6.0; //ten times
 		case CellContent::ICE:
-			return 2.3;
+			return 23.0; // *10
 		case CellContent::GROUND:
-			return 0.950;
+			return 9.50;//ten times
 		default:
 			return 0.0;
 	}

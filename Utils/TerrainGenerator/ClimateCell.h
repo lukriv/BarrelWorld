@@ -58,8 +58,11 @@ public:
 	float m_airPressureDiff; // 
 	float m_waterMassDiff;
 	
-	Urho3D::Vector2 m_highDir; // hor. dir. of wind in heght
-	Urho3D::Vector2 m_lowDir; // horizontal direction of wind at ground level
+	Urho3D::Vector2 m_highForce; // hor. dir. of wind in heght
+	Urho3D::Vector2 m_lowForce; // horizontal direction of wind at ground level
+	
+	Urho3D::Vector2 m_highWind; // hor. dir. of wind in heght
+	Urho3D::Vector2 m_lowWind; // horizontal direction of wind at ground level
 	
 	AirContent() : CellContent(CellContent::AIR)
 		, m_baseAltitude(0)

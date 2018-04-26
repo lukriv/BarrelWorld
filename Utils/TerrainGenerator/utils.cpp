@@ -164,3 +164,33 @@ void writeClimateStatistics(std::ostream& out, MapContainer<ClimateCell, SphereM
 	out << "Air temperature average: " << airAvg / (float)airCount << " C" << std::endl;
 	
 }
+
+void writeCellStats(std::ostream& out, MapContainer<ClimateCell, SphereMapCoords>& map, int32_t x, int32_t y, int32_t level)
+{
+	CellContent *pCont = map.GetCellValue(x, y).GetContent(level);
+	if(pCont)
+	{
+		switch(pCont->GetContentType())
+		{
+			case CellContent::AIR:
+			{
+				AirContent *pAir = static_cast<AirContent*>(pCont);
+				out << "*** AIR CONTENT ***" << std::endl;
+				out << " Temperature: " << pAir->m_temperature - 273 << std::endl;
+				out << " Pressure: " << pAir->m_airPressure << std::endl;
+				out << " Altitude: " << pAir->m_baseAltitude << std::endl;
+				out << " Water mass: " << pAir->m_waterMass << std::endl;
+				out << " Low wind: " << pAir->m_lowForce.x_ << "," << pAir->m_lowForce.y_ << "; speed: " << pAir->m_lowForce.Length() << std::endl;
+				out << " High wind: " << pAir->m_highForce.x_ << "," << pAir->m_highForce.y_ << "; speed: " << pAir->m_highForce.Length() << std::endl;
+			}
+				break;
+			case CellContent::WATER:
+			case CellContent::GROUND:
+			default:
+				out << " *** Not implemented yet ***" << std::endl;
+				break;
+		}
+	} else {
+		out << " *** NO CONTENT ***" << std::endl;
+	}
+}

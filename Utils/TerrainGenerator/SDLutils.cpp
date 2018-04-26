@@ -189,9 +189,9 @@ void SDLutils::writeMove(CellContent* cont, int32_t xPos, int32_t yPos, int32_t 
 			{
 				AirContent *pAir = reinterpret_cast<AirContent*>(cont);
 				if((flags & HIGH_AIR) != 0)				{
-					writeMove(pAir->m_highDir, xPos, yPos, flags);
+					writeMove(pAir->m_highForce, xPos, yPos, flags);
 				} else {
-					writeMove(pAir->m_lowDir, xPos, yPos, flags);
+					writeMove(pAir->m_lowForce, xPos, yPos, flags);
 				}
 			}
 			break;
@@ -357,6 +357,8 @@ void SDLutils::writeClimateMap(const ClimateCell* map, int32_t mapSizeX, int32_t
 			if((flags & TEMPERATURE) != 0)
 			{
 				writeTemperature(cont, x*mMultiplier, y*mMultiplier);
+			} else if((flags & PRESSURE) != 0) {
+				writePressure(cont, x*mMultiplier, y*mMultiplier);
 			} else {
 				writeType(cont, x*mMultiplier, y*mMultiplier);
 			}
@@ -423,6 +425,8 @@ SDLutils::ACTION SDLutils::waitForAction()
 						return ACTION::CLIMATE_MOVE;
 					case SDLK_c:
 						return ACTION::CLIMATE_CLOUDS;
+					case SDLK_p:
+						return ACTION::CLIMATE_PRESSURE;
 					case SDLK_s:
 						return ACTION::CLIMATE_STEP;
 					case SDLK_f:
@@ -431,8 +435,57 @@ SDLutils::ACTION SDLutils::waitForAction()
 						break;
 				}
 			}
+			
+			if ( e.type == SDL_MOUSEBUTTONDOWN )
+			{
+				mLastX = e.button.x;
+				mLastY = e.button.y;
+				return ACTION::MOUSE_CLICK;
+			}
 		}
 	}
+}
+
+void SDLutils::writePressure(CellContent* cont, int32_t xPos, int32_t yPos, int32_t flags)
+{
+	int32_t r = 0,g = 0,b = 0;
+	SDL_Rect rect = {xPos,yPos,mMultiplier,mMultiplier};
+	
+	bool undef = false;
+	float pressure = 0;
+	
+	if(cont != nullptr)
+	{
+		switch(cont->GetContentType())
+		{
+
+			case CellContent::AIR:
+			{
+				AirContent* pAir = reinterpret_cast<AirContent*>(cont);
+				pressure = pAir->m_airPressure;
+			}
+			break;
+			case CellContent::WATER:
+			case CellContent::GROUND:
+			default:
+				undef = true;
+			break;
+		}
+	} else {
+		undef = true;
+	}
+	
+	if(undef)
+	{
+		SDL_SetRenderDrawColor(mRenderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
+	} else {
+		b = restrict((int32_t)(-(255.0/50000.0) * pressure) + 510.0);
+		g = restrict(parabola((int32_t)pressure, -1000, 100000, 200));
+		r = restrict((int32_t)((255.0/50000.0) * pressure) - 510.0);
+	}
+
+	SDL_SetRenderDrawColor(mRenderer, r, g, b, SDL_ALPHA_OPAQUE);
+	SDL_RenderFillRect(mRenderer,&rect);
 }
 
 

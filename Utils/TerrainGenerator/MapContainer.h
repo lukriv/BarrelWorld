@@ -58,8 +58,8 @@ private:
 	int32_t m_totalSize;
 	TCellValue *m_pMap;
 	MapCoords FnMapCoords;
-private:
-	void GetNeightbourCoords( MapContainerDIR neighbourDir, int32_t &xDiff, int32_t &yDiff)
+public:
+	static void GetNeightbourCoords( MapContainerDIR neighbourDir, int32_t &xDiff, int32_t &yDiff)
 	{
 		switch (neighbourDir)
 		{

@@ -34,14 +34,17 @@ private:
 	
 	void AirPressureChange(AirContent & air);
 	void Evaporation(AirContent &air, WaterContent &water);
-	void AirMoveChange(AirContent &air, int32_t x, int32_t y);
+	void AirForceComp(AirContent &air, int32_t x, int32_t y, float sinLatitude);
+	
+	void AirWindMassChange(AirContent &source, AirContent &dest, Urho3D::Vector2 &forceVec, Urho3D::Vector2 &windVec, float altitude, float timeDiff);
 	void AirWind(AirContent &air, int32_t x, int32_t y);
 	
+	void Cooling(ClimateCell &cell);
 	
 	void SunHeatingStep();
-	void CoolingStep();
-	void AirPressureDiffStep();
+	void OneCellStep();
 	void AirMoveStep();
+	void UpdateStep();
 	
 	float GetSalinity(WaterContent &water);
 	
