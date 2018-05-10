@@ -17,13 +17,22 @@ public:
 		CLIMATE_LEVEL_1,
 		CLIMATE_LEVEL_2,
 		CLIMATE_LEVEL_3,
-		CLIMATE_LEVEL_4,
+		CLIMATE_FORCE,
+		CLIMATE_MOVE_HIGH,
 		CLIMATE_MOVE,
 		CLIMATE_TEMPERATURE,
 		CLIMATE_CLOUDS,
 		CLIMATE_PRESSURE,
+		CLIMATE_VOLUME,
 		CLIMATE_STEP,
 		CLIMATE_FAST_STEP,
+		CLIMATE_SUN_POSITION,
+		UP,
+		DOWN,
+		LEFT,
+		RIGHT,
+		WHEEL_DOWN,
+		WHEEL_UP,
 		MOUSE_CLICK,
 		QUIT
 	};
@@ -31,13 +40,16 @@ public:
 	enum ClimateFlag {
 		NONE = 0,
 		TEMPERATURE = 1,
-		MOVE = 2,
-		CLOUDS = 4,
-		PRESSURE = 8
+		//MOVE = 2,
+		//CLOUDS = 4,
+		PRESSURE = 8,
+		VOLUME = 16
 	};
 	
 	enum MoveFlag {
-		HIGH_AIR = 1
+		MOVE_HIGH = 1,
+		MOVE_FORCE = 2,
+		MOVE_WATER = 4
 	};
 private:	
 	//The window we'll be rendering to 
@@ -52,14 +64,30 @@ private:
 	int32_t mLastX;
 	int32_t mLastY;
 	
+	int32_t mScreenBeginX;
+	int32_t mScreenBeginY;
+	
+	int32_t mMapWidth;
+	int32_t mMapHeight;
+	
 public:
-	SDLutils(int32_t SCREEN_WIDTH, int32_t SCREEN_HEIGHT, int32_t multiplier = 1);
+	SDLutils(int32_t MAP_WIDTH, int32_t MAP_HEIGHT, int32_t multiplier = 1);
 	~SDLutils();
+	
+	void updateMultiplier(int32_t update);
+	
+	void updateScreenBegin(int32_t xDiff, int32_t yDiff);
 	
 	void writeMap(const uint8_t *map, int32_t mapSizeX, int32_t mapSizeY, int32_t waterLevel);
 	void writeClimateMap(const ClimateCell *map, int32_t mapSizeX, int32_t mapSizeY, int32_t level, int32_t flags );
 	
-	void getLastMousePos(int32_t &x, int32_t &y) { x = mLastX/mMultiplier; y = mLastY/mMultiplier; }
+	void writeClouds(const ClimateCell *map, int32_t mapSizeX, int32_t mapSizeY);
+	
+	void writeMove(const ClimateCell *map, int32_t mapSizeX, int32_t mapSizeY, int32_t flags );
+	
+	void writeSun(int32_t x, int32_t y);
+	
+	void getLastMousePos(int32_t &x, int32_t &y) { x = (mLastX/mMultiplier) + mScreenBeginX; y = (mLastY/mMultiplier) + mScreenBeginY; }
 	
 	ACTION waitForAction();
 private:
@@ -68,6 +96,7 @@ private:
 	void writeType(CellContent* cont, int32_t xPos, int32_t yPos, int32_t flags = 0);
 	void writeTemperature(CellContent* cont, int32_t xPos, int32_t yPos, int32_t flags = 0);
 	void writePressure(CellContent* cont, int32_t xPos, int32_t yPos, int32_t flags = 0);
+	void writeVolume(CellContent* cont, int32_t xPos, int32_t yPos, int32_t flags = 0);
 	void writeClouds(AirContent* cont, int32_t xPos, int32_t yPos, int32_t flags = 0);
 };
 

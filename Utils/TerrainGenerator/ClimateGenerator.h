@@ -4,8 +4,24 @@
 #include "MapContainer.h"
 #include "ClimateCell.h"
 
+#include <string>
+
 class ClimateGenerator
 {
+public:
+	class ClimateException : public std::exception {
+		std::string m_errStr;
+	public:
+		ClimateException(const std::string& errStr) : m_errStr(errStr) {}
+		
+		virtual const char* what() const _GLIBCXX_USE_NOEXCEPT
+		{
+			return m_errStr.c_str();
+		}
+	};
+private:
+	float m_oneStepHeat;
+	float m_timeStep;
 	int32_t m_sunPosX; // Sun positionX
 	int32_t m_sunPosY; // Sun positionY
 	int32_t m_sunRadius;
@@ -20,6 +36,8 @@ public:
 	void InitializeClimate();
 	
 	void SimulateClimateStep();
+	
+	void GetSunPosition(int32_t &x, int32_t &y) { x = m_sunPosX; y = m_sunPosY; }
 
 public:
 	// help functions
@@ -32,18 +50,21 @@ private:
 	
 	MapContainerDIR GetWindDest(Urho3D::Vector2 &windVec);
 	
-	void AirPressureChange(AirContent & air);
-	void Evaporation(AirContent &air, WaterContent &water);
+	void Evaporation(ClimateCell& cell);
 	void AirForceComp(AirContent &air, int32_t x, int32_t y, float sinLatitude);
+	void AirLowWindMassChange(AirContent &source, int32_t x, int32_t y);
+	void AirHighWindMassChange(AirContent &source, int32_t x, int32_t y);
 	
-	void AirWindMassChange(AirContent &source, AirContent &dest, Urho3D::Vector2 &forceVec, Urho3D::Vector2 &windVec, float altitude, float timeDiff);
-	void AirWind(AirContent &air, int32_t x, int32_t y);
+	void WaterForceComp(WaterContent &water, int32_t x, int32_t y, float sinLatitude);
+	void WaterStreamMassChange(WaterContent &source, int32_t x, int32_t y);
 	
 	void Cooling(ClimateCell &cell);
+	void Precipitation(ClimateCell &cell);
 	
 	void SunHeatingStep();
 	void OneCellStep();
 	void AirMoveStep();
+	void WaterMoveStep();
 	void UpdateStep();
 	
 	float GetSalinity(WaterContent &water);

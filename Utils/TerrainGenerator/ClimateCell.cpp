@@ -63,6 +63,16 @@ AirContent* ClimateCell::GetAirContent(int32_t level)
 	return nullptr;
 }
 
+AirContent* ClimateCell::GetAirContent(int32_t level) const
+{
+	if(IsCheckContent(level, CellContent::AIR))
+	{
+		return reinterpret_cast<AirContent*>(m_levels[level]);
+	}
+	
+	return nullptr;
+}
+
 GroundContent* ClimateCell::GetGroundContent(int32_t level)
 {
 	if(IsCheckContent(level, CellContent::GROUND))
@@ -97,4 +107,6 @@ void ClimateCell::AddContent(int32_t level, CellContent* pContent)
 	
 	m_levels[level] = pContent;
 }
+
+
 

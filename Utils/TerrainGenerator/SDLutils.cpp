@@ -3,7 +3,7 @@
 #include <iostream>
 #include "ClimateGenerator.h"
 
-SDLutils::SDLutils(int32_t SCREEN_WIDTH, int32_t SCREEN_HEIGHT, int32_t multiplier) : mMultiplier(multiplier)
+SDLutils::SDLutils(int32_t MAP_WIDTH, int32_t MAP_HEIGHT, int32_t multiplier) : mMultiplier(multiplier)
 {
 	//Initialize SDL 
 	if( SDL_Init( SDL_INIT_VIDEO ) < 0 ) 
@@ -12,7 +12,7 @@ SDLutils::SDLutils(int32_t SCREEN_WIDTH, int32_t SCREEN_HEIGHT, int32_t multipli
 		return;
 	} 
 	
-	if(SDL_CreateWindowAndRenderer(SCREEN_WIDTH*mMultiplier, SCREEN_HEIGHT*mMultiplier, SDL_WINDOW_SHOWN, &mWindow, &mRenderer) != 0)
+	if(SDL_CreateWindowAndRenderer(MAP_WIDTH*mMultiplier, MAP_HEIGHT*mMultiplier, SDL_WINDOW_SHOWN, &mWindow, &mRenderer) != 0)
 	{
 		std::cout << "Window could not be created! SDL_Error: " << SDL_GetError() << std::endl; 
 		return;
@@ -29,6 +29,12 @@ SDLutils::SDLutils(int32_t SCREEN_WIDTH, int32_t SCREEN_HEIGHT, int32_t multipli
 	//}
 	
 	mScreenSurface = SDL_GetWindowSurface( mWindow );
+	
+	mScreenBeginX = 0;
+	mScreenBeginY = 0;
+	
+	mMapWidth = MAP_WIDTH;
+	mMapHeight = MAP_HEIGHT;
 }
 
 SDLutils::~SDLutils()
@@ -70,9 +76,16 @@ void SDLutils::writeMap(const uint8_t* map, int32_t mapSizeX, int32_t mapSizeY, 
 	int32_t r = 0,g = 0,b = 0;
 	int32_t index = 0;
 	SDL_Rect rect = {0,0,mMultiplier,mMultiplier};
-	for (int32_t y = 0; y < mapSizeY; ++y)
+	
+	int32_t screenEndX = mScreenBeginX + (mScreenSurface->w/mMultiplier);
+	int32_t screenEndY = mScreenBeginY + (mScreenSurface->h/mMultiplier);
+	
+	screenEndX = (screenEndX > mapSizeX) ? mapSizeX : screenEndX;
+	screenEndY = (screenEndY > mapSizeY) ? mapSizeY : screenEndY;
+	
+	for (int32_t y = mScreenBeginY; y < screenEndY; ++y)
 	{
-		for (int32_t x = 0; x < mapSizeX; ++x)
+		for (int32_t x = mScreenBeginX; x < screenEndX; ++x)
 		{
 			auto height = map[y*mapSizeX + x];
 			if(height > waterLevel)
@@ -102,8 +115,8 @@ void SDLutils::writeMap(const uint8_t* map, int32_t mapSizeX, int32_t mapSizeY, 
 					b = restrict(b);
 				}
 			}
-			rect.x = x*mMultiplier;
-			rect.y = y*mMultiplier;
+			rect.x = (x-mScreenBeginX)*mMultiplier;
+			rect.y = (y-mScreenBeginY)*mMultiplier;
 			//SDL_FillRect(mScreenSurface, &rect, actual);
 			SDL_SetRenderDrawColor(mRenderer, r, g, b, SDL_ALPHA_OPAQUE);
 			SDL_RenderFillRect(mRenderer,&rect);
@@ -125,7 +138,7 @@ void SDLutils::writeMove(Urho3D::Vector2 &streamDir, int32_t xPos, int32_t yPos,
 	float angle = 0.0f;
 	
 	speed = streamDir.Length();
-	angle = streamDir.Angle(Urho3D::Vector2(0.0, 1.0));
+	angle = streamDir.Angle(Urho3D::Vector2(0.0, -1.0));
 	
 	SDL_SetRenderDrawColor(mRenderer, restrict((int32_t)((speed/200.0)*255.0)), restrict((int32_t)(-(speed/200.0)*255.0) + 200), 0, SDL_ALPHA_OPAQUE);
 	
@@ -136,47 +149,28 @@ void SDLutils::writeMove(Urho3D::Vector2 &streamDir, int32_t xPos, int32_t yPos,
 		return;
 	}
 	
+	int32_t weMult = (streamDir.x_ >= 0) ? 1 : -1;
+	
 	// end line
 	int32_t xEnd, yEnd;
-	if(angle > 0)
+	if(angle < 22.5)
 	{
-		if(angle < 22.5)
-		{
-			xEnd = xBegin;
-			yEnd = yBegin - (mMultiplier / 2);
-		} else if (angle < 67.5) {
-			xEnd = xBegin + (mMultiplier / 2);
-			yEnd = yBegin - (mMultiplier / 2);
-		} else if (angle < 112.5) {
-			xEnd = xBegin + (mMultiplier / 2);
-			yEnd = yBegin;			
-		} else if (angle < 157.5) {
-			xEnd = xBegin + (mMultiplier / 2);
-			yEnd = yBegin + (mMultiplier / 2);
-		} else {
-			xEnd = xBegin;
-			yEnd = yBegin + (mMultiplier / 2);
-		}
+		xEnd = xBegin;
+		yEnd = yBegin - (mMultiplier / 2);
+	} else if (angle < 67.5) {
+		xEnd = xBegin + weMult*(mMultiplier / 2);
+		yEnd = yBegin - (mMultiplier / 2);
+	} else if (angle < 112.5) {
+		xEnd = xBegin + weMult*(mMultiplier / 2);
+		yEnd = yBegin;			
+	} else if (angle < 157.5) {
+		xEnd = xBegin + weMult*(mMultiplier / 2);
+		yEnd = yBegin + (mMultiplier / 2);
 	} else {
-		if(angle > -22.5)
-		{
-			xEnd = xBegin;
-			yEnd = yBegin - (mMultiplier / 2);
-		} else if (angle > -67.5) {
-			xEnd = xBegin - (mMultiplier / 2);
-			yEnd = yBegin - (mMultiplier / 2);
-		} else if (angle > 112.5) {
-			xEnd = xBegin - (mMultiplier / 2);
-			yEnd = yBegin;			
-		} else if (angle > 157.5) {
-			xEnd = xBegin - (mMultiplier / 2);
-			yEnd = yBegin + (mMultiplier / 2);
-		} else {
-			xEnd = xBegin;
-			yEnd = yBegin + (mMultiplier / 2);
-		}
+		xEnd = xBegin;
+		yEnd = yBegin + (mMultiplier / 2);
 	}
-	
+		
 	SDL_RenderDrawLine(mRenderer, xBegin, yBegin, xEnd , yEnd);
 }
 
@@ -188,10 +182,21 @@ void SDLutils::writeMove(CellContent* cont, int32_t xPos, int32_t yPos, int32_t 
 		case CellContent::AIR:
 			{
 				AirContent *pAir = reinterpret_cast<AirContent*>(cont);
-				if((flags & HIGH_AIR) != 0)				{
-					writeMove(pAir->m_highForce, xPos, yPos, flags);
+				
+				if((flags & MOVE_HIGH) != 0)
+				{
+					if((flags & MOVE_FORCE) != 0)				{
+						writeMove(pAir->m_highForce, xPos, yPos, flags);
+					} else {
+						writeMove(pAir->m_highWind, xPos, yPos, flags);
+					}
+					
 				} else {
-					writeMove(pAir->m_lowForce, xPos, yPos, flags);
+					if((flags & MOVE_FORCE) != 0)				{
+						writeMove(pAir->m_lowForce, xPos, yPos, flags);
+					} else {
+						writeMove(pAir->m_lowWind, xPos, yPos, flags);
+					}
 				}
 			}
 			break;
@@ -219,9 +224,10 @@ void SDLutils::writeType(CellContent* cont, int32_t xPos, int32_t yPos, int32_t 
 			case CellContent::WATER:
 			{
 				WaterContent* pWater = reinterpret_cast<WaterContent*>(cont);
-				float ice = pWater->m_iceMass / (pWater->m_iceMass + pWater->m_waterMass);
+				float ice = pWater->m_iceMass / (1*0.2*2000);
+				ice = (ice > 1) ? 1 : ice;
 				b = 200;
-				g = r = (int32_t)(200.0f * ice);
+				g = r = restrict((int32_t)(200.0f * ice));
 			}
 			break;
 			case CellContent::GROUND:
@@ -308,9 +314,10 @@ void SDLutils::writeClouds(AirContent* cont, int32_t xPos, int32_t yPos, int32_t
 	if(cont != nullptr)
 	{
 		
-		float height = ClimateGenerator::CompCloudsHeight(*cont);
+		float height = cont->m_cloudsHeight;
 		
-		alpha = static_cast<int32_t>((-0.0001*height + 1.1)*255.0);
+		// clouds will be visible from 5500 m
+		alpha = static_cast<int32_t>(-0.046*height + 255.0);
 		
 		if(alpha <= 0) return; // no clouds
 		
@@ -326,53 +333,48 @@ void SDLutils::writeClouds(AirContent* cont, int32_t xPos, int32_t yPos, int32_t
 void SDLutils::writeClimateMap(const ClimateCell* map, int32_t mapSizeX, int32_t mapSizeY, int32_t level, int32_t flags)
 {
 	
-	int32_t climateLevel;
-	int32_t moveFlags = 0;
-	switch(level)
+	//int32_t moveFlags = 0;
+	
+	int32_t screenEndX = mScreenBeginX + (mScreenSurface->w/mMultiplier);
+	int32_t screenEndY = mScreenBeginY + (mScreenSurface->h/mMultiplier);
+	
+	screenEndX = (screenEndX > mapSizeX) ? mapSizeX : screenEndX;
+	screenEndY = (screenEndY > mapSizeY) ? mapSizeY : screenEndY;
+	
+	int32_t scrPosX, scrPosY;
+	
+	for (int32_t y = mScreenBeginY; y < screenEndY; ++y)
 	{
-		case 0:
-			climateLevel = 0;
-			moveFlags = HIGH_AIR;
-			break;
-		case 1:
-		case 2:
-		case 3:
-			climateLevel = level - 1;
-			break;
-		default:
-			return;
-	}
-	
-	
-	
-	for (int32_t y = 0; y < mapSizeY; ++y)
-	{
-		for (int32_t x = 0; x < mapSizeX; ++x)
+		for (int32_t x = mScreenBeginX; x < screenEndX; ++x)
 		{
 			const ClimateCell& climate = map[y*mapSizeX + x];
 			
-			CellContent* cont = climate.GetContent(climateLevel);
-
+			CellContent* cont = climate.GetContent(level);
+			
+			scrPosX = (x - mScreenBeginX)*mMultiplier;
+			scrPosY = (y - mScreenBeginY)*mMultiplier;
 			
 			if((flags & TEMPERATURE) != 0)
 			{
-				writeTemperature(cont, x*mMultiplier, y*mMultiplier);
+				writeTemperature(cont, scrPosX, scrPosY);
 			} else if((flags & PRESSURE) != 0) {
-				writePressure(cont, x*mMultiplier, y*mMultiplier);
+				writePressure(cont, scrPosX, scrPosY);
+			} else if((flags & VOLUME) != 0) {
+				writeVolume(cont, scrPosX, scrPosY);
 			} else {
-				writeType(cont, x*mMultiplier, y*mMultiplier);
+				writeType(cont, scrPosX, scrPosY);
 			}
 			
 			// write clouds
-			if((flags & CLOUDS)&&(cont != nullptr)&&(cont->GetContentType() == CellContent::AIR))
-			{
-				writeClouds(reinterpret_cast<AirContent*>(cont), x*mMultiplier, y*mMultiplier);
-			}
+			//if((flags & CLOUDS)&&(cont != nullptr)&&(cont->GetContentType() == CellContent::AIR))
+			//{
+			//	writeClouds(reinterpret_cast<AirContent*>(cont), scrPosX, scrPosY);
+			//}
 			
-			if((flags & MOVE) != 0)
-			{
-				writeMove(cont, x*mMultiplier, y*mMultiplier, moveFlags);
-			}
+			//if((flags & MOVE) != 0)
+			//{
+			//	writeMove(cont, scrPosX, scrPosY, moveFlags);
+			//}
 		}
 	}
 	
@@ -381,6 +383,77 @@ void SDLutils::writeClimateMap(const ClimateCell* map, int32_t mapSizeX, int32_t
 
 	//SDL_UpdateWindowSurface( mWindow ); 
 }
+
+void SDLutils::writeMove(const ClimateCell* map, int32_t mapSizeX, int32_t mapSizeY, int32_t flags)
+{
+	int32_t screenEndX = mScreenBeginX + (mScreenSurface->w/mMultiplier);
+	int32_t screenEndY = mScreenBeginY + (mScreenSurface->h/mMultiplier);
+	
+	screenEndX = (screenEndX > mapSizeX) ? mapSizeX : screenEndX;
+	screenEndY = (screenEndY > mapSizeY) ? mapSizeY : screenEndY;
+	
+	int32_t scrPosX, scrPosY;
+	
+	int32_t climateLevel = 0;
+	
+	//if((flags & WATER_STREAM) != 0)
+	//{
+	//	climateLevel = 1;
+	//}
+	
+	for (int32_t y = mScreenBeginY; y < screenEndY; ++y)
+	{
+		for (int32_t x = mScreenBeginX; x < screenEndX; ++x)
+		{
+			const ClimateCell& climate = map[y*mapSizeX + x];
+			
+			CellContent* cont = climate.GetContent(climateLevel);
+			
+			scrPosX = (x - mScreenBeginX)*mMultiplier;
+			scrPosY = (y - mScreenBeginY)*mMultiplier;
+			
+			
+			
+			writeMove(cont, scrPosX, scrPosY, flags);
+		}
+	}
+	
+	//Update the surface 
+	SDL_RenderPresent(mRenderer);
+
+	//SDL_UpdateWindowSurface( mWindow ); 
+}
+
+void SDLutils::writeClouds(const ClimateCell* map, int32_t mapSizeX, int32_t mapSizeY)
+{
+	int32_t screenEndX = mScreenBeginX + (mScreenSurface->w/mMultiplier);
+	int32_t screenEndY = mScreenBeginY + (mScreenSurface->h/mMultiplier);
+	
+	screenEndX = (screenEndX > mapSizeX) ? mapSizeX : screenEndX;
+	screenEndY = (screenEndY > mapSizeY) ? mapSizeY : screenEndY;
+	
+	int32_t scrPosX, scrPosY;
+	
+	for (int32_t y = mScreenBeginY; y < screenEndY; ++y)
+	{
+		for (int32_t x = mScreenBeginX; x < screenEndX; ++x)
+		{
+			const ClimateCell& climate = map[y*mapSizeX + x];
+			
+			AirContent* cont = climate.GetAirContent(0);
+			
+			scrPosX = (x - mScreenBeginX)*mMultiplier;
+			scrPosY = (y - mScreenBeginY)*mMultiplier;
+			
+			// write clouds
+			writeClouds(cont, scrPosX, scrPosY);
+		}
+	}
+	
+	//Update the surface 
+	SDL_RenderPresent(mRenderer);
+}
+
 
 SDLutils::ACTION SDLutils::waitForAction()
 {
@@ -417,20 +490,34 @@ SDLutils::ACTION SDLutils::waitForAction()
 						return ACTION::CLIMATE_LEVEL_2;
 					case SDLK_3:
 						return ACTION::CLIMATE_LEVEL_3;
-					case SDLK_4:
-						return ACTION::CLIMATE_LEVEL_4;
+					case SDLK_o:
+						return ACTION::CLIMATE_FORCE;
 					case SDLK_t:
 						return ACTION::CLIMATE_TEMPERATURE;
+					case SDLK_i:
+						return ACTION::CLIMATE_MOVE_HIGH;
 					case SDLK_m:
 						return ACTION::CLIMATE_MOVE;
 					case SDLK_c:
 						return ACTION::CLIMATE_CLOUDS;
 					case SDLK_p:
 						return ACTION::CLIMATE_PRESSURE;
+					case SDLK_v:
+						return ACTION::CLIMATE_VOLUME;
+					case SDLK_u:
+						return ACTION::CLIMATE_SUN_POSITION;
 					case SDLK_s:
 						return ACTION::CLIMATE_STEP;
 					case SDLK_f:
 						return ACTION::CLIMATE_FAST_STEP;
+					case SDLK_UP:
+						return ACTION::UP;
+					case SDLK_DOWN:
+						return ACTION::DOWN;
+					case SDLK_LEFT:
+						return ACTION::LEFT;
+					case SDLK_RIGHT:
+						return ACTION::RIGHT;
 					default:
 						break;
 				}
@@ -441,6 +528,16 @@ SDLutils::ACTION SDLutils::waitForAction()
 				mLastX = e.button.x;
 				mLastY = e.button.y;
 				return ACTION::MOUSE_CLICK;
+			}
+			
+			if ( e.type == SDL_MOUSEWHEEL )
+			{
+				if(e.wheel.y > 0)
+				{
+					return ACTION::WHEEL_UP;
+				} else {
+					return ACTION::WHEEL_DOWN;
+				}
 			}
 		}
 	}
@@ -480,13 +577,107 @@ void SDLutils::writePressure(CellContent* cont, int32_t xPos, int32_t yPos, int3
 		SDL_SetRenderDrawColor(mRenderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
 	} else {
 		b = restrict((int32_t)(-(255.0/50000.0) * pressure) + 510.0);
-		g = restrict(parabola((int32_t)pressure, -1000, 100000, 200));
+		g = restrict(parabola((int32_t)pressure, -1000, 101500, 130));
 		r = restrict((int32_t)((255.0/50000.0) * pressure) - 510.0);
 	}
 
 	SDL_SetRenderDrawColor(mRenderer, r, g, b, SDL_ALPHA_OPAQUE);
 	SDL_RenderFillRect(mRenderer,&rect);
 }
+
+void SDLutils::updateMultiplier(int32_t update)
+{
+	mMultiplier += update*2;
+	//min
+	mMultiplier = (mMultiplier < 1) ? 1 : mMultiplier;
+	
+	//max
+	mMultiplier = (mMultiplier > 17) ? 17 : mMultiplier;
+}
+
+void SDLutils::updateScreenBegin(int32_t xDiff, int32_t yDiff)
+{
+	int32_t sizeX = mScreenSurface->w / mMultiplier;
+	int32_t sizeY = mScreenSurface->h / mMultiplier;
+	
+	mScreenBeginX += xDiff;
+	mScreenBeginY += yDiff;
+	
+	//min
+	mScreenBeginX = (mScreenBeginX < 0) ? 0 : mScreenBeginX;	
+	mScreenBeginY = (mScreenBeginY < 0) ? 0 : mScreenBeginY;	
+	
+	//max
+	mScreenBeginX = (mScreenBeginX > (mMapWidth - sizeX)) ? (mMapWidth - sizeX) : mScreenBeginX;	
+	mScreenBeginY = (mScreenBeginY > (mMapHeight - sizeY)) ? (mMapHeight - sizeY) : mScreenBeginY;	
+}
+
+void SDLutils::writeSun(int32_t x, int32_t y)
+{
+	int32_t sizeX = mScreenSurface->w / mMultiplier;
+	int32_t sizeY = mScreenSurface->h / mMultiplier;
+	
+	if((x >= mScreenBeginX) && (x < (mScreenBeginX + sizeX)) 
+		&& (y >= mScreenBeginY) && (y < (mScreenBeginY + sizeY)))
+	{
+		x = (x - mScreenBeginX)*mMultiplier;
+		y = (y - mScreenBeginY)*mMultiplier;
+		
+		int32_t r = 240,g = 40,b = 0, alpha = 122;
+
+		SDL_Rect rect = {x,y,mMultiplier,mMultiplier};
+			
+		SDL_SetRenderDrawColor(mRenderer, r, g, b, alpha);
+		SDL_RenderFillRect(mRenderer,&rect);
+		
+		SDL_RenderPresent(mRenderer);
+			
+	}
+}
+
+void SDLutils::writeVolume(CellContent* cont, int32_t xPos, int32_t yPos, int32_t flags)
+{
+	int32_t r = 0,g = 0,b = 0;
+	SDL_Rect rect = {xPos,yPos,mMultiplier,mMultiplier};
+	
+	bool undef = false;
+	float volume = 0;
+	
+	if(cont != nullptr)
+	{
+		switch(cont->GetContentType())
+		{
+
+			case CellContent::AIR:
+			{
+				AirContent* pAir = reinterpret_cast<AirContent*>(cont);
+				volume = pAir->m_volumeLevel;
+			}
+			break;
+			case CellContent::WATER:
+			case CellContent::GROUND:
+			default:
+				undef = true;
+			break;
+		}
+	} else {
+		undef = true;
+	}
+	
+	if(undef)
+	{
+		SDL_SetRenderDrawColor(mRenderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
+	} else {
+		b = restrict((int32_t)(-(255.0) * volume) + 510.0);
+		g = restrict(parabola((int32_t)volume, -1000, 0, 130));
+		r = restrict((int32_t)((255.0) * volume) - 510.0);
+	}
+
+	SDL_SetRenderDrawColor(mRenderer, r, g, b, SDL_ALPHA_OPAQUE);
+	SDL_RenderFillRect(mRenderer,&rect);
+}
+
+
 
 
 

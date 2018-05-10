@@ -175,17 +175,44 @@ void writeCellStats(std::ostream& out, MapContainer<ClimateCell, SphereMapCoords
 			case CellContent::AIR:
 			{
 				AirContent *pAir = static_cast<AirContent*>(pCont);
-				out << "*** AIR CONTENT ***" << std::endl;
-				out << " Temperature: " << pAir->m_temperature - 273 << std::endl;
-				out << " Pressure: " << pAir->m_airPressure << std::endl;
-				out << " Altitude: " << pAir->m_baseAltitude << std::endl;
-				out << " Water mass: " << pAir->m_waterMass << std::endl;
-				out << " Low wind: " << pAir->m_lowForce.x_ << "," << pAir->m_lowForce.y_ << "; speed: " << pAir->m_lowForce.Length() << std::endl;
-				out << " High wind: " << pAir->m_highForce.x_ << "," << pAir->m_highForce.y_ << "; speed: " << pAir->m_highForce.Length() << std::endl;
+				out << "*** AIR CONTENT [ " << x << ", " << y <<"] ***" << std::endl;
+				out << " Temperature: " << pAir->m_temperature - 273 << "[C]" << std::endl;
+				out << " Air mass: " << pAir->m_airMass << "[kg]" << std::endl;
+				out << " Altitude: " << pAir->m_baseAltitude << "[m]"<< std::endl;
+				out << " Water mass: " << pAir->m_waterMass << "[kg]" << std::endl;
+				out << " Pressure: " << pAir->m_airPressure << "[Pa]" << std::endl;
+				out << " Dynamic pressure (low): " << pAir->m_dynamicPressureLow << "[Pa]" << std::endl;
+				out << " Dynamic pressure (high): " << pAir->m_dynamicPressureHigh << "[Pa]" << std::endl;
+				out << " Humidity: " << pAir->m_actHum << "[kg/kg]" << std::endl;
+				out << " Clouds height: " << pAir->m_cloudsHeight << "[m]" << std::endl;
+				out << " Precipitation: " << (int)pAir->m_precip << std::endl;
+				out << " Volume level: " << pAir->m_volumeLevel << " [m] or [m^3]" << std::endl;
+				out << " Pressure force high: " << pAir->m_highForce.x_ << "," << pAir->m_highForce.y_ << "; size: " << pAir->m_highForce.Length() << std::endl;
+				out << " High wind: " << pAir->m_highWind.x_ << "," << pAir->m_highWind.y_ << "; speed: " << pAir->m_highWind.Length() << std::endl;
+				out << " Pressure force low: " << pAir->m_lowForce.x_ << "," << pAir->m_lowForce.y_ << "; size: " << pAir->m_lowForce.Length() << std::endl;
+				out << " Low wind: " << pAir->m_lowWind.x_ << "," << pAir->m_lowWind.y_ << "; speed: " << pAir->m_lowWind.Length() << std::endl;
 			}
 				break;
 			case CellContent::WATER:
+			{
+				WaterContent *pWater = static_cast<WaterContent*>(pCont);
+				out << "*** WATER CONTENT [ " << x << ", " << y <<"] ***" << std::endl;
+				out << " Temperature: " << pWater->m_temperature - 273 << std::endl;
+				out << " Water mass: " << pWater->m_waterMass << std::endl;
+				out << " Salt mass: " << pWater->m_saltMass << std::endl;
+				out << " Ice mass: " << pWater->m_iceMass << std::endl;
+				out << " Stream: " << pWater->m_streamDir.x_ << "," << pWater->m_streamDir.y_ << "; speed: " << pWater->m_streamDir.Length() << std::endl;
+			}
+				break;
 			case CellContent::GROUND:
+			{
+				GroundContent *pGround = static_cast<GroundContent*>(pCont);
+				out << "*** GROUND CONTENT [ " << x << ", " << y <<"] ***" << std::endl;
+				out << " Temperature: " << pGround->m_temperature - 273 << std::endl;
+				out << " Water mass: " << pGround->m_waterMass << std::endl;
+				out << " Water capacity: " << pGround->m_maxWaterCapacity << std::endl;
+			}
+				break;
 			default:
 				out << " *** Not implemented yet ***" << std::endl;
 				break;

@@ -7,21 +7,36 @@ class ClimateUtils
 {
 
 public:
-	static float Initialize();
-
-	static float GetMaxAirHumidity(int32_t temperature);
+	static const float WATER_DENSITY;
+	static const float AIR_DENSITY;
+	static const float ICE_DENSITY;
+	static const float GROUND_DENSITY;
 	
+public:
 	static float GetDewPointTemperature(float relHum);
 	
 	// temperature in Celsius
 	// salinity in g/liter or kg/m^3
-	static float GetWaterDensity(int32_t temperature, float salinity);
-
-	static float GetAirDensity(int32_t temperature);
+	inline static float GetWaterDensity(int32_t temperature, float salinity)
+	{
+		if(temperature < 273) temperature = 273;
+		if(temperature > 373) temperature = 373;
+		
+		temperature = temperature - 273;
+		
+		float koef = 0.8*salinity + 998.52;
+		return (-0.3663*(float)(temperature*temperature) + 1.6315*(float)(temperature) + koef);
+	}
 	
-	inline static float GetIceDensity() { return 917.0; }
-	
-	inline static float GetGroundDensity() { return 1700.0; }
+	inline static float GetAirDensity(int32_t temperature)
+	{
+		if(temperature < CLIMATE_MIN_TEMPERATURE_KELVIN) temperature = CLIMATE_MIN_TEMPERATURE_KELVIN;
+		if(temperature > CLIMATE_MAX_TEMPERATURE_KELVIN) temperature = CLIMATE_MAX_TEMPERATURE_KELVIN;
+		
+		temperature = temperature - 273;
+		
+		return (-0.0047 * (float)(temperature) + 1.32);
+	}
 	
 	// J/(kg*K)
 	static float GetSpecificHeat(CellContent::ContentType contType);
@@ -35,6 +50,34 @@ public:
 		// (1 / 11000) == 0.00009091
 		return basePressure * (1 - 0.00009091 * altitude );
 	}
+	
+	// pressure in altitude delta
+	inline static float GetPressureInHeight2( float deltaAltitude, float basePressure, float temperature)
+	{
+		// p = p0*e^(- (Density0 * g * deltaAltitude) / p0)
+		return basePressure * std::exp(- (GetAirDensity(temperature) * 10 * deltaAltitude)/basePressure);
+	}
+	
+	// pressure in altitude delta
+	inline static float GetPressureInHeight2( float deltaAltitude, float basePressure)
+	{
+		// p = p0*e^(- (Density0 * g * deltaAltitude) / p0)
+		return basePressure * std::exp(- (AIR_DENSITY * 10 * deltaAltitude)/basePressure);
+	}
+	
+	// compute relative pressure from absolute pressure in altitude
+	inline static float CompRelativePressure( float altitude, float absPressure)
+	{
+		// p = p0*e^(- (Density0 * g * deltaAltitude) / p0)
+		return absPressure / std::pow((1 - altitude / 44330),5.255);
+	}
+	
+	// compute absolute pressure in altitude from relative pressure
+	inline static float CompAbsolutePressure( float altitude, float relPressure)
+	{
+		// p = p0*e^(- (Density0 * g * deltaAltitude) / p0)
+		return relPressure * std::pow((1 - altitude / 44330),5.255);
+	}	
 	
 	// Compute real temperature at given altitude
 	// baseTemperature - temperature in altitude 0

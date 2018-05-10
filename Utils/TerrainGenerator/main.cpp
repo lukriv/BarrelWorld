@@ -336,22 +336,35 @@ int WinMain(int argc, char **argv)
 			
 			int32_t climateLevel = -1;
 			bool climateMove = false;
+			bool climateMoveHigh = false;
+			bool climateMoveForce = false;
 			bool climateTemp = false;
 			bool climateClouds = false;
 			bool climatePressure = false;
+			bool climateVolume = false;
+			bool climateSunPosition = false;
 			
 			while((act == SDLutils::ACTION::HEIGHT_MAP)
 				||(act == SDLutils::ACTION::CLIMATE_LEVEL_1)
 				||(act == SDLutils::ACTION::CLIMATE_LEVEL_2)
 				||(act == SDLutils::ACTION::CLIMATE_LEVEL_3)
-				||(act == SDLutils::ACTION::CLIMATE_LEVEL_4)
+				||(act == SDLutils::ACTION::CLIMATE_FORCE)
 				||(act == SDLutils::ACTION::CLIMATE_TEMPERATURE)
+				||(act == SDLutils::ACTION::CLIMATE_MOVE_HIGH)
 				||(act == SDLutils::ACTION::CLIMATE_MOVE)
 				||(act == SDLutils::ACTION::CLIMATE_CLOUDS)
 				||(act == SDLutils::ACTION::CLIMATE_PRESSURE)
+				||(act == SDLutils::ACTION::CLIMATE_VOLUME)
+				||(act == SDLutils::ACTION::CLIMATE_SUN_POSITION)
 				||(act == SDLutils::ACTION::CLIMATE_STEP)
 				||(act == SDLutils::ACTION::CLIMATE_FAST_STEP)
-				||(act == SDLutils::ACTION::MOUSE_CLICK))
+				||(act == SDLutils::ACTION::MOUSE_CLICK)
+				||(act == SDLutils::ACTION::WHEEL_DOWN)
+				||(act == SDLutils::ACTION::WHEEL_UP)
+				||(act == SDLutils::ACTION::UP)
+				||(act == SDLutils::ACTION::DOWN)
+				||(act == SDLutils::ACTION::LEFT)
+				||(act == SDLutils::ACTION::RIGHT))
 			{
 				switch(act)
 				{
@@ -367,20 +380,52 @@ int WinMain(int argc, char **argv)
 					case SDLutils::ACTION::CLIMATE_LEVEL_3:
 						climateLevel = 2;
 						break;
-					case SDLutils::ACTION::CLIMATE_LEVEL_4:
-						climateLevel = 3;
+					case SDLutils::ACTION::CLIMATE_FORCE:
+						climateMoveForce = !climateMoveForce;
+						if(climateMove)
+						{
+							std::string str = (climateMoveHigh)?"high":"low";
+							std::cout << "Display move: " << str << ", ";
+							str = (climateMoveForce)?"force":"wind/stream";
+							std::cout << str << std::endl;
+						}
 						break;
 					case SDLutils::ACTION::CLIMATE_TEMPERATURE:
 						climateTemp = !climateTemp;
 						break;
+					case SDLutils::ACTION::CLIMATE_MOVE_HIGH:
+						climateMoveHigh = !climateMoveHigh;
+						if(climateMove)
+						{
+							std::string str = (climateMoveHigh)?"high":"low";
+							std::cout << "Display move: " << str << ", ";
+							str = (climateMoveForce)?"force":"wind/stream";
+							std::cout << str << std::endl;
+						}
+						break;
 					case SDLutils::ACTION::CLIMATE_MOVE:
 						climateMove = !climateMove;
+						if(climateMove)
+						{
+							std::string str = (climateMoveHigh)?"high":"low";
+							std::cout << "Display move: " << str << ", ";
+							str = (climateMoveForce)?"force":"wind/stream";
+							std::cout << str << std::endl;
+						} else {
+							std::cout << "Disable move display" << std::endl;
+						}
 						break;
 					case SDLutils::ACTION::CLIMATE_CLOUDS:
 						climateClouds = !climateClouds;
 						break;
 					case SDLutils::ACTION::CLIMATE_PRESSURE:
 						climatePressure = !climatePressure;
+						break;
+					case SDLutils::ACTION::CLIMATE_VOLUME:
+						climateVolume = !climateVolume;
+						break;
+					case SDLutils::ACTION::CLIMATE_SUN_POSITION:
+						climateSunPosition = !climateSunPosition;
 						break;
 					case SDLutils::ACTION::CLIMATE_FAST_STEP:
 						for(int32_t r = 0; r < 100; ++r)
@@ -394,8 +439,26 @@ int WinMain(int argc, char **argv)
 						{
 							int32_t x,y;
 							gSDL->getLastMousePos(x,y);
-							writeCellStats(*gErrOut, climateMap, x, y, (climateLevel>0)?(climateLevel-1):climateLevel);
+							writeCellStats(*gErrOut, climateMap, x, y, climateLevel);
 						}
+						break;
+					case SDLutils::ACTION::WHEEL_DOWN:
+						gSDL->updateMultiplier(-1);
+						break;
+					case SDLutils::ACTION::WHEEL_UP:
+						gSDL->updateMultiplier(1);
+						break;
+					case SDLutils::ACTION::UP:
+						gSDL->updateScreenBegin(0,-1);
+						break;
+					case SDLutils::ACTION::DOWN:
+						gSDL->updateScreenBegin(0,1);
+						break;
+					case SDLutils::ACTION::LEFT:
+						gSDL->updateScreenBegin(-1,0);
+						break;
+					case SDLutils::ACTION::RIGHT:
+						gSDL->updateScreenBegin(1, 0);
 						break;
 					default:
 						break;
@@ -406,12 +469,34 @@ int WinMain(int argc, char **argv)
 				} else {
 					int32_t flags = 0;
 					flags |= (climateTemp)? SDLutils::TEMPERATURE : 0;
-					flags |= (climateMove)? SDLutils::MOVE : 0;
-					flags |= (climateClouds)? SDLutils::CLOUDS : 0;
+					//flags |= (climateMove)? SDLutils::MOVE : 0;
+					//flags |= (climateClouds)? SDLutils::CLOUDS : 0;
 					flags |= (climatePressure)? SDLutils::PRESSURE : 0;
-					
+					flags |= (climateVolume)? SDLutils::VOLUME : 0;
+									
 					gSDL->writeClimateMap(climateMap.GetData(), climateMap.GetSizeX(), climateMap.GetSizeY(), climateLevel, flags);
 				}
+				
+				if(climateClouds)
+				{
+					gSDL->writeClouds(climateMap.GetData(), climateMap.GetSizeX(), climateMap.GetSizeY());
+				}
+				
+				if(climateMove)
+				{
+					int32_t flags = 0;
+					flags |= (climateMoveForce)?SDLutils::MOVE_FORCE : 0;
+					flags |= (climateMoveHigh)?SDLutils::MOVE_HIGH : 0;
+					gSDL->writeMove(climateMap.GetData(), climateMap.GetSizeX(), climateMap.GetSizeY(), flags);
+				}
+				
+				if(climateSunPosition)
+				{
+					int32_t x, y;
+					climate.GetSunPosition(x,y);
+					gSDL->writeSun(x,y);
+				}
+				
 				act = gSDL->waitForAction();
 			}
 			

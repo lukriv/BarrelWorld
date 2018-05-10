@@ -39,14 +39,14 @@ struct SphereMapCoords {
 };
 
 enum class MapContainerDIR {
-		N = 0,
-		NW,
-		W,
-		SW,
-		S,
-		SE,
-		E,
-		NE
+		N 	= 0,
+		NW 	= 1,
+		W	= 2,
+		SW	= 3,
+		S	= 4,
+		SE	= 5,
+		E	= 6,
+		NE	= 7
 	};
 	
 template<typename TCellValue, class MapCoords>
