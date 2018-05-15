@@ -1,0 +1,33 @@
+BASE = 1
+MAPSIZEX = 64
+MAPSIZEY = 32
+MULTIPLIER = 17
+CONT_PARAM
+waterLevel = 40
+groundPercentage = 31
+jitterPercentage = 50
+jitterStrong = 3
+chunkSizeMin = 8
+chunkSizeMax = 80
+compactGround = 2
+highRiseProb = 15
+sinkProb = 20
+minElev = 0 
+maxElev = 120
+regions = 1
+xBorder = 3
+yBorder = 3
+erosion = 0
+addMode = 1
+END
+BREAK
+CELL_PARAM
+growsOn = 0
+lifeForm = 1
+initialPercentage = 0
+bornFrom = 6
+bornTo = 8
+aliveFrom = 4
+aliveTo = 8
+iterations = 10
+END

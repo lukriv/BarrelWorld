@@ -183,21 +183,21 @@ void SDLutils::writeMove(CellContent* cont, int32_t xPos, int32_t yPos, int32_t 
 			{
 				AirContent *pAir = reinterpret_cast<AirContent*>(cont);
 				
-				if((flags & MOVE_HIGH) != 0)
-				{
-					if((flags & MOVE_FORCE) != 0)				{
-						writeMove(pAir->m_highForce, xPos, yPos, flags);
-					} else {
-						writeMove(pAir->m_highWind, xPos, yPos, flags);
-					}
-					
-				} else {
+				//if((flags & MOVE_HIGH) != 0)
+				//{
+				//	if((flags & MOVE_FORCE) != 0)				{
+				//		writeMove(pAir->m_highForce, xPos, yPos, flags);
+				//	} else {
+				//		writeMove(pAir->m_highWind, xPos, yPos, flags);
+				//	}
+				//	
+				//} else {
 					if((flags & MOVE_FORCE) != 0)				{
 						writeMove(pAir->m_lowForce, xPos, yPos, flags);
 					} else {
 						writeMove(pAir->m_lowWind, xPos, yPos, flags);
 					}
-				}
+				//}
 			}
 			break;
 		case CellContent::WATER:
@@ -396,10 +396,10 @@ void SDLutils::writeMove(const ClimateCell* map, int32_t mapSizeX, int32_t mapSi
 	
 	int32_t climateLevel = 0;
 	
-	//if((flags & WATER_STREAM) != 0)
-	//{
-	//	climateLevel = 1;
-	//}
+	if((flags & MOVE_WATER) != 0)
+	{
+		climateLevel = 1;
+	}
 	
 	for (int32_t y = mScreenBeginY; y < screenEndY; ++y)
 	{
@@ -623,7 +623,7 @@ void SDLutils::writeSun(int32_t x, int32_t y)
 		x = (x - mScreenBeginX)*mMultiplier;
 		y = (y - mScreenBeginY)*mMultiplier;
 		
-		int32_t r = 240,g = 40,b = 0, alpha = 122;
+		int32_t r = 240,g = 240,b = 0, alpha = 122;
 
 		SDL_Rect rect = {x,y,mMultiplier,mMultiplier};
 			
@@ -655,6 +655,11 @@ void SDLutils::writeVolume(CellContent* cont, int32_t xPos, int32_t yPos, int32_
 			}
 			break;
 			case CellContent::WATER:
+			{
+				WaterContent* pWater = reinterpret_cast<WaterContent*>(cont);
+				volume = pWater->m_surfaceLevel;
+			}
+			break;
 			case CellContent::GROUND:
 			default:
 				undef = true;

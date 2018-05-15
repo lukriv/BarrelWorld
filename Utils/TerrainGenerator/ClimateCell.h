@@ -48,6 +48,8 @@ public:
 	float m_waterMassDiff;
 	float m_iceMassDiff;
 	
+	float m_maxSurfaceDiff;
+	
 	Urho3D::Vector2 m_force; // force to stream move
 	
 	Urho3D::Vector2 m_streamDir; // vector of water stream
@@ -80,16 +82,16 @@ public:
 	CellContent::ContentType m_precip; // precipitation type
 	
 	// helper
+	float m_volumeBase; // initial base volume constant
 	float m_maxPressureDiff; // maximal pressure difference between neightbour cells
-	float m_maxVolumeDiff; // maximal volume level difference between cells
+	float m_maxVolumeDiff; // maximal volume difference between neightbour cells
+	
 	
 	float m_airMassDiff; // air mass difference
 	float m_waterMassDiff;
 	
-	Urho3D::Vector2 m_highForce; // force direction between neightbour cells
 	Urho3D::Vector2 m_lowForce; // force direction between neightbour cells
-	
-	Urho3D::Vector2 m_highWind; // hor. dir. of wind in height
+
 	Urho3D::Vector2 m_lowWind; // horizontal direction of wind at ground level
 	
 	AirContent() : CellContent(CellContent::AIR)
@@ -103,7 +105,9 @@ public:
 		, m_actHum(0)
 		, m_cloudsHeight(0)
 		, m_precip(CellContent::NONE)
+		, m_volumeBase(0)
 		, m_maxPressureDiff(0)
+		, m_maxVolumeDiff(0)
 		, m_airMassDiff(0.0)
 		, m_waterMassDiff(0)
 	{}

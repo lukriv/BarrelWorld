@@ -187,8 +187,10 @@ void writeCellStats(std::ostream& out, MapContainer<ClimateCell, SphereMapCoords
 				out << " Clouds height: " << pAir->m_cloudsHeight << "[m]" << std::endl;
 				out << " Precipitation: " << (int)pAir->m_precip << std::endl;
 				out << " Volume level: " << pAir->m_volumeLevel << " [m] or [m^3]" << std::endl;
-				out << " Pressure force high: " << pAir->m_highForce.x_ << "," << pAir->m_highForce.y_ << "; size: " << pAir->m_highForce.Length() << std::endl;
-				out << " High wind: " << pAir->m_highWind.x_ << "," << pAir->m_highWind.y_ << "; speed: " << pAir->m_highWind.Length() << std::endl;
+				//out << " Pressure force pulse high: " << pAir->m_highForcePulse.x_ << "," << pAir->m_highForcePulse.y_ << "; size: " << pAir->m_highForcePulse.Length() << std::endl;
+				//out << " Pressure force high: " << pAir->m_highForce.x_ << "," << pAir->m_highForce.y_ << "; size: " << pAir->m_highForce.Length() << std::endl;
+				//out << " High wind: " << pAir->m_highWind.x_ << "," << pAir->m_highWind.y_ << "; speed: " << pAir->m_highWind.Length() << std::endl;
+				//out << " Pressure force pulse low: " << pAir->m_lowForcePulse.x_ << "," << pAir->m_lowForcePulse.y_ << "; size: " << pAir->m_lowForcePulse.Length() << std::endl;
 				out << " Pressure force low: " << pAir->m_lowForce.x_ << "," << pAir->m_lowForce.y_ << "; size: " << pAir->m_lowForce.Length() << std::endl;
 				out << " Low wind: " << pAir->m_lowWind.x_ << "," << pAir->m_lowWind.y_ << "; speed: " << pAir->m_lowWind.Length() << std::endl;
 			}
@@ -201,6 +203,7 @@ void writeCellStats(std::ostream& out, MapContainer<ClimateCell, SphereMapCoords
 				out << " Water mass: " << pWater->m_waterMass << std::endl;
 				out << " Salt mass: " << pWater->m_saltMass << std::endl;
 				out << " Ice mass: " << pWater->m_iceMass << std::endl;
+				out << " Surface level:" << pWater->m_surfaceLevel << std::endl;
 				out << " Stream: " << pWater->m_streamDir.x_ << "," << pWater->m_streamDir.y_ << "; speed: " << pWater->m_streamDir.Length() << std::endl;
 			}
 				break;
