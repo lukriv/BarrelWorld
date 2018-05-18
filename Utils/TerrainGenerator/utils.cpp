@@ -182,7 +182,7 @@ void writeCellStats(std::ostream& out, MapContainer<ClimateCell, SphereMapCoords
 				out << " Water mass: " << pAir->m_waterMass << "[kg]" << std::endl;
 				out << " Pressure: " << pAir->m_airPressure << "[Pa]" << std::endl;
 				out << " Dynamic pressure (low): " << pAir->m_dynamicPressureLow << "[Pa]" << std::endl;
-				out << " Dynamic pressure (high): " << pAir->m_dynamicPressureHigh << "[Pa]" << std::endl;
+				//out << " Dynamic pressure (high): " << pAir->m_dynamicPressureHigh << "[Pa]" << std::endl;
 				out << " Humidity: " << pAir->m_actHum << "[kg/kg]" << std::endl;
 				out << " Clouds height: " << pAir->m_cloudsHeight << "[m]" << std::endl;
 				out << " Precipitation: " << (int)pAir->m_precip << std::endl;
@@ -191,6 +191,7 @@ void writeCellStats(std::ostream& out, MapContainer<ClimateCell, SphereMapCoords
 				//out << " Pressure force high: " << pAir->m_highForce.x_ << "," << pAir->m_highForce.y_ << "; size: " << pAir->m_highForce.Length() << std::endl;
 				//out << " High wind: " << pAir->m_highWind.x_ << "," << pAir->m_highWind.y_ << "; speed: " << pAir->m_highWind.Length() << std::endl;
 				//out << " Pressure force pulse low: " << pAir->m_lowForcePulse.x_ << "," << pAir->m_lowForcePulse.y_ << "; size: " << pAir->m_lowForcePulse.Length() << std::endl;
+				out << " Dynamic force: " << pAir->m_dynamicForce.x_ << "," << pAir->m_dynamicForce.y_ << "; size: " << pAir->m_dynamicForce.Length() << std::endl;
 				out << " Pressure force low: " << pAir->m_lowForce.x_ << "," << pAir->m_lowForce.y_ << "; size: " << pAir->m_lowForce.Length() << std::endl;
 				out << " Low wind: " << pAir->m_lowWind.x_ << "," << pAir->m_lowWind.y_ << "; speed: " << pAir->m_lowWind.Length() << std::endl;
 			}

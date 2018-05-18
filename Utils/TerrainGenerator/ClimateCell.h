@@ -76,7 +76,7 @@ public:
 	// updatable
 	float m_airPressure; // air pressure at altitude 0 (can be computed from air mass ) [Pa]
 	float m_dynamicPressureLow; // dynamic pressure ( from Bernoulli's principle ) 
-	float m_dynamicPressureHigh; // dynamic pressure ( from Bernoulli's principle ) 
+	//float m_dynamicPressureHigh; // dynamic pressure ( from Bernoulli's principle ) 
 	float m_actHum; // actual air humidity [kg/kg]
 	float m_cloudsHeight; // altitude of clouds
 	CellContent::ContentType m_precip; // precipitation type
@@ -90,6 +90,8 @@ public:
 	float m_airMassDiff; // air mass difference
 	float m_waterMassDiff;
 	
+	Urho3D::Vector2 m_dynamicForce;
+	
 	Urho3D::Vector2 m_lowForce; // force direction between neightbour cells
 
 	Urho3D::Vector2 m_lowWind; // horizontal direction of wind at ground level
@@ -101,7 +103,7 @@ public:
 		, m_volumeLevel(0)
 		, m_airPressure(0) // air pressure
 		, m_dynamicPressureLow(0) //dynamic pressure
-		, m_dynamicPressureHigh(0)
+		//, m_dynamicPressureHigh(0)
 		, m_actHum(0)
 		, m_cloudsHeight(0)
 		, m_precip(CellContent::NONE)

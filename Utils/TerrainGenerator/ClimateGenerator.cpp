@@ -15,6 +15,7 @@ const uint8_t LOW_WATER_DEEP = 1;
 const uint8_t LOW_WATER_METERS = 10; // deep of low water
 const float SQUARE_SIDE_SIZE = 1000;
 const float SQUARE_SIZE = SQUARE_SIDE_SIZE* SQUARE_SIDE_SIZE;
+const float nS = 0.5; // normalized surface for force computing
 
 const float MEASURE_HEIGHT = 3000;
 
@@ -227,7 +228,7 @@ bool UpdateContent(AirContent &cont)
 	
 	//windSpeed = cont.m_highWind.Length();
 	//cont.m_dynamicPressureHigh = 0.5*windSpeed*windSpeed*CompDensityInAltitude(cont, cont.m_baseAltitude + MEASURE_HEIGHT);
-
+	cont.m_dynamicForce = cont.m_lowWind.Normalized()*cont.m_dynamicPressureLow*nS;
 	
 	cont.m_actHum = cont.m_waterMass/cont.m_airMass;
 	cont.m_actHum = (cont.m_actHum > 0) ? cont.m_actHum : 0; // water mass can be lower than zero
@@ -278,9 +279,7 @@ bool UpdateContent(WaterContent &cont)
 	cont.m_waterMassDiff = 0.0;
 	cont.m_iceMassDiff = 0.0;
 	
-	if((cont.m_waterMass < 0)
-		||(cont.m_iceMass < 0)
-		||(cont.m_temperature < 0))
+	if(((cont.m_waterMass + cont.m_iceMass) < 0)||(cont.m_temperature < 0))
 	{
 		std::stringstream sstr;
 		sstr << "Error! Water: cont.m_waterMass: " << cont.m_waterMass
@@ -375,7 +374,7 @@ void ClimateGenerator::InitializeClimate()
 
 				// ground
 				GroundContent* pGround = new GroundContent();
-				pGround->m_maxWaterCapacity = GROUND_WATER_METERS;
+				pGround->m_maxWaterCapacity = GROUND_WATER_METERS*ClimateUtils::WATER_DENSITY;
 				pGround->m_temperature = BASE_TEMPERATURE;
 				cell.AddContent(1, pGround);
 			}
@@ -399,8 +398,10 @@ ClimateGenerator::ClimateGenerator(MapContainer<uint8_t, SphereMapCoords>& map, 
 	m_sunPosY = m_map.GetSizeY() / 2;
 	m_sunRadius = m_map.GetSizeY() / 2;
 	//m_sunStep = map.GetSizeX() / DAYLONG;
+	//m_timeStep = (DAYLONG*TIME_STEP)/(map.GetSizeX()/m_sunStep);
 	m_sunStep = 1;
-	m_timeStep = (DAYLONG*TIME_STEP)/(float)m_map.GetSizeY();
+	m_timeStep = (DAYLONG*TIME_STEP)/(float)m_map.GetSizeX();
+	
 	
 }
 
@@ -709,7 +710,7 @@ void ClimateGenerator::Evaporation(ClimateCell& cell)
 void ClimateGenerator::AirForceComp(AirContent& air, int32_t x, int32_t y, float sinLatitude)
 {
 	//static const float nS = SQUARE_SIDE_SIZE / 2; //neightbour surface
-	static const float nS = 0.5; //neightbour surface
+	//static const float nS = 0.5; //neightbour surface
 	
 	int32_t nx, ny;
 	Urho3D::Vector2 topDiff;
@@ -791,7 +792,7 @@ void ClimateGenerator::AirForceComp(AirContent& air, int32_t x, int32_t y, float
 			//air.m_highForce += vec*highForce;
 			
 			// dynamic pressure comp
-			air.m_lowForce += nAir.m_lowWind.Normalized()*nAir.m_dynamicPressureLow*nS*0.2;
+			air.m_lowForce += nAir.m_dynamicForce - air.m_dynamicForce;
 			//air.m_highForce += nAir.m_highWind.Normalized()*nAir.m_dynamicPressureHigh*nS;
 
 		}
@@ -816,7 +817,7 @@ void ClimateGenerator::AirForceComp(AirContent& air, int32_t x, int32_t y, float
 	// drag
 	if(true)
 	{
-		float dragConst = 0.5; //0.5*nS;
+		float dragConst = nS; //0.5*nS;
 		
 		// low wind
 		float windSpeed = air.m_lowWind.Length();
