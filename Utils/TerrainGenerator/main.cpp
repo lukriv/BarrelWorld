@@ -404,7 +404,7 @@ int WinMain(int argc, char **argv)
 						climateLevel = 2;
 						break;
 					case SDLutils::ACTION::CLIMATE_FORCE:
-						climateMoveForce = !climateMoveForce;
+						//climateMoveForce = !climateMoveForce; - no force change
 						if(climateMove)
 						{
 							writeClimateMoveSelection(climateMoveHigh, climateMoveForce);

@@ -192,7 +192,7 @@ void writeCellStats(std::ostream& out, MapContainer<ClimateCell, SphereMapCoords
 				//out << " High wind: " << pAir->m_highWind.x_ << "," << pAir->m_highWind.y_ << "; speed: " << pAir->m_highWind.Length() << std::endl;
 				//out << " Pressure force pulse low: " << pAir->m_lowForcePulse.x_ << "," << pAir->m_lowForcePulse.y_ << "; size: " << pAir->m_lowForcePulse.Length() << std::endl;
 				out << " Dynamic force: " << pAir->m_dynamicForce.x_ << "," << pAir->m_dynamicForce.y_ << "; size: " << pAir->m_dynamicForce.Length() << std::endl;
-				out << " Pressure force low: " << pAir->m_lowForce.x_ << "," << pAir->m_lowForce.y_ << "; size: " << pAir->m_lowForce.Length() << std::endl;
+				//out << " Pressure force low: " << pAir->m_lowForce.x_ << "," << pAir->m_lowForce.y_ << "; size: " << pAir->m_lowForce.Length() << std::endl;
 				out << " Low wind: " << pAir->m_lowWind.x_ << "," << pAir->m_lowWind.y_ << "; speed: " << pAir->m_lowWind.Length() << std::endl;
 			}
 				break;

@@ -92,7 +92,7 @@ public:
 	
 	Urho3D::Vector2 m_dynamicForce;
 	
-	Urho3D::Vector2 m_lowForce; // force direction between neightbour cells
+	//Urho3D::Vector2 m_lowForce; // force direction between neightbour cells
 	
 	//Urho3D::Vector2 m_highForce; // high force direction between neightbour cells
 

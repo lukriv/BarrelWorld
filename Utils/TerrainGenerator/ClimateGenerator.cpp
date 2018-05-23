@@ -35,6 +35,7 @@ const float AIR_BASE_PRESSURE = 101500.0;
 
 //const float WATER_VISCOSITY = 0.000001; // [m^2/s]
 //const float AIR_VISCOSITY = 0.0000133; // [m^2/s]
+const float AIR_VISCOSITY = 0.00001827; // [Pa*s]
 
 const float DEEP_WATER_BASE_TEMPERATURE = 4 + 273;
 const float BASE_TEMPERATURE = 15 + 273;
@@ -43,7 +44,7 @@ const float BASE_TEMPERATURE = 15 + 273;
 const float MASS_MOVE_PROTECTION = 0.05; // maximal mass move ( ratio to whole mass )
 const float WIND_SPEED_PROTECTION = 50; // maximal posible wind speed [m/s]
 const float FORCE_SIZE_PROTECTION = 10000; // maximal posible force size [N]
-const float WIND_SPEED_CHANGE_PROTECTION = 5; // maximal posible wind speed change [m/s]
+const float WIND_SPEED_CHANGE_PROTECTION = 10; // maximal posible wind speed change [m/s]
 
 const float MAX_AIR_PRESSURE_PROTECTION = 108000; // maximal air pressure [Pa]
 const float MIN_AIR_PRESSURE_PROTECTION = 87000; // minimal air pressure [Pa]
@@ -681,16 +682,17 @@ void ClimateGenerator::AirForceComp(ClimateCell& cell, int32_t x, int32_t y, flo
 	
 	AirContent &air = cell.GetAirContent();
 	
-	Urho3D::Vector2 topDiff;
+	//Urho3D::Vector2 topDiff;
 	Urho3D::Vector2 lowDiff;
 	
 	air.m_maxPressureDiff = 0;
 	air.m_maxVolumeDiff = 0;
-	air.m_lowForce = Urho3D::Vector2::ZERO;
+	//air.m_lowForce = Urho3D::Vector2::ZERO;
 	//air.m_highForce = Urho3D::Vector2::ZERO;
 	
 	// density in high * GRAV_ACC * nS
 	float dens = CompDensity(air);
+	float mass = dens*SQUARE_SIZE;
 	//float densHigh = CompDensityInAltitude(air, air.m_baseAltitude + MEASURE_HEIGHT);
 	
 	//float highConst = densHigh*GRAV_ACC*nS;
@@ -738,18 +740,23 @@ void ClimateGenerator::AirForceComp(ClimateCell& cell, int32_t x, int32_t y, flo
 			//lowForce /= m_timeStep;
 			//highForce /= m_timeStep;
 			
-			air.m_lowForce += vec*lowForce;
+			lowDiff += vec*lowForce;
 			//air.m_highForce += vec*highForce;
 			
 			// dynamic pressure comp
-			air.m_lowForce += nAir.m_dynamicForce - air.m_dynamicForce;
+			lowDiff += nAir.m_dynamicForce - air.m_dynamicForce;
 			//air.m_highForce += nAir.m_highWind.Normalized()*nAir.m_dynamicPressureHigh*nS;
 
 		}
 		
 	}
 	
-
+	// force impuls length
+	//float timeDiff = 0.1*std::sqrt(source.m_maxPressureDiff/dens*SQUARE_SIDE_SIZE);
+	//timeDiff = (timeDiff > m_timeStep) ? m_timeStep : timeDiff;
+	
+	// mass from ground to MEASURE_HEIGHT
+	//float massSource = source.m_airMass*(1 - ClimateUtils::CompAbsolutePressure(source.m_baseAltitude + MEASURE_HEIGHT, source.m_airPressure)/source.m_airPressure);
 	
 	// Coriolis effect 
 	if(true)
@@ -758,11 +765,25 @@ void ClimateGenerator::AirForceComp(ClimateCell& cell, int32_t x, int32_t y, flo
 		float f = 2*ANGULAR_VELOCITY*sinLatitude;
 		
 		Urho3D::Vector2 Fc = Urho3D::Vector2(air.m_lowWind.y_, -air.m_lowWind.x_) * f;
-		air.m_lowForce += Fc;
+		lowDiff += Fc;
 		
 		//Fc = Urho3D::Vector2(air.m_highWind.y_, -air.m_highWind.x_) * f;
 		//air.m_highForce += Fc;
 	}
+	
+	
+	
+	// wind speed change
+	Urho3D::Vector2 windChange = (lowDiff*m_timeStep)/mass;
+	
+	if(windChange.Length() > WIND_SPEED_CHANGE_PROTECTION)
+	{
+		windChange = windChange.Normalized() * WIND_SPEED_CHANGE_PROTECTION;
+	}
+	
+	air.m_lowWind = air.m_lowWind + windChange;
+	
+	float windSpeed = air.m_lowWind.Length();
 	
 	// drag
 	if(true)
@@ -770,17 +791,33 @@ void ClimateGenerator::AirForceComp(ClimateCell& cell, int32_t x, int32_t y, flo
 		float dragConst = nS; //0.5*nS;
 		
 		// low wind
-		float windSpeed = air.m_lowWind.Length();
 		float scalFd = dens*dragConst*windSpeed*windSpeed;
-		Urho3D::Vector2 Fd = air.m_lowWind.Normalized()*(-scalFd);
-		air.m_lowForce += Fd;
+		lowDiff = air.m_lowWind.Normalized()*(-scalFd);
 		
+		windChange = (lowDiff*m_timeStep)/mass;
+		
+		air.m_lowWind = air.m_lowWind + windChange;
 		// high wind
 		//windSpeed = air.m_highWind.Length();
 		//scalFd = densHigh*dragConst*windSpeed*windSpeed;
 		//Fd = air.m_highWind.Normalized()*(-scalFd);
 		//air.m_highForce += Fd;
 		
+		
+	}
+	
+	//friction
+	if(true)
+	{
+		lowDiff = air.m_lowWind.Normalized()*AIR_VISCOSITY*windSpeed;
+		
+		windChange = (lowDiff*m_timeStep)/mass;
+		if(windChange.Length() > windSpeed)
+		{
+			windChange = windChange.Normalized() * windSpeed;
+		}
+		
+		air.m_lowWind = air.m_lowWind + windChange;
 		
 	}
 	
@@ -811,26 +848,8 @@ void ClimateGenerator::AirLowWindMassChange(ClimateCell& sourceCell, int32_t x, 
 	
 	AirContent &source = sourceCell.GetAirContent();
 	
-	float dens = CompDensity(source);
-	
-	// force impuls length
-	//float timeDiff = 0.1*std::sqrt(source.m_maxPressureDiff/dens*SQUARE_SIDE_SIZE);
-	//timeDiff = (timeDiff > m_timeStep) ? m_timeStep : timeDiff;
-	
-	// mass from ground to MEASURE_HEIGHT
-	//float massSource = source.m_airMass*(1 - ClimateUtils::CompAbsolutePressure(source.m_baseAltitude + MEASURE_HEIGHT, source.m_airPressure)/source.m_airPressure);
 	
 	float massSource = (source.m_maxPressureDiff/GRAV_ACC)*0.5;
-	
-	// wind speed change
-	Urho3D::Vector2 windChange = (source.m_lowForce*m_timeStep)/(dens*SQUARE_SIZE);
-	
-	if(windChange.Length() > WIND_SPEED_CHANGE_PROTECTION)
-	{
-		windChange = windChange.Normalized() * WIND_SPEED_CHANGE_PROTECTION;
-	}
-	
-	source.m_lowWind = source.m_lowWind + windChange;
 	
 	// neightbour coords
 	//int32_t nx, ny;
@@ -846,18 +865,11 @@ void ClimateGenerator::AirLowWindMassChange(ClimateCell& sourceCell, int32_t x, 
 		massSource = MASS_MOVE_PROTECTION*source.m_airMass;
 	}
 	
-	// limit wind speed
-	if(speed > WIND_SPEED_PROTECTION)
-	{
-		//std::cout << "Warning! speed fail (low): " << speed << " at " << x << ", " << y << std::endl;
-		source.m_lowWind = source.m_lowWind.Normalized() * WIND_SPEED_PROTECTION;
-	}
-	
-	if(std::isinf(speed)||std::isnan(speed))
-	{
-		std::cout << "Error! speed fail (low): " << speed << " at " << x << ", " << y << std::endl;
-		return;
-	}
+	//if(std::isinf(speed)||std::isnan(speed))
+	//{
+	//	std::cout << "Error! speed fail (low): " << speed << " at " << x << ", " << y << std::endl;
+	//	return;
+	//}
 	
 	
 	

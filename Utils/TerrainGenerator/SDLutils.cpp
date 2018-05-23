@@ -192,11 +192,11 @@ void SDLutils::writeMove(const CellContent* cont, int32_t xPos, int32_t yPos, in
 				//	}
 				//	
 				//} else {
-					if((flags & MOVE_FORCE) != 0)				{
-						writeMove(pAir->m_lowForce, xPos, yPos, flags);
-					} else {
+					//if((flags & MOVE_FORCE) != 0)				{
+						//writeMove(pAir->m_lowForce, xPos, yPos, flags);
+					//} else {
 						writeMove(pAir->m_lowWind, xPos, yPos, flags);
-					}
+					//}
 				//}
 			}
 			break;
