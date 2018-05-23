@@ -38,7 +38,7 @@ struct SphereMapCoords {
 	}
 };
 
-enum class MapContainerDIR {
+enum MapContainerDIR {
 		N 	= 0,
 		NW 	= 1,
 		W	= 2,
@@ -61,26 +61,11 @@ private:
 public:
 	static void GetNeightbourCoords( MapContainerDIR neighbourDir, int32_t &xDiff, int32_t &yDiff)
 	{
-		switch (neighbourDir)
-		{
-			case MapContainerDIR::N:
-				xDiff = 0; yDiff = -1; break;
-			case MapContainerDIR::NW:
-				xDiff = -1; yDiff = -1; break;
-			case MapContainerDIR::W:
-				xDiff = -1; yDiff = 0; break;
-			case MapContainerDIR::SW:
-				xDiff = -1; yDiff = 1; break;
-			case MapContainerDIR::S:
-				xDiff = 0; yDiff = 1; break;
-			case MapContainerDIR::SE:
-				xDiff = 1; yDiff = 1; break;
-			case MapContainerDIR::E:
-				xDiff = 1; yDiff = 0; break;
-			case MapContainerDIR::NE:
-				xDiff = 1; yDiff = -1; break;
-			
-		}
+		static int32_t vx[] = {  0, -1, -1, -1,  0,  1,  1,  1 };
+		static int32_t vy[] = { -1, -1,  0,  1,  1,  1,  0, -1 };
+		
+		xDiff = vx[neighbourDir];
+		yDiff = vy[neighbourDir];
 	}
 	
 public:

@@ -129,7 +129,7 @@ void SDLutils::writeMap(const uint8_t* map, int32_t mapSizeX, int32_t mapSizeY, 
 	
 }
 
-void SDLutils::writeMove(Urho3D::Vector2 &streamDir, int32_t xPos, int32_t yPos, int32_t flags)
+void SDLutils::writeMove(const Urho3D::Vector2 &streamDir, int32_t xPos, int32_t yPos, int32_t flags)
 {
 	if(mMultiplier <= 2) return;
 	
@@ -174,14 +174,14 @@ void SDLutils::writeMove(Urho3D::Vector2 &streamDir, int32_t xPos, int32_t yPos,
 	SDL_RenderDrawLine(mRenderer, xBegin, yBegin, xEnd , yEnd);
 }
 
-void SDLutils::writeMove(CellContent* cont, int32_t xPos, int32_t yPos, int32_t flags)
+void SDLutils::writeMove(const CellContent* cont, int32_t xPos, int32_t yPos, int32_t flags)
 {
 	if(cont == nullptr) return;
 	switch(cont->GetContentType())
 	{
 		case CellContent::AIR:
 			{
-				AirContent *pAir = reinterpret_cast<AirContent*>(cont);
+				const AirContent *pAir = reinterpret_cast<const AirContent*>(cont);
 				
 				//if((flags & MOVE_HIGH) != 0)
 				//{
@@ -202,7 +202,7 @@ void SDLutils::writeMove(CellContent* cont, int32_t xPos, int32_t yPos, int32_t 
 			break;
 		case CellContent::WATER:
 			{
-				WaterContent *pWater = reinterpret_cast<WaterContent*>(cont);
+				const WaterContent *pWater = reinterpret_cast<const WaterContent*>(cont);
 				writeMove(pWater->m_streamDir, xPos, yPos, flags);
 			}
 			break;
@@ -211,7 +211,7 @@ void SDLutils::writeMove(CellContent* cont, int32_t xPos, int32_t yPos, int32_t 
 	}
 }
 
-void SDLutils::writeType(CellContent* cont, int32_t xPos, int32_t yPos, int32_t flags)
+void SDLutils::writeType(const CellContent* cont, int32_t xPos, int32_t yPos, int32_t flags)
 {
 	int32_t r = 0,g = 0,b = 0;
 	SDL_Rect rect = {xPos,yPos,mMultiplier,mMultiplier};
@@ -223,7 +223,7 @@ void SDLutils::writeType(CellContent* cont, int32_t xPos, int32_t yPos, int32_t 
 		{
 			case CellContent::WATER:
 			{
-				WaterContent* pWater = reinterpret_cast<WaterContent*>(cont);
+				const WaterContent* pWater = reinterpret_cast<const WaterContent*>(cont);
 				float ice = pWater->m_iceMass / (1*0.2*2000);
 				ice = (ice > 1) ? 1 : ice;
 				b = 200;
@@ -232,7 +232,7 @@ void SDLutils::writeType(CellContent* cont, int32_t xPos, int32_t yPos, int32_t 
 			break;
 			case CellContent::GROUND:
 			{
-				GroundContent* pGround = reinterpret_cast<GroundContent*>(cont);
+				const GroundContent* pGround = reinterpret_cast<const GroundContent*>(cont);
 				
 				b = (int32_t)(pGround->m_waterMass / pGround->m_maxWaterCapacity * 255.0f);
 				g = r = 150;
@@ -256,7 +256,7 @@ void SDLutils::writeType(CellContent* cont, int32_t xPos, int32_t yPos, int32_t 
 	SDL_RenderFillRect(mRenderer,&rect);
 }
 
-void SDLutils::writeTemperature(CellContent* cont, int32_t xPos, int32_t yPos, int32_t flags)
+void SDLutils::writeTemperature(const CellContent* cont, int32_t xPos, int32_t yPos, int32_t flags)
 {
 	int32_t r = 0,g = 0,b = 0;
 	SDL_Rect rect = {xPos,yPos,mMultiplier,mMultiplier};
@@ -270,19 +270,19 @@ void SDLutils::writeTemperature(CellContent* cont, int32_t xPos, int32_t yPos, i
 		{
 			case CellContent::WATER:
 			{
-				WaterContent* pWater = reinterpret_cast<WaterContent*>(cont);
+				const WaterContent* pWater = reinterpret_cast<const WaterContent*>(cont);
 				temp = pWater->m_temperature - 273;
 			}
 			break;
 			case CellContent::GROUND:
 			{
-				GroundContent* pGround = reinterpret_cast<GroundContent*>(cont);
+				const GroundContent* pGround = reinterpret_cast<const GroundContent*>(cont);
 				temp = pGround->m_temperature - 273;
 			}
 			break;
 			case CellContent::AIR:
 			{
-				AirContent* pAir = reinterpret_cast<AirContent*>(cont);
+				const AirContent* pAir = reinterpret_cast<const AirContent*>(cont);
 				temp = pAir->m_temperature - 273;
 			}
 			break;
@@ -307,7 +307,7 @@ void SDLutils::writeTemperature(CellContent* cont, int32_t xPos, int32_t yPos, i
 	SDL_RenderFillRect(mRenderer,&rect);
 }
 
-void SDLutils::writeClouds(AirContent* cont, int32_t xPos, int32_t yPos, int32_t flags)
+void SDLutils::writeClouds(const AirContent* cont, int32_t xPos, int32_t yPos, int32_t flags)
 {
 	int32_t r = 240,g = 240,b = 240, alpha = 0;
 	SDL_Rect rect = {xPos,yPos,mMultiplier,mMultiplier};
@@ -349,7 +349,7 @@ void SDLutils::writeClimateMap(const ClimateCell* map, int32_t mapSizeX, int32_t
 		{
 			const ClimateCell& climate = map[y*mapSizeX + x];
 			
-			CellContent* cont = climate.GetContent(level);
+			const CellContent* cont = climate.GetContent(level);
 			
 			scrPosX = (x - mScreenBeginX)*mMultiplier;
 			scrPosY = (y - mScreenBeginY)*mMultiplier;
@@ -407,7 +407,7 @@ void SDLutils::writeMove(const ClimateCell* map, int32_t mapSizeX, int32_t mapSi
 		{
 			const ClimateCell& climate = map[y*mapSizeX + x];
 			
-			CellContent* cont = climate.GetContent(climateLevel);
+			const CellContent* cont = climate.GetContent(climateLevel);
 			
 			scrPosX = (x - mScreenBeginX)*mMultiplier;
 			scrPosY = (y - mScreenBeginY)*mMultiplier;
@@ -440,7 +440,7 @@ void SDLutils::writeClouds(const ClimateCell* map, int32_t mapSizeX, int32_t map
 		{
 			const ClimateCell& climate = map[y*mapSizeX + x];
 			
-			AirContent* cont = climate.GetAirContent(0);
+			const AirContent* cont = &climate.GetAirContent();
 			
 			scrPosX = (x - mScreenBeginX)*mMultiplier;
 			scrPosY = (y - mScreenBeginY)*mMultiplier;
@@ -543,7 +543,7 @@ SDLutils::ACTION SDLutils::waitForAction()
 	}
 }
 
-void SDLutils::writePressure(CellContent* cont, int32_t xPos, int32_t yPos, int32_t flags)
+void SDLutils::writePressure(const CellContent* cont, int32_t xPos, int32_t yPos, int32_t flags)
 {
 	int32_t r = 0,g = 0,b = 0;
 	SDL_Rect rect = {xPos,yPos,mMultiplier,mMultiplier};
@@ -558,7 +558,7 @@ void SDLutils::writePressure(CellContent* cont, int32_t xPos, int32_t yPos, int3
 
 			case CellContent::AIR:
 			{
-				AirContent* pAir = reinterpret_cast<AirContent*>(cont);
+				const AirContent* pAir = reinterpret_cast<const AirContent*>(cont);
 				pressure = pAir->m_airPressure;
 			}
 			break;
@@ -635,7 +635,7 @@ void SDLutils::writeSun(int32_t x, int32_t y)
 	}
 }
 
-void SDLutils::writeVolume(CellContent* cont, int32_t xPos, int32_t yPos, int32_t flags)
+void SDLutils::writeVolume(const CellContent* cont, int32_t xPos, int32_t yPos, int32_t flags)
 {
 	int32_t r = 0,g = 0,b = 0;
 	SDL_Rect rect = {xPos,yPos,mMultiplier,mMultiplier};
@@ -650,13 +650,13 @@ void SDLutils::writeVolume(CellContent* cont, int32_t xPos, int32_t yPos, int32_
 
 			case CellContent::AIR:
 			{
-				AirContent* pAir = reinterpret_cast<AirContent*>(cont);
+				const AirContent* pAir = reinterpret_cast<const AirContent*>(cont);
 				volume = pAir->m_volumeLevel;
 			}
 			break;
 			case CellContent::WATER:
 			{
-				WaterContent* pWater = reinterpret_cast<WaterContent*>(cont);
+				const WaterContent* pWater = reinterpret_cast<const WaterContent*>(cont);
 				volume = pWater->m_surfaceLevel;
 			}
 			break;

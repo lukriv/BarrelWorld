@@ -91,13 +91,13 @@ public:
 	
 	ACTION waitForAction();
 private:
-	void writeMove(Urho3D::Vector2 &streamDir, int32_t xPos, int32_t yPos, int32_t flags = 0);
-	void writeMove(CellContent* cont, int32_t xPos, int32_t yPos, int32_t flags = 0);
-	void writeType(CellContent* cont, int32_t xPos, int32_t yPos, int32_t flags = 0);
-	void writeTemperature(CellContent* cont, int32_t xPos, int32_t yPos, int32_t flags = 0);
-	void writePressure(CellContent* cont, int32_t xPos, int32_t yPos, int32_t flags = 0);
-	void writeVolume(CellContent* cont, int32_t xPos, int32_t yPos, int32_t flags = 0);
-	void writeClouds(AirContent* cont, int32_t xPos, int32_t yPos, int32_t flags = 0);
+	void writeMove(const Urho3D::Vector2 &streamDir, int32_t xPos, int32_t yPos, int32_t flags = 0);
+	void writeMove(const CellContent* cont, int32_t xPos, int32_t yPos, int32_t flags = 0);
+	void writeType(const CellContent* cont, int32_t xPos, int32_t yPos, int32_t flags = 0);
+	void writeTemperature(const CellContent* cont, int32_t xPos, int32_t yPos, int32_t flags = 0);
+	void writePressure(const CellContent* cont, int32_t xPos, int32_t yPos, int32_t flags = 0);
+	void writeVolume(const CellContent* cont, int32_t xPos, int32_t yPos, int32_t flags = 0);
+	void writeClouds(const AirContent* cont, int32_t xPos, int32_t yPos, int32_t flags = 0);
 };
 
 #endif // __SDL_UTILITIES_H__

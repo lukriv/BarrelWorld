@@ -1,112 +1,49 @@
 #include "ClimateCell.h"
 
-ClimateCell::ClimateCell()
+ClimateCell::ClimateCell() : m_lowLevelType(CellContent::NONE)
 {
-	for(int32_t i = 0; i < CLIMATE_LEVELS; ++i)
-	{
-		m_levels[i] = nullptr;
-	}
 }
 
 ClimateCell::~ClimateCell()
-{
-	for(int32_t i = 0; i < CLIMATE_LEVELS; ++i)
-	{
-		if(m_levels[i] != nullptr)
-		{
-			delete m_levels[i];
-			m_levels[i] = nullptr;
-		}
-	}
-}
+{}
 
 CellContent* ClimateCell::GetContent(int32_t level)
 {
-	if((level < 0)||(level >= CLIMATE_LEVELS))
+	if(level == 0)
 	{
-		return nullptr;
-	}
-	return m_levels[level];
-}
-
-CellContent* ClimateCell::GetContent(int32_t level) const
-{
-	if((level < 0)||(level >= CLIMATE_LEVELS))
-	{
-		return nullptr;
-	}
-	return m_levels[level];
-}
-
-bool ClimateCell::IsCheckContent(int32_t level, CellContent::ContentType type) const
-{
-	if((level < 0)||(level >= CLIMATE_LEVELS))
-	{
-		return false;
-	}
+		return &m_air;
+	} 
 	
-	if(m_levels[level] != nullptr)
+	if((level == 1)&&(m_lowLevelType == CellContent::WATER))
 	{
-		return (m_levels[level]->GetContentType() == type);
-	}
+		return &m_water;
+	} 
 	
-	return false;
-}
-
-AirContent* ClimateCell::GetAirContent(int32_t level)
-{
-	if(IsCheckContent(level, CellContent::AIR))
+	if((level == 1)&&(m_lowLevelType == CellContent::GROUND))
 	{
-		return reinterpret_cast<AirContent*>(m_levels[level]);
-	}
+		return &m_ground;
+	} 	
 	
 	return nullptr;
 }
 
-AirContent* ClimateCell::GetAirContent(int32_t level) const
+const CellContent* ClimateCell::GetContent(int32_t level) const
 {
-	if(IsCheckContent(level, CellContent::AIR))
+	if(level == 0)
 	{
-		return reinterpret_cast<AirContent*>(m_levels[level]);
-	}
+		return &m_air;
+	} 
+	
+	if((level == 1)&&(m_lowLevelType == CellContent::WATER))
+	{
+		return &m_water;
+	} 
+	
+	if((level == 1)&&(m_lowLevelType == CellContent::GROUND))
+	{
+		return &m_ground;
+	} 	
 	
 	return nullptr;
 }
-
-GroundContent* ClimateCell::GetGroundContent(int32_t level)
-{
-	if(IsCheckContent(level, CellContent::GROUND))
-	{
-		return reinterpret_cast<GroundContent*>(m_levels[level]);
-	}
-	
-	return nullptr;
-}
-
-WaterContent* ClimateCell::GetWaterContent(int32_t level)
-{
-	if(IsCheckContent(level, CellContent::WATER))
-	{
-		return reinterpret_cast<WaterContent*>(m_levels[level]);
-	}
-	
-	return nullptr;
-}
-
-void ClimateCell::AddContent(int32_t level, CellContent* pContent)
-{
-	if((level < 0)||(level >= CLIMATE_LEVELS))
-	{
-		return;
-	}
-	
-	if(m_levels[level] != nullptr)
-	{
-		delete m_levels[level];
-	}
-	
-	m_levels[level] = pContent;
-}
-
-
 

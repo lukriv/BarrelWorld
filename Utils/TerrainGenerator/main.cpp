@@ -249,13 +249,13 @@ void writeClimateMoveSelection(int32_t climateMoveLevel, bool force)
 	switch (climateMoveLevel)
 	{
 		case 0:
-			str = "high";
+			str = "water";
 			break;
 		case 1:
 			str = "low";
 			break;
 		case 2:
-			str = "water";
+			str = "high";
 			break;
 	}
 

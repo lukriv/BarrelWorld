@@ -93,8 +93,12 @@ public:
 	Urho3D::Vector2 m_dynamicForce;
 	
 	Urho3D::Vector2 m_lowForce; // force direction between neightbour cells
+	
+	//Urho3D::Vector2 m_highForce; // high force direction between neightbour cells
 
 	Urho3D::Vector2 m_lowWind; // horizontal direction of wind at ground level
+	
+	//Urho3D::Vector2 m_highWind; // horizontal direction of wind at high
 	
 	AirContent() : CellContent(CellContent::AIR)
 		, m_baseAltitude(0)
@@ -132,29 +136,54 @@ public:
 	{}
 };
 
-#define CLIMATE_LEVELS 3
+#define CLIMATE_LEVELS 2
 
 class ClimateCell
 {
-	
+	CellContent::ContentType m_lowLevelType;
+	ClimateCell *m_neightbours[8];
 	CellContent *m_levels[CLIMATE_LEVELS];
+	AirContent m_air;
+	WaterContent m_water;
+	GroundContent m_ground;
 public:
 	ClimateCell();
 	~ClimateCell();
 	
+	inline ClimateCell* GetNeightbour(int32_t index) const { return m_neightbours[index]; }
+	inline void SetNeightbour(int32_t index, ClimateCell* pNeightbour) { m_neightbours[index] = pNeightbour; }
+	
 	CellContent* GetContent(int32_t level);
 	
-	CellContent* GetContent(int32_t level) const;
+	const CellContent* GetContent(int32_t level) const;
 	
-	bool IsCheckContent(int32_t level, CellContent::ContentType type) const;
+	inline bool IsCheckContent(int32_t level, CellContent::ContentType type) const
+	{
+		if(level == 0)
+		{
+			return (CellContent::AIR == type);
+		}
+		
+		if(level == 1)
+		{
+			return (m_lowLevelType == type);
+		}
+		
+		return false;
+	}
 	
-	AirContent* GetAirContent(int32_t level);
-	GroundContent* GetGroundContent(int32_t level);
-	WaterContent* GetWaterContent(int32_t level);
+	inline bool IsCheckContent(CellContent::ContentType type) const
+	{
+		return (m_lowLevelType == type);
+	}
 	
-	AirContent* GetAirContent(int32_t level) const;
+	inline AirContent& GetAirContent() { return m_air; }
+	inline GroundContent& GetGroundContent() { return m_ground; }
+	inline WaterContent& GetWaterContent() { return m_water; }
 	
-	void AddContent( int32_t level, CellContent* pContent );
+	inline const AirContent& GetAirContent() const { return m_air; }
+	
+	inline void SetLowContent( CellContent::ContentType contType ) { m_lowLevelType = contType; }
 	
 };
 

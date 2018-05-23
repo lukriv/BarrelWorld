@@ -51,12 +51,12 @@ private:
 	MapContainerDIR GetWindDest(Urho3D::Vector2 &windVec);
 	
 	void Evaporation(ClimateCell& cell);
-	void AirForceComp(AirContent &air, int32_t x, int32_t y, float sinLatitude);
-	void AirLowWindMassChange(AirContent &source, int32_t x, int32_t y);
-	void AirHighWindMassChange(AirContent &source, int32_t x, int32_t y);
+	void AirForceComp(ClimateCell &air, int32_t x, int32_t y, float sinLatitude);
+	void AirLowWindMassChange(ClimateCell &source, int32_t x, int32_t y);
+	void AirHighWindMassChange(ClimateCell &source, int32_t x, int32_t y);
 	
-	void WaterForceComp(WaterContent &water, int32_t x, int32_t y, float sinLatitude);
-	void WaterStreamMassChange(WaterContent &source, int32_t x, int32_t y);
+	void WaterForceComp(ClimateCell &water, int32_t x, int32_t y, float sinLatitude);
+	void WaterStreamMassChange(ClimateCell &source, int32_t x, int32_t y);
 	
 	void Cooling(ClimateCell &cell);
 	void Precipitation(ClimateCell &cell);
