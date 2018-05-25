@@ -3,9 +3,8 @@
   <Project Name="TerrainGenerator" Path="TerrainGenerator/TerrainGenerator.project" Active="Yes"/>
   <Project Name="extern" Path="../Source/extern/extern.project" Active="No"/>
   <BuildMatrix>
-    <WorkspaceConfiguration Name="Debug" Selected="yes">
+    <WorkspaceConfiguration Name="Debug" Selected="no">
       <Environment/>
-      <Project Name="TerrainGenerator" ConfigName="Debug"/>
       <Project Name="TerrainGenerator" ConfigName="Debug"/>
       <Project Name="extern" ConfigName="Debug"/>
     </WorkspaceConfiguration>
@@ -13,6 +12,16 @@
       <Environment/>
       <Project Name="TerrainGenerator" ConfigName="Release"/>
       <Project Name="TerrainGenerator" ConfigName="Release"/>
+      <Project Name="extern" ConfigName="Debug"/>
+    </WorkspaceConfiguration>
+    <WorkspaceConfiguration Name="Debug64" Selected="yes">
+      <Environment/>
+      <Project Name="TerrainGenerator" ConfigName="Debug64"/>
+      <Project Name="extern" ConfigName="Debug"/>
+    </WorkspaceConfiguration>
+    <WorkspaceConfiguration Name="Release64" Selected="no">
+      <Environment/>
+      <Project Name="TerrainGenerator" ConfigName="Release64"/>
       <Project Name="extern" ConfigName="Debug"/>
     </WorkspaceConfiguration>
   </BuildMatrix>
