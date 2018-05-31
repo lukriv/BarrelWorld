@@ -256,18 +256,24 @@ float ClimateUtils::GetSpecificHeat(CellContent::ContentType contType)
 	}
 }
 
+static const float CONDUCTIVITY_COEF = 100;
+static const float WATER_CONDUCTIVITY = 0.60*CONDUCTIVITY_COEF;
+static const float AIR_CONDUCTIVITY = 0.026*CONDUCTIVITY_COEF;
+static const float ICE_CONDUCTIVITY = 2.30*CONDUCTIVITY_COEF;
+static const float GROUND_CONDUCTIVITY = 0.95*CONDUCTIVITY_COEF;
+
 float ClimateUtils::GetThermalConductivity(CellContent::ContentType contType)
 {
 	switch(contType)
 	{
 		case CellContent::AIR:
-			return 0.26; // *10
+			return AIR_CONDUCTIVITY; // *1
 		case CellContent::WATER:
-			return 6.0; // *10
+			return WATER_CONDUCTIVITY; // *1
 		case CellContent::ICE:
-			return 23.0; // *10
+			return ICE_CONDUCTIVITY; // *1
 		case CellContent::GROUND:
-			return 9.5;// *10
+			return GROUND_CONDUCTIVITY;// *1
 		default:
 			return 0.0;
 	}

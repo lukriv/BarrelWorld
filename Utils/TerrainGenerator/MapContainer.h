@@ -22,6 +22,7 @@ struct SphereMapCoords {
 	{
 		if(x < 0) x = mapSizeX - (std::abs(x)%mapSizeX);
 		if(x >= mapSizeX) x = x%mapSizeX;
+		//x = (x+mapSizeX)%mapSizeX;
 		if(y < 0)
 		{
 			y = std::abs(y+1)%mapSizeY;

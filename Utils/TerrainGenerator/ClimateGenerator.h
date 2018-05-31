@@ -22,10 +22,12 @@ public:
 private:
 	float m_oneStepHeat;
 	float m_timeStep;
+	float m_timeStepPerSquare;
 	int32_t m_sunPosX; // Sun positionX
 	int32_t m_sunPosY; // Sun positionY
 	int32_t m_sunRadius;
 	int32_t m_sunStep;
+	int32_t m_sunStepSize;
 	int32_t m_waterLevel;
 	MapContainer<uint8_t, SphereMapCoords>& m_map;
 	MapContainer<ClimateCell, SphereMapCoords>& m_climateMap;
