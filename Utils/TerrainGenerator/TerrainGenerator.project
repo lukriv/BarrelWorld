@@ -8,6 +8,11 @@
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="src">
+    <File Name="SerializableTG.h"/>
+    <File Name="ClimateMap.cpp"/>
+    <File Name="ClimateMap.h"/>
+    <File Name="HeightMap.cpp"/>
+    <File Name="HeightMap.h"/>
     <File Name="ClimateUtils.cpp"/>
     <File Name="ClimateUtils.h"/>
     <File Name="ClimateGenerator.cpp"/>

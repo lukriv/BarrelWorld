@@ -2,7 +2,7 @@
 #define __CELLULAR_AUTOMATON_MAP_GENERATOR_H__
 
 #include <cstdint>
-#include "MapContainer.h"
+#include "HeightMap.h"
 
 
 
@@ -37,7 +37,7 @@ public:
 		
 	};
 
-	static void GenerateMap(MapContainer<uint8_t, SphereMapCoords> &map, const Params& params);
+	static void GenerateMap(HeightMap &map, const Params& params);
 };
 
 #endif //__CELLULAR_AUTOMATON_MAP_GENERATOR_H__

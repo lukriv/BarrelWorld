@@ -43,7 +43,7 @@ std::ostream& operator<< (std::ostream& os, const Region& reg)
 	return os;
 }
 
-bool IsErodible(MapContainer<uint8_t, SphereMapCoords>& map, int32_t ix, int32_t iy)
+bool IsErodible(HeightMap& map, int32_t ix, int32_t iy)
 {
 	int32_t nx, ny;
 	uint8_t cElev = map.GetCellValue(ix, iy);
@@ -63,10 +63,10 @@ bool IsErodible(MapContainer<uint8_t, SphereMapCoords>& map, int32_t ix, int32_t
 	return false;
 }
 
-void ContinentMapGenerator::GenerateMap(MapContainer<uint8_t, SphereMapCoords>& map, const ContinentMapGenerator::Params& params)
+void ContinentMapGenerator::GenerateMap(HeightMap& map, const ContinentMapGenerator::Params& params)
 {
 	int32_t totalMapSize = map.GetSizeX()*map.GetSizeY();
-	MapContainer<uint8_t, SphereMapCoords> searchMap;
+	HeightMap searchMap;
 	searchMap.Initialize(map.GetSizeX(), map.GetSizeY());
 	
 	map.FillMap(0);
@@ -339,7 +339,7 @@ void ContinentMapGenerator::GenerateMap(MapContainer<uint8_t, SphereMapCoords>& 
 	
 }
 
-void ContinentMapGenerator::ErodeMap(MapContainer<uint8_t, SphereMapCoords>& map, const Params& params)
+void ContinentMapGenerator::ErodeMap(HeightMap& map, const Params& params)
 {
 	// skip erosion if it is not desired
 	if(params.m_erosion == 0) return;
@@ -349,7 +349,7 @@ void ContinentMapGenerator::ErodeMap(MapContainer<uint8_t, SphereMapCoords>& map
 	
 	// erosion
 	// find erodable cells 
-	MapContainer<uint8_t, SphereMapCoords> searchMap;
+	HeightMap searchMap;
 	searchMap.Initialize(map.GetSizeX(), map.GetSizeY());
 	std::queue<MapNode> erodibleCells;
 	

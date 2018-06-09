@@ -256,7 +256,7 @@ float ClimateUtils::GetSpecificHeat(CellContent::ContentType contType)
 	}
 }
 
-static const float CONDUCTIVITY_COEF = 100;
+static const float CONDUCTIVITY_COEF = 50;
 static const float WATER_CONDUCTIVITY = 0.60*CONDUCTIVITY_COEF;
 static const float AIR_CONDUCTIVITY = 0.026*CONDUCTIVITY_COEF;
 static const float ICE_CONDUCTIVITY = 2.30*CONDUCTIVITY_COEF;

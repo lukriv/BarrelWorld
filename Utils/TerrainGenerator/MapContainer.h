@@ -6,6 +6,8 @@
 #include <cmath>
 #include <cstring>
 #include <new>
+#include <iostream>
+#include "SerializableTG.h"
 
 struct ToroidMapCoords {
 	void operator()(int32_t mapSizeX, int32_t mapSizeY, int32_t &x, int32_t &y) const
@@ -53,7 +55,7 @@ enum MapContainerDIR {
 template<typename TCellValue, class MapCoords>
 class MapContainer
 {
-private:
+protected:
 	int32_t m_sizeX;
 	int32_t m_sizeY;
 	int32_t m_totalSize;
@@ -71,7 +73,7 @@ public:
 	
 public:
 	MapContainer() : m_sizeX(0), m_sizeY(0), m_totalSize(0), m_pMap(nullptr) {}
-	~MapContainer()
+	virtual ~MapContainer()
 	{
 		Release();
 	}
@@ -130,6 +132,9 @@ public:
 	
 	int32_t GetSizeX() const { return m_sizeX; }
 	int32_t GetSizeY() const { return m_sizeY; }
+	
+	int32_t GetTotalSize() const { return m_totalSize; }
+	
 	TCellValue* GetData() { return m_pMap; };
 	
 	void SetCellValue(int32_t x, int32_t y, TCellValue value)
@@ -142,6 +147,40 @@ public:
 	{
 		FnMapCoords(m_sizeX, m_sizeY, x, y);
 		return *(m_pMap + y*m_sizeX + x);
+	}
+	
+	bool LoadHeader(std::istream& input, int32_t sign, int32_t version)
+	{
+		int32_t loadedSign = 0;
+		int32_t loadedVer = 0;
+		//signiture
+		SerializableTG::Load(input, loadedSign);
+		
+		if(loadedSign != sign) return false;
+		
+		//version
+		SerializableTG::Load(input, loadedVer);
+		
+		if (loadedVer != version) return false;
+		
+		//size
+		SerializableTG::Load(input, m_sizeX);
+		SerializableTG::Load(input, m_sizeY);
+		
+		return Initialize(m_sizeX, m_sizeY);
+	}
+	
+	bool StoreHeader(std::ostream& output, int32_t sign, int32_t version) const
+	{
+		//signiture
+		SerializableTG::Store(output, sign);
+		//version
+		SerializableTG::Store(output, version);
+		//size
+		SerializableTG::Store(output, m_sizeX);
+		SerializableTG::Store(output, m_sizeY);
+		
+		return true;
 	}
 	
 };

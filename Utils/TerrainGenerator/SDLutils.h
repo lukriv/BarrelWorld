@@ -17,11 +17,11 @@ public:
 		CLIMATE_LEVEL_1,
 		CLIMATE_LEVEL_2,
 		CLIMATE_LEVEL_3,
-		CLIMATE_FORCE,
 		CLIMATE_MOVE_HIGH,
 		CLIMATE_MOVE,
 		CLIMATE_TEMPERATURE,
 		CLIMATE_CLOUDS,
+		CLIMATE_MOISTURE,
 		CLIMATE_PRESSURE,
 		CLIMATE_VOLUME,
 		CLIMATE_STEP,
@@ -34,6 +34,8 @@ public:
 		WHEEL_DOWN,
 		WHEEL_UP,
 		MOUSE_CLICK,
+		LOAD_MAPS,
+		STORE_MAPS,
 		QUIT
 	};
 	
@@ -83,6 +85,8 @@ public:
 	
 	void writeClouds(const ClimateCell *map, int32_t mapSizeX, int32_t mapSizeY);
 	
+	void writeMoisture(const ClimateCell *map, int32_t mapSizeX, int32_t mapSizeY);
+	
 	void writeMove(const ClimateCell *map, int32_t mapSizeX, int32_t mapSizeY, int32_t flags );
 	
 	void writeSun(int32_t x, int32_t y);
@@ -98,6 +102,7 @@ private:
 	void writePressure(const CellContent* cont, int32_t xPos, int32_t yPos, int32_t flags = 0);
 	void writeVolume(const CellContent* cont, int32_t xPos, int32_t yPos, int32_t flags = 0);
 	void writeClouds(const AirContent* cont, int32_t xPos, int32_t yPos, int32_t flags = 0);
+	void writeMoisture(const ClimateCell& cont, int32_t xPos, int32_t yPos, int32_t flags);
 };
 
 #endif // __SDL_UTILITIES_H__

@@ -273,8 +273,8 @@ SDLutils *gSDL = nullptr;
 int WinMain(int argc, char **argv)
 {
 	std::vector<UniversalParam> paramsList;
-	MapContainer<uint8_t, SphereMapCoords> map;
-	MapContainer<ClimateCell, SphereMapCoords> climateMap;
+	HeightMap map;
+	ClimateMap climateMap;
 	
 	std::ofstream file("output.txt");
 	InitializeDebugConsole();
@@ -296,6 +296,7 @@ int WinMain(int argc, char **argv)
 	
 	int32_t mapx,mapy;
 	bool quit = false;
+	bool load = false;
 	while (!quit)
 	{
 		*gErrOut << " ---Start--- " << std::endl;
@@ -329,27 +330,81 @@ int WinMain(int argc, char **argv)
 		
 		for(auto &par: paramsList)
 		{
+			std::ifstream ifs;
+			if(!load) 
+			{	
 			
-			switch(par.m_type)
-			{
-				case UniversalParam::CELL :
-					CellularAutomatonMapGenerator::GenerateMap(map, par.m_cellParams);
+				switch(par.m_type)
+				{
+					case UniversalParam::CELL :
+						CellularAutomatonMapGenerator::GenerateMap(map, par.m_cellParams);
+						break;
+					case UniversalParam::CONT :
+						waterLevel = par.m_contParams.m_waterLevel;
+						
+						ContinentMapGenerator::GenerateMap(map, par.m_contParams);
+						//gSDL->writeMap( map.GetData(), map.GetSizeX(), map.GetSizeY(), waterLevel);
+						//gSDL->waitForAction();
+						ContinentMapGenerator::ErodeMap(map, par.m_contParams);
+						
+						break;
+					case UniversalParam::UNDEF :
+						*gErrOut << "Parameter has unknown type" << std::endl;
+						return -1;
+				}
+			
+			} else {
+				//load stored map
+				
+				ifs.open("height.map", std::ifstream::in|std::ifstream::binary);
+				if(!map.Load(ifs))
+				{
+					load = false; // do not repeat load
+					*gErrOut << "Height map load failed" << std::endl;
 					break;
-				case UniversalParam::CONT :
-					waterLevel = par.m_contParams.m_waterLevel;
-					
-					ContinentMapGenerator::GenerateMap(map, par.m_contParams);
-					//gSDL->writeMap( map.GetData(), map.GetSizeX(), map.GetSizeY(), waterLevel);
-					//gSDL->waitForAction();
-					//ContinentMapGenerator::ErodeMap(map, par.m_contParams);
-					
-					break;
-				case UniversalParam::UNDEF :
-					*gErrOut << "Parameter has unknown type" << std::endl;
-					return -1;
+				}
+				
+				
+				
+				*gErrOut << "Height map load was successful" << std::endl;
+				
+				//ifs.open("climate.map", std::ifstream::in|std::ifstream::binary);
+				//if(!map.Load(ifs))
+				//{
+				//	*gErrOut << "Height map load failed" << std::endl;
+				//	break;
+				//}
+				//
+				//*gErrOut << "Climate map loaded successfuly" << std::endl;
 			}
 			
 			ClimateGenerator climate(map, climateMap, waterLevel);
+			
+			if(load)
+			{
+				load = false;
+				
+				if(!climateMap.Load(ifs))
+				{
+					*gErrOut << "Climate map load failed" << std::endl;
+					break;
+				}
+				
+				*gErrOut << "Climate map loaded successfuly" << std::endl;
+				
+				if(!climate.Load(ifs))
+				{
+					*gErrOut << "Climate parameters load failed" << std::endl;
+					break;
+				}
+				
+				*gErrOut << "Climate parameters loaded successfuly" << std::endl;
+				
+				ifs.close();
+				
+				waterLevel = climate.GetWaterLevel();
+			}
+			
 			
 			gSDL->writeMap( map.GetData(), map.GetSizeX(), map.GetSizeY(), waterLevel);
 			
@@ -359,8 +414,8 @@ int WinMain(int argc, char **argv)
 			
 			int32_t climateLevel = -1;
 			bool climateMove = false;
-			int32_t climateMoveHigh = 0;
-			bool climateMoveForce = false;
+			int32_t climateMoveHigh = 1;
+			bool climateMoisture = false;
 			bool climateTemp = false;
 			bool climateClouds = false;
 			bool climatePressure = false;
@@ -371,11 +426,11 @@ int WinMain(int argc, char **argv)
 				||(act == SDLutils::ACTION::CLIMATE_LEVEL_1)
 				||(act == SDLutils::ACTION::CLIMATE_LEVEL_2)
 				||(act == SDLutils::ACTION::CLIMATE_LEVEL_3)
-				||(act == SDLutils::ACTION::CLIMATE_FORCE)
 				||(act == SDLutils::ACTION::CLIMATE_TEMPERATURE)
 				||(act == SDLutils::ACTION::CLIMATE_MOVE_HIGH)
 				||(act == SDLutils::ACTION::CLIMATE_MOVE)
 				||(act == SDLutils::ACTION::CLIMATE_CLOUDS)
+				||(act == SDLutils::ACTION::CLIMATE_MOISTURE)
 				||(act == SDLutils::ACTION::CLIMATE_PRESSURE)
 				||(act == SDLutils::ACTION::CLIMATE_VOLUME)
 				||(act == SDLutils::ACTION::CLIMATE_SUN_POSITION)
@@ -387,7 +442,8 @@ int WinMain(int argc, char **argv)
 				||(act == SDLutils::ACTION::UP)
 				||(act == SDLutils::ACTION::DOWN)
 				||(act == SDLutils::ACTION::LEFT)
-				||(act == SDLutils::ACTION::RIGHT))
+				||(act == SDLutils::ACTION::RIGHT)
+				||(act == SDLutils::ACTION::STORE_MAPS))
 			{
 				switch(act)
 				{
@@ -403,28 +459,24 @@ int WinMain(int argc, char **argv)
 					case SDLutils::ACTION::CLIMATE_LEVEL_3:
 						climateLevel = 2;
 						break;
-					case SDLutils::ACTION::CLIMATE_FORCE:
-						//climateMoveForce = !climateMoveForce; - no force change
-						if(climateMove)
-						{
-							writeClimateMoveSelection(climateMoveHigh, climateMoveForce);
-						}
+					case SDLutils::ACTION::CLIMATE_MOISTURE:
+						climateMoisture = !climateMoisture; //no force change
 						break;
 					case SDLutils::ACTION::CLIMATE_TEMPERATURE:
 						climateTemp = !climateTemp;
 						break;
 					case SDLutils::ACTION::CLIMATE_MOVE_HIGH:
-						climateMoveHigh = (climateMoveHigh + 1) % 2;
+						climateMoveHigh = ((climateMoveHigh) % 2) + 1;
 						if(climateMove)
 						{
-							writeClimateMoveSelection(climateMoveHigh, climateMoveForce);
+							writeClimateMoveSelection(climateMoveHigh, false);
 						}
 						break;
 					case SDLutils::ACTION::CLIMATE_MOVE:
 						climateMove = !climateMove;
 						if(climateMove)
 						{
-							writeClimateMoveSelection(climateMoveHigh, climateMoveForce);
+							writeClimateMoveSelection(climateMoveHigh, false);
 						} else {
 							std::cout << "Disable move display" << std::endl;
 						}
@@ -442,18 +494,33 @@ int WinMain(int argc, char **argv)
 						climateSunPosition = !climateSunPosition;
 						break;
 					case SDLutils::ACTION::CLIMATE_FAST_STEP:
+					{
+						std::cout << "Fast step:" << std::endl;
+						std::cout << "[0%.................100%]" << std::endl;
+
 						try {
-							for(int32_t r = 0; r < 100; ++r)
+							int32_t rounds = 100;
+							int32_t base = rounds/25;
+							for(int32_t r = 0; r < rounds; ++r)
+							{
 								climate.SimulateClimateStep();
+								if((r % base) == 0)
+								{
+									std::cout << "#";
+								}
+							}
+							std::cout << std::endl;	
 							
 						} catch (ClimateGenerator::ClimateException e) {
 							std::cout << "Exception: " << e.what() << std::endl;
 						}
+					}
 					case SDLutils::ACTION::CLIMATE_STEP:
 						try {
 							climate.SimulateClimateStep();
 							std::cout << " -- Climate simulation End --" << std::endl;
 							writeClimateStatistics(*gErrOut, climateMap, waterLevel);
+							std::cout << "Cooling temperature: " << climate.GetCoolingTemp() << " C" << std::endl;
 						} catch (ClimateGenerator::ClimateException e) {
 							std::cout << "Exception: " << e.what() << std::endl;
 						}
@@ -483,6 +550,38 @@ int WinMain(int argc, char **argv)
 					case SDLutils::ACTION::RIGHT:
 						gSDL->updateScreenBegin(1, 0);
 						break;
+					case SDLutils::ACTION::STORE_MAPS:
+					{
+						std::ofstream ofs ("height.map", std::ofstream::out|std::ifstream::binary);
+						if(!map.Store(ofs))
+						{
+							*gErrOut << "Height map store failed" << std::endl;
+							break;
+						}
+						
+						*gErrOut << "Height map store was successful" << std::endl;
+						
+						if(!climateMap.Store(ofs))
+						{
+							*gErrOut << "Climate map store failed" << std::endl;
+							break;
+						}
+						
+						*gErrOut << "Climate map store was successful" << std::endl;
+						
+						if(!climate.Store(ofs))
+						{
+							*gErrOut << "Climate params store failed" << std::endl;
+							break;
+						}
+						
+						*gErrOut << "Climate params store was successful" << std::endl;
+				
+						ofs.close();
+						
+						*gErrOut << "Storing was successful" << std::endl;
+					}
+						break;
 					default:
 						break;
 				}
@@ -500,6 +599,11 @@ int WinMain(int argc, char **argv)
 					gSDL->writeClimateMap(climateMap.GetData(), climateMap.GetSizeX(), climateMap.GetSizeY(), climateLevel, flags);
 				}
 				
+				if(climateMoisture)
+				{
+					gSDL->writeMoisture(climateMap.GetData(), climateMap.GetSizeX(), climateMap.GetSizeY());
+				}
+				
 				if(climateClouds)
 				{
 					gSDL->writeClouds(climateMap.GetData(), climateMap.GetSizeX(), climateMap.GetSizeY());
@@ -508,7 +612,7 @@ int WinMain(int argc, char **argv)
 				if(climateMove)
 				{
 					int32_t flags = 0;
-					flags |= (climateMoveForce)?SDLutils::MOVE_FORCE : 0;
+					//flags |= (climateMoveForce)?SDLutils::MOVE_FORCE : 0;
 					flags |= (climateMoveHigh == 2)?SDLutils::MOVE_HIGH : (climateMoveHigh == 0)? SDLutils::MOVE_WATER : 0;
 					gSDL->writeMove(climateMap.GetData(), climateMap.GetSizeX(), climateMap.GetSizeY(), flags);
 				}
@@ -525,6 +629,12 @@ int WinMain(int argc, char **argv)
 			
 			if(act == SDLutils::ACTION::RELOAD)
 			{
+				break;
+			}
+			
+			if(act == SDLutils::ACTION::LOAD_MAPS)
+			{
+				load = true;
 				break;
 			}
 			

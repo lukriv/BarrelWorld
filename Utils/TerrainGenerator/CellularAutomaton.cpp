@@ -10,7 +10,7 @@
 //#include "utils.h"
 
 
-void CellularAutomatonMapGenerator::GenerateMap(MapContainer<uint8_t, SphereMapCoords> &map, const CellularAutomatonMapGenerator::Params& params)
+void CellularAutomatonMapGenerator::GenerateMap(HeightMap &map, const CellularAutomatonMapGenerator::Params& params)
 {
 	std::default_random_engine generator(std::chrono::system_clock::now().time_since_epoch().count());
 	std::uniform_int_distribution<int32_t> distribution(0,99);

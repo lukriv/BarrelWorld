@@ -2,7 +2,7 @@
 #define __CONTITNENT_MAP_GENERATOR__H__
 
 #include <cstdint>
-#include "MapContainer.h"
+#include "HeightMap.h"
 
 class ContinentMapGenerator {
 public:
@@ -55,9 +55,9 @@ public:
 	};
 
 
-	static void GenerateMap(MapContainer<uint8_t, SphereMapCoords>& map, const Params& params);
+	static void GenerateMap(HeightMap& map, const Params& params);
 	
-	static void ErodeMap(MapContainer<uint8_t, SphereMapCoords>& map, const Params& params);
+	static void ErodeMap(HeightMap& map, const Params& params);
 	
 };
 
