@@ -8,6 +8,12 @@
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="src">
+    <File Name="SimpleClimateCell.cpp"/>
+    <File Name="SimpleClimateCell.h"/>
+    <File Name="SimpleClimateGenerator.cpp"/>
+    <File Name="SimpleClimateGenerator.h"/>
+    <File Name="SimpleClimateMap.cpp"/>
+    <File Name="SimpleClimateMap.h"/>
     <File Name="SerializableTG.h"/>
     <File Name="ClimateMap.cpp"/>
     <File Name="ClimateMap.h"/>

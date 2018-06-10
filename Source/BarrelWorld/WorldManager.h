@@ -8,6 +8,7 @@
 #include <Urho3D/Container/RefCounted.h>
 #include <Urho3D/Graphics/Viewport.h>
 #include "TerrainTile.h"
+#include "ActualMission.h"
 
 
 namespace Urho3D {
@@ -28,6 +29,7 @@ namespace BW
 		Urho3D::WeakPtr<Urho3D::Node> m_spCameraNode;
 		
 		Urho3D::SharedPtr<TerrainTile> m_spTerrainMgr;
+		Urho3D::SharedPtr<ActualMission> m_spActualMission;
 		
 		Urho3D::WeakPtr<Urho3D::Viewport> m_spViewport;
 		
@@ -60,6 +62,8 @@ namespace BW
 	protected:
 		void CreateCamera();
 		void CreateLights();
+		
+		void GenerateEnemies();
 		
 		void SwitchCameraToCharacterMode();
 		

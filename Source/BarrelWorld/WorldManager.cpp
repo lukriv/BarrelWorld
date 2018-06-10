@@ -167,6 +167,8 @@ void BW::WorldManager::NewGame()
 	
 	CreateLights();
 	
+	m_spActualMission = new ActualMission();
+	
 	if(m_spTerrainMgr.Null())
 	{
 		m_spTerrainMgr = new TerrainTile(m_pApp, m_spMainScene);
@@ -181,6 +183,11 @@ void BW::WorldManager::NewGame()
 	m_spAvatarNode = EntityCreator::CreateAvatar("Avatar", m_pApp, m_spMainScene);
 	
 	m_spAvatarNode->SetPosition(vec + Vector3(0,25,0));
+	
+	for(int32_t i = 0; i < 10; ++i)
+	{
+		m_spActualMission->CreateEnemy(m_spMainScene, m_pApp);
+	}
 	
 	String str;
 	str.AppendWithFormat("Terrain position: %f, %f, %f", vec.x_, vec.y_, vec.z_);
@@ -289,3 +296,7 @@ float BW::WorldManager::GetAvatarYaw( int32_t x, int32_t y)
 	
 }
 
+
+void BW::WorldManager::GenerateEnemies()
+{
+}

@@ -59,7 +59,7 @@ void BW::TerrainTile::GenerateTerrainParameters(TerrainParams& params)
 	HillParams hillParams;
 	//set parameters
 	
-	hillParams.m_count = 15;
+	hillParams.m_count = 1;
 	hillParams.m_maxHeight = 39;
 	hillParams.m_minHeight = 15;
 	hillParams.m_minTopSize = 3;

@@ -8,6 +8,7 @@
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="src">
+    <File Name="ActualMission.cpp"/>
     <File Name="TerrainTile.cpp"/>
     <File Name="TerrainDef.cpp"/>
     <File Name="DebugTools.cpp"/>
@@ -28,6 +29,7 @@
   <Dependencies Name="Debug"/>
   <Dependencies Name="Release"/>
   <VirtualDirectory Name="include">
+    <File Name="ActualMission.h"/>
     <File Name="TerrainTile.h"/>
     <VirtualDirectory Name="utils">
       <File Name="PerlinNoise.h"/>

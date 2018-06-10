@@ -31,7 +31,16 @@ private:
 	int32_t m_sunRadius;
 	int32_t m_sunStep;
 	int32_t m_sunStepSize;
+	
+	int32_t m_sunVerticalPos;
+	int32_t m_sunVerticalStepSize;
+	int32_t m_sunVerticalDirection;
+	int32_t m_sunVerticalMaximum;
+	int32_t m_sunVerticalStepCounter;
+	
 	int32_t m_waterLevel;
+	
+	int32_t m_stepCounter;
 
 	HeightMap& m_map;
 	ClimateMap& m_climateMap;
@@ -86,6 +95,7 @@ private:
 
 
 	void SunHeatingStep();
+	void SunHeatingDaylongStep();
 	void OneCellStep();
 	void AirMoveStep();
 	void WaterMoveStep();
