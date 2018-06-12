@@ -16,10 +16,14 @@ const float GROUND_WATER_CAPACITY = 1000; // in kg - defines when the water begi
 const float GROUND_HEAT_METERS = 3;
 const float GROUND_WATER_RUNOFF = 0.1;
 
+const float ATHMOSPHERIC_REFLECTION = 0.3;
 const float ATHMOSPHERIC_ABSORBTION =  	0.175; //
-
 const float CLOUDS_SCATTERED =  0.145; //
-const float SUN_POWER = 1400; // power [W] per square meter
+const float GROUND_REFLECTION = 0.04;
+
+const float SUN_POWER = 1400; // power [W/m^2]
+const float REAL_SUN_POWER = (1 - ATHMOSPHERIC_REFLECTION)*SUN_POWER;
+
 
 const float GRAV_ACC = 10;
 
@@ -42,13 +46,15 @@ const float BASE_TEMPERATURE = 15 + 273;
 const float PRESSURE_FACTOR = 0.5;
 const float VOLUME_FACTOR = 0.6;
 
+
+const float HEAT_TRANSFER_COEFICIENT_AIR = 20; // can be 5 - 37 W/(m^2*K) heat transfer coefficient for air
+const float HEAT_TRANSFER_COEFICIENT_WATER = 200; // can be 100 - 1200 W/(m^2*K) heat transfer coefficient for water
+
 // non parameters
 const float SQUARE_SIZE = SQUARE_SIDE_SIZE* SQUARE_SIDE_SIZE;
 const float nS = 0.5*SQUARE_SIDE_SIZE; // normalized surface for force computing
 
-
 const float SALT_MASS_ON_SQUARE_METER = 35; // kilo per cubic meter
-
 
 
 const float ANGULAR_VELOCITY = (2*PI)/(DAYLONG*TIME_STEP); // planet angular velocity
@@ -364,7 +370,7 @@ ClimateGenerator::ClimateGenerator(HeightMap& map, ClimateMap& climateMap, int32
 	
 	//m_sunStep = 1;
 	m_timeStepPerSquare = (DAYLONG*TIME_STEP)/(float)m_map.GetSizeX();
-	m_coolingTemperature = 180;
+	m_coolingTemperature = 220;
 }
 
 ClimateGenerator::~ClimateGenerator()
@@ -590,7 +596,7 @@ void ClimateGenerator::SunHeatingStep()
 	// add warm to the surface
 	for(int32_t y = m_sunPosY - (m_map.GetSizeY() / 2); y < m_sunPosY + (m_map.GetSizeY() / 2); ++y) {
 		float degreeX = - (PI / 2);
-		cosY = std::abs(std::cos(degreeY)) * SUN_POWER * m_timeStepPerSquare;
+		cosY = std::abs(std::cos(degreeY)) * REAL_SUN_POWER * m_timeStepPerSquare;
 		for(int32_t x = m_sunPosX - (m_map.GetSizeY() / 2); x < m_sunPosX + (m_map.GetSizeY() / 2); ++x) {
 			ClimateCell& cell = m_climateMap.GetCellValue(x,y);
 			float degreeXtemp = degreeX;
@@ -600,11 +606,13 @@ void ClimateGenerator::SunHeatingStep()
 				degreeXtemp += degreeStep;
 			}
 
-			totalEnergyGround = totalEnergy;
-
 			{
 				AirContent &air = cell.GetAirContent();
 				AddHeat(air, (totalEnergy * ATHMOSPHERIC_ABSORBTION));
+				
+				// immediate update
+				air.m_temperature += air.m_temperatureDiff;
+				air.m_temperatureDiff = 0;
 
 				// is clouds
 				if(air.m_cloudsHeight < MEASURE_HEIGHT) {
@@ -619,12 +627,18 @@ void ClimateGenerator::SunHeatingStep()
 
 			//level = 1;
 			if(cell.IsCheckContent(CellContent::GROUND)) {
+				totalEnergyGround -= (totalEnergy*GROUND_REFLECTION);
 				AddHeat(cell.GetGroundContent(), totalEnergyGround);
-			}
-
-			if(cell.IsCheckContent(CellContent::WATER)) {
+				cell.GetGroundContent().m_temperature += cell.GetGroundContent().m_temperatureDiff;
+				cell.GetGroundContent().m_temperatureDiff = 0;
+			} else {
 				AddHeat(cell.GetWaterContent(), totalEnergyGround);
+				cell.GetWaterContent().m_temperature += cell.GetWaterContent().m_temperatureDiff;
+				cell.GetWaterContent().m_temperatureDiff = 0;
 			}
+			
+			totalEnergyGround = totalEnergy;
+			
 			degreeX += degreeStep;
 		}
 		degreeY += degreeStep;
@@ -637,7 +651,7 @@ void ClimateGenerator::SunHeatingStep()
 void ClimateGenerator::SunHeatingDaylongStep()
 {
 	static const float SIN_CONST = 114.59; // cumulated sinus multiplier
-	static const float HEAT_PER_LINE = SIN_CONST * 0.5 * (((float)DAYLONG*TIME_STEP*SUN_POWER)/180); // cumulated sinus multiplier
+	static const float HEAT_PER_LINE = SIN_CONST * 0.5 * (((float)DAYLONG*TIME_STEP*REAL_SUN_POWER)/180); // cumulated sinus multiplier
 	static const float degreeStep = PI / m_map.GetSizeY();
 	//static const float clA = 1/(MEASURE_HEIGHT - CLOADS_UNDER_HEIGHT);
 	//static const float clB = -CLOADS_UNDER_HEIGHT/(MEASURE_HEIGHT - CLOADS_UNDER_HEIGHT);
@@ -655,7 +669,7 @@ void ClimateGenerator::SunHeatingDaylongStep()
 		for(int32_t x = 0; x < m_map.GetSizeX(); ++x) {
 			ClimateCell& cell = m_climateMap.GetCellValue(x,y);
 			
-			totalEnergyGround = totalEnergy;
+			
 
 			{
 				AirContent &air = cell.GetAirContent();
@@ -677,6 +691,7 @@ void ClimateGenerator::SunHeatingDaylongStep()
 			//level = 1;
 			if(cell.IsCheckContent(CellContent::GROUND)) {
 				GroundContent &ground = cell.GetGroundContent();
+				totalEnergyGround -= (totalEnergy*GROUND_REFLECTION);
 				AddHeat(ground, totalEnergyGround);
 				// update temperature
 				ground.m_temperature += ground.m_temperatureDiff;
@@ -689,6 +704,9 @@ void ClimateGenerator::SunHeatingDaylongStep()
 				water.m_temperature += water.m_temperatureDiff;
 				water.m_temperatureDiff = 0;
 			}
+			
+			totalEnergyGround = totalEnergy;
+			
 		}
 		degreeY += degreeStep;
 	}
@@ -699,6 +717,8 @@ void ClimateGenerator::SunHeatingDaylongStep()
 
 void ClimateGenerator::Cooling(ClimateCell& cell)
 {
+	const float AIR_HTC = HEAT_TRANSFER_COEFICIENT_AIR/ClimateUtils::GetSpecificHeat(CellContent::AIR);
+	float resultTemp = 0.0;
 	float energyLoss = 0.0;
 	AirContent &air = cell.GetAirContent();
 	//GroundContent *pGround = nullptr;
@@ -706,9 +726,16 @@ void ClimateGenerator::Cooling(ClimateCell& cell)
 	//WaterContent *pDeepWater = nullptr;
 
 	{
-		energyLoss = (ClimateUtils::GetThermalConductivity(CellContent::AIR) * ( m_coolingTemperature - air.m_temperature) * m_timeStep * 15000)/(15000 - air.m_baseAltitude); //
-
+		//energyLoss = (ClimateUtils::GetThermalConductivity(CellContent::AIR) * ( m_coolingTemperature - air.m_temperature) * m_timeStep * 15000)/(15000 - air.m_baseAltitude); //
+		float beginTemp = ClimateUtils::CompRealAirTemp(air.m_temperature, air.m_baseAltitude, 15000);
+		// result temperature 
+		resultTemp = ClimateUtils::CompCoolingTemperature(beginTemp, m_coolingTemperature, AIR_HTC/air.m_airMass, m_timeStep); //
+		
+		//temp = heat / (cont.m_airMass * ClimateUtils::GetSpecificHeat(CellContent::AIR));
+		energyLoss = (beginTemp - resultTemp)*(air.m_airMass * ClimateUtils::GetSpecificHeat(CellContent::AIR));
+		
 		AddHeat(air, energyLoss);
+		
 		m_oneStepHeat += energyLoss;
 		//AddHeat(air, m_oneStepHeat);
 	}
@@ -1790,10 +1817,12 @@ void ClimateGenerator::WaterMassSpread(ClimateCell& sourceCell)
 		mass = source.m_evapWaterMass - pDest->m_evapWaterMass;
 		
 		if(mass < 0) continue;
-
-		heatChange = mass*ratio*ClimateUtils::GetSpecificHeat(CellContent::WATER)*(source.m_temperature - pDest->m_temperature);
+		
+		heatChange = ratio*(ClimateUtils::GetThermalConductivity(CellContent::WATER) * ( source.m_temperature - pDest->m_temperature ) * m_timeStep * LOW_WATER_METERS)/SQUARE_SIDE_SIZE;
+		//heatChange = mass*ratio*ClimateUtils::GetSpecificHeat(CellContent::WATER)*(source.m_temperature - pDest->m_temperature);
 
 		AddHeat(*pDest, heatChange);
+		AddHeat(source, -heatChange);
 
 	}
 

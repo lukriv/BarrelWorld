@@ -129,6 +129,10 @@ public:
 		return temp;
 	}
 
+	inline static float CompCoolingTemperature(float baseTemperature, float envTemperature, float coef, float timeChunk)
+	{
+		return envTemperature + (baseTemperature - envTemperature)*std::exp(-coef*timeChunk);
+	}
 	
 };
 

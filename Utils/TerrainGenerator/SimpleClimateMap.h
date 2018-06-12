@@ -9,7 +9,7 @@ class SimpleClimateMap : public MapContainer<SimpleClimateCell, SphereMapCoords>
 {
 public:
 	SimpleClimateMap() {}
-	~SimpleClimateMap() {}
+	virtual ~SimpleClimateMap() {}
 	
 	virtual	bool Load(std::istream& input) override;
 	virtual	bool Store(std::ostream& output) const override;
