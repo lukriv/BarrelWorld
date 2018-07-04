@@ -76,9 +76,9 @@
       </Debugger>
       <PreBuild/>
       <PostBuild>
-        <Command Enabled="yes">copy "c:\Program Files (x86)\mingw-w64\i686-7.2.0-posix-sjlj-rt_v5-rev1\mingw32\bin\libstdc++-6.dll" $(IntermediateDirectory)</Command>
-        <Command Enabled="yes">copy "c:\Program Files (x86)\mingw-w64\i686-7.2.0-posix-sjlj-rt_v5-rev1\mingw32\bin\libgcc_s_sjlj-1.dll" $(IntermediateDirectory)</Command>
-        <Command Enabled="yes">copy "c:\Program Files (x86)\mingw-w64\i686-7.2.0-posix-sjlj-rt_v5-rev1\mingw32\bin\libwinpthread-1.dll" $(IntermediateDirectory)</Command>
+        <Command Enabled="yes">copy "c:\Program Files (x86)\mingw-w64\i686-7.3.0-posix-sjlj-rt_v5-rev0\mingw32\bin\libstdc++-6.dll" $(IntermediateDirectory)</Command>
+        <Command Enabled="yes">copy "c:\Program Files (x86)\mingw-w64\i686-7.3.0-posix-sjlj-rt_v5-rev0\mingw32\bin\libgcc_s_sjlj-1.dll" $(IntermediateDirectory)</Command>
+        <Command Enabled="yes">copy "c:\Program Files (x86)\mingw-w64\i686-7.3.0-posix-sjlj-rt_v5-rev0\mingw32\bin\libwinpthread-1.dll" $(IntermediateDirectory)</Command>
       </PostBuild>
       <CustomBuild Enabled="no">
         <RebuildCommand/>

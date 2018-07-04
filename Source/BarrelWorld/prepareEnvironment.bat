@@ -11,8 +11,8 @@ if not defined externSubDir (
 	exit /B 5
 )
 
-if [%externSubDir%] EQU [win32] set mingwDir=C:\Program Files (x86)\mingw-w64\i686-7.2.0-posix-sjlj-rt_v5-rev1\mingw32\bin
-if [%externSubDir%] EQU [x64] set mingwDir=C:\Program Files\mingw-w64\x86_64-7.2.0-posix-seh-rt_v5-rev1\mingw64\bin
+if [%externSubDir%] EQU [win32] set mingwDir=C:\Program Files (x86)\mingw-w64\i686-7.3.0-posix-sjlj-rt_v5-rev0\mingw32\bin
+if [%externSubDir%] EQU [x64] set mingwDir=C:\Program Files\mingw-w64\x86_64-7.3.0-posix-seh-rt_v5-rev0\mingw64\bin
 
 if not exist .\%dest%\Urho3D.dll copy ..\..\extern\bin\%externSubDir%\Urho3D.dll .\%dest%
 

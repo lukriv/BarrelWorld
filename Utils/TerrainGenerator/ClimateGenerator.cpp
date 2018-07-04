@@ -79,6 +79,7 @@ const float MIN_AIR_PRESSURE_PROTECTION = 87000; // minimal air pressure [Pa]
 
 const float HEAT_OF_VAPORIZATION_OF_WATER = 2300000; // [ J/kg ]
 const float ENTHALPY_OF_FUSION_OF_WATER = 335000; // [ J/kg ]
+const float STEFAN_BOLTZMAN_CONSTANT = 5,670367e-8;
 
 const float WATER_FREEZING = 273; // freeze temperature [ K ]
 const float RAIN_HEIGHT = 1000; //
@@ -726,6 +727,7 @@ void ClimateGenerator::Cooling(ClimateCell& cell)
 	//WaterContent *pDeepWater = nullptr;
 
 	{
+		float energyRadiation = STEFAN_BOLTZMAN_CONSTANT*air.m_temperature*air.m_temperature*air.m_temperature*air.m_temperature; // M = sigma*T^4 
 		//energyLoss = (ClimateUtils::GetThermalConductivity(CellContent::AIR) * ( m_coolingTemperature - air.m_temperature) * m_timeStep * 15000)/(15000 - air.m_baseAltitude); //
 		float beginTemp = ClimateUtils::CompRealAirTemp(air.m_temperature, air.m_baseAltitude, 15000);
 		// result temperature 
