@@ -221,6 +221,8 @@ const float ClimateUtils::AIR_DENSITY = 1.25;
 const float ClimateUtils::ICE_DENSITY = 917.0;
 const float ClimateUtils::GROUND_DENSITY = 1700.0;
 
+const float ClimateUtils::STEFAN_BOLTZMAN_CONSTANT = 5.670367e-8;
+
 //float ClimateUtils::GetDewPointTemperature(float relHum)
 //{
 //	int32_t chunkSize = 100;

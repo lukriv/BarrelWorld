@@ -20,6 +20,8 @@ const float ATHMOSPHERIC_REFLECTION = 0.3;
 const float ATHMOSPHERIC_ABSORBTION =  	0.175; //
 const float CLOUDS_SCATTERED =  0.145; //
 const float GROUND_REFLECTION = 0.04;
+const float ATHMOSPHERIC_WINDOW = 0.05;
+const float ATHMOSPHERIC_GROUND_TRANSFER = 1.0 - ATHMOSPHERIC_WINDOW;
 
 const float SUN_POWER = 1400; // power [W/m^2]
 const float REAL_SUN_POWER = (1 - ATHMOSPHERIC_REFLECTION)*SUN_POWER;
@@ -79,7 +81,7 @@ const float MIN_AIR_PRESSURE_PROTECTION = 87000; // minimal air pressure [Pa]
 
 const float HEAT_OF_VAPORIZATION_OF_WATER = 2300000; // [ J/kg ]
 const float ENTHALPY_OF_FUSION_OF_WATER = 335000; // [ J/kg ]
-const float STEFAN_BOLTZMAN_CONSTANT = 5,670367e-8;
+
 
 const float WATER_FREEZING = 273; // freeze temperature [ K ]
 const float RAIN_HEIGHT = 1000; //
@@ -718,60 +720,72 @@ void ClimateGenerator::SunHeatingDaylongStep()
 
 void ClimateGenerator::Cooling(ClimateCell& cell)
 {
-	const float AIR_HTC = HEAT_TRANSFER_COEFICIENT_AIR/ClimateUtils::GetSpecificHeat(CellContent::AIR);
-	float resultTemp = 0.0;
+	//const float AIR_HTC = HEAT_TRANSFER_COEFICIENT_AIR/ClimateUtils::GetSpecificHeat(CellContent::AIR);
+	//float resultTemp = 0.0;
 	float energyLoss = 0.0;
+	float energyRadiation = 0.0;
 	AirContent &air = cell.GetAirContent();
+	
+	//CellContent *pLowContent = cell.GetContent(1);
+	
+	float groundRadMult = (air.m_cloudsHeight < MEASURE_HEIGHT) ? (1.0 - CLOUDS_SCATTERED) : 1.0;
 	//GroundContent *pGround = nullptr;
 	//WaterContent *pLowWater = nullptr;
 	//WaterContent *pDeepWater = nullptr;
-
+	//for(int32_t i = 0; i < m_sunStep; ++i)
 	{
-		float energyRadiation = STEFAN_BOLTZMAN_CONSTANT*air.m_temperature*air.m_temperature*air.m_temperature*air.m_temperature; // M = sigma*T^4 
-		//energyLoss = (ClimateUtils::GetThermalConductivity(CellContent::AIR) * ( m_coolingTemperature - air.m_temperature) * m_timeStep * 15000)/(15000 - air.m_baseAltitude); //
-		float beginTemp = ClimateUtils::CompRealAirTemp(air.m_temperature, air.m_baseAltitude, 15000);
-		// result temperature 
-		resultTemp = ClimateUtils::CompCoolingTemperature(beginTemp, m_coolingTemperature, AIR_HTC/air.m_airMass, m_timeStep); //
-		
-		//temp = heat / (cont.m_airMass * ClimateUtils::GetSpecificHeat(CellContent::AIR));
-		energyLoss = (beginTemp - resultTemp)*(air.m_airMass * ClimateUtils::GetSpecificHeat(CellContent::AIR));
-		
-		AddHeat(air, energyLoss);
-		
-		m_oneStepHeat += energyLoss;
-		//AddHeat(air, m_oneStepHeat);
-	}
+		{
+			float beginTemp = ClimateUtils::CompRealAirTemp(air.m_temperature, air.m_baseAltitude, 15000);
+			energyRadiation = ClimateUtils::CompRadiationPerSquareMeter(air.m_temperature); 
+			
+			energyLoss = ClimateUtils::CompRadiationPerSquareMeter(beginTemp)*m_timeStep; // radiation to the universe
+			
+			// athmosperic lost is only 30% : 70% goes to neighbour athmospheric cells 15% to the ground or water and 15% goes away (in this model)
+			AddHeat(air, -energyLoss);
+			m_oneStepHeat += -energyLoss; // comp energy loss
+			
+			energyLoss = energyRadiation*m_timeStep; // energy radiation to the ground or water
+			
+			AddHeat(air, -energyLoss);
+			
+			//add half of emited energy to the ground or water
+			if(cell.IsCheckContent(CellContent::GROUND))
+			{
+				AddHeat(cell.GetGroundContent(), energyLoss);
+			} else {
+				AddHeat(cell.GetWaterContent(), energyLoss);
+			}
+			
+			
+			//AddHeat(air, m_oneStepHeat);
+		}
 
-	if(cell.IsCheckContent(CellContent::GROUND)) {
-		GroundContent &ground = cell.GetGroundContent();
-		energyLoss = ClimateUtils::GetThermalConductivity(CellContent::GROUND) * ( air.m_temperature - ground.m_temperature ) * m_timeStep;
+		if(cell.IsCheckContent(CellContent::GROUND)) {
+			
+			GroundContent &ground = cell.GetGroundContent();
+			energyRadiation = ClimateUtils::CompRadiationPerSquareMeter(ground.m_temperature);
+			energyLoss = energyRadiation*m_timeStep*groundRadMult;
+			
+			AddHeat(ground, -(energyLoss));
+		} else {
 
-		AddHeat(air, -energyLoss);
-		AddHeat(ground, energyLoss);
+			WaterContent &water = cell.GetWaterContent();
+			energyRadiation = ClimateUtils::CompRadiationPerSquareMeter(water.m_temperature); // M = sigma*T^4 
+			energyLoss = energyRadiation*m_timeStep*groundRadMult;
+			
+			AddHeat(water, -(energyLoss));
+		}
 		
-		//energyLoss = (ClimateUtils::GetThermalConductivity(CellContent::GROUND) * (ground.m_temperature - ground.m_deepTemperature) * m_timeStep) / GROUND_HEAT_METERS;
+		AddHeat(air, energyLoss*ATHMOSPHERIC_GROUND_TRANSFER);
+		m_oneStepHeat += -(energyLoss*ATHMOSPHERIC_WINDOW);
 		
-		//AddHeat(ground, -energyLoss);
-		//ground.m_deepTemperature += energyLoss / ((ClimateUtils::GROUND_DENSITY * (GROUND_HEAT_METERS - 1)) * ClimateUtils::GetSpecificHeat(CellContent::GROUND));
+		// fast temperature update
+		//air.m_temperature += air.m_temperatureDiff;
+		//air.m_temperatureDiff = 0.0;
+		//
+		//pLowContent->m_temperature += pLowContent->m_temperatureDiff;
+		//pLowContent->m_temperatureDiff = 0.0;
 		
-		
-	}
-
-	if(cell.IsCheckContent(CellContent::WATER)) {
-		WaterContent &water = cell.GetWaterContent();
-		energyLoss = ClimateUtils::GetThermalConductivity(CellContent::WATER) * ( air.m_temperature - water.m_temperature ) * m_timeStep;
-
-		AddHeat(air, -energyLoss);
-		AddHeat(water, energyLoss);
-
-		//energyLoss = (ClimateUtils::GetThermalConductivity(CellContent::WATER) * (water.m_temperature - water.m_deepTemperature) * m_timeStep) / LOW_WATER_METERS;
-		
-		//AddHeat(water, -energyLoss);
-		//water.m_deepTemperature += energyLoss / (((water.m_waterMass + water.m_iceMass) - CompWaterMass(water)) * ClimateUtils::GetSpecificHeat(CellContent::WATER));
-		
-		//energyLoss = ClimateUtils::GetThermalConductivity(CellContent::WATER) * ( water.m_temperature - DEEP_WATER_BASE_TEMPERATURE ) * m_timeStep;
-		//AddHeat(water, -energyLoss);
-
 	}
 
 }

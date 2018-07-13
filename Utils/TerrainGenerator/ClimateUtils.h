@@ -3,6 +3,8 @@
 
 #include "ClimateCell.h"
 
+
+
 class ClimateUtils
 {
 
@@ -12,6 +14,7 @@ public:
 	static const float ICE_DENSITY;
 	static const float GROUND_DENSITY;
 	
+	static const float STEFAN_BOLTZMAN_CONSTANT;
 public:
 	static float GetDewPointTemperature(float relHum);
 	
@@ -132,6 +135,11 @@ public:
 	inline static float CompCoolingTemperature(float baseTemperature, float envTemperature, float coef, float timeChunk)
 	{
 		return envTemperature + (baseTemperature - envTemperature)*std::exp(-coef*timeChunk);
+	}
+	
+	inline static float CompRadiationPerSquareMeter(float temperature)
+	{
+		return (STEFAN_BOLTZMAN_CONSTANT*temperature*temperature*temperature*temperature); // M = sigma*T^4 
 	}
 	
 };
