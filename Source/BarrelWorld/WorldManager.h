@@ -9,7 +9,7 @@
 #include <Urho3D/Graphics/Viewport.h>
 #include "TerrainTile.h"
 #include "ActualMission.h"
-
+#include "StateBase.h"
 
 namespace Urho3D {
 	class Camera;
@@ -18,9 +18,9 @@ namespace Urho3D {
 namespace BW
 {
 
-	class WorldManager : public Urho3D::RefCounted
+	class WorldManager : public StateBase
 	{
-		Urho3D::Application *m_pApp;
+		Game *m_pApp;
 		
 		Urho3D::WeakPtr<Urho3D::Scene> m_spMainScene;
 		
@@ -40,35 +40,36 @@ namespace BW
 		Urho3D::Vector3 m_cameraDistance;
 		
 	public:
-		WorldManager(Urho3D::Application *pApp, Urho3D::WeakPtr<Urho3D::Scene> spMainScene);
 		~WorldManager();
 		
-		void SetViewport(Urho3D::Viewport *pViewport);
-		
-		Urho3D::Scene* GetMainScene() { return m_spMainScene; }
-		
 		Urho3D::Camera* GetCamera();
-		Urho3D::Node* GetCameraNode() { return m_spCameraNode; }
+		//Urho3D::Node* GetCameraNode() { return m_spCameraNode; }
 		
+		virtual void Init() override;
+		virtual void Cleanup() override;
+
+		virtual void Pause() override;
+		virtual void Resume() override;
 		
-		
-		void Update(float timeStep);
-		
-		
-		void NewGame();
+		virtual void Update(float timeStep) override;
 		
 		void StoreGame();
 		
 	protected:
+		WorldManager(Game *pApp);
+	
 		void CreateCamera();
 		void CreateLights();
-		
-		void GenerateEnemies();
 		
 		void SwitchCameraToCharacterMode();
 		
 		float GetAvatarYaw(int32_t x, int32_t y);
-
+		
+	public:
+		static WorldManager* GetInstance(Game *pApp);		
+		
+	protected:
+		static WorldManager* gWorldManager;
 	};
 
 }

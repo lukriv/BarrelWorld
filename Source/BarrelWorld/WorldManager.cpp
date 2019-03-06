@@ -9,6 +9,7 @@
 #include <Urho3D/Physics/PhysicsWorld.h>
 #include <Urho3D/Input/Input.h>
 #include <Urho3D/IO/Log.h>
+#include "Game.h"
 #include "Rotator.h"
 #include "Character.h"
 #include "EntityCreator.h"
@@ -16,64 +17,75 @@
 using namespace Urho3D;
 
 
+//static
+
+BW::WorldManager* BW::WorldManager::gWorldManager = nullptr;
+
+BW::WorldManager* BW::WorldManager::GetInstance(BW::Game* pApp )
+{
+	if(gWorldManager == nullptr)
+	{
+		gWorldManager = new BW::WorldManager(pApp);
+	}
+	
+	return gWorldManager;
+}
+
+//non-static
 static const float DEFAULT_CAMERA_DISTANCE = 40;
 static const float DEFAULT_CAMERA_YAW = 0;
 static const float DEFAULT_CAMERA_PITCH = 70;
 
 
-BW::WorldManager::WorldManager(Urho3D::Application *pApp, Urho3D::WeakPtr<Urho3D::Scene> spMainScene) : m_pApp(pApp)
-	, m_spMainScene(spMainScene)
+BW::WorldManager::WorldManager(BW::Game *pApp) : m_pApp(pApp)
+	, m_spMainScene(nullptr)
 	, m_characterMode(true)
 {
-	ResourceCache* cache=pApp->GetSubsystem<ResourceCache>();
+	//ResourceCache* cache=pApp->GetSubsystem<ResourceCache>();
 	
+	m_spMainScene = pApp->GetMainScene();
 	
 	m_cameraYaw = 0;
 	m_cameraPitch = 0;
 	
-	// Let's put a box in there.
-    m_spBoxNode=m_spMainScene->CreateChild("Box");
-    m_spBoxNode->SetPosition(Vector3(0,0,5));
-    StaticModel* boxObject=m_spBoxNode->CreateComponent<StaticModel>();
-    boxObject->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
-    boxObject->SetMaterial(cache->GetResource<Material>("Materials/Stone.xml"));
-	m_spBoxNode->CreateComponent<Rotator>();
-	
-	// Create two lights
-    {
-        Node* lightNode=m_spMainScene->CreateChild("Light");
-        lightNode->SetPosition(Vector3(-5,0,10));
-        Light* light=lightNode->CreateComponent<Light>();
-        light->SetLightType(LIGHT_POINT);
-        light->SetRange(50);
-        light->SetBrightness(1.2);
-        light->SetColor(Color(1,.5,.8,1));
-        light->SetCastShadows(true);
-    }
-    {
-        Node* lightNode=m_spMainScene->CreateChild("Light");
-        lightNode->SetPosition(Vector3(5,0,10));
-        Light* light=lightNode->CreateComponent<Light>();
-        light->SetLightType(LIGHT_POINT);
-        light->SetRange(50);
-        light->SetBrightness(1.2);
-        light->SetColor(Color(.5,.8,1,1));
-        light->SetCastShadows(true);
-    }
-	
-	// We need a camera from which the viewport can render.
-	CreateCamera();
+	//// Let's put a box in there.
+    //m_spBoxNode=m_spMainScene->CreateChild("Box");
+    //m_spBoxNode->SetPosition(Vector3(0,0,5));
+    //StaticModel* boxObject=m_spBoxNode->CreateComponent<StaticModel>();
+    //boxObject->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
+    //boxObject->SetMaterial(cache->GetResource<Material>("Materials/Stone.xml"));
+	//m_spBoxNode->CreateComponent<Rotator>();
+	//
+	//// Create two lights
+    //{
+    //    Node* lightNode=m_spMainScene->CreateChild("Light");
+    //    lightNode->SetPosition(Vector3(-5,0,10));
+    //    Light* light=lightNode->CreateComponent<Light>();
+    //    light->SetLightType(LIGHT_POINT);
+    //    light->SetRange(50);
+    //    light->SetBrightness(1.2);
+    //    light->SetColor(Color(1,.5,.8,1));
+    //    light->SetCastShadows(true);
+    //}
+    //{
+    //    Node* lightNode=m_spMainScene->CreateChild("Light");
+    //    lightNode->SetPosition(Vector3(5,0,10));
+    //    Light* light=lightNode->CreateComponent<Light>();
+    //    light->SetLightType(LIGHT_POINT);
+    //    light->SetRange(50);
+    //    light->SetBrightness(1.2);
+    //    light->SetColor(Color(.5,.8,1,1));
+    //    light->SetCastShadows(true);
+    //}
+	//
+	//// We need a camera from which the viewport can render.
+	//CreateCamera();
 
 }
 
 BW::WorldManager::~WorldManager()
 {
 	
-}
-
-void BW::WorldManager::SetViewport(Urho3D::Viewport* pViewport)
-{
-	m_spViewport = pViewport;
 }
 
 Urho3D::Camera* BW::WorldManager::GetCamera()
@@ -157,50 +169,6 @@ void BW::WorldManager::Update(float timeStep)
 	}
 }
 
-void BW::WorldManager::NewGame()
-{
-
-	m_spMainScene->RemoveAllChildren();
-	CreateCamera();
-	// set new camera to viewport
-	m_spViewport->SetCamera(GetCamera());
-	
-	CreateLights();
-	
-	m_spActualMission = new ActualMission();
-	
-	if(m_spTerrainMgr.Null())
-	{
-		m_spTerrainMgr = new TerrainTile(m_pApp, m_spMainScene);
-	}
-	m_spTerrainMgr->GenerateTerrain();
-	
-	Log::Write(LOG_INFO, String("Terrain was generated"));
-	
-	Vector3 vec = m_spTerrainMgr->GetTerrainNode()->GetPosition();
-	Vector3 trans = vec + Vector3(0,50,0);
-	
-	m_spAvatarNode = EntityCreator::CreateAvatar("Avatar", m_pApp, m_spMainScene);
-	
-	m_spAvatarNode->SetPosition(vec + Vector3(0,25,0));
-	
-	for(int32_t i = 0; i < 10; ++i)
-	{
-		m_spActualMission->CreateEnemy(m_spMainScene, m_pApp);
-	}
-	
-	String str;
-	str.AppendWithFormat("Terrain position: %f, %f, %f", vec.x_, vec.y_, vec.z_);
-	Log::Write(LOG_INFO, str);
-	
-	m_spCameraNode->Translate(trans);
-	
-	if(m_characterMode)
-	{
-		SwitchCameraToCharacterMode();
-	}
-	
-}
 
 void BW::WorldManager::StoreGame()
 {
@@ -297,6 +265,65 @@ float BW::WorldManager::GetAvatarYaw( int32_t x, int32_t y)
 }
 
 
-void BW::WorldManager::GenerateEnemies()
+void BW::WorldManager::Init()
+{
+	CreateCamera();
+	// set new camera to viewport
+	
+	Renderer* pRenderer= m_pApp->GetSubsystem<Renderer>();
+	SharedPtr<Viewport> viewport(new Viewport( m_pApp->GetContext(), m_spMainScene, GetCamera()));
+	pRenderer->SetViewport(0,viewport);
+	m_spViewport = viewport;
+	
+	m_spViewport->SetCamera(GetCamera());
+	
+	CreateLights();
+	
+	m_spActualMission = new ActualMission();
+	
+	if(m_spTerrainMgr.Null())
+	{
+		m_spTerrainMgr = new TerrainTile(m_pApp, m_spMainScene);
+	}
+	m_spTerrainMgr->GenerateTerrain();
+	
+	Log::Write(LOG_INFO, String("Terrain was generated"));
+	
+	Vector3 vec = m_spTerrainMgr->GetTerrainNode()->GetPosition();
+	Vector3 trans = vec + Vector3(0,50,0);
+	
+	m_spAvatarNode = EntityCreator::CreateAvatar("Avatar", m_pApp, m_spMainScene);
+	
+	m_spAvatarNode->SetPosition(vec + Vector3(0,25,0));
+	
+	for(int32_t i = 0; i < 10; ++i)
+	{
+		m_spActualMission->CreateEnemy(m_spMainScene, m_pApp);
+	}
+	
+	String str;
+	str.AppendWithFormat("Terrain position: %f, %f, %f", vec.x_, vec.y_, vec.z_);
+	Log::Write(LOG_INFO, str);
+	
+	m_spCameraNode->Translate(trans);
+	
+	if(m_characterMode)
+	{
+		SwitchCameraToCharacterMode();
+	}
+}
+
+void BW::WorldManager::Cleanup()
+{
+	m_spMainScene->RemoveAllChildren();
+}
+
+void BW::WorldManager::Pause()
 {
 }
+
+void BW::WorldManager::Resume()
+{
+}
+
+
