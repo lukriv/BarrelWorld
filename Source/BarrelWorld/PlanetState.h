@@ -13,7 +13,7 @@ namespace BW
 	class PlanetState : public StateBase
 	{
 	protected:
-		Urho3D::Application *m_pApp;
+		Game *m_pApp;
 		
 		Urho3D::WeakPtr<Urho3D::Scene> m_spMainScene;
 		

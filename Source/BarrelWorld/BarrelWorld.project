@@ -8,6 +8,7 @@
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="src">
+    <File Name="IntroState.cpp"/>
     <File Name="Game.cpp"/>
     <File Name="StateBase.cpp"/>
     <File Name="PlanetState.cpp"/>
@@ -32,6 +33,7 @@
   <Dependencies Name="Debug"/>
   <Dependencies Name="Release"/>
   <VirtualDirectory Name="include">
+    <File Name="IntroState.h"/>
     <File Name="Game.h"/>
     <File Name="StateBase.h"/>
     <File Name="PlanetState.h"/>

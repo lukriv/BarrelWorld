@@ -52,6 +52,7 @@ namespace BW {
 	#ifdef _DEBUG_
 		, debugMode_(false)
 	#endif //_DEBUG_
+		, m_actualState(nullptr)
     {
 		BW::Rotator::RegisterObject(context);
 		BW::Character::RegisterObject(context);
@@ -192,7 +193,7 @@ namespace BW {
 			{
                 engine_->Exit();
 			} else if(clicked->GetName()=="new") {
-				m_actualState->Init();
+				ChangeState(PlanetState::GetInstance(this));
 				m_spMainmenu->Visible(false);
 			} else if(clicked->GetName()=="store") {
 				//m_actualState->StoreGame();
@@ -271,6 +272,7 @@ namespace BW {
 	
 	void Game::ChangeState(StateBase *state)
 	{
+		if(m_actualState) m_actualState->Cleanup();
 		m_actualState = state;
 		m_actualState->Init();
 	}
