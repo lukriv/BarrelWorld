@@ -17,7 +17,7 @@ namespace BW
 		static Urho3D::Node* CreateAvatar2(const Urho3D::String &name, Urho3D::Application *pApp, Urho3D::Node *pScene);
 		static Urho3D::Node* CreatePistol(const Urho3D::String &name, Urho3D::Application *pApp, Urho3D::Node *pScene);
 		
-		static Urho3D::Node* CreatePlanet(const Urho3D::String &name, Urho3D::Application *pApp, Urho3D::Node *pScene);
+		
 	private:
 
 	};

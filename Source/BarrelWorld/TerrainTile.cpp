@@ -453,7 +453,7 @@ void BW::TerrainTile::GenerateGrounds(unsigned char* data, int32_t MAP_SIZE, con
 	//NW,NE,SW,SE
 	static const int32_t NW=0,NE=1,SW=2,SE=3; // indexes
 	int32_t corners[4] = {0,0,0,0};
-	int32_t center = 0;
+	//int32_t center = 0;
 	for(auto &gParams : params.m_ground)
 	{
 		if(gParams.m_terrainSides == (TERR_SIDE_NORTH | TERR_SIDE_WEST))
@@ -507,7 +507,7 @@ void BW::TerrainTile::GenerateGrounds(unsigned char* data, int32_t MAP_SIZE, con
 		corners[NW] = corners[NE] = corners[SW] = corners[SE] = gParams.m_baseAlt;
 	}
 	
-	center = (corners[NW] + corners[NE] + corners[SW] + corners[SE]) / 4;
+	//center = (corners[NW] + corners[NE] + corners[SW] + corners[SE]) / 4;
 	
 	if((corners[NW] == corners[NE]) && (corners[NE] == corners[SW]) && (corners[SW] == corners[SE]))
 	{

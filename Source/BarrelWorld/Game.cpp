@@ -31,6 +31,7 @@
 #include <Urho3D/Physics/PhysicsWorld.h>
 //#include "WorldManager.h"
 #include "PlanetState.h"
+#include "IntroState.h"
 
 #include "Rotator.h"
 #include "Character.h"
@@ -118,7 +119,7 @@ namespace BW {
 	#endif //_DEBUG_
 
 		//m_actualState = BW::WorldManager::GetInstance(this);
-		ChangeState(BW::PlanetState::GetInstance(this));
+		ChangeState(BW::IntroState::GetInstance(this));
  
 		// Now we setup the viewport. Ofcourse, you can have more than one!
 

@@ -6,6 +6,7 @@
 #include <Urho3D/Graphics/StaticModel.h>
 #include <Urho3D/Graphics/Model.h>
 #include <Urho3D/Graphics/Camera.h>
+#include "Planet.h"
 #include "Rotator.h"
 
 using namespace Urho3D;
@@ -44,7 +45,7 @@ void BW::PlanetState::Init()
 {
 	CreateCamera();
 	// set new camera to viewport
-	ResourceCache* cache=m_pApp->GetSubsystem<ResourceCache>();
+	//ResourceCache* cache=m_pApp->GetSubsystem<ResourceCache>();
 	
 	Renderer* pRenderer= m_pApp->GetSubsystem<Renderer>();
 	SharedPtr<Viewport> viewport(new Viewport( m_pApp->GetContext(), m_spMainScene, GetCamera()));
@@ -52,13 +53,18 @@ void BW::PlanetState::Init()
 	m_spViewport = viewport;
 	
 	m_spViewport->SetCamera(GetCamera());
+	GetCamera()->SetFillMode(FILL_WIREFRAME);
 	
-    Urho3D::Node* pBoxNode=m_spMainScene->CreateChild("Box");
+    /*Urho3D::Node* pBoxNode=m_spMainScene->CreateChild("Box");
     pBoxNode->SetPosition(Vector3(0,0,5));
     StaticModel* boxObject=pBoxNode->CreateComponent<StaticModel>();
     boxObject->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
     boxObject->SetMaterial(cache->GetResource<Material>("Materials/Stone.xml"));
-	pBoxNode->CreateComponent<Rotator>();
+	pBoxNode->CreateComponent<Rotator>();*/
+	
+	Urho3D::Node* pPlanet = BW::Planet::CreatePlanet("Planet", m_pApp);
+	pPlanet->SetPosition(Vector3(0,0,5));
+	//pPlanet->CreateComponent<Rotator>();
 	
 	// Create two lights
     {
@@ -73,7 +79,7 @@ void BW::PlanetState::Init()
     }
     {
         Node* lightNode=m_spMainScene->CreateChild("Light");
-        lightNode->SetPosition(Vector3(5,0,10));
+        lightNode->SetPosition(Vector3(5,0,-10));
         Light* light=lightNode->CreateComponent<Light>();
         light->SetLightType(LIGHT_POINT);
         light->SetRange(50);

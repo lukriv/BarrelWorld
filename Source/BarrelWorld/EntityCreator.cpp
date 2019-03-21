@@ -130,8 +130,3 @@ Node* BW::EntityCreator::CreateAvatar2(const String &name, Application* pApp, No
 
 
 
-Urho3D::Node* BW::EntityCreator::CreatePlanet(const Urho3D::String& name, Urho3D::Application* pApp, Urho3D::Node* pScene)
-{
-	ResourceCache* cache= pApp->GetSubsystem<ResourceCache>();
-	Node* pPlanetNode = pScene->CreateChild(name);
-}
