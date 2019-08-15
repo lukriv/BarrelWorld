@@ -22,6 +22,8 @@
 
 #include "GeometryUtils.h"
 
+#include <set>
+
 using namespace Urho3D;
 
 /*
@@ -467,54 +469,84 @@ Urho3D::Node* BW::Planet::CreatePlanet(const Urho3D::String& name, Game* pApp)
 void BW::Planet::ConvertToDodecahedronMesh(std::vector<Vector3>& vertices, std::vector<IntVector3>& faces)
 {
 	std::vector<Vector3> verticesNew;
-	std::vector< std::vector<size_t> > polygons;
-	std::vector< std::vector<size_t> > neightbours;
+	std::vector< std::vector<size_t> > facesNew;
+	std::vector< std::set<size_t> > neightbours;
+	std::vector< Plane > vertPlanes;
+	std::vector< Ray > planeRays;
+	
+	Vector3 midpoint;
+	
+	std::vector<IntVector2> lines;
 	
 	std::vector<Vector3> verticesOut;
 	std::vector<IntVector3> facesOut;
 	
 	IntVector3 tri;
 	
-	neightbours.resize(faces.size());
-	polygons.resize(vertices.size());
+	neightbours.resize(vertices.size());
+	vertPlanes.resize(vertices.size());
+	planeRays.resize(vertices.size());
+	//polygons.resize(vertices.size());
 	
-	size_t id;
-	// find neightbours
-    for (size_t i = 0; i < faces.size(); i++)
-    {
-		size_t line[2];
-		
-    }
-	
-	//create new polygons
-	for(size_t i = 0; i < polygons.size(); ++i)
+	for(const auto& vert: vertices)
 	{
-		//create new polygon plane
-		Plane plane(verticesNew[polygons[i][0]], verticesNew[polygons[i][1]], verticesNew[polygons[i][2]]);
-		Vector3 center(plane.Project(vertices[i]));
-		
-		tri.x_ = verticesOut.size();
-		verticesOut.push_back(center);
-		
-		size_t polySize = polygons[i].size();
-				
-		for(size_t j = 0; j < polySize; ++j)
-		{
-			id = verticesOut.size();
-			verticesOut.push_back(verticesNew[polygons[i][j]]);
-			polygons[i][j] = id;
-		}
-		
-		//create new triangles
-		for(size_t j = 0; j < polySize; ++j)
-		{
-			tri.y_ = polygons[i][j];
-			tri.z_ = polygons[i][(j+1)%polySize];
-			facesOut.push_back(tri);
-		}
+		midpoint += vert;
 	}
 	
+	midpoint = midpoint/(static_cast<float>(vertices.size()));
+	
+	//{
+	//	String str;
+	//	str.AppendWithFormat("Midpoint: %f, %f, %f", midpoint.x_, midpoint.y_, midpoint.z_);
+	//	Log::Write(LOG_INFO, str);
+	//}
+	
+	// find neightbours
+    for (const auto& face: faces)
+    {
+		neightbours[face.x_].insert(face.y_);
+		neightbours[face.x_].insert(face.z_);
+
+		neightbours[face.y_].insert(face.x_);
+		neightbours[face.y_].insert(face.z_);
+
+		neightbours[face.z_].insert(face.x_);
+		neightbours[face.z_].insert(face.y_);
+	}
+	
+	//for (size_t i = 0; i < neightbours.size(); ++i)
+	//{
+	//	String str;
+	//	str.AppendWithFormat("Neighbours for [%u]: ", i);
+	//	for (const auto& n: neightbours[i])
+	//	{
+	//		str.AppendWithFormat(" %d,", n);
+	//	}
+	//	Log::Write(LOG_INFO, str);
+	//}
+	
+	//create planes
+	for(size_t i = 0; i < vertices.size(); ++i)
+	{
+		//create new polygon plane
+		Vector3 mainNormal = vertices[i] - midpoint;
+		Plane mainPlane(mainNormal, vertices[i]);
+		
+		vertPlanes[i] = mainPlane;
+	}
+	
+	//create rays
+	//for(size_t i = 0; i < vertices.size(); ++i)
+	//{
+	//	//create new polygon plane
+	//	Vector3 dirPoint = vertPlanes[i].Project(vertices[neightbours[i]]);
+	//	Plane mainPlane(mainNormal, vertices[i]);
+	//	
+	//	vertPlanes[i] = mainPlane;
+	//}	
+	
+	
 	//change data
-	vertices.swap(verticesOut);
-	faces.swap(facesOut);
+	//vertices.swap(verticesOut);
+	//faces.swap(facesOut);
 }
