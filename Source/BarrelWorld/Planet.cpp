@@ -406,7 +406,7 @@ Urho3D::Node* BW::Planet::CreatePlanet(const Urho3D::String& name, Game* pApp)
 	//InitAsIcosohedron(vertices, faces);
 	//Subdivide(2, vertices, faces);
 	
-	BW::GeometryUtils::GenerateIcosahedron(0, vertices, faces);
+	BW::GeometryUtils::GenerateIcosahedron(1, vertices, faces);
 	ConvertToDodecahedronMesh(vertices, faces);
 	GenerateTriangleMesh(vertices, faces, verticesData, indexData);
 	
@@ -469,10 +469,7 @@ Urho3D::Node* BW::Planet::CreatePlanet(const Urho3D::String& name, Game* pApp)
 void BW::Planet::ConvertToDodecahedronMesh(std::vector<Vector3>& vertices, std::vector<IntVector3>& faces)
 {
 	std::vector<Vector3> verticesNew;
-	std::vector< std::vector<size_t> > facesNew;
-	std::vector< std::set<size_t> > neightbours;
-	std::vector< Plane > vertPlanes;
-	std::vector< Ray > planeRays;
+
 	
 	Vector3 midpoint;
 	
@@ -481,12 +478,9 @@ void BW::Planet::ConvertToDodecahedronMesh(std::vector<Vector3>& vertices, std::
 	std::vector<Vector3> verticesOut;
 	std::vector<IntVector3> facesOut;
 	
-	IntVector3 tri;
 	
-	neightbours.resize(vertices.size());
-	vertPlanes.resize(vertices.size());
-	planeRays.resize(vertices.size());
-	//polygons.resize(vertices.size());
+	
+
 	
 	for(const auto& vert: vertices)
 	{
@@ -502,16 +496,22 @@ void BW::Planet::ConvertToDodecahedronMesh(std::vector<Vector3>& vertices, std::
 	//}
 	
 	// find neightbours
-    for (const auto& face: faces)
+    for (int32_t i = 0; i < faces.size(); ++i)
     {
-		neightbours[face.x_].insert(face.y_);
-		neightbours[face.x_].insert(face.z_);
+		const auto& face = faces[i];
+		nbVert[face.x_].insert(face.y_);
+		nbVert[face.x_].insert(face.z_);
 
-		neightbours[face.y_].insert(face.x_);
-		neightbours[face.y_].insert(face.z_);
+		nbVert[face.y_].insert(face.x_);
+		nbVert[face.y_].insert(face.z_);
 
-		neightbours[face.z_].insert(face.x_);
-		neightbours[face.z_].insert(face.y_);
+		nbVert[face.z_].insert(face.x_);
+		nbVert[face.z_].insert(face.y_);
+		
+		nbFaces[face.x_].insert(i);
+		nbFaces[face.y_].insert(i);
+		nbFaces[face.z_].insert(i);
+		
 	}
 	
 	//for (size_t i = 0; i < neightbours.size(); ++i)
@@ -536,14 +536,12 @@ void BW::Planet::ConvertToDodecahedronMesh(std::vector<Vector3>& vertices, std::
 	}
 	
 	//create rays
-	//for(size_t i = 0; i < vertices.size(); ++i)
-	//{
-	//	//create new polygon plane
-	//	Vector3 dirPoint = vertPlanes[i].Project(vertices[neightbours[i]]);
-	//	Plane mainPlane(mainNormal, vertices[i]);
-	//	
-	//	vertPlanes[i] = mainPlane;
-	//}	
+	for(size_t i = 0; i < vertices.size(); ++i)
+	{
+		//create new polygon plane
+		Plane &plane = vertPlanes[i];
+		for()
+	}	
 	
 	
 	//change data
