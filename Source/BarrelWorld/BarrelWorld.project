@@ -2,7 +2,7 @@
 <CodeLite_Project Name="BarrelWorld" InternalType="Console" Version="10.0.0">
   <Plugins>
     <Plugin Name="qmake">
-      <![CDATA[00040001N0005Debug0000000000000001N0009Debug x640000000000000001N0007Release0000000000000001N0011Release x64000000000000]]>
+      <![CDATA[00050001N0005Debug0000000000000001N0009Debug x640000000000000001N0009Debug_x640000000000000001N0007Release0000000000000001N0011Release x64000000000000]]>
     </Plugin>
   </Plugins>
   <Description/>
@@ -64,7 +64,7 @@
       <Linker Options=""/>
       <ResourceCompiler Options=""/>
     </GlobalSettings>
-    <Configuration Name="Debug" CompilerType="gcc.exe (i686-posix-sjlj-rev0) 7.2.0" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+    <Configuration Name="Debug" CompilerType="gcc.exe (i686-posix-sjlj-rev0, Built by MinGW-W64 project) 7.3.0" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="-g;-O0;-Wall" C_Options="-g;-O0;-Wall" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
         <IncludePath Value="."/>
       </Compiler>
@@ -108,7 +108,7 @@
         <SearchPaths/>
       </Completion>
     </Configuration>
-    <Configuration Name="Debug x64" CompilerType="gcc.exe (x86_64-posix-seh-rev0) 7.2.0" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+    <Configuration Name="Debug_x64" CompilerType="gcc.exe (x86_64-posix-seh-rev0, Built by MinGW-W64 project) 7.3.0" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="-g;-O0;-Wall" C_Options="-g;-O0;-Wall" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
         <IncludePath Value="."/>
         <Preprocessor Value="_DEBUG_"/>
@@ -118,7 +118,7 @@
         <Library Value="Urho3d.dll"/>
       </Linker>
       <ResourceCompiler Options="" Required="no"/>
-      <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="Debug64" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
+      <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="Debug64" Command="$(WorkspacePath)/build-$(WorkspaceConfiguration)/bin/$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
       <BuildSystem Name="Default"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
         <![CDATA[]]>
@@ -130,7 +130,7 @@
       </Debugger>
       <PreBuild/>
       <PostBuild>
-        <Command Enabled="yes">prepareEnvironment.bat $(IntermediateDirectory)</Command>
+        <Command Enabled="yes">prepareEnvironment.bat $(WorkspacePath)/build-$(WorkspaceConfiguration)/bin</Command>
       </PostBuild>
       <CustomBuild Enabled="no">
         <RebuildCommand/>
@@ -198,7 +198,7 @@
         <SearchPaths/>
       </Completion>
     </Configuration>
-    <Configuration Name="Release x64" CompilerType="gcc.exe (x86_64-posix-seh-rev0) 7.2.0" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+    <Configuration Name="Release_x64" CompilerType="gcc.exe (x86_64-posix-seh-rev0) 7.2.0" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="-O2;-Wall" C_Options="-O2;-Wall" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
         <IncludePath Value="."/>
         <Preprocessor Value="NDEBUG"/>

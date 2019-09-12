@@ -1,10 +1,13 @@
 @echo off
 set dest=%1
+set dest=%dest:/=\%
+echo Destination is %dest%
+set destCheck=%1
 
-if [%dest%] EQU [Debug] set externSubDir=win32
-if [%dest%] EQU [Release] set externSubDir=win32
-if [%dest%] EQU [Debug64] set externSubDir=x64
-if [%dest%] EQU [Release64] set externSubDir=x64
+if /i %destCheck:Debug=%==%destCheck% set externSubDir=win32
+if /i %destCheck:Release=%==%destCheck% set externSubDir=win32
+if /i %destCheck:Debug_x64=%==%destCheck% set externSubDir=x64
+if /i %destCheck:Release_x64=%==%destCheck% set externSubDir=x64
 
 if not defined externSubDir (
 	echo externSubDir not defined
@@ -14,22 +17,22 @@ if not defined externSubDir (
 if [%externSubDir%] EQU [win32] set mingwDir=C:\Program Files (x86)\mingw-w64\i686-7.3.0-posix-sjlj-rt_v5-rev0\mingw32\bin
 if [%externSubDir%] EQU [x64] set mingwDir=C:\Program Files\mingw-w64\x86_64-7.3.0-posix-seh-rt_v5-rev0\mingw64\bin
 
-if not exist .\%dest%\Urho3D.dll copy ..\..\extern\bin\%externSubDir%\Urho3D.dll .\%dest%
+if not exist %dest%\Urho3D.dll copy ..\..\extern\bin\%externSubDir%\Urho3D.dll %dest%
 
 if [%externSubDir%] EQU [win32] set mingwList=libgcc_s_sjlj-1.dll libstdc++-6.dll libwinpthread-1.dll
 if [%externSubDir%] EQU [x64] set mingwList=libgcc_s_seh-1.dll libstdc++-6.dll libwinpthread-1.dll
 
-for %%g in (%mingwList%) do (if not exist .\%dest%\%%g copy "%mingwDir%\%%g" .\%dest%)
+for %%g in (%mingwList%) do (if not exist %dest%\%%g copy "%mingwDir%\%%g" %dest%)
 
-if not exist .\%dest%\CoreData  (
-	mkdir .\%dest%\CoreData
-	xcopy ..\..\Resources\urho3d\CoreData .\%dest%\CoreData /S /Y /Q 
+if not exist %dest%\CoreData  (
+	mkdir %dest%\CoreData
+	xcopy ..\..\Resources\urho3d\CoreData %dest%\CoreData /S /Y /Q 
  )
 
 set source=..\..\Resources\urho3d
 
 
-if not exist .\%dest%\Data mkdir .\%dest%\Data
+if not exist %dest%\Data mkdir %dest%\Data
 
 ::@echo on
 set fileList=UI.png StoneDiffuse.dds StoneNormal.dds TerrainWeights.dds TerrainDetail2.dds TerrainDetail3.dds
@@ -50,7 +53,7 @@ call :CopyList %dest% Data UI %fileList%
 
 set source=..\..\Resources
 set barrelData=BarrelData
-if not exist .\%dest%\%barrelData% mkdir .\%dest%\%barrelData%
+if not exist %dest%\%barrelData% mkdir %dest%\%barrelData%
 
 ::set fileList=AvatarMaterial.xml TerrainX.xml BaseMat.xml HandMat.xml LegMat.xml
 ::call :CopyList %dest% %barrelData% Materials %fileList%
@@ -61,7 +64,7 @@ if not exist .\%dest%\%barrelData% mkdir .\%dest%\%barrelData%
 ::set fileList=barrelTexPrep.png webGrass.dds avatarFull2.png avatarFull2LeftHand.png
 ::call :CopyList %dest% %barrelData% Textures %fileList%
 
-xcopy ..\..\Resources\BarrelData .\%dest%\%barrelData% /S /Y
+xcopy ..\..\Resources\BarrelData %dest%\%barrelData% /S /Y
  
 goto :EOF
 
@@ -82,11 +85,11 @@ if not [%1]==[] (
 	goto :CopyListLoop
 )
 
-if not exist .\%dest%\%resourceDest%\%destSubdir% (
-	mkdir .\%dest%\%resourceDest%\%destSubdir% 
+if not exist %dest%\%resourceDest%\%destSubdir% (
+	mkdir %dest%\%resourceDest%\%destSubdir% 
 )
 
-for %%g in (%fileList%) do ( call :CopyFile %source%\%resourceDest%\%destSubdir% .\%dest%\%resourceDest%\%destSubdir% %%g )
+for %%g in (%fileList%) do ( call :CopyFile %source%\%resourceDest%\%destSubdir% %dest%\%resourceDest%\%destSubdir% %%g )
 
 endlocal
 EXIT /B 0
@@ -108,11 +111,11 @@ if not [%1]==[] (
 	goto :CopyListLoop
 )
 
-if not exist .\%dest%\%resourceDest%\%destSubdir% (
-	mkdir .\%dest%\%resourceDest%\%destSubdir% 
+if not exist %dest%\%resourceDest%\%destSubdir% (
+	mkdir %dest%\%resourceDest%\%destSubdir% 
 )
 
-for %%g in (%fileList%) do ( call :CopyFile %source%\%resourceDest%\%destSubdir% .\%dest%\%resourceDest%\%destSubdir% %%g )
+for %%g in (%fileList%) do ( call :CopyFile %source%\%resourceDest%\%destSubdir% %dest%\%resourceDest%\%destSubdir% %%g )
 
 endlocal
 EXIT /B 0
@@ -123,13 +126,13 @@ set sourceDir=%1
 set destDir=%2
 set fileName=%3
 
-if not exist .\%destDir%\%fileName% (
-	copy %sourceDir%\%fileName% .\%destDir%
-	echo Copied file .\%destDir%\%fileName%
+if not exist %destDir%\%fileName% (
+	copy %sourceDir%\%fileName% %destDir%
+	echo Copied file %destDir%\%fileName%
 )
 
 endlocal
 EXIT /B 0
 
-::xcopy ..\..\Resources\urho3d\coredata .\%dest% /S /T
-::xcopy ..\..\Resources\urho3d\data .\%dest% /S /T
+::xcopy ..\..\Resources\urho3d\coredata %dest% /S /T
+::xcopy ..\..\Resources\urho3d\data %dest% /S /T

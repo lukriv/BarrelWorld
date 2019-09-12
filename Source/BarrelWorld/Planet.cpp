@@ -477,9 +477,14 @@ void BW::Planet::ConvertToDodecahedronMesh(std::vector<Vector3>& vertices, std::
 	
 	std::vector<Vector3> verticesOut;
 	std::vector<IntVector3> facesOut;
+	std::vector<std::set<int32_t> > nbVert;
+	std::vector<std::set<int32_t> > nbFaces;
+	std::vector<int32_t> vertProcessed;
 	
+	nbVert.resize(vertices.size());
+	nbFaces.resize(faces.size());
 	
-	
+	vertProcessed.resize(faces.size(), 0);
 
 	
 	for(const auto& vert: vertices)
@@ -496,7 +501,7 @@ void BW::Planet::ConvertToDodecahedronMesh(std::vector<Vector3>& vertices, std::
 	//}
 	
 	// find neightbours
-    for (int32_t i = 0; i < faces.size(); ++i)
+    for (uint32_t i = 0; i < faces.size(); ++i)
     {
 		const auto& face = faces[i];
 		nbVert[face.x_].insert(face.y_);
@@ -525,23 +530,6 @@ void BW::Planet::ConvertToDodecahedronMesh(std::vector<Vector3>& vertices, std::
 	//	Log::Write(LOG_INFO, str);
 	//}
 	
-	//create planes
-	for(size_t i = 0; i < vertices.size(); ++i)
-	{
-		//create new polygon plane
-		Vector3 mainNormal = vertices[i] - midpoint;
-		Plane mainPlane(mainNormal, vertices[i]);
-		
-		vertPlanes[i] = mainPlane;
-	}
-	
-	//create rays
-	for(size_t i = 0; i < vertices.size(); ++i)
-	{
-		//create new polygon plane
-		Plane &plane = vertPlanes[i];
-		for()
-	}	
 	
 	
 	//change data

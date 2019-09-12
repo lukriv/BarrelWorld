@@ -14,6 +14,7 @@ compilation.db
 cscope.out
 cscope_file.list
 Urho3D.log
+compile_flags.txt
 
 LoneWolf/Makefile
 Source/Makefile
@@ -22,6 +23,10 @@ Source/BarrelWorld/Release
 Source/BarrelWorld/Debug64
 Source/BarrelWorld/Release64
 Source/BarrelWorld/BarrelWorld.txt
+Source/build-Debug/
+Source/build-Debug_x64/
+Source/build-Release_x64/
+Source/compile_commands.json
 
 Source/BarrelWorld/x64
 Source/x64
@@ -32,3 +37,5 @@ Utils/TerrainGenerator/Release
 Utils/TerrainGenerator/Debug64
 Utils/TerrainGenerator/Release64
 Utils/TerrainGenerator/TerrainGenerator.txt
+
+Source/extern/Debug/
