@@ -403,9 +403,9 @@ void BW::TerrainTile::GenerateAltWeights(unsigned char* weightData, unsigned cha
 			wBasePoint2 = weightData2 + y*WEIGHTS_SIZE*WEIGHTS_COMPONENT + x*WEIGHTS_COMPONENT;
 			
 			corners[0] = *(data + my*MAP_SIZE + mx);
-			corners[1] = *(data + my*MAP_SIZE + std::min(mx + 1, MAP_SIZE - 1));
-			corners[2] = *(data + std::min(my + 1, MAP_SIZE - 1)*MAP_SIZE + mx);
-			corners[3] = *(data + std::min(my + 1, MAP_SIZE - 1)*MAP_SIZE + std::min(mx + 1, MAP_SIZE - 1));
+			corners[1] = *(data + my*MAP_SIZE + std::min<int32_t>(mx + 1, MAP_SIZE - 1));
+			corners[2] = *(data + std::min<int32_t>(my + 1, MAP_SIZE - 1)*MAP_SIZE + mx);
+			corners[3] = *(data + std::min<int32_t>(my + 1, MAP_SIZE - 1)*MAP_SIZE + std::min<int32_t>(mx + 1, MAP_SIZE - 1));
 			
 			normPos.x_ = (static_cast<float>(x) * static_cast<float>(MAP_SIZE)) / static_cast<float>(WEIGHTS_SIZE) - static_cast<float>(mx);
 			normPos.y_ = (static_cast<float>(y) * static_cast<float>(MAP_SIZE)) / static_cast<float>(WEIGHTS_SIZE) - static_cast<float>(my);

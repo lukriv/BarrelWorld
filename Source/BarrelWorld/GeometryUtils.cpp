@@ -1,4 +1,5 @@
 #include "GeometryUtils.h"
+#include <algorithm>
 
 using namespace Urho3D;
 

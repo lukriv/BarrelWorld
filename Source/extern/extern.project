@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CodeLite_Project Name="extern" InternalType="" Version="10.0.0">
+<CodeLite_Project Name="extern" InternalType="" Version="11000">
+  <Plugins>
+    <Plugin Name="qmake">
+      <![CDATA[00010001N0005Debug000000000000]]>
+    </Plugin>
+  </Plugins>
   <VirtualDirectory Name="UnitTest++">
     <VirtualDirectory Name="Win32">
       <File Name="../../extern/include/UnitTest++/Win32/TimeHelpers.h"/>
@@ -968,11 +973,6 @@
     </Extensions>
     <Topleveldir>../../extern/include/Urho3D</Topleveldir>
   </Reconciliation>
-  <Plugins>
-    <Plugin Name="qmake">
-      <![CDATA[00010001N0005Debug000000000000]]>
-    </Plugin>
-  </Plugins>
   <Description/>
   <Dependencies/>
   <Settings Type="Executable">

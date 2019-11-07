@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CodeLite_Project Name="BarrelWorld" InternalType="Console" Version="10.0.0">
+<CodeLite_Project Name="BarrelWorld" InternalType="Console" Version="11000">
   <Plugins>
     <Plugin Name="qmake">
       <![CDATA[00050001N0005Debug0000000000000001N0009Debug x640000000000000001N0009Debug_x640000000000000001N0007Release0000000000000001N0011Release x64000000000000]]>
@@ -118,7 +118,7 @@
         <Library Value="Urho3d.dll"/>
       </Linker>
       <ResourceCompiler Options="" Required="no"/>
-      <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="Debug64" Command="$(WorkspacePath)/build-$(WorkspaceConfiguration)/bin/$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
+      <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="Debug64" Command="$(ProjectName).exe" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
       <BuildSystem Name="Default"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
         <![CDATA[]]>
@@ -130,7 +130,7 @@
       </Debugger>
       <PreBuild/>
       <PostBuild>
-        <Command Enabled="yes">prepareEnvironment.bat $(WorkspacePath)/build-$(WorkspaceConfiguration)/bin</Command>
+        <Command Enabled="yes">prepareEnvironment.bat $(IntermediateDirectory)</Command>
       </PostBuild>
       <CustomBuild Enabled="no">
         <RebuildCommand/>

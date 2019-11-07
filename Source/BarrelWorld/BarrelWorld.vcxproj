@@ -19,25 +19,42 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ActualMission.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="DebugTools.h" />
     <ClInclude Include="EntityCreator.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="GeometryUtils.h" />
+    <ClInclude Include="IntroState.h" />
     <ClInclude Include="LayerDefs.h" />
     <ClInclude Include="mainmenu.h" />
+    <ClInclude Include="Planet.h" />
+    <ClInclude Include="PlanetState.h" />
     <ClInclude Include="Rotator.h" />
+    <ClInclude Include="StateBase.h" />
     <ClInclude Include="subsystemmanager.h" />
+    <ClInclude Include="TerrainDef.h" />
     <ClInclude Include="TerrainManager.h" />
+    <ClInclude Include="TerrainTile.h" />
     <ClInclude Include="WorldManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ActualMission.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="DebugTools.cpp" />
     <ClCompile Include="EntityCreator.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GeometryUtils.cpp" />
+    <ClCompile Include="IntroState.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mainmenu.cpp" />
+    <ClCompile Include="Planet.cpp" />
+    <ClCompile Include="PlanetState.cpp" />
     <ClCompile Include="Rotator.cpp" />
+    <ClCompile Include="StateBase.cpp" />
     <ClCompile Include="subsystemmanager.cpp" />
-    <ClCompile Include="TerrainManager.cpp" />
+    <ClCompile Include="TerrainDef.cpp" />
+    <ClCompile Include="TerrainTile.cpp" />
     <ClCompile Include="WorldManager.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -45,32 +62,32 @@
     <ProjectGuid>{537A08D2-DCC0-49F2-BF7E-21294997E248}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>BarrelWorld</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -130,13 +147,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\..\extern\include\Urho3D\ThirdParty;..\..\extern\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Library\Urho3D-1.7.1\vsSDK64\include\Urho3D\ThirdParty;D:\Library\Urho3D-1.7.1\vsSDK64\include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4251;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>D:\Library\Urho3D-1.7\vsSDK64\lib;C:\Library\Urho3D-1.7\vsSDK64\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\Library\Urho3D-1.7.1\vsSDK64\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Urho3D_d.lib;MSVCRTD.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
